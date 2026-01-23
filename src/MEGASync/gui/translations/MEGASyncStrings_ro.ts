@@ -250,7 +250,11 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] a adăugat %n element</numerusform><numerusform>[A] a adăugat %n elemente</numerusform><numerusform>[A] a adăugat %n de elemente</numerusform></translation>
+        <translation>
+            <numerusform>[A] a adăugat %n element</numerusform>
+            <numerusform>[A] a adăugat %n elemente</numerusform>
+            <numerusform>[A] a adăugat %n de elemente</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -285,7 +289,11 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] a eliminat %n element</numerusform><numerusform>[A] a eliminat %n elemente</numerusform><numerusform>[A] a eliminat %n de elemente</numerusform></translation>
+        <translation>
+            <numerusform>[A] a eliminat %n element</numerusform>
+            <numerusform>[A] a eliminat %n elemente</numerusform>
+            <numerusform>[A] a eliminat %n de elemente</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
@@ -295,7 +303,11 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] a actualizat %n articol</numerusform><numerusform>[A] a actualizat %n articole</numerusform><numerusform>[A] a actualizat %n de articole</numerusform></translation>
+        <translation>
+            <numerusform>[A] a actualizat %n articol</numerusform>
+            <numerusform>[A] a actualizat %n articole</numerusform>
+            <numerusform>[A] a actualizat %n de articole</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -395,12 +407,20 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation><numerusform>%1, dar %n folderul nu a putut fi copiat de rezervă</numerusform><numerusform>%1, dar %n folderele nu au putut fi copiate de rezervă</numerusform><numerusform>%1, dar %n folderele nu au putut fi copiate de rezervă</numerusform></translation>
+        <translation>
+            <numerusform>%1, dar %n folderul nu a putut fi copiat de rezervă</numerusform>
+            <numerusform>%1, dar %n folderele nu au putut fi copiate de rezervă</numerusform>
+            <numerusform>%1, dar %n folderele nu au putut fi copiate de rezervă</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation><numerusform>%n folderul a fost copiat de rezervă</numerusform><numerusform>%n folderele au fost copiate de rezervă</numerusform><numerusform>%n folderele au fost copiate de rezervă</numerusform></translation>
+        <translation>
+            <numerusform>%n folderul a fost copiat de rezervă</numerusform>
+            <numerusform>%n folderele au fost copiate de rezervă</numerusform>
+            <numerusform>%n folderele au fost copiate de rezervă</numerusform>
+        </translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
@@ -413,7 +433,11 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>Un folder cu același nume există deja în Backups. Redenumiți noul folder pentru a continua cu backup-ul. Numele folderului nu se va schimba pe calculator.</numerusform><numerusform>Unele foldere cu același nume există deja în Backup-urile. Redenumiți noile foldere pentru a continua cu backup-ul. Numele folderelor nu se vor schimba pe calculator.</numerusform><numerusform>Unele foldere cu același nume există deja în Backupuri. Redenumiți noile foldere pentru a continua cu backup-ul. Numele folderelor nu se vor schimba pe calculator.</numerusform></translation>
+        <translation>
+            <numerusform>Un folder cu același nume există deja în Backups. Redenumiți noul folder pentru a continua cu backup-ul. Numele folderului nu se va schimba pe calculator.</numerusform>
+            <numerusform>Unele foldere cu același nume există deja în Backup-urile. Redenumiți noile foldere pentru a continua cu backup-ul. Numele folderelor nu se vor schimba pe calculator.</numerusform>
+            <numerusform>Unele foldere cu același nume există deja în Backupuri. Redenumiți noile foldere pentru a continua cu backup-ul. Numele folderelor nu se vor schimba pe calculator.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -428,7 +452,11 @@
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>Folderul nu a fost făcut backup-uit. Încercați din nou.</numerusform><numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform><numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform></translation>
+        <translation>
+            <numerusform>Folderul nu a fost făcut backup-uit. Încercați din nou.</numerusform>
+            <numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform>
+            <numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -513,7 +541,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>Activează această opțiune numai dacă transferurile nu pornesc. În toate celelalte circumstanțe, folosirea HTTP este satisfăcătoare, deoarece MEGA criptează deja toate datele.</translation>
     </message>
     <message>
@@ -632,7 +660,7 @@
     <message>
         <source>You must wait 10 minutes before submitting another issue</source>
         <translatorcomment>Warning message title shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation>Trebuie să așteptați 10 minute înainte de a trimite o altă problemă</translation>
+        <translation>Trebuie să așteptați 10&#xa0;minute înainte de a trimite o altă problemă</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -821,8 +849,12 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>Rezolvați problema?</numerusform><numerusform>Rezolvați problemele?</numerusform><numerusform>Rezolvați problemele?</numerusform></translation>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation>
+            <numerusform>Rezolvați problema?</numerusform>
+            <numerusform>Rezolvați problemele?</numerusform>
+            <numerusform>Rezolvați problemele?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -841,18 +873,26 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Rezolva</translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Această acțiune va descărca fișierul într-o locație temporară, va remedia problema și apoi va șterge fișierul temporar.</numerusform><numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va șterge fișierele temporare.</numerusform><numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va șterge fișierele temporare.</numerusform></translation>
+        <translation>
+            <numerusform>Această acțiune va descărca fișierul într-o locație temporară, va remedia problema și apoi va șterge fișierul temporar.</numerusform>
+            <numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va șterge fișierele temporare.</numerusform>
+            <numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va șterge fișierele temporare.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Reluați transferurile pentru a remedia problema.</numerusform><numerusform>Reluați transferurile pentru a remedia problemele.</numerusform><numerusform>Reluați transferurile pentru a remedia problemele.</numerusform></translation>
+        <translation>
+            <numerusform>Reluați transferurile pentru a remedia problema.</numerusform>
+            <numerusform>Reluați transferurile pentru a remedia problemele.</numerusform>
+            <numerusform>Reluați transferurile pentru a remedia problemele.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -906,12 +946,20 @@
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Abonamentul pentru calitatea de membru Pro a expirat acum %n zi</numerusform><numerusform>Abonamentul pentru calitatea de membru Pro a expirat acum %n zile</numerusform><numerusform>Abonamentul pentru calitatea de membru Pro a expirat acum %n de zile</numerusform></translation>
+        <translation>
+            <numerusform>Abonamentul pentru calitatea de membru Pro a expirat acum %n zi</numerusform>
+            <numerusform>Abonamentul pentru calitatea de membru Pro a expirat acum %n zile</numerusform>
+            <numerusform>Abonamentul pentru calitatea de membru Pro a expirat acum %n de zile</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Abonamentul pentru calitatea de membru Pro va expira în %n zi</numerusform><numerusform>Abonamentul pentru calitatea de membru Pro va expira în %n zile</numerusform><numerusform>Abonamentul pentru calitatea de membru Pro va expira în %n de zile</numerusform></translation>
+        <translation>
+            <numerusform>Abonamentul pentru calitatea de membru Pro va expira în %n zi</numerusform>
+            <numerusform>Abonamentul pentru calitatea de membru Pro va expira în %n zile</numerusform>
+            <numerusform>Abonamentul pentru calitatea de membru Pro va expira în %n de zile</numerusform>
+        </translation>
     </message>
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
@@ -1033,12 +1081,12 @@
     <name>DeleteWaitingOnMovesHeader</name>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>În așteptarea finalizării altor procese.</translation>
     </message>
     <message>
         <source>Waiting to move [B]%1[/B]</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
         <translation>În așteptare să mute [B]%1[/B]</translation>
     </message>
 </context>
@@ -1122,7 +1170,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Contul Pro Flexi a fost dezactivat</translation>
+        <translation>Contul Pro&#xa0;Flexi a fost dezactivat</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1192,7 +1240,11 @@
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>Ai %n zi rămasă pentru a-ți salva datele</numerusform><numerusform>Ai %n zile rămase pentru a-ți salva datele</numerusform><numerusform>Ai %n de zile rămase pentru a-ți salva datele</numerusform></translation>
+        <translation>
+            <numerusform>Ai %n zi rămasă pentru a-ți salva datele</numerusform>
+            <numerusform>Ai %n zile rămase pentru a-ți salva datele</numerusform>
+            <numerusform>Ai %n de zile rămase pentru a-ți salva datele</numerusform>
+        </translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1257,7 +1309,11 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] a adăugat %n element</numerusform><numerusform>[A] a adăugat %n elemente</numerusform><numerusform>[A] a adăugat %n de elemente</numerusform></translation>
+        <translation>
+            <numerusform>[A] a adăugat %n element</numerusform>
+            <numerusform>[A] a adăugat %n elemente</numerusform>
+            <numerusform>[A] a adăugat %n de elemente</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1272,7 +1328,11 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] a actualizat %n articol</numerusform><numerusform>[A] a actualizat %n articole</numerusform><numerusform>[A] a actualizat %n de articole</numerusform></translation>
+        <translation>
+            <numerusform>[A] a actualizat %n articol</numerusform>
+            <numerusform>[A] a actualizat %n articole</numerusform>
+            <numerusform>[A] a actualizat %n de articole</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1319,7 +1379,7 @@
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Nu ai permisiuni de scriere în acest folder local.</translation>
     </message>
 </context>
@@ -1342,13 +1402,21 @@
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 element selectat.</numerusform><numerusform>%1 elemente selectate.</numerusform><numerusform>%1 de elemente selectate.</numerusform></translation>
+        <translation>
+            <numerusform>%1 element selectat.</numerusform>
+            <numerusform>%1 elemente selectate.</numerusform>
+            <numerusform>%1 de elemente selectate.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1, %2 a fost eliminat. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform><numerusform>%1, %2 au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform><numerusform>%1, %2 au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform></translation>
+        <translation>
+            <numerusform>%1, %2 a fost eliminat. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform>
+            <numerusform>%1, %2 au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform>
+            <numerusform>%1, %2 au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Download</source>
@@ -1358,12 +1426,20 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>Elementul pe care l-ai selectat a fost eliminat. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform><numerusform>Elementele pe care le-ai selectat au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform><numerusform>Elementele pe care le-ai selectat au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform></translation>
+        <translation>
+            <numerusform>Elementul pe care l-ai selectat a fost eliminat. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform>
+            <numerusform>Elementele pe care le-ai selectat au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform>
+            <numerusform>Elementele pe care le-ai selectat au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>Nu mai ai acces la acest element. Cere-i persoanei care ți l-a partajat să ți-l partajeze din nou.</numerusform><numerusform>Nu mai ai acces la aceste elemente. Cere-i persoanei care ți le-a partajat să ți le partajeze din nou.</numerusform><numerusform>Nu mai ai acces la aceste elemente. Cere-i persoanei care ți le-a partajat să ți le partajeze din nou.</numerusform></translation>
+        <translation>
+            <numerusform>Nu mai ai acces la acest element. Cere-i persoanei care ți l-a partajat să ți-l partajeze din nou.</numerusform>
+            <numerusform>Nu mai ai acces la aceste elemente. Cere-i persoanei care ți le-a partajat să ți le partajeze din nou.</numerusform>
+            <numerusform>Nu mai ai acces la aceste elemente. Cere-i persoanei care ți le-a partajat să ți le partajeze din nou.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1399,7 +1475,11 @@
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Aplică la celălalt duplicat</numerusform><numerusform>Aplică la toate cele %1 duplicate</numerusform><numerusform>Aplică la toate cele %1 de duplicate</numerusform></translation>
+        <translation>
+            <numerusform>Aplică la celălalt duplicat</numerusform>
+            <numerusform>Aplică la toate cele %1 duplicate</numerusform>
+            <numerusform>Aplică la toate cele %1 de duplicate</numerusform>
+        </translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1578,7 +1658,7 @@
         <translation>Excludeți fișierele în funcție de dimensiune</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>Excludeți fișierele definind o limită de dimensiune minimă și maximă sau fișiere mai mari sau mai mici decât o anumită dimensiune.</translation>
     </message>
@@ -1910,17 +1990,17 @@
     <name>FileIssueHeader</name>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>Un fișier are o problemă care necesită decizia dvs. pentru a o rezolva</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>Un folder are o problemă care necesită decizia dvs. pentru a o rezolva</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>Nu se poate sincroniza [B]%1[/B]</translation>
     </message>
 </context>
@@ -1952,12 +2032,20 @@
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n fișier</numerusform><numerusform>%n fișiere</numerusform><numerusform>%n de fișiere</numerusform></translation>
+        <translation>
+            <numerusform>%n fișier</numerusform>
+            <numerusform>%n fișiere</numerusform>
+            <numerusform>%n de fișiere</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n foldere</numerusform><numerusform>%n de foldere</numerusform></translation>
+        <translation>
+            <numerusform>%n folder</numerusform>
+            <numerusform>%n foldere</numerusform>
+            <numerusform>%n de foldere</numerusform>
+        </translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
@@ -2007,12 +2095,12 @@
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>Fișierul pe care încercați să îl sincronizați nu are extensie și are același nume ca un folder existent</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Nu se poate sincroniza [B]%1[/B]</translation>
     </message>
 </context>
@@ -2219,7 +2307,7 @@ Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului �
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -2271,22 +2359,22 @@ Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului �
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>Nicio notificare</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
         <translation>Nicio notificare pentru contacte</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
         <translation>Nicio notificare pentru partajări primite</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>Nicio notificare pentru plăți</translation>
     </message>
     <message>
@@ -2402,7 +2490,11 @@ Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului �
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>Te-am contactat prin e-mail la adresa [A] în data de [B], însă ai în continuare %n fișier, ocupând [D] în contul MEGA, ceea ce necesită să ai [E].</numerusform><numerusform>Te-am contactat prin e-mail la adresa [A] în data de [B], însă ai în continuare %n fișiere, ocupând [D] în contul MEGA, ceea ce necesită să ai [E].</numerusform><numerusform>Te-am contactat prin e-mail la adresa [A] în data de [B], însă ai în continuare %n de fișiere, ocupând [D] în contul MEGA, ceea ce necesită să ai [E].</numerusform></translation>
+        <translation>
+            <numerusform>Te-am contactat prin e-mail la adresa [A] în data de [B], însă ai în continuare %n fișier, ocupând [D] în contul MEGA, ceea ce necesită să ai [E].</numerusform>
+            <numerusform>Te-am contactat prin e-mail la adresa [A] în data de [B], însă ai în continuare %n fișiere, ocupând [D] în contul MEGA, ceea ce necesită să ai [E].</numerusform>
+            <numerusform>Te-am contactat prin e-mail la adresa [A] în data de [B], însă ai în continuare %n de fișiere, ocupând [D] în contul MEGA, ceea ce necesită să ai [E].</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
@@ -2412,12 +2504,20 @@ Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului �
     <message numerus="yes">
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>Mai aveți %n zi rămasă pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform><numerusform>Mai aveți %n zile rămase pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform><numerusform>Mai aveți %n de zile rămase pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform></translation>
+        <translation>
+            <numerusform>Mai aveți %n zi rămasă pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform>
+            <numerusform>Mai aveți %n zile rămase pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform>
+            <numerusform>Mai aveți %n de zile rămase pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>Mai aveți %n oră rămasă pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform><numerusform>Mai aveți %n ore rămase pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform><numerusform>Mai aveți %n de ore rămase pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform></translation>
+        <translation>
+            <numerusform>Mai aveți %n oră rămasă pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform>
+            <numerusform>Mai aveți %n ore rămase pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform>
+            <numerusform>Mai aveți %n de ore rămase pentru a face upgrade. În caz contrar, datele dvs. vor fi șterse.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2548,7 +2648,7 @@ Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului �
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
-        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translatorcomment>This is the text of an error message displayed when there&apos;s a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn&apos;t be installed. SNC-2270</translatorcomment>
         <translation>Eșec la instalarea componentelor necesare.</translation>
     </message>
     <message>
@@ -2601,7 +2701,7 @@ Reporniți computerul pentru a finliza instalarea.</translation>
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
-        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
         <translation>Pentru a instala manual, executați următoarele comenzi:
 
 sudo dnf install gnome-shell-extensions
@@ -2793,7 +2893,11 @@ Așteptați finalizarea încărcării.</translation>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Un sufix precum (1) va fi adăugat la fișierul deja stocate în MEGA.</numerusform><numerusform>Un sufix precum (1) va fi adăugat fișierelor deja stocate în MEGA.</numerusform><numerusform>Un sufix precum (1) va fi adăugat fișierelor deja stocate în MEGA.</numerusform></translation>
+        <translation>
+            <numerusform>Un sufix precum (1) va fi adăugat la fișierul deja stocate în MEGA.</numerusform>
+            <numerusform>Un sufix precum (1) va fi adăugat fișierelor deja stocate în MEGA.</numerusform>
+            <numerusform>Un sufix precum (1) va fi adăugat fișierelor deja stocate în MEGA.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -2803,7 +2907,11 @@ Așteptați finalizarea încărcării.</translation>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Un sufix precum (1) va fi adăugat la folderul deja stocate în MEGA.</numerusform><numerusform>Un sufix precum (1) va fi adăugat folderelor deja stocate în MEGA.</numerusform><numerusform>Un sufix precum (1) va fi adăugat folderelor deja stocate în MEGA.</numerusform></translation>
+        <translation>
+            <numerusform>Un sufix precum (1) va fi adăugat la folderul deja stocate în MEGA.</numerusform>
+            <numerusform>Un sufix precum (1) va fi adăugat folderelor deja stocate în MEGA.</numerusform>
+            <numerusform>Un sufix precum (1) va fi adăugat folderelor deja stocate în MEGA.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2888,7 +2996,11 @@ Așteptați finalizarea încărcării.</translation>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Reluați transferurile pentru a remedia problema.</numerusform><numerusform>Reluați transferurile pentru a remedia problemele.</numerusform><numerusform>Reluați transferurile pentru a remedia problemele.</numerusform></translation>
+        <translation>
+            <numerusform>Reluați transferurile pentru a remedia problema.</numerusform>
+            <numerusform>Reluați transferurile pentru a remedia problemele.</numerusform>
+            <numerusform>Reluați transferurile pentru a remedia problemele.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3262,7 +3374,7 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Contul Pro Flexi a fost dezactivat</translation>
+        <translation>Contul Pro&#xa0;Flexi a fost dezactivat</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3296,7 +3408,7 @@ Așteptați finalizarea încărcării.</translation>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
         <translation>Problemă a fost detectată</translation>
     </message>
     <message>
@@ -3353,10 +3465,14 @@ Așteptați finalizarea încărcării.</translation>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Există un transfer activ. Ieși din aplicație?
-Transferul se va relua automat când redeschizi aplicația.</numerusform><numerusform>Există transferuri active. Ieși din aplicație?
-Transferurile se vor relua automat când redeschizi aplicația.</numerusform><numerusform>Există transferuri active. Ieși din aplicație?
-Transferurile se vor relua automat când redeschizi aplicația.</numerusform></translation>
+        <translation>
+            <numerusform>Există un transfer activ. Ieși din aplicație?
+Transferul se va relua automat când redeschizi aplicația.</numerusform>
+            <numerusform>Există transferuri active. Ieși din aplicație?
+Transferurile se vor relua automat când redeschizi aplicația.</numerusform>
+            <numerusform>Există transferuri active. Ieși din aplicație?
+Transferurile se vor relua automat când redeschizi aplicația.</numerusform>
+        </translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -3391,7 +3507,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>La zi</translation>
     </message>
     <message>
@@ -3417,7 +3533,11 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>În prezent partajezi următorul folder: %1</numerusform><numerusform>În prezent partajezi următoarele foldere: %1</numerusform><numerusform>În prezent partajezi următoarele foldere: %1</numerusform></translation>
+        <translation>
+            <numerusform>În prezent partajezi următorul folder: %1</numerusform>
+            <numerusform>În prezent partajezi următoarele foldere: %1</numerusform>
+            <numerusform>În prezent partajezi următoarele foldere: %1</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3726,7 +3846,7 @@ Verificați căsuța de e-mail pentru mai multe informații despre cum să depun
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>Contul dvs. a fost desființat din cauza unei încălcări a Termenii de utilizare a serviciului MEGA.
 Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autorizat să înscrieți pentru un nou cont MEGA.</translation>
     </message>
@@ -3899,7 +4019,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     </message>
     <message>
         <source>Mismatch on sync root FSID.</source>
-        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
         <translation>Problemă la sincronizarea sau backup a acestui folder din cauza modificărilor aduse folderului local. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în Setări sau contactați Asistența.</translation>
     </message>
     <message>
@@ -3995,7 +4115,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>Imposibil de creat backup deoarece dispozitivul de pe care faceți backup nu are un nume. Dați un nume dispozitivului și apoi încercați din nou. Dacă problema persistă, contactați Asistența.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4093,12 +4213,20 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>Anulează și șterge transferul</numerusform><numerusform>Anulează și șterge transferurile</numerusform><numerusform>Anulează și șterge transferurile</numerusform></translation>
+        <translation>
+            <numerusform>Anulează și șterge transferul</numerusform>
+            <numerusform>Anulează și șterge transferurile</numerusform>
+            <numerusform>Anulează și șterge transferurile</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>Anulează transferul</numerusform><numerusform>Anulează transferurile</numerusform><numerusform>Anulează transferurile</numerusform></translation>
+        <translation>
+            <numerusform>Anulează transferul</numerusform>
+            <numerusform>Anulează transferurile</numerusform>
+            <numerusform>Anulează transferurile</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -4118,7 +4246,11 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>Șterge transferul</numerusform><numerusform>Șterge transferurile</numerusform><numerusform>Șterge transferurile</numerusform></translation>
+        <translation>
+            <numerusform>Șterge transferul</numerusform>
+            <numerusform>Șterge transferurile</numerusform>
+            <numerusform>Șterge transferurile</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -4183,12 +4315,20 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>Pune pe pauză transferul</numerusform><numerusform>Pune pe pauză transferurile</numerusform><numerusform>Pune pe pauză transferurile</numerusform></translation>
+        <translation>
+            <numerusform>Pune pe pauză transferul</numerusform>
+            <numerusform>Pune pe pauză transferurile</numerusform>
+            <numerusform>Pune pe pauză transferurile</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>Reia transferul</numerusform><numerusform>Reia transferurile</numerusform><numerusform>Reia transferurile</numerusform></translation>
+        <translation>
+            <numerusform>Reia transferul</numerusform>
+            <numerusform>Reia transferurile</numerusform>
+            <numerusform>Reia transferurile</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -4196,7 +4336,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
         <translation>Arată în folder</translation>
     </message>
     <message>
-        <source>Your incomplete sync transfers won't be cancelled
+        <source>Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>Transferurile de sincronizare nu pot fi anulate, dar toate celelalte transferuri vor fi anulate și eliminate</translation>
@@ -4207,7 +4347,7 @@ All the other transfers will be cancelled and cleared.</source>
         <translation>Transferurile de sincronizare nu pot fi anulate</translation>
     </message>
     <message>
-        <source>Your selected incomplete sync transfers won't be cancelled
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Transferurile de sincronizare nu pot fi anulate, dar toate celelalte transferuri selectate vor fi anulate și eliminate</translation>
@@ -4350,12 +4490,12 @@ Actualizați fereastra.</translation>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
         <translation>Modificat extern</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
         <translation>Nu este necesară nicio acțiune</translation>
     </message>
     <message>
@@ -4936,7 +5076,11 @@ Introdu un alt nume.</translation>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Dacă părăsești folderul, nu vei putea să îl vezi din nou.</numerusform><numerusform>Dacă părăsești aceste foldere, nu vei putea să le vezi din nou.</numerusform><numerusform>Dacă părăsești aceste foldere, nu vei putea să le vezi din nou.</numerusform></translation>
+        <translation>
+            <numerusform>Dacă părăsești folderul, nu vei putea să îl vezi din nou.</numerusform>
+            <numerusform>Dacă părăsești aceste foldere, nu vei putea să le vezi din nou.</numerusform>
+            <numerusform>Dacă părăsești aceste foldere, nu vei putea să le vezi din nou.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Leave</source>
@@ -4946,7 +5090,11 @@ Introdu un alt nume.</translation>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Părăsiți acest dosar partajat?</numerusform><numerusform>Părăsiți aceste dosare partajate?</numerusform><numerusform>Părăsiți aceste dosare partajate?</numerusform></translation>
+        <translation>
+            <numerusform>Părăsiți acest dosar partajat?</numerusform>
+            <numerusform>Părăsiți aceste dosare partajate?</numerusform>
+            <numerusform>Părăsiți aceste dosare partajate?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Move</source>
@@ -4961,7 +5109,11 @@ Introdu un alt nume.</translation>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
-        <translation><numerusform>Mișcare %n articol în Coș de gunoi?</numerusform><numerusform>Mutare %n elemente la Coș de gunoi?</numerusform><numerusform>Mutare %n elemente la Coș de gunoi?</numerusform></translation>
+        <translation>
+            <numerusform>Mișcare %n articol în Coș de gunoi?</numerusform>
+            <numerusform>Mutare %n elemente la Coș de gunoi?</numerusform>
+            <numerusform>Mutare %n elemente la Coș de gunoi?</numerusform>
+        </translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4976,17 +5128,29 @@ Introdu un alt nume.</translation>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation><numerusform>Sunteți pe cale să ștergeți definitiv %n fișier. Doriți să continuați?</numerusform><numerusform>Sunteți pe cale să ștergeți definitiv %n fișierele. Doriți să continuați?</numerusform><numerusform>Sunteți pe cale să ștergeți definitiv %n fișierele. Doriți să continuați?</numerusform></translation>
+        <translation>
+            <numerusform>Sunteți pe cale să ștergeți definitiv %n fișier. Doriți să continuați?</numerusform>
+            <numerusform>Sunteți pe cale să ștergeți definitiv %n fișierele. Doriți să continuați?</numerusform>
+            <numerusform>Sunteți pe cale să ștergeți definitiv %n fișierele. Doriți să continuați?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation><numerusform>Sunteți pe cale să elimini definitiv %n folder. Dorești să continui?</numerusform><numerusform>Sunteți pe cale să elimini definitiv %n foldere. Dorești să continui?</numerusform><numerusform>Sunteți pe cale să elimini definitiv %n foldere. Dorești să continui?</numerusform></translation>
+        <translation>
+            <numerusform>Sunteți pe cale să elimini definitiv %n folder. Dorești să continui?</numerusform>
+            <numerusform>Sunteți pe cale să elimini definitiv %n foldere. Dorești să continui?</numerusform>
+            <numerusform>Sunteți pe cale să elimini definitiv %n foldere. Dorești să continui?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation><numerusform>Sunteți pe cale să ștergeți definitiv #%n elementul. Doriți să continuați?</numerusform><numerusform>Sunteți pe cale să ștergi definitiv %n elemente. Doriți să continuați?</numerusform><numerusform>Sunteți pe cale să ștergi definitiv %n elemente. Doriți să continuați?</numerusform></translation>
+        <translation>
+            <numerusform>Sunteți pe cale să ștergeți definitiv #%n elementul. Doriți să continuați?</numerusform>
+            <numerusform>Sunteți pe cale să ștergi definitiv %n elemente. Doriți să continuați?</numerusform>
+            <numerusform>Sunteți pe cale să ștergi definitiv %n elemente. Doriți să continuați?</numerusform>
+        </translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
@@ -5041,7 +5205,11 @@ Introdu un alt nume.</translation>
     <message numerus="yes">
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
-        <translation><numerusform>%n rezultat găsit</numerusform><numerusform>%n rezultate găsite</numerusform><numerusform>%n de rezultate găsite</numerusform></translation>
+        <translation>
+            <numerusform>%n rezultat găsit</numerusform>
+            <numerusform>%n rezultate găsite</numerusform>
+            <numerusform>%n de rezultate găsite</numerusform>
+        </translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5064,27 +5232,43 @@ Introdu un alt nume.</translation>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>Oferta expiră în %1 m %2 s</translation>
+        <translation>Oferta expiră în %1&#xa0;m %2&#xa0;s</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Oferta expiră în %n zi</numerusform><numerusform>Oferta expiră în %n zile</numerusform><numerusform>Oferta expiră în %n zile</numerusform></translation>
+        <translation>
+            <numerusform>Oferta expiră în %n zi</numerusform>
+            <numerusform>Oferta expiră în %n zile</numerusform>
+            <numerusform>Oferta expiră în %n zile</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Oferta expiră în %n oră</numerusform><numerusform>Oferta expiră în %n ore</numerusform><numerusform>Oferta expiră în %n ore</numerusform></translation>
+        <translation>
+            <numerusform>Oferta expiră în %n oră</numerusform>
+            <numerusform>Oferta expiră în %n ore</numerusform>
+            <numerusform>Oferta expiră în %n ore</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Oferta expiră în %n minută</numerusform><numerusform>Oferta expiră în %n minute</numerusform><numerusform>Oferta expiră în %n minute</numerusform></translation>
+        <translation>
+            <numerusform>Oferta expiră în %n minută</numerusform>
+            <numerusform>Oferta expiră în %n minute</numerusform>
+            <numerusform>Oferta expiră în %n minute</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Oferta expiră în 1%n al doilea</numerusform><numerusform>Oferta expiră în 1%n secunde</numerusform><numerusform>Oferta expiră în 1%n de secunde</numerusform></translation>
+        <translation>
+            <numerusform>Oferta expiră în 1%n&#xa0;al doilea</numerusform>
+            <numerusform>Oferta expiră în 1%n&#xa0;secunde</numerusform>
+            <numerusform>Oferta expiră în 1%n de secunde</numerusform>
+        </translation>
     </message>
     <message>
         <source>PROMO</source>
@@ -5609,7 +5793,7 @@ Introdu un alt nume.</translation>
     </message>
     <message>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
+        <translatorcomment>Text indicating that the user can view the backups in settings&apos; backups tab CON-738</translatorcomment>
         <translation>Puteți vizualiza backupurile și statusurile acestora în fila Backup din Setări.</translation>
     </message>
     <message>
@@ -5666,7 +5850,11 @@ Introdu un alt nume.</translation>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] a eliminat %n element</numerusform><numerusform>[A] a eliminat %n elemente</numerusform><numerusform>[A] a eliminat %n de elemente</numerusform></translation>
+        <translation>
+            <numerusform>[A] a eliminat %n element</numerusform>
+            <numerusform>[A] a eliminat %n elemente</numerusform>
+            <numerusform>[A] a eliminat %n de elemente</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5904,17 +6092,17 @@ Introdu un alt nume.</translation>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
         <translation>Elementul a fost mutat în Coșul de gunoi</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
         <translation>Elementul a fost mutat în Coșul de gunoi</translation>
     </message>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
         <translation>Elementul a fost mutat în Coșul de gunoi</translation>
     </message>
     <message>
@@ -5941,7 +6129,16 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We've fixed bugs and made the app more reliable.
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</translation>
+    </message>
+    <message>
+        <source>- We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6117,7 +6314,7 @@ Vrei să îl înlocuiești?</translation>
         <translation>&amp;Salvează</translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>„%1” este protejat la scriere.
@@ -6349,27 +6546,27 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 byți</translation>
+        <translation>%1&#xa0;byți</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -6488,8 +6685,13 @@ Vrei să îl ștergi oricum?</translation>
     <name>RemoveBackup</name>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>Destination folder doesn’t exist. Choose another.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -6520,6 +6722,11 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Ștergeți folderul din MEGA</translation>
     </message>
     <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>Folderul va fi șters din MEGA, dar nu va fi șters de pe dispozitiv. Această acțiune nu poate fi anulată.</translation>
+    </message>
+    <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
         <translation>Mutați folderul pe Unitatea cloud</translation>
@@ -6543,11 +6750,6 @@ Vrei să îl ștergi oricum?</translation>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
         <translation>Oprește backupul</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
-        <translation>Folderul va fi șters din MEGA, dar nu va fi șters de pe dispozitiv. Această acțiune nu poate fi anulată.</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
@@ -6637,12 +6839,20 @@ Vrei să îl ștergi oricum?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n fișier</numerusform><numerusform>%n fișiere</numerusform><numerusform>%n de fișiere</numerusform></translation>
+        <translation>
+            <numerusform>%n fișier</numerusform>
+            <numerusform>%n fișiere</numerusform>
+            <numerusform>%n de fișiere</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n foldere</numerusform><numerusform>%n de foldere</numerusform></translation>
+        <translation>
+            <numerusform>%n folder</numerusform>
+            <numerusform>%n foldere</numerusform>
+            <numerusform>%n de foldere</numerusform>
+        </translation>
     </message>
     <message>
         <source>Adding transfers…</source>
@@ -6891,6 +7101,11 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Lansează la autentificare</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Aflați mai multe</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Un folder local cu un backup al fișierelor șterse în MEGA</translation>
@@ -7036,6 +7251,11 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Sincronizările vor fi dezactivate.</translation>
     </message>
     <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Temă</translation>
+    </message>
+    <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>Cotă de transfer</translation>
@@ -7068,7 +7288,11 @@ Vrei să îl ștergi oricum?</translation>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Cota folosită pentru ultima oră:</numerusform><numerusform>Cota folosită pentru ultimele %n ore:</numerusform><numerusform>Cota folosită pentru ultimele %n de ore:</numerusform></translation>
+        <translation>
+            <numerusform>Cota folosită pentru ultima oră:</numerusform>
+            <numerusform>Cota folosită pentru ultimele %n ore:</numerusform>
+            <numerusform>Cota folosită pentru ultimele %n de ore:</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -7098,17 +7322,11 @@ Vrei să îl ștergi oricum?</translation>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>zi</numerusform><numerusform>zile</numerusform><numerusform>de zile</numerusform></translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation>Temă</translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
-        <translation>Aflați mai multe</translation>
+        <translation>
+            <numerusform>zi</numerusform>
+            <numerusform>zile</numerusform>
+            <numerusform>de zile</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7142,12 +7360,20 @@ Vrei să îl ștergi oricum?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n fișier</numerusform><numerusform>%n fișiere</numerusform><numerusform>%n de fișiere</numerusform></translation>
+        <translation>
+            <numerusform>%n fișier</numerusform>
+            <numerusform>%n fișiere</numerusform>
+            <numerusform>%n de fișiere</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n foldere</numerusform><numerusform>%n de foldere</numerusform></translation>
+        <translation>
+            <numerusform>%n folder</numerusform>
+            <numerusform>%n foldere</numerusform>
+            <numerusform>%n de foldere</numerusform>
+        </translation>
     </message>
     <message>
         <source>Add backup</source>
@@ -7158,6 +7384,11 @@ Vrei să îl ștergi oricum?</translation>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
         <translation>Adăugați sincronizare</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Backup</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7178,6 +7409,11 @@ Vrei să îl ștergi oricum?</translation>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>Partajează cu un utilizator MEGA</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Sync</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -7386,7 +7622,7 @@ Vrei să îl ștergi oricum?</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
         <translation>Verificarea MAC a eșuat</translation>
     </message>
     <message>
@@ -7396,7 +7632,7 @@ Vrei să îl ștergi oricum?</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
         <translation>Numele este prea lung pentru sistemul de fișiere</translation>
     </message>
     <message>
@@ -7498,27 +7734,47 @@ Vrei să îl ștergi oricum?</translation>
     <message numerus="yes">
         <source>Failed: %n</source>
         <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
-        <translation><numerusform>Eșuat: %n</numerusform><numerusform>Eșuat: %n</numerusform><numerusform>Eșuat: %n</numerusform></translation>
+        <translation>
+            <numerusform>Eșuat: %n</numerusform>
+            <numerusform>Eșuat: %n</numerusform>
+            <numerusform>Eșuat: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>Conflict tip de element: %n</numerusform><numerusform>Conflicte tip de element: %n</numerusform><numerusform>Conflicte tip de element: %n</numerusform></translation>
+        <translation>
+            <numerusform>Conflict tip de element: %n</numerusform>
+            <numerusform>Conflicte tip de element: %n</numerusform>
+            <numerusform>Conflicte tip de element: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation><numerusform>Conflict de nume: %n</numerusform><numerusform>Conflicte de nume: %n</numerusform><numerusform>Conflicte de nume: %n</numerusform></translation>
+        <translation>
+            <numerusform>Conflict de nume: %n</numerusform>
+            <numerusform>Conflicte de nume: %n</numerusform>
+            <numerusform>Conflicte de nume: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>Altă: %n</numerusform><numerusform>Alte: %n</numerusform><numerusform>Alte: %n</numerusform></translation>
+        <translation>
+            <numerusform>Altă: %n</numerusform>
+            <numerusform>Alte: %n</numerusform>
+            <numerusform>Alte: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation><numerusform>Rezolvată: %n</numerusform><numerusform>Rezolvate: %n</numerusform><numerusform>Rezolvate: %n</numerusform></translation>
+        <translation>
+            <numerusform>Rezolvată: %n</numerusform>
+            <numerusform>Rezolvate: %n</numerusform>
+            <numerusform>Rezolvate: %n</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7560,28 +7816,48 @@ Vrei să îl ștergi oricum?</translation>
         <source>%1 and %n issues failed.</source>
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
-        <translation><numerusform>%1 și %n problemă nerezolvată</numerusform><numerusform>%1 și %n probleme nerezolvate</numerusform><numerusform>%1 și %n de probleme nerezolvate</numerusform></translation>
+        <translation>
+            <numerusform>%1 și %n&#xa0;problemă nerezolvată</numerusform>
+            <numerusform>%1 și %n&#xa0;probleme nerezolvate</numerusform>
+            <numerusform>%1 și %n de probleme nerezolvate</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>%n problemă nerezolvată</numerusform><numerusform>%n probleme nerezolvate</numerusform><numerusform>%n de probleme nerezolvate</numerusform></translation>
+        <translation>
+            <numerusform>%n&#xa0;problemă nerezolvată</numerusform>
+            <numerusform>%n&#xa0;probleme nerezolvate</numerusform>
+            <numerusform>%n de probleme nerezolvate</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
         when several issues have failed. SNC-2565</translatorcomment>
-        <translation><numerusform>%n problemă a fost rezolvată</numerusform><numerusform>%n probleme au fost rezolvate</numerusform><numerusform>%n de probleme au fost rezolvate</numerusform></translation>
+        <translation>
+            <numerusform>%n&#xa0;problemă a fost rezolvată</numerusform>
+            <numerusform>%n&#xa0;probleme au fost rezolvate</numerusform>
+            <numerusform>%n de probleme au fost rezolvate</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
-        <translation><numerusform>%n problemă rezolvată și 1 problemă nerezolvată</numerusform><numerusform>%n probleme rezolvate și 1 problemă nerezolvată</numerusform><numerusform>%n de probleme rezolvate și 1 problemă nerezolvată</numerusform></translation>
+        <translation>
+            <numerusform>%n&#xa0;problemă rezolvată și 1&#xa0;problemă nerezolvată</numerusform>
+            <numerusform>%n&#xa0;probleme rezolvate și 1 problemă nerezolvată</numerusform>
+            <numerusform>%n de probleme rezolvate și 1 problemă nerezolvată</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>1 problemă rezolvată și %n problemă nerezolvată</numerusform><numerusform>1 problemă rezolvată și %n probleme nerezolvate</numerusform><numerusform>1 problemă rezolvată și %n de probleme nerezolvate</numerusform></translation>
+        <translation>
+            <numerusform>1&#xa0;problemă rezolvată și %n&#xa0;problemă nerezolvată</numerusform>
+            <numerusform>1&#xa0;problemă rezolvată și %n&#xa0;probleme nerezolvate</numerusform>
+            <numerusform>1&#xa0;problemă rezolvată și %n de probleme nerezolvate</numerusform>
+        </translation>
     </message>
     <message>
         <source>Fixing issues</source>
@@ -7589,7 +7865,7 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Rezolvarea problemelor…</translation>
     </message>
     <message>
-        <source>Issues can't be fixed.
+        <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Unele probleme nu pot fi rezolvate.
@@ -7606,7 +7882,7 @@ Verificați permisiunile fișierului.megaignore în locațiile folderului local 
         <translation>Actualizați</translation>
     </message>
     <message>
-        <source>Some issues can't be fixed.
+        <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Unele probleme nu pot fi rezolvate.
@@ -8343,7 +8619,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>%1 nu poate fi adăugat deoarece contul dvs. Pro Flexi a fost dezactivat din cauza nerealizării plății sau v-ați anulat abonamentul. Pentru a continua, efectuați o plată și reactivați abonamentul.</translation>
+        <translation>%1 nu poate fi adăugat deoarece contul dvs. Pro&#xa0;Flexi a fost dezactivat din cauza nerealizării plății sau v-ați anulat abonamentul. Pentru a continua, efectuați o plată și reactivați abonamentul.</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
@@ -8495,13 +8771,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>Selectați folderele de sincronizat</translation>
     </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]Learn more[/A]</translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>
     <message numerus="yes">
         <source>Maximum length is %n characters.</source>
         <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation><numerusform>Lungimea maximă este %n caracter</numerusform><numerusform>Lungimea maximă este %n caractere</numerusform><numerusform>Lungimea maximă este %n caractere</numerusform></translation>
+        <translation>
+            <numerusform>Lungimea maximă este %n caracter</numerusform>
+            <numerusform>Lungimea maximă este %n caractere</numerusform>
+            <numerusform>Lungimea maximă este %n caractere</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8600,7 +8885,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1 rezultat găsit</numerusform><numerusform>%1 rezultate găsite</numerusform><numerusform>%1 de rezultate găsite</numerusform></translation>
+        <translation>
+            <numerusform>%1 rezultat găsit</numerusform>
+            <numerusform>%1 rezultate găsite</numerusform>
+            <numerusform>%1 de rezultate găsite</numerusform>
+        </translation>
     </message>
     <message>
         <source>All</source>
@@ -8805,55 +9094,95 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, dar %n articol nu a putut fi descărcat.</numerusform><numerusform>%1, dar %n articole nu au putut fi descărcate.</numerusform><numerusform>%1, dar %n de articole nu au putut fi descărcate.</numerusform></translation>
+        <translation>
+            <numerusform>%1, dar %n articol nu a putut fi descărcat.</numerusform>
+            <numerusform>%1, dar %n articole nu au putut fi descărcate.</numerusform>
+            <numerusform>%1, dar %n de articole nu au putut fi descărcate.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, dar %n articol nu a putut fi încărcat.</numerusform><numerusform>%1, dar %n articole nu au putut fi încărcate.</numerusform><numerusform>%1, dar %n de articole nu au putut fi încărcate.</numerusform></translation>
+        <translation>
+            <numerusform>%1, dar %n articol nu a putut fi încărcat.</numerusform>
+            <numerusform>%1, dar %n articole nu au putut fi încărcate.</numerusform>
+            <numerusform>%1, dar %n de articole nu au putut fi încărcate.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n articol nu a putut fi descărcat în %1.</numerusform><numerusform>%n articole nu au putut fi descărcate în %1.</numerusform><numerusform>%n de articole nu au putut fi descărcate în %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n articol nu a putut fi descărcat în %1.</numerusform>
+            <numerusform>%n articole nu au putut fi descărcate în %1.</numerusform>
+            <numerusform>%n de articole nu au putut fi descărcate în %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n articol nu a putut fi încărcat în %1.</numerusform><numerusform>%n articole nu au putut fi încărcate în %1.</numerusform><numerusform>%n de articole nu au putut fi încărcate în %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n articol nu a putut fi încărcat în %1.</numerusform>
+            <numerusform>%n articole nu au putut fi încărcate în %1.</numerusform>
+            <numerusform>%n de articole nu au putut fi încărcate în %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>1 articol este descărcat</numerusform><numerusform>%n articole sunt descărcate</numerusform><numerusform>%n de articole sunt descărcate</numerusform></translation>
+        <translation>
+            <numerusform>1 articol este descărcat</numerusform>
+            <numerusform>%n articole sunt descărcate</numerusform>
+            <numerusform>%n de articole sunt descărcate</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n articol este descărcat în %1.</numerusform><numerusform>%n articole sunt descărcate în %1.</numerusform><numerusform>%n de articole sunt descărcate în %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n articol este descărcat în %1.</numerusform>
+            <numerusform>%n articole sunt descărcate în %1.</numerusform>
+            <numerusform>%n de articole sunt descărcate în %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n articol nu mai există sau a fost redenumit.</numerusform><numerusform>%n articole nu mai există sau au fost redenumite.</numerusform><numerusform>%n de articole nu mai există sau au fost redenumite.</numerusform></translation>
+        <translation>
+            <numerusform>%n articol nu mai există sau a fost redenumit.</numerusform>
+            <numerusform>%n articole nu mai există sau au fost redenumite.</numerusform>
+            <numerusform>%n de articole nu mai există sau au fost redenumite.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n articol nu mai există.</numerusform><numerusform>%n articole nu mai există.</numerusform><numerusform>%n de articole nu mai există.</numerusform></translation>
+        <translation>
+            <numerusform>%n articol nu mai există.</numerusform>
+            <numerusform>%n articole nu mai există.</numerusform>
+            <numerusform>%n de articole nu mai există.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n articol este încărcat</numerusform><numerusform>%n articole sunt încărcate</numerusform><numerusform>%n de articole sunt încărcate</numerusform></translation>
+        <translation>
+            <numerusform>%n articol este încărcat</numerusform>
+            <numerusform>%n articole sunt încărcate</numerusform>
+            <numerusform>%n de articole sunt încărcate</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n articol este încărcat în %1.</numerusform><numerusform>%n articole sunt încărcate în %1.</numerusform><numerusform>%n de articole sunt încărcate în %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n articol este încărcat în %1.</numerusform>
+            <numerusform>%n articole sunt încărcate în %1.</numerusform>
+            <numerusform>%n de articole sunt încărcate în %1.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not download</source>
@@ -8893,7 +9222,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>Reîncercați elementul eșuat</numerusform><numerusform>Reîncercați elementele eșuate</numerusform><numerusform>Reîncercați elementele eșuate</numerusform></translation>
+        <translation>
+            <numerusform>Reîncercați elementul eșuat</numerusform>
+            <numerusform>Reîncercați elementele eșuate</numerusform>
+            <numerusform>Reîncercați elementele eșuate</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -8918,12 +9251,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>Încărcarea oprită</numerusform><numerusform>Încărcările au fost oprite</numerusform><numerusform>Încărcările au fost oprite</numerusform></translation>
+        <translation>
+            <numerusform>Încărcarea oprită</numerusform>
+            <numerusform>Încărcările au fost oprite</numerusform>
+            <numerusform>Încărcările au fost oprite</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>V-ați deconectat de la MEGA, astfel încât încărcarea dvs. s-a oprit. Puteți relua încărcarea după ce vă conectați din nou.</numerusform><numerusform>Te-ai deconectat de la MEGA, astfel încât încărcările tale s-au oprit. Puteți relua încărcările după ce vă conectați din nou.</numerusform><numerusform>Te-ai deconectat de la MEGA, astfel încât încărcările tale s-au oprit. Puteți relua încărcările după ce vă conectați din nou.</numerusform></translation>
+        <translation>
+            <numerusform>V-ați deconectat de la MEGA, astfel încât încărcarea dvs. s-a oprit. Puteți relua încărcarea după ce vă conectați din nou.</numerusform>
+            <numerusform>Te-ai deconectat de la MEGA, astfel încât încărcările tale s-au oprit. Puteți relua încărcările după ce vă conectați din nou.</numerusform>
+            <numerusform>Te-ai deconectat de la MEGA, astfel încât încărcările tale s-au oprit. Puteți relua încărcările după ce vă conectați din nou.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -9340,12 +9681,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>Nu se poate ajunge la folderul de destinație</translation>
     </message>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>Nu se poate încărca [B]%1[/B] la locația selectată</translation>
     </message>
 </context>
@@ -9450,7 +9791,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Aveți nevoie de mai mult spațiu de stocare?[BR][B][A]Încercați Pro Flexi[/A][/B]</translation>
+        <translation>Aveți nevoie de mai mult spațiu de stocare?[BR][B][A]Încercați Pro&#xa0;Flexi[/A][/B]</translation>
     </message>
     <message>
         <source>Recommended</source>
@@ -9511,7 +9852,11 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 (%2 %) folosit din %3</numerusform><numerusform>%1 (%2 %) folosiți din %3</numerusform><numerusform>%1 (%2 %) folosiți din %3</numerusform></translation>
+        <translation>
+            <numerusform>%1 (%2&#xa0;%) folosit din %3</numerusform>
+            <numerusform>%1 (%2&#xa0;%) folosiți din %3</numerusform>
+            <numerusform>%1 (%2&#xa0;%) folosiți din %3</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 / %2</source>
@@ -9531,7 +9876,11 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 folosit</numerusform><numerusform>%1 folosiți</numerusform><numerusform>%1 folosiți</numerusform></translation>
+        <translation>
+            <numerusform>%1 folosit</numerusform>
+            <numerusform>%1 folosiți</numerusform>
+            <numerusform>%1 folosiți</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1d</source>
@@ -9556,32 +9905,56 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer finalizat acum %n zi</numerusform><numerusform>Transfer finalizat acum %n zile</numerusform><numerusform>Transfer finalizat acum %n de zile</numerusform></translation>
+        <translation>
+            <numerusform>Transfer finalizat acum %n zi</numerusform>
+            <numerusform>Transfer finalizat acum %n zile</numerusform>
+            <numerusform>Transfer finalizat acum %n de zile</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer finalizat acum %n oră</numerusform><numerusform>Transfer finalizat acum %n ore</numerusform><numerusform>Transfer finalizat acum %n de ore</numerusform></translation>
+        <translation>
+            <numerusform>Transfer finalizat acum %n oră</numerusform>
+            <numerusform>Transfer finalizat acum %n ore</numerusform>
+            <numerusform>Transfer finalizat acum %n de ore</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer finalizat acum %n minut</numerusform><numerusform>Transfer finalizat acum %n minute</numerusform><numerusform>Transfer finalizat acum %n de minute</numerusform></translation>
+        <translation>
+            <numerusform>Transfer finalizat acum %n minut</numerusform>
+            <numerusform>Transfer finalizat acum %n minute</numerusform>
+            <numerusform>Transfer finalizat acum %n de minute</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer finalizat acum %n luna</numerusform><numerusform>Transfer finalizat acum %n luni</numerusform><numerusform>Transfer finalizat acum %n de luni</numerusform></translation>
+        <translation>
+            <numerusform>Transfer finalizat acum %n luna</numerusform>
+            <numerusform>Transfer finalizat acum %n luni</numerusform>
+            <numerusform>Transfer finalizat acum %n de luni</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer finalizat acum %n secundă</numerusform><numerusform>Transfer finalizat acum %n secunde</numerusform><numerusform>Transfer finalizat acum %n de secunde</numerusform></translation>
+        <translation>
+            <numerusform>Transfer finalizat acum %n secundă</numerusform>
+            <numerusform>Transfer finalizat acum %n secunde</numerusform>
+            <numerusform>Transfer finalizat acum %n de secunde</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer finalizat acum %n an</numerusform><numerusform>Transfer finalizat acum %n ani</numerusform><numerusform>Transfer finalizat acum %n de ani</numerusform></translation>
+        <translation>
+            <numerusform>Transfer finalizat acum %n an</numerusform>
+            <numerusform>Transfer finalizat acum %n ani</numerusform>
+            <numerusform>Transfer finalizat acum %n de ani</numerusform>
+        </translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -9631,42 +10004,42 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Starter</source>

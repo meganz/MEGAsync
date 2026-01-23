@@ -250,7 +250,9 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A], %n öğe ekledi</numerusform><numerusform>[A], %n öğe ekledi</numerusform></translation>
+        <translation>
+            <numerusform>[A], %n öğe ekledi</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -285,7 +287,9 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A], %n öğeyi kaldırdı</numerusform><numerusform>[A], %n öğeyi kaldırdı</numerusform></translation>
+        <translation>
+            <numerusform>[A], %n öğeyi kaldırdı</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
@@ -295,7 +299,9 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A], %n öğeyi güncelledi</numerusform><numerusform>[A], %n öğeyi güncelledi</numerusform></translation>
+        <translation>
+            <numerusform>[A], %n öğeyi güncelledi</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -395,12 +401,16 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation><numerusform>%1, ancak %n klasör yedeklenemedi</numerusform><numerusform>%1, ancak %n klasör yedeklenemedi</numerusform></translation>
+        <translation>
+            <numerusform>%1, ancak %n klasör yedeklenemedi</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation><numerusform>%n klasör yedeklendi</numerusform><numerusform>%n klasör yedeklendi</numerusform></translation>
+        <translation>
+            <numerusform>%n klasör yedeklendi</numerusform>
+        </translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
@@ -413,7 +423,9 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>Yedeklemelerinizde aynı ada sahip bir klasör zaten var. Yedeklemeye devam etmek için yeni klasörü yeniden adlandırın. Klasör adı bilgisayarınızda değişmeyecektir.</numerusform><numerusform>Yedeklemelerinizde aynı ada sahip bazı klasörler zaten mevcut. Yedeklemeye devam etmek için yeni klasörleri yeniden adlandırın. Klasör adları bilgisayarınızda değişmeyecektir.</numerusform></translation>
+        <translation>
+            <numerusform>Yedeklemelerinizde aynı ada sahip bir klasör zaten var. Yedeklemeye devam etmek için yeni klasörü yeniden adlandırın. Klasör adı bilgisayarınızda değişmeyecektir.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -428,7 +440,9 @@
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>Klasör yedeklenmedi. Tekrar deneyin.</numerusform><numerusform>Bu klasörler yedeklenmedi. Tekrar deneyin.</numerusform></translation>
+        <translation>
+            <numerusform>Klasör yedeklenmedi. Tekrar deneyin.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -513,7 +527,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>Bu seçeneği yalnızca aktarımlar başlamıyorsa etkinleştirin. Diğer tüm durumlarda, MEGA tüm verileri zaten şifrelediğinden HTTP kullanımı yeterlidir.</translation>
     </message>
     <message>
@@ -645,7 +659,7 @@
     <message>
         <source>All the queued transfers from your current download will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation>Mevcut indirme işleminizdeki kuyruğa alınmış tüm aktarımlar iptal edilecektir.</translation>
+        <translation>Mevcut indirme işleminizdeki sıraya alınmış tüm aktarımlar iptal edilecektir.</translation>
     </message>
     <message>
         <source>Cancel transfers?</source>
@@ -821,8 +835,10 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>Sorun çözülsün mü?</numerusform><numerusform>Sorunlar çözülsün mü?</numerusform></translation>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation>
+            <numerusform>Sorun çözülsün mü?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -841,18 +857,22 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Çöz</translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Bu işlem, dosyayı geçici bir konuma indirecek, sorunu çözecek ve ardından geçici dosyayı silecektir.</numerusform><numerusform>Bu işlem, dosyaları geçici bir konuma indirecek, sorunları çözecek ve ardından geçici dosyaları silecektir.</numerusform></translation>
+        <translation>
+            <numerusform>Bu işlem, dosyayı geçici bir konuma indirecek, sorunu çözecek ve ardından geçici dosyayı silecektir.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Sorunu çözmek için aktarımlarınıza devam edin.</numerusform><numerusform>Sorunları çözmek için aktarımlarınıza devam edin.</numerusform></translation>
+        <translation>
+            <numerusform>Sorunu çözmek için aktarımlarınıza devam edin.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -906,12 +926,16 @@
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Pro üyelik planınızın süresi %n gün önce doldu</numerusform><numerusform>Pro üyelik planınızın süresi %n gün önce doldu</numerusform></translation>
+        <translation>
+            <numerusform>Pro üyelik planınızın süresi %n gün önce doldu</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Pro üyelik planınızın süresi %n gün içinde dolacak</numerusform><numerusform>Pro üyelik planınızın süresi %n gün içinde dolacak</numerusform></translation>
+        <translation>
+            <numerusform>Pro üyelik planınızın süresi %n gün içinde dolacak</numerusform>
+        </translation>
     </message>
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
@@ -1033,12 +1057,12 @@
     <name>DeleteWaitingOnMovesHeader</name>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>Diğer işlemlerin tamamlanması bekleniyor.</translation>
     </message>
     <message>
         <source>Waiting to move [B]%1[/B]</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]%1[/B] öğesinin taşınması bekleniyor</translation>
     </message>
 </context>
@@ -1122,7 +1146,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro Flexi hesabı devre dışı bırakıldı</translation>
+        <translation>Pro&#xa0;Flexi hesabı devre dışı bırakıldı</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1192,7 +1216,9 @@
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>Verilerinizi korumak için %n gününüz kaldı</numerusform><numerusform>Verilerinizi korumak için %n gününüz kaldı</numerusform></translation>
+        <translation>
+            <numerusform>Verilerinizi korumak için %n gününüz kaldı</numerusform>
+        </translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1257,7 +1283,9 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A], %n öğe ekledi</numerusform><numerusform>[A], %n öğe ekledi</numerusform></translation>
+        <translation>
+            <numerusform>[A], %n öğe ekledi</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1272,7 +1300,9 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A], %n öğeyi güncelledi</numerusform><numerusform>[A], %n öğeyi güncelledi</numerusform></translation>
+        <translation>
+            <numerusform>[A], %n öğeyi güncelledi</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1319,7 +1349,7 @@
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Bu yerel klasörde yazma izniniz yok.</translation>
     </message>
 </context>
@@ -1342,13 +1372,17 @@
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 öğe seçildi.</numerusform><numerusform>%1 öğe seçildi.</numerusform></translation>
+        <translation>
+            <numerusform>%1 öğe seçildi.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 kaldırıldı. Yeniden seçmek için bu pencereyi kapatıp tekrar deneyin.</numerusform><numerusform>%1. %2 kaldırıldı. Yeniden seçmek için bu pencereyi kapatıp tekrar deneyin.</numerusform></translation>
+        <translation>
+            <numerusform>%1. %2 kaldırıldı. Yeniden seçmek için bu pencereyi kapatıp tekrar deneyin.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Download</source>
@@ -1358,12 +1392,16 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>Seçtiğiniz öğe kaldırıldı. Yeniden seçmek için bu pencereyi kapatıp tekrar deneyin.</numerusform><numerusform>Seçtiğiniz öğeler kaldırıldı. Yeniden seçmek için bu pencereyi kapatıp tekrar deneyin.</numerusform></translation>
+        <translation>
+            <numerusform>Seçtiğiniz öğe kaldırıldı. Yeniden seçmek için bu pencereyi kapatıp tekrar deneyin.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>Artık bu öğeye erişiminiz yok. Sizinle paylaşan kişiden tekrar paylaşmasını isteyin.</numerusform><numerusform>Artık bu öğelere erişiminiz yok. Onları sizinle paylaşan kişiden tekrar paylaşmasını isteyin.</numerusform></translation>
+        <translation>
+            <numerusform>Artık bu öğeye erişiminiz yok. Sizinle paylaşan kişiden tekrar paylaşmasını isteyin.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1399,7 +1437,9 @@
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Diğer yinelenene uygula</numerusform><numerusform>Tüm %1 yinelenene uygula</numerusform></translation>
+        <translation>
+            <numerusform>Diğer yinelenene uygula</numerusform>
+        </translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1578,7 +1618,7 @@
         <translation>Dosyaları boyuta göre hariç tut</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>Minimum ve maksimum boyut sınırı belirleyerek veya belirli bir boyuttan daha büyük ya da küçük dosyaları hariç tutun.</translation>
     </message>
@@ -1910,17 +1950,17 @@
     <name>FileIssueHeader</name>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>Bir dosyada çözmek için sizin kararınızı gerektiren bir sorun var</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>Bir klasörde çözmek için sizin kararınızı gerektiren bir sorun var</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]%1[/B] senkronize edilemiyor</translation>
     </message>
 </context>
@@ -1952,12 +1992,16 @@
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n dosya</numerusform><numerusform>%n dosya</numerusform></translation>
+        <translation>
+            <numerusform>%n dosya</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n klasör</numerusform><numerusform>%n klasör</numerusform></translation>
+        <translation>
+            <numerusform>%n klasör</numerusform>
+        </translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
@@ -2007,12 +2051,12 @@
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>Senkronize etmeye çalıştığınız dosyanın uzantısı yok ve mevcut bir klasörle aynı ada sahip</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]%1[/B] senkronize edilemiyor</translation>
     </message>
 </context>
@@ -2041,7 +2085,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
-        <translation>Çıkış yap</translation>
+        <translation>Çıkış&#xa0;yap</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -2219,7 +2263,7 @@ Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını önlemeye 
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -2271,22 +2315,22 @@ Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını önlemeye 
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>Bildirim yok</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
         <translation>Kişiler için bildirim yok</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
         <translation>Gelen paylaşımlar için bildirim yok</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>Ödemeler için bildirim yok</translation>
     </message>
     <message>
@@ -2402,7 +2446,9 @@ Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını önlemeye 
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>Sizinle [B] tarihinde [A] adresine e-posta göndererek iletişime geçtik ancak MEGA hesabınızda hâlâ [E] gerektiren ve [D] kadar yer kaplayan %n dosya bulunuyor.</numerusform><numerusform>Sizinle [B] tarihinde [A] adresine e-posta göndererek iletişime geçtik ancak MEGA hesabınızda hâlâ [E] gerektiren ve [D] kadar yer kaplayan %n dosya bulunuyor.</numerusform></translation>
+        <translation>
+            <numerusform>Sizinle [B] tarihinde [A] adresine e-posta göndererek iletişime geçtik ancak MEGA hesabınızda hâlâ [E] gerektiren ve [D] kadar yer kaplayan %n dosya bulunuyor.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
@@ -2412,12 +2458,16 @@ Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını önlemeye 
     <message numerus="yes">
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>Yükseltme yapmak için %n gününüz kaldı, aksi halde verileriniz silinebilir</numerusform><numerusform>Yükseltme yapmak için %n gününüz kaldı, aksi halde verileriniz silinebilir</numerusform></translation>
+        <translation>
+            <numerusform>Yükseltme yapmak için %n gününüz kaldı, aksi halde verileriniz silinebilir</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>Yükseltme yapmak için %n saatiniz kaldı, aksi halde verileriniz silinebilir</numerusform><numerusform>Yükseltme yapmak için %n saatiniz kaldı, aksi halde verileriniz silinebilir</numerusform></translation>
+        <translation>
+            <numerusform>Yükseltme yapmak için %n saatiniz kaldı, aksi halde verileriniz silinebilir</numerusform>
+        </translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2442,7 +2492,7 @@ Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını önlemeye 
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
-        <translation>Kuyruktaki aktarımlarınız IP adresiniz için mevcut olan kotayı aşıyor.</translation>
+        <translation>Sıradaki aktarımlarınız IP adresiniz için mevcut olan kotayı aşıyor.</translation>
     </message>
 </context>
 <context>
@@ -2548,7 +2598,7 @@ Hesabınızın kilidini açma talimatları ve bunun tekrar olmasını önlemeye 
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
-        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translatorcomment>This is the text of an error message displayed when there&apos;s a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn&apos;t be installed. SNC-2270</translatorcomment>
         <translation>Gerekli bileşenler kurulamadı.</translation>
     </message>
     <message>
@@ -2601,7 +2651,7 @@ Yüklemeyi tamamlamak için lütfen bilgisayarınızı yeniden başlatın.</tran
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
-        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
         <translation>Elle yüklemek için aşağıdaki komutları çalıştırın:
 
 sudo dnf install gnome-shell-extensions
@@ -2793,7 +2843,9 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>MEGA’daki dosyaya (1) gibi bir son ek eklenecektir.</numerusform><numerusform>MEGA’da zaten depolanmış olan dosyalara (1) gibi bir son ek eklenecektir.</numerusform></translation>
+        <translation>
+            <numerusform>MEGA’daki dosyaya (1) gibi bir son ek eklenecektir.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -2803,7 +2855,9 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>MEGA’da zaten depolanmış olan klasöre (1) gibi bir son ek eklenecektir.</numerusform><numerusform>MEGA’da zaten depolanmış olan klasörlere (1) gibi bir son ek eklenecektir.</numerusform></translation>
+        <translation>
+            <numerusform>MEGA’da zaten depolanmış olan klasöre (1) gibi bir son ek eklenecektir.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2888,7 +2942,9 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Sorunu çözmek için aktarımlarınıza devam edin.</numerusform><numerusform>Sorunları çözmek için aktarımlarınıza devam edin.</numerusform></translation>
+        <translation>
+            <numerusform>Sorunu çözmek için aktarımlarınıza devam edin.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3262,7 +3318,7 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro Flexi hesabı devre dışı bırakıldı</translation>
+        <translation>Pro&#xa0;Flexi hesabı devre dışı bırakıldı</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3296,7 +3352,7 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
         <translation>Sorun algılandı</translation>
     </message>
     <message>
@@ -3353,9 +3409,10 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Aktif bir aktarım var. Uygulamadan çıkılsın mı?
-Uygulamayı yeniden açtığınızda aktarım otomatik olarak devam edecektir.</numerusform><numerusform>Aktif aktarımlar var. Uygulamadan çıkılsın mı?
-Uygulamayı yeniden açtığınızda aktarımlar otomatik olarak devam edecektir.</numerusform></translation>
+        <translation>
+            <numerusform>Aktif bir aktarım var. Uygulamadan çıkılsın mı?
+Uygulamayı yeniden açtığınızda aktarım otomatik olarak devam edecektir.</numerusform>
+        </translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -3390,7 +3447,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Güncel</translation>
     </message>
     <message>
@@ -3416,7 +3473,9 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>Şu anda bu klasörü paylaşıyorsunuz: %1</numerusform><numerusform>Şu anda bu klasörleri paylaşıyorsunuz: %1</numerusform></translation>
+        <translation>
+            <numerusform>Şu anda bu klasörü paylaşıyorsunuz: %1</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3594,7 +3653,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation>Çıkış yap</translation>
+        <translation>Çıkış&#xa0;yap</translation>
     </message>
     <message>
         <source>No error</source>
@@ -3725,7 +3784,7 @@ Karşı bildirimde bulunma hakkında daha fazla bilgi için e-posta gelen kutunu
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>Hesabınız MEGA’nın Hizmet Şartlarının ihlali nedeniyle sonlandırıldı.
 Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydolma yetkiniz olmayacaktır.</translation>
     </message>
@@ -3898,7 +3957,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     </message>
     <message>
         <source>Mismatch on sync root FSID.</source>
-        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
         <translation>Yerel klasördeki değişiklikler nedeniyle bu klasörü senkronize etme veya yedeklemede sorun yaşanıyor. Senkronizasyonu veya yedeklemeyi durdurun ve Ayarlar’da yeniden kurmayı deneyin ya da Destek ile iletişime geçin.</translation>
     </message>
     <message>
@@ -3994,7 +4053,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>Yedekleme yaptığınız cihazın adı olmadığı için yedekleme oluşturulamıyor. Cihazınıza bir ad verin ve ardından tekrar deneyin. Sorun devam ederse Destek ile iletişime geçin.</translation>
+        <translation>Yedekleme yaptığınız cihazın bir adı olmadığı için yedekleme oluşturulamıyor. Lütfen cihazınıza bir ad verin ve tekrar deneyin. Sorun devam ederse Destek ekibiyle iletişime geçin.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4092,12 +4151,16 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>Aktarımı iptal et ve temizle</numerusform><numerusform>Aktarımları iptal et ve temizle</numerusform></translation>
+        <translation>
+            <numerusform>Aktarımı iptal et ve temizle</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>Aktarımı iptal et</numerusform><numerusform>Aktarımları iptal et</numerusform></translation>
+        <translation>
+            <numerusform>Aktarımı iptal et</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -4117,7 +4180,9 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>Aktarımı temizle</numerusform><numerusform>Aktarımları temizle</numerusform></translation>
+        <translation>
+            <numerusform>Aktarımı temizle</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -4182,12 +4247,16 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>Aktarımı duraklat</numerusform><numerusform>Aktarımları duraklat</numerusform></translation>
+        <translation>
+            <numerusform>Aktarımı duraklat</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>Aktarıma devam et</numerusform><numerusform>Aktarımlara devam et</numerusform></translation>
+        <translation>
+            <numerusform>Aktarıma devam et</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -4195,7 +4264,7 @@ Depolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydol
         <translation>Klasörde göster</translation>
     </message>
     <message>
-        <source>Your incomplete sync transfers won't be cancelled
+        <source>Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>Senkronize aktarımlar iptal edilemez, ancak diğer tüm aktarımlar iptal edilecek ve temizlenecek</translation>
@@ -4206,7 +4275,7 @@ All the other transfers will be cancelled and cleared.</source>
         <translation>Senkronize aktarımlar iptal edilemez</translation>
     </message>
     <message>
-        <source>Your selected incomplete sync transfers won't be cancelled
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Senkronize aktarımlar iptal edilemez, ancak seçilen diğer tüm aktarımlar iptal edilecek ve temizlenecek</translation>
@@ -4349,12 +4418,12 @@ Görünümü yenileyin.</translation>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
         <translation>Harici olarak değiştirildi</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
         <translation>İşlem gerekmiyor</translation>
     </message>
     <message>
@@ -4935,7 +5004,9 @@ Farklı bir ad girin.</translation>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Klasörden ayrılırsanız bir daha göremezsiniz.</numerusform><numerusform>Bu klasörlerden ayrılırsanız bir daha göremezsiniz.</numerusform></translation>
+        <translation>
+            <numerusform>Klasörden ayrılırsanız bir daha göremezsiniz.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Leave</source>
@@ -4945,7 +5016,9 @@ Farklı bir ad girin.</translation>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Bu paylaşılan klasörden ayrılmak istiyor musunuz?</numerusform><numerusform>Bu paylaşılan klasörlerden ayrılmak istiyor musunuz?</numerusform></translation>
+        <translation>
+            <numerusform>Bu paylaşılan klasörden ayrılmak istiyor musunuz?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Move</source>
@@ -4960,7 +5033,9 @@ Farklı bir ad girin.</translation>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
-        <translation><numerusform>%n öğe Çöp kutusuna taşınsın mı?</numerusform><numerusform>%n öğe Çöp kutusuna taşınsın mı?</numerusform></translation>
+        <translation>
+            <numerusform>%n öğe Çöp kutusuna taşınsın mı?</numerusform>
+        </translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4975,17 +5050,23 @@ Farklı bir ad girin.</translation>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation><numerusform>%n dosyayı kalıcı olarak silmek üzeresiniz. Devam etmek istiyor musunuz?</numerusform><numerusform>%n dosyayı kalıcı olarak silmek üzeresiniz. Devam etmek istiyor musunuz?</numerusform></translation>
+        <translation>
+            <numerusform>%n dosyayı kalıcı olarak silmek üzeresiniz. Devam etmek istiyor musunuz?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation><numerusform>%n klasörü kalıcı olarak silmek üzeresiniz. Devam etmek istiyor musunuz?</numerusform><numerusform>%n klasörü kalıcı olarak silmek üzeresiniz. Devam etmek istiyor musunuz?</numerusform></translation>
+        <translation>
+            <numerusform>%n klasörü kalıcı olarak silmek üzeresiniz. Devam etmek istiyor musunuz?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation><numerusform>%n öğeyi kalıcı olarak silmek üzeresiniz. Devam etmek istiyor musunuz?</numerusform><numerusform>%n öğeyi kalıcı olarak silmek üzeresiniz. Devam etmek istiyor musunuz?</numerusform></translation>
+        <translation>
+            <numerusform>%n öğeyi kalıcı olarak silmek üzeresiniz. Devam etmek istiyor musunuz?</numerusform>
+        </translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
@@ -5040,7 +5121,9 @@ Farklı bir ad girin.</translation>
     <message numerus="yes">
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
-        <translation><numerusform>%n sonuç bulundu</numerusform><numerusform>%n sonuç bulundu</numerusform></translation>
+        <translation>
+            <numerusform>%n sonuç bulundu</numerusform>
+        </translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5063,27 +5146,35 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>Teklifin süresi %1 dk. %2 sn. sonra doluyor</translation>
+        <translation>Teklifin süresi %1&#xa0;dk. %2&#xa0;sn. sonra doluyor</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Teklifin süresi %n gün sonra doluyor</numerusform><numerusform>Teklifin süresi %n gün sonra doluyor</numerusform></translation>
+        <translation>
+            <numerusform>Teklifin süresi %n gün sonra doluyor</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Teklifin süresi %n saat sonra doluyor</numerusform><numerusform>Teklifin süresi %n saat sonra doluyor</numerusform></translation>
+        <translation>
+            <numerusform>Teklifin süresi %n saat sonra doluyor</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Teklifin süresi %n dakika sonra doluyor</numerusform><numerusform>Teklifin süresi %n dakika sonra doluyor</numerusform></translation>
+        <translation>
+            <numerusform>Teklifin süresi %n dakika sonra doluyor</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Teklifin süresi %n saniye sonra doluyor</numerusform><numerusform>Teklifin süresi %n saniye sonra doluyor</numerusform></translation>
+        <translation>
+            <numerusform>Teklifin süresi %n saniye sonra doluyor</numerusform>
+        </translation>
     </message>
     <message>
         <source>PROMO</source>
@@ -5414,7 +5505,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>Giriş yap</translation>
+        <translation>Giriş&#xa0;yap</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
@@ -5608,7 +5699,7 @@ Farklı bir ad girin.</translation>
     </message>
     <message>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
+        <translatorcomment>Text indicating that the user can view the backups in settings&apos; backups tab CON-738</translatorcomment>
         <translation>Yedeklemelerinizi ve durumlarını Ayarlar’daki Yedekleme sekmesi altında görüntüleyebilirsiniz.</translation>
     </message>
     <message>
@@ -5665,7 +5756,9 @@ Farklı bir ad girin.</translation>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A], %n öğeyi kaldırdı</numerusform><numerusform>[A], %n öğeyi kaldırdı</numerusform></translation>
+        <translation>
+            <numerusform>[A], %n öğeyi kaldırdı</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5723,17 +5816,17 @@ Farklı bir ad girin.</translation>
     <message>
         <source>You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting to add new uploads that will be queued until there is enough free storage space within the account.</translatorcomment>
-        <translation>Hesabınız için kullanılabilir depolama alanını aştınız. Yüklemeler ekleyebilirsiniz ancak hesabınızda yeterli alan olana kadar aktarımlar kuyrukta kalacaktır.</translation>
+        <translation>Hesabınız için kullanılabilir depolama alanını aştınız. Yüklemeler ekleyebilirsiniz ancak hesabınızda yeterli alan olana kadar aktarımlar sırada kalacaktır.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation>Hesabınız için mevcut aktarım kotasını aştınız. İndirmeler ekleyebilirsiniz ancak hesabınızda daha fazla aktarım kotası olana kadar aktarımlar kuyrukta kalacaktır.</translation>
+        <translation>Hesabınız için mevcut aktarım kotasını aştınız. İndirmeler ekleyebilirsiniz ancak hesabınızda daha fazla aktarım kotası olana kadar aktarımlar sırada kalacaktır.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
-        <translation>Hesabınız için mevcut aktarım kotasını aştınız. Yayınlar ekleyebilirsiniz ancak hesabınızda daha fazla aktarım kotası olana kadar aktarımlar kuyrukta kalacaktır.</translation>
+        <translation>Hesabınız için mevcut aktarım kotasını aştınız. Yayınlar ekleyebilirsiniz ancak hesabınızda daha fazla aktarım kotası olana kadar aktarımlar sırada kalacaktır.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
@@ -5743,7 +5836,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
-        <translation>Hesabınız için mevcut aktarım kotasını aştınız. Bağlantıları içe aktarabilirsiniz ancak hesabınızda daha fazla aktarım kotası olana kadar aktarımlar kuyrukta kalacaktır.</translation>
+        <translation>Hesabınız için mevcut aktarım kotasını aştınız. Bağlantıları içe aktarabilirsiniz ancak hesabınızda daha fazla aktarım kotası olana kadar aktarımlar sırada kalacaktır.</translation>
     </message>
 </context>
 <context>
@@ -5903,17 +5996,17 @@ Farklı bir ad girin.</translation>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
         <translation>Öğe, Geri dönüşüm kutusuna taşındı</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
         <translation>Öğe, Çöp kutusuna taşındı</translation>
     </message>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
         <translation>Öğe, Çöp kutusuna taşındı</translation>
     </message>
     <message>
@@ -5940,10 +6033,19 @@ Farklı bir ad girin.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We've fixed bugs and made the app more reliable.
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</translation>
+    </message>
+    <message>
+        <source>- We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Hataları giderdik ve uygulamayı daha güvenilir hale getirdik</translation>
     </message>
 </context>
 <context>
@@ -6116,7 +6218,7 @@ Değiştirmek istiyor musunuz?</translation>
         <translation>&amp;Kaydet</translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>“%1” yazma korumalı.
@@ -6348,27 +6450,27 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bayt</translation>
+        <translation>%1&#xa0;bayt</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -6487,8 +6589,13 @@ Yine de silmek istiyor musunuz?</translation>
     <name>RemoveBackup</name>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
         <translation>Bu konumda aynı ada sahip bir klasör zaten var, başka bir konum seçin</translation>
+    </message>
+    <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>Destination folder doesn’t exist. Choose another.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -6519,6 +6626,11 @@ Yine de silmek istiyor musunuz?</translation>
         <translation>Klasörü MEGA’dan sil</translation>
     </message>
     <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>Klasör MEGA’dan silinecek ancak cihazınızdan silinmeyecektir. Bu işlem geri alınamaz.</translation>
+    </message>
+    <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
         <translation>Klasörü, Bulut depolamaya taşı</translation>
@@ -6542,11 +6654,6 @@ Yine de silmek istiyor musunuz?</translation>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
         <translation>Yedeklemeyi durdur</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
-        <translation>Klasör MEGA’dan silinecek ancak cihazınızdan silinmeyecektir. Bu işlem geri alınamaz.</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
@@ -6636,12 +6743,16 @@ Yine de silmek istiyor musunuz?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n dosya</numerusform><numerusform>%n dosya</numerusform></translation>
+        <translation>
+            <numerusform>%n dosya</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n klasör</numerusform><numerusform>%n klasör</numerusform></translation>
+        <translation>
+            <numerusform>%n klasör</numerusform>
+        </translation>
     </message>
     <message>
         <source>Adding transfers…</source>
@@ -6661,7 +6772,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation>Uygulamayı kapatmayın. Kapatırsanız henüz kuyruğa alınmamış aktarımlar kaybolur.</translation>
+        <translation>Uygulamayı kapatmayın. Kapatırsanız henüz sıraya alınmamış aktarımlar kaybolur.</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -6890,6 +7001,11 @@ Yine de silmek istiyor musunuz?</translation>
         <translation>Açılışta başlat</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Daha fazlasını öğrenin</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>MEGA’da silinen dosyaların yedeğini içeren bir yerel klasör</translation>
@@ -6897,7 +7013,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>Çıkış yap</translation>
+        <translation>Çıkış&#xa0;yap</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -7035,6 +7151,11 @@ Yine de silmek istiyor musunuz?</translation>
         <translation>Senkronizasyonlar devre dışı bırakılacaktır.</translation>
     </message>
     <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Tema</translation>
+    </message>
+    <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>Aktarım kotası</translation>
@@ -7067,7 +7188,9 @@ Yine de silmek istiyor musunuz?</translation>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Son saat için kullanılan kota:</numerusform><numerusform>Son %n saat için kullanılan kota:</numerusform></translation>
+        <translation>
+            <numerusform>Son saat için kullanılan kota:</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -7097,17 +7220,9 @@ Yine de silmek istiyor musunuz?</translation>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>gün</numerusform><numerusform>gün</numerusform></translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation>Tema</translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
-        <translation>Daha fazlasını öğrenin</translation>
+        <translation>
+            <numerusform>gün</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7141,12 +7256,16 @@ Yine de silmek istiyor musunuz?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n dosya</numerusform><numerusform>%n dosya</numerusform></translation>
+        <translation>
+            <numerusform>%n dosya</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n klasör</numerusform><numerusform>%n klasör</numerusform></translation>
+        <translation>
+            <numerusform>%n klasör</numerusform>
+        </translation>
     </message>
     <message>
         <source>Add backup</source>
@@ -7157,6 +7276,11 @@ Yine de silmek istiyor musunuz?</translation>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
         <translation>Senkronizasyon ekle</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Backup</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7177,6 +7301,11 @@ Yine de silmek istiyor musunuz?</translation>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>Bir MEGA kullanıcısı ile paylaşın</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Sync</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -7385,7 +7514,7 @@ Yine de silmek istiyor musunuz?</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
         <translation>MAC doğrulama hatası</translation>
     </message>
     <message>
@@ -7395,7 +7524,7 @@ Yine de silmek istiyor musunuz?</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
         <translation>Ad, dosya sistemi için çok uzun</translation>
     </message>
     <message>
@@ -7497,27 +7626,37 @@ Yine de silmek istiyor musunuz?</translation>
     <message numerus="yes">
         <source>Failed: %n</source>
         <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
-        <translation><numerusform>Başarısız: %n</numerusform><numerusform>Başarısız: %n</numerusform></translation>
+        <translation>
+            <numerusform>Başarısız: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>Öğe türü çakışmaları: %n</numerusform><numerusform>Öğe türü çakışmaları: %n</numerusform></translation>
+        <translation>
+            <numerusform>Öğe türü çakışmaları: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation><numerusform>Ad çakışmaları: %n</numerusform><numerusform>Ad çakışmaları: %n</numerusform></translation>
+        <translation>
+            <numerusform>Ad çakışmaları: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>Diğerleri: %n</numerusform><numerusform>Diğerleri: %n</numerusform></translation>
+        <translation>
+            <numerusform>Diğerleri: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation><numerusform>Çözüldü: %n</numerusform><numerusform>Çözüldü: %n</numerusform></translation>
+        <translation>
+            <numerusform>Çözüldü: %n</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7559,28 +7698,38 @@ Yine de silmek istiyor musunuz?</translation>
         <source>%1 and %n issues failed.</source>
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
-        <translation><numerusform>%1 ve %n sorun çözülemedi</numerusform><numerusform>%1 ve %n sorun çözülemedi</numerusform></translation>
+        <translation>
+            <numerusform>%1 ve %n sorun çözülemedi</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>%n sorun çözülemedi</numerusform><numerusform>%n sorun çözülemedi</numerusform></translation>
+        <translation>
+            <numerusform>%n sorun çözülemedi</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
         when several issues have failed. SNC-2565</translatorcomment>
-        <translation><numerusform>%n sorun çözüldü</numerusform><numerusform>%n sorun çözüldü</numerusform></translation>
+        <translation>
+            <numerusform>%n sorun çözüldü</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
-        <translation><numerusform>%n sorun düzeltildi ve 1 sorun çözülemedi</numerusform><numerusform>%n sorun düzeltildi ve 1 sorun çözülemedi</numerusform></translation>
+        <translation>
+            <numerusform>%n sorun düzeltildi ve 1 sorun çözülemedi</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>1 sorun düzeltildi ve %n sorun çözülemedi</numerusform><numerusform>1 sorun düzeltildi ve %n sorun çözülemedi</numerusform></translation>
+        <translation>
+            <numerusform>1 sorun düzeltildi ve %n sorun çözülemedi</numerusform>
+        </translation>
     </message>
     <message>
         <source>Fixing issues</source>
@@ -7588,7 +7737,7 @@ Yine de silmek istiyor musunuz?</translation>
         <translation>Sorunlar çözülüyor…</translation>
     </message>
     <message>
-        <source>Issues can't be fixed.
+        <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Bazı sorunlar çözülemiyor.
@@ -7605,7 +7754,7 @@ Yerel senkronizasyon klasörü konumlarınızdaki .megaignore dosyasının izinl
         <translation>Yenile</translation>
     </message>
     <message>
-        <source>Some issues can't be fixed.
+        <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Bazı sorunlar çözülemiyor.
@@ -7649,7 +7798,7 @@ Listeyi yenileyin.</translation>
     <message>
         <source>Transferring…</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers. SNC-5938</translatorcomment>
-        <translation>Transfer ediliyor…</translation>
+        <translation>Aktarılıyor…</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -8494,13 +8643,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>Senkronize edilecek klasörleri seçin</translation>
     </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]Learn more[/A]</translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>
     <message numerus="yes">
         <source>Maximum length is %n characters.</source>
         <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation><numerusform>Maksimum uzunluk %n karakterdir</numerusform><numerusform>Maksimum uzunluk %n karakterdir</numerusform></translation>
+        <translation>
+            <numerusform>Maksimum uzunluk %n karakterdir</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8576,7 +8732,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>Tekrar deneniyor…</translation>
+        <translation>Yeniden deneniyor…</translation>
     </message>
     <message>
         <source>Starting…</source>
@@ -8599,7 +8755,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1 sonuç bulundu</numerusform><numerusform>%1 sonuç bulundu</numerusform></translation>
+        <translation>
+            <numerusform>%1 sonuç bulundu</numerusform>
+        </translation>
     </message>
     <message>
         <source>All</source>
@@ -8804,55 +8962,75 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, ancak %n öğe indirilemedi.</numerusform><numerusform>%1, ancak %n öğe indirilemedi.</numerusform></translation>
+        <translation>
+            <numerusform>%1, ancak %n öğe indirilemedi.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, ancak %n öğe yüklenemedi.</numerusform><numerusform>%1, ancak %n öğe yüklenemedi.</numerusform></translation>
+        <translation>
+            <numerusform>%1, ancak %n öğe yüklenemedi.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n öğe %1 konumuna indirilemedi.</numerusform><numerusform>%n öğe %1 konumuna indirilemedi.</numerusform></translation>
+        <translation>
+            <numerusform>%n öğe %1 konumuna indirilemedi.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n öğe %1 konumuna yüklenemedi.</numerusform><numerusform>%n öğe %1 konumuna yüklenemedi.</numerusform></translation>
+        <translation>
+            <numerusform>%n öğe %1 konumuna yüklenemedi.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n öğe indirildi</numerusform><numerusform>%n öğe indirildi</numerusform></translation>
+        <translation>
+            <numerusform>%n öğe indirildi</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n öğe %1 konumuna indirildi.</numerusform><numerusform>%n öğe %1 konumuna indirildi.</numerusform></translation>
+        <translation>
+            <numerusform>%n öğe %1 konumuna indirildi.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n öğe artık mevcut değil veya yeniden adlandırıldı.</numerusform><numerusform>%n öğe artık mevcut değil veya yeniden adlandırıldı.</numerusform></translation>
+        <translation>
+            <numerusform>%n öğe artık mevcut değil veya yeniden adlandırıldı.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n öğe artık mevcut değil.</numerusform><numerusform>%n öğe artık mevcut değil.</numerusform></translation>
+        <translation>
+            <numerusform>%n öğe artık mevcut değil.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n öğe yüklendi</numerusform><numerusform>%n öğe yüklendi</numerusform></translation>
+        <translation>
+            <numerusform>%n öğe yüklendi</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n öğe %1 konumuna yüklendi.</numerusform><numerusform>%n öğe %1 konumuna yüklendi.</numerusform></translation>
+        <translation>
+            <numerusform>%n öğe %1 konumuna yüklendi.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not download</source>
@@ -8892,7 +9070,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>Başarısız öğeyi yeniden dene</numerusform><numerusform>Başarısız öğeleri yeniden dene</numerusform></translation>
+        <translation>
+            <numerusform>Başarısız öğeyi yeniden dene</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -8917,12 +9097,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>Yükleme durduruldu</numerusform><numerusform>Yüklemeler durduruldu</numerusform></translation>
+        <translation>
+            <numerusform>Yükleme durduruldu</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>MEGA’dan çıkış yaptığınız için yüklemeniz durdu. Tekrar giriş yaptıktan sonra yüklemeye devam edebilirsiniz.</numerusform><numerusform>MEGA’dan çıkış yaptığınız için yüklemeleriniz durdu. Tekrar giriş yaptıktan sonra yüklemelere devam edebilirsiniz.</numerusform></translation>
+        <translation>
+            <numerusform>MEGA’dan çıkış yaptığınız için yüklemeniz durdu. Tekrar giriş yaptıktan sonra yüklemeye devam edebilirsiniz.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -9339,12 +9523,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>Hedef klasöre ulaşılamıyor</translation>
     </message>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]%1[/B] seçilen konuma yüklenemiyor</translation>
     </message>
 </context>
@@ -9449,7 +9633,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Daha fazla depolama alanına mı ihtiyacınız var?[BR][B][A]Pro Flexi’yi deneyin[/A][/B]</translation>
+        <translation>Daha fazla depolama alanına mı ihtiyacınız var?[BR][B][A]Pro&#xa0;Flexi’yi deneyin[/A][/B]</translation>
     </message>
     <message>
         <source>Recommended</source>
@@ -9510,7 +9694,9 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%3 alanın %1’si (%%2) kullanılıyor</numerusform><numerusform>%3 alanın %1’si (%%2) kullanılıyor</numerusform></translation>
+        <translation>
+            <numerusform>%3 alanın %1’si (%%2) kullanılıyor</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 / %2</source>
@@ -9525,12 +9711,14 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1 sn</translation>
+        <translation>%1&#xa0;sn</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 kullanıldı</numerusform><numerusform>%1 kullanıldı</numerusform></translation>
+        <translation>
+            <numerusform>%1 kullanıldı</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1d</source>
@@ -9555,32 +9743,44 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Aktarım %n gün önce tamamlandı</numerusform><numerusform>Aktarım %n gün önce tamamlandı</numerusform></translation>
+        <translation>
+            <numerusform>Aktarım %n gün önce tamamlandı</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Aktarım %n saat önce tamamlandı</numerusform><numerusform>Aktarım %n saat önce tamamlandı</numerusform></translation>
+        <translation>
+            <numerusform>Aktarım %n saat önce tamamlandı</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Aktarım %n dakika önce tamamlandı</numerusform><numerusform>Aktarım %n dakika önce tamamlandı</numerusform></translation>
+        <translation>
+            <numerusform>Aktarım %n dakika önce tamamlandı</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Aktarım %n ay önce tamamlandı</numerusform><numerusform>Aktarım %n ay önce tamamlandı</numerusform></translation>
+        <translation>
+            <numerusform>Aktarım %n ay önce tamamlandı</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Aktarım %n saniye önce tamamlandı</numerusform><numerusform>Aktarım %n saniye önce tamamlandı</numerusform></translation>
+        <translation>
+            <numerusform>Aktarım %n saniye önce tamamlandı</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Aktarım %n yıl önce tamamlandı</numerusform><numerusform>Aktarım %n yıl önce tamamlandı</numerusform></translation>
+        <translation>
+            <numerusform>Aktarım %n yıl önce tamamlandı</numerusform>
+        </translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -9630,42 +9830,42 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Starter</source>

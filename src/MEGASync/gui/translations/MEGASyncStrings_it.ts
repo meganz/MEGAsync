@@ -1158,7 +1158,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Account Pro Flexi disattivato</translation>
+        <translation>Account Pro&#xa0;Flexi disattivato</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1638,7 +1638,7 @@
         <translation>Escludi i file in base alla grandezza</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>Escludi i file impostando un minimo e un massimo di dimensione, oppure file più grandi o più piccoli di una dimensione specifica.</translation>
     </message>
@@ -2285,7 +2285,7 @@ Controlla la tua casella di posta elettronica per istruzioni su come sbloccare i
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -3346,7 +3346,7 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Account Pro Flexi disattivato</translation>
+        <translation>Account Pro&#xa0;Flexi disattivato</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3440,6 +3440,8 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>
             <numerusform>C’è un trasferimento attivo. Uscire dall’app?
 Il trasferimento riprenderà automaticamente quando riaprirai l’app.</numerusform>
+            <numerusform>Ci sono trasferimenti attivi. Uscire dall’app?
+I trasferimenti riprenderanno automaticamente quando riaprirai l’app.</numerusform>
             <numerusform>Ci sono trasferimenti attivi. Uscire dall’app?
 I trasferimenti riprenderanno automaticamente quando riaprirai l’app.</numerusform>
         </translation>
@@ -4084,7 +4086,7 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>Impossibile creare il backup perché il dispositivo da cui stai effettuando il backup non ha un nome. Dai un nome al tuo dispositivo e poi riprova. Se il problema persiste, contatta il Supporto.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -5189,7 +5191,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>L’offerta scade tra %1 m e %2 s</translation>
+        <translation>L’offerta scade tra %1&#xa0;m e %2&#xa0;s</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
@@ -5552,7 +5554,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>Effettua il log in</translation>
+        <translation>Effettua il log&#xa0;in</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
@@ -6080,6 +6082,21 @@ Inserisci un nome differente.</translation>
 </context>
 <context>
     <name>Preferences</name>
+    <message>
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</translation>
+    </message>
+    <message>
+        <source>- We&apos;ve fixed bugs and made the app more reliable.
+</source>
+        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProgressIndicatorDialog</name>
@@ -6160,6 +6177,11 @@ Inserisci un nome differente.</translation>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
         <translation>Non siamo riusciti a connetterci utilizzando le tue impostazioni proxy. Controlla le impostazioni o prova un’altra rete.</translation>
+    </message>
+    <message>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6478,27 +6500,27 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1&#xa0;bytes</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -6615,6 +6637,26 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
 </context>
 <context>
     <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>Destination folder doesn’t exist. Choose another.</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveBackupDialog</name>
@@ -7292,6 +7334,11 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Aggiungi sincronizzazione</translation>
     </message>
     <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Backup</translation>
+    </message>
+    <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>Ottieni link MEGA</translation>
@@ -7310,6 +7357,11 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>Condividi con un utente MEGA</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Sync</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8505,7 +8557,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>[B]%1[/B] non può essere aggiunta perché il tuo account Pro Flexi è stato disattivato a causa di un fallimento nel pagamento oppure perché hai annullato il tuo abbonamento. Per continuare, effettua un pagamento e riattiva il tuo abbonamento.</translation>
+        <translation>[B]%1[/B] non può essere aggiunta perché il tuo account Pro&#xa0;Flexi è stato disattivato a causa di un fallimento nel pagamento oppure perché hai annullato il tuo abbonamento. Per continuare, effettua un pagamento e riattiva il tuo abbonamento.</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
@@ -8656,6 +8708,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Select folders to sync</source>
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>Seleziona le cartelle da sincronizzare</translation>
+    </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]Learn more[/A]</translation>
     </message>
 </context>
 <context>
@@ -9657,7 +9714,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Hai bisogno di più spazio di archiviazione?[BR][B][A]Prova Pro Flexi[/A][/B]</translation>
+        <translation>Hai bisogno di più spazio di archiviazione?[BR][B][A]Prova Pro&#xa0;Flexi[/A][/B]</translation>
     </message>
     <message>
         <source>Recommended</source>
@@ -9736,7 +9793,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1 sec</translation>
+        <translation>%1&#xa0;sec</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9820,6 +9877,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Trasferimento appena completato</translation>
     </message>
     <message>
+        <source>Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation>Business</translation>
@@ -9828,6 +9890,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation>Bytes</translation>
+    </message>
+    <message>
+        <source>Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free</source>
@@ -9852,42 +9919,47 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TB</source>
