@@ -2,8 +2,7 @@
 
 QmlDeviceName::QmlDeviceName(QObject* parent):
     QObject{parent},
-    mDeviceNameRequest(UserAttributes::DeviceNames::requestDeviceName()),
-    mChanging(false)
+    mDeviceNameRequest(UserAttributes::DeviceNames::requestDeviceName())
 {
     connect(mDeviceNameRequest.get(),
             &UserAttributes::DeviceNames::attributeReady,
@@ -17,25 +16,30 @@ QmlDeviceName::QmlDeviceName(QObject* parent):
     }
 }
 
-QString QmlDeviceName::getDeviceName()
+QString QmlDeviceName::getDeviceName() const
 {
     return mName;
 }
 
-bool QmlDeviceName::setDeviceName(const QString& newName)
+void QmlDeviceName::setDeviceName(const QString& newName)
 {
-    mChanging = mDeviceNameRequest->setDeviceName(newName);
-    return mChanging;
+    if (mName == newName)
+    {
+        onDeviceNameSet();
+    }
+    else
+    {
+        mDeviceNameRequest->setDeviceName(newName);
+    }
 }
 
 void QmlDeviceName::onDeviceNameSet()
 {
+    const auto isInit = mName.isEmpty();
     mName = mDeviceNameRequest->getDeviceName();
     emit deviceNameChanged();
-
-    if (mChanging)
+    if (!isInit)
     {
-        mChanging = false;
         emit deviceNameSet();
     }
 }

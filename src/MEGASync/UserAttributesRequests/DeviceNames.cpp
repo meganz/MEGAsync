@@ -109,20 +109,10 @@ QString DeviceNames::getDefaultDeviceName()
                deviceName;
 }
 
-bool DeviceNames::setDeviceName(const QString& deviceName)
+void DeviceNames::setDeviceName(const QString& newDeviceName)
 {
-    if (mDeviceName != deviceName)
-    {
-        mDeviceName = deviceName;
-
-        setDeviceNameAttribute();
-    }
-    else
-    {
-        emit attributeReady(mDeviceName);
-    }
-
-    return true;
+    mDeviceName = newDeviceName;
+    setDeviceNameAttribute();
 }
 
 void DeviceNames::setDeviceNameAttribute()

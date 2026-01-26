@@ -29,7 +29,7 @@ private:
 
     void fetchBackupDeviceNames();
     void updateReadyCondition();
-    bool checkDeviceName(QString deviceName);
+    bool checkDeviceName(const QString& deviceName);
 };
 
 #endif

@@ -92,23 +92,9 @@ void DeviceNameChecker::updateReadyCondition()
     }
 }
 
-bool DeviceNameChecker::checkDeviceName(QString deviceName)
+bool DeviceNameChecker::checkDeviceName(const QString& deviceName)
 {
-    QString currentDeviceName = mDeviceName->getDeviceName();
-    if (currentDeviceName == deviceName)
-    {
-        /* it's ok, we try to set as a device name our current device name */
-        return true;
-    }
-
-    auto deviceNameMap = mDeviceName->getDeviceNames();
-    auto deviceNames = deviceNameMap.values();
-    if (deviceNames.contains(deviceName))
-    {
-        /* error, device name used in another device */
-        return false;
-    }
-
-    /* the device name is used in previous backup folders ?? */
-    return !mBackupDeviceNames.contains(deviceName);
+    return mDeviceName->getDeviceName() == deviceName ||
+           (mDeviceName->getDeviceNames().key(deviceName).isEmpty() &&
+            !mBackupDeviceNames.contains(deviceName));
 }
