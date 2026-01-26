@@ -258,9 +258,9 @@ void MEGASyncPlugin::viewPreviousVersions()
 
 void MEGASyncPlugin::backupFolders()
 {
-    for (int i = 0; i < selectedFilePaths.size(); i++)
+    for (int i = 0; i < mSelectedFilePath.size(); i++)
     {
-        QString path = selectedFilePaths.at(i);
+        QString path = mSelectedFilePath.at(i);
         if (sendRequest(OP_BACKUP, QFileInfo(path).canonicalFilePath()).size())
         {}
     }
@@ -269,7 +269,7 @@ void MEGASyncPlugin::backupFolders()
 
 void MEGASyncPlugin::syncFolder()
 {
-    if (sendRequest(OP_SYNC, QFileInfo(selectedFilePath).canonicalFilePath()).size())
+    if (sendRequest(OP_SYNC, QFileInfo(mSelectedFilePath).canonicalFilePath()).size())
     {
         sendRequest(OP_END, QLatin1String(" "));
     }
