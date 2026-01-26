@@ -277,7 +277,8 @@ void MEGASyncPlugin::syncFolder()
 
 QString MEGASyncPlugin::getString(int type, int numFiles,int numFolders)
 {
-    QString queryString = QString::fromLatin1("%1:%2:%3").arg(type).arg(numFiles).arg(numFolders);
+    const auto queryString =
+        QString::fromLatin1("%1:%2:%3").arg(type).arg(numFiles).arg(numFolders);
     auto res = sendRequest(OP_STRING, queryString);
     const int responseCode = res.isEmpty() ? RESPONSE_ERROR : res.toInt();
 
@@ -332,9 +333,8 @@ QString MEGASyncPlugin::sendRequest(char type, const QString& command)
         return {};
     }
 
-    QString reply (sock.readAll().trimmed());
-
-    return reply;
+    // Answer is utf-8 encoded
+    return QString::fromUtf8(sock.readAll().trimmed());
 }
 
 #include "megasync-plugin.moc"

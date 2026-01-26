@@ -248,10 +248,8 @@ private:
             return {};
         }
 
-        QString reply;
-        reply.append(sockExtServer.readAll());
-
-        return reply;
+        // Answer is latin1 encoded
+        return QString::fromLatin1(sockExtServer.readAll());
     }
 
     // Function to get folder icon path
