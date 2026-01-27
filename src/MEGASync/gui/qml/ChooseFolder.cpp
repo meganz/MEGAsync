@@ -153,10 +153,20 @@ void ChooseRemoteFolder::openFolderSelector()
     QPointer<SyncNodeSelector> nodeSelector = new SyncNodeSelector();
     nodeSelector->init();
 
-    if(mFolderHandle != mega::INVALID_HANDLE)
+    if (mFolderHandle != mega::INVALID_HANDLE)
     {
-        std::shared_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(mFolderHandle));
-        nodeSelector->setSelectedNodeHandle(node);
+        const std::shared_ptr<mega::MegaNode> node(
+            MegaSyncApp->getMegaApi()->getNodeByHandle(mFolderHandle));
+
+        // Make sure the node still exists and is not in the Rubbish before navigating
+        if (node && !MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
+        {
+            nodeSelector->setSelectedNodeHandle(node);
+        }
+        else
+        {
+            reset();
+        }
     }
 
     QPointer<const QObject> context = this;
