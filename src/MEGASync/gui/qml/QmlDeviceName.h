@@ -16,8 +16,8 @@ class QmlDeviceName: public QObject
 public:
     explicit QmlDeviceName(QObject* parent = nullptr);
 
-    Q_INVOKABLE QString getDeviceName();
-    Q_INVOKABLE bool setDeviceName(const QString& newName);
+    Q_INVOKABLE QString getDeviceName() const;
+    Q_INVOKABLE void setDeviceName(const QString& newName);
 
 signals:
     void deviceNameChanged();
@@ -29,8 +29,6 @@ private slots:
 private:
     QString mName;
     std::shared_ptr<UserAttributes::DeviceNames> mDeviceNameRequest;
-    bool mChanging;
-    bool mRequesting;
 };
 
 #endif // QMLDEVICENAME_H

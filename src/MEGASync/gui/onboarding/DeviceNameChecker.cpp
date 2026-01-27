@@ -57,16 +57,24 @@ void DeviceNameChecker::fetchBackupDeviceNames()
         auto backupHandle = mMyBackupsHandle->getMyBackupsHandle();
         if (backupHandle != mega::INVALID_HANDLE)
         {
-            std::unique_ptr<mega::MegaNode> backupFolder(mMegaApi->getNodeByHandle(backupHandle));
-
-            std::unique_ptr<mega::MegaNodeList> nodeList(mMegaApi->getChildren(backupFolder.get()));
+            const std::unique_ptr<mega::MegaNode> backupFolder(
+                mMegaApi->getNodeByHandle(backupHandle));
+            const std::unique_ptr<mega::MegaNodeList> nodeList(
+                mMegaApi->getChildren(backupFolder.get()));
 
             for (int nodeIndex = 0; nodeIndex < nodeList->size(); ++nodeIndex)
             {
-                auto node = nodeList->get(nodeIndex);
+                auto* node = nodeList->get(nodeIndex);
                 if (node != nullptr && node->getType() == mega::MegaNode::TYPE_FOLDER)
                 {
-                    mBackupDeviceNames.push_back(QString::fromUtf8(node->getName()));
+                    static const auto deviceId = QString::fromUtf8(mMegaApi->getDeviceId());
+                    const auto nodeDeviceId = QString::fromUtf8(node->getDeviceId());
+                    if (nodeDeviceId == deviceId)
+                    {
+                        // Only list folders for different device ids, to allow re-using a folder
+                        continue;
+                    }
+                    mBackupDeviceNames << QString::fromUtf8(node->getName());
                 }
             }
         }
@@ -84,23 +92,9 @@ void DeviceNameChecker::updateReadyCondition()
     }
 }
 
-bool DeviceNameChecker::checkDeviceName(QString deviceName)
+bool DeviceNameChecker::checkDeviceName(const QString& deviceName)
 {
-    QString currentDeviceName = mDeviceName->getDeviceName();
-    if (currentDeviceName == deviceName)
-    {
-        /* it's ok, we try to set as a device name our current device name */
-        return true;
-    }
-
-    auto deviceNameMap = mDeviceName->getDeviceNames();
-    auto deviceNames = deviceNameMap.values();
-    if (deviceNames.contains(deviceName))
-    {
-        /* error, device name used in another device */
-        return false;
-    }
-
-    /* the device name is used in previous backup folders ?? */
-    return !mBackupDeviceNames.contains(deviceName);
+    return mDeviceName->getDeviceName() == deviceName ||
+           (mDeviceName->getDeviceNames().key(deviceName).isEmpty() &&
+            !mBackupDeviceNames.contains(deviceName));
 }

@@ -23,13 +23,13 @@ private:
     mega::MegaApi* mMegaApi;
     std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandle;
     std::shared_ptr<UserAttributes::DeviceNames> mDeviceName;
-    QStringList mBackupDeviceNames;
+    QSet<QString> mBackupDeviceNames;
     int mPendingRequests = 0;
     QString mDeviceNameCandidate;
 
     void fetchBackupDeviceNames();
     void updateReadyCondition();
-    bool checkDeviceName(QString deviceName);
+    bool checkDeviceName(const QString& deviceName);
 };
 
 #endif

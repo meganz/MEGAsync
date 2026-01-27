@@ -28,7 +28,7 @@ public:
     QString getDeviceName() const;
     QString getDeviceName(const DeviceId& deviceId) const;
     QString getDefaultDeviceName();
-    bool setDeviceName(const QString& deviceName);
+    void setDeviceName(const QString& newDeviceName);
     void setDeviceNameAttribute();
     QMap<DeviceId, Name> getDeviceNames() const;
 
