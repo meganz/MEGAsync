@@ -314,6 +314,31 @@ protected:
 #endif
 };
 
+class OverlayWidget: public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit OverlayWidget(QWidget* parent = nullptr):
+        QWidget(parent)
+    {
+        setAttribute(Qt::WA_StyledBackground);
+        setAttribute(Qt::WA_TranslucentBackground);
+        setAutoFillBackground(false);
+        setCursor(Qt::PointingHandCursor);
+    }
+
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent* event) override
+    {
+        emit clicked();
+        QWidget::mousePressEvent(event);
+    }
+};
+
 struct TimeInterval
 {
     TimeInterval(long long secs, bool secondPrecision = true);

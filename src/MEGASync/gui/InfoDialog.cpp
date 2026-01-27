@@ -244,16 +244,13 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     ui->wListTransfers->setupTransfers();
 
     //Create the overlay widget with a transparent background
-    overlay = new QPushButton(ui->pUpdated);
-    overlay->setStyleSheet(
-        QString::fromLatin1(".QPushButton{background-color: transparent; border: none;}"));
+    overlay = new OverlayWidget(ui->pUpdated);
     overlay->resize(ui->pUpdated->size());
     overlay->setCursor(Qt::PointingHandCursor);
-
-    overlay->resize(overlay->width()-4, overlay->height());
-
+    overlay->raise();
     overlay->show();
-    connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
+
+    connect(overlay, &OverlayWidget::clicked, this, &InfoDialog::onOverlayClicked);
     connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
 
     if (mPreferences->logged())

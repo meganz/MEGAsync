@@ -181,7 +181,7 @@ signals:
 
 private:
     Ui::InfoDialog *ui;
-    QPushButton *overlay;
+    OverlayWidget* overlay;
 
     FilterAlertWidget* filterMenu;
 
