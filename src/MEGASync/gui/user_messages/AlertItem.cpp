@@ -765,7 +765,10 @@ bool AlertItem::event(QEvent* event)
         if (size() != sizeHint())
         {
             emit sizeHintChanged();
-            mAlertData->setSizeHint(sizeHint());
+            if (mAlertData)
+            {
+                mAlertData->setSizeHint(sizeHint());
+            }
         }
     }
 
