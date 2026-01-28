@@ -624,12 +624,9 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 {
                     auto path(parameters.first());
                     Utilities::queueFunctionInAppThread(
-                        [path]()
+                        [this, path]()
                         {
-                            CreateRemoveSyncsManager::addSync(
-                                SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
-                                INVALID_HANDLE,
-                                path);
+                            receiver->shellSync(path);
                         });
                 }
                 else
@@ -637,11 +634,9 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     if (!parameters.isEmpty())
                     {
                         Utilities::queueFunctionInAppThread(
-                            [parameters]()
+                            [this, parameters]()
                             {
-                                CreateRemoveBackupsManager::addBackup(
-                                    SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
-                                    parameters);
+                                receiver->shellBackup(parameters);
                             });
                     }
                 }

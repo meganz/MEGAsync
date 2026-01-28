@@ -10,7 +10,6 @@
 #include "CrashReportDialog.h"
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
-#include "CreateRemoveBackupsManager.h"
 #include "DateTimeFormatter.h"
 #include "DeviceCentre.h"
 #include "DialogOpener.h"
@@ -2314,6 +2313,7 @@ void MegaApplication::onAboutClicked()
 
     mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_ABOUT_CLICKED,
                                          sender(), aboutAction, true);
+
     showChangeLog();
 }
 
@@ -4793,7 +4793,15 @@ void MegaApplication::shellBackup(QStringList newBackupList)
     {
         return;
     }
-    CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN, newBackupList);
+    if (megaApi && megaApi->isLoggedIn())
+    {
+        CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
+                                              newBackupList);
+    }
+    else
+    {
+        QmlDialogManager::instance()->openOnboardingDialog();
+    }
 }
 
 void MegaApplication::shellSync(QString localFolder)
@@ -4802,9 +4810,16 @@ void MegaApplication::shellSync(QString localFolder)
     {
         return;
     }
-    CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
-                                      ::mega::INVALID_HANDLE,
-                                      localFolder);
+    if (megaApi && megaApi->isLoggedIn())
+    {
+        CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
+                                          ::mega::INVALID_HANDLE,
+                                          localFolder);
+    }
+    else
+    {
+        QmlDialogManager::instance()->openOnboardingDialog();
+    }
 }
 void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 {
