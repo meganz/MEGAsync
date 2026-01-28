@@ -158,7 +158,7 @@ Item {
                     }
                     buttonCursorShape: Qt.PointingHandCursor
                     sizes.textFontSize: Texts.Text.Size.NORMAL
-                    url: serviceUrlsAccess.getContactSupportUrl()
+                    url: serviceUrlsAccess.getCredentialStuffingHelpUrl()
                 }
             }
         }
