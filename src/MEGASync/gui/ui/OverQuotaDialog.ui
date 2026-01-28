@@ -26,7 +26,7 @@
    <string>Storage full</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#OverquotaFullDialog
+   <string notr="true">#OverquotaFullDialog, #pageBandwidthFull, #pageStorageFull
 {
 background-color: #FFFFFF;/*colorToken.page-background*/
 }
@@ -35,7 +35,8 @@ background-color: #FFFFFF;/*colorToken.page-background*/
 {
 font-size: 20px;
 line-height: 30px;
-}</string>
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -170,8 +171,11 @@ line-height: 30px;
        <height>111</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageStorageFull">
       <property name="minimumSize">
@@ -203,7 +207,7 @@ line-height: 30px;
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="buttonBigIcon">
+        <widget class="IconLabel" name="buttonBigIcon">
          <property name="minimumSize">
           <size>
            <width>100</width>
@@ -217,7 +221,7 @@ line-height: 30px;
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">border: none;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string/>
@@ -254,7 +258,7 @@ line-height: 30px;
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="IconLabel" name="toolButton">
          <property name="minimumSize">
           <size>
            <width>94</width>
@@ -268,7 +272,7 @@ line-height: 30px;
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">border: none;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string/>
@@ -425,6 +429,11 @@ line-height: 30px;
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QToolButton</extends>
+   <header>tokenizer/TokenizableItems/IconLabel.h</header>
+  </customwidget>
   <customwidget>
    <class>CustomLabel</class>
    <extends>QLabel</extends>
