@@ -209,7 +209,7 @@ QUrl ServiceUrls::getHelpBaseUrl()
 QUrl ServiceUrls::getDesktopAppHelpUrl()
 {
     auto url = getHelpBaseUrl();
-    url.setPath(QLatin1String("/installs-apps/desktop"));
+    url.setPath(QLatin1String("/desktop-app"));
     return url;
 }
 
@@ -664,6 +664,6 @@ void ServiceUrls::onAppStateChanged(AppState::AppStates oldAppState,
 QUrl ServiceUrls::getSyncDebrisHelpLink()
 {
     auto url = getHelpBaseUrl();
-    url.setPath(QLatin1String("/installs-apps/desktop/sync-debris"));
+    url.setPath(QLatin1String("/files-folders/restore-delete/sync-debris"));
     return url;
 }
