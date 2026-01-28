@@ -141,6 +141,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordController.h
+    ${CMAKE_CURRENT_LIST_DIR}/offer/OfferComponent.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -276,6 +277,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/offer/OfferComponent.cpp
 )
 
 target_sources_conditional(${ExecutableTarget}

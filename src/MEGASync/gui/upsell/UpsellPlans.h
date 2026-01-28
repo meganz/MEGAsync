@@ -7,6 +7,7 @@
 #include <QObject>
 
 #include <memory>
+#include <optional>
 
 class UpsellPlans: public QObject
 {
@@ -41,13 +42,18 @@ public:
         RECOMMENDED_ROLE,
         STORAGE_ROLE,
         TRANSFER_ROLE,
-        PRICE_ROLE,
+        PRICE_AFTER_TAX_ROLE,
         TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE,
         MONTHLY_PRICE_WITH_DISCOUNT_ROLE,
         CURRENT_PLAN_ROLE,
         AVAILABLE_ROLE,
         SHOW_PRO_FLEXI_MESSAGE,
-        SHOW_ONLY_PRO_FLEXI
+        SHOW_ONLY_PRO_FLEXI,
+        HAS_DISCOUNT,
+        DISCOUNT_MONTHS,
+        DISCOUNT_PERCENTAGE,
+        IS_HIGHLIGHTED,
+        PRICE_BEFORE_TAX_ROLE
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -56,23 +62,34 @@ public:
     class Data
     {
     public:
+        struct DiscountInfo
+        {
+            QString code;
+            int months;
+            int percentage = 0;
+        };
         class AccountBillingPlanData
         {
         public:
             AccountBillingPlanData();
-            AccountBillingPlanData(int64_t gbStorage, int64_t gbTransfer, float price);
+            AccountBillingPlanData(int64_t gbStorage,
+                                   int64_t gbTransfer,
+                                   float priceAfterTax,
+                                   double priceBeforeTax);
             ~AccountBillingPlanData() = default;
 
             bool isValid() const;
 
             int64_t gBStorage() const;
             int64_t gBTransfer() const;
-            float price() const;
+            float priceAfterTax() const;
+            double priceBeforeTax() const;
 
         private:
             int64_t mGBStorage;
             int64_t mGBTransfer;
-            float mPrice;
+            float mPriceAfterTax;
+            double mPriceBeforeTax;
         };
 
         Data(int proLevel, const QString& name);
@@ -84,6 +101,8 @@ public:
         const QString& name() const;
         const AccountBillingPlanData& monthlyData() const;
         const AccountBillingPlanData& yearlyData() const;
+        std::optional<DiscountInfo> discount() const;
+        bool hasDiscount() const;
 
     private:
         int mProLevel;
@@ -91,6 +110,7 @@ public:
         QString mName;
         AccountBillingPlanData mMonthlyData;
         AccountBillingPlanData mYearlyData;
+        std::optional<DiscountInfo> mDiscount = std::nullopt;
 
         friend class UpsellPlans;
         friend class UpsellController;
@@ -99,6 +119,7 @@ public:
         void setRecommended(bool newRecommended);
         void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
         void setYearlyData(const AccountBillingPlanData& newYearlyData);
+        void setDiscount(DiscountInfo discount);
         void setName(const QString& name);
     };
 
@@ -138,7 +159,7 @@ public:
     bool isOnlyProFlexiAvailable() const;
     bool isPro() const;
     bool isAnyPlanClicked() const;
-
+    bool hasDiscounts() const;
 signals:
     void viewModeChanged();
     void currencyChanged();

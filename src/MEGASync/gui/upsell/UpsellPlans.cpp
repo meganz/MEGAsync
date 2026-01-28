@@ -182,6 +182,16 @@ QList<std::shared_ptr<UpsellPlans::Data>> UpsellPlans::plans() const
     return mPlans;
 }
 
+bool UpsellPlans::hasDiscounts() const
+{
+    return std::any_of(mPlans.begin(),
+                       mPlans.end(),
+                       [](std::shared_ptr<Data> plan)
+                       {
+                           return plan->mDiscount != std::nullopt;
+                       });
+}
+
 // ************************************************************************************************
 // * UpsellPlans::Data
 // ************************************************************************************************
@@ -195,19 +205,25 @@ UpsellPlans::Data::Data(int proLevel, const QString& name):
 QHash<int, QByteArray> UpsellPlans::Data::roleNames()
 {
     static QHash<int, QByteArray> roles{
-        {Qt::DisplayRole,                                "display"                  },
-        {UpsellPlans::NAME_ROLE,                         "name"                     },
-        {UpsellPlans::BUTTON_NAME_ROLE,                  "buttonName"               },
-        {UpsellPlans::RECOMMENDED_ROLE,                  "recommended"              },
-        {UpsellPlans::STORAGE_ROLE,                      "gbStorage"                },
-        {UpsellPlans::TRANSFER_ROLE,                     "gbTransfer"               },
-        {UpsellPlans::PRICE_ROLE,                        "price"                    },
+        {Qt::DisplayRole, "display"},
+        {UpsellPlans::NAME_ROLE, "name"},
+        {UpsellPlans::BUTTON_NAME_ROLE, "buttonName"},
+        {UpsellPlans::RECOMMENDED_ROLE, "recommended"},
+        {UpsellPlans::STORAGE_ROLE, "gbStorage"},
+        {UpsellPlans::TRANSFER_ROLE, "gbTransfer"},
+        {UpsellPlans::PRICE_AFTER_TAX_ROLE, "priceAfterTax"},
         {UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE, "totalPriceWithoutDiscount"},
-        {UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE,  "monthlyPriceWithDiscount" },
-        {UpsellPlans::CURRENT_PLAN_ROLE,                 "currentPlan"              },
-        {UpsellPlans::AVAILABLE_ROLE,                    "available"                },
-        {UpsellPlans::SHOW_PRO_FLEXI_MESSAGE,            "showProFlexiMessage"      },
-        {UpsellPlans::SHOW_ONLY_PRO_FLEXI,               "showOnlyProFlexi"         }
+        {UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE, "monthlyPriceWithDiscount"},
+        {UpsellPlans::CURRENT_PLAN_ROLE, "currentPlan"},
+        {UpsellPlans::AVAILABLE_ROLE, "available"},
+        {UpsellPlans::SHOW_PRO_FLEXI_MESSAGE, "showProFlexiMessage"},
+        {UpsellPlans::SHOW_ONLY_PRO_FLEXI, "showOnlyProFlexi"},
+        {UpsellPlans::HAS_DISCOUNT, "hasDiscount"},
+        {UpsellPlans::DISCOUNT_MONTHS, "discountMonths"},
+        {UpsellPlans::DISCOUNT_PERCENTAGE, "discountPercentage"},
+        {UpsellPlans::IS_HIGHLIGHTED, "isHighlighted"},
+        {UpsellPlans::PRICE_BEFORE_TAX_ROLE, "priceBeforeTax"},
+
     };
 
     return roles;
@@ -263,6 +279,21 @@ void UpsellPlans::Data::setMonthlyData(const AccountBillingPlanData& newMonthlyD
     mMonthlyData = newMonthlyData;
 }
 
+void UpsellPlans::Data::setDiscount(UpsellPlans::Data::DiscountInfo discount)
+{
+    mDiscount = discount;
+}
+
+std::optional<UpsellPlans::Data::DiscountInfo> UpsellPlans::Data::discount() const
+{
+    return mDiscount;
+}
+
+bool UpsellPlans::Data::hasDiscount() const
+{
+    return mDiscount != std::nullopt;
+}
+
 // ************************************************************************************************
 // * UpsellPlans::Data::AccountBillingPlanData
 // ************************************************************************************************
@@ -270,20 +301,23 @@ void UpsellPlans::Data::setMonthlyData(const AccountBillingPlanData& newMonthlyD
 UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData():
     mGBStorage(-1),
     mGBTransfer(-1),
-    mPrice(-1.0f)
+    mPriceAfterTax(-1.0f),
+    mPriceBeforeTax(-1.0)
 {}
 
 UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int64_t gbStorage,
                                                                   int64_t gbTransfer,
-                                                                  float price):
+                                                                  float priceAfterTax,
+                                                                  double priceBeforeTax):
     mGBStorage(gbStorage),
     mGBTransfer(gbTransfer),
-    mPrice(price)
+    mPriceAfterTax(priceAfterTax),
+    mPriceBeforeTax(priceBeforeTax)
 {}
 
 bool UpsellPlans::Data::AccountBillingPlanData::isValid() const
 {
-    return mGBStorage != -1 && mGBTransfer != -1 && mPrice != -1.0f;
+    return mGBStorage != -1 && mGBTransfer != -1 && mPriceAfterTax != -1.0f;
 }
 
 int64_t UpsellPlans::Data::AccountBillingPlanData::gBStorage() const
@@ -296,9 +330,14 @@ int64_t UpsellPlans::Data::AccountBillingPlanData::gBTransfer() const
     return mGBTransfer;
 }
 
-float UpsellPlans::Data::AccountBillingPlanData::price() const
+float UpsellPlans::Data::AccountBillingPlanData::priceAfterTax() const
 {
-    return mPrice;
+    return mPriceAfterTax;
+}
+
+double UpsellPlans::Data::AccountBillingPlanData::priceBeforeTax() const
+{
+    return mPriceBeforeTax;
 }
 
 // ************************************************************************************************

@@ -7,7 +7,9 @@
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "offer/OfferComponent.h"
 #include "Platform.h"
+#include "QmlDialogWrapper.h"
 #include "ServiceUrls.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
@@ -420,6 +422,13 @@ void InfoDialog::createUpsellController()
     {
         mUpsellController = std::make_unique<UpsellController>(nullptr);
         mUpsellController->requestPricingData();
+        connect(mUpsellController.get(),
+                &UpsellController::dataReady,
+                this,
+                [this]()
+                {
+                    updateUpgradeButtonState();
+                });
     }
 }
 
@@ -1111,7 +1120,15 @@ void InfoDialog::on_bUpgrade_clicked()
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
         AppStatsEvents::EventType::UPGRADE_CLICKED_INFO_DIALOG,
         true);
-    Utilities::upgradeClicked();
+    if (mDiscountInfo == nullptr)
+    {
+        Utilities::upgradeClicked();
+    }
+    else
+    {
+        auto dialog = QMLComponent::showDialog<OfferComponent>();
+        dialog->getDialog()->wrapper()->setDiscountInfo(mDiscountInfo);
+    }
 }
 
 void InfoDialog::on_bUpgradeOverDiskQuota_clicked()
@@ -1509,7 +1526,7 @@ void InfoDialog::showSomeIssues()
 
 void InfoDialog::updateUpgradeButtonText()
 {
-    ui->bUpgrade->setText(QCoreApplication::translate("SettingsDialog", "Upgrade"));
+    updateUpgradeButtonState();
 }
 
 void InfoDialog::updateCreateSyncButtonText()
@@ -1831,4 +1848,53 @@ void InfoDialog::onTopTransferTypeChanged(TransferData::TransferTypes type)
 void InfoDialog::showStalledIssuesDialog()
 {
     MegaApplication::showStalledIssuesDialog();
+}
+
+void InfoDialog::updateUpgradeButtonState()
+{
+    if (!mPreferences->logged())
+    {
+        return;
+    }
+    const bool hasOffer = mDiscountInfo != nullptr;
+    const QuotaState quotaState = MegaSyncApp->getTransferQuota()->quotaState();
+    const bool isTransferOverquota = (quotaState != QuotaState::OK);
+
+    ui->bUpgrade->setProperty("type", hasOffer ? QLatin1String("brand") : QLatin1String("primary"));
+    ui->bUpgrade->setProperty("state", hasOffer ? QLatin1String("offer") : QLatin1String("normal"));
+
+    ui->bUpgrade->setVisible(hasOffer ||
+                             Utilities::shouldDisplayUpgradeButton(isTransferOverquota));
+    ui->bCreateSync->setVisible(!hasOffer);
+
+    if (hasOffer)
+    {
+        if (mDiscountInfo && mUpsellController)
+        {
+            const auto plans = mUpsellController->getPlans();
+            int nPlans = plans ? plans->size() : 0;
+            for (int i = 0; i < nPlans; ++i)
+            {
+                auto plan = plans->getPlan(i);
+                if (plan->proLevel() == mDiscountInfo->getAccountLevel())
+                {
+                    ui->bUpgrade->setText(tr("%1% off %2")
+                                              .arg(mDiscountInfo->getPercentageDiscount())
+                                              .arg(plan->name()));
+                    break;
+                }
+            }
+        }
+    }
+    else
+    {
+        ui->bUpgrade->setText(QCoreApplication::translate("SettingsDialog", "Upgrade"));
+    }
+    ui->bUpgrade->style()->polish(ui->bUpgrade);
+}
+
+void InfoDialog::setDiscountInfo(std::shared_ptr<MegaDiscountCodeInfo> discount)
+{
+    mDiscountInfo = discount;
+    updateUpgradeButtonState();
 }

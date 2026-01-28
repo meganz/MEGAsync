@@ -66,6 +66,7 @@ QtObject {
     readonly property url upArrow: imagesQmlPath + "up-arrow.svg"
     readonly property url downArrow: imagesQmlPath + "down-arrow.svg"
     readonly property url externalLink: imagesQmlPath + "external-link.svg"
+    readonly property url offerBanner: imagesQmlPath + "offer_banner.png"
 
     readonly property url dialogMessageQuestion: imagesQmlPath + "dialog_message_question.svg"
     readonly property url dialogMessageInformation: imagesQmlPath + "dialog_message_information.svg"

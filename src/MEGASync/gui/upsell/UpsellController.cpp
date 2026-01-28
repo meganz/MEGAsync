@@ -16,14 +16,11 @@ namespace
 {
 constexpr int MONTH_PERIOD(1);
 constexpr int YEAR_PERIOD(12);
-constexpr int PRECISION_FOR_DECIMALS(2);
-constexpr int NO_DECIMALS(0);
 constexpr float CENTS_IN_1_UNIT(100.0f);
 constexpr float NUM_MONTHS_PER_PLAN(12.0f);
 constexpr float PERCENTAGE(100.0f);
 constexpr long long TRANSFER_REMAINING_TIME_INTERVAL_MS(1000ll);
 constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
-constexpr QLatin1Char BILLING_CURRENCY_REMARK('*');
 const std::vector<int> ACCOUNT_TYPES_IN_ORDER = {Preferences::AccountType::ACCOUNT_TYPE_FREE,
                                                  Preferences::AccountType::ACCOUNT_TYPE_STARTER,
                                                  Preferences::AccountType::ACCOUNT_TYPE_BASIC,
@@ -111,29 +108,29 @@ QVariant UpsellController::data(int row, int role) const
     return data(mPlans->getPlan(row), role);
 }
 
-QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int role) const
+QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int role) const
 {
     QVariant field;
 
-    if (data)
+    if (plan)
     {
         switch (role)
         {
             case Qt::DisplayRole:
             {
-                field = mPlans->isMonthly() ? data->monthlyData().isValid() :
-                                              data->yearlyData().isValid();
+                field = mPlans->isMonthly() ? plan->monthlyData().isValid() :
+                                              plan->yearlyData().isValid();
                 break;
             }
             case UpsellPlans::NAME_ROLE:
             {
-                field = data->name();
+                field = plan->name();
                 break;
             }
             case UpsellPlans::BUTTON_NAME_ROLE:
             {
-                if (data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI &&
-                    (isOnlyProFlexiAvailable(data) ||
+                if (plan->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI &&
+                    (isOnlyProFlexiAvailable(plan) ||
                      Preferences::instance()->accountType() ==
                          Preferences::AccountType::ACCOUNT_TYPE_PROIII))
                 {
@@ -147,14 +144,14 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
                 }
                 else
                 {
-                    field = data->name();
+                    field = plan->name();
                 }
                 break;
             }
             case UpsellPlans::RECOMMENDED_ROLE:
             {
-                if (isOnlyProFlexiAvailable(data) &&
-                    data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI)
+                if (isOnlyProFlexiAvailable(plan) &&
+                    plan->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI)
                 {
                     // For Pro III, only Pro III and/or Pro Flexi are available.
                     // Override recommended to show the border as for recommended plans.
@@ -162,67 +159,135 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
                 }
                 else
                 {
-                    field = data->isRecommended();
+                    field = plan->isRecommended();
                 }
                 break;
             }
             case UpsellPlans::STORAGE_ROLE:
             {
                 field =
-                    Utilities::getSizeString(mPlans->isMonthly() ? data->monthlyData().gBStorage() :
-                                                                   data->yearlyData().gBStorage());
+                    Utilities::getSizeString(mPlans->isMonthly() ? plan->monthlyData().gBStorage() :
+                                                                   plan->yearlyData().gBStorage());
                 break;
             }
             case UpsellPlans::TRANSFER_ROLE:
             {
                 field = Utilities::getSizeString(mPlans->isMonthly() ?
-                                                     data->monthlyData().gBTransfer() :
-                                                     data->yearlyData().gBTransfer());
+                                                     plan->monthlyData().gBTransfer() :
+                                                     plan->yearlyData().gBTransfer());
                 break;
             }
-            case UpsellPlans::PRICE_ROLE:
+            case UpsellPlans::PRICE_AFTER_TAX_ROLE:
             {
-                field = getLocalePriceString(mPlans->isMonthly() ? data->monthlyData().price() :
-                                                                   data->yearlyData().price());
+                auto isMonthly = mPlans->isMonthly();
+                auto isYearly = !isMonthly;
+                double price = isMonthly ? plan->monthlyData().priceAfterTax() :
+                                           plan->yearlyData().priceAfterTax();
+
+                if (plan->discount().has_value())
+                {
+                    if ((isMonthly && plan->discount()->months == MONTH_PERIOD) ||
+                        ((isYearly && plan->discount()->months == YEAR_PERIOD)))
+                    {
+                        price *= (100 - plan->discount()->percentage) / 100.;
+                    }
+                }
+                field = getLocalePriceString(float(price));
+                break;
+            }
+            case UpsellPlans::PRICE_BEFORE_TAX_ROLE:
+            {
+                auto isMonthly = mPlans->isMonthly();
+                auto isYearly = !isMonthly;
+                double price = isMonthly ? plan->monthlyData().priceBeforeTax() :
+                                           plan->yearlyData().priceBeforeTax();
+
+                if (plan->discount().has_value())
+                {
+                    if ((isMonthly && plan->discount()->months == MONTH_PERIOD) ||
+                        ((isYearly && plan->discount()->months == YEAR_PERIOD)))
+                    {
+                        price *= (100 - plan->discount()->percentage) / 100.;
+                    }
+                }
+                field = getLocalePriceString(float(price));
                 break;
             }
             case UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE:
             {
                 field = getLocalePriceString(
-                    calculateTotalPriceWithoutDiscount(data->monthlyData().price()));
+                    calculateTotalPriceWithoutDiscount(plan->monthlyData().priceAfterTax()));
                 break;
             }
             case UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE:
             {
                 field = getLocalePriceString(
-                    calculateMonthlyPriceWithDiscount(data->yearlyData().price()));
+                    calculateMonthlyPriceWithDiscount(plan->yearlyData().priceAfterTax()));
                 break;
             }
             case UpsellPlans::CURRENT_PLAN_ROLE:
             {
-                field = data->proLevel() == Preferences::instance()->accountType() ||
+                field = plan->proLevel() == Preferences::instance()->accountType() ||
                         (Preferences::instance()->accountType() ==
                              Preferences::AccountType::ACCOUNT_TYPE_PROIII &&
-                         data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI);
+                         plan->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI);
                 break;
             }
             case UpsellPlans::AVAILABLE_ROLE:
             {
-                field = isAvailable(data);
+                field = isAvailable(plan);
                 break;
             }
             case UpsellPlans::SHOW_PRO_FLEXI_MESSAGE:
             {
-                field = data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PROIII ||
-                        data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI;
+                field = plan->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PROIII ||
+                        plan->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI;
                 break;
             }
             case UpsellPlans::SHOW_ONLY_PRO_FLEXI:
             {
-                field = isOnlyProFlexiAvailable(data) ||
-                        (data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI &&
+                field = isOnlyProFlexiAvailable(plan) ||
+                        (plan->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI &&
                          Preferences::instance()->accountType() ==
                              Preferences::AccountType::ACCOUNT_TYPE_PROIII);
+                break;
+            }
+            case UpsellPlans::HAS_DISCOUNT:
+            {
+                auto isMonthly = mPlans->isMonthly();
+                auto isYearly = !isMonthly;
+                field = plan->discount().has_value() &&
+                        ((isMonthly && plan->discount()->months == MONTH_PERIOD) ||
+                         ((isYearly && plan->discount()->months == YEAR_PERIOD)));
+                break;
+            }
+            case UpsellPlans::DISCOUNT_MONTHS:
+            {
+                field = plan->discount().has_value() ? plan->discount()->months : 0;
+                break;
+            }
+            case UpsellPlans::DISCOUNT_PERCENTAGE:
+            {
+                if (plan->discount().has_value())
+                {
+                    auto dp = plan->discount()->percentage;
+                    field = mPlans->isMonthly() ? dp : dp + ((2 * (100 - dp)) / 12);
+                }
+                else
+                {
+                    field = 0;
+                }
+                break;
+            }
+            case UpsellPlans::IS_HIGHLIGHTED:
+            {
+                auto isMonthly = mPlans->isMonthly();
+                auto isYearly = !isMonthly;
+
+                field = (plan->discount().has_value() &&
+                         ((isMonthly && plan->discount()->months == MONTH_PERIOD) ||
+                          ((isYearly && plan->discount()->months == YEAR_PERIOD)))) ||
+                        plan->isRecommended();
                 break;
             }
             default:
@@ -308,7 +373,7 @@ QString UpsellController::getMinProPlanNeeded(long long usedStorage) const
     {
         if (usedStorage < plan->monthlyData().gBStorage())
         {
-            float currentAmountMonth(plan->monthlyData().price());
+            float currentAmountMonth(plan->monthlyData().priceAfterTax());
             if (proLevel == -1 || currentAmountMonth < amountPlanNeeded)
             {
                 proLevel = plan->proLevel();
@@ -376,23 +441,27 @@ void UpsellController::process(mega::MegaPricing* pricing)
 
 void UpsellController::process(mega::MegaCurrency* currency)
 {
-    QString localCurrencySymbol;
     QString localCurrencyName;
-    QByteArray localByteSymbol(QByteArray::fromBase64(currency->getLocalCurrencySymbol()));
-    if (localByteSymbol.isEmpty())
+
+    // If Local currency symbol is empty, use billing currency as local currency.
+    QString localCurrencySymbol = QString::fromLatin1(currency->getLocalCurrencySymbol());
+    const auto localCurrencyIsBillingCurrency = localCurrencySymbol.isEmpty();
+
+    if (localCurrencyIsBillingCurrency)
     {
-        QByteArray byteSymbol(QByteArray::fromBase64(currency->getCurrencySymbol()));
-        localCurrencySymbol = QString::fromUtf8(byteSymbol.data());
+        // Billing currency symbol is utf-8 encoded
+        localCurrencySymbol = QString::fromUtf8(currency->getCurrencySymbol());
         localCurrencyName = QString::fromUtf8(currency->getCurrencyName());
     }
     else
     {
-        localCurrencySymbol = QString::fromUtf8(localByteSymbol.data());
+        // Local currency symbol is represented as an escaped unicode sequence ("\uXXXX")
+        localCurrencySymbol = Utilities::decodeUnicodeEscapes(localCurrencySymbol);
         localCurrencyName = QString::fromUtf8(currency->getLocalCurrencyName());
     }
 
     mPlans->setCurrency(localCurrencySymbol, localCurrencyName);
-    mPlans->setBillingCurrency(localByteSymbol.isEmpty());
+    mPlans->setBillingCurrency(localCurrencyIsBillingCurrency);
 }
 
 QList<std::shared_ptr<UpsellPlans::Data>>
@@ -408,10 +477,15 @@ QList<std::shared_ptr<UpsellPlans::Data>>
         }
 
         auto plan(appendPlan(proLevel, plans));
-        int price(mPlans->isBillingCurrency() ? pricing->getAmount(i) : pricing->getLocalPrice(i));
+        int priceAfterTax(mPlans->isBillingCurrency() ? pricing->getAmount(i) :
+                                                        pricing->getLocalPrice(i));
+        double priceBeforeTax(mPlans->isBillingCurrency() ?
+                                  pricing->getPriceNetWithDecimals(i) :
+                                  pricing->getLocalPriceNetWithDecimals(i));
         auto planData(createAccountBillingPlanData(pricing->getGBStorage(i),
                                                    pricing->getGBTransfer(i),
-                                                   price));
+                                                   priceAfterTax,
+                                                   priceBeforeTax));
         if (pricing->getMonths(i) == MONTH_PERIOD)
         {
             plan->setMonthlyData(planData);
@@ -419,6 +493,13 @@ QList<std::shared_ptr<UpsellPlans::Data>>
         else if (pricing->getMonths(i) == YEAR_PERIOD)
         {
             plan->setYearlyData(planData);
+        }
+        if (pricing->hasDiscount(i))
+        {
+            UpsellPlans::Data::DiscountInfo discount{QString::fromUtf8(pricing->getDiscountCode(i)),
+                                                     pricing->getDiscountMonths(i),
+                                                     pricing->getDiscountPercentage(i)};
+            plan->setDiscount(discount);
         }
     }
     return plans;
@@ -459,22 +540,20 @@ bool UpsellController::isProLevelValid(int proLevel) const
 
 QString UpsellController::getLocalePriceString(float price) const
 {
-    static const QLocale locale(QLocale().language(), QLocale().country());
-    int precision(std::fmod(price, 1.) > 0. ? PRECISION_FOR_DECIMALS : NO_DECIMALS);
-    QString priceStr(locale.toCurrencyString(price, mPlans->getCurrencySymbol(), precision));
-    if (!mPlans->isBillingCurrency())
-    {
-        priceStr += BILLING_CURRENCY_REMARK;
-    }
-    return priceStr;
+    return Utilities::toPrice(price, mPlans->getCurrencySymbol(), !mPlans->isBillingCurrency());
 }
 
 UpsellPlans::Data::AccountBillingPlanData
-    UpsellController::createAccountBillingPlanData(int storage, int transfer, int price) const
+    UpsellController::createAccountBillingPlanData(int storage,
+                                                   int transfer,
+                                                   int priceAfterTax,
+                                                   double priceBeforeTax) const
 {
-    UpsellPlans::Data::AccountBillingPlanData planData(static_cast<int64_t>(storage) * NB_B_IN_1GB,
-                                                       static_cast<int64_t>(transfer) * NB_B_IN_1GB,
-                                                       static_cast<float>(price) / CENTS_IN_1_UNIT);
+    UpsellPlans::Data::AccountBillingPlanData planData(
+        static_cast<int64_t>(storage) * NB_B_IN_1GB,
+        static_cast<int64_t>(transfer) * NB_B_IN_1GB,
+        static_cast<float>(priceAfterTax) / CENTS_IN_1_UNIT,
+        priceBeforeTax / static_cast<double>(CENTS_IN_1_UNIT));
     return planData;
 }
 
@@ -506,7 +585,8 @@ void UpsellController::updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& d
     if (mPlans->getPlan(row)->monthlyData().isValid() &&
         mPlans->getPlan(row)->yearlyData().isValid())
     {
-        discount = calculateDiscount(data->monthlyData().price(), data->yearlyData().price());
+        discount = calculateDiscount(data->monthlyData().priceAfterTax(),
+                                     data->yearlyData().priceAfterTax());
     }
     mPlans->setCurrentDiscount(discount);
 }

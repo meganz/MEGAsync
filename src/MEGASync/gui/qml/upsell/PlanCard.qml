@@ -11,7 +11,7 @@ import components.buttons 1.0
 Rectangle {
     id: root
 
-    readonly property real planDefaultWidth: 160
+    readonly property real planDefaultWidth: 156
     readonly property real cardRadius: 8
     readonly property real contentMargin: 12
     readonly property real contentSpacing: 8
@@ -38,10 +38,15 @@ Rectangle {
     property string name: ""
     property string gbStorage: ""
     property string gbTransfer: ""
-    property string price: ""
+    property string priceAfterTax: ""
+    property string priceBeforeTax: ""
     property string totalPriceWithoutDiscount: ""
     property string monthlyPriceWithDiscount: ""
     property string buttonName: ""
+    property bool hasDiscount: false
+    property int discountPercentage: 0
+    property int discountMonths: 0
+    property bool isHighlighted: false
 
     property string billedText: {
         root.billingCurrency
@@ -57,8 +62,11 @@ Rectangle {
         if (root.currentPlan) {
             return ColorTheme.notificationInfo;
         }
+        else if(root.hasDiscount) {
+            return ColorTheme.brandDefault;
+        }
         else if (root.recommended) {
-            return ColorTheme.borderBrand;
+            return ColorTheme.brandContainerDefault;
         }
         else {
             return "transparent";
@@ -66,17 +74,32 @@ Rectangle {
     }
 
     function getChipTextColor() {
-        if (root.currentPlan) {
+        if (root.currentPlan ) {
             return ColorTheme.textInfo;
         }
-        else if (root.recommended) {
+        else if(root.hasDiscount) {
             return ColorTheme.textOnColor;
+        }
+        else if (root.recommended) {
+            return ColorTheme.textBrand;
         }
         else {
             return "transparent";
         }
     }
 
+    function getChipText() {
+        if (root.currentPlan) {
+            return UpsellStrings.currentPlan;
+        }
+        else if(root.hasDiscount) {
+            return UpsellStrings.discountLabel(root.discountMonths).arg(root.discountPercentage);
+        }
+        else if (root.recommended) {
+            return UpsellStrings.recommended;
+        }
+        return "";
+    }
     function updateBilledPeriodText() {
         if (!billedPeriodInfoText.enabled) {
             billedPeriodInfoText.text = root.billedText;
@@ -87,8 +110,8 @@ Rectangle {
     height: root.monthly, contentColumn.implicitHeight + (2 * root.contentMargin)
 
     border {
-        width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
-        color: root.recommended ? ColorTheme.borderBrand : ColorTheme.borderStrong
+        width: root.isHighlighted && root.enabled ? root.borderWidthRecommended : root.borderWidthDefault
+        color: root.isHighlighted && root.enabled ? ColorTheme.borderBrand : ColorTheme.borderStrong
     }
     radius: root.cardRadius
     color: ColorTheme.pageBackground
@@ -127,9 +150,9 @@ Rectangle {
                 id: recommendedChip
 
                 sizes: Chips.SmallSizes {}
-                text: root.currentPlan ? UpsellStrings.currentPlan : UpsellStrings.recommended
+                text: getChipText()
                 visible: true
-                opacity: (root.recommended || root.currentPlan) ? 1.0 : 0.0
+                opacity: (root.recommended || root.currentPlan || (root.hasDiscount && root.enabled)) ? 1.0 : 0.0
                 colors {
                     background: getChipBackgroundColor()
                     border: getChipBackgroundColor()
@@ -150,9 +173,8 @@ Rectangle {
 
                 lineHeight: root.discountLineHeight
                 lineHeightMode: Text.FixedHeight
-                font.strikeout: true
-                text: root.totalPriceWithoutDiscount
-                visible: !root.monthly && root.enabled && !root.showOnlyProFlexi
+                text: UpsellStrings.only
+                visible: true
                 width: parent.width
             }
 
@@ -166,7 +188,7 @@ Rectangle {
                 }
                 lineHeight: root.priceLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: root.price
+                text: root.priceBeforeTax
                 visible: root.enabled && !root.showOnlyProFlexi
                 width: parent.width
             }
@@ -186,8 +208,9 @@ Rectangle {
 
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: UpsellStrings.pricePerMonth.arg(root.monthlyPriceWithDiscount)
-                visible: !root.monthly && root.enabled && !root.showOnlyProFlexi
+                text: UpsellStrings.pricePerMonthAfterTax.arg(priceAfterTax)
+                font.weight: Font.DemiBold
+                visible: root.enabled && !root.showOnlyProFlexi
                 width: parent.width
             }
         }
@@ -293,7 +316,7 @@ Rectangle {
                     onClicked: {
                         root.buyButtonClicked();
                     }
-                    visible: root.recommended && parent.enabled
+                    visible: root.isHighlighted && parent.enabled
                 }
 
                 OutlineButton {

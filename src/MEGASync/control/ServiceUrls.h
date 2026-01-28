@@ -87,6 +87,8 @@ public:
     QUrl getRepayUrl() const;
     QUrl getUpsellPlanUrl(int proLevel, int periodInMonths) const;
 
+    QUrl getDiscountUrl(const QString& discountCode) const;
+
     bool isFolderLink(const QString& link) const;
     bool isSetLink(const QString& link) const;
 

@@ -134,6 +134,18 @@ image-position: left;
 text-align: right;
 qproperty-icon: url(:/plus_icon_secondary.svg);
 }
+#bUpgrade[state=&quot;normal&quot;]
+{
+font-weight: 600;
+qproperty-icon: url();
+}
+#bUpgrade[state=&quot;offer&quot;]
+{
+image-position: left;
+text-align: right;
+font-weight: 600;
+qproperty-icon: url(:/tag-01-medium-thin-outline.svg);
+}
 #bSettings
 {
 qproperty-icon: url(:/menu.svg);

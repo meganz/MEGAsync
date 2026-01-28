@@ -147,6 +147,12 @@ public:
     int getBlockedState();
     void setBlockedState(int value);
 
+    long long getOfferDialogLastExecution();
+    void setOfferDialogLastExecution(long long timestamp);
+
+    long long getUserDiscountLastCheck();
+    void setUserDiscountLastCheck(long long timestamp);
+
     //**** Notifications ****/
     enum class NotificationsTypes
     {
@@ -520,6 +526,12 @@ public:
     static long long PAYWALL_NOTIFICATION_INTERVAL_MS;
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
+    static long long OFFER_DIALOG_INTERVAL_MS;
+    static long long USER_DISCOUNT_CHECK_INTERVAL_MS;
+    static long long OFER_DIALOG_SHORT_DELAY_INTERVAL_MS;
+    static long long OFER_DIALOG_AUTO_LOGIN_INTERVAL_MS;
+    static long long OFFER_DIALOG_INTERVAL_SINCE_STARTUP_MS;
+    static long long OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS;
 
     static std::chrono::milliseconds OVER_QUOTA_DIALOG_DISABLE_DURATION;
     static std::chrono::milliseconds OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
@@ -767,6 +779,9 @@ protected:
     static const QString themeKey;
     static const QString lastSyncReminderTimeKey;
     static const QString lastSyncReminderStateKey;
+    static const QString offerDialogLastExecutionKey;
+    static const QString userDiscountLastCheckKey;
+
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     static const QString gfxWorkerEndpointKey;
 #endif

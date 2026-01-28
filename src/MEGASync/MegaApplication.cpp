@@ -32,6 +32,7 @@
 #include "MyBackupsHandle.h"
 #include "NodeSelector.h"
 #include "NodeSelectorSpecializations.h"
+#include "offer/OfferComponent.h"
 #include "Onboarding.h"
 #include "OverQuotaDialog.h"
 #include "ParallelConnectionsValues.h"
@@ -758,6 +759,8 @@ void MegaApplication::initialize()
             this,
             &MegaApplication::onOperatingSystemThemeChanged);
 #endif
+    requestUserDiscounts(true);
+    triggerOfferCheck(OfferTrigger::APP_INITIALIZATION);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1471,6 +1474,12 @@ if (!infoDialog)
                 mSyncReminderNotificationManager,
                 &SyncReminderNotificationManager::onSyncsDialogClosed);
     }
+    if (comesFromOnboarding)
+    {
+        constexpr bool FORCE_CHECK = true;
+        requestUserDiscounts(FORCE_CHECK);
+        triggerOfferCheck(OfferTrigger::ONBARDING_COMPLETION);
+    }
 }
 
 void MegaApplication::onLoginFinished()
@@ -1485,6 +1494,9 @@ void MegaApplication::onLoginFinished()
     ThemeManager::instance()->init();
     Platform::getInstance()->disableContextMenu(Preferences::instance()->contextMenuDisabled());
     Platform::getInstance()->unHideTrayIcon();
+    constexpr bool FORCE_CHECK = true;
+    requestUserDiscounts(FORCE_CHECK);
+    triggerOfferCheck(OfferTrigger::AUTO_LOGIN);
 }
 
 void MegaApplication::onFetchNodesFinished()
@@ -1782,6 +1794,13 @@ void MegaApplication::createTransferManagerDialog()
     // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
     // active, tracking is disabled
     connect(mTransferManager.data() , &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
+    connect(mTransferManager.data(),
+            &TransferManager::userActivity,
+            this,
+            [this]()
+            {
+                triggerOfferCheck(OfferTrigger::USER_ACTIVITY);
+            });
     connect(mTransferQuota.get(), &TransferQuota::sendState,
             mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
     connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
@@ -1997,9 +2016,20 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
              ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) >
               Preferences::OQ_DIALOG_INTERVAL_MS)))
         {
-            preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
-            mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
-            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_FULL);
+            if (!mDiscountInfo || wasOfferShownRecently())
+            {
+                preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
+                mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
+                showUpsellDialog(UpsellPlans::ViewMode::STORAGE_FULL);
+            }
+            else
+            {
+                triggerOfferCheck(OfferTrigger::OVER_QUOTA);
+                preferences->setOverStorageDialogExecution(
+                    QDateTime::currentMSecsSinceEpoch() +
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS -
+                    Preferences::OQ_DIALOG_INTERVAL_MS);
+            }
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
@@ -2038,8 +2068,20 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
                preferences->getAlmostOverStorageDialogExecution()) >
               Preferences::OQ_DIALOG_INTERVAL_MS)))
         {
-            preferences->setAlmostOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
-            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
+            if (!mDiscountInfo || wasOfferShownRecently())
+            {
+                preferences->setAlmostOverStorageDialogExecution(
+                    QDateTime::currentMSecsSinceEpoch());
+                showUpsellDialog(UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
+            }
+            else
+            {
+                triggerOfferCheck(OfferTrigger::OVER_QUOTA);
+                preferences->setAlmostOverStorageDialogExecution(
+                    QDateTime::currentMSecsSinceEpoch() +
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS -
+                    Preferences::OQ_DIALOG_INTERVAL_MS);
+            }
         }
 
         if (infoDialog)
@@ -2160,7 +2202,11 @@ void MegaApplication::periodicTasks()
                         });
                 });
         }
-
+        if (!wasOfferShownRecently())
+        {
+            triggerOfferCheck(OfferTrigger::AUTO_LOGIN);
+        }
+        requestUserDiscounts();
         onGlobalSyncStateChanged(megaApi);
     }
 
@@ -2440,6 +2486,7 @@ void MegaApplication::showInfoDialog()
                                                            true,
                                                            USERSTATS_SHOWMAINDIALOG);
     }
+    triggerOfferCheck(OfferTrigger::USER_ACTIVITY);
 }
 
 void MegaApplication::showInfoDialogNotifications()
@@ -2504,6 +2551,12 @@ void MegaApplication::createInfoDialog()
             mTransferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
     connect(infoDialog.data(), &InfoDialog::userActivity,
             this, &MegaApplication::registerUserActivity);
+    connect(infoDialog.data(),
+            &InfoDialog::userActivity,
+            [this]()
+            {
+                triggerOfferCheck(OfferTrigger::USER_ACTIVITY);
+            });
     connect(mTransferQuota.get(), &TransferQuota::sendState,
             infoDialog.data(), &InfoDialog::setBandwidthOverquotaState);
     connect(mTransferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown,
@@ -4626,16 +4679,23 @@ void MegaApplication::closeUpsellStorageDialog()
 
 void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
 {
-    auto dialogInfo(DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>());
-    if (dialogInfo)
+    if (!mDiscountInfo || wasOfferShownRecently())
     {
-        dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
-        DialogOpener::showDialog(dialogInfo->getDialog());
+        auto dialogInfo(DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>());
+        if (dialogInfo)
+        {
+            dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
+            DialogOpener::showDialog(dialogInfo->getDialog());
+        }
+        else
+        {
+            dialogInfo = QMLComponent::addDialog<UpsellComponent>(nullptr, viewMode);
+            dialogInfo->getDialog()->setShowWhenCreated();
+        }
     }
     else
     {
-        dialogInfo = QMLComponent::addDialog<UpsellComponent>(nullptr, viewMode);
-        dialogInfo->getDialog()->setShowWhenCreated();
+        triggerOfferCheck(OfferTrigger::OVER_QUOTA);
     }
 }
 
@@ -4777,7 +4837,7 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     {
         return;
     }
-
+    triggerOfferCheck(OfferTrigger::USER_ACTIVITY);
     //Append the list of files to the upload queue, but avoid duplicates
     std::for_each(newUploadQueue.begin(), newUploadQueue.end(), [&](const QString &str) {
         if (!uploadQueue.contains(str)) {
@@ -4797,6 +4857,7 @@ void MegaApplication::shellBackup(QStringList newBackupList)
     {
         CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
                                               newBackupList);
+        triggerOfferCheck(OfferTrigger::USER_ACTIVITY);
     }
     else
     {
@@ -4815,6 +4876,7 @@ void MegaApplication::shellSync(QString localFolder)
         CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
                                           ::mega::INVALID_HANDLE,
                                           localFolder);
+        triggerOfferCheck(OfferTrigger::USER_ACTIVITY);
     }
     else
     {
@@ -5273,7 +5335,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 
     registerUserActivity();
-
+    triggerOfferCheck(OfferTrigger::USER_ACTIVITY);
     if (AppState::instance()->getAppState() == AppState::FATAL_ERROR)
     {
         if (reason == QSystemTrayIcon::Trigger)
@@ -5325,6 +5387,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                     checkSystemTray();
                     createTrayIcon();
                     showInfoDialog();
+                    triggerOfferCheck(OfferTrigger::USER_ACTIVITY);
                 }
                 else
                 {
@@ -5465,6 +5528,14 @@ void MegaApplication::openSettings(int tab)
         mSettingsDialog = new SettingsDialog(this, proxyOnly);
         mSettingsDialog->setUpdateAvailable(updateAvailable);
         connect(mSettingsDialog.data(), &SettingsDialog::userActivity, this, &MegaApplication::registerUserActivity);
+        connect(mSettingsDialog.data(),
+                &SettingsDialog::userActivity,
+                this,
+                [this]()
+                {
+                    triggerOfferCheck(OfferTrigger::USER_ACTIVITY);
+                });
+
         DialogOpener::showDialog(mSettingsDialog);
         if (proxyOnly)
         {
@@ -6352,8 +6423,31 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_OK)
         {
             getUserDataRequestReady = true;
+            auto list = request->getMegaDiscountCodeList();
+            preferences->setUserDiscountLastCheck(QDateTime::currentMSecsSinceEpoch());
+            if (list->size())
+            {
+                megaApi->getDiscountCodeInformation(
+                    list->get(0)->getCode()); // if we have multible discounts, we will always
+                                              // use the first one to trigger the offer dialog.
+            }
             checkOverStorageStates();
         }
+        break;
+    }
+    case MegaRequest::TYPE_GET_DISCOUNT_CODE_INFORMATION:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            auto discountInfo = request->getMegaDiscountCodeInfo();
+            if (discountInfo)
+            {
+                mDiscountInfo = std::shared_ptr<MegaDiscountCodeInfo>(discountInfo->copy());
+                infoDialog->setDiscountInfo(mDiscountInfo);
+                triggerOfferCheck(OfferTrigger::AUTO_LOGIN);
+            }
+        }
+
         break;
     }
     case MegaRequest::TYPE_SEND_EVENT:
@@ -6880,7 +6974,111 @@ void MegaApplication::showStalledIssuesDialog()
     {
         auto newStalledIssuesDialog = new StalledIssuesDialog();
         DialogOpener::showDialog<StalledIssuesDialog>(newStalledIssuesDialog);
-    }
+				}
 }
 
+void MegaApplication::checkAndShowOffer(std::shared_ptr<MegaDiscountCodeInfo> discountInfo)
+{
+		if (appfinished || !preferences->logged() || !discountInfo)
+		{
+				return;
+		}
+
+if(wasOfferShownRecently())
+	{
+		return;
+	}
+bool onboarding = isOnboarding();
+bool someDialogOpen = DialogOpener::anyVisibleAndActiveDialogs();
+	if( onboarding|| someDialogOpen)
+		{
+		triggerOfferCheck(OfferTrigger::SHORT_DELAY);
+		return;
+		}
+
+		preferences->setOfferDialogLastExecution(QDateTime::currentMSecsSinceEpoch());
+
+		auto dialog = QMLComponent::showDialog<OfferComponent>();
+		dialog->getDialog()->wrapper()->setDiscountInfo(discountInfo);
+}
+
+
+void MegaApplication::requestUserDiscounts(bool skipChecks)
+{
+	auto logged = preferences->logged();
+	if(appfinished || !logged)
+		{
+			return;
+		}
+	if(mDiscountInfo && mDiscountInfo->getExpiry() - QDateTime::currentSecsSinceEpoch() <=0)
+		{
+			mDiscountInfo= nullptr;
+			if(infoDialog)
+				{
+					infoDialog->setDiscountInfo(nullptr);
+				}
+		}
+	auto  difference = QDateTime::currentMSecsSinceEpoch() - preferences->getUserDiscountLastCheck();
+	if(skipChecks || (difference > Preferences::USER_DISCOUNT_CHECK_INTERVAL_MS))
+		{
+				megaApi->getUserData();
+		}
+}
+
+void MegaApplication::triggerOfferCheck(OfferTrigger trigger)
+{
+	if (appfinished || !preferences->logged())
+	{
+			return;
+	}
+
+	long long waitTime = 0;
+	switch (trigger) {
+		case OfferTrigger::APP_INITIALIZATION:
+				waitTime = Preferences::OFFER_DIALOG_INTERVAL_SINCE_STARTUP_MS;
+			break;
+		case OfferTrigger::ONBARDING_COMPLETION:
+				waitTime = Preferences::OFER_DIALOG_SHORT_DELAY_INTERVAL_MS;
+			break;
+		case OfferTrigger::SHORT_DELAY:
+				waitTime = Preferences::OFER_DIALOG_SHORT_DELAY_INTERVAL_MS;
+			break;
+		case OfferTrigger::AUTO_LOGIN:
+				waitTime = Preferences::OFER_DIALOG_AUTO_LOGIN_INTERVAL_MS;
+			break;
+		case OfferTrigger::USER_ACTIVITY:
+				waitTime = 1;
+			break;
+		case OfferTrigger::OVER_QUOTA:
+				waitTime = 1;
+			break;
+		default:
+			waitTime  =0;
+			break;
+		}
+	QTimer::singleShot(waitTime, [this](){
+			checkAndShowOffer(mDiscountInfo);
+		});
+}
+
+bool MegaApplication::wasOfferShownRecently()
+{
+	if(!preferences->logged())
+		{
+			return true;
+		}
+	auto lastExecution = preferences->getOfferDialogLastExecution();
+	auto elapsedTimeSinceLastExecution = QDateTime::currentMSecsSinceEpoch() - lastExecution;
+	return elapsedTimeSinceLastExecution<Preferences::OFFER_DIALOG_INTERVAL_MS;
+}
+
+bool MegaApplication::isOnboarding()
+{
+	bool isOnboardingDialogVisible(false);
+	if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+	{
+			isOnboardingDialogVisible = dialogInfo->getDialog()->isVisible();
+	}
+	return isOnboardingDialogVisible;
+}
 // clang-format on

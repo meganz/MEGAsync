@@ -87,6 +87,7 @@ public:
     void disableCancelling();
     void setUiInCancellingStage();
     void updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent& event);
+    void setDiscountInfo(std::shared_ptr<mega::MegaDiscountCodeInfo> discount);
 
     void on_bStorageDetails_clicked();
     HighDpiResize<QDialog> highDpiResize;
@@ -165,7 +166,7 @@ private slots:
     void onScanningVisibilityChanged(bool state);
     void onTopTransferTypeChanged(TransferData::TransferTypes);
     void showStalledIssuesDialog();
-
+    void updateUpgradeButtonState();
 signals:
 
     void openTransferManager(int tab);
@@ -258,6 +259,7 @@ private:
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;
+    std::shared_ptr<mega::MegaDiscountCodeInfo> mDiscountInfo = nullptr;
 };
 
 #endif // INFODIALOG_H

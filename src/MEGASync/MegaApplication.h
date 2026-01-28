@@ -80,6 +80,16 @@ enum GetUserStatsReason {
     USERSTATS_REMOVEVERSIONS,
 };
 
+enum OfferTrigger
+{
+    APP_INITIALIZATION,
+    ONBARDING_COMPLETION,
+    AUTO_LOGIN,
+    OVER_QUOTA,
+    USER_ACTIVITY,
+    SHORT_DELAY
+};
+
 class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
@@ -198,6 +208,11 @@ public:
     void updateUsedStorage(const bool sendEvent = false);
     void showUpsellDialog(UpsellPlans::ViewMode viewMode);
     static void showStalledIssuesDialog();
+    void checkAndShowOffer(std::shared_ptr<mega::MegaDiscountCodeInfo> discountInfo);
+    bool wasOfferShownRecently();
+    bool isOnboarding();
+    void requestUserDiscounts(bool skipChecks = false);
+    void triggerOfferCheck(OfferTrigger trigger);
 
 signals:
     void startUpdaterThread();
@@ -500,6 +515,7 @@ protected:
     std::unique_ptr<mega::MegaGfxProvider> mGfxProvider;
 
     QPointer<SyncReminderNotificationManager> mSyncReminderNotificationManager;
+    std::shared_ptr<mega::MegaDiscountCodeInfo> mDiscountInfo = nullptr;
 
     bool misSyncingStateWrongLogged;
 
