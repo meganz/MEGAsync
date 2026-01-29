@@ -10,7 +10,7 @@ elseif(APPLE)
     option(ENABLE_DESKTOP_UPDATER "Enable desktop updater tool build" ON)
 else()
     #LINUX
-    option(ENABLE_LINUX_EXT "desc" OFF) #Need to port nautilus and thunar to cmake
+    option(ENABLE_LINUX_EXT "desc" ON) #Need to port nautilus and thunar to cmake
     option(ENABLE_DESKTOP_UPDATER "Enable desktop updater tool build" OFF)
     option(DEPLOY_QT_LIBRARIES "Deploy Qt libraries with MEGAsync during the install phase" OFF)
 endif()
