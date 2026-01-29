@@ -213,9 +213,23 @@ QUrl ServiceUrls::getDesktopAppHelpUrl()
     return url;
 }
 
-QUrl ServiceUrls::getSyncHelpUrl()
+QUrl ServiceUrls::getDesktopSyncHelpUrl()
 {
     auto url = getDesktopAppHelpUrl();
+    url.setPath(url.path() + QLatin1String("/desktop-syncs"));
+    return url;
+}
+
+QUrl ServiceUrls::getDesktopBackupsHelpUrl()
+{
+    auto url = getDesktopAppHelpUrl();
+    url.setPath(url.path() + QLatin1String("/desktop-backups"));
+    return url;
+}
+
+QUrl ServiceUrls::getSyncHelpUrl()
+{
+    auto url = getDesktopSyncHelpUrl();
     url.setPath(url.path() + QLatin1String("/how-does-syncing-work"));
     return url;
 }
@@ -250,14 +264,14 @@ QUrl ServiceUrls::getCredentialStuffingHelpUrl()
 
 QUrl ServiceUrls::getCreateBackupHelpUrl()
 {
-    auto url = getDesktopAppHelpUrl();
+    auto url = getDesktopBackupsHelpUrl();
     url.setPath(url.path() + QLatin1String("/create-backup"));
     return url;
 }
 
 QUrl ServiceUrls::getCreateSyncHelpUrl()
 {
-    auto url = getDesktopAppHelpUrl();
+    auto url = getDesktopSyncHelpUrl();
     url.setPath(url.path() + QLatin1String("/set-up-syncs"));
     return url;
 }
