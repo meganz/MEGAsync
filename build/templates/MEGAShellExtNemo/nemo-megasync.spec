@@ -9,7 +9,7 @@ Source0:	nemo-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.io>
 
-BuildRequires:   nemo-devel
+BuildRequires:   nemo-devel, cmake, gcc-c++
 
 %if 0%{?rhel} || 0%{?rhel_version} || 0%{?centos} || 0%{?centos_version} || 0%{?almalinux}
 %global debug_package %{nil}
@@ -17,16 +17,16 @@ BuildRequires: redhat-rpm-config
 BuildRequires: gcc-c++
 %endif
 %if 0%{?suse_version} || 0%{?sle_version}
-BuildRequires: libnemo-extension1, libqt5-qtbase-devel
+BuildRequires: libnemo-extension1
 %else
-BuildRequires: nemo-extensions, qt5-qtbase-devel
+BuildRequires: nemo-extensions
 %endif
 %if 0%{?fedora_version} 
 BuildRequires: fedora-logos
 %global debug_package %{nil}
 %endif
 %if 0%{?scientificlinux_version} 
-BuildRequires: sl-logos, gcc-c++
+BuildRequires: sl-logos
 %endif
 
 Requires:       nemo, megasync >= 5.3.0
@@ -44,29 +44,16 @@ Requires:       nemo, megasync >= 5.3.0
 %setup -q
 
 %build
-if [ 0$(head /usr/share/doc/nemo/NEWS -n 1 | awk '{print $NF}' | awk -F':' '{print $1}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}') -gt 31503 ]; then 
-    for i in data/emblems/64x64/*smaller.png; do mv $i ${i/-smaller/}; done
-    echo "NEWER NEMO REQUIRES SMALLER OVERLAY ICONS"    
-else
-    rm data/emblems/64x64/*smaller.png
-    echo "OLDER NEMO DOES NOT REQUIRE SMALLER OVERLAY ICONS"
-fi
-
-export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-%if 0%{?rhel}
-qmake-qt5 QMAKE_CFLAGS_RELEASE+="-g" QMAKE_CXXFLAGS_RELEASE+="-g" || qmake
-%else
-qmake-qt5 || qmake
-%endif
-make
-
+cmake -S . -B %{_builddir} -DCMAKE_INSTALL_PREFIX=%{_prefix}
+cmake --build %{_builddir}
 
 %install
-make install
+DESTDIR=%{buildroot} cmake --install %{_builddir}
+
 echo "== INSTALLED TREE =="
 find %{buildroot} -type f | sort
 # clean up
-rm -fr $RPM_BUILD_ROOT/usr/share/icons/hicolor/icon-theme.cache || true
+rm -fr %{buildroot}/%{_datadir}/icons/hicolor/icon-theme.cache || true
 
 %post
 %if 0%{?suse_version} >= 1140
