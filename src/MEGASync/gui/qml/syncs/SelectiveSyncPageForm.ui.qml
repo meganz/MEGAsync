@@ -41,12 +41,17 @@ FooterButtonsPage {
             right: parent.right
             margins: 0
         }
+
         spacing: Constants.defaultComponentSpacing
+                 - (localFolder.folderField.hint.visible + remoteFolder.folderField.hint.visible)
+                    * Constants.defaultComponentSpacing / 3
+
 
         ColumnLayout {
             Layout.preferredWidth: parent.width
-            spacing: textSpacings
-
+            spacing: (localFolder.folderField.hint.visible && remoteFolder.folderField.hint.visible) ?
+                         textSpacings / 4
+                       : textSpacings
             HeaderTexts {
                 id: header
 
@@ -67,24 +72,31 @@ FooterButtonsPage {
             }
         }
 
-        ChooseSyncFolder {
-            id: localFolder
+        ColumnLayout {
+            Layout.preferredWidth: parent.width
+            spacing: Constants.defaultComponentSpacing
+                     - (localFolder.folderField.hint.visible + remoteFolder.folderField.hint.visible)
+                        * Constants.defaultComponentSpacing / 2.5
 
-            title: SyncsStrings.selectLocalFolder
-            leftIconSource: Images.pc
-            chosenPath: syncsDataAccess.defaultLocalFolder
-            Layout.preferredWidth: parent.width + 8
-            Layout.leftMargin: -4
-        }
+            ChooseSyncFolder {
+                id: localFolder
 
-        ChooseSyncFolder {
-            id: remoteFolder
+                title: SyncsStrings.selectLocalFolder
+                leftIconSource: Images.pc
+                chosenPath: syncsDataAccess.defaultLocalFolder
+                Layout.preferredWidth: parent.width + 8
+                Layout.leftMargin: -4
+            }
 
-            title: SyncsStrings.selectMEGAFolder
-            leftIconSource: Images.megaOutline
-            chosenPath: syncsDataAccess.defaultRemoteFolder
-            Layout.preferredWidth: parent.width + 8
-            Layout.leftMargin: -4
+            ChooseSyncFolder {
+                id: remoteFolder
+
+                title: SyncsStrings.selectMEGAFolder
+                leftIconSource: Images.megaOutline
+                chosenPath: syncsDataAccess.defaultRemoteFolder
+                Layout.preferredWidth: parent.width + 8
+                Layout.leftMargin: -4
+            }
         }
     }
 
