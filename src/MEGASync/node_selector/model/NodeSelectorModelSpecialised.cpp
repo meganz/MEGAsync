@@ -295,7 +295,7 @@ NodeSelectorModelBackups::NodeSelectorModelBackups(QObject* parent):
     NodeSelectorModel(parent),
     mBackupsHandle(INVALID_HANDLE),
     mBackupDevicesSize(0),
-    mDeviceNamesRequest(UserAttributes::DeviceNames::requestDeviceName())
+    mDeviceNamesRequest(UserAttributes::DeviceNames::requestDeviceNames())
 {}
 
 QVariant NodeSelectorModelBackups::getDisplayText(NodeSelectorModelItem* item) const

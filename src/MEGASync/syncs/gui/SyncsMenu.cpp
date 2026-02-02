@@ -240,7 +240,7 @@ QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSetting
 BackupSyncsMenu::BackupSyncsMenu(QWidget* parent):
     SyncsMenu(mega::MegaSync::TYPE_BACKUP, mBackupItemIndent, parent),
     mDevNameAction(nullptr),
-    mDeviceNameRequest(UserAttributes::DeviceNames::requestDeviceName()),
+    mDeviceNameRequest(UserAttributes::DeviceNames::requestDeviceNames()),
     mMyBackupsHandleRequest(UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
 {
     connect(mDeviceNameRequest.get(),

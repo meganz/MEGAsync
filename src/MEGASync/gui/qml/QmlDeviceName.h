@@ -21,7 +21,7 @@ public:
 
 signals:
     void deviceNameChanged();
-    void deviceNameSet();
+    void deviceNameSetRequestCompleted();
 
 private slots:
     void onDeviceNameSet();

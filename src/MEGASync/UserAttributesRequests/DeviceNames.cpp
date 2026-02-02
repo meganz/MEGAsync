@@ -15,7 +15,7 @@ namespace UserAttributes
 
 DeviceNames::DeviceNames(const QString& userEmail):
     AttributeRequest(userEmail),
-    mNameSuffix(0),
+    mAutoDeviceNameSuffix(0),
     mDeviceName(getDefaultDeviceName()),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
@@ -24,9 +24,22 @@ DeviceNames::DeviceNames(const QString& userEmail):
         QString::fromUtf8("Default device name: \"%1\"").arg(mDeviceName).toUtf8().constData());
 }
 
-std::shared_ptr<DeviceNames> DeviceNames::requestDeviceName()
+std::shared_ptr<DeviceNames> DeviceNames::requestDeviceNames()
 {
     return UserAttributesManager::instance().requestAttribute<DeviceNames>();
+}
+
+DeviceNames::Name DeviceNames::getDefaultDeviceName()
+{
+    const auto MAX_DEVICE_NAME_SIZE = 28;
+
+    auto deviceName = Platform::getInstance()->getDeviceName();
+    deviceName.truncate(MAX_DEVICE_NAME_SIZE);
+
+    // If empty, use generic one.
+    return deviceName.isEmpty() ?
+               QCoreApplication::translate("UserAttributes::DeviceName", "My computer") :
+               deviceName;
 }
 
 void DeviceNames::onRequestFinish(mega::MegaApi*,
@@ -39,7 +52,7 @@ void DeviceNames::onRequestFinish(mega::MegaApi*,
         {
             case mega::MegaRequest::TYPE_GET_ATTR_USER:
             {
-                processGetDeviceNameCallback(request, error);
+                processGetDeviceNamesCallback(request, error);
                 break;
             }
             case mega::MegaRequest::TYPE_SET_ATTR_USER:
@@ -60,7 +73,7 @@ AttributeRequest::RequestInfo DeviceNames::fillRequestInfo()
 {
     std::function<void()> requestFunc = []()
     {
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, "Requesting device name");
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, "Requesting device names");
         MegaSyncApp->getMegaApi()->getUserAttribute(static_cast<char*>(nullptr),
                                                     mega::MegaApi::USER_ATTR_DEVICE_NAMES,
                                                     nullptr);
@@ -83,33 +96,17 @@ bool DeviceNames::isAttributeReady() const
     return !isRequestPending();
 }
 
-QString DeviceNames::getDeviceName() const
+DeviceNames::Name DeviceNames::getDeviceName() const
 {
     return mDeviceName;
 }
 
-QString DeviceNames::getDeviceName(const DeviceId& deviceId) const
+DeviceNames::Name DeviceNames::getDeviceName(const DeviceId& deviceId) const
 {
     return mAccountDeviceNames.value(deviceId);
 }
 
-QString DeviceNames::getDefaultDeviceName()
-{
-    const auto MAX_DEVICE_NAME_SIZE = 28;
-
-    QString deviceName = Platform::getInstance()->getDeviceName();
-    if (deviceName.length() > MAX_DEVICE_NAME_SIZE)
-    {
-        deviceName.truncate(MAX_DEVICE_NAME_SIZE);
-    }
-
-    // If empty, use generic one.
-    return deviceName.isEmpty() ?
-               QCoreApplication::translate("UserAttributes::DeviceName", "My computer") :
-               deviceName;
-}
-
-void DeviceNames::setDeviceName(const QString& newDeviceName)
+void DeviceNames::setDeviceName(const DeviceNames::Name& newDeviceName)
 {
     mDeviceName = newDeviceName;
     setDeviceNameAttribute();
@@ -122,6 +119,7 @@ void DeviceNames::setDeviceNameAttribute()
         QString::fromUtf8("Setting Device name to \"%1\"").arg(mDeviceName).toUtf8().constData());
 
     mRequestInfo.mParamInfo[mega::MegaApi::USER_ATTR_DEVICE_NAMES]->setPending(true);
+
     MegaSyncApp->getMegaApi()->setDeviceName(nullptr, mDeviceName.toUtf8().constData());
 }
 
@@ -130,7 +128,7 @@ QMap<DeviceNames::DeviceId, DeviceNames::Name> DeviceNames::getDeviceNames() con
     return mAccountDeviceNames;
 }
 
-void DeviceNames::processGetDeviceNameCallback(mega::MegaRequest* request, mega::MegaError* error)
+void DeviceNames::processGetDeviceNamesCallback(mega::MegaRequest* request, mega::MegaError* error)
 {
     if (error->getErrorCode() == mega::MegaError::API_OK)
     {
@@ -140,8 +138,8 @@ void DeviceNames::processGetDeviceNameCallback(mega::MegaRequest* request, mega:
 
         for (int keyIndex = 0; keyIndex < deviceNameKeys->size(); ++keyIndex)
         {
-            QString deviceId = QString::fromUtf8(deviceNameKeys->get(keyIndex));
-            QString deviceName = QString::fromUtf8(
+            const auto deviceId = QString::fromUtf8(deviceNameKeys->get(keyIndex));
+            const auto deviceName = QString::fromUtf8(
                 QByteArray::fromBase64(deviceNameMap->get(deviceNameKeys->get(keyIndex))));
 
             mAccountDeviceNames.insert(deviceId, deviceName);
@@ -152,7 +150,7 @@ void DeviceNames::processGetDeviceNameCallback(mega::MegaRequest* request, mega:
             mDeviceName = mAccountDeviceNames[QString::fromUtf8(mMegaApi->getDeviceId())];
 
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
-                               QString::fromUtf8("Got device name from remote: \"%1\"")
+                               QString::fromUtf8("Current device name: \"%1\"")
                                    .arg(mDeviceName)
                                    .toUtf8()
                                    .constData());
@@ -162,13 +160,15 @@ void DeviceNames::processGetDeviceNameCallback(mega::MegaRequest* request, mega:
     }
     else if (error->getErrorCode() == mega::MegaError::API_ENOENT)
     {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, "Device names attribute does not exist");
+
         setDeviceNameAttribute();
     }
     else
     {
-        QString errorMsg = QString::fromUtf8(error->getErrorString());
-        QString logMsg(
-            QString::fromUtf8("Error getting device name from remote: \"%1\"").arg(errorMsg));
+        const auto errorMsg = QString::fromUtf8(error->getErrorString());
+        const auto logMsg =
+            QString::fromUtf8("Error getting device names from remote: \"%1\"").arg(errorMsg);
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
     }
 }
@@ -177,26 +177,20 @@ void DeviceNames::processSetDeviceNameCallback(mega::MegaRequest* request, mega:
 {
     if (error->getErrorCode() == mega::MegaError::API_OK)
     {
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
-                           QString::fromUtf8("Device name(%1) successfully set on remote")
-                               .arg(mDeviceName)
-                               .toUtf8()
-                               .constData());
-        mNameSuffix = 0;
+        mAutoDeviceNameSuffix = 0;
         mDeviceName = QString::fromUtf8(request->getName());
+
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Device name successfully set on remote");
+
         emit attributeReady(mDeviceName);
     }
     else
     {
-        QString logMsg(QString::fromUtf8("Error setting device name on remote: \"%1\"")
-                           .arg(QString::fromUtf8(error->getErrorString())));
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Error setting device name on remote");
 
         if (error->getErrorCode() == mega::MegaError::API_EEXIST)
         {
-            // Increment suffix and retry
-            mNameSuffix++;
-            mDeviceName = mDeviceName + QString::fromLatin1(" - ") + QString::number(mNameSuffix);
+            updateAutoDeviceName();
             setDeviceNameAttribute();
         }
         else
@@ -206,4 +200,16 @@ void DeviceNames::processSetDeviceNameCallback(mega::MegaRequest* request, mega:
     }
 }
 
+void DeviceNames::updateAutoDeviceName()
+{
+    // Make sure we don't use an already taken name
+    const auto takenNames = mAccountDeviceNames.values();
+    while (takenNames.contains(mDeviceName))
+    {
+        // Increment suffix
+        mAutoDeviceNameSuffix++;
+        mDeviceName = getDefaultDeviceName() + QString::fromLatin1(" - ") +
+                      QString::number(mAutoDeviceNameSuffix);
+    }
+}
 }

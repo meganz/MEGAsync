@@ -2,7 +2,7 @@
 
 QmlDeviceName::QmlDeviceName(QObject* parent):
     QObject{parent},
-    mDeviceNameRequest(UserAttributes::DeviceNames::requestDeviceName())
+    mDeviceNameRequest(UserAttributes::DeviceNames::requestDeviceNames())
 {
     connect(mDeviceNameRequest.get(),
             &UserAttributes::DeviceNames::attributeReady,
@@ -40,6 +40,6 @@ void QmlDeviceName::onDeviceNameSet()
     emit deviceNameChanged();
     if (!isInit)
     {
-        emit deviceNameSet();
+        emit deviceNameSetRequestCompleted();
     }
 }

@@ -15,7 +15,7 @@ DeviceNameChecker::DeviceNameChecker(QObject* parent, QString deviceNameCandidat
 void DeviceNameChecker::run()
 {
     mMyBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-    mDeviceName = UserAttributes::DeviceNames::requestDeviceName();
+    mDeviceName = UserAttributes::DeviceNames::requestDeviceNames();
 
     mPendingRequests = INITIAL_PENDING_REQUEST;
     mBackupDeviceNames.clear();
