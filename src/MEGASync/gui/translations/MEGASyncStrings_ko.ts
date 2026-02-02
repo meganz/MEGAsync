@@ -6037,8 +6037,8 @@ Enter a different name</source>
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
+        <translation>- Windows에서 문제를 일으키는 그래픽 드라이버에 대한 안정성을 향상하였습니다
+- 작은 버그를 수정하고 성능을 향상하였습니다
 </translation>
     </message>
     <message>
@@ -6595,7 +6595,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation>Destination folder doesn’t exist. Choose another.</translation>
+        <translation>대상 폴더가 존재하지 않습니다. 다른 것을 선택하세요.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -7280,7 +7280,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backup</source>
         <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Backup</translation>
+        <translation>백업</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7305,7 +7305,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Sync</source>
         <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Sync</translation>
+        <translation>동기화</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8646,7 +8646,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
+        <translation>[A]더 알아보기[/A]</translation>
     </message>
 </context>
 <context>

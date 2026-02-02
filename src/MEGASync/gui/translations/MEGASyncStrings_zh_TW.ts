@@ -6037,8 +6037,8 @@ Enter a different name</source>
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
+        <translation>- 改善Windows系統下顯示卡驅動程式的可靠性
+- 修復了一些小錯誤並提升了效能
 </translation>
     </message>
     <message>
@@ -6595,7 +6595,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation>Destination folder doesn’t exist. Choose another.</translation>
+        <translation>目標資料夾不存在。請選擇其它資料夾。</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -7280,7 +7280,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backup</source>
         <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Backup</translation>
+        <translation>備份</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7305,7 +7305,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Sync</source>
         <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Sync</translation>
+        <translation>同步</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8646,7 +8646,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
+        <translation>[A]瞭解更多[/A]</translation>
     </message>
 </context>
 <context>

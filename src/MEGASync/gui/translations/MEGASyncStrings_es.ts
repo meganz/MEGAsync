@@ -3442,8 +3442,6 @@ Transfer will automatically resume when you re-open the app.</source>
 La transferencia se reanudará automáticamente en cuanto vuelvas a abrir la aplicación.</numerusform>
             <numerusform>Hay transferencias activas. ¿Salir de la aplicación?
 Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la aplicación.</numerusform>
-            <numerusform>Hay transferencias activas. ¿Salir de la aplicación?
-Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la aplicación.</numerusform>
         </translation>
     </message>
     <message>
@@ -6087,8 +6085,8 @@ Introduzca un nombre diferente.</translation>
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
+        <translation>- Mayor fiabilidad para drivers gráficos problemáticos en Windows.
+- Correcciones de errores menores y mejoras de rendimiento.
 </translation>
     </message>
     <message>
@@ -6645,7 +6643,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation>Destination folder doesn’t exist. Choose another.</translation>
+        <translation>La carpeta de destino no existe. Elige otra.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -7361,7 +7359,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Sync</source>
         <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Sync</translation>
+        <translation>Sincronizar</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8712,7 +8710,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
+        <translation>[A]Más información[/A]</translation>
     </message>
 </context>
 <context>

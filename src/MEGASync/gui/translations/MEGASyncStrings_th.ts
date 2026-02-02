@@ -4052,7 +4052,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถสำรองข้อมูลได้เนื่องจากอุปกรณ์ต้นทางยังไม่มีชื่อ กรุณาตั้งชื่ออุปกรณ์แล้วลองใหม่อีกครั้ง หากยังพบปัญหา กรุณาติดต่อฝ่ายสนับสนุน</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4958,7 +4958,7 @@ Enter a different name</source>
     <message>
         <source>Upload</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>อัปโหลด</translation>
     </message>
 </context>
 <context>
@@ -4996,7 +4996,7 @@ Enter a different name</source>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์ว่างเปล่า</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -6033,16 +6033,16 @@ Enter a different name</source>
         <source>- Improved reliability for problematic graphics drivers on Windows.
 - Minor bug fixes and performance improvements.
 </source>
-        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
+        <translatorcomment></translatorcomment>
+        <translation>- ปรับปรุงความเสถียรในการทำงานร่วมกับไดรเวอร์กราฟิกที่มีปัญหาบน Windows
+- แก้ไขข้อผิดพลาดเล็กน้อยและปรับปรุงประสิทธิภาพการทำงานทั่วไป
 </translation>
     </message>
     <message>
         <source>- We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- เราได้แก้ไขข้อผิดพลาดและปรับปรุงแอปให้ทำงานเสถียรยิ่งขึ้น</translation>
     </message>
 </context>
 <context>
@@ -6128,7 +6128,7 @@ Enter a different name</source>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
         <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ตรวจไม่พบการตั้งค่าพร็อกซี หากต้องการเชื่อมต่อ กรุณากำหนดค่า http_proxy หรือ https_proxy ที่ถูกต้องในสภาพแวดล้อมของคุณ</translation>
     </message>
 </context>
 <context>
@@ -6587,22 +6587,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>มีโฟลเดอร์ชื่อนี้อยู่ในตำแหน่งดังกล่าวแล้ว กรุณาเลือกตำแหน่งอื่น</translation>
     </message>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation>Destination folder doesn’t exist. Choose another.</translation>
+        <translatorcomment></translatorcomment>
+        <translation>ไม่พบโฟลเดอร์ปลายทาง กรุณาเลือกโฟลเดอร์ใหม่</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เกิดข้อผิดพลาดขณะย้ายหรือลบโฟลเดอร์สำรองข้อมูลใน MEGA</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถย้ายหรือลบโฟลเดอร์สำรองข้อมูลใน MEGA ได้ สาเหตุ: %1</translation>
     </message>
 </context>
 <context>
@@ -7277,7 +7277,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backup</source>
         <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Backup</translation>
+        <translation>สำรองข้อมูล</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7302,7 +7302,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Sync</source>
         <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Sync</translation>
+        <translation>ซิงค์ข้อมูล</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8643,7 +8643,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
+        <translation>[A]เรียนรู้เพิ่มเติม[/A]</translation>
     </message>
 </context>
 <context>
@@ -9708,7 +9708,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 วินาที</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9787,7 +9787,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9802,7 +9802,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9867,7 +9867,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>TB</source>

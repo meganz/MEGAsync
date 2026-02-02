@@ -3442,8 +3442,6 @@ Transfer will automatically resume when you re-open the app.</source>
 A transferência continuará automaticamente quando você abrir o aplicativo de novo.</numerusform>
             <numerusform>Há transferências ativas. Você quer sair do aplicativo?
 As transferências continuarão automaticamente quando você abrir o aplicativo de novo.</numerusform>
-            <numerusform>Há transferências ativas. Você quer sair do aplicativo?
-As transferências continuarão automaticamente quando você abrir o aplicativo de novo.</numerusform>
         </translation>
     </message>
     <message>
@@ -6088,8 +6086,8 @@ Digite um nome diferente.
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
+        <translation>- Mais fiabilidade para drivers de gráficos com problemas no Windows
+- Correção de pequenos bugs e melhorias de desempenho
 </translation>
     </message>
     <message>
@@ -6646,7 +6644,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation>Destination folder doesn’t exist. Choose another.</translation>
+        <translation>A pasta de destino não existe. Escolha outra.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -7337,7 +7335,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Backup</source>
         <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Backup</translation>
+        <translation>Fazer backup</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7362,7 +7360,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Sync</source>
         <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Sync</translation>
+        <translation>Sincronizar</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8713,7 +8711,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
+        <translation>[A]Mais informações[/A]</translation>
     </message>
 </context>
 <context>
