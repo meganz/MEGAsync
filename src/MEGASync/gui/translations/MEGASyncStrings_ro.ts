@@ -6133,8 +6133,8 @@ Introdu un alt nume.</translation>
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
+        <translation>- Îmbunătățită fiabilitatea driverelor grafice problematice pe Windows
+- Corecții de erori minore și îmbunătiri ale performanței
 </translation>
     </message>
     <message>
@@ -6691,7 +6691,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation>Destination folder doesn’t exist. Choose another.</translation>
+        <translation>Folder de destinație inexistent. Selectați altul.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -7413,7 +7413,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Sync</source>
         <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Sync</translation>
+        <translation>Sincronizează</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8774,7 +8774,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
+        <translation>[A]En apprendre davantage[/A]</translation>
     </message>
 </context>
 <context>

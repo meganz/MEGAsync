@@ -6037,8 +6037,8 @@ Farklı bir ad girin.</translation>
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
+        <translation>- Windows’taki sorunlu grafik sürücüleri için güvenilirlik artırıldı
+- Küçük hata düzeltmeleri ve performans iyileştirmeleri yapıldı
 </translation>
     </message>
     <message>
@@ -6595,7 +6595,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation>Destination folder doesn’t exist. Choose another.</translation>
+        <translation>Hedef klasör mevcut değil. Başka bir klasör seçin.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -7280,7 +7280,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Backup</source>
         <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Backup</translation>
+        <translation>Yedekle</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7305,7 +7305,7 @@ Yine de silmek istiyor musunuz?</translation>
     <message>
         <source>Sync</source>
         <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Sync</translation>
+        <translation>Senkronize et</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8646,7 +8646,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
+        <translation>[A]Daha fazlasını öğren[/A]</translation>
     </message>
 </context>
 <context>

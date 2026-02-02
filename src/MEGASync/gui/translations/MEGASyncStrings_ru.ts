@@ -6133,8 +6133,8 @@ Enter a different name</source>
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
+        <translation>- Повышена надёжность проблемных графических драйверов в Windows
+- Мелкие исправления ошибок и улучшения производительности
 </translation>
     </message>
     <message>
@@ -6691,7 +6691,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation>Destination folder doesn’t exist. Choose another.</translation>
+        <translation>Папка назначения не существует. Выберите другую.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -7388,7 +7388,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backup</source>
         <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Backup</translation>
+        <translation>Резервное копирование</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7413,7 +7413,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Sync</source>
         <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Sync</translation>
+        <translation>Синхронизировать</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8774,7 +8774,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
+        <translation>[A]Подробнее[/A]</translation>
     </message>
 </context>
 <context>

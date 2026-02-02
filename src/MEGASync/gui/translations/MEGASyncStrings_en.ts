@@ -6085,8 +6085,8 @@ Enter a different name.</translation>
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
+        <translation>- Improved reliability for problematic graphics drivers on Windows
+- Minor bug fixes and performance improvements
 </translation>
     </message>
     <message>

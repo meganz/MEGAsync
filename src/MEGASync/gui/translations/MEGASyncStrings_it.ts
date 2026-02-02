@@ -3442,8 +3442,6 @@ Transfer will automatically resume when you re-open the app.</source>
 Il trasferimento riprenderà automaticamente quando riaprirai l’app.</numerusform>
             <numerusform>Ci sono trasferimenti attivi. Uscire dall’app?
 I trasferimenti riprenderanno automaticamente quando riaprirai l’app.</numerusform>
-            <numerusform>Ci sono trasferimenti attivi. Uscire dall’app?
-I trasferimenti riprenderanno automaticamente quando riaprirai l’app.</numerusform>
         </translation>
     </message>
     <message>
@@ -6083,15 +6081,6 @@ Inserisci un nome differente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
-</source>
-        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation>- Improved reliability for problematic graphics drivers on Windows.
-- Minor bug fixes and performance improvements.
-</translation>
-    </message>
-    <message>
         <source>- We&apos;ve fixed bugs and made the app more reliable.
 </source>
         <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
@@ -6641,11 +6630,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <source>Backup folder already exists on destination. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Destination folder doesn’t exist. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation>Destination folder doesn’t exist. Choose another.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -7361,7 +7345,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Sync</source>
         <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
-        <translation>Sync</translation>
+        <translation>Sincronizza</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -8712,7 +8696,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
+        <translation>[A]Scopri di più[/A]</translation>
     </message>
 </context>
 <context>
