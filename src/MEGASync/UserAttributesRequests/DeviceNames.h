@@ -42,6 +42,7 @@ private:
 
     int mAutoDeviceNameSuffix;
     Name mDeviceName;
+    DeviceId mDeviceId;
     mega::MegaApi* mMegaApi = nullptr;
     QMap<DeviceId, Name> mAccountDeviceNames;
 };

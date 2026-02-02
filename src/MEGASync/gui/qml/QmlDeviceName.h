@@ -28,6 +28,7 @@ private slots:
 
 private:
     QString mName;
+    bool mSetDeviceNameRequested;
     std::shared_ptr<UserAttributes::DeviceNames> mDeviceNameRequest;
 };
 

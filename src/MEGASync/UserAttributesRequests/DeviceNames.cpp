@@ -19,6 +19,11 @@ DeviceNames::DeviceNames(const QString& userEmail):
     mDeviceName(getDefaultDeviceName()),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
+    if (mMegaApi)
+    {
+        mDeviceId = QString::fromUtf8(mMegaApi->getDeviceId());
+    }
+
     mega::MegaApi::log(
         mega::MegaApi::LOG_LEVEL_DEBUG,
         QString::fromUtf8("Default device name: \"%1\"").arg(mDeviceName).toUtf8().constData());
@@ -145,18 +150,28 @@ void DeviceNames::processGetDeviceNamesCallback(mega::MegaRequest* request, mega
             mAccountDeviceNames.insert(deviceId, deviceName);
         }
 
-        if (mAccountDeviceNames.contains(QString::fromUtf8(mMegaApi->getDeviceId())))
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, "Got device names from remote");
+
+        const auto curentDeviceName = mAccountDeviceNames.constFind(mDeviceId);
+        if (curentDeviceName != mAccountDeviceNames.cend())
         {
-            mDeviceName = mAccountDeviceNames[QString::fromUtf8(mMegaApi->getDeviceId())];
+            mDeviceName = curentDeviceName.value();
 
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                                QString::fromUtf8("Current device name: \"%1\"")
                                    .arg(mDeviceName)
                                    .toUtf8()
                                    .constData());
+            emit attributeReady(mDeviceName);
         }
+        else
+        {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
+                               "Current device name not set on remote");
 
-        emit attributeReady(mDeviceName);
+            updateAutoDeviceName();
+            setDeviceNameAttribute();
+        }
     }
     else if (error->getErrorCode() == mega::MegaError::API_ENOENT)
     {
