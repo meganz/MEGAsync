@@ -284,7 +284,7 @@ NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(SelectTypeS
     setTitle(MegaNodeNames::getBackupsName());
 
     // Monitor Device Names changes and update the title if the current folder is a Device Folder
-    auto deviceNamesRequest = UserAttributes::DeviceNames::requestDeviceName();
+    auto deviceNamesRequest = UserAttributes::DeviceNames::requestDeviceNames();
     connect(deviceNamesRequest.get(),
             &UserAttributes::DeviceNames::attributeReady,
             this,

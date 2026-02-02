@@ -15,7 +15,8 @@ public:
 
     DeviceNames(const QString& userEmail);
 
-    static std::shared_ptr<DeviceNames> requestDeviceName();
+    static std::shared_ptr<DeviceNames> requestDeviceNames();
+    static Name getDefaultDeviceName();
 
     void onRequestFinish(mega::MegaApi*,
                          mega::MegaRequest* incoming_request,
@@ -25,22 +26,23 @@ public:
 
     bool isAttributeReady() const override;
 
-    QString getDeviceName() const;
-    QString getDeviceName(const DeviceId& deviceId) const;
-    QString getDefaultDeviceName();
-    void setDeviceName(const QString& newDeviceName);
+    Name getDeviceName() const;
+    Name getDeviceName(const DeviceId& deviceId) const;
+    void setDeviceName(const Name& newDeviceName);
     void setDeviceNameAttribute();
     QMap<DeviceId, Name> getDeviceNames() const;
 
 signals:
-    void attributeReady(const QString& deviceName);
+    void attributeReady(const Name& deviceName);
 
 private:
-    void processGetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e);
+    void processGetDeviceNamesCallback(mega::MegaRequest* incoming_request, mega::MegaError* e);
     void processSetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e);
+    void updateAutoDeviceName();
 
-    int mNameSuffix;
-    QString mDeviceName;
+    int mAutoDeviceNameSuffix;
+    Name mDeviceName;
+    DeviceId mDeviceId;
     mega::MegaApi* mMegaApi = nullptr;
     QMap<DeviceId, Name> mAccountDeviceNames;
 };

@@ -2,7 +2,8 @@
 
 QmlDeviceName::QmlDeviceName(QObject* parent):
     QObject{parent},
-    mDeviceNameRequest(UserAttributes::DeviceNames::requestDeviceName())
+    mSetDeviceNameRequested(false),
+    mDeviceNameRequest(UserAttributes::DeviceNames::requestDeviceNames())
 {
     connect(mDeviceNameRequest.get(),
             &UserAttributes::DeviceNames::attributeReady,
@@ -23,6 +24,8 @@ QString QmlDeviceName::getDeviceName() const
 
 void QmlDeviceName::setDeviceName(const QString& newName)
 {
+    mSetDeviceNameRequested = true;
+
     if (mName == newName)
     {
         onDeviceNameSet();
@@ -35,11 +38,13 @@ void QmlDeviceName::setDeviceName(const QString& newName)
 
 void QmlDeviceName::onDeviceNameSet()
 {
-    const auto isInit = mName.isEmpty();
     mName = mDeviceNameRequest->getDeviceName();
     emit deviceNameChanged();
-    if (!isInit)
+
+    // Emit only if this object is the source of the device name set
+    if (mSetDeviceNameRequested)
     {
-        emit deviceNameSet();
+        mSetDeviceNameRequested = false;
+        emit deviceNameSetRequestCompleted();
     }
 }

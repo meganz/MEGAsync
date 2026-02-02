@@ -48,7 +48,7 @@ DeviceNamePageForm {
     QmlDeviceName {
         id: deviceName
 
-        onDeviceNameSet: {
+        onDeviceNameSetRequestCompleted: {
             pageInWaitState(false);
             root.deviceNameMoveToSyncType();
         }
