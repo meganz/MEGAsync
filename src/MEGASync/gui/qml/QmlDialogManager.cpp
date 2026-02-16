@@ -61,6 +61,7 @@ bool QmlDialogManager::openOnboardingDialog(bool force)
             onboardingInfo->setIgnoreCloseAllAction(true);
         }
     }
+    emit openOnboardingDialogSignal();
     return true;
 }
 
