@@ -2274,6 +2274,11 @@ Check your email inbox for instructions on unlocking your account and tips on ho
 <context>
     <name>InfoDialog</name>
     <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%1%折扣%2</translation>
+    </message>
+    <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>添加同步</translation>
@@ -4053,7 +4058,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>无法创建备份，因为要备份的设备没有名称。请为您的设备命名，然后再试一次。如果问题仍然存在，请联系客服。</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4961,7 +4966,7 @@ Enter a different name</source>
     <message>
         <source>Upload</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>上传</translation>
     </message>
 </context>
 <context>
@@ -4999,7 +5004,7 @@ Enter a different name</source>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>空文件夹</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5248,6 +5253,87 @@ Enter a different name</source>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
         <translation>上传和下载</translation>
+    </message>
+</context>
+<context>
+    <name>OfferStrings</name>
+    <message>
+        <source>%1 of storage</source>
+        <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1储存空间</translation>
+    </message>
+    <message>
+        <source>%1 of transfer</source>
+        <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1传输流量</translation>
+    </message>
+    <message>
+        <source>%1 per month, charged yearly</source>
+        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
+        <translation>每月%1，按年收费</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n天</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <translatorcomment>Number of remaining hours before the offer expire variable is for remaining hours. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n小时</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <translatorcomment>Number of remaining minutes before the offer expire,variable is for remaining minutes. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n分钟</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>*Tax may apply.</source>
+        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
+        <translation>*可能会有税费。</translation>
+    </message>
+    <message>
+        <source>Grab Deal</source>
+        <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
+        <translation>抢购优惠</translation>
+    </message>
+    <message>
+        <source>MEGA %1</source>
+        <translatorcomment>Plan name used in the offer dialog, the variable is for plan name snc.6228</translatorcomment>
+        <translation>MEGA %1</translation>
+    </message>
+    <message>
+        <source>MEGA Pass</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA Pass</translation>
+    </message>
+    <message>
+        <source>MEGA VPN</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA VPN</translation>
+    </message>
+    <message>
+        <source>Object storage</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>对象储存</translation>
+    </message>
+    <message>
+        <source>Special offers ends in:</source>
+        <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
+        <translation>特惠活动将于以下时间结束:</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]%1% off[/B] for %n month</source>
+        <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n个月享受[B]%1%折扣[/B]</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -6040,12 +6126,6 @@ Enter a different name</source>
         <translation>- 提高了Windows系统上存在问题的图形驱动程序支持的可靠性
 - 修复了一些小错误并提升了性能
 </translation>
-    </message>
-    <message>
-        <source>- We&apos;ve fixed bugs and made the app more reliable.
-</source>
-        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9581,6 +9661,11 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UpsellStrings</name>
     <message>
+        <source>%1 after tax</source>
+        <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
+        <translation>税后%1</translation>
+    </message>
+    <message>
         <source>%1 billed yearly</source>
         <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
         <translation>%1按年结算</translation>
@@ -9599,6 +9684,23 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation>%1传输流量</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1% off for %n month</source>
+        <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
+        <translation>
+            <numerusform>%n个月享受%1%折扣</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1/month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format.SNC-6228</translatorcomment>
+        <translation>%1/月</translation>
+    </message>
+    <message>
+        <source>%1/month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
+        <translation>%1/月，按年收费</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -9629,6 +9731,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
         <translation>当前方案</translation>
+    </message>
+    <message>
+        <source>Most Popular</source>
+        <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
+        <translation>最受欢迎</translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
@@ -9676,6 +9783,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>您的MEGA云盘空间已满</translation>
     </message>
     <message>
+        <source>only</source>
+        <translatorcomment>Text shown ont top of the price of a plan.SNC-6228</translatorcomment>
+        <translation>只要</translation>
+    </message>
+    <message>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>每月</translation>
@@ -9711,7 +9823,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1秒</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9790,7 +9902,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9805,7 +9917,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9870,7 +9982,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>TB</source>

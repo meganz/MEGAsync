@@ -1031,7 +1031,7 @@
     <message>
         <source>Today at %1</source>
         <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
-        <translation>Today at %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Yesterday at %1</source>
@@ -2296,6 +2296,11 @@ Check your email inbox for instructions on unlocking your account and tips on ho
 <context>
     <name>InfoDialog</name>
     <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%1% off %2</translation>
+    </message>
+    <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>Add sync</translation>
@@ -2518,11 +2523,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
         <translation>Your queued transfers exceed the current quota available for your IP address.</translation>
-    </message>
-    <message>
-        <source>%1% off %2</source>
-        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
-        <translation>%1% off %2</translation>
     </message>
 </context>
 <context>
@@ -5346,7 +5346,7 @@ Enter a different name.</translation>
     <message>
         <source>Grab Deal</source>
         <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
-        <translation>Grab Deal</translation>
+        <translation>Grab deal</translation>
     </message>
     <message>
         <source>MEGA %1</source>
@@ -5371,7 +5371,7 @@ Enter a different name.</translation>
     <message>
         <source>Special offers ends in:</source>
         <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
-        <translation>Special offers ends in:</translation>
+        <translation>Special offer ends in:</translation>
     </message>
     <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>
@@ -9776,7 +9776,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Most Popular</source>
         <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
-        <translation>Most Popular</translation>
+        <translation>Most popular</translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>

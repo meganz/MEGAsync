@@ -1952,13 +1952,13 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
                 emit mDiscountStateMachine->enterOverquota();
                 // We don't want to show both upsell dialog and discount dialog back to back, but
                 // still want to show the upsell dialog, so we leave
-                // OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS after showin the discount dialog. To do
+                // OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS after showin the discount dialog. To do
                 // that, we postdate the last time the upsell was shown to its disable duration
-                // minus OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS
+                // minus OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS
                 preferences->setOverStorageDialogExecution(
                     QDateTime::currentMSecsSinceEpoch() -
                     Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION.count() +
-                    Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS.count());
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS.count());
             }
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
@@ -2009,13 +2009,13 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
                 emit mDiscountStateMachine->enterOverquota();
                 // We don't want to show both upsell dialog and discount dialog back to back, but
                 // still want to show the upsell dialog, so we leave
-                // OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS after showin the discount dialog. To do
+                // OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS after showin the discount dialog. To do
                 // that, we postdate the last time the upsell was shown to its disable duration
-                // minus OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS
+                // minus OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS
                 preferences->setAlmostOverStorageDialogExecution(
                     QDateTime::currentMSecsSinceEpoch() -
                     Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION.count() +
-                    Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS.count());
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS.count());
             }
         }
 
@@ -4607,9 +4607,9 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
         emit mDiscountStateMachine->enterOverquota();
 
         // We don't want to show both upsell dialog and discount dialog back to back, but still want
-        // to show the upsell dialog, so we leave OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS after showin
+        // to show the upsell dialog, so we leave OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS after showin
         // the discount dialog. To do that, we postdate the last time the upsell was shown to its
-        // disable duration minus OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS
+        // disable duration minus OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS
         switch (viewMode)
         {
             case UpsellPlans::ViewMode::TRANSFER_EXCEEDED:
@@ -4617,7 +4617,7 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
                 preferences->setTransferOverQuotaDialogLastExecution(
                     std::chrono::system_clock::now() -
                     Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION +
-                    Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS);
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS);
                 break;
             }
             case UpsellPlans::ViewMode::STORAGE_ALMOST_FULL:
@@ -4625,7 +4625,7 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
                 preferences->setAlmostOverStorageDialogExecution(
                     QDateTime::currentMSecsSinceEpoch() -
                     Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION.count() +
-                    Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS.count());
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS.count());
                 break;
             }
             case UpsellPlans::ViewMode::STORAGE_FULL:
@@ -4633,7 +4633,7 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
                 preferences->setOverStorageDialogExecution(
                     QDateTime::currentMSecsSinceEpoch() -
                     Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION.count() +
-                    Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS.count());
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS.count());
                 break;
             }
             default:

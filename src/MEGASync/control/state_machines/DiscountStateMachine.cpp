@@ -228,7 +228,7 @@ void DiscountStateMachine::build()
     mActiveOnboarding = new QState(mCampaignActive);
     mActiveOnboarding->setObjectName(QLatin1String("Campaign active onboarding"));
 
-    // ++ Waiting (Timed State)
+    // ++ Waiting
     mWaiting = new TimedState(QState::ParallelStates, mCampaignActive);
     mWaiting->setObjectName(QLatin1String("Waiting"));
 
@@ -265,10 +265,10 @@ void DiscountStateMachine::build()
     mShowing->setObjectName(QLatin1String("Showing"));
 
     // ++ Shown
-    mShown = new TimedState(mCampaignActive);
+    mShown = new QState(mCampaignActive);
     mShown->setObjectName(QLatin1String("Shown"));
 
-    // *** Cooldown (Timed State)
+    // *** Cooldown
     mCooldown = new TimedState(mShown);
     mCooldown->setObjectName(QLatin1String("Cooldown"));
 

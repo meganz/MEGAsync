@@ -1031,7 +1031,7 @@
     <message>
         <source>Today at %1</source>
         <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
-        <translation>Hoje à %1</translation>
+        <translation>Hoje às %1</translation>
     </message>
     <message>
         <source>Yesterday at %1</source>
@@ -2295,6 +2295,11 @@ Acesse o seu email para saber como desbloquear a sua conta e obter informações
 </context>
 <context>
     <name>InfoDialog</name>
+    <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%1 de desconto no plano %2</translation>
+    </message>
     <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
@@ -4084,7 +4089,7 @@ Você não poderá recuperar o acesso aos seus dados armazenados, nem estará au
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível criar um backup porque o dispositivoque você está usando não tem nome. Dê um nome ao seu dispositivo e tente novamente. Se o problema persistir, entre em contato com o Suporte.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4998,7 +5003,7 @@ Digite um nome diferente.
     <message>
         <source>Upload</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fazer upload</translation>
     </message>
 </context>
 <context>
@@ -5036,7 +5041,7 @@ Digite um nome diferente.
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pasta vazia</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5296,6 +5301,91 @@ Digite um nome diferente.
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
         <translation>Uploads e downloads</translation>
+    </message>
+</context>
+<context>
+    <name>OfferStrings</name>
+    <message>
+        <source>%1 of storage</source>
+        <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 de armazenamento</translation>
+    </message>
+    <message>
+        <source>%1 of transfer</source>
+        <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 de transferência</translation>
+    </message>
+    <message>
+        <source>%1 per month, charged yearly</source>
+        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
+        <translation>%1 por mês, com pagamento anual</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n dia</numerusform>
+            <numerusform>%n dias</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <translatorcomment>Number of remaining hours before the offer expire variable is for remaining hours. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n hora</numerusform>
+            <numerusform>%n horas</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <translatorcomment>Number of remaining minutes before the offer expire,variable is for remaining minutes. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n minuto</numerusform>
+            <numerusform>%n minutos</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>*Tax may apply.</source>
+        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
+        <translation>*Podem incidir impostos.</translation>
+    </message>
+    <message>
+        <source>Grab Deal</source>
+        <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
+        <translation>Aceitar a oferta</translation>
+    </message>
+    <message>
+        <source>MEGA %1</source>
+        <translatorcomment>Plan name used in the offer dialog, the variable is for plan name snc.6228</translatorcomment>
+        <translation>MEGA %1</translation>
+    </message>
+    <message>
+        <source>MEGA Pass</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA Pass</translation>
+    </message>
+    <message>
+        <source>MEGA VPN</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA VPN</translation>
+    </message>
+    <message>
+        <source>Object storage</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>Object storage</translation>
+    </message>
+    <message>
+        <source>Special offers ends in:</source>
+        <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
+        <translation>A oferta especial termina em:</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]%1% off[/B] for %n month</source>
+        <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>[B]%1% de desconto [/B] durante %n mês</numerusform>
+            <numerusform>[B]%1% de desconto [/B] durante %n meses</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -6090,12 +6180,6 @@ Digite um nome diferente.
 - Correção de pequenos bugs e melhorias de desempenho
 </translation>
     </message>
-    <message>
-        <source>- We&apos;ve fixed bugs and made the app more reliable.
-</source>
-        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProgressIndicatorDialog</name>
@@ -6180,7 +6264,7 @@ Digite um nome diferente.
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
         <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum proxy foi detectado. Para se conectar, defina um valor válido de http_proxy ou https_proxy no seu ambiente.</translation>
     </message>
 </context>
 <context>
@@ -6639,7 +6723,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Já existe uma pasta com este nome nesta localização; escolha outra localização</translation>
     </message>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
@@ -6649,12 +6733,12 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível mover ou deletar a pasta de backup no MEGA</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível mover ou excluir a pasta de backup no MEGA. Motivo: %1</translation>
     </message>
 </context>
 <context>
@@ -6969,7 +7053,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Ativar a integração do Explorador de Arquivos</translation>
+        <translation>Ativar a integração com o Explorador de Arquivos</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -9661,6 +9745,11 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UpsellStrings</name>
     <message>
+        <source>%1 after tax</source>
+        <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
+        <translation>%1 com impostos</translation>
+    </message>
+    <message>
         <source>%1 billed yearly</source>
         <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
         <translation>%1 pagamento anual</translation>
@@ -9679,6 +9768,24 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation>%1 de transferência</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1% off for %n month</source>
+        <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
+        <translation>
+            <numerusform>%1% de desconto durante %n mês</numerusform>
+            <numerusform>%1% de desconto durante %n meses</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1/month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format.SNC-6228</translatorcomment>
+        <translation>%1 por mês</translation>
+    </message>
+    <message>
+        <source>%1/month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
+        <translation>%1 por mês, com pagamento anual</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -9709,6 +9816,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
         <translation>Plano atual</translation>
+    </message>
+    <message>
+        <source>Most Popular</source>
+        <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
+        <translation>O mais popular</translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
@@ -9754,6 +9866,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Your MEGA cloud storage is full</source>
         <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
         <translation>A sua Nuvem do MEGA está cheia</translation>
+    </message>
+    <message>
+        <source>only</source>
+        <translatorcomment>Text shown ont top of the price of a plan.SNC-6228</translatorcomment>
+        <translation>apenas</translation>
     </message>
     <message>
         <source>per month</source>
@@ -9878,7 +9995,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9893,7 +10010,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9958,7 +10075,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>TB</source>
