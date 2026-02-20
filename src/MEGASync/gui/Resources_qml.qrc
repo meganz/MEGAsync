@@ -118,5 +118,9 @@
         <file alias="images/qml/mega_3d_devices@2x.png">images/qml/mega_3d_devices@2x.png</file>
         <file alias="images/qml/mega_3d_devices@3x.png">images/qml/mega_3d_devices@3x.png</file>
         <file alias="images/qml/external-link.svg">images/qml/external-link.svg</file>
+        <file alias="images/qml/offer_banner@3x.png">images/qml/offer_banner@3x.png</file>
+        <file alias="images/qml/offer_banner@2x.png">images/qml/offer_banner@2x.png</file>
+        <file alias="images/qml/offer_banner.png">images/qml/offer_banner.png</file>
+        <file alias="tag-01-medium-thin-outline.svg">images/themed/tokenizable/tag-01-medium-thin-outline.svg</file>
     </qresource>
 </RCC>

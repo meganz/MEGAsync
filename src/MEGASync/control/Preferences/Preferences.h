@@ -147,6 +147,17 @@ public:
     int getBlockedState();
     void setBlockedState(int value);
 
+    QDateTime getOfferDialogLastExecution();
+    void setOfferDialogLastExecution(QDateTime timestamp);
+    QDateTime getOfferDialogCampaignExpiryDate();
+    void setOfferDialogCampaignExpiryDate(QDateTime timestamp);
+
+    QString getDiscountCode();
+    void setDiscountCode(QString discountCode);
+
+    long long getUserDiscountLastCheck();
+    void setUserDiscountLastCheck(long long timestamp);
+
     //**** Notifications ****/
     enum class NotificationsTypes
     {
@@ -520,6 +531,11 @@ public:
     static long long PAYWALL_NOTIFICATION_INTERVAL_MS;
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
+    static long long TARGETED_DISCOUNT_COOLDOWN_MS;
+    static long long TARGETED_DISCOUNT_CHECK_INTERVAL_MS;
+    static long long TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
+    static long long TARGETED_DISCOUNT_STARTUP_DELAY_MS;
+    static std::chrono::milliseconds OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS;
 
     static std::chrono::milliseconds OVER_QUOTA_DIALOG_DISABLE_DURATION;
     static std::chrono::milliseconds OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
@@ -767,6 +783,11 @@ protected:
     static const QString themeKey;
     static const QString lastSyncReminderTimeKey;
     static const QString lastSyncReminderStateKey;
+    static const QString offerDialogLastExecutionKey;
+    static const QString offerDialogCampaignExpiryDateKey;
+    static const QString userDiscountLastCheckKey;
+    static const QString discountCodeKey;
+
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     static const QString gfxWorkerEndpointKey;
 #endif

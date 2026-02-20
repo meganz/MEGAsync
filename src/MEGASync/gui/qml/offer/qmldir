@@ -1,0 +1,3 @@
+module offer
+singleton OfferStrings 1.0 OfferStrings.qml
+OfferDialog 1.0 OfferDialog.qml

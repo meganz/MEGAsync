@@ -2191,6 +2191,49 @@ QString Utilities::getFileHash(const QString& filePath)
     return hashString;
 }
 
+QString Utilities::decodeUnicodeEscapes(const QString& input)
+{
+    QString out;
+    out.reserve(input.size());
+
+    QChar c = u'\\';
+    QChar u = u'u';
+
+    for (int i = 0; i < input.size();)
+    {
+        if (input[i] == c && i + 5 < input.size() && input[i + 1] == u)
+        {
+            bool ok = false;
+            ushort code = input.mid(i + 2, 4).toUShort(&ok, 16);
+
+            if (ok)
+            {
+                out.append(QChar(code));
+                i += 6;
+                continue;
+            }
+        }
+        out.append(input[i++]);
+    }
+    return out;
+}
+
+QString Utilities::toPrice(double value, const QString& currencySymbol, bool showRemark)
+{
+    // Build locale: it is necessary to build it like this because using QLocale::system()
+    // ignores the precision when using toCurrencyString.
+    const QLocale locale(QLocale().language(), QLocale().country());
+    const int precision(std::fmod(std::abs(value), 1.) > 0. ? 2 : 0);
+
+    auto price(locale.toCurrencyString(value, currencySymbol, precision));
+    if (showRemark)
+    {
+        price += QLatin1Char('*');
+    }
+
+    return price;
+}
+
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)
 {
     mExecuteInAppThread = executeInAppThread;

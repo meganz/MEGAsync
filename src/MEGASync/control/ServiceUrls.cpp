@@ -681,3 +681,10 @@ QUrl ServiceUrls::getSyncDebrisHelpLink()
     url.setPath(QLatin1String("/files-folders/restore-delete/sync-debris"));
     return url;
 }
+
+QUrl ServiceUrls::getDiscountUrl(const QString& discountCode) const
+{
+    auto url = getSessionTransferBaseUrl();
+    url.setPath(QString::fromUtf8("/discount%1/%2").arg(discountCode, getProUrlParameters()));
+    return url;
+}

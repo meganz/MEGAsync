@@ -219,5 +219,8 @@
         <file>change_password/TwoFAPage.qml</file>
         <file>change_password/ChangePasswordStrings.qml</file>
         <file>change_password/qmldir</file>
+        <file>offer/OfferDialog.qml</file>
+        <file>offer/qmldir</file>
+        <file>offer/OfferStrings.qml</file>
     </qresource>
 </RCC>

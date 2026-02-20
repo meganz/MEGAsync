@@ -72,9 +72,11 @@ private:
                                                   QList<std::shared_ptr<UpsellPlans::Data>>& plans);
     bool isProLevelValid(int proLevel) const;
     QString getLocalePriceString(float price) const;
-    UpsellPlans::Data::AccountBillingPlanData createAccountBillingPlanData(int storage,
-                                                                           int transfer,
-                                                                           int price) const;
+    UpsellPlans::Data::AccountBillingPlanData
+        createAccountBillingPlanData(int storage,
+                                     int transfer,
+                                     int priceAfterTax,
+                                     double priceBeforeTax) const;
     int calculateDiscount(float monthlyPrice, float yearlyPrice) const;
     int getRowForNextRecommendedPlan() const;
     int getRowForCurrentRecommended();

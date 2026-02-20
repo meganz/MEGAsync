@@ -630,6 +630,9 @@ public:
 
     static QString getFileHash(const QString& filePath);
 
+    static QString decodeUnicodeEscapes(const QString& input);
+    static QString toPrice(double value, const QString& currencySymbol, bool showRemark = false);
+
     // Human-friendly list of forbidden chars for New Remote Folder
     static const QLatin1String FORBIDDEN_CHARS;
     // Forbidden chars PCRE

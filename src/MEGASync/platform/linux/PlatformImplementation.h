@@ -61,7 +61,7 @@ public:
 #endif
 
     Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
-
+    Preferences::ThemeAppeareance getPanelTheme() const override;
     void setRenderingBackend() const override;
 
 private:
@@ -100,7 +100,8 @@ private:
     Preferences::ThemeAppeareance mCurrentGSettingsTheme =
         Preferences::ThemeAppeareance::UNINITIALIZED;
     Preferences::ThemeAppeareance mLastEmittedTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
-
+    Preferences::ThemeAppeareance mLastEmittedPanelTheme =
+        Preferences::ThemeAppeareance::UNINITIALIZED;
 private slots:
     void onGsettingsThemeReadyRead();
 #ifndef QT_NO_DBUS

@@ -101,6 +101,8 @@ FocusScope {
 
                     PlanCard {
                         id: card
+                        // Changing Visibility should be done first to ensure values are updated
+                        visible: model.display
 
                         Layout.preferredWidth: width
                         Layout.preferredHeight: height
@@ -109,16 +111,20 @@ FocusScope {
                         name: model.name
                         buttonName: model.buttonName
                         recommended: model.recommended
+                        hasDiscount: model.hasDiscount
+                        discountPercentage: model.discountPercentage
+                        discountMonths: model.discountMonths
+                        isHighlighted: model.isHighlighted
                         currentPlan: model.currentPlan
                         gbStorage: model.gbStorage
                         gbTransfer: model.gbTransfer
-                        price: model.price
+                        priceAfterTax: model.priceAfterTax
+                        priceBeforeTax: model.priceBeforeTax
                         totalPriceWithoutDiscount: model.totalPriceWithoutDiscount
                         monthlyPriceWithDiscount: model.monthlyPriceWithDiscount
                         enabled: model.available || model.showOnlyProFlexi
                         showProFlexiMessage: model.showProFlexiMessage
                         showOnlyProFlexi: model.showOnlyProFlexi
-                        visible: model.display
                         monthly: upsellPlansAccess.monthly
                         billingCurrency: upsellPlansAccess.billingCurrency
                         currencyName: upsellPlansAccess.currencyName
