@@ -1,7 +1,6 @@
 #include "TransferQuota.h"
 
 #include "DialogOpener.h"
-#include "mega/types.h"
 #include "OverQuotaDialog.h"
 #include "Platform.h"
 #include "StatsEventHandler.h"

@@ -16,13 +16,17 @@
 #include "MegaMenuItemAction.h"
 #include "MegaSyncLogger.h"
 #include "MegaUploader.h"
+#include "MenuItemAction.h"
 #include "PasteMegaLinksDialog.h"
 #include "Preferences.h"
 #include "QTMegaListener.h"
 #include "ScanStageController.h"
 #include "SetManager.h"
 #include "SettingsDialog.h"
+#include "state_machines/DiscountPolicy.h"
+#include "state_machines/DiscountStateMachine.h"
 #include "SyncInfo.h"
+#include "SyncsMenu.h"
 #include "ThreadPool.h"
 #include "TransferManager.h"
 #include "TransferQuota.h"
@@ -205,11 +209,7 @@ public:
     void updateUsedStorage(const bool sendEvent = false);
     void showUpsellDialog(UpsellPlans::ViewMode viewMode);
     static void showStalledIssuesDialog();
-    void checkAndShowOffer(std::shared_ptr<mega::MegaDiscountCodeInfo> discountInfo);
-    bool wasOfferShownRecently();
     bool isOnboarding();
-    void requestUserDiscounts(bool skipChecks = false);
-    void triggerOfferCheck(OfferTrigger trigger);
 
 signals:
     void startUpdaterThread();
@@ -229,6 +229,7 @@ signals:
     void requestAppState(AppState::AppStates newAppState);
     void syncsDialogClosed();
     void languageChanged();
+    void onBoardingFinishedSignal();
 
 public slots:
     void updateTrayIcon();
@@ -296,6 +297,7 @@ public slots:
     void triggerInstallUpdate();
     void clearDownloadAndPendingLinks();
     void changeState();
+    void requestUserDiscounts(bool skipChecks = false);
 
 #ifdef _WIN32
     void changeDisplay(QScreen *disp);
@@ -353,6 +355,8 @@ protected:
     void manageBusinessStatus(int64_t event);
 
     void createInfoDialog();
+
+    QPointer<DiscountPolicy> getDiscountPolicy();
 
     QAction *guestSettingsAction;
     QAction *initialExitAction;
@@ -510,7 +514,9 @@ protected:
     std::unique_ptr<mega::MegaGfxProvider> mGfxProvider;
 
     QPointer<SyncReminderNotificationManager> mSyncReminderNotificationManager;
-    std::shared_ptr<mega::MegaDiscountCodeInfo> mDiscountInfo = nullptr;
+
+    QPointer<DiscountPolicy> mPolicy;
+    QPointer<DiscountStateMachine> mDiscountStateMachine;
 
     bool misSyncingStateWrongLogged;
 

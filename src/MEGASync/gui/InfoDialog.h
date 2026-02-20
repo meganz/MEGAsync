@@ -4,13 +4,12 @@
 #include "FilterAlertWidget.h"
 #include "HighDpiResize.h"
 #include "MegaDelegateHoverManager.h"
-#include "MenuItemAction.h"
 #include "Preferences.h"
 #include "QtPositioningBugFixer.h"
 #include "SettingsDialog.h"
+#include "state_machines/DiscountPolicy.h"
 #include "StatusInfo.h"
 #include "SyncInfo.h"
-#include "SyncsMenu.h"
 #include "TransferItem.h"
 #include "TransferQuota.h"
 #include "TransferScanCancelUi.h"
@@ -87,7 +86,7 @@ public:
     void disableCancelling();
     void setUiInCancellingStage();
     void updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent& event);
-    void setDiscountInfo(std::shared_ptr<mega::MegaDiscountCodeInfo> discount);
+    void setDiscountPolicy(QPointer<DiscountPolicy> policy);
 
     void on_bStorageDetails_clicked();
     HighDpiResize<QDialog> highDpiResize;
@@ -179,6 +178,7 @@ signals:
     void almostTransferOverquotaMsgVisibilityChange(bool messageShown);
     void userActivity();
     void cancelScanning();
+    void requestShowDiscountDialog();
 
 private:
     Ui::InfoDialog *ui;
@@ -259,7 +259,7 @@ private:
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;
-    std::shared_ptr<mega::MegaDiscountCodeInfo> mDiscountInfo = nullptr;
+    QPointer<DiscountPolicy> mPolicy;
 };
 
 #endif // INFODIALOG_H

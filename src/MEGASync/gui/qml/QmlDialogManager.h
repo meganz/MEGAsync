@@ -27,6 +27,9 @@ public:
     void raiseOrHideInfoGuestDialog(QTimer* dialogTimer, int msec);
     void forceCloseOnboardingDialog();
 
+signals:
+    void openOnboardingDialogSignal();
+
 private:
     explicit QmlDialogManager(QObject* parent = nullptr) {}
 };

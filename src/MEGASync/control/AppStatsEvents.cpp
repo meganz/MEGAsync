@@ -187,7 +187,13 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::TRANSFER_MANAGER_UPLOAD_CLICKED, 600081},
     {AppStatsEvents::EventType::INFO_DIALOG_UPLOAD_CLICKED, 600082},
     {AppStatsEvents::EventType::TRANSFER_MANAGER_PAUSE_RESUME_CLICKED, 600083},
-    {AppStatsEvents::EventType::TRANSFER_MANAGER_SETTINGS_CLICKED, 600084}};
+    {AppStatsEvents::EventType::TRANSFER_MANAGER_SETTINGS_CLICKED, 600084},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_CAMPAIGN_STARTED, 600085},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_CAMPAIGN_STOPPED, 600086},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_DIALOG_SHOWN, 600087},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_DIALOG_DISMISSED, 600088},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_DIALOG_DEAL_GRABBED, 600089},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_INFODIALOG_BUTTON_CLICKED, 600090}};
 
 // Deprecated are not displayed
 QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
@@ -420,7 +426,18 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::TRANSFER_MANAGER_PAUSE_RESUME_CLICKED,
      "Pause-Resume transfers clicked (Transfer manager)"},
     {AppStatsEvents::EventType::TRANSFER_MANAGER_SETTINGS_CLICKED,
-     "Open settings clicked (Transfer manager)"}};
+     "Open settings clicked (Transfer manager)"},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_CAMPAIGN_STARTED,
+     "Targeted discount campaign started"},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_CAMPAIGN_STOPPED,
+     "Targeted discount campaign stopped"},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_DIALOG_SHOWN, "Targeted discount dialog shown"},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_DIALOG_DISMISSED,
+     "Targeted discount dialog dismissed"},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_DIALOG_DEAL_GRABBED,
+     "Targeted discount deal grabbed"},
+    {AppStatsEvents::EventType::TARGETED_DISCOUNT_INFODIALOG_BUTTON_CLICKED,
+     "Targeted discount infodialog button clicked"}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

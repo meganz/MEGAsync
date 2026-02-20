@@ -40,12 +40,12 @@ long long Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS = 259200000; // 72 hours
 long long Preferences::OQ_UI_MESSAGE_INTERVAL_MS = 129600000; // 36 hours
 long long Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS = 86400000; //24 hours
 long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
-long long Preferences::OFFER_DIALOG_INTERVAL_MS = 604800000; // 7 daysm
-long long Preferences::OFFER_DIALOG_INTERVAL_SINCE_STARTUP_MS = 120000; // 2 mins
-long long Preferences::USER_DISCOUNT_CHECK_INTERVAL_MS = 86400000; // 24 hours
-long long Preferences::OFER_DIALOG_SHORT_DELAY_INTERVAL_MS = 30000; // 0.5 mins
-long long Preferences::OFER_DIALOG_AUTO_LOGIN_INTERVAL_MS = 900000; // 15 mins
-long long Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS = 10800000; // 6 Hours
+long long Preferences::TARGETED_DISCOUNT_COOLDOWN_MS = 604800000; // 7 days
+long long Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS = 120000; // 2 mins
+long long Preferences::TARGETED_DISCOUNT_CHECK_INTERVAL_MS = 86400000; // 24 hours
+long long Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS = 900000; // 15 mins
+std::chrono::milliseconds Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS{
+    std::chrono::hours(6)}; // 6 Hours
 
 std::chrono::milliseconds Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION{std::chrono::hours(7*24)};
 std::chrono::milliseconds Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
@@ -150,9 +150,11 @@ const QString Preferences::storageOverQuotaUploadsDialogLastExecutionKey = QStri
 const QString Preferences::storageOverQuotaSyncsDialogLastExecutionKey = QString::fromLatin1("storageOverQuotaSyncsDialogLastExecution");
 
 const QString Preferences::offerDialogLastExecutionKey =
-    QString::fromLatin1("offerDialogExecution");
-const QString Preferences::userDiscountLastCheckKey =
-    QString::fromLatin1("userDiscountLastCheckKey");
+    QString::fromLatin1("offerDialogLastExecution");
+const QString Preferences::offerDialogCampaignExpiryDateKey =
+    QString::fromLatin1("offerDialogCampaignExpiryDate");
+const QString Preferences::userDiscountLastCheckKey = QString::fromLatin1("userDiscountLastCheck");
+const QString Preferences::discountCodeKey = QString::fromLatin1("discountCode");
 
 const bool Preferences::defaultShowNotifications = true;
 
@@ -804,16 +806,40 @@ void Preferences::setOverStorageDialogExecution(long long timestamp)
     setValueConcurrently(overStorageDialogExecutionKey, timestamp);
 }
 
-long long Preferences::getOfferDialogLastExecution()
+QDateTime Preferences::getOfferDialogLastExecution()
 {
     assert(logged());
-    return getValueConcurrent<long long>(offerDialogLastExecutionKey, defaultTimeStamp);
+    return getValueConcurrent<QDateTime>(offerDialogLastExecutionKey, QDateTime());
 }
 
-void Preferences::setOfferDialogLastExecution(long long timestamp)
+void Preferences::setOfferDialogLastExecution(QDateTime timestamp)
 {
     assert(logged());
     setValueConcurrently(offerDialogLastExecutionKey, timestamp);
+}
+
+QDateTime Preferences::getOfferDialogCampaignExpiryDate()
+{
+    assert(logged());
+    return getValueConcurrent<QDateTime>(offerDialogCampaignExpiryDateKey, QDateTime());
+}
+
+void Preferences::setOfferDialogCampaignExpiryDate(QDateTime timestamp)
+{
+    assert(logged());
+    setValueConcurrently(offerDialogCampaignExpiryDateKey, timestamp);
+}
+
+QString Preferences::getDiscountCode()
+{
+    assert(logged());
+    return getValueConcurrent<QString>(discountCodeKey, QString());
+}
+
+void Preferences::setDiscountCode(QString discountCode)
+{
+    assert(logged());
+    setValueConcurrently(discountCodeKey, discountCode);
 }
 
 long long Preferences::getUserDiscountLastCheck()
@@ -2855,11 +2881,20 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_ONLY_ONCE"), Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE);
 
     overridePreference(settings,
-                       QString::fromUtf8("OFFER_DIALOG_INTERVAL_MS"),
-                       Preferences::OFFER_DIALOG_INTERVAL_MS);
+                       QString::fromUtf8("TARGETED_DISCOUNT_COOLDOWN_MS"),
+                       Preferences::TARGETED_DISCOUNT_COOLDOWN_MS);
     overridePreference(settings,
-                       QString::fromUtf8("OFFER_DIALOG_INTERVAL_MS"),
-                       Preferences::USER_DISCOUNT_CHECK_INTERVAL_MS);
+                       QString::fromUtf8("TARGETED_DISCOUNT_CHECK_INTERVAL_MS"),
+                       Preferences::TARGETED_DISCOUNT_CHECK_INTERVAL_MS);
+    overridePreference(settings,
+                       QString::fromUtf8("TARGETED_DISCOUNT_STARTUP_DELAY_MS"),
+                       Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS);
+    overridePreference(settings,
+                       QString::fromUtf8("TARGETED_DISCOUNT_WAITING_FALLBACK_MS"),
+                       Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS);
+    overridePreference(settings,
+                       QString::fromUtf8("OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS"),
+                       Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS);
 }
 
 void Preferences::updateFullName()
