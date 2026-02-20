@@ -7,6 +7,7 @@
 #include "DesktopNotifications.h"
 #include "DownloadFromMegaDialog.h"
 #include "DuplicatedNodeInfo.h"
+#include "gui/TrayIconManager.h"
 #include "HTTPServer.h"
 #include "InfoDialog.h"
 #include "LinkProcessor.h"
@@ -93,10 +94,6 @@ enum OfferTrigger
 class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
-
-#ifdef Q_OS_LINUX
-    void setTrayIconFromTheme(QString icon);
-#endif
 
     static void loadDataPath();
 
@@ -297,7 +294,6 @@ public slots:
     void showInfoDialog();
     void showInfoDialogNotifications();
     void triggerInstallUpdate();
-    void scanningAnimationStep();
     void clearDownloadAndPendingLinks();
     void changeState();
 
@@ -358,8 +354,6 @@ protected:
 
     void createInfoDialog();
 
-    QSystemTrayIcon *trayIcon;
-
     QAction *guestSettingsAction;
     QAction *initialExitAction;
     QPointer<QMenu> initialTrayMenu;
@@ -401,12 +395,13 @@ protected:
     MenuItemAction *settingsActionGuest;
     MenuItemAction* updateActionGuest;
 
-#ifdef __APPLE__
-    QTimer *scanningTimer;
-#endif
+    // Tray icon manager — owns QSystemTrayIcon, animation timer, icon cache
+    TrayIconManager* mTrayIconManager = nullptr;
+
+    // Convenience accessor for code that needs the raw QSystemTrayIcon*
+    QSystemTrayIcon* trayIcon() const;
 
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
-    int scanningAnimationIndex;
     QPointer<SettingsDialog> mSettingsDialog;
     QPointer<InfoDialog> infoDialog;
     std::shared_ptr<Preferences> preferences;

@@ -20,6 +20,7 @@
 #include "ExportProcessor.h"
 #include "FatalEventHandler.h"
 #include "FullName.h"
+#include "gui/TrayIconManager.h"
 #include "GuiUtilities.h"
 #include "IconTokenizer.h"
 #include "ImportMegaLinksDialog.h"
@@ -241,7 +242,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
 
     updateAvailable = false;
     networkConnectivity = true;
-    trayIcon = nullptr;
     infoDialogMenu = nullptr;
     guestMenu = nullptr;
     megaApi = nullptr;
@@ -335,10 +335,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     transferOverQuotaWaitTimeExpiredReceived = false;
 
-#ifdef __APPLE__
-    scanningTimer = nullptr;
-#endif
-
     // Passing "--nogfx" or "/nogfx" disables graphics processing for the current run.
     // To always disable graphics processing, create a "megasync.nogfx" file in the user data dir.
     mDisableGfx |=
@@ -377,6 +373,11 @@ MegaApplication::~MegaApplication()
     {
         mMutexStealerThread->join();
     }
+}
+
+QSystemTrayIcon* MegaApplication::trayIcon() const
+{
+    return mTrayIconManager ? mTrayIconManager->trayIcon() : nullptr;
 }
 
 void MegaApplication::showInterface(QString)
@@ -482,7 +483,7 @@ void MegaApplication::initialize()
     QString language = preferences->language();
     changeLanguage(language);
 
-    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon);
+    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon());
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
     if (modifiers.testFlag(Qt::ControlModifier)
@@ -599,7 +600,7 @@ void MegaApplication::initialize()
         Preferences::overridePreferences(settings);
         Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
     }
-    trayIcon->show();
+    mTrayIconManager->show();
 
     megaApi->log(MegaApi::LOG_LEVEL_INFO,
                  QString::fromUtf8("MEGA Desktop App is starting. Version string: %1   Version "
@@ -815,96 +816,40 @@ void MegaApplication::changeLanguage(QString languageCode)
     createTrayIcon();
 }
 
-#ifdef Q_OS_LINUX
-void MegaApplication::setTrayIconFromTheme(QString icon)
-{
-    QString name = QString(icon).replace(QString::fromUtf8("://images/"), QString::fromUtf8("mega")).replace(QString::fromUtf8(".svg"),QString::fromUtf8(""));
-    const bool needsToBeUpdated{name != trayIcon->icon().name()};
-    if(needsToBeUpdated)
-    {
-        trayIcon->setIcon(QIcon::fromTheme(name, QIcon(icon)));
-    }
-}
-#endif
-
 void MegaApplication::updateTrayIcon()
 {
-    if (appfinished || !trayIcon)
+    if (appfinished || !mTrayIconManager || !mTrayIconManager->trayIcon())
     {
         return;
     }
 
     QString tooltipState;
-    QString icon;
+    QString iconState;
+    TrayIconManager::Animation animation = TrayIconManager::Animation::None;
 
-    static std::map<std::string, QString> icons = {
-    #ifndef __APPLE__
-        #ifdef _WIN32
-            { "warning", QString::fromUtf8("://images/warning_ico.ico") },
-            { "synching", QString::fromUtf8("://images/tray_sync.ico") },
-            { "uptodate", QString::fromUtf8("://images/app_ico.ico") },
-            { "paused", QString::fromUtf8("://images/tray_pause.ico") },
-            { "logging", QString::fromUtf8("://images/login_ico.ico") },
-            { "alert", QString::fromUtf8("://images/alert_ico.ico") },
-            { "someissues", QString::fromUtf8("://images/warning_ico.ico") }
-
-        #else
-            { "warning", QString::fromUtf8("://images/warning.svg") },
-            { "synching", QString::fromUtf8("://images/synching.svg") },
-            { "uptodate", QString::fromUtf8("://images/uptodate.svg") },
-            { "paused", QString::fromUtf8("://images/paused.svg") },
-            { "logging", QString::fromUtf8("://images/logging.svg") },
-            { "alert", QString::fromUtf8("://images/alert.svg") },
-            { "someissues", QString::fromUtf8("://images/warning.svg") }
-        #endif
-    #else
-            { "warning", QString::fromUtf8("://images/icon_overquota_mac.png") },
-            { "synching", QString::fromUtf8("://images/icon_syncing_mac.png") },
-            { "uptodate", QString::fromUtf8("://images/icon_synced_mac.png") },
-            { "paused", QString::fromUtf8("://images/icon_paused_mac.png") },
-            { "logging", QString::fromUtf8("://images/icon_logging_mac.png") },
-            { "alert", QString::fromUtf8("://images/icon_alert_mac.png") },
-            { "someissues", QString::fromUtf8("://images/icon_overquota_mac.png") }
-    #endif
-        };
-
-    const bool isStorageOverQuotaOrPaywall = appliedStorageState == MegaApi::STORAGE_STATE_RED
-                                                || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
+    const bool isStorageOverQuotaOrPaywall = appliedStorageState == MegaApi::STORAGE_STATE_RED ||
+                                             appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
 
     if (AppState::instance()->getAppState() == AppState::FATAL_ERROR)
     {
-        icon = icons["alert"];
+        iconState = QStringLiteral("alert");
         tooltipState = FatalEventHandler::instance()->getErrorTitle();
     }
     else if (isStorageOverQuotaOrPaywall || mTransferQuota->isOverQuota())
     {
-        tooltipState = isStorageOverQuotaOrPaywall ? tr("Storage full") : tr("Transfer quota exceeded");
-        icon = icons["warning"];
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
+        tooltipState =
+            isStorageOverQuotaOrPaywall ? tr("Storage full") : tr("Transfer quota exceeded");
+        iconState = QStringLiteral("warning");
     }
     else if (mStatusController->isAccountBlocked())
     {
         tooltipState = tr("Locked account");
-
-        icon = icons["alert"];
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
+        iconState = QStringLiteral("alert");
     }
     else if (model->hasUnattendedDisabledSyncs({MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP}))
     {
-        if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY)
-            && model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
+        if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY) &&
+            model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
         {
             tooltipState = tr("Some syncs and backups have been disabled");
         }
@@ -917,91 +862,49 @@ void MegaApplication::updateTrayIcon()
             tooltipState = tr("One or more syncs have been disabled");
         }
 
-        icon = icons["alert"];
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
-
+        iconState = QStringLiteral("alert");
     }
     else if (!megaApi->isLoggedIn())
     {
         if (!infoDialog)
         {
             tooltipState = tr("Logging in");
-            icon = icons["synching"];
-    #ifdef __APPLE__
-            if (!scanningTimer->isActive())
-            {
-                scanningAnimationIndex = 1;
-                scanningTimer->start();
-            }
-    #endif
+            animation = TrayIconManager::Animation::Logging;
         }
         else
         {
             tooltipState = tr("You are not logged in");
-            icon = icons["uptodate"];
-
-    #ifdef __APPLE__
-            if (scanningTimer->isActive())
-            {
-                scanningTimer->stop();
-            }
-    #endif
+            iconState = QStringLiteral("uptodate");
         }
     }
     else if (!nodescurrent || !getRootNode() ||
              AppState::instance()->getAppState() == AppState::RELOADING)
     {
         tooltipState = tr("Fetching file list...");
-        icon = icons["synching"];
-
-#ifdef __APPLE__
-        if (!scanningTimer->isActive())
-        {
-            scanningAnimationIndex = 1;
-            scanningTimer->start();
-        }
-#endif
+        animation = TrayIconManager::Animation::Progress;
     }
     else if (mSyncStalled && !mStalledIssuesModel->isEmpty())
     {
         tooltipState = tr("Stalled");
-        icon = icons["alert"];
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
+        iconState = QStringLiteral("alert");
     }
     else if (paused)
     {
         auto transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
-        if(transfersFailed > 0)
+        if (transfersFailed > 0)
         {
-            //We won´t never have thousand of millions of failed issues...so overflow is not a problem here
-            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", static_cast<int>(transfersFailed));
-            icon = icons["someissues"];
+            tooltipState = QCoreApplication::translate("TransferManager",
+                                                       "Issue found",
+                                                       "",
+                                                       static_cast<int>(transfersFailed));
+            iconState = QStringLiteral("someissues");
         }
         else
         {
             tooltipState = tr("Paused");
-            icon = icons["paused"];
+            iconState = QStringLiteral("paused");
         }
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
     }
     else if (mIndexing || mWaiting || mSyncing || mTransferring)
     {
@@ -1021,38 +924,26 @@ void MegaApplication::updateTrayIcon()
         {
             tooltipState = tr("Transferring");
         }
-
-        icon = icons["synching"];
-
-#ifdef __APPLE__
-        if (!scanningTimer->isActive())
-        {
-            scanningAnimationIndex = 1;
-            scanningTimer->start();
-        }
-#endif
+        animation = TrayIconManager::Animation::Progress;
     }
     else
     {
         auto transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
-        if(transfersFailed > 0)
+        if (transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", static_cast<int>(transfersFailed));
-            icon = icons["someissues"];
+            tooltipState = QCoreApplication::translate("TransferManager",
+                                                       "Issue found",
+                                                       "",
+                                                       static_cast<int>(transfersFailed));
+            iconState = QStringLiteral("someissues");
         }
         else
         {
             tooltipState = tr("Up to date");
-            icon = icons["uptodate"];
+            iconState = QStringLiteral("uptodate");
         }
 
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
         if (reboot)
         {
             rebootApplication();
@@ -1061,17 +952,16 @@ void MegaApplication::updateTrayIcon()
 
     if (!networkConnectivity)
     {
-        //Override the current state
         tooltipState = tr("No Internet connection");
-        icon = icons["logging"];
+        iconState = QStringLiteral("logging");
     }
 
-    QString tooltip = QString::fromUtf8("%1 %2\n").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING);
+    QString tooltip = QString::fromUtf8("%1 %2\n")
+                          .arg(QString::fromUtf8("MEGA"))
+                          .arg(Preferences::VERSION_STRING);
 
     if (updateAvailable)
     {
-        // Only overwrite the tooltipState if it is "Up to date", because
-        // in that case it would be conflicting with "Update available!"
         if (tooltipState != tr("Up to date"))
         {
             tooltip += tooltipState + QString::fromUtf8("\n");
@@ -1084,25 +974,23 @@ void MegaApplication::updateTrayIcon()
         tooltip += tooltipState;
     }
 
-    // Finally apply icon and tooltip
-    if (!icon.isEmpty())
+    if (!iconState.isEmpty())
     {
-#ifndef __APPLE__
-    #ifdef _WIN32
-        trayIcon->setIcon(QIcon(icon));
-    #else
-        setTrayIconFromTheme(icon);
-    #endif
-#else
-    QIcon ic = QIcon(icon);
-    ic.setIsMask(true);
-    trayIcon->setIcon(ic);
-#endif
+        mTrayIconManager->setIcon(iconState);
+    }
+
+    if (animation != TrayIconManager::Animation::None)
+    {
+        mTrayIconManager->startAnimation(animation);
+    }
+    else
+    {
+        mTrayIconManager->stopAnimation();
     }
 
     if (!tooltip.isEmpty())
     {
-        trayIcon->setToolTip(tooltip);
+        mTrayIconManager->setTooltip(tooltip);
     }
 }
 
@@ -1136,25 +1024,11 @@ void MegaApplication::start()
     transferOverQuotaWaitTimeExpiredReceived = false;
     updateTrayIconMenu();
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        trayIcon->setIcon(QIcon(QString::fromUtf8("://images/tray_sync.ico")));
-    #else
-        setTrayIconFromTheme(QString::fromUtf8("://images/synching.svg"));
-    #endif
-#else
-    QIcon ic = QIcon(QString::fromUtf8("://images/icon_syncing_mac.png"));
-    ic.setIsMask(true);
-    trayIcon->setIcon(ic);
-
-    if (!scanningTimer->isActive())
-    {
-        scanningAnimationIndex = 1;
-        scanningTimer->start();
-    }
-#endif
-    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromUtf8(" ") + Preferences::VERSION_STRING + QString::fromUtf8("\n") + tr("Logging in"));
-    trayIcon->show();
+    mTrayIconManager->startAnimation(TrayIconManager::Animation::Progress);
+    mTrayIconManager->setTooltip(QCoreApplication::applicationName() + QString::fromUtf8(" ") +
+                                 Preferences::VERSION_STRING + QString::fromUtf8("\n") +
+                                 tr("Logging in"));
+    mTrayIconManager->show();
 
     //In case the previous session did not remove all of them
     Preferences::instance()->clearTempTransfersPath();
@@ -1828,7 +1702,7 @@ void MegaApplication::rebootApplication(bool update)
         return;
     }
 
-    trayIcon->hide();
+    mTrayIconManager->hide();
     QApplication::exit();
 }
 
@@ -2212,16 +2086,16 @@ void MegaApplication::periodicTasks()
 
     sendPeriodicStats();
 
-    if (trayIcon)
+    if (trayIcon())
     {
 #ifdef Q_OS_LINUX
         const QString xdgEnvVar = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
         if (counter == 4 && !xdgEnvVar.isEmpty() && xdgEnvVar == QString::fromUtf8("XFCE"))
         {
-            trayIcon->hide();
+            mTrayIconManager->hide();
         }
 #endif
-        trayIcon->show();
+        mTrayIconManager->show();
     }
 }
 
@@ -2304,8 +2178,9 @@ void MegaApplication::cleanAll()
 
     QTMegaApiManager::removeMegaApis();
 
-    trayIcon->deleteLater();
-    trayIcon = nullptr;
+    mTrayIconManager->hide();
+    mTrayIconManager->deleteLater();
+    mTrayIconManager = nullptr;
 
     logger.reset();
 
@@ -2612,23 +2487,6 @@ void MegaApplication::triggerInstallUpdate()
     }
 
     emit installUpdate();
-}
-
-void MegaApplication::scanningAnimationStep()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    scanningAnimationIndex = scanningAnimationIndex%4;
-    scanningAnimationIndex++;
-    QIcon ic = QIcon(QString::fromUtf8("://images/icon_syncing_mac") +
-                     QString::number(scanningAnimationIndex) + QString::fromUtf8(".png"));
-#ifdef __APPLE__
-    ic.setIsMask(true);
-#endif
-    trayIcon->setIcon(ic);
 }
 
 QList<QNetworkInterface> MegaApplication::findNewNetworkInterfaces()
@@ -2994,7 +2852,7 @@ bool MegaApplication::dontAskForExitConfirmation(bool force)
 void MegaApplication::exitApplication()
 {
     reboot = false;
-    trayIcon->hide();
+    mTrayIconManager->hide();
     QApplication::exit();
 }
 
@@ -3671,7 +3529,7 @@ void MegaApplication::enableFinderExt()
 
 QSystemTrayIcon *MegaApplication::getTrayIcon()
 {
-    return trayIcon;
+    return trayIcon();
 }
 
 LoginController *MegaApplication::getLoginController()
@@ -4365,34 +4223,38 @@ void MegaApplication::changeDisplay(QScreen*)
 
 void MegaApplication::updateTrayIconMenu()
 {
-    if (trayIcon)
+    if (trayIcon())
     {
 #if defined(Q_OS_MACX)
         if (infoDialog)
         {
-            trayIcon->setContextMenu(&emptyMenu);
+            trayIcon()->setContextMenu(&emptyMenu);
         }
         else
         {
-            trayIcon->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() : &emptyMenu);
+            trayIcon()->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() :
+                                                                &emptyMenu);
         }
 #else
 
-        trayIcon->setContextMenu(nullptr); //prevents duplicated context menu in qt 5.12.8 64 bits
+        trayIcon()->setContextMenu(nullptr); // prevents duplicated context menu in qt 5.12.8 64
+                                             // bits
 
         if (preferences && preferences->logged() && getRootNode() &&
             !mStatusController->isAccountBlocked() &&
             AppState::instance()->getAppState() != AppState::FATAL_ERROR)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
-            trayIcon->setContextMenu(windowsMenu.data() ? windowsMenu.data() : &emptyMenu);
+            trayIcon()->setContextMenu(windowsMenu.data() ? windowsMenu.data() : &emptyMenu);
 #else
-            trayIcon->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() : &emptyMenu);
+            trayIcon()->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() :
+                                                                &emptyMenu);
 #endif
         }
         else
         {
-            trayIcon->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() : &emptyMenu);
+            trayIcon()->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() :
+                                                                &emptyMenu);
         }
 #endif
     }
@@ -4408,50 +4270,30 @@ void MegaApplication::createTrayIcon()
     createAppMenus();
     createGuestMenu();
 
-    if (!trayIcon)
+    if (!mTrayIconManager)
     {
-        trayIcon = new QSystemTrayIcon();
+        mTrayIconManager = new TrayIconManager(this);
+        mTrayIconManager->initTrayIcon();
 
-        connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
-        connect(trayIcon, &QSystemTrayIcon::activated,
-                this, &MegaApplication::trayIconActivated);
-
-    #ifdef __APPLE__
-        scanningTimer = new QTimer();
-        scanningTimer->setSingleShot(false);
-        scanningTimer->setInterval(500);
-        scanningAnimationIndex = 1;
-        connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
-    #endif
+        connect(mTrayIconManager,
+                &TrayIconManager::messageClicked,
+                this,
+                &MegaApplication::onMessageClicked);
+        connect(mTrayIconManager,
+                &TrayIconManager::activated,
+                this,
+                &MegaApplication::trayIconActivated);
     }
 
     updateTrayIconMenu();
 
-    trayIcon->setToolTip(QCoreApplication::applicationName()
-                     + QString::fromUtf8(" ")
-                     + Preferences::VERSION_STRING
-                     + QString::fromUtf8("\n")
-                     + tr("Starting"));
+    QString initialTooltip = QCoreApplication::applicationName() + QString::fromUtf8(" ") +
+                             Preferences::VERSION_STRING + QString::fromUtf8("\n") + tr("Starting");
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        trayIcon->setIcon(QIcon(QString::fromUtf8("://images/tray_sync.ico")));
-    #else
-        setTrayIconFromTheme(QString::fromUtf8("://images/synching.svg"));
-    #endif
-#else
-    QIcon ic = QIcon(QString::fromUtf8("://images/icon_syncing_mac.png"));
-    ic.setIsMask(true);
-    trayIcon->setIcon(ic);
-
-    if (!scanningTimer->isActive())
-    {
-        scanningAnimationIndex = 1;
-        scanningTimer->start();
-    }
-#endif
+    mTrayIconManager->setIconAndTooltip(QStringLiteral("synching"), initialTooltip);
+    mTrayIconManager->startAnimation(TrayIconManager::Animation::Progress);
+    mTrayIconManager->show();
 }
-
 void MegaApplication::processUploads()
 {
     if (appfinished || !megaApi->isLoggedIn())
