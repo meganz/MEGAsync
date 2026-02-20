@@ -535,7 +535,7 @@ public:
     static long long TARGETED_DISCOUNT_CHECK_INTERVAL_MS;
     static long long TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
     static long long TARGETED_DISCOUNT_STARTUP_DELAY_MS;
-    static std::chrono::milliseconds OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS;
+    static std::chrono::milliseconds OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS;
 
     static std::chrono::milliseconds OVER_QUOTA_DIALOG_DISABLE_DURATION;
     static std::chrono::milliseconds OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;

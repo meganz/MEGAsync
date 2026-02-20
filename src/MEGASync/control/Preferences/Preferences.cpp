@@ -44,7 +44,7 @@ long long Preferences::TARGETED_DISCOUNT_COOLDOWN_MS = 604800000; // 7 days
 long long Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS = 120000; // 2 mins
 long long Preferences::TARGETED_DISCOUNT_CHECK_INTERVAL_MS = 86400000; // 24 hours
 long long Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS = 900000; // 15 mins
-std::chrono::milliseconds Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS{
+std::chrono::milliseconds Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS{
     std::chrono::hours(6)}; // 6 Hours
 
 std::chrono::milliseconds Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION{std::chrono::hours(7*24)};
@@ -2893,8 +2893,8 @@ void Preferences::overridePreferences(const QSettings &settings)
                        QString::fromUtf8("TARGETED_DISCOUNT_WAITING_FALLBACK_MS"),
                        Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS);
     overridePreference(settings,
-                       QString::fromUtf8("OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS"),
-                       Preferences::OQ_COOL_DOWN_AFTER_OFFFER_INTERVAL_MS);
+                       QString::fromUtf8("OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS"),
+                       Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS);
 }
 
 void Preferences::updateFullName()

@@ -85,16 +85,6 @@ enum GetUserStatsReason {
     USERSTATS_REMOVEVERSIONS,
 };
 
-enum OfferTrigger
-{
-    APP_INITIALIZATION,
-    ONBARDING_COMPLETION,
-    AUTO_LOGIN,
-    OVER_QUOTA,
-    USER_ACTIVITY,
-    SHORT_DELAY
-};
-
 class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
