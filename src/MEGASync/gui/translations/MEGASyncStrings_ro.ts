@@ -2318,6 +2318,11 @@ Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului �
 <context>
     <name>InfoDialog</name>
     <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%1% reducere la %2</translation>
+    </message>
+    <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>Adaugă o sincronizare</translation>
@@ -4115,7 +4120,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate crea o copie de rezervă deoarece dispozitivul de pe care faci backup nu are un nume. Atribuie un nume dispozitivului, apoi încearcă din nou. Dacă problema persistă, contactează Asistența.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -5033,7 +5038,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Upload</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Încarcă</translation>
     </message>
 </context>
 <context>
@@ -5071,7 +5076,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folderul este gol</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5342,6 +5347,95 @@ Introdu un alt nume.</translation>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
         <translation>Încărcări și descărcări</translation>
+    </message>
+</context>
+<context>
+    <name>OfferStrings</name>
+    <message>
+        <source>%1 of storage</source>
+        <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 spațiu de stocare</translation>
+    </message>
+    <message>
+        <source>%1 of transfer</source>
+        <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 transferuri</translation>
+    </message>
+    <message>
+        <source>%1 per month, charged yearly</source>
+        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
+        <translation>%1 pe lună, taxat anual</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n zi</numerusform>
+            <numerusform>%n zile</numerusform>
+            <numerusform>%n de zile</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <translatorcomment>Number of remaining hours before the offer expire variable is for remaining hours. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n oră</numerusform>
+            <numerusform>%n ore</numerusform>
+            <numerusform>%n de ore</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <translatorcomment>Number of remaining minutes before the offer expire,variable is for remaining minutes. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n minut</numerusform>
+            <numerusform>%n minute</numerusform>
+            <numerusform>%n de minute</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>*Tax may apply.</source>
+        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
+        <translation>*Se pot aplica taxe.</translation>
+    </message>
+    <message>
+        <source>Grab Deal</source>
+        <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
+        <translation>Profită de ofertă</translation>
+    </message>
+    <message>
+        <source>MEGA %1</source>
+        <translatorcomment>Plan name used in the offer dialog, the variable is for plan name snc.6228</translatorcomment>
+        <translation>MEGA %1</translation>
+    </message>
+    <message>
+        <source>MEGA Pass</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA Pass</translation>
+    </message>
+    <message>
+        <source>MEGA VPN</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA VPN</translation>
+    </message>
+    <message>
+        <source>Object storage</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>Stocarea obiect</translation>
+    </message>
+    <message>
+        <source>Special offers ends in:</source>
+        <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
+        <translation>Ofertele speciale expiră în:</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]%1% off[/B] for %n month</source>
+        <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>[B]%1% reducere[/B] pentru %n lună</numerusform>
+            <numerusform>[B]%1% reducere[/B] pentru %n luni</numerusform>
+            <numerusform>[B]%1% reducere[/B] pentru %n de luni</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -6137,12 +6231,6 @@ Introdu un alt nume.</translation>
 - Corecții de erori minore și îmbunătiri ale performanței
 </translation>
     </message>
-    <message>
-        <source>- We&apos;ve fixed bugs and made the app more reliable.
-</source>
-        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProgressIndicatorDialog</name>
@@ -6227,7 +6315,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
         <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu a fost detectat niciun proxy. Pentru a te conecta, setează o valoare validă pentru http_proxy sau https_proxy în mediul tău.</translation>
     </message>
 </context>
 <context>
@@ -6686,7 +6774,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Există deja un folder cu acest nume în acea locație; alegeți o altă locație</translation>
     </message>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
@@ -6696,12 +6784,12 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la mutarea sau ștergerea folderului de backup în MEGA</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate muta sau șterge folderul de backup în MEGA. Motiv: %1</translation>
     </message>
 </context>
 <context>
@@ -9739,6 +9827,11 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UpsellStrings</name>
     <message>
+        <source>%1 after tax</source>
+        <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
+        <translation>%1 după impozitare</translation>
+    </message>
+    <message>
         <source>%1 billed yearly</source>
         <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
         <translation>%1 facturat anual</translation>
@@ -9757,6 +9850,25 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation>%1 transfer</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1% off for %n month</source>
+        <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
+        <translation>
+            <numerusform>%1% reducere pentru %n lună</numerusform>
+            <numerusform>%1% reducere pentru %n luni</numerusform>
+            <numerusform>%1% reducere pentru %n de luni</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1/month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format.SNC-6228</translatorcomment>
+        <translation>%1/lună</translation>
+    </message>
+    <message>
+        <source>%1/month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
+        <translation>%1/lună, facturat anual</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -9787,6 +9899,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
         <translation>Abonamentul actual</translation>
+    </message>
+    <message>
+        <source>Most Popular</source>
+        <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
+        <translation>Cel mai popular</translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
@@ -9834,6 +9951,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Spațiul tău de stocare în cloud MEGA este plin</translation>
     </message>
     <message>
+        <source>only</source>
+        <translatorcomment>Text shown ont top of the price of a plan.SNC-6228</translatorcomment>
+        <translation>numai</translation>
+    </message>
+    <message>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>pe lună</translation>
@@ -9871,7 +9993,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 secunde</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>

@@ -6,9 +6,9 @@
 #define VER_MAJOR 6
 #define VER_MINOR 2
 #define VER_MICRO 0
-#define VER_RC 1
+#define VER_RC 2
 // Format: "VER_MAJOR.VER_MINOR.VER_MICRO.VER_RC\0"
-#define VER_PRODUCTVERSION_STR "6.2.0.1\0"
+#define VER_PRODUCTVERSION_STR "6.2.0.2\0"
 #define VER_PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION_CODE (VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO)
@@ -26,7 +26,7 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "3b28e18" // v10.5.0
+#define VER_SDK_ID "052c6fa" // v10.6.0
 
 // clang-format off
 // Update scrips relying on this value if you move it

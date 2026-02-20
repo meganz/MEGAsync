@@ -1031,7 +1031,7 @@
     <message>
         <source>Today at %1</source>
         <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
-        <translation>Today at %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Yesterday at %1</source>
@@ -2295,6 +2295,11 @@ Check your email inbox for instructions on unlocking your account and tips on ho
 </context>
 <context>
     <name>InfoDialog</name>
+    <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%1% off %2</translation>
+    </message>
     <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
@@ -5298,6 +5303,91 @@ Enter a different name.</translation>
     </message>
 </context>
 <context>
+    <name>OfferStrings</name>
+    <message>
+        <source>%1 of storage</source>
+        <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 of storage</translation>
+    </message>
+    <message>
+        <source>%1 of transfer</source>
+        <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 of transfer</translation>
+    </message>
+    <message>
+        <source>%1 per month, charged yearly</source>
+        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
+        <translation>%1 per month, charged yearly</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n day</numerusform>
+            <numerusform>%n days</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <translatorcomment>Number of remaining hours before the offer expire variable is for remaining hours. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n hour</numerusform>
+            <numerusform>%n hours</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <translatorcomment>Number of remaining minutes before the offer expire,variable is for remaining minutes. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n minute</numerusform>
+            <numerusform>%n minutes</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>*Tax may apply.</source>
+        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
+        <translation>*Tax may apply.</translation>
+    </message>
+    <message>
+        <source>Grab Deal</source>
+        <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
+        <translation>Grab deal</translation>
+    </message>
+    <message>
+        <source>MEGA %1</source>
+        <translatorcomment>Plan name used in the offer dialog, the variable is for plan name snc.6228</translatorcomment>
+        <translation>MEGA %1</translation>
+    </message>
+    <message>
+        <source>MEGA Pass</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA Pass</translation>
+    </message>
+    <message>
+        <source>MEGA VPN</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA VPN</translation>
+    </message>
+    <message>
+        <source>Object storage</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>Object storage</translation>
+    </message>
+    <message>
+        <source>Special offers ends in:</source>
+        <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
+        <translation>Special offer ends in:</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]%1% off[/B] for %n month</source>
+        <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>[B]%1% off[/B] for %n month</numerusform>
+            <numerusform>[B]%1% off[/B] for %n months</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>OnboardingStrings</name>
     <message>
         <source>A folder with the same name already exists on your backups</source>
@@ -6088,12 +6178,6 @@ Enter a different name.</translation>
         <translation>- Improved reliability for problematic graphics drivers on Windows
 - Minor bug fixes and performance improvements
 </translation>
-    </message>
-    <message>
-        <source>- We&apos;ve fixed bugs and made the app more reliable.
-</source>
-        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation>- We’ve fixed bugs and made the app more reliable</translation>
     </message>
 </context>
 <context>
@@ -9660,6 +9744,11 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UpsellStrings</name>
     <message>
+        <source>%1 after tax</source>
+        <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
+        <translation>%1 after tax</translation>
+    </message>
+    <message>
         <source>%1 billed yearly</source>
         <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
         <translation>%1 billed yearly</translation>
@@ -9678,6 +9767,24 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation>%1 transfer</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1% off for %n month</source>
+        <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
+        <translation>
+            <numerusform>%1% off for %n month</numerusform>
+            <numerusform>%1% off for %n months</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1/month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format.SNC-6228</translatorcomment>
+        <translation>%1/month</translation>
+    </message>
+    <message>
+        <source>%1/month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
+        <translation>%1/month, charged yearly</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -9708,6 +9815,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
         <translation>Current plan</translation>
+    </message>
+    <message>
+        <source>Most Popular</source>
+        <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
+        <translation>Most popular</translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
@@ -9753,6 +9865,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Your MEGA cloud storage is full</source>
         <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
         <translation>Your MEGA cloud storage is full</translation>
+    </message>
+    <message>
+        <source>only</source>
+        <translatorcomment>Text shown ont top of the price of a plan.SNC-6228</translatorcomment>
+        <translation>only</translation>
     </message>
     <message>
         <source>per month</source>
