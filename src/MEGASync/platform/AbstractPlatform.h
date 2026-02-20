@@ -119,6 +119,7 @@ public:
     }
 
     virtual Preferences::SystemColorScheme getCurrentThemeAppearance() const;
+    virtual Preferences::ThemeAppeareance getPanelTheme() const;
     virtual void applyCurrentThemeOnCurrentDialogFrame(QWindow* window);
 
     virtual void setRenderingBackend() const {}

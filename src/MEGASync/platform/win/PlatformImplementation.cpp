@@ -1943,3 +1943,8 @@ QString PlatformImplementation::getGfxProviderPath()
            QLatin1String("/mega-desktop-app-gfxworker.exe");
 }
 #endif
+
+Preferences::ThemeAppeareance PlatformImplementation::getPanelTheme() const
+{
+    return getCurrentThemeAppearance().systemScheme;
+}

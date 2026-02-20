@@ -71,6 +71,7 @@ public:
 
     // AutoUpdate tasks
     void runPostAutoUpdateStep() override;
+    Preferences::ThemeAppeareance getPanelTheme() const override;
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     QString getGfxProviderPath() override;

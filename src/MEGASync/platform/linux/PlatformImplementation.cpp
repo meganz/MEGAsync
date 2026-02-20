@@ -969,6 +969,7 @@ void PlatformImplementation::stopThemeMonitor()
     mCurrentPortalTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
     mCurrentGSettingsTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
     mLastEmittedTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
+    mLastEmittedPanelTheme = Preferences::ThemeAppeareance::UNINITIALIZED;
     mUseGtkTheme = false;
 }
 
@@ -1173,11 +1174,14 @@ Preferences::ThemeAppeareance PlatformImplementation::effectiveTheme() const
 
 void PlatformImplementation::maybeEmitTheme()
 {
-    const auto effTheme = effectiveTheme();
-    if (effTheme != mLastEmittedTheme)
+    const auto appTheme = effectiveTheme();
+    const auto panelTheme = getPanelTheme();
+
+    if (appTheme != mLastEmittedTheme || panelTheme != mLastEmittedPanelTheme)
     {
-        mLastEmittedTheme = effTheme;
-        emit themeChanged({effTheme, effTheme});
+        mLastEmittedTheme = appTheme;
+        mLastEmittedPanelTheme = panelTheme;
+        emit themeChanged({appTheme, appTheme});
     }
 }
 
@@ -1257,4 +1261,17 @@ void PlatformImplementation::onGsettingsThemeReadyRead()
             maybeEmitTheme();
         }
     }
+}
+
+Preferences::ThemeAppeareance PlatformImplementation::getPanelTheme() const
+{
+    const QString desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP").toUpper();
+
+    if (desktop.contains(QLatin1String("GNOME")) || desktop.contains(QLatin1String("CINNAMON")) ||
+        desktop.contains(QLatin1String("X-CINNAMON")))
+    {
+        return Preferences::ThemeAppeareance::DARK;
+    }
+
+    return effectiveTheme();
 }
