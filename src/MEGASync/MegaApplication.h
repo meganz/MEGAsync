@@ -505,7 +505,7 @@ protected:
 
     QPointer<SyncReminderNotificationManager> mSyncReminderNotificationManager;
 
-    QPointer<DiscountPolicy> mPolicy;
+    QPointer<DiscountPolicy> mDiscountPolicy;
     QPointer<DiscountStateMachine> mDiscountStateMachine;
 
     bool misSyncingStateWrongLogged;

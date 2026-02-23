@@ -422,13 +422,6 @@ void InfoDialog::createUpsellController()
     {
         mUpsellController = std::make_unique<UpsellController>(nullptr);
         mUpsellController->requestPricingData();
-        connect(mUpsellController.get(),
-                &UpsellController::dataReady,
-                this,
-                [this]()
-                {
-                    updateUpgradeButtonState();
-                });
     }
 }
 
@@ -1117,7 +1110,7 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bUpgrade_clicked()
 {
-    auto discountInfo = mPolicy ? mPolicy->getDiscountInfo() : nullptr;
+    auto discountInfo = mDiscountPolicy ? mDiscountPolicy->getDiscountInfo() : nullptr;
 
     if (!discountInfo)
     {
@@ -1860,7 +1853,7 @@ void InfoDialog::updateUpgradeButtonState()
     {
         return;
     }
-    const bool hasOffer = mPolicy && mPolicy->isCampaignActive();
+    const bool hasOffer = mDiscountPolicy && mDiscountPolicy->isCampaignActive();
     const QuotaState quotaState = MegaSyncApp->getTransferQuota()->quotaState();
     const bool isTransferOverquota = (quotaState != QuotaState::OK);
 
@@ -1873,23 +1866,9 @@ void InfoDialog::updateUpgradeButtonState()
 
     if (hasOffer)
     {
-        if (mPolicy->isCampaignActive() && mUpsellController)
-        {
-            const auto plans = mUpsellController->getPlans();
-            int nPlans = plans ? plans->size() : 0;
-            for (int i = 0; i < nPlans; ++i)
-            {
-                auto plan = plans->getPlan(i);
-                auto discountInfo = mPolicy->getDiscountInfo();
-                if (plan->proLevel() == discountInfo->getAccountLevel())
-                {
-                    ui->bUpgrade->setText(tr("%1% off %2")
-                                              .arg(discountInfo->getPercentageDiscount())
-                                              .arg(plan->name()));
-                    break;
-                }
-            }
-        }
+        ui->bUpgrade->setText(tr("%1% off %2")
+                                  .arg(mDiscountPolicy->getDiscountInfo()->getPercentageDiscount())
+                                  .arg(mDiscountPolicy->getPlanName()));
     }
     else
     {
@@ -1900,15 +1879,19 @@ void InfoDialog::updateUpgradeButtonState()
 
 void InfoDialog::setDiscountPolicy(QPointer<DiscountPolicy> policy)
 {
-    mPolicy = policy;
-    if (!mPolicy.isNull())
+    mDiscountPolicy = policy;
+    if (!mDiscountPolicy.isNull())
     {
-        connect(mPolicy,
+        connect(mDiscountPolicy,
                 &DiscountPolicy::campaignActivated,
                 this,
                 &InfoDialog::updateUpgradeButtonState);
-        connect(mPolicy,
+        connect(mDiscountPolicy,
                 &DiscountPolicy::campaignDeactivated,
+                this,
+                &InfoDialog::updateUpgradeButtonState);
+        connect(mDiscountPolicy,
+                &DiscountPolicy::planNameReady,
                 this,
                 &InfoDialog::updateUpgradeButtonState);
     }

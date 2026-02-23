@@ -2,6 +2,7 @@
 
 #include "megaapi.h"
 #include "Preferences.h"
+#include "UpsellController.h"
 
 #include <QDateTime>
 #include <QObject>
@@ -23,22 +24,31 @@ public:
     QDateTime getDialogLastShownDateUtc() const;
     std::shared_ptr<mega::MegaDiscountCodeInfo> getDiscountInfo();
     QDateTime getExpiryDateUtc() const;
+    QString getPlanName() const;
 
 signals:
     void campaignActivated();
     void campaignDeactivated();
+    void planNameReady();
 
-private:
-    void load();
+protected slots:
+    void setPlanName();
+
+protected:
+    bool load();
     void persist() const;
+    void checkAndDeactivateExpiredCampaign();
+    bool isCampaignExpired(const QDateTime& expiryDate);
 
-private:
     // State
     bool mIsCampaignActive = false;
+    bool mIsLoadingPersistedDataNeeded = true;
     QDateTime mLastTimeShownUtc;
     QDateTime mCampaignExpiryDateUtc;
     QString mDiscountCode;
+    QString mPlanName;
 
     std::shared_ptr<mega::MegaDiscountCodeInfo> mDiscountInfo;
     std::shared_ptr<Preferences> mPreferences;
+    QPointer<UpsellController> mUpsellController;
 };

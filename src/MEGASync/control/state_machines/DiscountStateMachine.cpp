@@ -408,9 +408,6 @@ void DiscountStateMachine::build()
             this,
             &DiscountStateMachine::requestShowDialog);
 
-    mShowable->setInitialState(mWaitingForNoBlocking);
-    mShowable->setInitialState(mWaitingForUserActive);
-
     mWaitingForNoBlocking->addTransition(this,
                                          &DiscountStateMachine::noBlockingWindow,
                                          noBlockingFinal);

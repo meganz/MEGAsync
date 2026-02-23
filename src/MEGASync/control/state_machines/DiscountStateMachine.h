@@ -50,7 +50,6 @@ public:
     bool showTrayIconAnimation() const;
 
 signals:
-    void startupFinished();
     void onboardingStarted();
     void onboardingFinished();
     void meaningfulInteraction();
@@ -70,7 +69,6 @@ signals:
     void requestUserDiscounts(bool force);
 
 private:
-    bool canShowNow() const;
     void build();
     void logState(QState* state);
 

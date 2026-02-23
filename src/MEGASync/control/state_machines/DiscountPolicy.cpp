@@ -8,85 +8,117 @@ DiscountPolicy::DiscountPolicy(QObject* parent):
     QObject(parent),
     mPreferences(Preferences::instance())
 {
-    load();
-    if (mIsCampaignActive && mCampaignExpiryDateUtc <= QDateTime::currentDateTimeUtc())
+    if (load())
     {
-        deactivateCampaign();
-    }
-}
-
-void DiscountPolicy::load()
-{
-    if (mPreferences->logged())
-    {
-        mLastTimeShownUtc = mPreferences->getOfferDialogLastExecution();
-        mDiscountCode = mPreferences->getDiscountCode();
-        mCampaignExpiryDateUtc = mPreferences->getOfferDialogCampaignExpiryDate();
-    }
-    mIsCampaignActive = !mDiscountCode.isEmpty();
-}
-
-void DiscountPolicy::persist() const
-{
-    if (mPreferences->logged())
-    {
-        mPreferences->setOfferDialogLastExecution(mLastTimeShownUtc);
-        mPreferences->setDiscountCode(mDiscountCode);
-        mPreferences->setOfferDialogCampaignExpiryDate(mCampaignExpiryDateUtc);
+        checkAndDeactivateExpiredCampaign();
     }
 }
 
 void DiscountPolicy::activateCampaign(std::shared_ptr<mega::MegaDiscountCodeInfo> discountInfo)
 {
+    // We have several cases to take into account here:
+    // - no stored code + no running campaign: start new campaign
+    // - running campaign + same code: do nothing
+    // - no running campaign + stored code + same new code: restore campaign
+    // - stored code + expired stored campaign + new code: stop old campaign and start new
+    // - running campaign + new code: stop old campaign and start new
+    // - stored code + expired stored campaign + new code + expired new campaign: stop old campaign
+
     if (!discountInfo)
     {
         return;
     }
 
-    // Load here?
-    if (!mIsCampaignActive)
+    bool deactivateCampaignFirst = false;
+    bool activateCampaign = false;
+
+    // Check persisted campaign
+    if ((mIsLoadingPersistedDataNeeded && load()) ||
+        (!mIsLoadingPersistedDataNeeded && !mIsCampaignActive && !mDiscountCode.isEmpty()))
     {
-        load();
-        if (mIsCampaignActive && mCampaignExpiryDateUtc <= QDateTime::currentDateTimeUtc())
-        {
-            deactivateCampaign();
-        }
+        // We want to deactivate an expired persisted campaign
+        deactivateCampaignFirst = isCampaignExpired(mCampaignExpiryDateUtc);
+        // And activate it if it's not expired
+        activateCampaign = !deactivateCampaignFirst;
     }
 
-    // Check if we have a new campaign, and stop the currently running one if it's not the same
     const auto newCode = QString::fromUtf8(discountInfo->getCode());
-    if (mIsCampaignActive && newCode != mDiscountCode)
+    const auto isNewCampaign = newCode != mDiscountCode;
+
+    // If it's a new campaign we want to activate it
+    activateCampaign |= isNewCampaign;
+
+    const auto newExpiryDate = QDateTime::fromSecsSinceEpoch(discountInfo->getExpiry());
+    const auto isNewCampaignExpired = isCampaignExpired(newExpiryDate); // Very low probability
+
+    // We want to deactivate an active, but different campaign, or if the new campaign is already
+    // expired when we process the info.
+    deactivateCampaignFirst |= mIsCampaignActive && (isNewCampaign || isNewCampaignExpired);
+
+    // Deactivate if needed
+    if (deactivateCampaignFirst)
     {
         deactivateCampaign();
     }
 
-    if (!mIsCampaignActive || newCode == mDiscountCode)
+    // Evaluate here because deactivating can change mIsCampaignActive value.
+    // We want to activate only if the campaign is not already running, or if the new campaign is
+    // already expired when we process the info.
+    activateCampaign &= !(mIsCampaignActive || isNewCampaignExpired);
+
+    // Activate if needed
+    if (activateCampaign)
     {
-        // Check that the campaign has not expired
-        mCampaignExpiryDateUtc = QDateTime::fromSecsSinceEpoch(discountInfo->getExpiry());
-        if (mCampaignExpiryDateUtc > QDateTime::currentDateTime())
+        if (isNewCampaign)
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
                 AppStatsEvents::EventType::TARGETED_DISCOUNT_CAMPAIGN_STARTED);
-            mIsCampaignActive = true;
-            mDiscountInfo = discountInfo;
             mDiscountCode = newCode;
-            persist();
-            emit campaignActivated();
         }
+        // Update in case it has changed (not very probable)
+        mCampaignExpiryDateUtc = newExpiryDate;
+        persist();
+        mDiscountInfo = discountInfo;
+        mIsCampaignActive = true;
+
+        // Create upsell controller to get access to plans info
+        if (!mUpsellController)
+        {
+            mUpsellController = new UpsellController(this);
+            mUpsellController->requestPricingData();
+            connect(mUpsellController,
+                    &UpsellController::dataReady,
+                    this,
+                    &DiscountPolicy::setPlanName);
+        }
+        else
+        {
+            setPlanName();
+        }
+
+        emit campaignActivated();
     }
 }
 
 void DiscountPolicy::deactivateCampaign()
 {
-    auto wasCampaignActive = mIsCampaignActive;
+    // We want to send an event if the campaign was runing or we had a persisted campaign pending
+    // re-activation
+    auto wasCampaignActive = mIsCampaignActive || (!mIsLoadingPersistedDataNeeded &&
+                                                   !mIsCampaignActive && !mDiscountCode.isEmpty());
 
     mIsCampaignActive = false;
+    mDiscountInfo.reset();
+    mPlanName.clear();
+    if (mUpsellController)
+    {
+        mUpsellController->deleteLater();
+        mUpsellController = nullptr;
+    }
+
     mDiscountCode.clear();
     mCampaignExpiryDateUtc = QDateTime();
     mLastTimeShownUtc = QDateTime();
-    mDiscountInfo.reset();
-
     persist();
 
     if (wasCampaignActive)
@@ -139,4 +171,63 @@ std::shared_ptr<mega::MegaDiscountCodeInfo> DiscountPolicy::getDiscountInfo()
 QDateTime DiscountPolicy::getExpiryDateUtc() const
 {
     return mCampaignExpiryDateUtc;
+}
+
+QString DiscountPolicy::getPlanName() const
+{
+    return mPlanName;
+}
+
+void DiscountPolicy::setPlanName()
+{
+    if (mUpsellController)
+    {
+        const auto plans = mUpsellController->getPlans();
+        int nPlans = plans ? plans->size() : 0;
+        for (int i = 0; i < nPlans; ++i)
+        {
+            auto plan = plans->getPlan(i);
+            if (plan->proLevel() == mDiscountInfo->getAccountLevel())
+            {
+                mPlanName = plan->name();
+                emit planNameReady();
+                break;
+            }
+        }
+    }
+}
+
+bool DiscountPolicy::load()
+{
+    if (mPreferences->logged())
+    {
+        mLastTimeShownUtc = mPreferences->getOfferDialogLastExecution();
+        mDiscountCode = mPreferences->getDiscountCode();
+        mCampaignExpiryDateUtc = mPreferences->getOfferDialogCampaignExpiryDate();
+        mIsLoadingPersistedDataNeeded = false;
+    }
+    return !mDiscountCode.isEmpty();
+}
+
+void DiscountPolicy::persist() const
+{
+    if (mPreferences->logged())
+    {
+        mPreferences->setOfferDialogLastExecution(mLastTimeShownUtc);
+        mPreferences->setDiscountCode(mDiscountCode);
+        mPreferences->setOfferDialogCampaignExpiryDate(mCampaignExpiryDateUtc);
+    }
+}
+
+void DiscountPolicy::checkAndDeactivateExpiredCampaign()
+{
+    if (isCampaignExpired(mCampaignExpiryDateUtc))
+    {
+        deactivateCampaign();
+    }
+}
+
+bool DiscountPolicy::isCampaignExpired(const QDateTime& expiryDate)
+{
+    return expiryDate <= QDateTime::currentDateTimeUtc();
 }
