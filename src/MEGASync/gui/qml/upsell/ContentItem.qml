@@ -122,6 +122,7 @@ FocusScope {
                         priceBeforeTax: model.priceBeforeTax
                         totalPriceWithoutDiscount: model.totalPriceWithoutDiscount
                         monthlyPriceWithDiscount: model.monthlyPriceWithDiscount
+                        monthlyBasePrice: model.monthlyBasePrice
                         enabled: model.available || model.showOnlyProFlexi
                         showProFlexiMessage: model.showProFlexiMessage
                         showOnlyProFlexi: model.showOnlyProFlexi

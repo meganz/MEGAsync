@@ -42,19 +42,22 @@ Rectangle {
     property string priceBeforeTax: ""
     property string totalPriceWithoutDiscount: ""
     property string monthlyPriceWithDiscount: ""
+    property string monthlyBasePrice:""
     property string buttonName: ""
     property bool hasDiscount: false
     property int discountPercentage: 0
     property int discountMonths: 0
     property bool isHighlighted: false
 
+
     property string billedText: {
-        root.billingCurrency
-            ? (root.monthly ? UpsellStrings.perMonth : UpsellStrings.billedYearly)
+        root.currencyName.length === 0
+            ? (root.monthly ? UpsellStrings.perMonth : UpsellStrings.billedYearlyWithoutBillingCurrency)
             : (root.monthly
                 ? UpsellStrings.perMonthWithBillingCurrency.arg(root.currencyName)
                 : UpsellStrings.billedYearlyWithBillingCurrency.arg(root.currencyName))
     }
+
 
     signal buyButtonClicked()
 
@@ -173,7 +176,8 @@ Rectangle {
 
                 lineHeight: root.discountLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: UpsellStrings.only
+                text: root.hasDiscount? root.monthlyBasePrice :UpsellStrings.only
+                font.strikeout: root.hasDiscount
                 visible: true
                 width: parent.width
             }

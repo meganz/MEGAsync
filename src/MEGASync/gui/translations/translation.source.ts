@@ -9754,16 +9754,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>* Estimated price in your local currency. You will be charged in euros for all transactions.</translation>
     </message>
     <message>
-        <source>Billed monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
-        <translation>Billed monthly</translation>
-    </message>
-    <message>
-        <source>Billed yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
-        <translation>Billed yearly</translation>
-    </message>
-    <message>
         <source>Buy %1</source>
         <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
         <translation>Buy %1</translation>
@@ -9827,6 +9817,21 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>per month</translation>
+    </message>
+    <message>
+        <source>per month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
+        <translation>per month, charged yearly</translation>
+    </message>
+    <message>
+        <source>Charged yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
+        <translation>Charged yearly</translation>
+    </message>
+    <message>
+        <source>Charged monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
+        <translation>Charged monthly</translation>
     </message>
 </context>
 <context>
