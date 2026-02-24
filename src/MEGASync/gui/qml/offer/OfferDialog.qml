@@ -108,7 +108,10 @@ QmlDialog {
                                 width: parent.width
                                 textFormat: Text.RichText
                                 
-                                text: OfferStrings.discountLabel(offerComponentAccess.discountPercentage, offerComponentAccess.discountMonthes, ColorTheme.textBrand)
+                                text: OfferStrings.discountLabel(
+                                          offerComponentAccess.discountPercentage,
+                                          offerComponentAccess.discountMonths,
+                                          ColorTheme.textBrand)
                                 font.pixelSize: 16
                                 lineHeight: 24
                                 lineHeightMode: Text.FixedHeight

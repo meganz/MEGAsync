@@ -8,7 +8,9 @@
 namespace
 {
 static bool qmlRegistrationDone = false;
-constexpr int COUNT_DOWN_UPDATE_INTERVAL = 60000;
+constexpr int MS_IN_ONE_MIN = 1000 * 60; // 1 minute
+constexpr int COUNT_DOWN_UPDATE_INTERVAL_MS = MS_IN_ONE_MIN; // 1 minute
+constexpr long long COUNT_DOWN_TOLERANCE_MS = 1500; // 1.5 seconds
 }
 
 OfferComponent::OfferComponent(QObject* parent):
@@ -27,6 +29,9 @@ OfferComponent::OfferComponent(QObject* parent):
     QmlManager::instance()->setRootContextProperty(QString::fromLatin1("offerComponentAccess"),
                                                    this);
     qApp->installEventFilter(this);
+
+    mCountDownTimer.setInterval(COUNT_DOWN_UPDATE_INTERVAL_MS);
+    connect(&mCountDownTimer, &QTimer::timeout, this, &OfferComponent::onTimerFired);
 }
 
 OfferComponent::~OfferComponent() {}
@@ -44,19 +49,6 @@ void OfferComponent::registerQmlModules()
         qmlRegisterType<OfferComponent>("OfferComponent", 1, 0, "OfferComponent");
         qmlRegistrationDone = true;
     }
-}
-
-void OfferComponent::onPlansReady()
-{
-    auto plans = mUpsellController->getPlans();
-
-    if (mDiscountInfo && plans && plans->size() > 0)
-    {
-        mDiscountedPlan =
-            findPlanByLevel(mDiscountInfo->getAccountLevel()); // For now, use the first plan
-    }
-
-    emit dataUpdated();
 }
 
 QString OfferComponent::getCurrencySymbol() const
@@ -171,44 +163,41 @@ QString OfferComponent::getDiscountedPrice() const
 int OfferComponent::getDays() const
 {
     qint64 secsRemaining = QDateTime::currentDateTime().secsTo(mOfferEndTime);
-    if (secsRemaining < 0)
+    if (secsRemaining <= 0)
+    {
         return 0;
+    }
     return static_cast<int>(secsRemaining / 86400); // 86400 secs in a day
 }
 
 int OfferComponent::getHours() const
 {
     qint64 secsRemaining = QDateTime::currentDateTime().secsTo(mOfferEndTime);
-    if (secsRemaining < 0)
+    if (secsRemaining <= 0)
+    {
         return 0;
+    }
     return static_cast<int>((secsRemaining % 86400) / 3600);
 }
 
 int OfferComponent::getMinutes() const
 {
     qint64 secsRemaining = QDateTime::currentDateTime().secsTo(mOfferEndTime);
-    if (secsRemaining < 0)
+    if (secsRemaining <= 0)
+    {
         return 0;
+    }
     return static_cast<int>((secsRemaining % 3600) / 60);
 }
 
-void OfferComponent::setOfferExpirationDate(QDateTime date)
+void OfferComponent::setOfferExpirationDate(const QDateTime& date)
 {
     mOfferEndTime = date;
-    emit countdownChanged();
-    connect(&mCountDownTimer,
-            &QTimer::timeout,
-            this,
-            [this]()
-            {
-                emit countdownChanged();
 
-                if (QDateTime::currentDateTime() >= mOfferEndTime)
-                {
-                    mCountDownTimer.stop();
-                }
-            });
-    mCountDownTimer.start(COUNT_DOWN_UPDATE_INTERVAL);
+    // Set single shot timer to next minute (relative to end date)
+    QTimer::singleShot(msToNextCountdownMinuteTick(), this, &OfferComponent::onTimerFired);
+
+    emit countdownChanged();
 }
 
 int OfferComponent::getPercentage() const
@@ -223,9 +212,9 @@ int OfferComponent::getMonths() const
 
 void OfferComponent::setDiscountInfo(std::shared_ptr<mega::MegaDiscountCodeInfo> discount)
 {
-    mDiscountInfo = discount;
+    mDiscountInfo = std::move(discount);
     mDiscountedPlan = findPlanByLevel(mDiscountInfo->getAccountLevel());
-    setOfferExpirationDate(QDateTime::fromSecsSinceEpoch(mDiscountInfo->getExpiry()));
+    setOfferExpirationDate(QDateTime::fromSecsSinceEpoch(mDiscountInfo->getExpiry(), Qt::UTC));
     emit dataUpdated();
 }
 
@@ -261,7 +250,6 @@ void OfferComponent::onGrabDeal()
 bool OfferComponent::localCurrencyIsBillingCurrency() const
 {
     auto localCurrencyIsBillingCurrency = true; // Default to true
-
     if (mDiscountInfo)
     {
         // Local currency is billing currency if the API doesn't give us a local currency symbol.
@@ -278,4 +266,67 @@ bool OfferComponent::eventFilter(QObject* obj, QEvent* event)
         emit dataUpdated();
     }
     return QMLComponent::eventFilter(obj, event);
+}
+
+void OfferComponent::onPlansReady()
+{
+    auto plans = mUpsellController->getPlans();
+
+    if (mDiscountInfo && plans && plans->size() > 0)
+    {
+        mDiscountedPlan =
+            findPlanByLevel(mDiscountInfo->getAccountLevel()); // For now, use the first plan
+    }
+
+    emit dataUpdated();
+}
+
+void OfferComponent::onTimerFired()
+{
+    emit countdownChanged();
+
+    // Realign if we drifted (sleep/wake or long stall) + check if we passed expiry
+    const auto msToMinTick = msToNextCountdownMinuteTick();
+    // We've reached the end
+    if (msToMinTick <= 0)
+    {
+        mCountDownTimer.stop();
+        // Grey out button
+        return;
+    }
+
+    const bool aligned = (msToMinTick <= COUNT_DOWN_TOLERANCE_MS) ||
+                         (MS_IN_ONE_MIN - msToMinTick <= COUNT_DOWN_TOLERANCE_MS);
+    if (!aligned)
+    {
+        mCountDownTimer.stop();
+        // Set single shot timer to next minute (relative to end date)
+        QTimer::singleShot(msToMinTick, this, &OfferComponent::onTimerFired);
+    }
+    // Start timer if needed
+    else if (!mCountDownTimer.isActive())
+    {
+        mCountDownTimer.start();
+    }
+}
+
+long long OfferComponent::msToNextCountdownMinuteTick() const
+{
+    auto msLeft = QDateTime::currentDateTimeUtc().msecsTo(mOfferEndTime);
+
+    // Return 0 if end has been reached
+    if (msLeft < 0)
+    {
+        msLeft = 0;
+    }
+    // Return ms to next tick
+    else if (msLeft > 0)
+    {
+        msLeft %= MS_IN_ONE_MIN;
+        if (msLeft == 0)
+        {
+            msLeft = MS_IN_ONE_MIN;
+        }
+    }
+    return msLeft;
 }

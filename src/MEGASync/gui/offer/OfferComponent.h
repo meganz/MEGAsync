@@ -19,7 +19,7 @@ class OfferComponent: public QMLComponent
     Q_PROPERTY(int hours READ getHours NOTIFY countdownChanged)
     Q_PROPERTY(int minutes READ getMinutes NOTIFY countdownChanged)
     Q_PROPERTY(int discountPercentage READ getPercentage NOTIFY dataUpdated)
-    Q_PROPERTY(int discountMonthes READ getMonths NOTIFY dataUpdated)
+    Q_PROPERTY(int discountMonths READ getMonths NOTIFY dataUpdated)
 
 public:
     explicit OfferComponent(QObject* parent = nullptr);
@@ -36,7 +36,7 @@ public:
     int getDays() const;
     int getHours() const;
     int getMinutes() const;
-    void setOfferExpirationDate(QDateTime date);
+    void setOfferExpirationDate(const QDateTime& date);
     Q_INVOKABLE QStringList getPlanFeatures() const;
     int getPercentage() const;
     int getMonths() const;
@@ -47,9 +47,11 @@ public:
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
+    long long msToNextCountdownMinuteTick() const;
 
-private slots:
+protected slots:
     void onPlansReady();
+    void onTimerFired();
 
 signals:
     void dataUpdated();
