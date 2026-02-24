@@ -258,6 +258,19 @@ void OfferComponent::onGrabDeal()
     }
 }
 
+bool OfferComponent::localCurrencyIsBillingCurrency() const
+{
+    auto localCurrencyIsBillingCurrency = true; // Default to true
+
+    if (mDiscountInfo)
+    {
+        // Local currency is billing currency if the API doesn't give us a local currency symbol.
+        localCurrencyIsBillingCurrency =
+            QString::fromUtf8(mDiscountInfo->getLocalCurrencySymbol()).isEmpty();
+    }
+    return localCurrencyIsBillingCurrency;
+}
+
 bool OfferComponent::eventFilter(QObject* obj, QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)

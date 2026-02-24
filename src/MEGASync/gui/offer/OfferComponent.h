@@ -43,6 +43,7 @@ public:
     void setDiscountInfo(std::shared_ptr<mega::MegaDiscountCodeInfo> discount);
     std::shared_ptr<UpsellPlans::Data> findPlanByLevel(int level) const;
     Q_INVOKABLE void onGrabDeal();
+    Q_INVOKABLE bool localCurrencyIsBillingCurrency() const;
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
