@@ -59,9 +59,7 @@ signals:
     void cooldown();
     void campaignActive();
     void updateDiscountCampaignSignaling();
-
     void requestShowDialog();
-
     void onboardingLostFocus();
     void onboardingGainedFocus();
     void noBlockingWindow();
@@ -73,6 +71,7 @@ private:
     void logState(QState* state);
     long long computeWaitingStateTimer();
 
+    QDateTime mAppStartDelayExpiredTime;
     DiscountPolicy* mPolicy;
     QStateMachine mStateMachine;
 
@@ -83,7 +82,7 @@ private:
     TimedState* mCampaignActive;
     QState* mActiveOnboarding;
     TimedState* mWaiting;
-    QState* mWatingForMeaningfulInteraction;
+    QState* mWaitingForMeaningfulInteraction;
     QState* mWaitingForOverquota;
     TimedState* mShowable;
     QState* mWaitingForNoBlocking;
@@ -92,6 +91,4 @@ private:
     QState* mShown;
     TimedState* mDealGrabbed;
     TimedState* mCooldown;
-
-    QDateTime mStartDelayExpiredTime;
 };

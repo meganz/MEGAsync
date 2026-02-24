@@ -38,7 +38,7 @@ protected:
     bool load();
     void persist() const;
     void checkAndDeactivateExpiredCampaign();
-    bool isCampaignExpired(const QDateTime& expiryDate);
+    bool isCampaignExpiredUtc(const QDateTime& expiryDateUtc);
 
     // State
     bool mIsCampaignActive = false;

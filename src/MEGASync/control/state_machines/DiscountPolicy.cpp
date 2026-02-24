@@ -37,7 +37,7 @@ void DiscountPolicy::activateCampaign(std::shared_ptr<mega::MegaDiscountCodeInfo
         (!mIsLoadingPersistedDataNeeded && !mIsCampaignActive && !mDiscountCode.isEmpty()))
     {
         // We want to deactivate an expired persisted campaign
-        deactivateCampaignFirst = isCampaignExpired(mCampaignExpiryDateUtc);
+        deactivateCampaignFirst = isCampaignExpiredUtc(mCampaignExpiryDateUtc);
         // And activate it if it's not expired
         activateCampaign = !deactivateCampaignFirst;
     }
@@ -48,8 +48,9 @@ void DiscountPolicy::activateCampaign(std::shared_ptr<mega::MegaDiscountCodeInfo
     // If it's a new campaign we want to activate it
     activateCampaign |= isNewCampaign;
 
-    const auto newExpiryDate = QDateTime::fromSecsSinceEpoch(discountInfo->getExpiry());
-    const auto isNewCampaignExpired = isCampaignExpired(newExpiryDate); // Very low probability
+    const auto newExpiryDateUtc = QDateTime::fromSecsSinceEpoch(discountInfo->getExpiry(), Qt::UTC);
+    const auto isNewCampaignExpired =
+        isCampaignExpiredUtc(newExpiryDateUtc); // Very low probability
 
     // We want to deactivate an active, but different campaign, or if the new campaign is already
     // expired when we process the info.
@@ -76,7 +77,7 @@ void DiscountPolicy::activateCampaign(std::shared_ptr<mega::MegaDiscountCodeInfo
             mDiscountCode = newCode;
         }
         // Update in case it has changed (not very probable)
-        mCampaignExpiryDateUtc = newExpiryDate;
+        mCampaignExpiryDateUtc = newExpiryDateUtc;
         persist();
         mDiscountInfo = discountInfo;
         mIsCampaignActive = true;
@@ -221,13 +222,13 @@ void DiscountPolicy::persist() const
 
 void DiscountPolicy::checkAndDeactivateExpiredCampaign()
 {
-    if (isCampaignExpired(mCampaignExpiryDateUtc))
+    if (isCampaignExpiredUtc(mCampaignExpiryDateUtc))
     {
         deactivateCampaign();
     }
 }
 
-bool DiscountPolicy::isCampaignExpired(const QDateTime& expiryDate)
+bool DiscountPolicy::isCampaignExpiredUtc(const QDateTime& expiryDateUtc)
 {
-    return expiryDate <= QDateTime::currentDateTimeUtc();
+    return expiryDateUtc <= QDateTime::currentDateTimeUtc();
 }

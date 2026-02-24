@@ -26,15 +26,18 @@ inline void setTargetStateTimerDurationOnTransition(QAbstractTransition* transit
 {
     Q_ASSERT(transition);
     TimedState* target = qobject_cast<TimedState*>(transition->targetState());
-    QObject::connect(transition,
-                     &QAbstractTransition::triggered,
-                     target,
-                     [target, durationProvider]
-                     {
-                         const long long ms =
-                             durationProvider ? durationProvider() : TIMER_DISABLED;
-                         target->setAssignedDurationMs(ms);
-                     });
+    if (target)
+    {
+        QObject::connect(transition,
+                         &QAbstractTransition::triggered,
+                         target,
+                         [target, durationProvider]
+                         {
+                             const long long ms =
+                                 durationProvider ? durationProvider() : TIMER_DISABLED;
+                             target->setAssignedDurationMs(ms);
+                         });
+    }
 }
 
 bool isOnboarding()
@@ -194,8 +197,8 @@ void DiscountStateMachine::build()
     mWaiting->setObjectName(QLatin1String("Waiting"));
 
     // *** WaitingForMeaningfulInteraction
-    mWatingForMeaningfulInteraction = new QState(mWaiting);
-    mWatingForMeaningfulInteraction->setObjectName(
+    mWaitingForMeaningfulInteraction = new QState(mWaiting);
+    mWaitingForMeaningfulInteraction->setObjectName(
         QLatin1String("Waiting for meaningful interaction"));
 
     // *** WaitingForOverquota
@@ -242,7 +245,7 @@ void DiscountStateMachine::build()
     mCampaignInactive->setInitialState(mIdle);
     rootState->setInitialState(mCampaignInactive);
     mStateMachine.setInitialState(rootState);
-    mStartDelayExpiredTime =
+    mAppStartDelayExpiredTime =
         QDateTime::currentDateTime().addMSecs(Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS);
 
     // Transitions ---------------------------------------------------------------------------------
@@ -277,7 +280,7 @@ void DiscountStateMachine::build()
     transition = mCampaignActive->addTimeoutTransition(mCampaignInactive);
     QObject::connect(transition,
                      &QAbstractTransition::triggered,
-                     mPolicy,
+                     this,
                      [this]
                      {
                          mPolicy->deactivateCampaign();
@@ -285,19 +288,14 @@ void DiscountStateMachine::build()
 
     connect(mPolicy,
             &DiscountPolicy::campaignActivated,
-            mPolicy,
+            this,
             [this]
             {
-                // Connect to onboarding start
-                connect(QmlDialogManager::instance().get(),
-                        &QmlDialogManager::openOnboardingDialogSignal,
-                        this,
-                        &DiscountStateMachine::onboardingStarted,
-                        Qt::UniqueConnection);
-
                 // Get the campaign duration to configure the Active State tineout
-                mCampaignActive->setAssignedDurationMs(
-                    QDateTime::currentDateTimeUtc().msecsTo(mPolicy->getExpiryDateUtc()));
+                const auto msecsToExpiry =
+                    QDateTime::currentDateTimeUtc().msecsTo(mPolicy->getExpiryDateUtc());
+                // Set to 0 to immediately exit if no time left
+                mCampaignActive->setAssignedDurationMs(std::max(msecsToExpiry, 0ll));
 
                 // If the onboarding is open, we want to go to the right state
                 if (isOnboarding())
@@ -334,9 +332,9 @@ void DiscountStateMachine::build()
     mWaiting->addTimeoutTransition(mShowable);
 
     mWaiting->addTransition(this, &DiscountStateMachine::onboardingGainedFocus, mActiveOnboarding);
-    mWatingForMeaningfulInteraction->addTransition(this,
-                                                   &DiscountStateMachine::meaningfulInteraction,
-                                                   mShowable);
+    mWaitingForMeaningfulInteraction->addTransition(this,
+                                                    &DiscountStateMachine::meaningfulInteraction,
+                                                    mShowable);
     mWaitingForOverquota->addTransition(this, &DiscountStateMachine::enterOverquota, mShowable);
 
     // Campaign Active Onboarding
@@ -365,6 +363,7 @@ void DiscountStateMachine::build()
                                          noBlockingFinal);
     connect(mWaitingForNoBlocking,
             &QState::entered,
+            this,
             [this]
             {
                 if (!DialogOpener::anyVisibleAndActiveDialogs())
@@ -376,6 +375,7 @@ void DiscountStateMachine::build()
     mWaitingForUserActive->addTransition(this, &DiscountStateMachine::userActive, userActiveFinal);
     connect(mWaitingForUserActive,
             &QState::entered,
+            this,
             [this]
             {
                 if (Platform::getInstance()->isUserActive())
@@ -438,7 +438,7 @@ void DiscountStateMachine::build()
     logState(mCampaignActive);
     logState(mActiveOnboarding);
     logState(mWaiting);
-    logState(mWatingForMeaningfulInteraction);
+    logState(mWaitingForMeaningfulInteraction);
     logState(mWaitingForOverquota);
     logState(mShowable);
     logState(mWaitingForNoBlocking);
@@ -499,9 +499,9 @@ long long DiscountStateMachine::computeWaitingStateTimer()
     // remaining time, of the fallback time if the start
     // delay has been reached.
     auto now = QDateTime::currentDateTime();
-    if (now < mStartDelayExpiredTime)
+    if (now < mAppStartDelayExpiredTime)
     {
-        return now.msecsTo(mStartDelayExpiredTime);
+        return now.msecsTo(mAppStartDelayExpiredTime);
     }
     return Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
 }
