@@ -3,6 +3,7 @@
 #include "DiscountPolicy.h"
 
 #include <QDateTime>
+#include <QElapsedTimer>
 #include <QObject>
 #include <QStateMachine>
 #include <QTimer>
@@ -71,7 +72,7 @@ private:
     void logState(QState* state);
     long long computeWaitingStateTimer();
 
-    QDateTime mAppStartDelayExpiredTime;
+    QElapsedTimer mElapsedTimeSinceAppStart;
     DiscountPolicy* mPolicy;
     QStateMachine mStateMachine;
 

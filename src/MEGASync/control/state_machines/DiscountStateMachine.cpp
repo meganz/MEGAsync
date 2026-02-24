@@ -245,8 +245,7 @@ void DiscountStateMachine::build()
     mCampaignInactive->setInitialState(mIdle);
     rootState->setInitialState(mCampaignInactive);
     mStateMachine.setInitialState(rootState);
-    mAppStartDelayExpiredTime =
-        QDateTime::currentDateTime().addMSecs(Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS);
+    mElapsedTimeSinceAppStart.start();
 
     // Transitions ---------------------------------------------------------------------------------
 
@@ -291,7 +290,7 @@ void DiscountStateMachine::build()
             this,
             [this]
             {
-                // Get the campaign duration to configure the Active State tineout
+                // Get the campaign duration to configure the Active State timeout
                 const auto msecsToExpiry =
                     QDateTime::currentDateTimeUtc().msecsTo(mPolicy->getExpiryDateUtc());
                 // Set to 0 to immediately exit if no time left
@@ -498,10 +497,8 @@ long long DiscountStateMachine::computeWaitingStateTimer()
     // Here we want to wait either the start delay
     // remaining time, of the fallback time if the start
     // delay has been reached.
-    auto now = QDateTime::currentDateTime();
-    if (now < mAppStartDelayExpiredTime)
-    {
-        return now.msecsTo(mAppStartDelayExpiredTime);
-    }
-    return Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
+    auto waitingDuration =
+        Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS - mElapsedTimeSinceAppStart.elapsed();
+    return waitingDuration > 0 ? waitingDuration :
+                                 Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
 }
