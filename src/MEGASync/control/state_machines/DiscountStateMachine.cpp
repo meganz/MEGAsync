@@ -113,50 +113,6 @@ void TimedState::setNextStep()
     }
 }
 
-void DiscountStateMachine::logState(QState* state)
-{
-    if (auto timedState = qobject_cast<TimedState*>(state))
-    {
-        QObject::connect(state,
-                         &QState::entered,
-                         timedState,
-                         [timedState]
-                         {
-                             mega::MegaApi::log(
-                                 mega::MegaApi::LOG_LEVEL_DEBUG,
-                                 QString::fromLatin1("DSM-ENTER %1 - TIMER: %2s")
-                                     .arg(timedState->objectName(),
-                                          QString::number(timedState->getDurationMs() / 1000))
-                                     .toUtf8()
-                                     .constData());
-                         });
-    }
-    else
-    {
-        QObject::connect(state,
-                         &QState::entered,
-                         state,
-                         [state]
-                         {
-                             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
-                                                QString::fromLatin1("DSM-ENTER %1")
-                                                    .arg(state->objectName())
-                                                    .toUtf8()
-                                                    .constData());
-                         });
-    }
-    QObject::connect(
-        state,
-        &QState::exited,
-        state,
-        [state]
-        {
-            mega::MegaApi::log(
-                mega::MegaApi::LOG_LEVEL_DEBUG,
-                QString::fromLatin1("DSM-EXIT %1").arg(state->objectName()).toUtf8().constData());
-        });
-}
-
 // DiscountStateMachine class
 
 DiscountStateMachine::DiscountStateMachine(DiscountPolicy* policy, QObject* parent):
@@ -190,6 +146,11 @@ DiscountStateMachine::DiscountStateMachine(DiscountPolicy* policy, QObject* pare
             Qt::UniqueConnection);
 
     build();
+}
+
+void DiscountStateMachine::start()
+{
+    mStateMachine.start();
 }
 
 bool DiscountStateMachine::isInCooldownState() const
@@ -281,6 +242,8 @@ void DiscountStateMachine::build()
     mCampaignInactive->setInitialState(mIdle);
     rootState->setInitialState(mCampaignInactive);
     mStateMachine.setInitialState(rootState);
+    mStartDelayExpiredTime =
+        QDateTime::currentDateTime().addMSecs(Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS);
 
     // Transitions ---------------------------------------------------------------------------------
 
@@ -293,22 +256,11 @@ void DiscountStateMachine::build()
         mIdle->addTransition(this, &DiscountStateMachine::campaignActive, mWaiting);
 
     // Set the time when the start delay waiting time will expire
-    mStartDelayExpiredTime =
-        QDateTime::currentDateTime().addMSecs(Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS);
-    setTargetStateTimerDurationOnTransition(
-        transition,
-        [this]
-        {
-            // Here we want to wait either the start delay
-            // remaining time, of the fallback time if the start
-            // delay has been reached.
-            auto now = QDateTime::currentDateTime();
-            if (now < mStartDelayExpiredTime)
-            {
-                return now.msecsTo(mStartDelayExpiredTime);
-            }
-            return Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
-        });
+    setTargetStateTimerDurationOnTransition(transition,
+                                            [this]
+                                            {
+                                                return computeWaitingStateTimer();
+                                            });
 
     // Campaign Inactive Onboarding
     mInactiveOnboarding->addTransition(this, &DiscountStateMachine::onboardingFinished, mIdle);
@@ -456,10 +408,21 @@ void DiscountStateMachine::build()
     connect(mShown, &QState::exited, this, &DiscountStateMachine::updateDiscountCampaignSignaling);
 
     // Cooldown
-    mCooldown->addTimeoutTransition(mWaiting);
+    transition = mCooldown->addTimeoutTransition(mWaiting);
+    setTargetStateTimerDurationOnTransition(transition,
+                                            [this]
+                                            {
+                                                return computeWaitingStateTimer();
+                                            });
 
     // Grabbed deal
+    // Here we want to wait for somr time before requesting discounts again.
     transition = mDealGrabbed->addTimeoutTransition(mCooldown);
+    setTargetStateTimerDurationOnTransition(transition,
+                                            []
+                                            {
+                                                return Preferences::TARGETED_DISCOUNT_COOLDOWN_MS;
+                                            });
     connect(transition,
             &QAbstractTransition::triggered,
             this,
@@ -486,7 +449,59 @@ void DiscountStateMachine::build()
     logState(mCooldown);
 }
 
-void DiscountStateMachine::start()
+void DiscountStateMachine::logState(QState* state)
 {
-    mStateMachine.start();
+    if (auto timedState = qobject_cast<TimedState*>(state))
+    {
+        QObject::connect(state,
+                         &QState::entered,
+                         timedState,
+                         [timedState]
+                         {
+                             mega::MegaApi::log(
+                                 mega::MegaApi::LOG_LEVEL_DEBUG,
+                                 QString::fromLatin1("DSM-ENTER %1 - TIMER: %2s")
+                                     .arg(timedState->objectName(),
+                                          QString::number(timedState->getDurationMs() / 1000))
+                                     .toUtf8()
+                                     .constData());
+                         });
+    }
+    else
+    {
+        QObject::connect(state,
+                         &QState::entered,
+                         state,
+                         [state]
+                         {
+                             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
+                                                QString::fromLatin1("DSM-ENTER %1")
+                                                    .arg(state->objectName())
+                                                    .toUtf8()
+                                                    .constData());
+                         });
+    }
+    QObject::connect(
+        state,
+        &QState::exited,
+        state,
+        [state]
+        {
+            mega::MegaApi::log(
+                mega::MegaApi::LOG_LEVEL_DEBUG,
+                QString::fromLatin1("DSM-EXIT %1").arg(state->objectName()).toUtf8().constData());
+        });
+}
+
+long long DiscountStateMachine::computeWaitingStateTimer()
+{
+    // Here we want to wait either the start delay
+    // remaining time, of the fallback time if the start
+    // delay has been reached.
+    auto now = QDateTime::currentDateTime();
+    if (now < mStartDelayExpiredTime)
+    {
+        return now.msecsTo(mStartDelayExpiredTime);
+    }
+    return Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
 }

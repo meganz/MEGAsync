@@ -71,6 +71,7 @@ signals:
 private:
     void build();
     void logState(QState* state);
+    long long computeWaitingStateTimer();
 
     DiscountPolicy* mPolicy;
     QStateMachine mStateMachine;
