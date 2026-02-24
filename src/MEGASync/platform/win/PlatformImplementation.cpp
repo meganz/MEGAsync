@@ -1555,16 +1555,12 @@ bool PlatformImplementation::isUserActive()
 {
     LASTINPUTINFO lii = {0};
     lii.cbSize = sizeof(LASTINPUTINFO);
-    if (!GetLastInputInfo(&lii))
+    bool userIsActive = true; // Default to true to avoid blocking
+    if (GetLastInputInfo(&lii))
     {
-        return true;
+        userIsActive = (GetTickCount() - lii.dwTime) <= Preferences::USER_INACTIVITY_MS;
     }
-
-    if ((GetTickCount() - lii.dwTime) > Preferences::USER_INACTIVITY_MS)
-    {
-        return false;
-    }
-    return true;
+    return userIsActive;
 }
 
 QString PlatformImplementation::getDeviceName()
