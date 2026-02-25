@@ -287,7 +287,11 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                 if (plan->discount().has_value())
                 {
                     auto dp = plan->discount()->percentage;
-                    field = mPlans->isMonthly() ? dp : dp + ((2 * (100 - dp)) / 12);
+                    // If the pro level has no monthly plan and we are in yearly view, return the
+                    // discount percentage without calculation.
+                    field = (mPlans->isMonthly() || !plan->monthlyData().isValid()) ?
+                                dp :
+                                dp + ((2 * (100 - dp)) / 12);
                 }
                 else
                 {
