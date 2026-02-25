@@ -229,8 +229,16 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             }
             case UpsellPlans::MONTHLY_BASE_PRICE_ROLE:
             {
-                field =
-                    getLocalePriceString(static_cast<float>(plan->monthlyData().priceBeforeTax()));
+                double price = -1;
+                if (plan->monthlyData().priceBeforeTax() > 0)
+                {
+                    price = plan->monthlyData().priceBeforeTax();
+                }
+                else
+                {
+                    price = plan->yearlyData().priceBeforeTax() / 12.;
+                }
+                field = price < 0 ? QString() : getLocalePriceString(static_cast<float>(price));
                 break;
             }
             case UpsellPlans::CURRENT_PLAN_ROLE:

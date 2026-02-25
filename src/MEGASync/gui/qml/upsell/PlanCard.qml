@@ -176,7 +176,7 @@ Rectangle {
 
                 lineHeight: root.discountLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: root.hasDiscount? root.monthlyBasePrice :UpsellStrings.only
+                text: root.hasDiscount && root.monthlyBasePrice.length ? root.monthlyBasePrice :UpsellStrings.only
                 font.strikeout: root.hasDiscount
                 visible: true
                 width: parent.width
