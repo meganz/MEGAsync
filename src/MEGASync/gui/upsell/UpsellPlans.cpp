@@ -3,6 +3,11 @@
 // ************************************************************************************************
 // * UpsellPlans
 // ************************************************************************************************
+namespace
+{
+constexpr int MONTH_PERIOD(1);
+constexpr int YEAR_PERIOD(12);
+}
 
 UpsellPlans::UpsellPlans(QObject* parent):
     QObject(parent),
@@ -24,6 +29,14 @@ void UpsellPlans::addPlans(const QList<std::shared_ptr<Data>>& plans)
     }
 
     mPlans.append(plans);
+    // Switch to monthly view if there are no discount on the yearly plan and a discount on the
+    // monthly plan.
+    bool isMonthly = false;
+    if (!hasYearlyDiscount() && hasMonthlyDiscount())
+    {
+        isMonthly = true;
+    }
+    setMonthly(isMonthly);
     emit sizeChanged();
 }
 
@@ -192,6 +205,27 @@ bool UpsellPlans::hasDiscounts() const
                        });
 }
 
+bool UpsellPlans::hasMonthlyDiscount() const
+{
+    return std::any_of(mPlans.begin(),
+                       mPlans.end(),
+                       [](std::shared_ptr<Data> plan)
+                       {
+                           return plan->mDiscount != std::nullopt &&
+                                  plan->mDiscount->months == MONTH_PERIOD;
+                       });
+}
+
+bool UpsellPlans::hasYearlyDiscount() const
+{
+    return std::any_of(mPlans.begin(),
+                       mPlans.end(),
+                       [](std::shared_ptr<Data> plan)
+                       {
+                           return plan->mDiscount != std::nullopt &&
+                                  plan->mDiscount->months == YEAR_PERIOD;
+                       });
+}
 // ************************************************************************************************
 // * UpsellPlans::Data
 // ************************************************************************************************
@@ -223,6 +257,7 @@ QHash<int, QByteArray> UpsellPlans::Data::roleNames()
         {UpsellPlans::DISCOUNT_PERCENTAGE, "discountPercentage"},
         {UpsellPlans::IS_HIGHLIGHTED, "isHighlighted"},
         {UpsellPlans::PRICE_BEFORE_TAX_ROLE, "priceBeforeTax"},
+        {UpsellPlans::MONTHLY_BASE_PRICE_ROLE, "monthlyBasePrice"}
 
     };
 

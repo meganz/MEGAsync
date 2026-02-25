@@ -53,7 +53,8 @@ public:
         DISCOUNT_MONTHS,
         DISCOUNT_PERCENTAGE,
         IS_HIGHLIGHTED,
-        PRICE_BEFORE_TAX_ROLE
+        PRICE_BEFORE_TAX_ROLE,
+        MONTHLY_BASE_PRICE_ROLE
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -160,6 +161,8 @@ public:
     bool isPro() const;
     bool isAnyPlanClicked() const;
     bool hasDiscounts() const;
+    bool hasMonthlyDiscount() const;
+    bool hasYearlyDiscount() const;
 signals:
     void viewModeChanged();
     void currencyChanged();

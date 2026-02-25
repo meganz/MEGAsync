@@ -4,13 +4,14 @@ import QtQuick 2.15
 QtObject {
     id: root
 
-    readonly property string billedMonthly: qsTr("Billed monthly")
+    readonly property string billedMonthly: qsTr("Charged monthly")
     readonly property string billedSaveUpText: qsTr("Save up to %1% with yearly billing")
-    readonly property string billedYearly: qsTr("Billed yearly")
+    readonly property string billedYearly: qsTr("Charged yearly")
     readonly property string buyPlan: qsTr("Buy %1")
-    readonly property string estimatedPrice: qsTr("* Estimated price in your local currency. Your account will be billed in Euros for all transactions.")
+    readonly property string estimatedPrice: qsTr("* Estimated price in your local currency. Your account will be charged in Euros for all transactions.")
     readonly property string perMonthWithBillingCurrency: qsTr("%1/month")
     readonly property string billedYearlyWithBillingCurrency: qsTr("%1/month, charged yearly")
+    readonly property string billedYearlyWithoutBillingCurrency: qsTr("per month, charged yearly")
     readonly property string perMonth: qsTr("per month")
     readonly property string pricePerMonth: qsTr("(%1 per month)")
     readonly property string recommended: qsTr("Most Popular")

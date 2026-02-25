@@ -183,6 +183,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                 auto isYearly = !isMonthly;
                 double price = isMonthly ? plan->monthlyData().priceAfterTax() :
                                            plan->yearlyData().priceAfterTax();
+                double months = isMonthly ? MONTH_PERIOD : YEAR_PERIOD;
 
                 if (plan->discount().has_value())
                 {
@@ -192,7 +193,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                         price *= (100 - plan->discount()->percentage) / 100.;
                     }
                 }
-                field = getLocalePriceString(float(price));
+                field = getLocalePriceString(float(price / months));
                 break;
             }
             case UpsellPlans::PRICE_BEFORE_TAX_ROLE:
@@ -201,6 +202,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                 auto isYearly = !isMonthly;
                 double price = isMonthly ? plan->monthlyData().priceBeforeTax() :
                                            plan->yearlyData().priceBeforeTax();
+                float months = isMonthly ? MONTH_PERIOD : YEAR_PERIOD;
 
                 if (plan->discount().has_value())
                 {
@@ -210,7 +212,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                         price *= (100 - plan->discount()->percentage) / 100.;
                     }
                 }
-                field = getLocalePriceString(float(price));
+                field = getLocalePriceString(float(price) / months);
                 break;
             }
             case UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE:
@@ -223,6 +225,20 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             {
                 field = getLocalePriceString(
                     calculateMonthlyPriceWithDiscount(plan->yearlyData().priceAfterTax()));
+                break;
+            }
+            case UpsellPlans::MONTHLY_BASE_PRICE_ROLE:
+            {
+                double price = -1;
+                if (plan->monthlyData().priceBeforeTax() > 0)
+                {
+                    price = plan->monthlyData().priceBeforeTax();
+                }
+                else
+                {
+                    price = plan->yearlyData().priceBeforeTax() / 12.;
+                }
+                field = price < 0 ? QString() : getLocalePriceString(static_cast<float>(price));
                 break;
             }
             case UpsellPlans::CURRENT_PLAN_ROLE:
@@ -283,11 +299,13 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             {
                 auto isMonthly = mPlans->isMonthly();
                 auto isYearly = !isMonthly;
-
+                const bool anyPlanHasDiscount =
+                    isMonthly ? mPlans->hasMonthlyDiscount() : mPlans->hasYearlyDiscount();
                 field = (plan->discount().has_value() &&
                          ((isMonthly && plan->discount()->months == MONTH_PERIOD) ||
                           ((isYearly && plan->discount()->months == YEAR_PERIOD)))) ||
-                        plan->isRecommended();
+                        (plan->isRecommended() && !anyPlanHasDiscount);
+
                 break;
             }
             default:
