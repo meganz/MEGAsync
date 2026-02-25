@@ -78,8 +78,12 @@ QString OfferComponent::getStorage() const
 {
     if (mDiscountedPlan)
     {
-        auto transferBytes = mDiscountedPlan->monthlyData().gBStorage();
-        return Utilities::getSizeString(transferBytes);
+        auto gbStorage = mDiscountedPlan->monthlyData().gBStorage();
+        if (gbStorage < 0)
+        {
+            gbStorage = mDiscountedPlan->yearlyData().gBStorage();
+        }
+        return Utilities::getSizeString(gbStorage);
     }
     return {};
 }
@@ -88,8 +92,12 @@ QString OfferComponent::getTransfer() const
 {
     if (mDiscountedPlan)
     {
-        auto transferBytes = mDiscountedPlan->monthlyData().gBTransfer() * getMonths();
-        return Utilities::getSizeString(transferBytes);
+        auto gbTransfer = mDiscountedPlan->monthlyData().gBTransfer() * getMonths();
+        if (gbTransfer < 0)
+        {
+            gbTransfer = mDiscountedPlan->yearlyData().gBTransfer();
+        }
+        return Utilities::getSizeString(gbTransfer);
     }
     return {};
 }
