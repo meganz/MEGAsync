@@ -190,6 +190,16 @@ int OfferComponent::getMinutes() const
     return static_cast<int>((secsRemaining % 3600) / 60);
 }
 
+qint64 OfferComponent::getSeconds() const
+{
+    qint64 secsRemaining = QDateTime::currentDateTime().secsTo(mOfferEndTime);
+    if (secsRemaining <= 0)
+    {
+        return 0;
+    }
+    return secsRemaining;
+}
+
 void OfferComponent::setOfferExpirationDate(const QDateTime& date)
 {
     mOfferEndTime = date;

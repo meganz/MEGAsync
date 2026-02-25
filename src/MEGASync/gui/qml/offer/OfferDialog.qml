@@ -359,12 +359,42 @@ QmlDialog {
 
                         text: OfferStrings.offerButton
                         sizes: Buttons.LargeSizes{}
-                        colors.background: ColorTheme.buttonBrand
-                        colors.pressed: ColorTheme.buttonBrandPressed
-                        colors.hover: ColorTheme.buttonBrandHover
-                        colors.text: ColorTheme.textOnColor
-                        colors.textPressed: ColorTheme.textOnColor
-                        colors.textHover: ColorTheme.textOnColor
+                        colors.background: {
+                            if (offerComponentAccess.seconds === 0)
+                                ColorTheme.buttonDisabled
+                            else
+                                ColorTheme.buttonBrand
+                            }
+                        colors.pressed: {
+                            if (offerComponentAccess.seconds === 0)
+                                ColorTheme.buttonDisabled
+                            else
+                                ColorTheme.buttonBrandPressed
+                            }
+                        colors.hover: {
+                            if (offerComponentAccess.seconds === 0)
+                                ColorTheme.buttonDisabled
+                            else
+                                ColorTheme.buttonBrandHover
+                            }
+                        colors.text: {
+                            if (offerComponentAccess.seconds === 0)
+                                ColorTheme.textDisabled
+                            else
+                                ColorTheme.textOnColor
+                            }
+                        colors.textPressed: {
+                            if (offerComponentAccess.seconds === 0)
+                                ColorTheme.textDisabled
+                            else
+                                ColorTheme.textOnColor
+                            }
+                        colors.textHover: {
+                                if (offerComponentAccess.seconds === 0)
+                                    ColorTheme.textDisabled
+                                else
+                                    ColorTheme.textOnColor
+                                }
 
                         onClicked: {
                             offerComponentAccess.onGrabDeal();
