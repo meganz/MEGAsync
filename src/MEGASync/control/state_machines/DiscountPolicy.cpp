@@ -1,6 +1,5 @@
 #include "DiscountPolicy.h"
 
-#include "Preferences.h"
 #include "StatsEventHandler.h"
 #include "Utilities.h"
 
@@ -82,21 +81,6 @@ void DiscountPolicy::activateCampaign(std::shared_ptr<mega::MegaDiscountCodeInfo
         mDiscountInfo = discountInfo;
         mIsCampaignActive = true;
 
-        // Create upsell controller to get access to plans info
-        if (!mUpsellController)
-        {
-            mUpsellController = new UpsellController(this);
-            mUpsellController->requestPricingData();
-            connect(mUpsellController,
-                    &UpsellController::dataReady,
-                    this,
-                    &DiscountPolicy::setPlanName);
-        }
-        else
-        {
-            setPlanName();
-        }
-
         emit campaignActivated();
     }
 }
@@ -111,11 +95,6 @@ void DiscountPolicy::deactivateCampaign()
     mIsCampaignActive = false;
     mDiscountInfo.reset();
     mPlanName.clear();
-    if (mUpsellController)
-    {
-        mUpsellController->deleteLater();
-        mUpsellController = nullptr;
-    }
 
     mDiscountCode.clear();
     mCampaignExpiryDateUtc = QDateTime();
@@ -176,26 +155,8 @@ QDateTime DiscountPolicy::getExpiryDateUtc() const
 
 QString DiscountPolicy::getPlanName() const
 {
-    return mPlanName;
-}
-
-void DiscountPolicy::setPlanName()
-{
-    if (mUpsellController)
-    {
-        const auto plans = mUpsellController->getPlans();
-        int nPlans = plans ? plans->size() : 0;
-        for (int i = 0; i < nPlans; ++i)
-        {
-            auto plan = plans->getPlan(i);
-            if (plan->proLevel() == mDiscountInfo->getAccountLevel())
-            {
-                mPlanName = plan->name();
-                emit planNameReady();
-                break;
-            }
-        }
-    }
+    return mDiscountInfo ? Utilities::getReadablePlanFromId(mDiscountInfo->getAccountLevel()) :
+                           QString();
 }
 
 bool DiscountPolicy::load()

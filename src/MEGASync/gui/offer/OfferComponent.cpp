@@ -222,10 +222,13 @@ int OfferComponent::getMonths() const
 
 void OfferComponent::setDiscountInfo(std::shared_ptr<mega::MegaDiscountCodeInfo> discount)
 {
-    mDiscountInfo = std::move(discount);
-    mDiscountedPlan = findPlanByLevel(mDiscountInfo->getAccountLevel());
-    setOfferExpirationDate(QDateTime::fromSecsSinceEpoch(mDiscountInfo->getExpiry(), Qt::UTC));
-    emit dataUpdated();
+    if (discount)
+    {
+        mDiscountInfo = std::move(discount);
+        mDiscountedPlan = findPlanByLevel(mDiscountInfo->getAccountLevel());
+        setOfferExpirationDate(QDateTime::fromSecsSinceEpoch(mDiscountInfo->getExpiry(), Qt::UTC));
+        emit dataUpdated();
+    }
 }
 
 std::shared_ptr<UpsellPlans::Data> OfferComponent::findPlanByLevel(int level) const

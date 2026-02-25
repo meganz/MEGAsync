@@ -2,11 +2,9 @@
 
 #include "megaapi.h"
 #include "Preferences.h"
-#include "UpsellController.h"
 
 #include <QDateTime>
 #include <QObject>
-#include <QTimer>
 
 class DiscountPolicy: public QObject
 {
@@ -31,9 +29,6 @@ signals:
     void campaignDeactivated();
     void planNameReady();
 
-protected slots:
-    void setPlanName();
-
 protected:
     bool load();
     void persist() const;
@@ -50,5 +45,4 @@ protected:
 
     std::shared_ptr<mega::MegaDiscountCodeInfo> mDiscountInfo;
     std::shared_ptr<Preferences> mPreferences;
-    QPointer<UpsellController> mUpsellController;
 };
