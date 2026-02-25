@@ -53,6 +53,12 @@ UpsellController::UpsellController(QObject* parent):
                    Preferences::AccountType::ACCOUNT_TYPE_FREE);
 }
 
+UpsellController::UpsellController(bool proFlexiTrick, QObject* parent):
+    UpsellController(parent)
+{
+    mProFlexiTrick = proFlexiTrick;
+}
+
 UpsellController::~UpsellController()
 {
     AccountDetailsManager::instance()->dettachStorageObserver(*this);
@@ -65,7 +71,10 @@ void UpsellController::updateStorageElements()
         return;
     }
 
-    reviewPlansToCheckProFlexi(mPlans->plans());
+    if (mProFlexiTrick)
+    {
+        reviewPlansToCheckProFlexi(mPlans->plans());
+    }
 
     emit dataChanged(0, mPlans->size() - 1);
     mPlans->setPro(Preferences::instance()->accountType() !=
@@ -451,7 +460,10 @@ void UpsellController::process(mega::MegaPricing* pricing)
         return;
     }
 
-    reviewPlansToCheckProFlexi(plans);
+    if (mProFlexiTrick)
+    {
+        reviewPlansToCheckProFlexi(plans);
+    }
 
     emit beginInsertRows(0, plans.size() - 1);
 

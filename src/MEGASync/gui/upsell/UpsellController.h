@@ -25,6 +25,7 @@ class UpsellController: public QObject, public IStorageObserver
 
 public:
     UpsellController(QObject* parent = nullptr);
+    UpsellController(bool proFlexiTrick = true, QObject* parent = nullptr);
     virtual ~UpsellController();
 
     void updateStorageElements() override;
@@ -63,6 +64,7 @@ private slots:
 private:
     std::shared_ptr<UpsellPlans> mPlans;
     QTimer* mTransferFinishTimer;
+    bool mProFlexiTrick = true;
 
     void processGetPricingRequest(mega::MegaPricing* pricing, mega::MegaCurrency* currency);
     void process(mega::MegaPricing* pricing);

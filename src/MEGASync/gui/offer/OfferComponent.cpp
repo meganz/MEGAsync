@@ -15,7 +15,7 @@ constexpr long long COUNT_DOWN_TOLERANCE_MS = 1500; // 1.5 seconds
 
 OfferComponent::OfferComponent(QObject* parent):
     QMLComponent(parent),
-    mUpsellController(std::make_shared<UpsellController>())
+    mUpsellController(std::make_shared<UpsellController>(false, nullptr))
 {
     mUpsellController->setBilledPeriod(true);
     mUpsellController->requestPricingData();
