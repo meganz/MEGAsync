@@ -3,11 +3,6 @@
 // ************************************************************************************************
 // * UpsellPlans
 // ************************************************************************************************
-namespace
-{
-constexpr int MONTH_PERIOD(1);
-constexpr int YEAR_PERIOD(12);
-}
 
 UpsellPlans::UpsellPlans(QObject* parent):
     QObject(parent),

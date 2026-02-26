@@ -83,7 +83,7 @@ FocusScope {
         Item {
             id: plansItem
 
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.left: parent.left
             width: rowLayout.width
             height: rowLayout.height
 
