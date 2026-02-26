@@ -1894,5 +1894,6 @@ void InfoDialog::setDiscountPolicy(QPointer<DiscountPolicy> policy)
                 &DiscountPolicy::planNameReady,
                 this,
                 &InfoDialog::updateUpgradeButtonState);
+        updateUpgradeButtonText();
     }
 }
