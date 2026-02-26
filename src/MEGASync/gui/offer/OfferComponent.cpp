@@ -70,7 +70,7 @@ QString OfferComponent::getCurrencyName() const
 
 QString OfferComponent::getPlanName() const
 {
-    return mDiscountedPlan ? Utilities::getReadablePlanFromId(mDiscountedPlan->proLevel()) :
+    return mDiscountedPlan ? Utilities::getReadablePlanFromId(mDiscountedPlan->proLevel(), true) :
                              QLatin1String{};
 }
 
