@@ -135,6 +135,12 @@ bool UpsellPlans::isMonthly() const
     return mIsMonthly;
 }
 
+std::optional<UpsellPlans::Data::DiscountInfo>
+    UpsellPlans::getPlanDiscount(std::shared_ptr<UpsellPlans::Data> plan) const
+{
+    return mIsMonthly ? plan->monthlyData().discount() : plan->yearlyData().discount();
+}
+
 void UpsellPlans::setMonthly(bool monthly)
 {
     if (mIsMonthly != monthly)
@@ -199,9 +205,10 @@ bool UpsellPlans::hasDiscounts() const
 {
     return std::any_of(mPlans.begin(),
                        mPlans.end(),
-                       [](std::shared_ptr<Data> plan)
+                       [this](std::shared_ptr<Data> plan)
                        {
-                           return plan->mDiscount != std::nullopt;
+                           return mIsMonthly ? plan->hasMonthlyDiscount() :
+                                               plan->hasYearlyDiscount();
                        });
 }
 
@@ -211,8 +218,7 @@ bool UpsellPlans::hasMonthlyDiscount() const
                        mPlans.end(),
                        [](std::shared_ptr<Data> plan)
                        {
-                           return plan->mDiscount != std::nullopt &&
-                                  plan->mDiscount->months == MONTH_PERIOD;
+                           return plan->hasMonthlyDiscount();
                        });
 }
 
@@ -222,10 +228,26 @@ bool UpsellPlans::hasYearlyDiscount() const
                        mPlans.end(),
                        [](std::shared_ptr<Data> plan)
                        {
-                           return plan->mDiscount != std::nullopt &&
-                                  plan->mDiscount->months == YEAR_PERIOD;
+                           return plan->hasYearlyDiscount();
                        });
 }
+
+int UpsellPlans::getMaximumYearlyDiscount() const
+{
+    if (mPlans.empty())
+        return 0; // or throw, depending on your design
+
+    auto it =
+        std::max_element(mPlans.begin(),
+                         mPlans.end(),
+                         [](const std::shared_ptr<Data>& a, const std::shared_ptr<Data>& b)
+                         {
+                             return a->calculateYearlyDiscount() < b->calculateYearlyDiscount();
+                         });
+
+    return (*it)->calculateYearlyDiscount();
+}
+
 // ************************************************************************************************
 // * UpsellPlans::Data
 // ************************************************************************************************
@@ -279,14 +301,43 @@ const QString& UpsellPlans::Data::name() const
     return mName;
 }
 
-const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::monthlyData() const
+UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::monthlyData()
 {
     return mMonthlyData;
 }
 
-const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData() const
+UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData()
 {
     return mYearlyData;
+}
+
+bool UpsellPlans::Data::hasMonthlyDiscount() const
+{
+    return mMonthlyData.hasDiscount();
+}
+
+bool UpsellPlans::Data::hasYearlyDiscount() const
+{
+    return mYearlyData.hasDiscount();
+}
+
+int UpsellPlans::Data::calculateYearlyDiscount() const
+{
+    if (mYearlyData.hasDiscount())
+    {
+        int dp = mYearlyData.discount()->percentage;
+        return mMonthlyData.isValid() ? dp + ((2 * (100 - dp)) / 12) : dp;
+    }
+    else if (mMonthlyData.isValid())
+    {
+        constexpr float NUM_MONTHS_PER_PLAN(12.0f);
+        constexpr float PERCENTAGE(100.0f);
+
+        return static_cast<int>(PERCENTAGE -
+                                (mYearlyData.priceAfterTax() * PERCENTAGE) /
+                                    (mMonthlyData.priceAfterTax() * NUM_MONTHS_PER_PLAN));
+    }
+    return 0;
 }
 
 void UpsellPlans::Data::setProLevel(int newProLevel)
@@ -312,21 +363,6 @@ void UpsellPlans::Data::setRecommended(bool newRecommended)
 void UpsellPlans::Data::setMonthlyData(const AccountBillingPlanData& newMonthlyData)
 {
     mMonthlyData = newMonthlyData;
-}
-
-void UpsellPlans::Data::setDiscount(UpsellPlans::Data::DiscountInfo discount)
-{
-    mDiscount = discount;
-}
-
-std::optional<UpsellPlans::Data::DiscountInfo> UpsellPlans::Data::discount() const
-{
-    return mDiscount;
-}
-
-bool UpsellPlans::Data::hasDiscount() const
-{
-    return mDiscount != std::nullopt;
 }
 
 // ************************************************************************************************
@@ -373,6 +409,23 @@ float UpsellPlans::Data::AccountBillingPlanData::priceAfterTax() const
 double UpsellPlans::Data::AccountBillingPlanData::priceBeforeTax() const
 {
     return mPriceBeforeTax;
+}
+
+std::optional<UpsellPlans::Data::DiscountInfo>
+    UpsellPlans::Data::AccountBillingPlanData::discount() const
+{
+    return mDiscount;
+}
+
+bool UpsellPlans::Data::AccountBillingPlanData::hasDiscount() const
+{
+    return mDiscount.has_value();
+}
+
+void UpsellPlans::Data::AccountBillingPlanData::setDiscount(
+    UpsellPlans::Data::DiscountInfo discount)
+{
+    mDiscount = discount;
 }
 
 // ************************************************************************************************

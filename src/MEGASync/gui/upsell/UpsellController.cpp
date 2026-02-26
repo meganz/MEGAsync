@@ -192,14 +192,14 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                 auto isYearly = !isMonthly;
                 double price = isMonthly ? plan->monthlyData().priceAfterTax() :
                                            plan->yearlyData().priceAfterTax();
+                auto discount = mPlans->getPlanDiscount(plan);
                 double months = isMonthly ? MONTH_PERIOD : YEAR_PERIOD;
-
-                if (plan->discount().has_value())
+                if (discount.has_value())
                 {
-                    if ((isMonthly && plan->discount()->months == MONTH_PERIOD) ||
-                        ((isYearly && plan->discount()->months == YEAR_PERIOD)))
+                    if ((isMonthly && plan->hasMonthlyDiscount()) ||
+                        ((isYearly && plan->hasYearlyDiscount())))
                     {
-                        price *= (100 - plan->discount()->percentage) / 100.;
+                        price *= (100 - discount->percentage) / 100.;
                     }
                 }
                 field = getLocalePriceString(float(price / months));
@@ -207,19 +207,13 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             }
             case UpsellPlans::PRICE_BEFORE_TAX_ROLE:
             {
-                auto isMonthly = mPlans->isMonthly();
-                auto isYearly = !isMonthly;
-                double price = isMonthly ? plan->monthlyData().priceBeforeTax() :
-                                           plan->yearlyData().priceBeforeTax();
-                float months = isMonthly ? MONTH_PERIOD : YEAR_PERIOD;
-
-                if (plan->discount().has_value())
+                double price = mPlans->isMonthly() ? plan->monthlyData().priceBeforeTax() :
+                                                     plan->yearlyData().priceBeforeTax();
+                auto discount = mPlans->getPlanDiscount(plan);
+                float months = mPlans->isMonthly() ? MONTH_PERIOD : YEAR_PERIOD;
+                if (discount.has_value())
                 {
-                    if ((isMonthly && plan->discount()->months == MONTH_PERIOD) ||
-                        ((isYearly && plan->discount()->months == YEAR_PERIOD)))
-                    {
-                        price *= (100 - plan->discount()->percentage) / 100.;
-                    }
+                    price *= (100 - discount->percentage) / 100.;
                 }
                 field = getLocalePriceString(float(price) / months);
                 break;
@@ -239,7 +233,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             case UpsellPlans::MONTHLY_BASE_PRICE_ROLE:
             {
                 double price = -1;
-                if (plan->monthlyData().priceBeforeTax() > 0)
+                if (plan->monthlyData().isValid())
                 {
                     price = plan->monthlyData().priceBeforeTax();
                 }
@@ -279,23 +273,22 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             }
             case UpsellPlans::HAS_DISCOUNT:
             {
-                auto isMonthly = mPlans->isMonthly();
-                auto isYearly = !isMonthly;
-                field = plan->discount().has_value() &&
-                        ((isMonthly && plan->discount()->months == MONTH_PERIOD) ||
-                         ((isYearly && plan->discount()->months == YEAR_PERIOD)));
+                auto discount = mPlans->getPlanDiscount(plan);
+                field = discount.has_value();
                 break;
             }
             case UpsellPlans::DISCOUNT_MONTHS:
             {
-                field = plan->discount().has_value() ? plan->discount()->months : 0;
+                auto discount = mPlans->getPlanDiscount(plan);
+                field = discount.has_value() ? discount->months : 0;
                 break;
             }
             case UpsellPlans::DISCOUNT_PERCENTAGE:
             {
-                if (plan->discount().has_value())
+                auto discount = mPlans->getPlanDiscount(plan);
+                if (discount.has_value())
                 {
-                    auto dp = plan->discount()->percentage;
+                    auto dp = discount->percentage;
                     // If the pro level has no monthly plan and we are in yearly view, return the
                     // discount percentage without calculation.
                     field = (mPlans->isMonthly() || !plan->monthlyData().isValid()) ?
@@ -310,14 +303,9 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             }
             case UpsellPlans::IS_HIGHLIGHTED:
             {
-                auto isMonthly = mPlans->isMonthly();
-                auto isYearly = !isMonthly;
-                const bool anyPlanHasDiscount =
-                    isMonthly ? mPlans->hasMonthlyDiscount() : mPlans->hasYearlyDiscount();
-                field = (plan->discount().has_value() &&
-                         ((isMonthly && plan->discount()->months == MONTH_PERIOD) ||
-                          ((isYearly && plan->discount()->months == YEAR_PERIOD)))) ||
-                        (plan->isRecommended() && !anyPlanHasDiscount);
+                const bool anyPlanHasDiscount = mPlans->hasDiscounts();
+                auto discount = mPlans->getPlanDiscount(plan);
+                field = (discount.has_value() || (plan->isRecommended() && !anyPlanHasDiscount));
 
                 break;
             }
@@ -533,7 +521,8 @@ QList<std::shared_ptr<UpsellPlans::Data>>
             UpsellPlans::Data::DiscountInfo discount{QString::fromUtf8(pricing->getDiscountCode(i)),
                                                      pricing->getDiscountMonths(i),
                                                      pricing->getDiscountPercentage(i)};
-            plan->setDiscount(discount);
+            discount.months == MONTH_PERIOD ? plan->monthlyData().setDiscount(discount) :
+                                              plan->yearlyData().setDiscount(discount);
         }
     }
     return plans;
@@ -607,7 +596,9 @@ void UpsellController::updatePlans()
 
         auto plan(mPlans->getPlan(row));
         plan->setRecommended(true);
-        updatePlansAt(plan, row);
+        mPlans->setCurrentDiscount(mPlans->getMaximumYearlyDiscount());
+
+        // updatePlansAt(plan, row);
     }
 }
 

@@ -75,7 +75,7 @@ FocusScope {
                     text: ColorTheme.textInfo
                 }
                 text: UpsellStrings.billedSaveUpText.arg(upsellPlansAccess.currentDiscount)
-                visible: upsellPlansAccess.currentDiscount > 0 && !upsellPlansAccess.onlyProFlexiAvailable
+                visible: upsellPlansAccess.monthly && upsellPlansAccess.currentDiscount > 0 && !upsellPlansAccess.onlyProFlexiAvailable
             }
 
         }

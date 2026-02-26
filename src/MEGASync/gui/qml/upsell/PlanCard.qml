@@ -155,6 +155,7 @@ Rectangle {
                 sizes: Chips.SmallSizes {}
                 text: getChipText()
                 visible: true
+                height: 20
                 opacity: (root.recommended || root.currentPlan || (root.hasDiscount && root.enabled)) ? 1.0 : 0.0
                 colors {
                     background: getChipBackgroundColor()
@@ -174,11 +175,11 @@ Rectangle {
             SecondaryText {
                 id: priceTextWithDiscount
 
+                visible: true // // Changing Visibility should be done first to ensure values are updated
                 lineHeight: root.discountLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: root.hasDiscount && root.monthlyBasePrice.length ? root.monthlyBasePrice :UpsellStrings.only
-                font.strikeout: root.hasDiscount
-                visible: true
+                text: root.hasDiscount && root.monthlyBasePrice.length ? root.monthlyBasePrice : UpsellStrings.only
+                font.strikeout: priceTextWithDiscount.text !== UpsellStrings.only
                 width: parent.width
             }
 
