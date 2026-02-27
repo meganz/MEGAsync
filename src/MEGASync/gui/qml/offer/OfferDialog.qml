@@ -21,6 +21,7 @@ QmlDialog {
     readonly property int smallSpacing: 4
     readonly property int firstSectionHeight: 368
     readonly property int storageSectionHeight: 56
+    readonly property bool isDisabled: offerComponentAccess.seconds === 0
 
     Connections {
         target: offerComponentAccess
@@ -359,42 +360,13 @@ QmlDialog {
 
                         text: OfferStrings.offerButton
                         sizes: Buttons.LargeSizes{}
-                        colors.background: {
-                            if (offerComponentAccess.seconds === 0)
-                                ColorTheme.buttonDisabled
-                            else
-                                ColorTheme.buttonBrand
-                            }
-                        colors.pressed: {
-                            if (offerComponentAccess.seconds === 0)
-                                ColorTheme.buttonDisabled
-                            else
-                                ColorTheme.buttonBrandPressed
-                            }
-                        colors.hover: {
-                            if (offerComponentAccess.seconds === 0)
-                                ColorTheme.buttonDisabled
-                            else
-                                ColorTheme.buttonBrandHover
-                            }
-                        colors.text: {
-                            if (offerComponentAccess.seconds === 0)
-                                ColorTheme.textDisabled
-                            else
-                                ColorTheme.textOnColor
-                            }
-                        colors.textPressed: {
-                            if (offerComponentAccess.seconds === 0)
-                                ColorTheme.textDisabled
-                            else
-                                ColorTheme.textOnColor
-                            }
-                        colors.textHover: {
-                                if (offerComponentAccess.seconds === 0)
-                                    ColorTheme.textDisabled
-                                else
-                                    ColorTheme.textOnColor
-                                }
+                        colors.background:  isDisabled ? ColorTheme.buttonDisabled : ColorTheme.buttonBrand
+                        colors.pressed:     isDisabled ? ColorTheme.buttonDisabled : ColorTheme.buttonBrandPressed
+                        colors.hover:       isDisabled ? ColorTheme.buttonDisabled : ColorTheme.buttonBrandHover
+
+                        colors.text:        isDisabled ? ColorTheme.textDisabled : ColorTheme.textOnColor
+                        colors.textPressed: isDisabled ? ColorTheme.textDisabled : ColorTheme.textOnColor
+                        colors.textHover:   isDisabled ? ColorTheme.textDisabled : ColorTheme.textOnColor
 
                         onClicked: {
                             offerComponentAccess.onGrabDeal();
