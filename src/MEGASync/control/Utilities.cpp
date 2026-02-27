@@ -2233,13 +2233,13 @@ QString Utilities::toPrice(double value, const QString& currencySymbol, bool sho
     return price;
 }
 
-long long Utilities::softCeil(double value)
+int Utilities::softCeil(double value)
 {
     // softCeil(number) {
     //     'use strict';
     //     return Math.ceil(Math.round(number * 10) / 10);
     // }
-    return std::ceil(std::round(value * 10.) / 10.);
+    return static_cast<int>(std::ceil(std::round(value * 10.) / 10.));
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)

@@ -632,7 +632,7 @@ public:
 
     static QString decodeUnicodeEscapes(const QString& input);
     static QString toPrice(double value, const QString& currencySymbol, bool showRemark = false);
-    static long long softCeil(double value);
+    static int softCeil(double value);
 
     // Human-friendly list of forbidden chars for New Remote Folder
     static const QLatin1String FORBIDDEN_CHARS;
