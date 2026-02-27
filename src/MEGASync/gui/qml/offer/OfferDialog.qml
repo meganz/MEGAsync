@@ -21,11 +21,14 @@ QmlDialog {
     readonly property int smallSpacing: 4
     readonly property int firstSectionHeight: 368
     readonly property int storageSectionHeight: 56
+    readonly property bool isDisabled: offerComponentAccess.seconds === 0
 
     Connections {
         target: offerComponentAccess
         function onDataUpdated() {
             productsRepeater.model = offerComponentAccess.getPlanFeatures();
+            taxText.text = OfferStrings.priceDisclaimer(
+                        offerComponentAccess.localCurrencyIsBillingCurrency());
         }
     }
 
@@ -106,7 +109,10 @@ QmlDialog {
                                 width: parent.width
                                 textFormat: Text.RichText
                                 
-                                text: OfferStrings.discountLabel(offerComponentAccess.discountPercentage, offerComponentAccess.discountMonthes, ColorTheme.textBrand)
+                                text: OfferStrings.discountLabel(
+                                          offerComponentAccess.discountPercentage,
+                                          offerComponentAccess.discountMonths,
+                                          ColorTheme.textBrand)
                                 font.pixelSize: 16
                                 lineHeight: 24
                                 lineHeightMode: Text.FixedHeight
@@ -253,7 +259,8 @@ QmlDialog {
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width
-                            text: OfferStrings.taxApply
+                            text: OfferStrings.priceDisclaimer(
+                                      offerComponentAccess.localCurrencyIsBillingCurrency())
                             font.pixelSize: 12
                             lineHeight: 18
                             lineHeightMode: Text.FixedHeight
@@ -353,12 +360,13 @@ QmlDialog {
 
                         text: OfferStrings.offerButton
                         sizes: Buttons.LargeSizes{}
-                        colors.background: ColorTheme.buttonBrand
-                        colors.pressed: ColorTheme.buttonBrandPressed
-                        colors.hover: ColorTheme.buttonBrandHover
-                        colors.text: ColorTheme.textOnColor
-                        colors.textPressed: ColorTheme.textOnColor
-                        colors.textHover: ColorTheme.textOnColor
+                        colors.background:  isDisabled ? ColorTheme.buttonDisabled : ColorTheme.buttonBrand
+                        colors.pressed:     isDisabled ? ColorTheme.buttonDisabled : ColorTheme.buttonBrandPressed
+                        colors.hover:       isDisabled ? ColorTheme.buttonDisabled : ColorTheme.buttonBrandHover
+
+                        colors.text:        isDisabled ? ColorTheme.textDisabled : ColorTheme.textOnColor
+                        colors.textPressed: isDisabled ? ColorTheme.textDisabled : ColorTheme.textOnColor
+                        colors.textHover:   isDisabled ? ColorTheme.textDisabled : ColorTheme.textOnColor
 
                         onClicked: {
                             offerComponentAccess.onGrabDeal();

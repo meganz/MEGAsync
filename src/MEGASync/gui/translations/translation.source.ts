@@ -5339,11 +5339,6 @@ Enter a different name.</translation>
         </translation>
     </message>
     <message>
-        <source>*Tax may apply.</source>
-        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
-        <translation>*Tax may apply.</translation>
-    </message>
-    <message>
         <source>Grab Deal</source>
         <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
         <translation>Grab deal</translation>
@@ -5380,6 +5375,26 @@ Enter a different name.</translation>
             <numerusform>[B]%1% off[/B] for %n month</numerusform>
             <numerusform>[B]%1% off[/B] for %n months</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Tax may apply.</source>
+        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
+        <translation>Tax may apply.</translation>
+    </message>
+    <message>
+        <source>Estimated price in your local currency.</source>
+        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
+        <translation>Estimated price in your local currency.</translation>
+    </message>
+    <message>
+        <source>%1 %2</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
+        <translation>%1 %2</translation>
+    </message>
+    <message>
+        <source>*%1</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not .SNC-6271</translatorcomment>
+        <translation>*%1</translation>
     </message>
 </context>
 <context>

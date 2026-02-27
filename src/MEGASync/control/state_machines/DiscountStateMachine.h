@@ -3,6 +3,7 @@
 #include "DiscountPolicy.h"
 
 #include <QDateTime>
+#include <QElapsedTimer>
 #include <QObject>
 #include <QStateMachine>
 #include <QTimer>
@@ -50,7 +51,6 @@ public:
     bool showTrayIconAnimation() const;
 
 signals:
-    void startupFinished();
     void onboardingStarted();
     void onboardingFinished();
     void meaningfulInteraction();
@@ -60,9 +60,7 @@ signals:
     void cooldown();
     void campaignActive();
     void updateDiscountCampaignSignaling();
-
     void requestShowDialog();
-
     void onboardingLostFocus();
     void onboardingGainedFocus();
     void noBlockingWindow();
@@ -70,10 +68,11 @@ signals:
     void requestUserDiscounts(bool force);
 
 private:
-    bool canShowNow() const;
     void build();
     void logState(QState* state);
+    long long computeWaitingStateTimer();
 
+    QElapsedTimer mElapsedTimeSinceAppStart;
     DiscountPolicy* mPolicy;
     QStateMachine mStateMachine;
 
@@ -84,7 +83,7 @@ private:
     TimedState* mCampaignActive;
     QState* mActiveOnboarding;
     TimedState* mWaiting;
-    QState* mWatingForMeaningfulInteraction;
+    QState* mWaitingForMeaningfulInteraction;
     QState* mWaitingForOverquota;
     TimedState* mShowable;
     QState* mWaitingForNoBlocking;
@@ -93,6 +92,4 @@ private:
     QState* mShown;
     TimedState* mDealGrabbed;
     TimedState* mCooldown;
-
-    QDateTime mStartDelayExpiredTime;
 };

@@ -7,7 +7,8 @@ QtObject {
     readonly property string mega: qsTr("MEGA %1")
     readonly property string storageAmount: qsTr("%1 of storage")
     readonly property string transferAmount: qsTr("%1 of transfer")
-    readonly property string taxApply: qsTr("*Tax may apply.")
+    readonly property string currencyDisclaimer: qsTr("Estimated price in your local currency.")
+    readonly property string taxDisclaimer: qsTr("Tax may apply.")
     readonly property string offerEnds: qsTr("Special offers ends in:")
     readonly property string offerButton: qsTr("Grab Deal")
 
@@ -34,5 +35,11 @@ QtObject {
         str = str.replace("[/B]", closeTag)
 
         return str
+    }
+
+    function priceDisclaimer(localCurrencyIsBillingCurrency){
+         return qsTr("*%1").arg(localCurrencyIsBillingCurrency ?
+                                  taxDisclaimer
+                                  : qsTr("%1 %2").arg(currencyDisclaimer).arg(taxDisclaimer))
     }
 }

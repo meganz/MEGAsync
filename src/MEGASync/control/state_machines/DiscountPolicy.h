@@ -5,7 +5,6 @@
 
 #include <QDateTime>
 #include <QObject>
-#include <QTimer>
 
 class DiscountPolicy: public QObject
 {
@@ -23,21 +22,26 @@ public:
     QDateTime getDialogLastShownDateUtc() const;
     std::shared_ptr<mega::MegaDiscountCodeInfo> getDiscountInfo();
     QDateTime getExpiryDateUtc() const;
+    QString getPlanName() const;
 
 signals:
     void campaignActivated();
     void campaignDeactivated();
+    void planNameReady();
 
-private:
-    void load();
+protected:
+    bool load();
     void persist() const;
+    void checkAndDeactivateExpiredCampaign();
+    bool isCampaignExpiredUtc(const QDateTime& expiryDateUtc);
 
-private:
     // State
     bool mIsCampaignActive = false;
+    bool mIsLoadingPersistedDataNeeded = true;
     QDateTime mLastTimeShownUtc;
     QDateTime mCampaignExpiryDateUtc;
     QString mDiscountCode;
+    QString mPlanName;
 
     std::shared_ptr<mega::MegaDiscountCodeInfo> mDiscountInfo;
     std::shared_ptr<Preferences> mPreferences;

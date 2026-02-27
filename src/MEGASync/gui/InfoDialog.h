@@ -259,7 +259,7 @@ private:
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;
-    QPointer<DiscountPolicy> mPolicy;
+    QPointer<DiscountPolicy> mDiscountPolicy;
 };
 
 #endif // INFODIALOG_H
