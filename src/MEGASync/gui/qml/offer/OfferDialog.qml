@@ -183,6 +183,7 @@ QmlDialog {
                                 id: storageText
 
                                 width: parent.width
+                                visible: offerComponentAccess.storage.length > 0
                                 text: OfferStrings.storageAmount.arg(offerComponentAccess.storage)
                                 font.pixelSize: 16
                                 lineHeight: 24
@@ -195,6 +196,7 @@ QmlDialog {
                                 id: transferText
 
                                 width: parent.width
+                                visible: offerComponentAccess.transfer.length > 0
                                 text:  OfferStrings.transferAmount.arg(offerComponentAccess.transfer);
                                 font.pixelSize: 16
                                 lineHeight: 24
