@@ -16,10 +16,9 @@ namespace
 {
 constexpr int MONTH_PERIOD(1);
 constexpr int YEAR_PERIOD(12);
-constexpr float CENTS_IN_1_UNIT(100.0f);
-constexpr float NUM_MONTHS_PER_PLAN(12.0f);
-constexpr float PERCENTAGE(100.0f);
-constexpr long long TRANSFER_REMAINING_TIME_INTERVAL_MS(1000ll);
+constexpr double NUM_MONTHS_PER_PLAN(12.);
+constexpr double PERCENTAGE(100.);
+constexpr int TRANSFER_REMAINING_TIME_INTERVAL_MS(1000);
 constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
 const std::vector<int> ACCOUNT_TYPES_IN_ORDER = {Preferences::AccountType::ACCOUNT_TYPE_FREE,
                                                  Preferences::AccountType::ACCOUNT_TYPE_STARTER,
@@ -193,7 +192,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                 double price = isMonthly ? plan->monthlyData().priceAfterTax() :
                                            plan->yearlyData().priceAfterTax();
                 auto discount = mPlans->getPlanDiscount(plan);
-                double months = isMonthly ? MONTH_PERIOD : YEAR_PERIOD;
+                const double months = isMonthly ? MONTH_PERIOD : YEAR_PERIOD;
                 if (discount.has_value())
                 {
                     if ((isMonthly && plan->hasMonthlyDiscount()) ||
@@ -202,7 +201,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                         price *= (100 - discount->percentage) / 100.;
                     }
                 }
-                field = getLocalePriceString(float(price / months));
+                field = getLocalePriceString(price / months);
                 break;
             }
             case UpsellPlans::PRICE_BEFORE_TAX_ROLE:
@@ -210,12 +209,12 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                 double price = mPlans->isMonthly() ? plan->monthlyData().priceBeforeTax() :
                                                      plan->yearlyData().priceBeforeTax();
                 auto discount = mPlans->getPlanDiscount(plan);
-                float months = mPlans->isMonthly() ? MONTH_PERIOD : YEAR_PERIOD;
+                const double months = mPlans->isMonthly() ? MONTH_PERIOD : YEAR_PERIOD;
                 if (discount.has_value())
                 {
                     price *= (100 - discount->percentage) / 100.;
                 }
-                field = getLocalePriceString(float(price) / months);
+                field = getLocalePriceString(price / months);
                 break;
             }
             case UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE:
@@ -232,16 +231,16 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             }
             case UpsellPlans::MONTHLY_BASE_PRICE_ROLE:
             {
-                double price = -1;
+                double price = -1.;
                 if (plan->monthlyData().isValid())
                 {
                     price = plan->monthlyData().priceBeforeTax();
                 }
                 else
                 {
-                    price = plan->yearlyData().priceBeforeTax() / 12.;
+                    price = plan->yearlyData().priceBeforeTax() / NUM_MONTHS_PER_PLAN;
                 }
-                field = price < 0 ? QString() : getLocalePriceString(static_cast<float>(price));
+                field = price < 0. ? QString() : getLocalePriceString(price);
                 break;
             }
             case UpsellPlans::CURRENT_PLAN_ROLE:
@@ -387,12 +386,12 @@ QString UpsellController::getMinProPlanNeeded(long long usedStorage) const
     }
 
     int proLevel(-1);
-    float amountPlanNeeded(0.0f);
+    double amountPlanNeeded(0.);
     for (const auto& plan: mPlans->plans())
     {
         if (usedStorage < plan->monthlyData().gBStorage())
         {
-            float currentAmountMonth(plan->monthlyData().priceAfterTax());
+            double currentAmountMonth(plan->monthlyData().priceAfterTax());
             if (proLevel == -1 || currentAmountMonth < amountPlanNeeded)
             {
                 proLevel = plan->proLevel();
@@ -499,11 +498,12 @@ QList<std::shared_ptr<UpsellPlans::Data>>
         }
 
         auto plan(appendPlan(proLevel, plans));
-        int priceAfterTax(mPlans->isBillingCurrency() ? pricing->getAmount(i) :
-                                                        pricing->getLocalPrice(i));
-        double priceBeforeTax(mPlans->isBillingCurrency() ?
-                                  pricing->getPriceNetWithDecimals(i) :
-                                  pricing->getLocalPriceNetWithDecimals(i));
+        const double priceAfterTax(mPlans->isBillingCurrency() ?
+                                       pricing->getAmountWithDecimals(i) :
+                                       pricing->getLocalPriceWithDecimals(i));
+        const double priceBeforeTax(mPlans->isBillingCurrency() ?
+                                        pricing->getPriceNetWithDecimals(i) :
+                                        pricing->getLocalPriceNetWithDecimals(i));
         auto planData(createAccountBillingPlanData(pricing->getGBStorage(i),
                                                    pricing->getGBTransfer(i),
                                                    priceAfterTax,
@@ -561,7 +561,7 @@ bool UpsellController::isProLevelValid(int proLevel) const
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FEATURE;
 }
 
-QString UpsellController::getLocalePriceString(float price) const
+QString UpsellController::getLocalePriceString(double price) const
 {
     return Utilities::toPrice(price, mPlans->getCurrencySymbol(), !mPlans->isBillingCurrency());
 }
@@ -569,18 +569,17 @@ QString UpsellController::getLocalePriceString(float price) const
 UpsellPlans::Data::AccountBillingPlanData
     UpsellController::createAccountBillingPlanData(int storage,
                                                    int transfer,
-                                                   int priceAfterTax,
+                                                   double priceAfterTax,
                                                    double priceBeforeTax) const
 {
-    UpsellPlans::Data::AccountBillingPlanData planData(
-        static_cast<int64_t>(storage) * NB_B_IN_1GB,
-        static_cast<int64_t>(transfer) * NB_B_IN_1GB,
-        static_cast<float>(priceAfterTax) / CENTS_IN_1_UNIT,
-        priceBeforeTax / static_cast<double>(CENTS_IN_1_UNIT));
+    UpsellPlans::Data::AccountBillingPlanData planData(storage * NB_B_IN_1GB,
+                                                       transfer * NB_B_IN_1GB,
+                                                       priceAfterTax,
+                                                       priceBeforeTax);
     return planData;
 }
 
-int UpsellController::calculateDiscount(float monthlyPrice, float yearlyPrice) const
+int UpsellController::calculateDiscount(double monthlyPrice, double yearlyPrice) const
 {
     return static_cast<int>(PERCENTAGE -
                             (yearlyPrice * PERCENTAGE) / (monthlyPrice * NUM_MONTHS_PER_PLAN));
@@ -709,12 +708,12 @@ bool UpsellController::planFitsUnderStorageOQConditions(int64_t planGbStorage) c
             ((isFullStorageOQ || isFullStorageUnderTxExceeded) && isStorageFit));
 }
 
-float UpsellController::calculateTotalPriceWithoutDiscount(float monthlyPrice) const
+double UpsellController::calculateTotalPriceWithoutDiscount(double monthlyPrice) const
 {
     return monthlyPrice * NUM_MONTHS_PER_PLAN;
 }
 
-float UpsellController::calculateMonthlyPriceWithDiscount(float yearlyPrice) const
+double UpsellController::calculateMonthlyPriceWithDiscount(double yearlyPrice) const
 {
     return yearlyPrice / NUM_MONTHS_PER_PLAN;
 }

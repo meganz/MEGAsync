@@ -2230,7 +2230,6 @@ QString Utilities::toPrice(double value, const QString& currencySymbol, bool sho
     {
         price += QLatin1Char('*');
     }
-
     return price;
 }
 

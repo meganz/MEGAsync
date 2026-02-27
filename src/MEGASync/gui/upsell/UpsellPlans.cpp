@@ -325,8 +325,8 @@ int UpsellPlans::Data::calculateYearlyDiscount() const
     }
     else if (mMonthlyData.isValid())
     {
-        constexpr float NUM_MONTHS_PER_PLAN(12.0f);
-        constexpr float PERCENTAGE(100.0f);
+        constexpr double NUM_MONTHS_PER_PLAN(12.);
+        constexpr double PERCENTAGE(100.);
 
         return static_cast<int>(PERCENTAGE -
                                 (mYearlyData.priceAfterTax() * PERCENTAGE) /
@@ -367,13 +367,13 @@ void UpsellPlans::Data::setMonthlyData(const AccountBillingPlanData& newMonthlyD
 UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData():
     mGBStorage(-1),
     mGBTransfer(-1),
-    mPriceAfterTax(-1.0f),
-    mPriceBeforeTax(-1.0)
+    mPriceAfterTax(-1.),
+    mPriceBeforeTax(-1.)
 {}
 
 UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int64_t gbStorage,
                                                                   int64_t gbTransfer,
-                                                                  float priceAfterTax,
+                                                                  double priceAfterTax,
                                                                   double priceBeforeTax):
     mGBStorage(gbStorage),
     mGBTransfer(gbTransfer),
@@ -383,7 +383,7 @@ UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int64_t gbStor
 
 bool UpsellPlans::Data::AccountBillingPlanData::isValid() const
 {
-    return mGBStorage != -1 && mGBTransfer != -1 && mPriceAfterTax != -1.0f;
+    return mGBStorage != -1 && mGBTransfer != -1 && mPriceAfterTax != -1.;
 }
 
 int64_t UpsellPlans::Data::AccountBillingPlanData::gBStorage() const
@@ -396,7 +396,7 @@ int64_t UpsellPlans::Data::AccountBillingPlanData::gBTransfer() const
     return mGBTransfer;
 }
 
-float UpsellPlans::Data::AccountBillingPlanData::priceAfterTax() const
+double UpsellPlans::Data::AccountBillingPlanData::priceAfterTax() const
 {
     return mPriceAfterTax;
 }

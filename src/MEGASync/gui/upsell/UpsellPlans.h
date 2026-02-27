@@ -75,7 +75,7 @@ public:
             AccountBillingPlanData();
             AccountBillingPlanData(int64_t gbStorage,
                                    int64_t gbTransfer,
-                                   float priceAfterTax,
+                                   double priceAfterTax,
                                    double priceBeforeTax);
             ~AccountBillingPlanData() = default;
 
@@ -83,7 +83,7 @@ public:
 
             int64_t gBStorage() const;
             int64_t gBTransfer() const;
-            float priceAfterTax() const;
+            double priceAfterTax() const;
             double priceBeforeTax() const;
             std::optional<DiscountInfo> discount() const;
             bool hasDiscount() const;
@@ -92,7 +92,7 @@ public:
         private:
             int64_t mGBStorage;
             int64_t mGBTransfer;
-            float mPriceAfterTax;
+            double mPriceAfterTax;
             double mPriceBeforeTax;
             std::optional<DiscountInfo> mDiscount = std::nullopt;
         };

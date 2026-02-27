@@ -73,13 +73,13 @@ private:
     std::shared_ptr<UpsellPlans::Data> appendPlan(int proLevel,
                                                   QList<std::shared_ptr<UpsellPlans::Data>>& plans);
     bool isProLevelValid(int proLevel) const;
-    QString getLocalePriceString(float price) const;
+    QString getLocalePriceString(double price) const;
     UpsellPlans::Data::AccountBillingPlanData
         createAccountBillingPlanData(int storage,
                                      int transfer,
-                                     int priceAfterTax,
+                                     double priceAfterTax,
                                      double priceBeforeTax) const;
-    int calculateDiscount(float monthlyPrice, float yearlyPrice) const;
+    int calculateDiscount(double monthlyPrice, double yearlyPrice) const;
     int getRowForNextRecommendedPlan() const;
     int getRowForCurrentRecommended();
     void updatePlans();
@@ -88,8 +88,8 @@ private:
     bool isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
     bool isPlanUnderCurrentProLevel(int proLevel) const;
     bool planFitsUnderStorageOQConditions(int64_t planGbStorage) const;
-    float calculateTotalPriceWithoutDiscount(float monthlyPrice) const;
-    float calculateMonthlyPriceWithDiscount(float yearlyPrice) const;
+    double calculateTotalPriceWithoutDiscount(double monthlyPrice) const;
+    double calculateMonthlyPriceWithDiscount(double yearlyPrice) const;
     bool isOnlyProFlexiAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
     bool storageFitsUnderStorageOQConditions(const std::shared_ptr<UpsellPlans::Data>& data) const;
     bool isOnlyProFlexiAvailable(const QList<std::shared_ptr<UpsellPlans::Data>>& plans) const;
