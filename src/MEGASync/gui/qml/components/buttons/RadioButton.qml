@@ -46,6 +46,7 @@ Qml.RadioButton {
             root.checked = true;
             root.userChecked(true);
         }
+        root.forceActiveFocus();
     }
 
     indicator: Rectangle {

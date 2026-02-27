@@ -1866,9 +1866,14 @@ void InfoDialog::updateUpgradeButtonState()
 
     if (hasOffer)
     {
-        ui->bUpgrade->setText(tr("%1% off %2")
-                                  .arg(mDiscountPolicy->getDiscountInfo()->getPercentageDiscount())
-                                  .arg(mDiscountPolicy->getPlanName()));
+        if (mPolicy->isCampaignActive())
+        {
+            ui->bUpgrade->setText(tr("%1% off %2")
+                                      .arg(mPolicy->getDiscountInfo()->getPercentageDiscount())
+                                      .arg(Utilities::getReadablePlanFromId(
+                                          mPolicy->getDiscountInfo()->getAccountLevel(),
+                                          true)));
+        }
     }
     else
     {
