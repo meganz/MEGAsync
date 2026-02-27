@@ -1,5 +1,7 @@
 #include "UpsellPlans.h"
 
+#include "Utilities.h"
+
 // ************************************************************************************************
 // * UpsellPlans
 // ************************************************************************************************
@@ -320,17 +322,20 @@ int UpsellPlans::Data::calculateYearlyDiscount() const
 {
     if (mYearlyData.hasDiscount())
     {
-        int dp = mYearlyData.discount()->percentage;
-        return mMonthlyData.isValid() ? dp + ((2 * (100 - dp)) / 12) : dp;
+        const auto dp = mYearlyData.discount()->percentage;
+        // return mMonthlyData.isValid() ? dp + ((2 * (100 - dp)) / 12) : dp; // Exact formula, do
+        // not use for
+        //  now because the webclient uses the following: softCeil(1-(1-16%)(1-dp%))
+        return mMonthlyData.isValid() ? Utilities::softCeil(100 - 0.84 * (100 - dp)) : dp;
     }
     else if (mMonthlyData.isValid())
     {
         constexpr double NUM_MONTHS_PER_PLAN(12.);
         constexpr double PERCENTAGE(100.);
 
-        return static_cast<int>(PERCENTAGE -
-                                (mYearlyData.priceAfterTax() * PERCENTAGE) /
-                                    (mMonthlyData.priceAfterTax() * NUM_MONTHS_PER_PLAN));
+        return Utilities::softCeil(PERCENTAGE -
+                                   (mYearlyData.priceAfterTax() * PERCENTAGE) /
+                                       (mMonthlyData.priceAfterTax() * NUM_MONTHS_PER_PLAN));
     }
     return 0;
 }

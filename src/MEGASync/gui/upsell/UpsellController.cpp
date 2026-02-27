@@ -292,7 +292,10 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                     // discount percentage without calculation.
                     field = (mPlans->isMonthly() || !plan->monthlyData().isValid()) ?
                                 dp :
-                                dp + ((2 * (100 - dp)) / 12);
+                                // dp + ((2 * (100 - dp)) / 12); // Exact formula, do not use for
+                                // now because the webclient uses the following:
+                                // softCeil(1-(1-16%)(1-dp%))
+                                Utilities::softCeil(100 - 0.84 * (100 - dp));
                 }
                 else
                 {
@@ -581,8 +584,8 @@ UpsellPlans::Data::AccountBillingPlanData
 
 int UpsellController::calculateDiscount(double monthlyPrice, double yearlyPrice) const
 {
-    return static_cast<int>(PERCENTAGE -
-                            (yearlyPrice * PERCENTAGE) / (monthlyPrice * NUM_MONTHS_PER_PLAN));
+    return Utilities::softCeil(PERCENTAGE -
+                               (yearlyPrice * PERCENTAGE) / (monthlyPrice * NUM_MONTHS_PER_PLAN));
 }
 
 void UpsellController::updatePlans()
