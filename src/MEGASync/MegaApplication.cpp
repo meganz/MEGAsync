@@ -4470,11 +4470,13 @@ void MegaApplication::processDownloads()
     {
         showInfoDialogIfHTTPServerSender();
         processDownloadQueue(preferences->downloadFolder());
+        emit mDiscountStateMachine->meaningfulInteraction();
         return;
     }
 
     auto downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
     DialogOpener::showDialog<DownloadFromMegaDialog, TransferManager>(downloadFolderSelector, false, this, &MegaApplication::onDownloadFromMegaFinished);
+    emit mDiscountStateMachine->meaningfulInteraction();
 }
 
 bool MegaApplication::hasDefaultDownloadFolder() const
