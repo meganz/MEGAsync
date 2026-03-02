@@ -11,6 +11,7 @@ static bool qmlRegistrationDone = false;
 constexpr int MS_IN_ONE_MIN = 1000 * 60; // 1 minute
 constexpr int COUNT_DOWN_UPDATE_INTERVAL_MS = MS_IN_ONE_MIN; // 1 minute
 constexpr long long COUNT_DOWN_TOLERANCE_MS = 1500; // 1.5 seconds
+constexpr double DOUBLE_COMPARISON_EPSILON = 1e-5;
 }
 
 OfferComponent::OfferComponent(QObject* parent):
@@ -131,9 +132,12 @@ QString OfferComponent::getPrice() const
         }
         else
         {
-            return Utilities::toPrice(mDiscountInfo->getLocalTotalPriceNet(),
-                                      localByteSymbol,
-                                      true);
+            auto price = mDiscountInfo->getLocalTotalPriceNet();
+            if (std::abs(price) < DOUBLE_COMPARISON_EPSILON)
+            {
+                price = mDiscountInfo->getLocalTotalPrice();
+            }
+            return Utilities::toPrice(price, localByteSymbol, true);
         }
     }
     return {};
@@ -161,9 +165,12 @@ QString OfferComponent::getDiscountedPrice() const
         }
         else
         {
-            return Utilities::toPrice(mDiscountInfo->getLocalDiscountedTotalPriceNet(),
-                                      localByteSymbol,
-                                      true);
+            auto price = mDiscountInfo->getLocalDiscountedTotalPriceNet();
+            if (std::abs(price) < DOUBLE_COMPARISON_EPSILON)
+            {
+                price = mDiscountInfo->getLocalDiscountedTotalPrice();
+            }
+            return Utilities::toPrice(price, localByteSymbol, true);
         }
     }
     return {};
@@ -197,6 +204,11 @@ int OfferComponent::getMinutes() const
         return 0;
     }
     return static_cast<int>((secsRemaining % 3600) / 60);
+}
+
+bool OfferComponent::hasTax() const
+{
+    return mDiscountInfo ? mDiscountInfo->getTaxRate() != -1 : true;
 }
 
 qint64 OfferComponent::getSeconds() const

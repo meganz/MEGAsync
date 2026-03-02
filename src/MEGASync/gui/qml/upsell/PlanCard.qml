@@ -48,6 +48,7 @@ Rectangle {
     property int discountPercentage: 0
     property int discountMonths: 0
     property bool isHighlighted: false
+    property bool hasTax: true
 
 
     property string billedText: {
@@ -215,7 +216,7 @@ Rectangle {
                 lineHeightMode: Text.FixedHeight
                 text: UpsellStrings.pricePerMonthAfterTax.arg(priceAfterTax)
                 font.weight: Font.DemiBold
-                visible: root.enabled && !root.showOnlyProFlexi
+                visible: root.enabled && !root.showOnlyProFlexi && root.hasTax
                 width: parent.width
             }
         }

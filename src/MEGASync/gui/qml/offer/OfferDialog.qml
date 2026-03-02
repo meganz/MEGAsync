@@ -28,7 +28,8 @@ QmlDialog {
         function onDataUpdated() {
             productsRepeater.model = offerComponentAccess.getPlanFeatures();
             taxText.text = OfferStrings.priceDisclaimer(
-                        offerComponentAccess.localCurrencyIsBillingCurrency());
+                        offerComponentAccess.localCurrencyIsBillingCurrency(),
+                        offerComponentAccess.hasTax);
         }
     }
 
@@ -262,7 +263,8 @@ QmlDialog {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width
                             text: OfferStrings.priceDisclaimer(
-                                      offerComponentAccess.localCurrencyIsBillingCurrency())
+                                      offerComponentAccess.localCurrencyIsBillingCurrency(),
+                                      offerComponentAccess.hasTax)
                             font.pixelSize: 12
                             lineHeight: 18
                             lineHeightMode: Text.FixedHeight

@@ -54,7 +54,8 @@ public:
         DISCOUNT_PERCENTAGE,
         IS_HIGHLIGHTED,
         PRICE_BEFORE_TAX_ROLE,
-        MONTHLY_BASE_PRICE_ROLE
+        MONTHLY_BASE_PRICE_ROLE,
+        HAS_TAX
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -88,12 +89,14 @@ public:
             std::optional<DiscountInfo> discount() const;
             bool hasDiscount() const;
             void setDiscount(DiscountInfo discount);
+            bool hasTax() const;
 
         private:
             int64_t mGBStorage;
             int64_t mGBTransfer;
             double mPriceAfterTax;
             double mPriceBeforeTax;
+            bool mHasTax = true;
             std::optional<DiscountInfo> mDiscount = std::nullopt;
         };
 

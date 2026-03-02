@@ -37,9 +37,27 @@ QtObject {
         return str
     }
 
-    function priceDisclaimer(localCurrencyIsBillingCurrency){
-         return qsTr("*%1").arg(localCurrencyIsBillingCurrency ?
-                                  taxDisclaimer
-                                  : qsTr("%1 %2").arg(currencyDisclaimer).arg(taxDisclaimer))
+    function priceDisclaimer(localCurrencyIsBillingCurrency, hasTax){
+        console.log("priceDisclaimer called with:", localCurrencyIsBillingCurrency, hasTax)
+        
+        if (localCurrencyIsBillingCurrency && hasTax) {
+            console.log("Showing only tax disclaimer")
+            var result = qsTr("*%1").arg(taxDisclaimer)
+            console.log("priceDisclaimer result:", result)
+            return result
+        } else if (!localCurrencyIsBillingCurrency && hasTax) {
+            console.log("Showing both disclaimers using %1 %2 format")
+            var result = qsTr("*%1").arg(qsTr("%1 %2").arg(currencyDisclaimer).arg(taxDisclaimer))
+            console.log("priceDisclaimer result:", result)
+            return result
+        } else if (!localCurrencyIsBillingCurrency && !hasTax) {
+            console.log("Showing only currency disclaimer")
+            var result = qsTr("*%1").arg(currencyDisclaimer)
+            console.log("priceDisclaimer result:", result)
+            return result
+        } else {
+            console.log("No disclaimers to show, returning empty string")
+            return ""
+        }
     }
 }

@@ -30,6 +30,7 @@ const std::vector<int> ACCOUNT_TYPES_IN_ORDER = {Preferences::AccountType::ACCOU
                                                  Preferences::AccountType::ACCOUNT_TYPE_PROIII,
                                                  Preferences::AccountType::ACCOUNT_TYPE_BUSINESS,
                                                  Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI};
+constexpr double DOUBLE_COMPARISON_EPSILON = 1e-5;
 }
 
 UpsellController::UpsellController(QObject* parent):
@@ -241,6 +242,12 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                     price = plan->yearlyData().priceBeforeTax() / NUM_MONTHS_PER_PLAN;
                 }
                 field = price < 0. ? QString() : getLocalePriceString(price);
+                break;
+            }
+            case UpsellPlans::HAS_TAX:
+            {
+                field = plan->monthlyData().isValid() ? plan->monthlyData().hasTax() :
+                                                        plan->yearlyData().hasTax();
                 break;
             }
             case UpsellPlans::CURRENT_PLAN_ROLE:
@@ -575,6 +582,11 @@ UpsellPlans::Data::AccountBillingPlanData
                                                    double priceAfterTax,
                                                    double priceBeforeTax) const
 {
+    // When the before tax is zero, there's no tax and we use the after tax price
+    if (std::abs(priceBeforeTax) < DOUBLE_COMPARISON_EPSILON)
+    {
+        priceBeforeTax = priceAfterTax;
+    }
     UpsellPlans::Data::AccountBillingPlanData planData(storage * NB_B_IN_1GB,
                                                        transfer * NB_B_IN_1GB,
                                                        priceAfterTax,

@@ -2,6 +2,10 @@
 
 #include "Utilities.h"
 
+namespace
+{
+constexpr double DOUBLE_COMPARISON_EPSILON = 1e-5;
+}
 // ************************************************************************************************
 // * UpsellPlans
 // ************************************************************************************************
@@ -276,9 +280,8 @@ QHash<int, QByteArray> UpsellPlans::Data::roleNames()
         {UpsellPlans::DISCOUNT_PERCENTAGE, "discountPercentage"},
         {UpsellPlans::IS_HIGHLIGHTED, "isHighlighted"},
         {UpsellPlans::PRICE_BEFORE_TAX_ROLE, "priceBeforeTax"},
-        {UpsellPlans::MONTHLY_BASE_PRICE_ROLE, "monthlyBasePrice"}
-
-    };
+        {UpsellPlans::MONTHLY_BASE_PRICE_ROLE, "monthlyBasePrice"},
+        {UpsellPlans::HAS_TAX, "hasTax"}};
 
     return roles;
 }
@@ -383,7 +386,8 @@ UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int64_t gbStor
     mGBStorage(gbStorage),
     mGBTransfer(gbTransfer),
     mPriceAfterTax(priceAfterTax),
-    mPriceBeforeTax(priceBeforeTax)
+    mPriceBeforeTax(priceBeforeTax),
+    mHasTax(std::abs(mPriceBeforeTax - mPriceAfterTax) > ::DOUBLE_COMPARISON_EPSILON)
 {}
 
 bool UpsellPlans::Data::AccountBillingPlanData::isValid() const
@@ -428,6 +432,10 @@ void UpsellPlans::Data::AccountBillingPlanData::setDiscount(
     mDiscount = discount;
 }
 
+bool UpsellPlans::Data::AccountBillingPlanData::hasTax() const
+{
+    return mHasTax;
+}
 // ************************************************************************************************
 // * UpsellPlans::CurrencyData
 // ************************************************************************************************

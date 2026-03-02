@@ -129,7 +129,7 @@ FocusScope {
                         monthly: upsellPlansAccess.monthly
                         billingCurrency: upsellPlansAccess.billingCurrency
                         currencyName: upsellPlansAccess.currencyName
-
+                        hasTax: model.hasTax
                         onBuyButtonClicked: {
                             upsellComponentAccess.buyButtonClicked(index);
                         }

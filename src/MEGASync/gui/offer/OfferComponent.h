@@ -21,6 +21,7 @@ class OfferComponent: public QMLComponent
     Q_PROPERTY(qint64 seconds READ getSeconds NOTIFY countdownChanged)
     Q_PROPERTY(int discountPercentage READ getPercentage NOTIFY dataUpdated)
     Q_PROPERTY(int discountMonths READ getMonths NOTIFY dataUpdated)
+    Q_PROPERTY(bool hasTax READ hasTax NOTIFY dataUpdated)
 
 public:
     explicit OfferComponent(QObject* parent = nullptr);
@@ -37,6 +38,7 @@ public:
     int getDays() const;
     int getHours() const;
     int getMinutes() const;
+    bool hasTax() const;
     qint64 getSeconds() const;
     void setOfferExpirationDate(const QDateTime& date);
     Q_INVOKABLE QStringList getPlanFeatures() const;
