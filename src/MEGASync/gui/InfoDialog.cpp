@@ -1885,21 +1885,19 @@ void InfoDialog::updateUpgradeButtonState()
 
 void InfoDialog::setDiscountPolicy(QPointer<DiscountPolicy> policy)
 {
-    mDiscountPolicy = policy;
-    if (!mDiscountPolicy.isNull())
+    if (!policy.isNull())
     {
+        mDiscountPolicy = policy;
         connect(mDiscountPolicy,
                 &DiscountPolicy::campaignActivated,
                 this,
-                &InfoDialog::updateUpgradeButtonState);
+                &InfoDialog::updateUpgradeButtonState,
+                Qt::UniqueConnection);
         connect(mDiscountPolicy,
                 &DiscountPolicy::campaignDeactivated,
                 this,
-                &InfoDialog::updateUpgradeButtonState);
-        connect(mDiscountPolicy,
-                &DiscountPolicy::planNameReady,
-                this,
-                &InfoDialog::updateUpgradeButtonState);
+                &InfoDialog::updateUpgradeButtonState,
+                Qt::UniqueConnection);
         updateUpgradeButtonText();
     }
 }

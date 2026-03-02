@@ -6398,6 +6398,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (auto discountInfo = request->getMegaDiscountCodeInfo())
             {
+                if (infoDialog)
+                {
+                    infoDialog->setDiscountPolicy(mDiscountPolicy);
+                }
                 mDiscountPolicy->activateCampaign(
                     std::shared_ptr<MegaDiscountCodeInfo>(discountInfo->copy()));
             }
