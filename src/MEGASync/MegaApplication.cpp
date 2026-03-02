@@ -896,7 +896,9 @@ void MegaApplication::updateTrayIcon()
         {
             tooltipState = QCoreApplication::translate("InfoDialog", "%1% off %2")
                                .arg(discountInfo->getPercentageDiscount())
-                               .arg(mDiscountPolicy->getPlanName());
+                               .arg(Utilities::getReadablePlanFromId(
+                                   mDiscountPolicy->getDiscountInfo()->getAccountLevel(),
+                                   false));
         }
         animation = TrayIconManager::Animation::Promo;
     }
@@ -1147,11 +1149,6 @@ void MegaApplication::start()
     // Target discounts init
 
     mDiscountPolicy = new DiscountPolicy(this);
-
-    connect(mDiscountPolicy,
-            &DiscountPolicy::planNameReady,
-            this,
-            &MegaApplication::updateTrayIcon);
 
     mDiscountStateMachine = new DiscountStateMachine(mDiscountPolicy);
 

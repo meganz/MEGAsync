@@ -22,12 +22,10 @@ public:
     QDateTime getDialogLastShownDateUtc() const;
     std::shared_ptr<mega::MegaDiscountCodeInfo> getDiscountInfo();
     QDateTime getExpiryDateUtc() const;
-    QString getPlanName() const;
 
 signals:
     void campaignActivated();
     void campaignDeactivated();
-    void planNameReady();
 
 protected:
     bool load();
@@ -41,7 +39,6 @@ protected:
     QDateTime mLastTimeShownUtc;
     QDateTime mCampaignExpiryDateUtc;
     QString mDiscountCode;
-    QString mPlanName;
 
     std::shared_ptr<mega::MegaDiscountCodeInfo> mDiscountInfo;
     std::shared_ptr<Preferences> mPreferences;

@@ -94,7 +94,6 @@ void DiscountPolicy::deactivateCampaign()
 
     mIsCampaignActive = false;
     mDiscountInfo.reset();
-    mPlanName.clear();
 
     mDiscountCode.clear();
     mCampaignExpiryDateUtc = QDateTime();
@@ -151,12 +150,6 @@ std::shared_ptr<mega::MegaDiscountCodeInfo> DiscountPolicy::getDiscountInfo()
 QDateTime DiscountPolicy::getExpiryDateUtc() const
 {
     return mCampaignExpiryDateUtc;
-}
-
-QString DiscountPolicy::getPlanName() const
-{
-    return mDiscountInfo ? Utilities::getReadablePlanFromId(mDiscountInfo->getAccountLevel()) :
-                           QString();
 }
 
 bool DiscountPolicy::load()
