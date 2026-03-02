@@ -5305,6 +5305,11 @@ Enter a different name.</translation>
 <context>
     <name>OfferStrings</name>
     <message>
+        <source>%1 %2</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
+        <translation>%1 %2</translation>
+    </message>
+    <message>
         <source>%1 of storage</source>
         <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
         <translation>%1 of storage</translation>
@@ -5339,6 +5344,16 @@ Enter a different name.</translation>
         </translation>
     </message>
     <message>
+        <source>*%1</source>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is â‚¬ and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation>*%1</translation>
+    </message>
+    <message>
+        <source>Estimated price in your local currency.</source>
+        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
+        <translation>Estimated price in your local currency.</translation>
+    </message>
+    <message>
         <source>Grab Deal</source>
         <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
         <translation>Grab deal</translation>
@@ -5368,6 +5383,11 @@ Enter a different name.</translation>
         <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
         <translation>Special offer ends in:</translation>
     </message>
+    <message>
+        <source>Tax may apply.</source>
+        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
+        <translation>Tax may apply.</translation>
+    </message>
     <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>
         <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
@@ -5375,26 +5395,6 @@ Enter a different name.</translation>
             <numerusform>[B]%1% off[/B] for %n month</numerusform>
             <numerusform>[B]%1% off[/B] for %n months</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Tax may apply.</source>
-        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
-        <translation>Tax may apply.</translation>
-    </message>
-    <message>
-        <source>Estimated price in your local currency.</source>
-        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
-        <translation>Estimated price in your local currency.</translation>
-    </message>
-    <message>
-        <source>%1 %2</source>
-        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
-        <translation>%1 %2</translation>
-    </message>
-    <message>
-        <source>*%1</source>
-        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not .SNC-6271</translatorcomment>
-        <translation>*%1</translation>
     </message>
 </context>
 <context>
@@ -9774,6 +9774,16 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Buy %1</translation>
     </message>
     <message>
+        <source>Charged monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
+        <translation>Charged monthly</translation>
+    </message>
+    <message>
+        <source>Charged yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
+        <translation>Charged yearly</translation>
+    </message>
+    <message>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
         <translation>Current plan</translation>
@@ -9837,16 +9847,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month, charged yearly</source>
         <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
         <translation>per month, charged yearly</translation>
-    </message>
-    <message>
-        <source>Charged yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
-        <translation>Charged yearly</translation>
-    </message>
-    <message>
-        <source>Charged monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
-        <translation>Charged monthly</translation>
     </message>
 </context>
 <context>
