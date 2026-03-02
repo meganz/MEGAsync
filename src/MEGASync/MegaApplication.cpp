@@ -2514,7 +2514,7 @@ void MegaApplication::createInfoDialog()
     connect(infoDialog,
             &InfoDialog::requestShowDiscountDialog,
             mDiscountStateMachine,
-            &DiscountStateMachine::requestShowDialog);
+            &DiscountStateMachine::discountButtonClicked);
     infoDialog->setDiscountPolicy(mDiscountPolicy);
 }
 

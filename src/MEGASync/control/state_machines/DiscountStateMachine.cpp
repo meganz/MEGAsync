@@ -163,9 +163,13 @@ bool DiscountStateMachine::isInCooldownState() const
 
 bool DiscountStateMachine::showTrayIconAnimation() const
 {
-    return mStateMachine.configuration().contains(mCampaignActive) &&
-           !(mStateMachine.configuration().contains(mShown) ||
-             mStateMachine.configuration().contains(mShowing));
+    return mStateMachine.configuration().contains(mWaiting) ||
+           mStateMachine.configuration().contains(mShowable);
+}
+
+void DiscountStateMachine::discountButtonClicked()
+{
+    emit externalDiscountDialogRequest();
 }
 
 void DiscountStateMachine::build()
@@ -317,15 +321,6 @@ void DiscountStateMachine::build()
                 }
             });
 
-    connect(mCampaignActive,
-            &QState::entered,
-            this,
-            &DiscountStateMachine::updateDiscountCampaignSignaling);
-    connect(mCampaignActive,
-            &QState::exited,
-            this,
-            &DiscountStateMachine::updateDiscountCampaignSignaling);
-
     // Waiting state
     mWaiting->addTransition(this, &DiscountStateMachine::onboardingStarted, mActiveOnboarding);
     mWaiting->addTimeoutTransition(mShowable);
@@ -335,6 +330,7 @@ void DiscountStateMachine::build()
                                                     &DiscountStateMachine::meaningfulInteraction,
                                                     mShowable);
     mWaitingForOverquota->addTransition(this, &DiscountStateMachine::enterOverquota, mShowable);
+    mWaiting->addTransition(this, &DiscountStateMachine::externalDiscountDialogRequest, mShowing);
 
     // Campaign Active Onboarding
     mActiveOnboarding->addTransition(this, &DiscountStateMachine::onboardingFinished, mShowable);
@@ -351,11 +347,8 @@ void DiscountStateMachine::build()
                                             });
     // Showable states
     mShowable->addTimeoutTransition(mShowable);
-    transition = mShowable->addTransition(mShowable, &QState::finished, mShowing);
-    connect(transition,
-            &QAbstractTransition::triggered,
-            this,
-            &DiscountStateMachine::requestShowDialog);
+    mShowable->addTransition(this, &DiscountStateMachine::externalDiscountDialogRequest, mShowing);
+    mShowable->addTransition(mShowable, &QState::finished, mShowing);
 
     mWaitingForNoBlocking->addTransition(this,
                                          &DiscountStateMachine::noBlockingWindow,
@@ -384,10 +377,7 @@ void DiscountStateMachine::build()
             });
 
     // Showing state
-    connect(mShowing,
-            &QState::entered,
-            this,
-            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mShowing, &QState::entered, this, &DiscountStateMachine::requestShowDialog);
     transition = mShowing->addTransition(this, &DiscountStateMachine::discountDismissed, mCooldown);
     setTargetStateTimerDurationOnTransition(transition,
                                             []
@@ -403,8 +393,7 @@ void DiscountStateMachine::build()
                                             });
 
     // Shown states
-    mShown->addTransition(this, &DiscountStateMachine::requestShowDialog, mShowing);
-    connect(mShown, &QState::exited, this, &DiscountStateMachine::updateDiscountCampaignSignaling);
+    mShown->addTransition(this, &DiscountStateMachine::externalDiscountDialogRequest, mShowing);
 
     // Cooldown
     transition = mCooldown->addTimeoutTransition(mWaiting);
@@ -429,6 +418,25 @@ void DiscountStateMachine::build()
             {
                 emit requestUserDiscounts(true);
             });
+
+    // Update signaling on state changes -----------------------------------------------------------
+    connect(mCampaignActive,
+            &QState::exited,
+            this,
+            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mWaiting,
+            &QState::entered,
+            this,
+            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mShowable,
+            &QState::entered,
+            this,
+            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mShowing,
+            &QState::entered,
+            this,
+            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mShown, &QState::entered, this, &DiscountStateMachine::updateDiscountCampaignSignaling);
 
     // Log state changes ---------------------------------------------------------------------------
     logState(mCampaignInactive);

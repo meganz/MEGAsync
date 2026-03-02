@@ -66,6 +66,10 @@ signals:
     void noBlockingWindow();
     void userActive();
     void requestUserDiscounts(bool force);
+    void externalDiscountDialogRequest();
+
+public slots:
+    void discountButtonClicked();
 
 private:
     void build();
