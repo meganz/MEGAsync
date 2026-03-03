@@ -404,7 +404,7 @@ void DiscountStateMachine::build()
                                             });
 
     // Grabbed deal
-    // Here we want to wait for somr time before requesting discounts again.
+    // Here we want to wait for some time before requesting discounts again.
     transition = mDealGrabbed->addTimeoutTransition(mCooldown);
     setTargetStateTimerDurationOnTransition(transition,
                                             []

@@ -629,6 +629,14 @@ void MegaApplication::initialize()
     QmlManager::instance()->setRootContextProperty(mStatusController);
     AccountDetailsManager::instance()->init(megaApi);
 
+    connect(AccountDetailsManager::instance(),
+            &AccountDetailsManager::accountDetailsUpdated,
+            this,
+            [this]
+            {
+                requestUserDiscounts(true);
+            });
+
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi, mFolderTransferListener);
@@ -6383,7 +6391,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
             else
             {
-                mDiscountPolicy->campaignDeactivated();
+                mDiscountPolicy->deactivateCampaign();
             }
             checkOverStorageStates();
         }
@@ -6404,12 +6412,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
             else
             {
-                mDiscountPolicy->campaignDeactivated();
+                mDiscountPolicy->deactivateCampaign();
             }
         }
         else
         {
-            mDiscountPolicy->campaignDeactivated();
+            mDiscountPolicy->deactivateCampaign();
         }
 
         break;

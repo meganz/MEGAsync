@@ -362,10 +362,7 @@ void InfoDialog::updateUsageAndAccountType()
 {
     setUsage();
     setAccountType(mPreferences->accountType());
-
-    const QuotaState quotaState = MegaSyncApp->getTransferQuota()->quotaState();
-    const bool isTransferOverquota = (quotaState != QuotaState::OK);
-    ui->bUpgrade->setVisible(Utilities::shouldDisplayUpgradeButton(isTransferOverquota));
+    updateUpgradeButtonState();
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
