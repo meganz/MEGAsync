@@ -204,7 +204,7 @@ Rectangle {
 
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: root.billedText
+                rawText: root.billedText
                 width: parent.width
                 enabled: root.enabled && !root.showOnlyProFlexi
             }
