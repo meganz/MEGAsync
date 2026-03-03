@@ -218,6 +218,7 @@ Rectangle {
                 font.weight: Font.DemiBold
                 width: parent.width
                 enabled: root.enabled && !root.showOnlyProFlexi
+                visible: root.hasTax
             }
         }
 
