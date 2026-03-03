@@ -18,6 +18,7 @@ constexpr int MONTH_PERIOD(1);
 constexpr int YEAR_PERIOD(12);
 constexpr double NUM_MONTHS_PER_PLAN(12.);
 constexpr double PERCENTAGE(100.);
+constexpr double CENTS_IN_1_UNIT(100.);
 constexpr int TRANSFER_REMAINING_TIME_INTERVAL_MS(1000);
 constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
 const std::vector<int> ACCOUNT_TYPES_IN_ORDER = {Preferences::AccountType::ACCOUNT_TYPE_FREE,
@@ -220,14 +221,20 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             }
             case UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE:
             {
-                field = getLocalePriceString(
-                    calculateTotalPriceWithoutDiscount(plan->monthlyData().priceAfterTax()));
+                double price =
+                    mPlans->isMonthly() ?
+                        plan->monthlyData().priceBeforeTax() :
+                        calculateTotalPriceWithoutDiscount(plan->yearlyData().priceBeforeTax());
+                field = getLocalePriceString(price);
                 break;
             }
             case UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE:
             {
-                field = getLocalePriceString(
-                    calculateMonthlyPriceWithDiscount(plan->yearlyData().priceAfterTax()));
+                double price =
+                    mPlans->isMonthly() ?
+                        plan->monthlyData().priceAfterTax() :
+                        calculateMonthlyPriceWithDiscount(plan->yearlyData().priceAfterTax());
+                field = getLocalePriceString(price);
                 break;
             }
             case UpsellPlans::MONTHLY_BASE_PRICE_ROLE:
@@ -589,15 +596,15 @@ UpsellPlans::Data::AccountBillingPlanData
     }
     UpsellPlans::Data::AccountBillingPlanData planData(storage * NB_B_IN_1GB,
                                                        transfer * NB_B_IN_1GB,
-                                                       priceAfterTax,
-                                                       priceBeforeTax);
+                                                       priceAfterTax / CENTS_IN_1_UNIT,
+                                                       priceBeforeTax / CENTS_IN_1_UNIT);
     return planData;
 }
 
 int UpsellController::calculateDiscount(double monthlyPrice, double yearlyPrice) const
 {
-    return Utilities::softCeil(PERCENTAGE -
-                               (yearlyPrice * PERCENTAGE) / (monthlyPrice * NUM_MONTHS_PER_PLAN));
+    return static_cast<int>(PERCENTAGE -
+                            (yearlyPrice * PERCENTAGE) / (monthlyPrice * NUM_MONTHS_PER_PLAN));
 }
 
 void UpsellController::updatePlans()

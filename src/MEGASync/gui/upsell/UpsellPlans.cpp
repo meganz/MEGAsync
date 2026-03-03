@@ -331,14 +331,14 @@ int UpsellPlans::Data::calculateYearlyDiscount() const
         //  now because the webclient uses the following: softCeil(1-(1-16%)(1-dp%))
         return mMonthlyData.isValid() ? Utilities::softCeil(100 - 0.84 * (100 - dp)) : dp;
     }
-    else if (mMonthlyData.isValid())
+    else if (mMonthlyData.isValid() && mYearlyData.isValid())
     {
         constexpr double NUM_MONTHS_PER_PLAN(12.);
         constexpr double PERCENTAGE(100.);
 
-        return Utilities::softCeil(PERCENTAGE -
-                                   (mYearlyData.priceAfterTax() * PERCENTAGE) /
-                                       (mMonthlyData.priceAfterTax() * NUM_MONTHS_PER_PLAN));
+        return static_cast<int>(PERCENTAGE -
+                                (mYearlyData.priceAfterTax() * PERCENTAGE) /
+                                    (mMonthlyData.priceAfterTax() * NUM_MONTHS_PER_PLAN));
     }
     return 0;
 }

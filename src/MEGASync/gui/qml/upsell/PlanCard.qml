@@ -195,8 +195,8 @@ Rectangle {
                 lineHeight: root.priceLineHeight
                 lineHeightMode: Text.FixedHeight
                 text: root.priceBeforeTax
-                visible: root.enabled && !root.showOnlyProFlexi
                 width: parent.width
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
 
             SecondaryText {
@@ -204,9 +204,9 @@ Rectangle {
 
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
-                visible: root.enabled && !root.showOnlyProFlexi
                 text: root.billedText
                 width: parent.width
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
 
             SecondaryText {
@@ -214,10 +214,10 @@ Rectangle {
 
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: UpsellStrings.pricePerMonthAfterTax.arg(priceAfterTax)
+                rawText: UpsellStrings.pricePerMonthAfterTax.arg(root.priceAfterTax)
                 font.weight: Font.DemiBold
-                visible: root.enabled && !root.showOnlyProFlexi && root.hasTax
                 width: parent.width
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
         }
 
