@@ -5,6 +5,8 @@
 #include "RequestListenerManager.h"
 #include "SettingsDialog.h"
 
+#include <algorithm>
+
 //
 // UserStats implementation (private).
 //
@@ -84,10 +86,27 @@ void AccountDetailsManager::init(mega::MegaApi* megaApi)
         mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
         reset();
         mProExpirityTimer.setSingleShot(true);
-        connect(&mProExpirityTimer, &QTimer::timeout, this, [this]()
-        {
-            updateUserStats(Flag::ALL, true, USERSTATS_PRO_EXPIRED);
-        });
+        mProExpirityTimer.setTimerType(Qt::VeryCoarseTimer);
+        connect(&mProExpirityTimer,
+                &QTimer::timeout,
+                this,
+                [this]()
+                {
+                    const auto timeDiff =
+                        mPreferences->proExpirityTime() - QDateTime::currentMSecsSinceEpoch();
+
+                    if (timeDiff > 0)
+                    {
+                        const long long maxInt = std::numeric_limits<int>::max();
+                        const auto interval = std::min(maxInt, timeDiff);
+                        mProExpirityTimer.setInterval(static_cast<int>(interval)); // Safe cast
+                        mProExpirityTimer.start();
+                    }
+                    else
+                    {
+                        updateUserStats(Flag::ALL, true, USERSTATS_PRO_EXPIRED);
+                    }
+                });
     }
 }
 
@@ -229,8 +248,12 @@ void AccountDetailsManager::processProFlag(const std::shared_ptr<mega::MegaAccou
         {
             mPreferences->setProExpirityTime(details->getProExpiration());
             mProExpirityTimer.stop();
-            const long long interval = qMax(0LL, details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch());
-            mProExpirityTimer.setInterval(static_cast<int>(interval));
+            const long long maxInt = std::numeric_limits<int>::max();
+            auto interval =
+                std::max(0LL,
+                         details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch());
+            interval = std::min(maxInt, interval);
+            mProExpirityTimer.setInterval(static_cast<int>(interval)); // Safe cast
             mProExpirityTimer.start();
         }
     }
