@@ -12,6 +12,12 @@ import OfferComponent 1.0
 QmlDialog {
     id: window
 
+    LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
+    LayoutMirroring.childrenInherit: true
+
+    readonly property bool mirrored: LayoutMirroring.enabled
+    readonly property int textAlignment: mirrored ? Text.AlignRight : Text.AlignLeft
+
     readonly property int defaultIconSize: 16
     readonly property int dialogWidth: 640
     readonly property int dialogHeight: 730
@@ -102,6 +108,7 @@ QmlDialog {
                                 font.bold: true
                                 color: ColorTheme.textPrimary
                                 verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                             Text {
@@ -118,6 +125,7 @@ QmlDialog {
                                 lineHeight: 24
                                 lineHeightMode: Text.FixedHeight
                                 color:  ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                             }
                         }
                     }
@@ -140,6 +148,7 @@ QmlDialog {
                                 lineHeight: 20
                                 lineHeightMode: Text.FixedHeight
                                 color: ColorTheme.textSecondary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                             Text {
@@ -153,6 +162,7 @@ QmlDialog {
                                 lineHeight: 44
                                 lineHeightMode: Text.FixedHeight
                                 color: ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
                             }
@@ -165,6 +175,7 @@ QmlDialog {
                                 lineHeight: 20
                                 lineHeightMode: Text.FixedHeight
                                 color: ColorTheme.textSecondary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                         }
@@ -191,6 +202,7 @@ QmlDialog {
                                 lineHeightMode: Text.FixedHeight
                                 font.weight: Font.Bold
                                 color: ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                             Text {
@@ -204,6 +216,7 @@ QmlDialog {
                                 lineHeightMode: Text.FixedHeight
                                 font.weight: Font.Bold
                                 color:  ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                         }
@@ -270,6 +283,7 @@ QmlDialog {
                             lineHeightMode: Text.FixedHeight
 
                             color: ColorTheme.textSecondary
+                            horizontalAlignment: window.textAlignment
                             elide: Text.ElideRight
                         }
                     }
@@ -297,6 +311,7 @@ QmlDialog {
                     id: timeUnitDelegate
                     RowLayout {
                         spacing: 4
+                        LayoutMirroring.enabled: false
                         Text {
                             text: modelData.value.toString().padStart(2, "0")
                             font.pixelSize: 32
@@ -337,11 +352,12 @@ QmlDialog {
                                 lineHeightMode: Text.FixedHeight
                                 font.weight: Font.DemiBold
                                 color: ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                             }
 
                             Row {
                                 spacing: 16
-
+                                layoutDirection: Qt.application.layoutDirection
                                 Repeater {
                                     model: [
                                         { value: offerComponentAccess.days,    label: OfferStrings.daysLabel(offerComponentAccess.days) },
