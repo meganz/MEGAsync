@@ -3,9 +3,9 @@
 #include "DialogOpener.h"
 #include "DiscountPolicy.h"
 #include "Onboarding.h"
-// #include "OnboardingQmlDialog.h"
 #include "Platform.h"
 #include "QmlDialogManager.h"
+#include "QmlDialogWrapper.h"
 
 #include <QAbstractTransition>
 #include <QDebug>
@@ -23,7 +23,7 @@ constexpr long long MEANINGFUL_INTERACTION_DELAY_MS = 300;
 // Helpers
 
 // Sets targetTimedState duration for the *next entry* when the transition fires.
-// durationProvider returns the duration in ms (-1 disables).
+// durationProvider returns the duration in ms (TIMER_DISABLED [-1] disables).
 inline void setTargetStateTimerDurationOnTransition(QAbstractTransition* transition,
                                                     std::function<long long()> durationProvider)
 {
@@ -41,11 +41,6 @@ inline void setTargetStateTimerDurationOnTransition(QAbstractTransition* transit
                              target->setAssignedDurationMs(ms);
                          });
     }
-}
-
-bool isOnboarding()
-{
-    return DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>().get();
 }
 
 // TimedState class
@@ -125,24 +120,11 @@ DiscountStateMachine::DiscountStateMachine(DiscountPolicy* policy, QObject* pare
     QObject(parent),
     mPolicy(policy)
 {
-    // connect(QmlDialogManager::instance().get(),
-    //         &QmlDialogManager::openOnboardingDialogSignal,
-    //         this,
-    //         [this]
-    //         {
-    //             // Setup connections to the Onboarding dialog
-    //             if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-    //             {
-    //                 // connect(dialog->getDialog()->wrapper(),
-    //                 //         &OnboardingQmlDialog::onboardingDialogLostFocus,
-    //                 //         this,
-    //                 //         &DiscountStateMachine::onboardingLostFocus);
-    //                 // connect(dialog->getDialog(),
-    //                 //         &OnboardingQmlDialog::onboardingDialogGainedFocus,
-    //                 //         this,
-    //                 //         &DiscountStateMachine::onboardingGainedFocus);
-    //             }
-    //         });
+    connect(this,
+            &DiscountStateMachine::onboardingStarted,
+            this,
+            &DiscountStateMachine::onOnboardingStarted,
+            Qt::UniqueConnection);
 
     // Connect to onboarding start
     connect(QmlDialogManager::instance().get(),
@@ -150,7 +132,6 @@ DiscountStateMachine::DiscountStateMachine(DiscountPolicy* policy, QObject* pare
             this,
             &DiscountStateMachine::onboardingStarted,
             Qt::UniqueConnection);
-
     build();
 }
 
@@ -267,6 +248,17 @@ void DiscountStateMachine::build()
     mCampaignInactive->addTransition(this, &DiscountStateMachine::cooldown, mCooldown);
 
     // Idle
+    connect(mIdle,
+            &QState::entered,
+            this,
+            [this]
+            {
+                // If the onboarding is open, we want to go to the right state
+                if (isOnboardingOpen())
+                {
+                    emit onboardingStarted();
+                }
+            });
     mIdle->addTransition(this, &DiscountStateMachine::onboardingStarted, mInactiveOnboarding);
     QAbstractTransition* transition =
         mIdle->addTransition(this, &DiscountStateMachine::campaignActive, mWaiting);
@@ -309,12 +301,6 @@ void DiscountStateMachine::build()
                     QDateTime::currentDateTimeUtc().msecsTo(mPolicy->getExpiryDateUtc());
                 // Set to 0 to immediately exit if no time left
                 mCampaignActive->setAssignedDurationMs(std::max(msecsToExpiry, 0LL));
-
-                // If the onboarding is open, we want to go to the right state
-                if (isOnboarding())
-                {
-                    emit onboardingStarted();
-                }
 
                 // Check if we are in the cooldown period or not
                 auto coolDownEnd = mPolicy->getDialogLastShownDateUtc().addMSecs(
@@ -512,11 +498,25 @@ void DiscountStateMachine::logState(QState* state)
 
 long long DiscountStateMachine::computeWaitingStateTimer()
 {
-    // Here we want to wait either the start delay
-    // remaining time, of the fallback time if the start
-    // delay has been reached.
+    // Here we want to wait either for the start delay remaining time, or for the fallback time if
+    // the start delay has been reached.
     auto waitingDuration =
         Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS - mElapsedTimeSinceAppStart.elapsed();
     return waitingDuration > 0 ? waitingDuration :
                                  Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
+}
+
+bool DiscountStateMachine::isOnboardingOpen()
+{
+    return DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>().get() != nullptr;
+}
+
+void DiscountStateMachine::onOnboardingStarted()
+{
+    auto onboardingDialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>();
+    connect(onboardingDialog->getDialog(),
+            &QmlDialogWrapper<Onboarding>::destroyed,
+            this,
+            &DiscountStateMachine::onboardingFinished,
+            Qt::UniqueConnection);
 }

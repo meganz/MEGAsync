@@ -76,6 +76,7 @@ private:
     void build();
     void logState(QState* state);
     long long computeWaitingStateTimer();
+    static bool isOnboardingOpen();
 
     QElapsedTimer mElapsedTimeSinceAppStart;
     DiscountPolicy* mPolicy;
@@ -97,4 +98,7 @@ private:
     QState* mShown;
     TimedState* mDealGrabbed;
     TimedState* mCooldown;
+
+private slots:
+    void onOnboardingStarted();
 };

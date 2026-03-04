@@ -1193,10 +1193,6 @@ void MegaApplication::start()
                                  });
             });
 
-    connect(this,
-            &MegaApplication::onBoardingFinishedSignal,
-            mDiscountStateMachine,
-            &DiscountStateMachine::onboardingFinished);
     connect(mDiscountStateMachine,
             &DiscountStateMachine::updateDiscountCampaignSignaling,
             this,
@@ -1234,8 +1230,6 @@ void MegaApplication::onboardingFinished(bool fastLogin, bool comesFromOnboardin
     {
         return;
     }
-
-    emit onBoardingFinishedSignal();
 
     registerUserActivity();
     pauseTransfers(paused);
