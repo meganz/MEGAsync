@@ -220,6 +220,7 @@ signals:
     void syncsDialogClosed();
     void languageChanged();
     void onBoardingFinishedSignal();
+    void meaningfulInteraction();
 
 public slots:
     void updateTrayIcon();

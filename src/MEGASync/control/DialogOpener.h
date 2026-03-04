@@ -429,6 +429,16 @@ public:
                            });
     }
 
+    static bool isAnyDialogVisible()
+    {
+        return std::any_of(mOpenedDialogs.begin(),
+                           mOpenedDialogs.end(),
+                           [](std::shared_ptr<DialogInfoBase> dialogInfo)
+                           {
+                               return dialogInfo->isVisible();
+                           });
+    }
+
     static QList<QPointer<QWidget>> getAllOpenedDialogs();
 
 private:

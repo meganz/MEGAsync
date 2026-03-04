@@ -3,7 +3,7 @@
 #include "DialogOpener.h"
 #include "DiscountPolicy.h"
 #include "Onboarding.h"
-#include "OnboardingQmlDialog.h"
+// #include "OnboardingQmlDialog.h"
 #include "Platform.h"
 #include "QmlDialogManager.h"
 
@@ -12,10 +12,13 @@
 #include <QState>
 #include <QTimer>
 
+#include <algorithm>
 #include <functional>
 
 constexpr long long TIMER_DISABLED = -1;
 constexpr long long REQUEST_DISCOUNT_AFTER_DEAL_GRABBED_MS = 1000 * 60 * 15; // 15 minutes
+constexpr long long SHOWABLE_TIMER_MS = 1000 * 5; // 5 seconds
+constexpr long long MEANINGFUL_INTERACTION_DELAY_MS = 300;
 
 // Helpers
 
@@ -167,9 +170,16 @@ bool DiscountStateMachine::showTrayIconAnimation() const
            mStateMachine.configuration().contains(mShowable);
 }
 
-void DiscountStateMachine::discountButtonClicked()
+void DiscountStateMachine::onDiscountButtonClicked()
 {
     emit externalDiscountDialogRequest();
+}
+
+void DiscountStateMachine::onMeaningfulInteraction()
+{
+    QTimer::singleShot(MEANINGFUL_INTERACTION_DELAY_MS,
+                       this,
+                       &DiscountStateMachine::meaningfulInteraction);
 }
 
 void DiscountStateMachine::build()
@@ -212,7 +222,7 @@ void DiscountStateMachine::build()
     // ++ Showable
     mShowable = new TimedState(QState::ParallelStates, mCampaignActive);
     mShowable->setObjectName(QLatin1String("Showable"));
-    mShowable->setAssignedDurationMs(Preferences::USER_INACTIVITY_MS);
+    mShowable->setAssignedDurationMs(SHOWABLE_TIMER_MS);
 
     // *** WaitingForNoBlocking
     auto* region1 = new QState(mShowable);
@@ -298,7 +308,7 @@ void DiscountStateMachine::build()
                 const auto msecsToExpiry =
                     QDateTime::currentDateTimeUtc().msecsTo(mPolicy->getExpiryDateUtc());
                 // Set to 0 to immediately exit if no time left
-                mCampaignActive->setAssignedDurationMs(std::max(msecsToExpiry, 0ll));
+                mCampaignActive->setAssignedDurationMs(std::max(msecsToExpiry, 0LL));
 
                 // If the onboarding is open, we want to go to the right state
                 if (isOnboarding())
@@ -358,7 +368,7 @@ void DiscountStateMachine::build()
             this,
             [this]
             {
-                if (!DialogOpener::anyVisibleAndActiveDialogs())
+                if (!DialogOpener::isAnyDialogVisible())
                 {
                     emit DiscountStateMachine::noBlockingWindow();
                 }

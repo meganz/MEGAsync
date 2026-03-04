@@ -69,7 +69,8 @@ signals:
     void externalDiscountDialogRequest();
 
 public slots:
-    void discountButtonClicked();
+    void onDiscountButtonClicked();
+    void onMeaningfulInteraction();
 
 private:
     void build();

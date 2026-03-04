@@ -1163,7 +1163,7 @@ void MegaApplication::start()
     connect(infoDialog,
             &InfoDialog::requestShowDiscountDialog,
             mDiscountStateMachine,
-            &DiscountStateMachine::discountButtonClicked,
+            &DiscountStateMachine::onDiscountButtonClicked,
             Qt::UniqueConnection);
 
     connect(mDiscountStateMachine,
@@ -1205,6 +1205,10 @@ void MegaApplication::start()
             &DiscountStateMachine::requestUserDiscounts,
             this,
             &MegaApplication::requestUserDiscounts);
+    connect(this,
+            &MegaApplication::meaningfulInteraction,
+            mDiscountStateMachine,
+            &DiscountStateMachine::onMeaningfulInteraction);
 
     mDiscountStateMachine->start();
 }
@@ -1753,7 +1757,7 @@ void MegaApplication::createTransferManagerDialog()
     connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     scanStageController.updateReference(mTransferManager);
 
-    emit mDiscountStateMachine->meaningfulInteraction();
+    emit meaningfulInteraction();
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -2442,7 +2446,7 @@ void MegaApplication::showInfoDialog()
                                                            true,
                                                            USERSTATS_SHOWMAINDIALOG);
     }
-    emit mDiscountStateMachine->meaningfulInteraction();
+    emit meaningfulInteraction();
 }
 
 void MegaApplication::showInfoDialogNotifications()
@@ -2528,7 +2532,7 @@ void MegaApplication::createInfoDialog()
     connect(infoDialog,
             &InfoDialog::requestShowDiscountDialog,
             mDiscountStateMachine,
-            &DiscountStateMachine::discountButtonClicked,
+            &DiscountStateMachine::onDiscountButtonClicked,
             Qt::UniqueConnection);
     infoDialog->setDiscountPolicy(mDiscountPolicy);
 }
@@ -4482,13 +4486,13 @@ void MegaApplication::processDownloads()
     {
         showInfoDialogIfHTTPServerSender();
         processDownloadQueue(preferences->downloadFolder());
-        emit mDiscountStateMachine->meaningfulInteraction();
+        emit meaningfulInteraction();
         return;
     }
 
     auto downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
     DialogOpener::showDialog<DownloadFromMegaDialog, TransferManager>(downloadFolderSelector, false, this, &MegaApplication::onDownloadFromMegaFinished);
-    emit mDiscountStateMachine->meaningfulInteraction();
+    emit meaningfulInteraction();
 }
 
 bool MegaApplication::hasDefaultDownloadFolder() const
@@ -4807,7 +4811,6 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     {
         return;
     }
-    emit mDiscountStateMachine->meaningfulInteraction();
     //Append the list of files to the upload queue, but avoid duplicates
     std::for_each(newUploadQueue.begin(), newUploadQueue.end(), [&](const QString &str) {
         if (!uploadQueue.contains(str)) {
@@ -4815,6 +4818,7 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
         }
     });
     processUploads();
+    emit meaningfulInteraction();
 }
 
 void MegaApplication::shellBackup(QStringList newBackupList)
@@ -4827,7 +4831,7 @@ void MegaApplication::shellBackup(QStringList newBackupList)
     {
         CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
                                               newBackupList);
-        emit mDiscountStateMachine->meaningfulInteraction();
+        emit meaningfulInteraction();
     }
     else
     {
@@ -4846,13 +4850,14 @@ void MegaApplication::shellSync(QString localFolder)
         CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
                                           ::mega::INVALID_HANDLE,
                                           localFolder);
-        emit mDiscountStateMachine->meaningfulInteraction();
+        emit meaningfulInteraction();
     }
     else
     {
         QmlDialogManager::instance()->openOnboardingDialog();
     }
 }
+
 void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 {
     if (appfinished || !megaApi->isLoggedIn())
@@ -5305,7 +5310,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 
     registerUserActivity();
-    mDiscountStateMachine->meaningfulInteraction();
+    meaningfulInteraction();
     if (AppState::instance()->getAppState() == AppState::FATAL_ERROR)
     {
         if (reason == QSystemTrayIcon::Trigger)
@@ -5357,7 +5362,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                     checkSystemTray();
                     createTrayIcon();
                     showInfoDialog();
-                    emit mDiscountStateMachine->meaningfulInteraction();
+                    emit meaningfulInteraction();
                 }
                 else
                 {
@@ -5499,7 +5504,7 @@ void MegaApplication::openSettings(int tab)
         mSettingsDialog->setUpdateAvailable(updateAvailable);
         connect(mSettingsDialog.data(), &SettingsDialog::userActivity, this, &MegaApplication::registerUserActivity);
 
-        emit mDiscountStateMachine->meaningfulInteraction();
+        emit meaningfulInteraction();
 
         DialogOpener::showDialog(mSettingsDialog);
         if (proxyOnly)
