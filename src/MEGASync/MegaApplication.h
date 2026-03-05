@@ -219,7 +219,7 @@ signals:
     void requestAppState(AppState::AppStates newAppState);
     void syncsDialogClosed();
     void languageChanged();
-    void onBoardingFinishedSignal();
+    void meaningfulInteraction();
 
 public slots:
     void updateTrayIcon();

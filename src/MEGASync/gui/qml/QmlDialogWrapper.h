@@ -3,7 +3,6 @@
 
 #include "DialogOpener.h"
 #include "megaapi.h"
-#include "MegaApplication.h"
 #include "QmlDialog.h"
 #include "QmlManager.h"
 #include "StatsEventHandler.h"

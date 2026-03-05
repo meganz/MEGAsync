@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QElapsedTimer>
 #include <QObject>
+#include <QPointer>
 #include <QStateMachine>
 #include <QTimer>
 
@@ -66,15 +67,22 @@ signals:
     void noBlockingWindow();
     void userActive();
     void requestUserDiscounts(bool force);
+    void externalDiscountDialogRequest();
+
+public slots:
+    void onDiscountButtonClicked();
+    void onMeaningfulInteraction();
 
 private:
     void build();
     void logState(QState* state);
     long long computeWaitingStateTimer();
+    static bool isOnboardingOpen();
 
     QElapsedTimer mElapsedTimeSinceAppStart;
     DiscountPolicy* mPolicy;
     QStateMachine mStateMachine;
+    QPointer<QObject> mOnBoardingDialog;
 
     // States
     QState* mCampaignInactive;
@@ -92,4 +100,7 @@ private:
     QState* mShown;
     TimedState* mDealGrabbed;
     TimedState* mCooldown;
+
+private slots:
+    void onOnboardingStarted();
 };

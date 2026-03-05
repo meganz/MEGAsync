@@ -54,7 +54,8 @@ public:
         DISCOUNT_PERCENTAGE,
         IS_HIGHLIGHTED,
         PRICE_BEFORE_TAX_ROLE,
-        MONTHLY_BASE_PRICE_ROLE
+        MONTHLY_BASE_PRICE_ROLE,
+        HAS_TAX
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -75,7 +76,7 @@ public:
             AccountBillingPlanData();
             AccountBillingPlanData(int64_t gbStorage,
                                    int64_t gbTransfer,
-                                   float priceAfterTax,
+                                   double priceAfterTax,
                                    double priceBeforeTax);
             ~AccountBillingPlanData() = default;
 
@@ -83,14 +84,20 @@ public:
 
             int64_t gBStorage() const;
             int64_t gBTransfer() const;
-            float priceAfterTax() const;
+            double priceAfterTax() const;
             double priceBeforeTax() const;
+            std::optional<DiscountInfo> discount() const;
+            bool hasDiscount() const;
+            void setDiscount(DiscountInfo discount);
+            bool hasTax() const;
 
         private:
             int64_t mGBStorage;
             int64_t mGBTransfer;
-            float mPriceAfterTax;
+            double mPriceAfterTax;
             double mPriceBeforeTax;
+            bool mHasTax = true;
+            std::optional<DiscountInfo> mDiscount = std::nullopt;
         };
 
         Data(int proLevel, const QString& name);
@@ -100,10 +107,11 @@ public:
         int proLevel() const;
         bool isRecommended() const;
         const QString& name() const;
-        const AccountBillingPlanData& monthlyData() const;
-        const AccountBillingPlanData& yearlyData() const;
-        std::optional<DiscountInfo> discount() const;
-        bool hasDiscount() const;
+        AccountBillingPlanData& monthlyData();
+        AccountBillingPlanData& yearlyData();
+        bool hasMonthlyDiscount() const;
+        bool hasYearlyDiscount() const;
+        int calculateYearlyDiscount() const;
 
     private:
         int mProLevel;
@@ -111,7 +119,6 @@ public:
         QString mName;
         AccountBillingPlanData mMonthlyData;
         AccountBillingPlanData mYearlyData;
-        std::optional<DiscountInfo> mDiscount = std::nullopt;
 
         friend class UpsellPlans;
         friend class UpsellController;
@@ -151,6 +158,8 @@ public:
 
     ViewMode getViewMode() const;
     bool isMonthly() const;
+    std::optional<Data::DiscountInfo>
+        getPlanDiscount(std::shared_ptr<UpsellPlans::Data> plan) const;
     bool isBillingCurrency() const;
     int getCurrentDiscount() const;
     QString getCurrencySymbol() const;
@@ -163,6 +172,7 @@ public:
     bool hasDiscounts() const;
     bool hasMonthlyDiscount() const;
     bool hasYearlyDiscount() const;
+    int getMaximumYearlyDiscount() const;
 signals:
     void viewModeChanged();
     void currencyChanged();

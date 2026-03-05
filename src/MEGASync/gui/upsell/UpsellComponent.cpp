@@ -9,7 +9,7 @@ static bool qmlRegistrationDone = false;
 
 UpsellComponent::UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode):
     QMLComponent(parent),
-    mController(std::make_shared<UpsellController>()),
+    mController(std::make_shared<UpsellController>(true, nullptr)),
     mModel(std::make_shared<UpsellModel>(mController))
 {
     registerQmlModules();

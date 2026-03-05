@@ -1,13 +1,14 @@
 #include "UpsellPlans.h"
 
+#include "Utilities.h"
+
+namespace
+{
+constexpr double DOUBLE_COMPARISON_EPSILON = 1e-5;
+}
 // ************************************************************************************************
 // * UpsellPlans
 // ************************************************************************************************
-namespace
-{
-constexpr int MONTH_PERIOD(1);
-constexpr int YEAR_PERIOD(12);
-}
 
 UpsellPlans::UpsellPlans(QObject* parent):
     QObject(parent),
@@ -135,6 +136,12 @@ bool UpsellPlans::isMonthly() const
     return mIsMonthly;
 }
 
+std::optional<UpsellPlans::Data::DiscountInfo>
+    UpsellPlans::getPlanDiscount(std::shared_ptr<UpsellPlans::Data> plan) const
+{
+    return mIsMonthly ? plan->monthlyData().discount() : plan->yearlyData().discount();
+}
+
 void UpsellPlans::setMonthly(bool monthly)
 {
     if (mIsMonthly != monthly)
@@ -199,9 +206,10 @@ bool UpsellPlans::hasDiscounts() const
 {
     return std::any_of(mPlans.begin(),
                        mPlans.end(),
-                       [](std::shared_ptr<Data> plan)
+                       [this](std::shared_ptr<Data> plan)
                        {
-                           return plan->mDiscount != std::nullopt;
+                           return mIsMonthly ? plan->hasMonthlyDiscount() :
+                                               plan->hasYearlyDiscount();
                        });
 }
 
@@ -211,8 +219,7 @@ bool UpsellPlans::hasMonthlyDiscount() const
                        mPlans.end(),
                        [](std::shared_ptr<Data> plan)
                        {
-                           return plan->mDiscount != std::nullopt &&
-                                  plan->mDiscount->months == MONTH_PERIOD;
+                           return plan->hasMonthlyDiscount();
                        });
 }
 
@@ -222,10 +229,26 @@ bool UpsellPlans::hasYearlyDiscount() const
                        mPlans.end(),
                        [](std::shared_ptr<Data> plan)
                        {
-                           return plan->mDiscount != std::nullopt &&
-                                  plan->mDiscount->months == YEAR_PERIOD;
+                           return plan->hasYearlyDiscount();
                        });
 }
+
+int UpsellPlans::getMaximumYearlyDiscount() const
+{
+    if (mPlans.empty())
+        return 0; // or throw, depending on your design
+
+    auto it =
+        std::max_element(mPlans.begin(),
+                         mPlans.end(),
+                         [](const std::shared_ptr<Data>& a, const std::shared_ptr<Data>& b)
+                         {
+                             return a->calculateYearlyDiscount() < b->calculateYearlyDiscount();
+                         });
+
+    return (*it)->calculateYearlyDiscount();
+}
+
 // ************************************************************************************************
 // * UpsellPlans::Data
 // ************************************************************************************************
@@ -257,9 +280,8 @@ QHash<int, QByteArray> UpsellPlans::Data::roleNames()
         {UpsellPlans::DISCOUNT_PERCENTAGE, "discountPercentage"},
         {UpsellPlans::IS_HIGHLIGHTED, "isHighlighted"},
         {UpsellPlans::PRICE_BEFORE_TAX_ROLE, "priceBeforeTax"},
-        {UpsellPlans::MONTHLY_BASE_PRICE_ROLE, "monthlyBasePrice"}
-
-    };
+        {UpsellPlans::MONTHLY_BASE_PRICE_ROLE, "monthlyBasePrice"},
+        {UpsellPlans::HAS_TAX, "hasTax"}};
 
     return roles;
 }
@@ -279,14 +301,46 @@ const QString& UpsellPlans::Data::name() const
     return mName;
 }
 
-const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::monthlyData() const
+UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::monthlyData()
 {
     return mMonthlyData;
 }
 
-const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData() const
+UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData()
 {
     return mYearlyData;
+}
+
+bool UpsellPlans::Data::hasMonthlyDiscount() const
+{
+    return mMonthlyData.hasDiscount();
+}
+
+bool UpsellPlans::Data::hasYearlyDiscount() const
+{
+    return mYearlyData.hasDiscount();
+}
+
+int UpsellPlans::Data::calculateYearlyDiscount() const
+{
+    if (mYearlyData.hasDiscount())
+    {
+        const auto dp = mYearlyData.discount()->percentage;
+        // return mMonthlyData.isValid() ? dp + ((2 * (100 - dp)) / 12) : dp; // Exact formula, do
+        // not use for
+        //  now because the webclient uses the following: softCeil(1-(1-16%)(1-dp%))
+        return mMonthlyData.isValid() ? Utilities::softCeil(100 - 0.84 * (100 - dp)) : dp;
+    }
+    else if (mMonthlyData.isValid() && mYearlyData.isValid())
+    {
+        constexpr double NUM_MONTHS_PER_PLAN(12.);
+        constexpr double PERCENTAGE(100.);
+
+        return static_cast<int>(PERCENTAGE -
+                                (mYearlyData.priceAfterTax() * PERCENTAGE) /
+                                    (mMonthlyData.priceAfterTax() * NUM_MONTHS_PER_PLAN));
+    }
+    return 0;
 }
 
 void UpsellPlans::Data::setProLevel(int newProLevel)
@@ -314,21 +368,6 @@ void UpsellPlans::Data::setMonthlyData(const AccountBillingPlanData& newMonthlyD
     mMonthlyData = newMonthlyData;
 }
 
-void UpsellPlans::Data::setDiscount(UpsellPlans::Data::DiscountInfo discount)
-{
-    mDiscount = discount;
-}
-
-std::optional<UpsellPlans::Data::DiscountInfo> UpsellPlans::Data::discount() const
-{
-    return mDiscount;
-}
-
-bool UpsellPlans::Data::hasDiscount() const
-{
-    return mDiscount != std::nullopt;
-}
-
 // ************************************************************************************************
 // * UpsellPlans::Data::AccountBillingPlanData
 // ************************************************************************************************
@@ -336,23 +375,24 @@ bool UpsellPlans::Data::hasDiscount() const
 UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData():
     mGBStorage(-1),
     mGBTransfer(-1),
-    mPriceAfterTax(-1.0f),
-    mPriceBeforeTax(-1.0)
+    mPriceAfterTax(-1.),
+    mPriceBeforeTax(-1.)
 {}
 
 UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int64_t gbStorage,
                                                                   int64_t gbTransfer,
-                                                                  float priceAfterTax,
+                                                                  double priceAfterTax,
                                                                   double priceBeforeTax):
     mGBStorage(gbStorage),
     mGBTransfer(gbTransfer),
     mPriceAfterTax(priceAfterTax),
-    mPriceBeforeTax(priceBeforeTax)
+    mPriceBeforeTax(priceBeforeTax),
+    mHasTax(std::abs(mPriceBeforeTax - mPriceAfterTax) > ::DOUBLE_COMPARISON_EPSILON)
 {}
 
 bool UpsellPlans::Data::AccountBillingPlanData::isValid() const
 {
-    return mGBStorage != -1 && mGBTransfer != -1 && mPriceAfterTax != -1.0f;
+    return mGBStorage != -1 && mGBTransfer != -1 && mPriceAfterTax != -1.;
 }
 
 int64_t UpsellPlans::Data::AccountBillingPlanData::gBStorage() const
@@ -365,7 +405,7 @@ int64_t UpsellPlans::Data::AccountBillingPlanData::gBTransfer() const
     return mGBTransfer;
 }
 
-float UpsellPlans::Data::AccountBillingPlanData::priceAfterTax() const
+double UpsellPlans::Data::AccountBillingPlanData::priceAfterTax() const
 {
     return mPriceAfterTax;
 }
@@ -375,6 +415,27 @@ double UpsellPlans::Data::AccountBillingPlanData::priceBeforeTax() const
     return mPriceBeforeTax;
 }
 
+std::optional<UpsellPlans::Data::DiscountInfo>
+    UpsellPlans::Data::AccountBillingPlanData::discount() const
+{
+    return mDiscount;
+}
+
+bool UpsellPlans::Data::AccountBillingPlanData::hasDiscount() const
+{
+    return mDiscount.has_value();
+}
+
+void UpsellPlans::Data::AccountBillingPlanData::setDiscount(
+    UpsellPlans::Data::DiscountInfo discount)
+{
+    mDiscount = discount;
+}
+
+bool UpsellPlans::Data::AccountBillingPlanData::hasTax() const
+{
+    return mHasTax;
+}
 // ************************************************************************************************
 // * UpsellPlans::CurrencyData
 // ************************************************************************************************

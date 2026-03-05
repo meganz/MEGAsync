@@ -75,7 +75,7 @@ FocusScope {
                     text: ColorTheme.textInfo
                 }
                 text: UpsellStrings.billedSaveUpText.arg(upsellPlansAccess.currentDiscount)
-                visible: upsellPlansAccess.currentDiscount > 0 && !upsellPlansAccess.onlyProFlexiAvailable
+                visible: upsellPlansAccess.monthly && upsellPlansAccess.currentDiscount > 0 && !upsellPlansAccess.onlyProFlexiAvailable
             }
 
         }
@@ -83,7 +83,7 @@ FocusScope {
         Item {
             id: plansItem
 
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.left: parent.left
             width: rowLayout.width
             height: rowLayout.height
 
@@ -129,7 +129,7 @@ FocusScope {
                         monthly: upsellPlansAccess.monthly
                         billingCurrency: upsellPlansAccess.billingCurrency
                         currencyName: upsellPlansAccess.currencyName
-
+                        hasTax: model.hasTax
                         onBuyButtonClicked: {
                             upsellComponentAccess.buyButtonClicked(index);
                         }

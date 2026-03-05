@@ -2230,8 +2230,16 @@ QString Utilities::toPrice(double value, const QString& currencySymbol, bool sho
     {
         price += QLatin1Char('*');
     }
-
     return price;
+}
+
+int Utilities::softCeil(double value)
+{
+    // softCeil(number) {
+    //     'use strict';
+    //     return Math.ceil(Math.round(number * 10) / 10);
+    // }
+    return static_cast<int>(std::ceil(std::round(value * 10.) / 10.));
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)

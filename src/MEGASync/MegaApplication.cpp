@@ -629,6 +629,14 @@ void MegaApplication::initialize()
     QmlManager::instance()->setRootContextProperty(mStatusController);
     AccountDetailsManager::instance()->init(megaApi);
 
+    connect(AccountDetailsManager::instance(),
+            &AccountDetailsManager::accountDetailsUpdated,
+            this,
+            [this]
+            {
+                requestUserDiscounts(true);
+            });
+
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi, mFolderTransferListener);
@@ -896,7 +904,9 @@ void MegaApplication::updateTrayIcon()
         {
             tooltipState = QCoreApplication::translate("InfoDialog", "%1% off %2")
                                .arg(discountInfo->getPercentageDiscount())
-                               .arg(mDiscountPolicy->getPlanName());
+                               .arg(Utilities::getReadablePlanFromId(
+                                   mDiscountPolicy->getDiscountInfo()->getAccountLevel(),
+                                   false));
         }
         animation = TrayIconManager::Animation::Promo;
     }
@@ -1148,12 +1158,13 @@ void MegaApplication::start()
 
     mDiscountPolicy = new DiscountPolicy(this);
 
-    connect(mDiscountPolicy,
-            &DiscountPolicy::planNameReady,
-            this,
-            &MegaApplication::updateTrayIcon);
-
     mDiscountStateMachine = new DiscountStateMachine(mDiscountPolicy);
+
+    connect(infoDialog,
+            &InfoDialog::requestShowDiscountDialog,
+            mDiscountStateMachine,
+            &DiscountStateMachine::onDiscountButtonClicked,
+            Qt::UniqueConnection);
 
     connect(mDiscountStateMachine,
             &DiscountStateMachine::requestShowDialog,
@@ -1182,10 +1193,6 @@ void MegaApplication::start()
                                  });
             });
 
-    connect(this,
-            &MegaApplication::onBoardingFinishedSignal,
-            mDiscountStateMachine,
-            &DiscountStateMachine::onboardingFinished);
     connect(mDiscountStateMachine,
             &DiscountStateMachine::updateDiscountCampaignSignaling,
             this,
@@ -1194,6 +1201,10 @@ void MegaApplication::start()
             &DiscountStateMachine::requestUserDiscounts,
             this,
             &MegaApplication::requestUserDiscounts);
+    connect(this,
+            &MegaApplication::meaningfulInteraction,
+            mDiscountStateMachine,
+            &DiscountStateMachine::onMeaningfulInteraction);
 
     mDiscountStateMachine->start();
 }
@@ -1219,8 +1230,6 @@ void MegaApplication::onboardingFinished(bool fastLogin, bool comesFromOnboardin
     {
         return;
     }
-
-    emit onBoardingFinishedSignal();
 
     registerUserActivity();
     pauseTransfers(paused);
@@ -1742,7 +1751,7 @@ void MegaApplication::createTransferManagerDialog()
     connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     scanStageController.updateReference(mTransferManager);
 
-    emit mDiscountStateMachine->meaningfulInteraction();
+    emit meaningfulInteraction();
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -2431,7 +2440,7 @@ void MegaApplication::showInfoDialog()
                                                            true,
                                                            USERSTATS_SHOWMAINDIALOG);
     }
-    emit mDiscountStateMachine->meaningfulInteraction();
+    emit meaningfulInteraction();
 }
 
 void MegaApplication::showInfoDialogNotifications()
@@ -2517,7 +2526,8 @@ void MegaApplication::createInfoDialog()
     connect(infoDialog,
             &InfoDialog::requestShowDiscountDialog,
             mDiscountStateMachine,
-            &DiscountStateMachine::requestShowDialog);
+            &DiscountStateMachine::onDiscountButtonClicked,
+            Qt::UniqueConnection);
     infoDialog->setDiscountPolicy(mDiscountPolicy);
 }
 
@@ -4470,11 +4480,13 @@ void MegaApplication::processDownloads()
     {
         showInfoDialogIfHTTPServerSender();
         processDownloadQueue(preferences->downloadFolder());
+        emit meaningfulInteraction();
         return;
     }
 
     auto downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
     DialogOpener::showDialog<DownloadFromMegaDialog, TransferManager>(downloadFolderSelector, false, this, &MegaApplication::onDownloadFromMegaFinished);
+    emit meaningfulInteraction();
 }
 
 bool MegaApplication::hasDefaultDownloadFolder() const
@@ -4793,7 +4805,6 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     {
         return;
     }
-    emit mDiscountStateMachine->meaningfulInteraction();
     //Append the list of files to the upload queue, but avoid duplicates
     std::for_each(newUploadQueue.begin(), newUploadQueue.end(), [&](const QString &str) {
         if (!uploadQueue.contains(str)) {
@@ -4801,6 +4812,7 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
         }
     });
     processUploads();
+    emit meaningfulInteraction();
 }
 
 void MegaApplication::shellBackup(QStringList newBackupList)
@@ -4813,7 +4825,7 @@ void MegaApplication::shellBackup(QStringList newBackupList)
     {
         CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
                                               newBackupList);
-        emit mDiscountStateMachine->meaningfulInteraction();
+        emit meaningfulInteraction();
     }
     else
     {
@@ -4832,13 +4844,14 @@ void MegaApplication::shellSync(QString localFolder)
         CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
                                           ::mega::INVALID_HANDLE,
                                           localFolder);
-        emit mDiscountStateMachine->meaningfulInteraction();
+        emit meaningfulInteraction();
     }
     else
     {
         QmlDialogManager::instance()->openOnboardingDialog();
     }
 }
+
 void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 {
     if (appfinished || !megaApi->isLoggedIn())
@@ -5291,7 +5304,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 
     registerUserActivity();
-    mDiscountStateMachine->meaningfulInteraction();
+    meaningfulInteraction();
     if (AppState::instance()->getAppState() == AppState::FATAL_ERROR)
     {
         if (reason == QSystemTrayIcon::Trigger)
@@ -5343,7 +5356,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                     checkSystemTray();
                     createTrayIcon();
                     showInfoDialog();
-                    emit mDiscountStateMachine->meaningfulInteraction();
+                    emit meaningfulInteraction();
                 }
                 else
                 {
@@ -5485,7 +5498,7 @@ void MegaApplication::openSettings(int tab)
         mSettingsDialog->setUpdateAvailable(updateAvailable);
         connect(mSettingsDialog.data(), &SettingsDialog::userActivity, this, &MegaApplication::registerUserActivity);
 
-        emit mDiscountStateMachine->meaningfulInteraction();
+        emit meaningfulInteraction();
 
         DialogOpener::showDialog(mSettingsDialog);
         if (proxyOnly)
@@ -6384,7 +6397,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
             else
             {
-                mDiscountPolicy->campaignDeactivated();
+                mDiscountPolicy->deactivateCampaign();
             }
             checkOverStorageStates();
         }
@@ -6396,17 +6409,21 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (auto discountInfo = request->getMegaDiscountCodeInfo())
             {
+                if (infoDialog)
+                {
+                    infoDialog->setDiscountPolicy(mDiscountPolicy);
+                }
                 mDiscountPolicy->activateCampaign(
                     std::shared_ptr<MegaDiscountCodeInfo>(discountInfo->copy()));
             }
             else
             {
-                mDiscountPolicy->campaignDeactivated();
+                mDiscountPolicy->deactivateCampaign();
             }
         }
         else
         {
-            mDiscountPolicy->campaignDeactivated();
+            mDiscountPolicy->deactivateCampaign();
         }
 
         break;

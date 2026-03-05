@@ -3,24 +3,27 @@
 #include "DialogOpener.h"
 #include "DiscountPolicy.h"
 #include "Onboarding.h"
-#include "OnboardingQmlDialog.h"
 #include "Platform.h"
 #include "QmlDialogManager.h"
+#include "QmlDialogWrapper.h"
 
 #include <QAbstractTransition>
 #include <QDebug>
 #include <QState>
 #include <QTimer>
 
+#include <algorithm>
 #include <functional>
 
 constexpr long long TIMER_DISABLED = -1;
 constexpr long long REQUEST_DISCOUNT_AFTER_DEAL_GRABBED_MS = 1000 * 60 * 15; // 15 minutes
+constexpr long long SHOWABLE_TIMER_MS = 1000 * 5; // 5 seconds
+constexpr long long MEANINGFUL_INTERACTION_DELAY_MS = 300;
 
 // Helpers
 
 // Sets targetTimedState duration for the *next entry* when the transition fires.
-// durationProvider returns the duration in ms (-1 disables).
+// durationProvider returns the duration in ms (TIMER_DISABLED [-1] disables).
 inline void setTargetStateTimerDurationOnTransition(QAbstractTransition* transition,
                                                     std::function<long long()> durationProvider)
 {
@@ -38,11 +41,6 @@ inline void setTargetStateTimerDurationOnTransition(QAbstractTransition* transit
                              target->setAssignedDurationMs(ms);
                          });
     }
-}
-
-bool isOnboarding()
-{
-    return DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>().get();
 }
 
 // TimedState class
@@ -120,26 +118,14 @@ void TimedState::setNextStep()
 
 DiscountStateMachine::DiscountStateMachine(DiscountPolicy* policy, QObject* parent):
     QObject(parent),
-    mPolicy(policy)
+    mPolicy(policy),
+    mOnBoardingDialog(nullptr)
 {
-    // connect(QmlDialogManager::instance().get(),
-    //         &QmlDialogManager::openOnboardingDialogSignal,
-    //         this,
-    //         [this]
-    //         {
-    //             // Setup connections to the Onboarding dialog
-    //             if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-    //             {
-    //                 // connect(dialog->getDialog()->wrapper(),
-    //                 //         &OnboardingQmlDialog::onboardingDialogLostFocus,
-    //                 //         this,
-    //                 //         &DiscountStateMachine::onboardingLostFocus);
-    //                 // connect(dialog->getDialog(),
-    //                 //         &OnboardingQmlDialog::onboardingDialogGainedFocus,
-    //                 //         this,
-    //                 //         &DiscountStateMachine::onboardingGainedFocus);
-    //             }
-    //         });
+    connect(this,
+            &DiscountStateMachine::onboardingStarted,
+            this,
+            &DiscountStateMachine::onOnboardingStarted,
+            Qt::UniqueConnection);
 
     // Connect to onboarding start
     connect(QmlDialogManager::instance().get(),
@@ -147,7 +133,6 @@ DiscountStateMachine::DiscountStateMachine(DiscountPolicy* policy, QObject* pare
             this,
             &DiscountStateMachine::onboardingStarted,
             Qt::UniqueConnection);
-
     build();
 }
 
@@ -163,9 +148,20 @@ bool DiscountStateMachine::isInCooldownState() const
 
 bool DiscountStateMachine::showTrayIconAnimation() const
 {
-    return mStateMachine.configuration().contains(mCampaignActive) &&
-           !(mStateMachine.configuration().contains(mShown) ||
-             mStateMachine.configuration().contains(mShowing));
+    return mStateMachine.configuration().contains(mWaiting) ||
+           mStateMachine.configuration().contains(mShowable);
+}
+
+void DiscountStateMachine::onDiscountButtonClicked()
+{
+    emit externalDiscountDialogRequest();
+}
+
+void DiscountStateMachine::onMeaningfulInteraction()
+{
+    QTimer::singleShot(MEANINGFUL_INTERACTION_DELAY_MS,
+                       this,
+                       &DiscountStateMachine::meaningfulInteraction);
 }
 
 void DiscountStateMachine::build()
@@ -208,7 +204,7 @@ void DiscountStateMachine::build()
     // ++ Showable
     mShowable = new TimedState(QState::ParallelStates, mCampaignActive);
     mShowable->setObjectName(QLatin1String("Showable"));
-    mShowable->setAssignedDurationMs(Preferences::USER_INACTIVITY_MS);
+    mShowable->setAssignedDurationMs(SHOWABLE_TIMER_MS);
 
     // *** WaitingForNoBlocking
     auto* region1 = new QState(mShowable);
@@ -253,6 +249,17 @@ void DiscountStateMachine::build()
     mCampaignInactive->addTransition(this, &DiscountStateMachine::cooldown, mCooldown);
 
     // Idle
+    connect(mIdle,
+            &QState::entered,
+            this,
+            [this]
+            {
+                // If the onboarding is open, we want to go to the right state
+                if (isOnboardingOpen())
+                {
+                    emit onboardingStarted();
+                }
+            });
     mIdle->addTransition(this, &DiscountStateMachine::onboardingStarted, mInactiveOnboarding);
     QAbstractTransition* transition =
         mIdle->addTransition(this, &DiscountStateMachine::campaignActive, mWaiting);
@@ -294,13 +301,7 @@ void DiscountStateMachine::build()
                 const auto msecsToExpiry =
                     QDateTime::currentDateTimeUtc().msecsTo(mPolicy->getExpiryDateUtc());
                 // Set to 0 to immediately exit if no time left
-                mCampaignActive->setAssignedDurationMs(std::max(msecsToExpiry, 0ll));
-
-                // If the onboarding is open, we want to go to the right state
-                if (isOnboarding())
-                {
-                    emit onboardingStarted();
-                }
+                mCampaignActive->setAssignedDurationMs(std::max(msecsToExpiry, 0LL));
 
                 // Check if we are in the cooldown period or not
                 auto coolDownEnd = mPolicy->getDialogLastShownDateUtc().addMSecs(
@@ -317,15 +318,6 @@ void DiscountStateMachine::build()
                 }
             });
 
-    connect(mCampaignActive,
-            &QState::entered,
-            this,
-            &DiscountStateMachine::updateDiscountCampaignSignaling);
-    connect(mCampaignActive,
-            &QState::exited,
-            this,
-            &DiscountStateMachine::updateDiscountCampaignSignaling);
-
     // Waiting state
     mWaiting->addTransition(this, &DiscountStateMachine::onboardingStarted, mActiveOnboarding);
     mWaiting->addTimeoutTransition(mShowable);
@@ -335,6 +327,7 @@ void DiscountStateMachine::build()
                                                     &DiscountStateMachine::meaningfulInteraction,
                                                     mShowable);
     mWaitingForOverquota->addTransition(this, &DiscountStateMachine::enterOverquota, mShowable);
+    mWaiting->addTransition(this, &DiscountStateMachine::externalDiscountDialogRequest, mShowing);
 
     // Campaign Active Onboarding
     mActiveOnboarding->addTransition(this, &DiscountStateMachine::onboardingFinished, mShowable);
@@ -351,11 +344,8 @@ void DiscountStateMachine::build()
                                             });
     // Showable states
     mShowable->addTimeoutTransition(mShowable);
-    transition = mShowable->addTransition(mShowable, &QState::finished, mShowing);
-    connect(transition,
-            &QAbstractTransition::triggered,
-            this,
-            &DiscountStateMachine::requestShowDialog);
+    mShowable->addTransition(this, &DiscountStateMachine::externalDiscountDialogRequest, mShowing);
+    mShowable->addTransition(mShowable, &QState::finished, mShowing);
 
     mWaitingForNoBlocking->addTransition(this,
                                          &DiscountStateMachine::noBlockingWindow,
@@ -365,7 +355,7 @@ void DiscountStateMachine::build()
             this,
             [this]
             {
-                if (!DialogOpener::anyVisibleAndActiveDialogs())
+                if (!DialogOpener::isAnyDialogVisible())
                 {
                     emit DiscountStateMachine::noBlockingWindow();
                 }
@@ -384,10 +374,7 @@ void DiscountStateMachine::build()
             });
 
     // Showing state
-    connect(mShowing,
-            &QState::entered,
-            this,
-            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mShowing, &QState::entered, this, &DiscountStateMachine::requestShowDialog);
     transition = mShowing->addTransition(this, &DiscountStateMachine::discountDismissed, mCooldown);
     setTargetStateTimerDurationOnTransition(transition,
                                             []
@@ -403,8 +390,7 @@ void DiscountStateMachine::build()
                                             });
 
     // Shown states
-    mShown->addTransition(this, &DiscountStateMachine::requestShowDialog, mShowing);
-    connect(mShown, &QState::exited, this, &DiscountStateMachine::updateDiscountCampaignSignaling);
+    mShown->addTransition(this, &DiscountStateMachine::externalDiscountDialogRequest, mShowing);
 
     // Cooldown
     transition = mCooldown->addTimeoutTransition(mWaiting);
@@ -415,7 +401,7 @@ void DiscountStateMachine::build()
                                             });
 
     // Grabbed deal
-    // Here we want to wait for somr time before requesting discounts again.
+    // Here we want to wait for some time before requesting discounts again.
     transition = mDealGrabbed->addTimeoutTransition(mCooldown);
     setTargetStateTimerDurationOnTransition(transition,
                                             []
@@ -429,6 +415,25 @@ void DiscountStateMachine::build()
             {
                 emit requestUserDiscounts(true);
             });
+
+    // Update signaling on state changes -----------------------------------------------------------
+    connect(mCampaignActive,
+            &QState::exited,
+            this,
+            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mWaiting,
+            &QState::entered,
+            this,
+            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mShowable,
+            &QState::entered,
+            this,
+            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mShowing,
+            &QState::entered,
+            this,
+            &DiscountStateMachine::updateDiscountCampaignSignaling);
+    connect(mShown, &QState::entered, this, &DiscountStateMachine::updateDiscountCampaignSignaling);
 
     // Log state changes ---------------------------------------------------------------------------
     logState(mCampaignInactive);
@@ -494,11 +499,33 @@ void DiscountStateMachine::logState(QState* state)
 
 long long DiscountStateMachine::computeWaitingStateTimer()
 {
-    // Here we want to wait either the start delay
-    // remaining time, of the fallback time if the start
-    // delay has been reached.
+    // Here we want to wait either for the start delay remaining time, or for the fallback time if
+    // the start delay has been reached.
     auto waitingDuration =
         Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS - mElapsedTimeSinceAppStart.elapsed();
     return waitingDuration > 0 ? waitingDuration :
                                  Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
+}
+
+bool DiscountStateMachine::isOnboardingOpen()
+{
+    return DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>().get() != nullptr;
+}
+
+void DiscountStateMachine::onOnboardingStarted()
+{
+    auto onboardingDialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>();
+    if (onboardingDialog)
+    {
+        const auto newOnboardingDialog = qobject_cast<QObject*>(onboardingDialog->getDialog());
+        if (newOnboardingDialog != mOnBoardingDialog)
+        {
+            mOnBoardingDialog = newOnboardingDialog;
+            connect(mOnBoardingDialog,
+                    &QObject::destroyed,
+                    this,
+                    &DiscountStateMachine::onboardingFinished,
+                    Qt::UniqueConnection);
+        }
+    }
 }

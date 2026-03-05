@@ -48,6 +48,7 @@ Rectangle {
     property int discountPercentage: 0
     property int discountMonths: 0
     property bool isHighlighted: false
+    property bool hasTax: true
 
 
     property string billedText: {
@@ -155,6 +156,7 @@ Rectangle {
                 sizes: Chips.SmallSizes {}
                 text: getChipText()
                 visible: true
+                height: 20
                 opacity: (root.recommended || root.currentPlan || (root.hasDiscount && root.enabled)) ? 1.0 : 0.0
                 colors {
                     background: getChipBackgroundColor()
@@ -174,11 +176,11 @@ Rectangle {
             SecondaryText {
                 id: priceTextWithDiscount
 
+                visible: true // // Changing Visibility should be done first to ensure values are updated
                 lineHeight: root.discountLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: root.hasDiscount && root.monthlyBasePrice.length ? root.monthlyBasePrice :UpsellStrings.only
-                font.strikeout: root.hasDiscount
-                visible: true
+                text: root.hasDiscount && root.monthlyBasePrice.length ? root.monthlyBasePrice : UpsellStrings.only
+                font.strikeout: priceTextWithDiscount.text !== UpsellStrings.only
                 width: parent.width
             }
 
@@ -193,8 +195,8 @@ Rectangle {
                 lineHeight: root.priceLineHeight
                 lineHeightMode: Text.FixedHeight
                 text: root.priceBeforeTax
-                visible: root.enabled && !root.showOnlyProFlexi
                 width: parent.width
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
 
             SecondaryText {
@@ -202,9 +204,9 @@ Rectangle {
 
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
-                visible: root.enabled && !root.showOnlyProFlexi
-                text: root.billedText
+                rawText: root.billedText
                 width: parent.width
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
 
             SecondaryText {
@@ -212,10 +214,11 @@ Rectangle {
 
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: UpsellStrings.pricePerMonthAfterTax.arg(priceAfterTax)
+                rawText: UpsellStrings.pricePerMonthAfterTax.arg(root.priceAfterTax)
                 font.weight: Font.DemiBold
-                visible: root.enabled && !root.showOnlyProFlexi
                 width: parent.width
+                enabled: root.enabled && !root.showOnlyProFlexi
+                visible: root.hasTax
             }
         }
 

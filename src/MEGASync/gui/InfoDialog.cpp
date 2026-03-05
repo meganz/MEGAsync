@@ -362,10 +362,7 @@ void InfoDialog::updateUsageAndAccountType()
 {
     setUsage();
     setAccountType(mPreferences->accountType());
-
-    const QuotaState quotaState = MegaSyncApp->getTransferQuota()->quotaState();
-    const bool isTransferOverquota = (quotaState != QuotaState::OK);
-    ui->bUpgrade->setVisible(Utilities::shouldDisplayUpgradeButton(isTransferOverquota));
+    updateUpgradeButtonState();
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
@@ -420,7 +417,7 @@ void InfoDialog::createUpsellController()
 {
     if (!mUpsellController)
     {
-        mUpsellController = std::make_unique<UpsellController>(nullptr);
+        mUpsellController = std::make_unique<UpsellController>(true, nullptr);
         mUpsellController->requestPricingData();
     }
 }
@@ -1868,7 +1865,9 @@ void InfoDialog::updateUpgradeButtonState()
     {
         ui->bUpgrade->setText(tr("%1% off %2")
                                   .arg(mDiscountPolicy->getDiscountInfo()->getPercentageDiscount())
-                                  .arg(mDiscountPolicy->getPlanName()));
+                                  .arg(Utilities::getReadablePlanFromId(
+                                      mDiscountPolicy->getDiscountInfo()->getAccountLevel(),
+                                      false)));
     }
     else
     {
@@ -1879,21 +1878,19 @@ void InfoDialog::updateUpgradeButtonState()
 
 void InfoDialog::setDiscountPolicy(QPointer<DiscountPolicy> policy)
 {
-    mDiscountPolicy = policy;
-    if (!mDiscountPolicy.isNull())
+    if (!policy.isNull())
     {
+        mDiscountPolicy = policy;
         connect(mDiscountPolicy,
                 &DiscountPolicy::campaignActivated,
                 this,
-                &InfoDialog::updateUpgradeButtonState);
+                &InfoDialog::updateUpgradeButtonState,
+                Qt::UniqueConnection);
         connect(mDiscountPolicy,
                 &DiscountPolicy::campaignDeactivated,
                 this,
-                &InfoDialog::updateUpgradeButtonState);
-        connect(mDiscountPolicy,
-                &DiscountPolicy::planNameReady,
-                this,
-                &InfoDialog::updateUpgradeButtonState);
+                &InfoDialog::updateUpgradeButtonState,
+                Qt::UniqueConnection);
         updateUpgradeButtonText();
     }
 }

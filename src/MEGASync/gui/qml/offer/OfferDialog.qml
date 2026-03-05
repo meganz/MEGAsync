@@ -12,6 +12,12 @@ import OfferComponent 1.0
 QmlDialog {
     id: window
 
+    LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
+    LayoutMirroring.childrenInherit: true
+
+    readonly property bool mirrored: LayoutMirroring.enabled
+    readonly property int textAlignment: mirrored ? Text.AlignRight : Text.AlignLeft
+
     readonly property int defaultIconSize: 16
     readonly property int dialogWidth: 640
     readonly property int dialogHeight: 730
@@ -28,7 +34,8 @@ QmlDialog {
         function onDataUpdated() {
             productsRepeater.model = offerComponentAccess.getPlanFeatures();
             taxText.text = OfferStrings.priceDisclaimer(
-                        offerComponentAccess.localCurrencyIsBillingCurrency());
+                        offerComponentAccess.localCurrencyIsBillingCurrency(),
+                        offerComponentAccess.hasTax);
         }
     }
 
@@ -101,6 +108,7 @@ QmlDialog {
                                 font.bold: true
                                 color: ColorTheme.textPrimary
                                 verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                             Text {
@@ -117,6 +125,7 @@ QmlDialog {
                                 lineHeight: 24
                                 lineHeightMode: Text.FixedHeight
                                 color:  ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                             }
                         }
                     }
@@ -139,6 +148,7 @@ QmlDialog {
                                 lineHeight: 20
                                 lineHeightMode: Text.FixedHeight
                                 color: ColorTheme.textSecondary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                             Text {
@@ -152,6 +162,7 @@ QmlDialog {
                                 lineHeight: 44
                                 lineHeightMode: Text.FixedHeight
                                 color: ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
                             }
@@ -164,6 +175,7 @@ QmlDialog {
                                 lineHeight: 20
                                 lineHeightMode: Text.FixedHeight
                                 color: ColorTheme.textSecondary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                         }
@@ -183,24 +195,28 @@ QmlDialog {
                                 id: storageText
 
                                 width: parent.width
+                                visible: offerComponentAccess.storage.length > 0
                                 text: OfferStrings.storageAmount.arg(offerComponentAccess.storage)
                                 font.pixelSize: 16
                                 lineHeight: 24
                                 lineHeightMode: Text.FixedHeight
                                 font.weight: Font.Bold
                                 color: ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                             Text {
                                 id: transferText
 
                                 width: parent.width
+                                visible: offerComponentAccess.transfer.length > 0
                                 text:  OfferStrings.transferAmount.arg(offerComponentAccess.transfer);
                                 font.pixelSize: 16
                                 lineHeight: 24
                                 lineHeightMode: Text.FixedHeight
                                 font.weight: Font.Bold
                                 color:  ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                                 wrapMode: Text.WordWrap
                             }
                         }
@@ -260,12 +276,14 @@ QmlDialog {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width
                             text: OfferStrings.priceDisclaimer(
-                                      offerComponentAccess.localCurrencyIsBillingCurrency())
+                                      offerComponentAccess.localCurrencyIsBillingCurrency(),
+                                      offerComponentAccess.hasTax)
                             font.pixelSize: 12
                             lineHeight: 18
                             lineHeightMode: Text.FixedHeight
 
                             color: ColorTheme.textSecondary
+                            horizontalAlignment: window.textAlignment
                             elide: Text.ElideRight
                         }
                     }
@@ -293,6 +311,7 @@ QmlDialog {
                     id: timeUnitDelegate
                     RowLayout {
                         spacing: 4
+                        LayoutMirroring.enabled: false
                         Text {
                             text: modelData.value.toString().padStart(2, "0")
                             font.pixelSize: 32
@@ -333,11 +352,12 @@ QmlDialog {
                                 lineHeightMode: Text.FixedHeight
                                 font.weight: Font.DemiBold
                                 color: ColorTheme.textPrimary
+                                horizontalAlignment: window.textAlignment
                             }
 
                             Row {
                                 spacing: 16
-
+                                layoutDirection: Qt.application.layoutDirection
                                 Repeater {
                                     model: [
                                         { value: offerComponentAccess.days,    label: OfferStrings.daysLabel(offerComponentAccess.days) },

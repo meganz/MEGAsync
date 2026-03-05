@@ -37,9 +37,14 @@ QtObject {
         return str
     }
 
-    function priceDisclaimer(localCurrencyIsBillingCurrency){
-         return qsTr("*%1").arg(localCurrencyIsBillingCurrency ?
-                                  taxDisclaimer
-                                  : qsTr("%1 %2").arg(currencyDisclaimer).arg(taxDisclaimer))
+    function priceDisclaimer(localCurrencyIsBillingCurrency, hasTax) {
+        if (localCurrencyIsBillingCurrency && hasTax) {
+            return qsTr("*%1").arg(taxDisclaimer)
+        } else if (!localCurrencyIsBillingCurrency && hasTax) {
+            return qsTr("*%1").arg(qsTr("%1 %2").arg(currencyDisclaimer).arg(taxDisclaimer))
+        } else if (!localCurrencyIsBillingCurrency && !hasTax) {
+            return qsTr("*%1").arg(currencyDisclaimer)
+        }
+        return ""
     }
 }

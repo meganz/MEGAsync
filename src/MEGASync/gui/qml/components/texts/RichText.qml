@@ -97,7 +97,7 @@ Text {
 
             // truly corner case :-) link is located on the edge of the text, last line & end of line.
             if (found && !closed) {
-                linkCoords.width = root.width - linkCoords.xi;
+                linkCoords.width = root.width - linkCoords.x;
                 linkCoordsList.push(linkCoords);
             }
 
