@@ -618,8 +618,6 @@ void UpsellController::updatePlans()
         auto plan(mPlans->getPlan(row));
         plan->setRecommended(true);
         mPlans->setCurrentDiscount(mPlans->getMaximumYearlyDiscount());
-
-        // updatePlansAt(plan, row);
     }
 }
 

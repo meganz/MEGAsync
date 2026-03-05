@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QElapsedTimer>
 #include <QObject>
+#include <QPointer>
 #include <QStateMachine>
 #include <QTimer>
 
@@ -81,6 +82,7 @@ private:
     QElapsedTimer mElapsedTimeSinceAppStart;
     DiscountPolicy* mPolicy;
     QStateMachine mStateMachine;
+    QPointer<QObject> mOnBoardingDialog;
 
     // States
     QState* mCampaignInactive;

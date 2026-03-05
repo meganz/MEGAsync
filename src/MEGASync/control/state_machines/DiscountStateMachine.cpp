@@ -118,7 +118,8 @@ void TimedState::setNextStep()
 
 DiscountStateMachine::DiscountStateMachine(DiscountPolicy* policy, QObject* parent):
     QObject(parent),
-    mPolicy(policy)
+    mPolicy(policy),
+    mOnBoardingDialog(nullptr)
 {
     connect(this,
             &DiscountStateMachine::onboardingStarted,
@@ -514,9 +515,17 @@ bool DiscountStateMachine::isOnboardingOpen()
 void DiscountStateMachine::onOnboardingStarted()
 {
     auto onboardingDialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>();
-    connect(onboardingDialog->getDialog(),
-            &QmlDialogWrapper<Onboarding>::destroyed,
-            this,
-            &DiscountStateMachine::onboardingFinished,
-            Qt::UniqueConnection);
+    if (onboardingDialog)
+    {
+        const auto newOnboardingDialog = qobject_cast<QObject*>(onboardingDialog->getDialog());
+        if (newOnboardingDialog != mOnBoardingDialog)
+        {
+            mOnBoardingDialog = newOnboardingDialog;
+            connect(mOnBoardingDialog,
+                    &QObject::destroyed,
+                    this,
+                    &DiscountStateMachine::onboardingFinished,
+                    Qt::UniqueConnection);
+        }
+    }
 }
