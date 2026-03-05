@@ -2386,7 +2386,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>%1% off %2</source>
         <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خصم %1% على %2</translation>
     </message>
     <message>
         <source>Add sync</source>
@@ -4213,7 +4213,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>يتعذر إنشاء نسخة احتياطية لأن الجهاز الذي تقوم بنسخه لا يحتوي على اسم. قم بتسمية جهازك ثم حاول مرة أخرى. إذا استمرت المشكلة، تواصل مع الدعم.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -5184,7 +5184,7 @@ Enter a different name</source>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>المجلد فارغ</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5493,74 +5493,122 @@ Enter a different name</source>
 <context>
     <name>OfferStrings</name>
     <message>
+        <source>%1 %2</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
+        <translation>%1 %2</translation>
+    </message>
+    <message>
         <source>%1 of storage</source>
         <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 من مساحة تخزين</translation>
     </message>
     <message>
         <source>%1 of transfer</source>
         <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 من تراسل البيانات</translation>
     </message>
     <message>
         <source>%1 per month, charged yearly</source>
         <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 شهريًا، يتم تحصيل الرسوم سنويًا</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%n day</source>
         <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>
+            <numerusform>%n يوم</numerusform>
+            <numerusform>%n يوم</numerusform>
+            <numerusform>%n يومان</numerusform>
+            <numerusform>%n أيام</numerusform>
+            <numerusform>%n يوماً</numerusform>
+            <numerusform>%n يوم</numerusform>
+        </translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%n hour</source>
         <translatorcomment>Number of remaining hours before the offer expire variable is for remaining hours. snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>
+            <numerusform>%n ساعة</numerusform>
+            <numerusform>%n ساعة</numerusform>
+            <numerusform>%n ساعتان</numerusform>
+            <numerusform>%n ساعات</numerusform>
+            <numerusform>%n ساعة</numerusform>
+            <numerusform>%n ساعة</numerusform>
+        </translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%n minute</source>
         <translatorcomment>Number of remaining minutes before the offer expire,variable is for remaining minutes. snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>
+            <numerusform>%n دقيقة</numerusform>
+            <numerusform>%n دقيقة</numerusform>
+            <numerusform>%n دقيقتان</numerusform>
+            <numerusform>%n دقائق</numerusform>
+            <numerusform>%n دقيقة</numerusform>
+            <numerusform>%n دقيقة</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>*%1</source>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation>*%1</translation>
     </message>
     <message>
         <source>*Tax may apply.</source>
         <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>قد تُفرض الضريبة.</translation>
+    </message>
+    <message>
+        <source>Estimated price in your local currency.</source>
+        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
+        <translation>السعر المقدر بعملتك المحلية.</translation>
     </message>
     <message>
         <source>Grab Deal</source>
         <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اغتنم الفرصة</translation>
     </message>
     <message>
         <source>MEGA %1</source>
         <translatorcomment>Plan name used in the offer dialog, the variable is for plan name snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA ميغا %1</translation>
     </message>
     <message>
         <source>MEGA Pass</source>
         <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ميغا باس MEGA Pass</translation>
     </message>
     <message>
         <source>MEGA VPN</source>
         <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ميغا في بي إن MEGA VPN</translation>
     </message>
     <message>
         <source>Object storage</source>
         <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خدمة تخزين الأغراض</translation>
     </message>
     <message>
         <source>Special offers ends in:</source>
         <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ينتهي العرض الخاص في:</translation>
     </message>
     <message>
+        <source>Tax may apply.</source>
+        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
+        <translation>قد تُفرض الضريبة.</translation>
+    </message>
+    <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>
         <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهر</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهر</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهرين</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n أشهر</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهر</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهر</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -6355,7 +6403,9 @@ Enter a different name</source>
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- تحسين موثوقية تعريفات الرسومات التي تواجه مشاكل على ويندوز Windows
+- إصلاح أخطاء طفيفة وتحسينات على الأداء
+</translation>
     </message>
 </context>
 <context>
@@ -6441,7 +6491,7 @@ Enter a different name</source>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
         <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لم يتم اكتشاف بروكسي. للاتصال، قم بتعيين قيمة صالحة لـ http_proxy أو https_proxy في بيئتك.</translation>
     </message>
 </context>
 <context>
@@ -6900,22 +6950,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هناك مجلد بنفس هذا الاسم في ذلك الموقع بالفعل، اختر موقعًا آخر</translation>
     </message>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>المجلد المستهدف غير موجود. اختر غيره.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ أثناء نقل أو حذف مجلد النسخ الاحتياطي في ميغا MEGA</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن نقل مجلد النسخ الاحتياطي أو حذفه في ميغا MEGA. السبب: %1</translation>
     </message>
 </context>
 <context>
@@ -8822,21 +8872,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 </context>
 <context>
     <name>SyncSettingsElements</name>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation>تطبيق</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation>سيتم تطبيق قواعد الاستبعاد التي قمت بإعدادها في إصدار سابق من التطبيق على جميع عمليات المزامنة والنسخ الاحتياطية. سيتم استبدال أي قواعد تم إنشاؤها منذ ذلك الحين.</translation>
-    </message>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation>[B]هل تريد تطبيق قواعد الاستبعاد السابقة؟[/B]</translation>
-    </message>
 </context>
 <context>
     <name>SyncSettingsUI</name>
@@ -8900,16 +8935,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Advanced</source>
         <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
         <translation>متقدم</translation>
-    </message>
-    <message>
-        <source>Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation>تطبيق قواعد الاستبعاد السابقة</translation>
-    </message>
-    <message>
-        <source>Apply rules</source>
-        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation>تطبيق القواعد</translation>
     </message>
     <message>
         <source>Get full control of the sync issues</source>
@@ -10048,17 +10073,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 after tax</source>
         <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 billed yearly</source>
-        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 تتم محاسبتها سنويًا</translation>
-    </message>
-    <message>
-        <source>%1 per month</source>
-        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 في الشهر</translation>
+        <translation>%1 بعد الضريبة</translation>
     </message>
     <message>
         <source>%1 storage</source>
@@ -10070,20 +10085,27 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation>%1 تراسل متاح</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1% off for %n month</source>
         <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>
+            <numerusform>خصم %1% لمدة %n شهر</numerusform>
+            <numerusform>خصم %1% لمدة %n شهر</numerusform>
+            <numerusform>خصم %1% لمدة %n شهرين</numerusform>
+            <numerusform>خصم %1% لمدة %n أشهر</numerusform>
+            <numerusform>خصم %1% لمدة %n شهراً</numerusform>
+            <numerusform>خصم %1% لمدة %n شهر</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1/month</source>
         <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format.SNC-6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1/شهر</translation>
     </message>
     <message>
         <source>%1/month, charged yearly</source>
         <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1/شهر، يتم تحصيله سنوياً</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -10096,19 +10118,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>* السعر المقدر بعملتك المحلية. سيتم محاسبتك باليورو على جميع المعاملات.</translation>
     </message>
     <message>
-        <source>Billed monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
-        <translation>الدفعة شهرياً</translation>
-    </message>
-    <message>
-        <source>Billed yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
-        <translation>الدفعة سنوياً</translation>
-    </message>
-    <message>
         <source>Buy %1</source>
         <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
         <translation>شراء %1</translation>
+    </message>
+    <message>
+        <source>Charged monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
+        <translation>يتم تحصيله شهرياً</translation>
+    </message>
+    <message>
+        <source>Charged yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
+        <translation>يتم تحصيله سنويًا</translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -10118,17 +10140,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Most Popular</source>
         <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الأكثر رواجاً</translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
         <translation>هل تحتاج إلى المزيد من مساحة التخزين؟[BR][B][A]جرب برو فليكسي Pro&#xa0;Flexi[/A][/B]</translation>
-    </message>
-    <message>
-        <source>Recommended</source>
-        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
-        <translation>موصي به</translation>
     </message>
     <message>
         <source>Save up to %1% with yearly billing</source>
@@ -10168,12 +10185,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>only</source>
         <translatorcomment>Text shown ont top of the price of a plan.SNC-6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>فقط</translation>
     </message>
     <message>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>في الشهر</translation>
+    </message>
+    <message>
+        <source>per month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
+        <translation>شهريًا، يتم تحصيل الرسوم سنويًا</translation>
     </message>
 </context>
 <context>
@@ -10211,7 +10233,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 ثانية</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -10325,7 +10347,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أساسي</translation>
     </message>
     <message>
         <source>Business</source>
@@ -10340,7 +10362,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ضروري</translation>
     </message>
     <message>
         <source>Free</source>
@@ -10405,7 +10427,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مفتاح التشغيل</translation>
     </message>
     <message>
         <source>TB</source>

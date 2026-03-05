@@ -2320,7 +2320,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>%1% off %2</source>
         <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Скидка %1 на %2</translation>
     </message>
     <message>
         <source>Add sync</source>
@@ -5352,6 +5352,11 @@ Enter a different name</source>
 <context>
     <name>OfferStrings</name>
     <message>
+        <source>%1 %2</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
+        <translation>%1 %2</translation>
+    </message>
+    <message>
         <source>%1 of storage</source>
         <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
         <translation>%1 на диске</translation>
@@ -5394,9 +5399,19 @@ Enter a different name</source>
         </translation>
     </message>
     <message>
+        <source>*%1</source>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation>*%1</translation>
+    </message>
+    <message>
         <source>*Tax may apply.</source>
         <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
         <translation>*Может взиматься налог.</translation>
+    </message>
+    <message>
+        <source>Estimated price in your local currency.</source>
+        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
+        <translation>Ориентировочная цена в местной валюте.</translation>
     </message>
     <message>
         <source>Grab Deal</source>
@@ -5426,7 +5441,12 @@ Enter a different name</source>
     <message>
         <source>Special offers ends in:</source>
         <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Специальное предложение заканчивается через:</translation>
+    </message>
+    <message>
+        <source>Tax may apply.</source>
+        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
+        <translation>Может взиматься налог.</translation>
     </message>
     <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>
@@ -8648,21 +8668,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 </context>
 <context>
     <name>SyncSettingsElements</name>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation>Применить</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation>Правила исключения, которые вы настроили в предыдущей версии приложения, будут применены ко всем вашим синхронизациям и резервным копированиям. Все правила, созданные после этого, будут перезаписаны.</translation>
-    </message>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation>[B]Применить предыдущие правила исключения?[/B]</translation>
-    </message>
 </context>
 <context>
     <name>SyncSettingsUI</name>
@@ -8726,16 +8731,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Advanced</source>
         <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
         <translation>Расширенный</translation>
-    </message>
-    <message>
-        <source>Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation>Применить предыдущие правила исключения</translation>
-    </message>
-    <message>
-        <source>Apply rules</source>
-        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation>Применить правила</translation>
     </message>
     <message>
         <source>Get full control of the sync issues</source>
@@ -9832,16 +9827,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>%1 после налогообложения</translation>
     </message>
     <message>
-        <source>%1 billed yearly</source>
-        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 ежегодно</translation>
-    </message>
-    <message>
-        <source>%1 per month</source>
-        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 в месяц</translation>
-    </message>
-    <message>
         <source>%1 storage</source>
         <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
         <translation>%1 на диске</translation>
@@ -9881,19 +9866,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>* Ориентировочная цена в вашей местной валюте. Все транзакции будут выполняться в евро.</translation>
     </message>
     <message>
-        <source>Billed monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
-        <translation>Ежемесячная оплата</translation>
-    </message>
-    <message>
-        <source>Billed yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
-        <translation>Ежегодная оплата</translation>
-    </message>
-    <message>
         <source>Buy %1</source>
         <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
         <translation>Купить %1</translation>
+    </message>
+    <message>
+        <source>Charged monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
+        <translation>Ежемесячная оплата</translation>
+    </message>
+    <message>
+        <source>Charged yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
+        <translation>Ежегодная оплата</translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -9909,11 +9894,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
         <translation>Нужно больше места?[BR][B][A]Попробуйте Pro&#xa0;Flexi[/A][/B]</translation>
-    </message>
-    <message>
-        <source>Recommended</source>
-        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
-        <translation>Рекомендуемые</translation>
     </message>
     <message>
         <source>Save up to %1% with yearly billing</source>
@@ -9959,6 +9939,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>в месяц</translation>
+    </message>
+    <message>
+        <source>per month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
+        <translation>в месяц, оплачивается ежегодно</translation>
     </message>
 </context>
 <context>

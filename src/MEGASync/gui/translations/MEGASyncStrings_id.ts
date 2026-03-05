@@ -2276,7 +2276,7 @@ Periksa kotak masuk email anda untuk petunjuk tentang membuka kunci akun anda da
     <message>
         <source>%1% off %2</source>
         <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1% diskon %2</translation>
     </message>
     <message>
         <source>Add sync</source>
@@ -4058,7 +4058,7 @@ Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat membuat cadangan karena perangkat yang anda gunakan untuk mencadangkan tidak memiliki nama. Beri nama perangkat anda, lalu coba lagi. Jika masalah berlanjut, hubungi Bantuan.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4966,7 +4966,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Upload</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unggah</translation>
     </message>
 </context>
 <context>
@@ -5004,7 +5004,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder kosong</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
@@ -5258,6 +5258,11 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>OfferStrings</name>
     <message>
+        <source>%1 %2</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 of storage</source>
         <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
         <translation>%1 dari penyimpanan</translation>
@@ -5294,9 +5299,19 @@ Masukkan nama yang berbeda.</translation>
         </translation>
     </message>
     <message>
+        <source>*%1</source>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is â‚¬ and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>*Tax may apply.</source>
         <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
         <translation>*Pajak mungkin berlaku.</translation>
+    </message>
+    <message>
+        <source>Estimated price in your local currency.</source>
+        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Grab Deal</source>
@@ -5327,6 +5342,11 @@ Masukkan nama yang berbeda.</translation>
         <source>Special offers ends in:</source>
         <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
         <translation>Penawaran khusus berakhir dalam:</translation>
+    </message>
+    <message>
+        <source>Tax may apply.</source>
+        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>
@@ -6123,7 +6143,9 @@ Masukkan nama yang berbeda.</translation>
 - Minor bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Peningkatan keandalan untuk driver grafis bermasalah di Windows
+- Perbaikan bug kecil dan peningkatan kinerja
+</translation>
     </message>
 </context>
 <context>
@@ -6209,7 +6231,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
         <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada proxy yang terdeteksi. Untuk terhubung, atur nilai http_proxy atau https_proxy yang valid di lingkungan anda.</translation>
     </message>
 </context>
 <context>
@@ -6668,7 +6690,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
         <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sudah ada folder dengan nama ini di lokasi tersebut, pilih lokasi lain</translation>
     </message>
     <message>
         <source>Destination folder doesn’t exist. Choose another.</source>
@@ -6678,12 +6700,12 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Terjadi kesalahan saat memindahkan atau menghapus folder cadangan di MEGA</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat memindahkan atau menghapus folder cadangan di MEGA. Alasan: %1</translation>
     </message>
 </context>
 <context>
@@ -7231,7 +7253,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Theme</source>
         <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
@@ -8510,21 +8532,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 </context>
 <context>
     <name>SyncSettingsElements</name>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation>Terapkan</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation>Aturan pengecualian yang anda atur di versi aplikasi sebelumnya akan diterapkan ke semua sinkronisasi dan cadangan anda. Setiap aturan yang dibuat sejak saat itu akan diganti.</translation>
-    </message>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation>[B]Terapkan aturan pengecualian sebelumnya?[/B]</translation>
-    </message>
 </context>
 <context>
     <name>SyncSettingsUI</name>
@@ -8588,16 +8595,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Advanced</source>
         <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
         <translation>Lanjutan</translation>
-    </message>
-    <message>
-        <source>Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation>Terapkan aturan pengecualian sebelumnya</translation>
-    </message>
-    <message>
-        <source>Apply rules</source>
-        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation>Terapkan aturan</translation>
     </message>
     <message>
         <source>Get full control of the sync issues</source>
@@ -9665,16 +9662,6 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translation>%1 setelah pajak</translation>
     </message>
     <message>
-        <source>%1 billed yearly</source>
-        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 ditagih setiap tahun</translation>
-    </message>
-    <message>
-        <source>%1 per month</source>
-        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 per bulan</translation>
-    </message>
-    <message>
         <source>%1 storage</source>
         <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
         <translation>%1 penyimpanan</translation>
@@ -9712,19 +9699,19 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translation>* Perkiraan harga dalam mata uang lokal anda. Anda akan dikenakan biaya dalam euro untuk semua transaksi.</translation>
     </message>
     <message>
-        <source>Billed monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
-        <translation>Ditagih setiap bulan</translation>
-    </message>
-    <message>
-        <source>Billed yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
-        <translation>Ditagih setiap tahun</translation>
-    </message>
-    <message>
         <source>Buy %1</source>
         <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
         <translation>Beli %1</translation>
+    </message>
+    <message>
+        <source>Charged monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charged yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -9740,11 +9727,6 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
         <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
         <translation>Perlu lebih banyak penyimpanan?[BR][B][A]Coba Pro&#xa0;Flexi[/A][/B]</translation>
-    </message>
-    <message>
-        <source>Recommended</source>
-        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
-        <translation>Disarankan</translation>
     </message>
     <message>
         <source>Save up to %1% with yearly billing</source>
@@ -9791,6 +9773,11 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>per bulan</translation>
     </message>
+    <message>
+        <source>per month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserAttributes::DeviceName</name>
@@ -9822,7 +9809,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;detik</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9901,7 +9888,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9916,7 +9903,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9981,7 +9968,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>TB</source>
