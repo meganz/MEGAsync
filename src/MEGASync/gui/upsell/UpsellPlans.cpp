@@ -2,6 +2,8 @@
 
 #include "Utilities.h"
 
+#include <cmath>
+
 namespace
 {
 constexpr double DOUBLE_COMPARISON_EPSILON = 1e-5;
@@ -160,7 +162,7 @@ void UpsellPlans::setBillingCurrency(bool isCurrencyBilling)
     }
 }
 
-void UpsellPlans::setCurrentDiscount(int discount)
+void UpsellPlans::setCurrentDiscount(long discount)
 {
     if (mCurrentDiscount != discount)
     {
@@ -192,7 +194,7 @@ bool UpsellPlans::isBillingCurrency() const
     return mIsBillingCurrency;
 }
 
-int UpsellPlans::getCurrentDiscount() const
+long UpsellPlans::getCurrentDiscount() const
 {
     return mCurrentDiscount;
 }
@@ -233,7 +235,7 @@ bool UpsellPlans::hasYearlyDiscount() const
                        });
 }
 
-int UpsellPlans::getMaximumYearlyDiscount() const
+long UpsellPlans::getMaximumYearlyDiscount() const
 {
     if (mPlans.empty())
         return 0; // or throw, depending on your design
@@ -321,26 +323,50 @@ bool UpsellPlans::Data::hasYearlyDiscount() const
     return mYearlyData.hasDiscount();
 }
 
-int UpsellPlans::Data::calculateYearlyDiscount() const
+long UpsellPlans::Data::calculateMonthlyDiscount() const
 {
-    if (mYearlyData.hasDiscount())
-    {
-        const auto dp = mYearlyData.discount()->percentage;
-        // return mMonthlyData.isValid() ? dp + ((2 * (100 - dp)) / 12) : dp; // Exact formula, do
-        // not use for
-        //  now because the webclient uses the following: softCeil(1-(1-16%)(1-dp%))
-        return mMonthlyData.isValid() ? Utilities::softCeil(100 - 0.84 * (100 - dp)) : dp;
-    }
-    else if (mMonthlyData.isValid() && mYearlyData.isValid())
-    {
-        constexpr double NUM_MONTHS_PER_PLAN(12.);
-        constexpr double PERCENTAGE(100.);
+    return mMonthlyData.isValid() && mMonthlyData.hasDiscount() ?
+               mMonthlyData.discount()->percentage :
+               0;
+}
 
-        return static_cast<int>(PERCENTAGE -
-                                (mYearlyData.priceAfterTax() * PERCENTAGE) /
-                                    (mMonthlyData.priceAfterTax() * NUM_MONTHS_PER_PLAN));
+long UpsellPlans::Data::calculateYearlyDiscount() const
+{
+    constexpr double NUM_MONTHS_PER_PLAN(12.);
+    constexpr double PERCENTAGE(100.);
+    long yearlyDiscountP = 0;
+
+    if (mYearlyData.isValid())
+    {
+        double baseYearlyDiscountP = 0.;
+        double priceFor12Months = 0.;
+
+        if (mMonthlyData.isValid())
+        {
+            priceFor12Months = mMonthlyData.priceBeforeTax() * NUM_MONTHS_PER_PLAN;
+            baseYearlyDiscountP =
+                PERCENTAGE -
+                Utilities::softCeil((mYearlyData.priceBeforeTax() * PERCENTAGE) / priceFor12Months);
+            yearlyDiscountP = std::lround(baseYearlyDiscountP);
+        }
+
+        if (mYearlyData.hasDiscount())
+        {
+            const auto instDisP = mYearlyData.discount()->percentage;
+            yearlyDiscountP = instDisP;
+
+            if (mMonthlyData.isValid() && (mYearlyData.priceBeforeTax() < priceFor12Months))
+            {
+                const auto instDiscountMult = (PERCENTAGE - instDisP) / PERCENTAGE;
+                yearlyDiscountP = std::lround(
+                    PERCENTAGE - Utilities::softCeil((PERCENTAGE * mYearlyData.priceBeforeTax() *
+                                                      instDiscountMult) /
+                                                     priceFor12Months));
+            }
+        }
     }
-    return 0;
+
+    return yearlyDiscountP;
 }
 
 void UpsellPlans::Data::setProLevel(int newProLevel)

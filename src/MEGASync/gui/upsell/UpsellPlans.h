@@ -16,7 +16,7 @@ class UpsellPlans: public QObject
     Q_PROPERTY(ViewMode viewMode READ getViewMode NOTIFY viewModeChanged)
     Q_PROPERTY(bool monthly READ isMonthly NOTIFY monthlyChanged)
     Q_PROPERTY(bool billingCurrency READ isBillingCurrency NOTIFY isCurrencyBillingChanged)
-    Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
+    Q_PROPERTY(long currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
     Q_PROPERTY(QString currencyName READ getCurrencyName NOTIFY currencyChanged)
     Q_PROPERTY(
         QString transferRemainingTime READ getTransferRemainingTime NOTIFY remainingTimeChanged)
@@ -111,7 +111,8 @@ public:
         AccountBillingPlanData& yearlyData();
         bool hasMonthlyDiscount() const;
         bool hasYearlyDiscount() const;
-        int calculateYearlyDiscount() const;
+        long calculateMonthlyDiscount() const;
+        long calculateYearlyDiscount() const;
 
     private:
         int mProLevel;
@@ -161,7 +162,7 @@ public:
     std::optional<Data::DiscountInfo>
         getPlanDiscount(std::shared_ptr<UpsellPlans::Data> plan) const;
     bool isBillingCurrency() const;
-    int getCurrentDiscount() const;
+    long getCurrentDiscount() const;
     QString getCurrencySymbol() const;
     QString getCurrencyName() const;
     QString getTransferRemainingTime() const;
@@ -172,7 +173,7 @@ public:
     bool hasDiscounts() const;
     bool hasMonthlyDiscount() const;
     bool hasYearlyDiscount() const;
-    int getMaximumYearlyDiscount() const;
+    long getMaximumYearlyDiscount() const;
 signals:
     void viewModeChanged();
     void currencyChanged();
@@ -190,7 +191,7 @@ private:
     ViewMode mViewMode;
     bool mIsMonthly;
     bool mIsBillingCurrency;
-    int mCurrentDiscount;
+    long mCurrentDiscount;
     QString mTransferRemainingTime;
     long long mTransferFinishTime; // Seconds since epoch.
     bool mIsOnlyProFlexiAvailable;
@@ -202,7 +203,7 @@ private:
     void setViewMode(ViewMode viewMode);
     void setMonthly(bool monthly);
     void setBillingCurrency(bool isCurrencyBilling);
-    void setCurrentDiscount(int discount);
+    void setCurrentDiscount(long discount);
     void setTransferRemainingTime(const QString& time);
     void setCurrency(const QString& symbol, const QString& name);
     void setTransferFinishTime(long long newTime);

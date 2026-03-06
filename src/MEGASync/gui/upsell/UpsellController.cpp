@@ -12,6 +12,8 @@
 
 #include <QUrl>
 
+#include <iterator>
+
 namespace
 {
 constexpr int MONTH_PERIOD(1);
@@ -298,23 +300,8 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
             }
             case UpsellPlans::DISCOUNT_PERCENTAGE:
             {
-                auto discount = mPlans->getPlanDiscount(plan);
-                if (discount.has_value())
-                {
-                    auto dp = discount->percentage;
-                    // If the pro level has no monthly plan and we are in yearly view, return the
-                    // discount percentage without calculation.
-                    field = (mPlans->isMonthly() || !plan->monthlyData().isValid()) ?
-                                dp :
-                                // dp + ((2 * (100 - dp)) / 12); // Exact formula, do not use for
-                                // now because the webclient uses the following:
-                                // softCeil(1-(1-16%)(1-dp%))
-                                Utilities::softCeil(100 - 0.84 * (100 - dp));
-                }
-                else
-                {
-                    field = 0;
-                }
+                field = QVariant::fromValue(mPlans->isMonthly() ? plan->calculateMonthlyDiscount() :
+                                                                  plan->calculateYearlyDiscount());
                 break;
             }
             case UpsellPlans::IS_HIGHLIGHTED:
@@ -601,12 +588,6 @@ UpsellPlans::Data::AccountBillingPlanData
     return planData;
 }
 
-int UpsellController::calculateDiscount(double monthlyPrice, double yearlyPrice) const
-{
-    return static_cast<int>(PERCENTAGE -
-                            (yearlyPrice * PERCENTAGE) / (monthlyPrice * NUM_MONTHS_PER_PLAN));
-}
-
 void UpsellController::updatePlans()
 {
     int currentRecommendedRow(getRowForCurrentRecommended());
@@ -619,20 +600,6 @@ void UpsellController::updatePlans()
         plan->setRecommended(true);
         mPlans->setCurrentDiscount(mPlans->getMaximumYearlyDiscount());
     }
-}
-
-void UpsellController::updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row)
-{
-    // Calculate discount if both monthly and yearly data are available, otherwise set it to -1
-    // to indicate that the discount is not available.
-    int discount(-1);
-    if (mPlans->getPlan(row)->monthlyData().isValid() &&
-        mPlans->getPlan(row)->yearlyData().isValid())
-    {
-        discount = calculateDiscount(data->monthlyData().priceAfterTax(),
-                                     data->yearlyData().priceAfterTax());
-    }
-    mPlans->setCurrentDiscount(discount);
 }
 
 int UpsellController::getRowForNextRecommendedPlan() const
