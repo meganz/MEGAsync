@@ -332,37 +332,31 @@ long UpsellPlans::Data::calculateMonthlyDiscount() const
 
 long UpsellPlans::Data::calculateYearlyDiscount() const
 {
-    constexpr double NUM_MONTHS_PER_PLAN(12.);
-    constexpr double PERCENTAGE(100.);
     long yearlyDiscountP = 0;
 
     if (mYearlyData.isValid())
     {
-        double baseYearlyDiscountP = 0.;
-        double priceFor12Months = 0.;
-
-        if (mMonthlyData.isValid())
-        {
-            priceFor12Months = mMonthlyData.priceBeforeTax() * NUM_MONTHS_PER_PLAN;
-            baseYearlyDiscountP =
-                PERCENTAGE -
-                Utilities::softCeil((mYearlyData.priceBeforeTax() * PERCENTAGE) / priceFor12Months);
-            yearlyDiscountP = std::lround(baseYearlyDiscountP);
-        }
+        constexpr double PERCENTAGE(100.);
+        double yearlyPrice = mYearlyData.priceBeforeTax();
+        int instDiscP = 0;
 
         if (mYearlyData.hasDiscount())
         {
-            const auto instDisP = mYearlyData.discount()->percentage;
-            yearlyDiscountP = instDisP;
+            instDiscP = mYearlyData.discount()->percentage;
+            const auto instDiscountMult = (PERCENTAGE - instDiscP) / PERCENTAGE;
+            yearlyPrice *= instDiscountMult;
+        }
 
-            if (mMonthlyData.isValid() && (mYearlyData.priceBeforeTax() < priceFor12Months))
-            {
-                const auto instDiscountMult = (PERCENTAGE - instDisP) / PERCENTAGE;
-                yearlyDiscountP = std::lround(
-                    PERCENTAGE - Utilities::softCeil((PERCENTAGE * mYearlyData.priceBeforeTax() *
-                                                      instDiscountMult) /
-                                                     priceFor12Months));
-            }
+        if (mMonthlyData.isValid())
+        {
+            constexpr double NUM_MONTHS_PER_PLAN(12.);
+            const auto priceFor12Months = mMonthlyData.priceBeforeTax() * NUM_MONTHS_PER_PLAN;
+            yearlyDiscountP = std::lround(
+                PERCENTAGE - Utilities::softCeil((yearlyPrice * PERCENTAGE) / priceFor12Months));
+        }
+        else
+        {
+            yearlyDiscountP = instDiscP;
         }
     }
 

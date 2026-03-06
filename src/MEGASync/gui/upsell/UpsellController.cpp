@@ -19,7 +19,6 @@ namespace
 constexpr int MONTH_PERIOD(1);
 constexpr int YEAR_PERIOD(12);
 constexpr double NUM_MONTHS_PER_PLAN(12.);
-constexpr double PERCENTAGE(100.);
 constexpr double CENTS_IN_1_UNIT(100.);
 constexpr int TRANSFER_REMAINING_TIME_INTERVAL_MS(1000);
 constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
