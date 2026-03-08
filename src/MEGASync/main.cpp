@@ -439,6 +439,13 @@ int main(int argc, char *argv[])
         QString sessionType = qEnvironmentVariable("XDG_SESSION_TYPE");
         if (!sessionType.isEmpty() && sessionType == QString::fromUtf8("wayland"))
         {
+            if (!qEnvironmentVariableIsSet("DO_NOT_SET_QT_XCB_GL_INTEGRATION") &&
+                !qEnvironmentVariableIsSet("QT_XCB_GL_INTEGRATION"))
+            {
+                std::cerr << "Setting QT_XCB_GL_INTEGRATION=none" << std::endl;
+                qputenv("QT_XCB_GL_INTEGRATION", "none");
+            }
+
             std::cerr << "Avoiding wayland" << std::endl;
             qunsetenv("XDG_SESSION_TYPE");
         }
