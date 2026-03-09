@@ -169,7 +169,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> plan, int rol
                 }
                 else
                 {
-                    field = plan->isRecommended();
+                    field = plan->isRecommended() && !mPlans->hasDiscounts();
                 }
                 break;
             }
