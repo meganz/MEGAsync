@@ -5,6 +5,9 @@
 
 #include <QDateTime>
 #include <QObject>
+#include <QString>
+
+#include <memory>
 
 class DiscountPolicy: public QObject
 {
@@ -32,6 +35,7 @@ protected:
     void persist() const;
     void checkAndDeactivateExpiredCampaign();
     bool isCampaignExpiredUtc(const QDateTime& expiryDateUtc);
+    static bool isDiscountValid(const std::shared_ptr<mega::MegaDiscountCodeInfo>& discountInfo);
 
     // State
     bool mIsCampaignActive = false;
