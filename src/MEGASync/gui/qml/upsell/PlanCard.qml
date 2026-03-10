@@ -110,8 +110,11 @@ Rectangle {
         }
     }
 
-    width: Math.max(contentColumn.implicitWidth, root.planDefaultWidth) + (2 * root.contentMargin)
-    height: root.monthly, contentColumn.implicitHeight + (2 * root.contentMargin)
+    implicitWidth: Math.max(contentColumn.implicitWidth, root.planDefaultWidth) + (2 * root.contentMargin)
+    implicitHeight: contentColumn.implicitHeight + (2 * root.contentMargin)
+
+    width: implicitWidth
+    height: implicitHeight
 
     border {
         width: root.isHighlighted && root.enabled ? root.borderWidthRecommended : root.borderWidthDefault
