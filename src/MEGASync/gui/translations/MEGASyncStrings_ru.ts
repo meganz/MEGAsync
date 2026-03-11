@@ -5366,11 +5366,6 @@ Enter a different name</source>
         <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
         <translation>%1 на передачу данных</translation>
     </message>
-    <message>
-        <source>%1 per month, charged yearly</source>
-        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
-        <translation>%1 в месяц, оплачивается ежегодно</translation>
-    </message>
     <message numerus="yes">
         <source>%n day</source>
         <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
@@ -5404,11 +5399,6 @@ Enter a different name</source>
         <translation>*%1</translation>
     </message>
     <message>
-        <source>*Tax may apply.</source>
-        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
-        <translation>*Может взиматься налог.</translation>
-    </message>
-    <message>
         <source>Estimated price in your local currency.</source>
         <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
         <translation>Ориентировочная цена в местной валюте.</translation>
@@ -5416,7 +5406,7 @@ Enter a different name</source>
     <message>
         <source>Grab Deal</source>
         <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
-        <translation>Воспользоваться предложением</translation>
+        <translation>Принять предложение</translation>
     </message>
     <message>
         <source>MEGA %1</source>
