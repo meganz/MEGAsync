@@ -4619,7 +4619,6 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
         if (dialogInfo)
         {
             dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
-            DialogOpener::showDialog(dialogInfo->getDialog());
         }
         else
         {

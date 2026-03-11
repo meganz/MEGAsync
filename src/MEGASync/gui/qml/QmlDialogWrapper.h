@@ -273,6 +273,7 @@ public:
             this,
             [this]()
             {
+                mWindow->showNormal();
                 mWindow->centerAndRaise();
             },
             Qt::UniqueConnection);

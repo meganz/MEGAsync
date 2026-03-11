@@ -90,9 +90,7 @@ FocusScope {
             RowLayout {
                 id: rowLayout
 
-                anchors.horizontalCenter: parent.horizontalCenter
                 spacing: root.plansRowSpacing
-                height: implicitHeight
 
                 Repeater {
                     id: plansRepeater
@@ -104,8 +102,8 @@ FocusScope {
                         // Changing Visibility should be done first to ensure values are updated
                         visible: model.display
 
-                        Layout.preferredWidth: width
-                        Layout.preferredHeight: height
+                        Layout.preferredWidth: implicitWidth
+                        Layout.preferredHeight: implicitHeight
                         Layout.fillHeight: true
 
                         name: model.name
