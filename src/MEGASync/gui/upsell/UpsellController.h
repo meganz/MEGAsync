@@ -79,7 +79,6 @@ private:
                                      int transfer,
                                      double priceAfterTax,
                                      double priceBeforeTax) const;
-    int calculateDiscount(double monthlyPrice, double yearlyPrice) const;
     int getRowForNextRecommendedPlan() const;
     int getRowForCurrentRecommended();
     void updatePlans();

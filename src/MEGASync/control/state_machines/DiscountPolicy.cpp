@@ -1,7 +1,10 @@
 #include "DiscountPolicy.h"
 
+#include "AppStatsEvents.h"
 #include "StatsEventHandler.h"
 #include "Utilities.h"
+
+#include <cmath>
 
 DiscountPolicy::DiscountPolicy(QObject* parent):
     QObject(parent),
@@ -23,7 +26,7 @@ void DiscountPolicy::activateCampaign(std::shared_ptr<mega::MegaDiscountCodeInfo
     // - running campaign + new code: stop old campaign and start new
     // - stored code + expired stored campaign + new code + expired new campaign: stop old campaign
 
-    if (!discountInfo)
+    if (!discountInfo || !isDiscountValid(discountInfo))
     {
         return;
     }
@@ -185,4 +188,14 @@ void DiscountPolicy::checkAndDeactivateExpiredCampaign()
 bool DiscountPolicy::isCampaignExpiredUtc(const QDateTime& expiryDateUtc)
 {
     return expiryDateUtc <= QDateTime::currentDateTimeUtc();
+}
+
+bool DiscountPolicy::isDiscountValid(
+    const std::shared_ptr<mega::MegaDiscountCodeInfo>& discountInfo)
+{
+    // Do not process any further if prices are 0
+    return std::lround(discountInfo->getEuroTotalPrice()) != 0 ||
+           std::lround(discountInfo->getEuroTotalPriceNet()) != 0 ||
+           std::lround(discountInfo->getEuroDiscountedTotalPrice()) != 0 ||
+           std::lround(discountInfo->getEuroDiscountAmount()) != 0;
 }
