@@ -5507,11 +5507,6 @@ Enter a different name</source>
         <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
         <translation>%1 من تراسل البيانات</translation>
     </message>
-    <message>
-        <source>%1 per month, charged yearly</source>
-        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
-        <translation>%1 شهريًا، يتم تحصيل الرسوم سنويًا</translation>
-    </message>
     <message numerus="yes">
         <source>%n day</source>
         <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
@@ -5552,11 +5547,6 @@ Enter a different name</source>
         <source>*%1</source>
         <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
         <translation>*%1</translation>
-    </message>
-    <message>
-        <source>*Tax may apply.</source>
-        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
-        <translation>قد تُفرض الضريبة.</translation>
     </message>
     <message>
         <source>Estimated price in your local currency.</source>

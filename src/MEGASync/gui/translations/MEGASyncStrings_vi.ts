@@ -5260,7 +5260,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>%1 %2</source>
         <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2</translation>
     </message>
     <message>
         <source>%1 of storage</source>
@@ -5271,11 +5271,6 @@ Nhập một tên khác.</translation>
         <source>%1 of transfer</source>
         <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
         <translation>%1 cho truyền&#xa0;tải</translation>
-    </message>
-    <message>
-        <source>%1 per month, charged yearly</source>
-        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
-        <translation>%1 mỗi tháng, thu phí hằng&#xa0;năm</translation>
     </message>
     <message numerus="yes">
         <source>%n day</source>
@@ -5300,18 +5295,13 @@ Nhập một tên khác.</translation>
     </message>
     <message>
         <source>*%1</source>
-        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is â‚¬ and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>*Tax may apply.</source>
-        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
-        <translation>* Thuế có thể áp&#xa0;dụng.</translation>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation>*%1</translation>
     </message>
     <message>
         <source>Estimated price in your local currency.</source>
         <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giá ước tính bằng đơn vị tiền tệ địa phương.</translation>
     </message>
     <message>
         <source>Grab Deal</source>
@@ -5346,7 +5336,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Tax may apply.</source>
         <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thuế có thể áp&#xa0;dụng.</translation>
     </message>
     <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>

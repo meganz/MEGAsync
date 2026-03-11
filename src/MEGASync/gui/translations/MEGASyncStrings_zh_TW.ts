@@ -2274,6 +2274,11 @@ Check your email inbox for instructions on unlocking your account and tips on ho
 <context>
     <name>InfoDialog</name>
     <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%2 %1%折扣</translation>
+    </message>
+    <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>新增同步</translation>
@@ -5255,7 +5260,7 @@ Enter a different name</source>
     <message>
         <source>%1 %2</source>
         <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2</translation>
     </message>
     <message>
         <source>%1 of storage</source>
@@ -5266,11 +5271,6 @@ Enter a different name</source>
         <source>%1 of transfer</source>
         <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
         <translation>%1傳輸配額</translation>
-    </message>
-    <message>
-        <source>%1 per month, charged yearly</source>
-        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
-        <translation>每月%1，按年計費</translation>
     </message>
     <message numerus="yes">
         <source>%n day</source>
@@ -5295,18 +5295,13 @@ Enter a different name</source>
     </message>
     <message>
         <source>*%1</source>
-        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is â‚¬ and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>*Tax may apply.</source>
-        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
-        <translation>*可能需要繳稅。</translation>
     </message>
     <message>
         <source>Estimated price in your local currency.</source>
         <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>以您本地貨幣預估的價格。</translation>
     </message>
     <message>
         <source>Grab Deal</source>
@@ -5341,7 +5336,7 @@ Enter a different name</source>
     <message>
         <source>Tax may apply.</source>
         <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>可能包含稅費</translation>
     </message>
     <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>
@@ -9700,12 +9695,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Charged monthly</source>
         <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>按月計費</translation>
     </message>
     <message>
         <source>Charged yearly</source>
         <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>按年計費</translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -9725,7 +9720,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Save up to %1% with yearly billing</source>
         <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
-        <translation>年繳可節省%1</translation>
+        <translation>年繳最多可節省%1</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -9770,7 +9765,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>per month, charged yearly</source>
         <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>每月，按年計費</translation>
     </message>
 </context>
 <context>

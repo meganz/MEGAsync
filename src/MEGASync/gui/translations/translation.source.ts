@@ -1031,7 +1031,7 @@
     <message>
         <source>Today at %1</source>
         <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Today at %1</translation>
     </message>
     <message>
         <source>Yesterday at %1</source>

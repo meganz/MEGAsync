@@ -2296,6 +2296,11 @@ Consultez votre boîte de réception d’emails pour obtenir des instructions su
 <context>
     <name>InfoDialog</name>
     <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%1&#xa0;% sur %2</translation>
+    </message>
+    <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
         <translation>Ajouter une synchronisation</translation>
@@ -5302,7 +5307,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>%1 %2</source>
         <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2</translation>
     </message>
     <message>
         <source>%1 of storage</source>
@@ -5313,11 +5318,6 @@ Saisissez un nom différent.</translation>
         <source>%1 of transfer</source>
         <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
         <translation>%1 de transfert</translation>
-    </message>
-    <message>
-        <source>%1 per month, charged yearly</source>
-        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
-        <translation>%1 par mois, facturés annuellement</translation>
     </message>
     <message numerus="yes">
         <source>%n day</source>
@@ -5345,18 +5345,13 @@ Saisissez un nom différent.</translation>
     </message>
     <message>
         <source>*%1</source>
-        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is â‚¬ and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>*Tax may apply.</source>
-        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
-        <translation>*Des taxes peuvent s&apos;appliquer.</translation>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation>*%1</translation>
     </message>
     <message>
         <source>Estimated price in your local currency.</source>
         <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Prix estimé dans votre devise locale.</translation>
     </message>
     <message>
         <source>Grab Deal</source>
@@ -5384,9 +5379,14 @@ Saisissez un nom différent.</translation>
         <translation>Stockage objet</translation>
     </message>
     <message>
+        <source>Special offers ends in:</source>
+        <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
+        <translation>L&apos;offre spéciale se termine dans&#xa0;:</translation>
+    </message>
+    <message>
         <source>Tax may apply.</source>
         <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Des taxes peuvent s&apos;appliquer.</translation>
     </message>
     <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>
@@ -9779,12 +9779,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Charged monthly</source>
         <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Facturé mensuellement</translation>
     </message>
     <message>
         <source>Charged yearly</source>
         <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Facturé annuellement</translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -9849,7 +9849,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>per month, charged yearly</source>
         <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>par mois, facturés annuellement</translation>
     </message>
 </context>
 <context>

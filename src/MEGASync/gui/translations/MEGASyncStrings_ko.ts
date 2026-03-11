@@ -5265,17 +5265,12 @@ Enter a different name</source>
     <message>
         <source>%1 of storage</source>
         <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
-        <translation>%1의 저장소</translation>
+        <translation>저장소 %1</translation>
     </message>
     <message>
         <source>%1 of transfer</source>
         <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
-        <translation>%1의 전송량</translation>
-    </message>
-    <message>
-        <source>%1 per month, charged yearly</source>
-        <translatorcomment>Description for the dicount, variable is for currency.snc.6228</translatorcomment>
-        <translation>월 %1, 매년 결제</translation>
+        <translation>전송량 %1</translation>
     </message>
     <message numerus="yes">
         <source>%n day</source>
@@ -5302,11 +5297,6 @@ Enter a different name</source>
         <source>*%1</source>
         <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
         <translation>*%1</translation>
-    </message>
-    <message>
-        <source>*Tax may apply.</source>
-        <translatorcomment>disclaimer that promoted prices are tax exclusive .snc.6228</translatorcomment>
-        <translation>*세금이 추가될 수 있습니다.</translation>
     </message>
     <message>
         <source>Estimated price in your local currency.</source>
@@ -9685,7 +9675,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1/month, charged yearly</source>
         <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
-        <translation>월 %1, 매년 결제</translation>
+        <translation>월 %1, 연간 청구</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
