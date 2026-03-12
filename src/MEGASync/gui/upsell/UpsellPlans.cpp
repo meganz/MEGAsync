@@ -332,34 +332,36 @@ long UpsellPlans::Data::calculateMonthlyDiscount() const
 
 long UpsellPlans::Data::calculateYearlyDiscount() const
 {
-    long yearlyDiscountP = 0;
+    auto yearlyDiscountP = 0L;
 
     if (mYearlyData.isValid())
     {
         constexpr double PERCENTAGE(100.);
-        double yearlyPrice = mYearlyData.priceBeforeTax();
-        int instDiscP = 0;
+        const auto yearlyPrice = mYearlyData.priceBeforeTax();
+        auto yearlyPriceWithInstDisc = yearlyPrice;
 
+        // Take instant discount into account
         if (mYearlyData.hasDiscount())
         {
-            instDiscP = mYearlyData.discount()->percentage;
+            const auto instDiscP = mYearlyData.discount()->percentage;
             const auto instDiscountMult = (PERCENTAGE - instDiscP) / PERCENTAGE;
-            yearlyPrice *= instDiscountMult;
+            yearlyPriceWithInstDisc *= instDiscountMult;
+            yearlyDiscountP = instDiscP;
         }
 
+        // Take savings wrt monthly plan into account
         if (mMonthlyData.isValid())
         {
             constexpr double NUM_MONTHS_PER_PLAN(12.);
             const auto priceFor12Months = mMonthlyData.priceBeforeTax() * NUM_MONTHS_PER_PLAN;
-            yearlyDiscountP = std::lround(
-                PERCENTAGE - Utilities::softCeil((yearlyPrice * PERCENTAGE) / priceFor12Months));
-        }
-        else
-        {
-            yearlyDiscountP = instDiscP;
+            if (yearlyPrice < priceFor12Months)
+            {
+                yearlyDiscountP = std::lround(
+                    PERCENTAGE -
+                    Utilities::softCeil((yearlyPriceWithInstDisc * PERCENTAGE) / priceFor12Months));
+            }
         }
     }
-
     return yearlyDiscountP;
 }
 
