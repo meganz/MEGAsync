@@ -2298,7 +2298,7 @@ Acesse o seu email para saber como desbloquear a sua conta e obter informações
     <message>
         <source>%1% off %2</source>
         <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
-        <translation>%1 de desconto no plano %2</translation>
+        <translation>%1% de desconto no plano %2</translation>
     </message>
     <message>
         <source>Add sync</source>
