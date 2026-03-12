@@ -601,7 +601,7 @@
     <message>
         <source>Optional</source>
         <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
-        <translation>선택적</translation>
+        <translation>선택 사항</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
@@ -2276,7 +2276,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>%1% off %2</source>
         <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
-        <translation>%2% %1% 할인</translation>
+        <translation>%2 %1% 할인</translation>
     </message>
     <message>
         <source>Add sync</source>
@@ -4180,13 +4180,13 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Clear</source>
         <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation>비우기</translation>
+        <translation>지우기</translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
         <translation>
-            <numerusform>전송 초기화</numerusform>
+            <numerusform>전송 지우기</numerusform>
         </translation>
     </message>
     <message>
@@ -4207,7 +4207,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Don&apos;t clear</source>
         <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
-        <translation>비우지 마세요</translation>
+        <translation>지우지 마세요</translation>
     </message>
     <message>
         <source>Error opening file</source>
@@ -6948,22 +6948,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
-        <translation>비우기</translation>
+        <translation>지우기</translation>
     </message>
     <message>
         <source>Clear local backup</source>
         <translatorcomment>Title label for the warning to the user before clearing the local backup cache. Keep as short as possible.</translatorcomment>
-        <translation>로컬 백업 비우기</translation>
+        <translation>로컬 백업 지우기</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
         <translatorcomment>Title label for the warning to the user before clearing the remote sync cache. Keep as short as possible.</translatorcomment>
-        <translation>원격 백업 비우기</translation>
+        <translation>원격 백업 지우기</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
-        <translation>데이터가 일시적으로 사용 불가능합니다</translation>
+        <translation>데이터를 일시적으로 이용할 수 없음</translation>
     </message>
     <message>
         <source>Default Folders</source>

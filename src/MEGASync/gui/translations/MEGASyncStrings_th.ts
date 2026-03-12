@@ -2276,7 +2276,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>%1% off %2</source>
         <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
-        <translation>%2 ลด %1%</translation>
+        <translation>ส่วนลด %1% สำหรับ %2</translation>
     </message>
     <message>
         <source>Add sync</source>
@@ -5303,7 +5303,7 @@ Enter a different name</source>
     <message>
         <source>Grab Deal</source>
         <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
-        <translation>รับดีลสุดพิเศษ</translation>
+        <translation>รับข้อเสนอเลย</translation>
     </message>
     <message>
         <source>MEGA %1</source>
@@ -5328,7 +5328,7 @@ Enter a different name</source>
     <message>
         <source>Special offers ends in:</source>
         <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
-        <translation>ข้อเสนอพิเศษจะหมดเขตในอีก:</translation>
+        <translation>ข้อเสนอพิเศษจะสิ้นสุดใน:</translation>
     </message>
     <message>
         <source>Tax may apply.</source>
@@ -5339,7 +5339,7 @@ Enter a different name</source>
         <source>[B]%1% off[/B] for %n month</source>
         <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
         <translation>
-            <numerusform>[B]ลดทันที %1%[/B] นาน %n เดือน</numerusform>
+            <numerusform>[B]ส่วนลด %1%[/B] นาน %n เดือน</numerusform>
         </translation>
     </message>
 </context>
@@ -9645,7 +9645,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 after tax</source>
         <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
-        <translation>%1 หลังรวมภาษี</translation>
+        <translation>%1 (รวมภาษีแล้ว)</translation>
     </message>
     <message>
         <source>%1 storage</source>
@@ -9661,7 +9661,7 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1% off for %n month</source>
         <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
         <translation>
-            <numerusform>ลด %1% เป็นเวลา %n เดือน</numerusform>
+            <numerusform>ส่วนลด %1% นาน %n เดือน</numerusform>
         </translation>
     </message>
     <message>
@@ -9672,7 +9672,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1/month, charged yearly</source>
         <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
-        <translation>%1 ต่อเดือน (ชำระรายปี)</translation>
+        <translation>%1 ต่อเดือน (ชำระเป็นรายปี)</translation>
     </message>
     <message>
         <source>(%1 per month)</source>

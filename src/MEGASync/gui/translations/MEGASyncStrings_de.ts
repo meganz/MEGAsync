@@ -2298,7 +2298,7 @@ In Ihrem E-Mail-Posteingang finden Sie Anweisungen zur Entsperrung Ihres Account
     <message>
         <source>%1% off %2</source>
         <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1% Rabatt für %2</translation>
     </message>
     <message>
         <source>Add sync</source>
@@ -5381,12 +5381,12 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Special offers ends in:</source>
         <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sonderaktion endet in:</translation>
     </message>
     <message>
         <source>Tax may apply.</source>
         <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ggf. zzgl. Steuern.</translation>
     </message>
     <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>
@@ -9849,7 +9849,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>per month, charged yearly</source>
         <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pro Monat, jährliche Abbuchung</translation>
     </message>
 </context>
 <context>
