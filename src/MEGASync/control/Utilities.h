@@ -314,6 +314,31 @@ protected:
 #endif
 };
 
+class OverlayWidget: public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit OverlayWidget(QWidget* parent = nullptr):
+        QWidget(parent)
+    {
+        setAttribute(Qt::WA_StyledBackground);
+        setAttribute(Qt::WA_TranslucentBackground);
+        setAutoFillBackground(false);
+        setCursor(Qt::PointingHandCursor);
+    }
+
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent* event) override
+    {
+        emit clicked();
+        QWidget::mousePressEvent(event);
+    }
+};
+
 struct TimeInterval
 {
     TimeInterval(long long secs, bool secondPrecision = true);
@@ -375,6 +400,7 @@ public:
     };
 
     static QString getSizeString(long long bytes);
+    static QString getDecimalSizeString(long long);
     static QString getSizeStringLocalized(qint64 bytes);
     static int toNearestUnit(long long bytes);
     static QString getTranslatedSeparatorTemplate();
@@ -603,6 +629,10 @@ public:
     static int partPer(long long part, long long total, uint ref = 100);
 
     static QString getFileHash(const QString& filePath);
+
+    static QString decodeUnicodeEscapes(const QString& input);
+    static QString toPrice(double value, const QString& currencySymbol, bool showRemark = false);
+    static double softCeil(double value);
 
     // Human-friendly list of forbidden chars for New Remote Folder
     static const QLatin1String FORBIDDEN_CHARS;

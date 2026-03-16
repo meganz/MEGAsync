@@ -95,12 +95,6 @@ SyncSettings::SyncSettings(QString initializer)
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
 
-SyncSettings::SyncSettings(const SyncData &osd, bool/* loadedFromPreviousSessions*/)
-{
-    mSyncID = osd.mSyncID;
-    mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
-}
-
 QString SyncSettings::toString()
 {
     QStringList toret;

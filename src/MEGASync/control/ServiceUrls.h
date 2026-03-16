@@ -46,11 +46,13 @@ public:
 
     static QUrl getHelpBaseUrl();
     Q_INVOKABLE static QUrl getDesktopAppHelpUrl();
+    static QUrl getDesktopSyncHelpUrl();
+    static QUrl getDesktopBackupsHelpUrl();
     static QUrl getSyncHelpUrl();
     static QUrl getSyncFat32HelpUrl();
     static QUrl getFileVersionHistoryHelpUrl();
     static QUrl getTransferQuotaHelpUrl();
-    static QUrl getCredentialStuffingHelpUrl();
+    Q_INVOKABLE static QUrl getCredentialStuffingHelpUrl();
     Q_INVOKABLE static QUrl getCreateBackupHelpUrl();
     Q_INVOKABLE static QUrl getCreateSyncHelpUrl();
     static QUrl getSslErrorHelpUrl();
@@ -84,6 +86,8 @@ public:
     QUrl getSmallProUrl() const;
     QUrl getRepayUrl() const;
     QUrl getUpsellPlanUrl(int proLevel, int periodInMonths) const;
+
+    QUrl getDiscountUrl(const QString& discountCode) const;
 
     bool isFolderLink(const QString& link) const;
     bool isSetLink(const QString& link) const;

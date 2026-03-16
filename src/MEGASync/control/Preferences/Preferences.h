@@ -18,7 +18,6 @@
 Q_DECLARE_METATYPE(QList<long long>)
 
 class SyncSettings;
-struct SyncData;
 class Preferences : public QObject
 {
     Q_OBJECT
@@ -147,6 +146,17 @@ public:
     void setBusinessState(int value);
     int getBlockedState();
     void setBlockedState(int value);
+
+    QDateTime getOfferDialogLastExecution();
+    void setOfferDialogLastExecution(QDateTime timestamp);
+    QDateTime getOfferDialogCampaignExpiryDate();
+    void setOfferDialogCampaignExpiryDate(QDateTime timestamp);
+
+    QString getDiscountCode();
+    void setDiscountCode(QString discountCode);
+
+    long long getUserDiscountLastCheck();
+    void setUserDiscountLastCheck(long long timestamp);
 
     //**** Notifications ****/
     enum class NotificationsTypes
@@ -318,38 +328,10 @@ public:
     void setNeverCreateLink(bool value);
 
     // sync related
-    void writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); //write sync into cache
-    void removeAllSyncSettings(); //remove all sync from cache
+    void writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); // write sync into cache
     void removeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); //remove one sync from cache
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
-    void removeAllFolders(); //remove all syncs from cache
-    // old cache transition related:
-    void removeOldCachedSync(int position, QString email = QString());
-    //get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
-    QList<SyncData> readOldCachedSyncs(int *cachedBusinessState = nullptr, int *cachedBlockedState = nullptr,
-                                       int *cachedStorageState = nullptr, QString email = QString());
-    void saveOldCachedSyncs(); //save the old cache (intended to clean them)
-
-    //**** LEGACY EXCLUSION RULES ****//
-    unsigned long long upperSizeLimitValue();
-    void setUpperSizeLimitValue(unsigned long long value);
-    unsigned long long lowerSizeLimitValue();
-    void setLowerSizeLimitValue(unsigned long long value);
-    bool upperSizeLimit();
-    void setUpperSizeLimit(bool value);
-    bool lowerSizeLimit();
-    void setLowerSizeLimit(bool value);
-    int upperSizeLimitUnit();
-    void setUpperSizeLimitUnit(int value);
-    int lowerSizeLimitUnit();
-    void setLowerSizeLimitUnit(int value);
-    QStringList getExcludedSyncNames();
-    QStringList getExcludedSyncPaths();
-    // preloads excluded sync names and adds missing defaults ones in previous versions
-    void loadExcludedSyncNames();
-
-    bool hasLegacyExclusionRules();
-    //**** END OF LEGACY EXCLUSION RULES ****/
+    void removeAllFolders(); // remove all syncs from cache
 
     bool isOneTimeActionDone(int action);
     void setOneTimeActionDone(int action, bool done);
@@ -549,6 +531,11 @@ public:
     static long long PAYWALL_NOTIFICATION_INTERVAL_MS;
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
+    static long long TARGETED_DISCOUNT_COOLDOWN_MS;
+    static long long TARGETED_DISCOUNT_CHECK_INTERVAL_MS;
+    static long long TARGETED_DISCOUNT_WAITING_FALLBACK_MS;
+    static long long TARGETED_DISCOUNT_STARTUP_DELAY_MS;
+    static std::chrono::milliseconds OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS;
 
     static std::chrono::milliseconds OVER_QUOTA_DIALOG_DISABLE_DURATION;
     static std::chrono::milliseconds OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
@@ -644,16 +631,11 @@ protected:
 
     std::unique_ptr<EncryptedSettings> mSettings;
 
-    // sync configuration from old syncs
-    QList<SyncData> oldSyncs;
-
     // loaded syncs when loggedin/entered user. This is intended to be used to load values that are not stored in the sdk (like sync name/last known remote path)
     // the actual SyncSettings model is stored in Model::configuredSyncsMap. That one is the one that will be updated and persistent accordingly
     // These are only used for retrieving values or removing at uninstall
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> loadedSyncsMap;
 
-    QStringList excludedSyncNames;
-    QStringList excludedSyncPaths;
     bool errorFlag;
     long long tempBandwidth;
     int tempBandwidthInterval;
@@ -675,7 +657,6 @@ protected:
     static const QString currentAccountKey;
     static const QString currentAccountStatusKey;
     static const QString needsFetchNodesKey;
-    static const QString syncsGroupKey;
     static const QString syncsGroupByTagKey;
     static const QString emailKey;
     static const QString firstNameKey;
@@ -729,12 +710,6 @@ protected:
     static const QString downloadLimitKBKey;
     static const QString parallelUploadConnectionsKey;
     static const QString parallelDownloadConnectionsKey;
-    static const QString upperSizeLimitKey;
-    static const QString lowerSizeLimitKey;
-    static const QString upperSizeLimitValueKey;
-    static const QString lowerSizeLimitValueKey;
-    static const QString upperSizeLimitUnitKey;
-    static const QString lowerSizeLimitUnitKey;
     static const QString cleanerDaysLimitKey;
     static const QString cleanerDaysLimitValueKey;
     static const QString folderPermissionsKey;
@@ -747,13 +722,6 @@ protected:
     static const QString proxyUsernameKey;
     static const QString proxyPasswordKey;
     static const QString configuredSyncsKey;
-    static const QString syncNameKey;
-    static const QString syncIdKey;
-    static const QString localFolderKey;
-    static const QString megaFolderKey;
-    static const QString megaFolderHandleKey;
-    static const QString folderActiveKey;
-    static const QString temporaryInactiveKey;
     static const QString downloadFolderKey;
     static const QString uploadFolderKey;
     static const QString hasDefaultUploadFolderKey;
@@ -815,6 +783,11 @@ protected:
     static const QString themeKey;
     static const QString lastSyncReminderTimeKey;
     static const QString lastSyncReminderStateKey;
+    static const QString offerDialogLastExecutionKey;
+    static const QString offerDialogCampaignExpiryDateKey;
+    static const QString userDiscountLastCheckKey;
+    static const QString discountCodeKey;
+
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     static const QString gfxWorkerEndpointKey;
 #endif
@@ -853,12 +826,6 @@ protected:
     static const bool defaultProxyRequiresAuth;
     static const QString defaultProxyUsername;
     static const QString defaultProxyPassword;
-    static const bool defaultUpperSizeLimit;
-    static const bool defaultLowerSizeLimit;
-    static const unsigned long long defaultUpperSizeLimitValue;
-    static const unsigned long long defaultLowerSizeLimitValue;
-    static const int defaultUpperSizeLimitUnit;
-    static const int defaultLowerSizeLimitUnit;
     static const bool defaultCleanerDaysLimit;
     static const int defaultCleanerDaysLimitValue;
     static const int defaultTransferDownloadMethod;

@@ -120,42 +120,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 #endif
 
     mUi->cDesktopIntegration->hide();
+
 #ifdef Q_OS_WINDOWS
-    typedef LONG MEGANTSTATUS;
-
-    typedef struct _MEGAOSVERSIONINFOW
-    {
-        DWORD dwOSVersionInfoSize;
-        DWORD dwMajorVersion;
-        DWORD dwMinorVersion;
-        DWORD dwBuildNumber;
-        DWORD dwPlatformId;
-        WCHAR szCSDVersion[128]; // Maintenance string for PSS usage
-    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
-
-    typedef MEGANTSTATUS(WINAPI * RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
-    MEGARTL_OSVERSIONINFOW version = {0};
-    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
-    if (hMod)
-    {
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning( \
-    disable: 4191) // 'type cast': unsafe conversion from 'FARPROC' to 'RtlGetVersionPtr'
-#endif
-        RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif
-        if (RtlGetVersion)
-        {
-            RtlGetVersion(&version);
-            if (version.dwMajorVersion >= 10)
-            {
-                mUi->cDesktopIntegration->show();
-            }
-        }
-    }
+    mUi->cDesktopIntegration->show();
 #endif
 
 #ifdef Q_OS_MACOS
@@ -1018,64 +985,71 @@ void SettingsDialog::updateAccountElements()
     QIcon icon;
     mUi->lAccountType->setText(Utilities::getReadablePlanFromId(mPreferences->accountType()));
 
-    const QuotaState quotaState = MegaSyncApp->getTransferQuota()->quotaState();
-    const bool isTransferOverquota = (quotaState != QuotaState::OK);
-    mUi->bUpgrade->setVisible(Utilities::shouldDisplayUpgradeButton(isTransferOverquota));
-
     switch (mPreferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Free.png"));
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->hide();
+            mUi->bUpgrade->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_I.png"));
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
+            mUi->bUpgrade->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_II.png"));
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
+            mUi->bUpgrade->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_III.png"));
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
+            mUi->bUpgrade->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Lite.png"));
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
+            mUi->bUpgrade->show();
             break;
         case Preferences::ACCOUNT_TYPE_BUSINESS:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Business.png"));
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
+            mUi->bUpgrade->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_Flexi.png"));
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
+            mUi->bUpgrade->show();
             break;
         case Preferences::ACCOUNT_TYPE_STARTER:
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
+            mUi->bUpgrade->show();
             break;
         case Preferences::ACCOUNT_TYPE_BASIC:
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
+            mUi->bUpgrade->show();
             break;
         case Preferences::ACCOUNT_TYPE_ESSENTIAL:
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
+            mUi->bUpgrade->show();
             break;
         default:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
             mUi->lAccountType->setText(QString());
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
+            mUi->bUpgrade->show();
             break;
     }
 

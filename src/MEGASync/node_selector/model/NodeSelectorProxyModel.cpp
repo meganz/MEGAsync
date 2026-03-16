@@ -9,7 +9,7 @@
 
 NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent):
     QSortFilterProxyModel(parent),
-    mSortColumn(NodeSelectorModel::NODE),
+    mSortColumn(NodeSelectorModel::Column::NODE),
     mOrder(Qt::AscendingOrder),
     mExpandMapped(true),
     mForceInvalidate(false)
@@ -140,10 +140,10 @@ bool NodeSelectorProxyModel::lessThan(const QModelIndex& left, const QModelIndex
     }
     else
     {
-        if ((left.column() == NodeSelectorModel::ADDED_DATE &&
-             right.column() == NodeSelectorModel::ADDED_DATE) ||
-            (left.column() == NodeSelectorModel::LAST_MODIFIED_DATE &&
-             right.column() == NodeSelectorModel::LAST_MODIFIED_DATE))
+        if ((left.column() == NodeSelectorModel::Column::ADDED_DATE &&
+             right.column() == NodeSelectorModel::Column::ADDED_DATE) ||
+            (left.column() == NodeSelectorModel::Column::LAST_MODIFIED_DATE &&
+             right.column() == NodeSelectorModel::Column::LAST_MODIFIED_DATE))
         {
             result = left.data(toInt(NodeSelectorModelRoles::DATE_ROLE)).value<int64_t>() <
                      right.data(toInt(NodeSelectorModelRoles::DATE_ROLE)).value<int64_t>();
@@ -157,14 +157,14 @@ bool NodeSelectorProxyModel::lessThan(const QModelIndex& left, const QModelIndex
             {
                 result = lStatus < rStatus;
             }
-            else if (left.column() == NodeSelectorModel::USER &&
-                     right.column() == NodeSelectorModel::USER)
+            else if (left.column() == NodeSelectorModel::Column::USER &&
+                     right.column() == NodeSelectorModel::Column::USER)
             {
                 result = mCollator.compare(left.data(Qt::ToolTipRole).toString(),
                                            right.data(Qt::ToolTipRole).toString()) < 0;
             }
-            else if (left.column() == NodeSelectorModel::ACCESS &&
-                     right.column() == NodeSelectorModel::ACCESS)
+            else if (left.column() == NodeSelectorModel::Column::ACCESS &&
+                     right.column() == NodeSelectorModel::Column::ACCESS)
             {
                 result = left.data(toInt(NodeSelectorModelRoles::ACCESS_ROLE)).toInt() <
                          right.data(toInt(NodeSelectorModelRoles::ACCESS_ROLE)).toInt();
@@ -287,7 +287,8 @@ bool NodeSelectorProxyModel::hasContextMenuOptions(const QModelIndexList& indexe
         auto indexItem(getMegaModel()->getItemByIndex(mapToSource(index)));
         if (indexItem && indexItem->getNode())
         {
-            if (indexItem->isRubbishBin() || indexItem->isVault() || indexItem->isVaultDevice())
+            if (indexItem->isRubbishBin() || indexItem->isMyBackupsFolder() ||
+                indexItem->isDeviceFolder())
             {
                 return false;
             }

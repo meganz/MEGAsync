@@ -75,7 +75,7 @@ FocusScope {
                     text: ColorTheme.textInfo
                 }
                 text: UpsellStrings.billedSaveUpText.arg(upsellPlansAccess.currentDiscount)
-                visible: upsellPlansAccess.currentDiscount > 0 && !upsellPlansAccess.onlyProFlexiAvailable
+                visible: upsellPlansAccess.monthly && upsellPlansAccess.currentDiscount > 0 && !upsellPlansAccess.onlyProFlexiAvailable
             }
 
         }
@@ -83,16 +83,14 @@ FocusScope {
         Item {
             id: plansItem
 
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.left: parent.left
             width: rowLayout.width
             height: rowLayout.height
 
             RowLayout {
                 id: rowLayout
 
-                anchors.horizontalCenter: parent.horizontalCenter
                 spacing: root.plansRowSpacing
-                height: implicitHeight
 
                 Repeater {
                     id: plansRepeater
@@ -101,28 +99,35 @@ FocusScope {
 
                     PlanCard {
                         id: card
+                        // Changing Visibility should be done first to ensure values are updated
+                        visible: model.display
 
-                        Layout.preferredWidth: width
-                        Layout.preferredHeight: height
+                        Layout.preferredWidth: implicitWidth
+                        Layout.preferredHeight: implicitHeight
                         Layout.fillHeight: true
 
                         name: model.name
                         buttonName: model.buttonName
                         recommended: model.recommended
+                        hasDiscount: model.hasDiscount
+                        discountPercentage: model.discountPercentage
+                        discountMonths: model.discountMonths
+                        isHighlighted: model.isHighlighted
                         currentPlan: model.currentPlan
                         gbStorage: model.gbStorage
                         gbTransfer: model.gbTransfer
-                        price: model.price
+                        priceAfterTax: model.priceAfterTax
+                        priceBeforeTax: model.priceBeforeTax
                         totalPriceWithoutDiscount: model.totalPriceWithoutDiscount
                         monthlyPriceWithDiscount: model.monthlyPriceWithDiscount
+                        monthlyBasePrice: model.monthlyBasePrice
                         enabled: model.available || model.showOnlyProFlexi
                         showProFlexiMessage: model.showProFlexiMessage
                         showOnlyProFlexi: model.showOnlyProFlexi
-                        visible: model.display
                         monthly: upsellPlansAccess.monthly
                         billingCurrency: upsellPlansAccess.billingCurrency
                         currencyName: upsellPlansAccess.currencyName
-
+                        hasTax: model.hasTax
                         onBuyButtonClicked: {
                             upsellComponentAccess.buyButtonClicked(index);
                         }

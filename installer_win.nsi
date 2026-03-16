@@ -18,12 +18,12 @@ SetCompressor /SOLID /FINAL lzma
 !macroend
 
 ; HM NIS Edit Wizard helper defines
-BrandingText "MEGA Limited"
+BrandingText "MEGA"
 !define PRODUCT_NAME "MEGAsync"
 
-VIAddVersionKey "CompanyName" "MEGA Limited"
+VIAddVersionKey "CompanyName" "MEGA"
 VIAddVersionKey "FileDescription" "MEGAsync"
-VIAddVersionKey "LegalCopyright" "MEGA Limited 2025"
+VIAddVersionKey "LegalCopyright" "MEGA 2026"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
@@ -393,8 +393,8 @@ Function .onInit
   ${EndIf}
   !endif
 
-  ${IfNot} ${AtLeastWin8}
-    MessageBox MB_OK "This MEGA Desktop App installer is for Windows 8 or above"
+  ${IfNot} ${AtLeastWin10}
+    MessageBox MB_OK "This MEGA Desktop App installer is for Windows 10 or above"
     Quit
   ${EndIf}
 

@@ -36,11 +36,10 @@ SyncInfo *SyncInfo::instance()
     return SyncInfo::model.get();
 }
 
-SyncInfo::SyncInfo() : QObject(),
-    preferences (Preferences::instance()),
-    mIsFirstTwoWaySyncDone (preferences->isFirstSyncDone()),
-    mIsFirstBackupDone (preferences->isFirstBackupDone()),
-    syncMutex (QMutex::Recursive),
+SyncInfo::SyncInfo():
+    QObject(),
+    preferences(Preferences::instance()),
+    syncMutex(QMutex::Recursive),
     delegateListener(std::make_unique<QTMegaListener>(MegaSyncApp->getMegaApi(), this))
 {
     MegaSyncApp->getMegaApi()->addListener(delegateListener.get());
@@ -118,7 +117,6 @@ void SyncInfo::removeAllFolders()
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
-    syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
 }
 
@@ -129,55 +127,6 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     {
         syncSetting->setSyncID(QUuid::createUuid().toString().toUpper());
         Platform::getInstance()->syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
-    }
-
-    //send event for the first sync/backup
-    switch (syncSetting->getType())
-    {
-    case mega::MegaSync::SyncType::TYPE_TWOWAY:
-    {
-        // Send event for the first sync
-        if (!mIsFirstTwoWaySyncDone && !preferences->isFirstSyncDone())
-        {
-            if (mSyncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
-            {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                    AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING);
-            }
-            else
-            {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                    AppStatsEvents::EventType::FIRST_SYNC);
-            }
-
-            mSyncToCreateOrigin = SyncOrigin::NONE;
-        }
-        mIsFirstTwoWaySyncDone = true;
-        break;
-    }
-    case mega::MegaSync::SyncType::TYPE_BACKUP:
-    {
-        // Send event for the first backup
-        if (!mIsFirstBackupDone && !preferences->isFirstBackupDone())
-        {
-            if (mSyncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
-            {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                    AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING);
-            }
-            else
-            {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                    AppStatsEvents::EventType::FIRST_BACKUP);
-            }
-
-            mSyncToCreateOrigin = SyncOrigin::NONE;
-        }
-        mIsFirstBackupDone = true;
-        break;
-    }
-    default:
-        break;
     }
 
     MessageDialogInfo msgInfo;
@@ -251,21 +200,7 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
     std::shared_ptr<SyncSettings> cs;
 
-    auto oldcsitr = syncsSettingPickedFromOldConfig.find(sync->getBackupId());
-
-    if (oldcsitr != syncsSettingPickedFromOldConfig.end()) // resumed after picked from old sync config)
-    {
-        cs = oldcsitr.value();
-
-        //move into the configuredSyncsMap
-        configuredSyncsMap.insert(sync->getBackupId(), cs);
-        MegaSync::SyncType type = static_cast<MegaSync::SyncType>(sync->getType());
-        configuredSyncs[type].append(sync->getBackupId());
-
-        // remove from picked
-        syncsSettingPickedFromOldConfig.erase(oldcsitr);
-    }
-    else if (configuredSyncsMap.contains(sync->getBackupId())) //existing configuration (an update)
+    if (configuredSyncsMap.contains(sync->getBackupId())) // existing configuration (an update)
     {
         cs = configuredSyncsMap[sync->getBackupId()];
     }
@@ -316,7 +251,6 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
 void SyncInfo::rewriteSyncSettings()
 {
-    preferences->removeAllSyncSettings();
     QMutexLocker qm(&syncMutex);
 
     // Get all settings
@@ -344,28 +278,12 @@ void SyncInfo::onboardingFinished(bool onboardingShown)
     }
 }
 
-void SyncInfo::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, bool loadedFromPreviousSessions)
-{
-    QMutexLocker qm(&syncMutex);
-    assert(preferences->logged() || loadedFromPreviousSessions);
-    assert (!configuredSyncsMap.contains(backupId) && "picking already configured sync!"); //this should always be the case
-
-    std::shared_ptr<SyncSettings> cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSettings>(osd, loadedFromPreviousSessions);
-
-    cs->setBackupId(backupId); //assign the new tag given by the sdk
-
-    preferences->writeSyncSetting(cs);
-}
-
 void SyncInfo::reset()
 {
     QMutexLocker qm(&syncMutex);
     configuredSyncs.clear();
     configuredSyncsMap.clear();
-    syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
-    mIsFirstTwoWaySyncDone = false;
-    mIsFirstBackupDone = false;
 }
 
 int SyncInfo::getNumSyncedFolders(const QVector<SyncType>& types)
@@ -631,11 +549,6 @@ void SyncInfo::checkUnattendedDisabledSyncsForErrors()
 
         mLastError = mega::MegaSync::NO_SYNC_ERROR;
     }
-}
-
-void SyncInfo::setSyncToCreateOrigin(SyncOrigin newSyncToCreate)
-{
-    mSyncToCreateOrigin = newSyncToCreate;
 }
 
 void SyncInfo::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)

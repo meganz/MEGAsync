@@ -62,9 +62,6 @@ color: #F3F4F4; /*colorToken.text-primary*/
 
 </string>
   </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0">
    <property name="spacing">
     <number>0</number>

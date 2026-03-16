@@ -41,7 +41,6 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
     mUi->lTotal->installEventFilter(this);
     mUi->sStatus->installEventFilter(this);
 
-    setProperty("TOKENIZED", true);
     TokenParserWidgetManager::instance()->polish(this);
 }
 

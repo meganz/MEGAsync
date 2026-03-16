@@ -71,6 +71,7 @@ public:
 
     // AutoUpdate tasks
     void runPostAutoUpdateStep() override;
+    Preferences::ThemeAppeareance getPanelTheme() const override;
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     QString getGfxProviderPath() override;
@@ -87,6 +88,8 @@ public:
 
     Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
     void applyCurrentThemeOnCurrentDialogFrame(QWindow* window) override;
+
+    void setRenderingBackend() const override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);

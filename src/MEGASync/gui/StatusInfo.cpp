@@ -1,6 +1,5 @@
 #include "StatusInfo.h"
 
-#include "ThemeManager.h"
 #include "ui_StatusInfo.h"
 #include "Utilities.h"
 #include <MegaApplication.h>
@@ -18,7 +17,6 @@ StatusInfo::StatusInfo(QWidget *parent) :
     mScanningAnimationIndex = 1;
     connect(&mScanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
     ui->bIconState->setCursor(Qt::ArrowCursor);
-    setProperty("TOKENIZED", true);
 }
 
 StatusInfo::~StatusInfo()

@@ -141,7 +141,7 @@ void TokenParserWidgetManager::onUpdateRequested()
 // performance mesurament code will be removed in latter stages of project.
 void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
 {
-    if (!dialog || !isTokenized(dialog))
+    if (!dialog)
     {
         return;
     }
@@ -179,11 +179,6 @@ void TokenParserWidgetManager::polish(QWidget* widget)
     widget->style()->unpolish(widget);
     widget->style()->polish(widget);
     widget->update();
-}
-
-bool TokenParserWidgetManager::isTokenized(QWidget* widget)
-{
-    return widget->property("TOKENIZED").toBool();
 }
 
 void TokenParserWidgetManager::applyCurrentTheme()
@@ -235,7 +230,6 @@ void TokenParserWidgetManager::styleQFileDialog(QPointer<QFileDialog> dialog)
 {
     if (dialog)
     {
-        dialog->setProperty("TOKENIZED", true);
         const auto dimension = QLatin1String("small");
         auto* buttonBox = dialog->findChild<QDialogButtonBox*>(QLatin1String("buttonBox"));
         if (buttonBox)
@@ -300,9 +294,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
     tokenizeChildStyleSheets(widget);
     removeFrameOnDialogCombos(widget);
 
-    QString styleSheet = (isTokenized(widget) ? mThemedStandardComponentsStyleSheet[currentTheme] :
-                                                QLatin1String()) %
-                         widgetStyleSheet;
+    QString styleSheet = mThemedStandardComponentsStyleSheet[currentTheme] % widgetStyleSheet;
 
     widget->setStyleSheet(styleSheet);
 }

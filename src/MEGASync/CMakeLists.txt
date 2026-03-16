@@ -203,7 +203,7 @@ if (UNIX AND NOT APPLE)
 
 endif()
 
-# Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
+# Amend manifest to tell Windows that the application is DPI aware (needed for Windows 10 and up)
 if (MSVC)
     add_custom_command(
         TARGET MEGAsync

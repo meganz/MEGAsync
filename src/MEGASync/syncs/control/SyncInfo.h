@@ -48,8 +48,6 @@ private:
     SyncInfo();
 
     std::shared_ptr<Preferences> preferences;
-    bool mIsFirstTwoWaySyncDone;
-    bool mIsFirstBackupDone;
 
     void saveUnattendedDisabledSyncs();
     void checkUnattendedDisabledSyncsForErrors();
@@ -82,11 +80,8 @@ public:
 protected:
     mutable QMutex syncMutex;
 
-    SyncOrigin mSyncToCreateOrigin;
-
     QMap<SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;
-    QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> syncsSettingPickedFromOldConfig;
     QMap<SyncType, QSet<mega::MegaHandle>> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
     std::unique_ptr<mega::QTMegaListener> delegateListener;
 
@@ -113,9 +108,6 @@ public:
 
     // OnboardingFinished
     void onboardingFinished(bool onboardingShown);
-
-    // load into sync model the information from an old cached sync
-    void pickInfoFromOldSync(const SyncData &osd, mega::MegaHandle backupId, bool loadedFromPreviousSessions);
 
     // remove syncs from model
     void removeSyncedFolderByBackupId(mega::MegaHandle backupId);
@@ -176,7 +168,6 @@ public:
     void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs);
 
     void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
-    void setSyncToCreateOrigin(SyncOrigin newSyncToCreate);
 
 protected:
     void onEvent(mega::MegaApi* api, mega::MegaEvent* event) override;

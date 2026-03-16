@@ -555,6 +555,46 @@ void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* wind
     }
 }
 
+void PlatformImplementation::setRenderingBackend() const
+{
+    auto qtOpengl = qEnvironmentVariable("QT_OPENGL");
+    if (!qtOpengl.isEmpty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     QString::fromUtf8("Using system QT_OPENGL value: %1")
+                         .arg(qtOpengl)
+                         .toUtf8()
+                         .constData());
+    }
+    else
+    {
+        // Default to ANGLE to mitigate driver issues
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting QT_OPENGL value to \"angle\"");
+        qputenv("QT_OPENGL", "angle");
+
+        auto qtAnglePlatform = qEnvironmentVariable("QT_ANGLE_PLATFORM");
+        if (!qtAnglePlatform.isEmpty())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                         QString::fromUtf8("Using system QT_ANGLE_PLATFORM value: %1")
+                             .arg(qtAnglePlatform)
+                             .toUtf8()
+                             .constData());
+        }
+        else
+        {
+            // Default to WARP
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting QT_ANGLE_PLATFORM value to \"warp\"");
+            qputenv("QT_ANGLE_PLATFORM", "warp");
+        }
+
+        QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+
+        // Improve QtQuickWidget compatibility
+        QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    }
+}
+
 void PlatformImplementation::removeSyncFromLeftPane(QString syncPath)
 {
     CheckLeftPaneIcon(syncPath.toStdWString().data(), true);
@@ -562,36 +602,6 @@ void PlatformImplementation::removeSyncFromLeftPane(QString syncPath)
 
 void PlatformImplementation::addSyncToLeftPane(QString syncPath, QString syncName, QString uuid)
 {
-    typedef LONG MEGANTSTATUS;
-    typedef struct _MEGAOSVERSIONINFOW {
-        DWORD dwOSVersionInfoSize;
-        DWORD dwMajorVersion;
-        DWORD dwMinorVersion;
-        DWORD dwBuildNumber;
-        DWORD dwPlatformId;
-        WCHAR  szCSDVersion[ 128 ];     // Maintenance string for PSS usage
-    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
-
-    typedef MEGANTSTATUS (WINAPI* RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
-    MEGARTL_OSVERSIONINFOW version = { 0 };
-    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
-    if (!hMod)
-    {
-        return;
-    }
-
-    RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
-    if (!RtlGetVersion)
-    {
-        return;
-    }
-
-    RtlGetVersion(&version);
-    if (version.dwMajorVersion < 10)
-    {
-        return;
-    }
-
     DWORD value;
     QString sValue;
     QString key = QString::fromUtf8("Software\\Classes\\CLSID\\%1").arg(uuid);
@@ -1545,16 +1555,12 @@ bool PlatformImplementation::isUserActive()
 {
     LASTINPUTINFO lii = {0};
     lii.cbSize = sizeof(LASTINPUTINFO);
-    if (!GetLastInputInfo(&lii))
+    bool userIsActive = true; // Default to true to avoid blocking
+    if (GetLastInputInfo(&lii))
     {
-        return true;
+        userIsActive = (GetTickCount() - lii.dwTime) <= Preferences::USER_INACTIVITY_MS;
     }
-
-    if ((GetTickCount() - lii.dwTime) > Preferences::USER_INACTIVITY_MS)
-    {
-        return false;
-    }
-    return true;
+    return userIsActive;
 }
 
 QString PlatformImplementation::getDeviceName()
@@ -1933,3 +1939,8 @@ QString PlatformImplementation::getGfxProviderPath()
            QLatin1String("/mega-desktop-app-gfxworker.exe");
 }
 #endif
+
+Preferences::ThemeAppeareance PlatformImplementation::getPanelTheme() const
+{
+    return getCurrentThemeAppearance().systemScheme;
+}

@@ -29,8 +29,9 @@ const QLatin1String
 const QLatin1String ENV_MEGA_SYNC_CREATION_MAX_INTERVAL_SECS_DEFAULT_VALUE("900"); // 15 mins
 }
 
-SyncReminderNotificationManager::SyncReminderNotificationManager(bool comesFromOnboarding):
-    QObject(nullptr),
+SyncReminderNotificationManager::SyncReminderNotificationManager(bool comesFromOnboarding,
+                                                                 QObject* parent):
+    QObject(parent),
     mState(std::nullopt),
     mLastState(std::nullopt),
     mLastSyncReminderTime(std::nullopt)

@@ -38,7 +38,7 @@ void RemoveBackup::onConfirmRemove(mega::MegaHandle targetFolder)
 {
     if (targetFolder != mega::INVALID_HANDLE && !checkTargetFolderExist(targetFolder))
     {
-        auto error = tr("Destination folder doesn't exists. Choose another.");
+        auto error = tr("Destination folder doesn’t exist. Choose another.");
 
         mRemoveBackupDialog->setTargetFolderErrorHint(error);
     }

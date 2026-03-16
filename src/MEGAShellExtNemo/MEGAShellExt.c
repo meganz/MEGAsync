@@ -26,6 +26,8 @@ static void mega_ext_instance_init(MEGAExt *mega_ext)
     mega_ext->string_viewprevious = NULL;
     mega_ext->string_upload = NULL;
     mega_ext->syncs_received = FALSE;
+    mega_ext->string_backup = NULL;
+    mega_ext->string_sync = NULL;
 
     // ignore SIGPIPE as we most likely will write to a closed socket in mega_notify_client_read()
     signal(SIGPIPE, SIG_IGN);
@@ -285,7 +287,81 @@ static void mega_ext_on_open_previous_selected(NemoMenuItem *item, gpointer user
         mega_ext_client_end_request(mega_ext);
 }
 
+// user clicked on "Backup to MEGA" menu item
+static void mega_ext_on_backup_selected(NemoMenuItem* item, gpointer user_data)
+{
+    MEGAExt* mega_ext = MEGA_EXT(user_data);
+    GList* l;
+    GList* files;
+    gboolean flag = FALSE;
 
+    files = g_object_get_data(G_OBJECT(item), "MEGAExtension::files");
+    for (l = files; l != NULL; l = l->next)
+    {
+        NemoFileInfo* file = NEMO_FILE_INFO(l->data);
+        FileState state;
+        gchar* path;
+        GFile* fp;
+
+        fp = nemo_file_info_get_location(file);
+        if (!fp)
+            continue;
+
+        path = g_file_get_path(fp);
+        if (!path)
+            continue;
+
+        state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
+
+        if (state != RESPONSE_SYNCED && state != RESPONSE_PENDING && state != RESPONSE_SYNCING)
+        {
+            if (mega_ext_client_backup(mega_ext, path))
+                flag = TRUE;
+        }
+        g_free(path);
+    }
+
+    if (flag)
+        mega_ext_client_end_request(mega_ext);
+}
+
+// user clicked on "Sync with MEGA" menu item
+static void mega_ext_on_sync_selected(NemoMenuItem* item, gpointer user_data)
+{
+    MEGAExt* mega_ext = MEGA_EXT(user_data);
+    GList* l;
+    GList* files;
+    gboolean flag = FALSE;
+
+    files = g_object_get_data(G_OBJECT(item), "MEGAExtension::files");
+    for (l = files; l != NULL; l = l->next)
+    {
+        NemoFileInfo* file = NEMO_FILE_INFO(l->data);
+        FileState state;
+        gchar* path;
+        GFile* fp;
+
+        fp = nemo_file_info_get_location(file);
+        if (!fp)
+            continue;
+
+        path = g_file_get_path(fp);
+        if (!path)
+            continue;
+
+        state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
+
+        if (state != RESPONSE_SYNCED && state != RESPONSE_PENDING && state != RESPONSE_SYNCING)
+        {
+            if (mega_ext_client_sync(mega_ext, path))
+                flag = TRUE;
+        }
+        g_free(path);
+    }
+
+    if (flag)
+        mega_ext_client_end_request(mega_ext);
+}
 
 // Executed on context menu for selected object(-s)
 // Check the state of the selected files
@@ -456,6 +532,61 @@ static GList *mega_ext_get_file_items(NemoMenuProvider *provider, G_GNUC_UNUSED 
                     g_object_unref(item);
                 }
             }
+        }
+    }
+    // if there are any unsynced folders selected
+    if (unsyncedFolders)
+    {
+        NemoMenuItem* backupItem;
+        NemoMenuItem* syncItem;
+
+        // Backup option
+        out = mega_ext_client_get_string(mega_ext, STRING_BACKUP, 0, unsyncedFolders);
+        g_debug("DEBUG: STRING_BACKUP returned: %s", out ? out : "NULL");
+
+        if (out)
+        {
+            backupItem = nemo_menu_item_new("MEGAExtension::backup",
+                                            out,
+                                            "Backup folders to your MEGA account",
+                                            "mega");
+            g_free(mega_ext->string_backup);
+            mega_ext->string_backup = g_strdup(out);
+            g_free(out);
+
+            g_signal_connect(backupItem,
+                             "activate",
+                             G_CALLBACK(mega_ext_on_backup_selected),
+                             provider);
+            g_object_set_data_full((GObject*)backupItem,
+                                   "MEGAExtension::files",
+                                   nemo_file_info_list_copy(files),
+                                   (GDestroyNotify)nemo_file_info_list_free);
+            nemo_menu_append_item(subMenu, backupItem);
+            g_object_unref(backupItem);
+        }
+
+        // Sync option
+        out = mega_ext_client_get_string(mega_ext, STRING_SYNC, 0, 0);
+        g_debug("DEBUG: STRING_SYNC returned: %s", out ? out : "NULL");
+
+        if (out && unsyncedFolders == 1) // Support sync for only one folder selection
+        {
+            syncItem = nemo_menu_item_new("MEGAExtension::sync",
+                                          out,
+                                          "Sync folders with your MEGA account",
+                                          "mega");
+            g_free(mega_ext->string_sync);
+            mega_ext->string_sync = g_strdup(out);
+            g_free(out);
+
+            g_signal_connect(syncItem, "activate", G_CALLBACK(mega_ext_on_sync_selected), provider);
+            g_object_set_data_full((GObject*)syncItem,
+                                   "MEGAExtension::files",
+                                   nemo_file_info_list_copy(files),
+                                   (GDestroyNotify)nemo_file_info_list_free);
+            nemo_menu_append_item(subMenu, syncItem);
+            g_object_unref(syncItem);
         }
     }
 

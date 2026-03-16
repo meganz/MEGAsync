@@ -21,7 +21,7 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation>Disque nuagique</translation>
+        <translation>Disque Cloud</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -54,7 +54,7 @@
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
-        <translation>Votre compte a été désactivé par votre administrateur. Contactez l’administrateur de votre compte Pour entreprise pour obtenir plus de précisions.</translation>
+        <translation>Votre compte a été désactivé par votre administrateur. Contactez l’administrateur de votre compte Pour&#xa0;entreprise pour obtenir plus de précisions.</translation>
     </message>
 </context>
 <context>
@@ -165,7 +165,7 @@
     <message>
         <source>Reminder: You have a contact request</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Rappel : vous avez une demande de contact</translation>
+        <translation>Rappel&#xa0;: vous avez une demande de contact</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -302,8 +302,8 @@
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
         <translation>
-            <numerusform>[A] a mis %n élément à jour</numerusform>
-            <numerusform>[A] a mis %n éléments à jour</numerusform>
+            <numerusform>[A] a mis %n&#xa0;élément à jour</numerusform>
+            <numerusform>[A] a mis %n&#xa0;éléments à jour</numerusform>
         </translation>
     </message>
 </context>
@@ -360,7 +360,7 @@
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
         <translatorcomment>text for error dialog shown when a  sync fails, folder path and reason are given during runtime in the placeholders.SNC-2565</translatorcomment>
-        <translation>Votre dossier « %1 » ne peut pas être synchronisé. Raison : %2</translation>
+        <translation>Votre dossier «&#xa0;%1&#xa0;» ne peut pas être synchronisé. Raison&#xa0;: %2</translation>
     </message>
     <message>
         <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
@@ -375,7 +375,7 @@
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder.SNC-4208</translatorcomment>
-        <translation>Votre synchronisation ne peut pas être supprimée. Raison : %1 </translation>
+        <translation>Votre synchronisation ne peut pas être supprimée. Raison&#xa0;: %1&#xa0;</translation>
     </message>
 </context>
 <context>
@@ -480,7 +480,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>(Maximum de 90 % de la bande passante disponible)</translation>
+        <translation>(Maximum de 90&#xa0;% de la bande passante disponible)</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -510,7 +510,7 @@
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
-        <translation>Téléchargements :</translation>
+        <translation>Téléchargements&#xa0;:</translation>
     </message>
     <message>
         <source>KB/s</source>
@@ -520,7 +520,7 @@
     <message>
         <source>Limit to:</source>
         <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
-        <translation>Limiter à :</translation>
+        <translation>Limiter à&#xa0;:</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -545,7 +545,7 @@
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the limit of upload connections per transfer.</translatorcomment>
-        <translation>Téléversements :</translation>
+        <translation>Téléversements&#xa0;:</translation>
     </message>
     <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
@@ -730,7 +730,7 @@
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation>Nouveautés de cette version :</translation>
+        <translation>Nouveautés de cette version&#xa0;:</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -745,7 +745,7 @@
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]Ce logiciel utilise Qt ([C] 2018 The Qt Company Ltd) sous licence publique générale GNU amoindrie Version 3[/A]</translation>
+        <translation>[A]Ce logiciel utilise Qt ([C] 2018 The Qt Company Ltd) sous licence publique générale GNU amoindrie Version&#xa0;3[/A]</translation>
     </message>
 </context>
 <context>
@@ -802,7 +802,7 @@
     <message>
         <source>[A]%</source>
         <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
-        <translation>[A] %</translation>
+        <translation>[A]&#xa0;%</translation>
     </message>
 </context>
 <context>
@@ -931,22 +931,22 @@
     <message>
         <source>The following characters are not allowed: %1</source>
         <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder). SNC-5804</translatorcomment>
-        <translation>Les caractères suivants ne sont pas autorisés : %1</translation>
+        <translation>Les caractères suivants ne sont pas autorisés&#xa0;: %1</translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
         <translation>
-            <numerusform>Votre abonnement Pro a expiré il y a %n jour</numerusform>
-            <numerusform>Votre abonnement Pro a expiré il y a %n jours</numerusform>
+            <numerusform>Votre abonnement Pro a expiré il y a %n&#xa0;jour</numerusform>
+            <numerusform>Votre abonnement Pro a expiré il y a %n&#xa0;jours</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
         <translation>
-            <numerusform>Votre abonnement Pro arrivera à expiration dans %n jour</numerusform>
-            <numerusform>Votre abonnement Pro arrivera à expiration dans %n jours</numerusform>
+            <numerusform>Votre abonnement Pro arrivera à expiration dans %n&#xa0;jour</numerusform>
+            <numerusform>Votre abonnement Pro arrivera à expiration dans %n&#xa0;jours</numerusform>
         </translation>
     </message>
     <message>
@@ -980,7 +980,7 @@
     <message>
         <source>Your error report was successfully submitted. Thank you for your feedback!</source>
         <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
-        <translation>Votre rapport d’erreur a été envoyé avec succès. Merci pour vos commentaires !</translation>
+        <translation>Votre rapport d’erreur a été envoyé avec succès. Merci pour vos commentaires&#xa0;!</translation>
     </message>
 </context>
 <context>
@@ -1108,7 +1108,7 @@
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Contactez l’administrateur de votre compte Pour entreprise pour résoudre la situation et activer votre compte.</translation>
+        <translation>Contactez l’administrateur de votre compte Pour&#xa0;entreprise pour résoudre la situation et activer votre compte.</translation>
     </message>
     <message>
         <source>Get Pro</source>
@@ -1153,12 +1153,12 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Résolvez votre problème de paiement dès que possible afin d’éviter toute désactivation de votre compte Pour entreprise</translation>
+        <translation>Résolvez votre problème de paiement dès que possible afin d’éviter toute désactivation de votre compte Pour&#xa0;entreprise</translation>
     </message>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Le compte Pro Flexi a été désactivé</translation>
+        <translation>Le compte Pro&#xa0;Flexi a été désactivé</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1168,7 +1168,7 @@
     <message>
         <source>Reminder: You have a contact request</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Rappel : vous avez une demande de contact</translation>
+        <translation>Rappel&#xa0;: vous avez une demande de contact</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -1229,8 +1229,8 @@
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
         <translation>
-            <numerusform>Il vous reste %n jour pour sauver vos données</numerusform>
-            <numerusform>Il vous reste %n jours pour sauver vos données</numerusform>
+            <numerusform>Il vous reste %n&#xa0;jour pour sauver vos données</numerusform>
+            <numerusform>Il vous reste %n&#xa0;jours pour sauver vos données</numerusform>
         </translation>
     </message>
     <message>
@@ -1297,8 +1297,8 @@
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
         <translation>
-            <numerusform>[A] a ajouté %n élément</numerusform>
-            <numerusform>[A] a ajouté %n éléments</numerusform>
+            <numerusform>[A] a ajouté %n&#xa0;élément</numerusform>
+            <numerusform>[A] a ajouté %n&#xa0;éléments</numerusform>
         </translation>
     </message>
     <message>
@@ -1315,8 +1315,8 @@
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
         <translation>
-            <numerusform>[A] a mis %n élément à jour</numerusform>
-            <numerusform>[A] a mis %n éléments à jour</numerusform>
+            <numerusform>[A] a mis %n&#xa0;élément à jour</numerusform>
+            <numerusform>[A] a mis %n&#xa0;éléments à jour</numerusform>
         </translation>
     </message>
 </context>
@@ -1345,7 +1345,7 @@
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
-        <translation>Dossier local :</translation>
+        <translation>Dossier local&#xa0;:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1355,7 +1355,7 @@
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Sélectionnez le dossier de téléchargement de vos fichiers :</translation>
+        <translation>Sélectionnez le dossier de téléchargement de vos fichiers&#xa0;:</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1388,8 +1388,8 @@
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation>
-            <numerusform>%1 élément est sélectionné.</numerusform>
-            <numerusform>%1 éléments sont sélectionnés.</numerusform>
+            <numerusform>%1&#xa0;élément est sélectionné.</numerusform>
+            <numerusform>%1&#xa0;éléments sont sélectionnés.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -1397,8 +1397,8 @@
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation>
-            <numerusform>%1. %2 élément a été supprimé. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform>
-            <numerusform>%1. %2 éléments ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform>
+            <numerusform>%1. %2&#xa0;élément a été supprimé. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform>
+            <numerusform>%1. %2&#xa0;éléments ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform>
         </translation>
     </message>
     <message>
@@ -1458,7 +1458,7 @@
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
         <translation>
             <numerusform>Appliquer à l’autre doublon</numerusform>
-            <numerusform>Appliquer à tous les %1 doublons</numerusform>
+            <numerusform>Appliquer à tous les %1&#xa0;doublons</numerusform>
         </translation>
     </message>
     <message>
@@ -1489,7 +1489,7 @@
     <message>
         <source>The file will be renamed as:</source>
         <translatorcomment>Text explaining the result of the file rename action</translatorcomment>
-        <translation>Le fichier sera renommé :</translation>
+        <translation>Le fichier sera renommé&#xa0;:</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
@@ -1638,7 +1638,7 @@
         <translation>Exclure les fichiers selon la taille</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>Excluez des fichiers en définissant une limite de taille minimale et maximale, ou des fichiers plus grands ou plus petits qu’une certaine taille.</translation>
     </message>
@@ -1665,37 +1665,37 @@
     <message>
         <source>Files and folders beginning with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation>Fichiers et dossiers qui commencent par «%1» sera inclus dans cette synchronisation.</translation>
+        <translation>Fichiers et dossiers qui commencent par&#xa0;«%1» sera inclus dans cette synchronisation.</translation>
     </message>
     <message>
         <source>Files and folders containing “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation>Fichiers et dossiers contenant «%1» seront inclus dans cette synchronisation.</translation>
+        <translation>Fichiers et dossiers contenant&#xa0;«%1» seront inclus dans cette synchronisation.</translation>
     </message>
     <message>
         <source>Files and folders ending with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation>Fichiers et dossiers qui se terminent par «%1» sera inclus dans cette synchronisation.</translation>
+        <translation>Fichiers et dossiers qui se terminent par&#xa0;«%1» sera inclus dans cette synchronisation.</translation>
     </message>
     <message>
         <source>Files and folders equal to “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation>Fichiers et dossiers égaux à «%1» sera inclus dans cette synchronisation.</translation>
+        <translation>Fichiers et dossiers égaux à&#xa0;«%1» sera inclus dans cette synchronisation.</translation>
     </message>
     <message>
         <source>Files and folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation>Fichiers et dossiers correspondant à la métacaractère  «%1» sera inclus dans cette synchronisation.</translation>
+        <translation>Fichiers et dossiers correspondant à la métacaractère &#xa0;«%1» sera inclus dans cette synchronisation.</translation>
     </message>
     <message>
         <source>Files beginning with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
-        <translation>Les fichiers qui commencent par « %1 » seront inclus dans cette synchronisation.</translation>
+        <translation>Les fichiers qui commencent par «&#xa0;%1&#xa0;» seront inclus dans cette synchronisation.</translation>
     </message>
     <message>
         <source>Files beginning with:</source>
         <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
-        <translation>Fichiers qui commencent par :</translation>
+        <translation>Fichiers qui commencent par&#xa0;:</translation>
     </message>
     <message>
         <source>Files containing “%1” will be included on this sync.</source>
@@ -1705,7 +1705,7 @@
     <message>
         <source>Files containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation>Fichiers qui comprennent :</translation>
+        <translation>Fichiers qui comprennent&#xa0;:</translation>
     </message>
     <message>
         <source>Files ending with “%1” will be included on this sync.</source>
@@ -1715,7 +1715,7 @@
     <message>
         <source>Files ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation>Fichiers qui se terminent par :</translation>
+        <translation>Fichiers qui se terminent par&#xa0;:</translation>
     </message>
     <message>
         <source>Files equal to “%1” will be included on this sync.</source>
@@ -1725,7 +1725,7 @@
     <message>
         <source>Files equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation>Fichiers égaux à :</translation>
+        <translation>Fichiers égaux à&#xa0;:</translation>
     </message>
     <message>
         <source>Files matching wildcard “%1” will be included on this sync.</source>
@@ -1735,37 +1735,37 @@
     <message>
         <source>Files matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation>Fichiers correspondant à une métacaractère :</translation>
+        <translation>Fichiers correspondant à une métacaractère&#xa0;:</translation>
     </message>
     <message>
         <source>Files or folders beginning with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation>Fichiers ou dossiers qui commencent par :</translation>
+        <translation>Fichiers ou dossiers qui commencent par&#xa0;:</translation>
     </message>
     <message>
         <source>Files or folders containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation>Fichiers ou dossiers qui contient :</translation>
+        <translation>Fichiers ou dossiers qui contient&#xa0;:</translation>
     </message>
     <message>
         <source>Files or folders ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation>Fichiers ou dossiers qui se terminent par :</translation>
+        <translation>Fichiers ou dossiers qui se terminent par&#xa0;:</translation>
     </message>
     <message>
         <source>Files or folders equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation>Fichiers ou dossiers d’une valeur égale à :</translation>
+        <translation>Fichiers ou dossiers d’une valeur égale à&#xa0;:</translation>
     </message>
     <message>
         <source>Files or folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation>Fichiers ou dossiers correspondant à une métacaractère :</translation>
+        <translation>Fichiers ou dossiers correspondant à une métacaractère&#xa0;:</translation>
     </message>
     <message>
         <source>Files with extension:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation>Fichiers avec une extension :</translation>
+        <translation>Fichiers avec une extension&#xa0;:</translation>
     </message>
     <message>
         <source>Files with this extension “%1” will be included</source>
@@ -1780,12 +1780,12 @@
     <message>
         <source>Folders beginning with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
-        <translation>Les dossiers qui commencent par « %1 » seront inclus dans cette synchronisation.</translation>
+        <translation>Les dossiers qui commencent par «&#xa0;%1&#xa0;» seront inclus dans cette synchronisation.</translation>
     </message>
     <message>
         <source>Folders beginning with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation>Dossiers qui commencent par :</translation>
+        <translation>Dossiers qui commencent par&#xa0;:</translation>
     </message>
     <message>
         <source>Folders containing “%1” will be included on this sync.</source>
@@ -1795,7 +1795,7 @@
     <message>
         <source>Folders containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation>Dossiers qui comprennent :</translation>
+        <translation>Dossiers qui comprennent&#xa0;:</translation>
     </message>
     <message>
         <source>Folders ending with “%1” will be included on this sync.</source>
@@ -1805,7 +1805,7 @@
     <message>
         <source>Folders ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation>Dossiers qui se terminent par :</translation>
+        <translation>Dossiers qui se terminent par&#xa0;:</translation>
     </message>
     <message>
         <source>Folders equal to “%1” will be included on this sync.</source>
@@ -1815,7 +1815,7 @@
     <message>
         <source>Folders equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation>Dossiers égaux à :</translation>
+        <translation>Dossiers égaux à&#xa0;:</translation>
     </message>
     <message>
         <source>Folders matching wildcard “%1” will be included on this sync.</source>
@@ -1825,12 +1825,12 @@
     <message>
         <source>Folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation>Dossiers correspondant à une métacaractère :</translation>
+        <translation>Dossiers correspondant à une métacaractère&#xa0;:</translation>
     </message>
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
         <translatorcomment>Description for sync exclusion rules dialog.SAT-449</translatorcomment>
-        <translation>Ici, vous pouvez exclure des fichiers et dossiers de la synchronisation avec votre Disque nuagique. Cela peut s’avérer utile pour les fichiers volumineux, les fichiers dont vous n’avez pas besoin sur tous vos appareils, ou certains types de fichiers qui ne doivent pas être synchronisés.</translation>
+        <translation>Ici, vous pouvez exclure des fichiers et dossiers de la synchronisation avec votre disque Cloud. Cela peut s’avérer utile pour les fichiers volumineux, les fichiers dont vous n’avez pas besoin sur tous vos appareils, ou certains types de fichiers qui ne doivent pas être synchronisés.</translation>
     </message>
     <message>
         <source>Manage exclusions</source>
@@ -1885,12 +1885,12 @@
     <message>
         <source>Use comma (“,”) to separate multiple items</source>
         <translatorcomment>Placeholder for text field for adding new exclusion rule .SAT-449</translatorcomment>
-        <translation>Insérez une virgule « , » pour séparer plusieurs éléments</translation>
+        <translation>Insérez une virgule «&#xa0;,&#xa0;» pour séparer plusieurs éléments</translation>
     </message>
     <message>
         <source>You will exclude:</source>
         <translatorcomment>Label for section to specify new exclusion rule values.SAT-449</translatorcomment>
-        <translation>Vous exclurez :</translation>
+        <translation>Vous exclurez&#xa0;:</translation>
     </message>
     <message>
         <source>and</source>
@@ -1963,7 +1963,7 @@
     <message>
         <source>Login error: %1</source>
         <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message. SNC-4122</translatorcomment>
-        <translation>Erreur de connexion :%1</translation>
+        <translation>Erreur de connexion&#xa0;:%1</translation>
     </message>
 </context>
 <context>
@@ -2013,16 +2013,16 @@
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
         <translation>
-            <numerusform>%n fichier</numerusform>
-            <numerusform>%n fichiers</numerusform>
+            <numerusform>%n&#xa0;fichier</numerusform>
+            <numerusform>%n&#xa0;fichiers</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
         <translation>
-            <numerusform>%n dossier</numerusform>
-            <numerusform>%n dossiers</numerusform>
+            <numerusform>%n&#xa0;dossier</numerusform>
+            <numerusform>%n&#xa0;dossiers</numerusform>
         </translation>
     </message>
     <message>
@@ -2173,12 +2173,12 @@ Consultez votre boîte de réception d’emails pour obtenir des instructions su
     <message>
         <source>Detected hard link: [B]%1[/B]</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
-        <translation>Lien physique détecté : [B]%1[/B]</translation>
+        <translation>Lien physique détecté&#xa0;: [B]%1[/B]</translation>
     </message>
     <message>
         <source>Detected special link: [B]%1[/B]</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
-        <translation>Lien spécial détecté : [B]%1[/B]</translation>
+        <translation>Lien spécial détecté&#xa0;: [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -2209,7 +2209,7 @@ Consultez votre boîte de réception d’emails pour obtenir des instructions su
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importer dans mon Disque nuagique</translation>
+        <translation>Importer dans mon disque Cloud</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2270,7 +2270,7 @@ Consultez votre boîte de réception d’emails pour obtenir des instructions su
     <message>
         <source>Available storage:</source>
         <translatorcomment>Label indicating that the number in the right is the available storage CON-467</translatorcomment>
-        <translation>Espace de stockage libre :</translation>
+        <translation>Espace de stockage libre&#xa0;:</translation>
     </message>
     <message>
         <source>Business</source>
@@ -2285,16 +2285,21 @@ Consultez votre boîte de réception d’emails pour obtenir des instructions su
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
         <translatorcomment>Label indicating that the number in the right is the storage space CON-467</translatorcomment>
-        <translation>Espace de stockage :</translation>
+        <translation>Espace de stockage&#xa0;:</translation>
     </message>
 </context>
 <context>
     <name>InfoDialog</name>
+    <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%1&#xa0;% sur %2</translation>
+    </message>
     <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
@@ -2323,7 +2328,7 @@ Consultez votre boîte de réception d’emails pour obtenir des instructions su
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation>Le téléchargement pourrait être interrompu, car 90 % du quota de transfert de ce compte a été utilisé. Pour le poursuivre, souscrivez un nouvel abonnement ou si vous avez un abonnement MEGA périodique, vous pouvez attendre que votre abonnement se renouvelle.</translation>
+        <translation>Le téléchargement pourrait être interrompu, car 90&#xa0;% du quota de transfert de ce compte a été utilisé. Pour le poursuivre, souscrivez un nouvel abonnement ou si vous avez un abonnement MEGA périodique, vous pouvez attendre que votre abonnement se renouvelle.</translation>
     </message>
     <message>
         <source>I will wait</source>
@@ -2469,8 +2474,8 @@ Consultez votre boîte de réception d’emails pour obtenir des instructions su
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
         <translation>
-            <numerusform>Nous vous avons contacté par courriel à l’adresse [A] le [B], mais vous avez encore %n fichier qui occupe [D] dans votre compte MEGA, ce qui vous demande d’avoir un abonnement [E].</numerusform>
-            <numerusform>Nous vous avons contacté par courriel à l’adresse [A] le [B], mais vous avez encore %n fichiers qui occupent [D] dans votre compte MEGA, ce qui vous demande d’avoir un abonnement [E].</numerusform>
+            <numerusform>Nous vous avons contacté par courriel à l’adresse [A] le [B], mais vous avez encore %n fichier qui occupe [D] dans votre compte&#xa0;MEGA, ce qui vous demande d’avoir un abonnement [E].</numerusform>
+            <numerusform>Nous vous avons contacté par courriel à l’adresse [A] le [B], mais vous avez encore %n fichiers qui occupent [D] dans votre compte&#xa0;MEGA, ce qui vous demande d’avoir un abonnement [E].</numerusform>
         </translation>
     </message>
     <message>
@@ -2507,7 +2512,7 @@ Consultez votre boîte de réception d’emails pour obtenir des instructions su
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Votre compte MEGA est saturé.</translation>
+        <translation>Votre compte&#xa0;MEGA est saturé.</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
@@ -2535,7 +2540,7 @@ Consultez votre boîte de réception d’emails pour obtenir des instructions su
     <message>
         <source>Failed: %1</source>
         <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
-        <translation>Échec : %1</translation>
+        <translation>Échec&#xa0;: %1</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -2677,7 +2682,7 @@ sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
         <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
-        <translation>Pour l’installer manuellement, exécutez les commandes suivantes :
+        <translation>Pour l’installer manuellement, exécutez les commandes suivantes&#xa0;:
 
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
@@ -3055,7 +3060,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
-        <translation>Vous avez été déconnecté en raison de cette erreur :%1</translation>
+        <translation>Vous avez été déconnecté en raison de cette erreur&#xa0;:%1</translation>
     </message>
     <message>
         <source>You have been logged out on this computer from another location</source>
@@ -3078,7 +3083,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>Free space: %1</source>
         <translatorcomment>Label informing about the local disk free space</translatorcomment>
-        <translation>Espace libre : %1</translation>
+        <translation>Espace libre&#xa0;: %1</translation>
     </message>
     <message>
         <source>Low disk space</source>
@@ -3093,7 +3098,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>Total size: %1</source>
         <translatorcomment>Label informing about the total local disk space</translatorcomment>
-        <translation>Taille totale : %1</translation>
+        <translation>Taille totale&#xa0;: %1</translation>
     </message>
     <message>
         <source>Try Again</source>
@@ -3151,7 +3156,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Le mode de débogage est activé. Un journal « MEGAsync.log » est en cours de création dans votre ordinateur.</translation>
+        <translation>Le mode de débogage est activé. Un journal «&#xa0;MEGAsync.log&#xa0;» est en cours de création dans votre ordinateur.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3176,17 +3181,17 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation>Erreur d’obtention du lien : %1</translation>
+        <translation>Erreur d’obtention du lien&#xa0;: %1</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
-        <translation>Erreur : Le dossier de destination est invalide. Le téléchargement a été annulé.</translation>
+        <translation>Erreur&#xa0;: Le dossier de destination est invalide. Le téléchargement a été annulé.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Erreur : dossier de destination invalide. Le téléversement a été annulé</translation>
+        <translation>Erreur&#xa0;: dossier de destination invalide. Le téléversement a été annulé</translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -3196,7 +3201,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
-        <translation>Échec de mise à niveau de la sécurité. Erreur : %1</translation>
+        <translation>Échec de mise à niveau de la sécurité. Erreur&#xa0;: %1</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -3226,7 +3231,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Votre compte Pour entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte tant que vous n’aurez pas effectué de paiement et réactivé votre abonnement.</translation>
+        <translation>Votre compte Pour&#xa0;entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte tant que vous n’aurez pas effectué de paiement et réactivé votre abonnement.</translation>
     </message>
     <message>
         <source>Link can&apos;t be imported, invalid key or decryption error</source>
@@ -3241,7 +3246,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>Link can&apos;t be imported: %1</source>
         <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
-        <translation>Le lien ne peut pas être importé. Erreur : %1</translation>
+        <translation>Le lien ne peut pas être importé. Erreur&#xa0;: %1</translation>
     </message>
     <message>
         <source>Link import error</source>
@@ -3346,7 +3351,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Le compte Pro Flexi a été désactivé</translation>
+        <translation>Le compte Pro&#xa0;Flexi a été désactivé</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3416,7 +3421,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Error received : %2.</source>
         <translatorcomment>Error message when there is an error downloading a MEGA link, and this error is a generic error. SNC-2549.</translatorcomment>
-        <translation>Le dossier %1 ne peut pas être téléchargé. Erreur reçue : %2.</translation>
+        <translation>Le dossier %1 ne peut pas être téléchargé. Erreur reçue&#xa0;: %2.</translation>
     </message>
     <message>
         <source>The folder %1 can&apos;t be downloaded. The download may have failed due to a casing mismatch. Ensure the folders match exactly and try again.</source>
@@ -3448,7 +3453,7 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Un problème est survenu lors de l’installation de la mise à jour. Réessayez ultérieurement ou téléchargez la version la plus récente sur : https://mega.io/desktop</translation>
+        <translation>Un problème est survenu lors de l’installation de la mise à jour. Réessayez ultérieurement ou téléchargez la version la plus récente sur&#xa0;: https://mega.io/desktop</translation>
     </message>
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
@@ -3504,8 +3509,8 @@ https://mega.co.nz/#sync</source>
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
         <translation>
-            <numerusform>Vous partagez actuellement le dossier suivant : %1</numerusform>
-            <numerusform>Vous partagez actuellement les dossiers suivants : %1</numerusform>
+            <numerusform>Vous partagez actuellement le dossier suivant&#xa0;: %1</numerusform>
+            <numerusform>Vous partagez actuellement les dossiers suivants&#xa0;: %1</numerusform>
         </translation>
     </message>
     <message>
@@ -3536,7 +3541,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Important :[/A] Contactez l’administrateur de votre compte Pour entreprise pour résoudre le problème et activer votre compte.</translation>
+        <translation>[A]Important&#xa0;:[/A] Contactez l’administrateur de votre compte Pour&#xa0;entreprise pour résoudre le problème et activer votre compte.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -3684,7 +3689,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation>Me déconnecter</translation>
+        <translation>Me&#xa0;déconnecter</translation>
     </message>
     <message>
         <source>No error</source>
@@ -3858,7 +3863,7 @@ Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autor
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation>Disque nuagique</translation>
+        <translation>Disque Cloud</translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4084,7 +4089,7 @@ Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autor
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>Impossible de créer la sauvegarde, car l’appareil à partir duquel vous sauvegardez n’a pas de nom. Donnez un nom à votre appareil, puis réessayez. Si le problème persiste, contactez l’Assistance.</translation>
+        <translation>Impossible de créer une sauvegarde car l’appareil à partir duquel vous effectuez la sauvegarde n’a pas de nom. Donnez un nom à votre appareil, puis réessayez. Si le problème persiste, contactez l&apos;assistance.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4226,7 +4231,7 @@ Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autor
     <message>
         <source>Clear transfers?</source>
         <translatorcomment>Messagebox title to confirm if the user wants to clear multipe selected completed transfer</translatorcomment>
-        <translation>Retirer les transferts ?</translation>
+        <translation>Retirer les transferts&#xa0;?</translation>
     </message>
     <message>
         <source>Don&apos;t cancel</source>
@@ -4475,7 +4480,7 @@ Actualisez la fenêtre.</translation>
     <message>
         <source>Renamed to &quot;%1&quot;</source>
         <translatorcomment>Label in solved name conflict sync stalls by renaming the file.SNC-2565</translatorcomment>
-        <translation>Renommé « %1 »</translation>
+        <translation>Renommé «&#xa0;%1&#xa0;»</translation>
     </message>
 </context>
 <context>
@@ -4511,7 +4516,7 @@ Actualisez la fenêtre.</translation>
     <message>
         <source>Name Conflicts: [B]%1[/B]</source>
         <translatorcomment>Title for name conflict sync stall header widget .[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Conflits de noms : [B]%1[/B]</translation>
+        <translation>Conflits de noms&#xa0;: [B]%1[/B]</translation>
     </message>
     <message>
         <source>Remove duplicates</source>
@@ -4994,6 +4999,11 @@ Saisissez un nom différent.</translation>
         <translatorcomment>Contextual menu text that appears when we right click on a folder on node selector. It creates a sync in the selected folder. SAT-426</translatorcomment>
         <translation>Synchroniser</translation>
     </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
+        <translation>Téléverser</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
@@ -5027,6 +5037,11 @@ Saisissez un nom différent.</translation>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation>Vider la Corbeille</translation>
     </message>
+    <message>
+        <source>Folder is empty</source>
+        <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
+        <translation>Le dossier est vide</translation>
+    </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
@@ -5044,8 +5059,8 @@ Saisissez un nom différent.</translation>
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
         <translation>
-            <numerusform>Quitter ce dossier partagé ?</numerusform>
-            <numerusform>Quitter ces dossiers partagés ?</numerusform>
+            <numerusform>Quitter ce dossier partagé&#xa0;?</numerusform>
+            <numerusform>Quitter ces dossiers partagés&#xa0;?</numerusform>
         </translation>
     </message>
     <message>
@@ -5056,14 +5071,14 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Move %1 to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move a single item (file or folder) pto the rubbish bin. %1 is the name of the item to delete. CON-334</translatorcomment>
-        <translation>Déplacer %1 à la Corbeille ?</translation>
+        <translation>Déplacer %1 à la Corbeille&#xa0;?</translation>
     </message>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
         <translation>
-            <numerusform>Déplacer %n un élément à la Corbeille ?</numerusform>
-            <numerusform>Déplacer %n des éléments à la Corbeille ?</numerusform>
+            <numerusform>Déplacer %n un élément à la Corbeille&#xa0;?</numerusform>
+            <numerusform>Déplacer %n des éléments à la Corbeille&#xa0;?</numerusform>
         </translation>
     </message>
     <message>
@@ -5080,24 +5095,24 @@ Saisissez un nom différent.</translation>
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
         <translation>
-            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n fichier. Désirez-vous continuer ?</numerusform>
-            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n fichiers. Désirez-vous continuer ?</numerusform>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n fichier. Désirez-vous continuer&#xa0;?</numerusform>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n fichiers. Désirez-vous continuer&#xa0;?</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
         <translation>
-            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n dossier. Désirez-vous continuer ?</numerusform>
-            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n dossiers. Désirez-vous continuer ?</numerusform>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n dossier. Désirez-vous continuer&#xa0;?</numerusform>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n dossiers. Désirez-vous continuer&#xa0;?</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
         <translation>
-            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n élément. Désirez-vous continuer ?</numerusform>
-            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n des éléments. Désirez-vous continuer ?</numerusform>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n élément. Désirez-vous continuer&#xa0;?</numerusform>
+            <numerusform>Vous êtes sur le point de supprimer irrémédiablement %n des éléments. Désirez-vous continuer&#xa0;?</numerusform>
         </translation>
     </message>
     <message>
@@ -5179,7 +5194,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>L’offre expire dans %1 min %2 s</translation>
+        <translation>L’offre expire dans %1&#xa0;min %2&#xa0;s</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
@@ -5279,12 +5294,107 @@ Saisissez un nom différent.</translation>
     <message>
         <source>System notifications:</source>
         <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
-        <translation>Notifications du système :</translation>
+        <translation>Notifications du système&#xa0;:</translation>
     </message>
     <message>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
         <translation>Téléversements et téléchargements</translation>
+    </message>
+</context>
+<context>
+    <name>OfferStrings</name>
+    <message>
+        <source>%1 %2</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
+        <translation>%1 %2</translation>
+    </message>
+    <message>
+        <source>%1 of storage</source>
+        <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 d’espace de stockage</translation>
+    </message>
+    <message>
+        <source>%1 of transfer</source>
+        <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 de transfert</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n jour</numerusform>
+            <numerusform>%n jours</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <translatorcomment>Number of remaining hours before the offer expire variable is for remaining hours. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n heure</numerusform>
+            <numerusform>%n heures</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <translatorcomment>Number of remaining minutes before the offer expire,variable is for remaining minutes. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n minute</numerusform>
+            <numerusform>%n minutes</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>*%1</source>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation>*%1</translation>
+    </message>
+    <message>
+        <source>Estimated price in your local currency.</source>
+        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
+        <translation>Prix estimé dans votre devise locale.</translation>
+    </message>
+    <message>
+        <source>Grab Deal</source>
+        <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
+        <translation>Profiter de l&apos;offre</translation>
+    </message>
+    <message>
+        <source>MEGA %1</source>
+        <translatorcomment>Plan name used in the offer dialog, the variable is for plan name snc.6228</translatorcomment>
+        <translation>MEGA %1</translation>
+    </message>
+    <message>
+        <source>MEGA Pass</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA Pass</translation>
+    </message>
+    <message>
+        <source>MEGA VPN</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA VPN</translation>
+    </message>
+    <message>
+        <source>Object storage</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>Stockage objet</translation>
+    </message>
+    <message>
+        <source>Special offers ends in:</source>
+        <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
+        <translation>L&apos;offre spéciale se termine dans&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Tax may apply.</source>
+        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
+        <translation>Des taxes peuvent s&apos;appliquer.</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]%1% off[/B] for %n month</source>
+        <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>[B]%1 % de réduction[/B] pendant %n mois</numerusform>
+            <numerusform>[B]%1 % de réduction[/B] pendant %n mois</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5342,17 +5452,17 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Backup to:</source>
         <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
-        <translation>Sauvegarder vers :</translation>
+        <translation>Sauvegarder vers&#xa0;:</translation>
     </message>
     <message>
         <source>Backup: Confirm</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the backup confirm step CON-468</translatorcomment>
-        <translation>Sauvegarde : confirmer</translation>
+        <translation>Sauvegarde&#xa0;: confirmer</translation>
     </message>
     <message>
         <source>Backup: Select folders</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
-        <translation>Sauvegarde : sélectionner des dossiers</translation>
+        <translation>Sauvegarde&#xa0;: sélectionner des dossiers</translation>
     </message>
     <message>
         <source>Cancel account</source>
@@ -5377,7 +5487,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Choose:</source>
         <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
-        <translation>Vos choix :</translation>
+        <translation>Vos choix&#xa0;:</translation>
     </message>
     <message>
         <source>Closing this window will cancel the sign up process.</source>
@@ -5527,7 +5637,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>It’s better to have:</source>
         <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
-        <translation>Sont recommandés :</translation>
+        <translation>Sont recommandés&#xa0;:</translation>
     </message>
     <message>
         <source>Last name</source>
@@ -5542,12 +5652,12 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>Me connecter</translation>
+        <translation>Me&#xa0;connecter</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
         <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
-        <translation>Connectez-vous à votre [B]compte MEGA[/B]</translation>
+        <translation>Connectez-vous à votre [B]compte&#xa0;MEGA[/B]</translation>
     </message>
     <message>
         <source>Logging in…</source>
@@ -5557,7 +5667,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Names longer than 32 characters are not supported</source>
         <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
-        <translation>Le nom ne doit pas dépasser 32 caractères</translation>
+        <translation>Le nom ne doit pas dépasser 32&#xa0;caractères</translation>
     </message>
     <message>
         <source>Once confirmed, your account will be activated.</source>
@@ -5682,7 +5792,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Synchronisez les dossiers sélectionnés sur votre disque nuagique MEGA avec votre appareil local. Les dossiers resteront à jour avec les modifications apportées localement ou dans MEGA.</translation>
+        <translation>Synchronisez les dossiers sélectionnés sur votre disque Cloud MEGA avec votre appareil local. Les dossiers resteront à jour avec les modifications apportées localement ou dans MEGA.</translation>
     </message>
     <message>
         <source>Sync set up</source>
@@ -5697,7 +5807,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Sync: Choose type</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the choose sync type step CON-467</translatorcomment>
-        <translation>Synchronisation : choisir le type</translation>
+        <translation>Synchronisation&#xa0;: choisir le type</translation>
     </message>
     <message>
         <source>There is already a folder with the same name in this backup</source>
@@ -5794,8 +5904,8 @@ Saisissez un nom différent.</translation>
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
         <translation>
-            <numerusform>[A] a supprimé %n élément</numerusform>
-            <numerusform>[A] a supprimé %n éléments</numerusform>
+            <numerusform>[A] a supprimé %n&#xa0;élément</numerusform>
+            <numerusform>[A] a supprimé %n&#xa0;éléments</numerusform>
         </translation>
     </message>
 </context>
@@ -5979,17 +6089,17 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation>Droits de groupe :</translation>
+        <translation>Droits de groupe&#xa0;:</translation>
     </message>
     <message>
         <source>Numeric value:</source>
         <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
-        <translation>Valeur numérique :</translation>
+        <translation>Valeur numérique&#xa0;:</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
-        <translation>Droits du propriétaire :</translation>
+        <translation>Droits du propriétaire&#xa0;:</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -6004,7 +6114,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation>Droits publics :</translation>
+        <translation>Droits publics&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -6070,6 +6180,15 @@ Saisissez un nom différent.</translation>
 </context>
 <context>
     <name>Preferences</name>
+    <message>
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- Amélioration de la fiabilité des pilotes graphiques problématiques sous Windows
+- Corrections mineures de bugs et améliorations des performances
+</translation>
+    </message>
 </context>
 <context>
     <name>ProgressIndicatorDialog</name>
@@ -6109,7 +6228,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Password:</source>
         <translatorcomment>Label to indicate the password of the proxy that is being configured.</translatorcomment>
-        <translation>Mot de passe :</translation>
+        <translation>Mot de passe&#xa0;:</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -6129,27 +6248,32 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
-        <translation>Paramètres du mandataire :</translation>
+        <translation>Paramètres du mandataire&#xa0;:</translation>
     </message>
     <message>
         <source>Proxy type:</source>
         <translatorcomment>Label to indicate the type of proxy that is being configured.</translatorcomment>
-        <translation>Type de mandataire :</translation>
+        <translation>Type de mandataire&#xa0;:</translation>
     </message>
     <message>
         <source>Server:</source>
         <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
-        <translation>Serveur :</translation>
+        <translation>Serveur&#xa0;:</translation>
     </message>
     <message>
         <source>Username:</source>
         <translatorcomment>Label to indicate the username of the proxy that is being configured.</translatorcomment>
-        <translation>Nom d’utilisateur :</translation>
+        <translation>Nom d’utilisateur&#xa0;:</translation>
     </message>
     <message>
         <source>We couldn’t connect using your proxy settings. Check your proxy details or try a different network.</source>
         <translatorcomment>Error banner shown when there is an error testing the proxy settings. SNC-5411</translatorcomment>
         <translation>Nous n’avons pas pu nous connecter à l’aide de vos paramètres proxy. Vérifiez les paramètres ou essayez un autre réseau.</translation>
+    </message>
+    <message>
+        <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
+        <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
+        <translation>Aucun proxy détecté. Pour vous connecter, définissez une valeur valide pour http_proxy ou https_proxy dans votre environnement.</translation>
     </message>
 </context>
 <context>
@@ -6196,7 +6320,7 @@ Confirmez que le bon nom de dossier a été donné.</translation>
     <message>
         <source>%1 File</source>
         <translatorcomment>Option for filtering files by extension. %1 is a file name suffix, for example txt.</translatorcomment>
-        <translation>Fichier %1</translation>
+        <translation>Fichier&#xa0;%1</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -6239,7 +6363,7 @@ Voulez-vous le remplacer ?</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>« %1 » est protégé en écriture.
+        <translation>«&#xa0;%1&#xa0;» est protégé en écriture.
 Voulez-vous le supprimer quand même ?</translation>
     </message>
     <message>
@@ -6275,7 +6399,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>Voulez-vous vraiment supprimer « %1 » ?</translation>
+        <translation>Voulez-vous vraiment supprimer «&#xa0;%1&#xa0;» ?</translation>
     </message>
     <message>
         <source>Back</source>
@@ -6325,7 +6449,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Dossier :</translation>
+        <translation>Dossier&#xa0;:</translation>
     </message>
     <message>
         <source>Drive</source>
@@ -6340,7 +6464,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>File &amp;name:</source>
         <translatorcomment>Selected file text box label when opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Open, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation>&amp;Nom du fichier :</translation>
+        <translation>&amp;Nom du fichier&#xa0;:</translation>
     </message>
     <message>
         <source>File Folder</source>
@@ -6355,7 +6479,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Files of type:</source>
         <translatorcomment>Label for choosing a type for filtering files</translatorcomment>
-        <translation>Type de fichiers :</translation>
+        <translation>Type de fichiers&#xa0;:</translation>
     </message>
     <message>
         <source>Find Directory</source>
@@ -6400,7 +6524,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Look in:</source>
         <translatorcomment>Label to indicate the current filesystem path containing the files and folders that are being listed</translatorcomment>
-        <translation>Chercher dans :</translation>
+        <translation>Chercher dans&#xa0;:</translation>
     </message>
     <message>
         <source>My Computer</source>
@@ -6468,32 +6592,32 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 Go</translation>
+        <translation>%1&#xa0;Go</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 ko</translation>
+        <translation>%1&#xa0;ko</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 Mo</translation>
+        <translation>%1&#xa0;Mo</translation>
     </message>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 To</translation>
+        <translation>%1&#xa0;To</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 octets</translation>
+        <translation>%1&#xa0;octets</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt;Le nom « %1 » ne peut pas être utilisé.&lt;/b&gt;&lt;p&gt;Essayez un autre nom avec moins de caractères ou sans ponctuation.</translation>
+        <translation>&lt;b&gt;Le nom «&#xa0;%1&#xa0;» ne peut pas être utilisé.&lt;/b&gt;&lt;p&gt;Essayez un autre nom avec moins de caractères ou sans ponctuation.</translation>
     </message>
     <message>
         <source>Computer</source>
@@ -6605,6 +6729,26 @@ Voulez-vous le supprimer quand même ?</translation>
 </context>
 <context>
     <name>RemoveBackup</name>
+    <message>
+        <source>Backup folder already exists on destination. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
+        <translation>Il existe déjà un dossier portant ce nom à cet emplacement, choisissez un autre emplacement</translation>
+    </message>
+    <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>Le dossier de destination n’existe pas. Choisissez-en un autre.</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>Erreur lors du déplacement ou de la suppression du dossier de sauvegarde dans MEGA</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
+        <translation>Impossible de déplacer ou de supprimer le dossier de sauvegarde dans MEGA. Raison&#xa0;: %1</translation>
+    </message>
 </context>
 <context>
     <name>RemoveBackupDialog</name>
@@ -6641,7 +6785,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Move to:</source>
         <translatorcomment>Label in the left of a line edit where the target location will be displayed</translatorcomment>
-        <translation>Déplacer vers :</translation>
+        <translation>Déplacer vers&#xa0;:</translation>
     </message>
     <message>
         <source>Stop backing up folder?</source>
@@ -6723,12 +6867,12 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Unable to rename this file.[BR]Error: %1.</source>
         <translatorcomment>Fail message shown on the rename dialog when renaming a MEGA file has failed. SAT-1110</translatorcomment>
-        <translation>Impossible de renommer ce fichier.[BR]Erreur : %1.</translation>
+        <translation>Impossible de renommer ce fichier.[BR]Erreur&#xa0;: %1.</translation>
     </message>
     <message>
         <source>Unable to rename this folder.[BR]Error: %1.</source>
         <translatorcomment>Fail message shown on the rename dialog when renaming a MEGA folder has failed. SAT-1110</translatorcomment>
-        <translation>Impossible de renommer ce dossier.[BR]Erreur : %1.</translation>
+        <translation>Impossible de renommer ce dossier.[BR]Erreur&#xa0;: %1.</translation>
     </message>
 </context>
 <context>
@@ -6742,16 +6886,16 @@ Voulez-vous le supprimer quand même ?</translation>
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
         <translation>
-            <numerusform>%n fichier</numerusform>
-            <numerusform>%n fichiers</numerusform>
+            <numerusform>%n&#xa0;fichier</numerusform>
+            <numerusform>%n&#xa0;fichiers</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
         <translation>
-            <numerusform>%n dossier</numerusform>
-            <numerusform>%n dossiers</numerusform>
+            <numerusform>%n&#xa0;dossier</numerusform>
+            <numerusform>%n&#xa0;dossiers</numerusform>
         </translation>
     </message>
     <message>
@@ -6823,12 +6967,12 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Les sauvegardes des versions précédentes de vos fichiers synchronisés seront irrémédiablement supprimées sur MEGA. Vérifiez votre dossier [A] dans la Corbeille de votre compte MEGA pour voir si vous devez y récupérer quelque chose avant de poursuivre.</translation>
+        <translation>Les sauvegardes des versions précédentes de vos fichiers synchronisés seront irrémédiablement supprimées sur MEGA. Vérifiez votre dossier [A] dans la Corbeille de votre compte&#xa0;MEGA pour voir si vous devez y récupérer quelque chose avant de poursuivre.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Les sauvegardes des versions précédentes de vos fichiers synchronisés seront irrémédiablement supprimées de votre ordinateur. Vérifiez vos dossiers de sauvegarde pour voir si vous devez y récupérer quelque chose avant de poursuivre :</translation>
+        <translation>Les sauvegardes des versions précédentes de vos fichiers synchronisés seront irrémédiablement supprimées de votre ordinateur. Vérifiez vos dossiers de sauvegarde pour voir si vous devez y récupérer quelque chose avant de poursuivre&#xa0;:</translation>
     </message>
     <message>
         <source>Backups will stop working.</source>
@@ -6908,12 +7052,12 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Form label text indicating the active download rate limit.</translatorcomment>
-        <translation>Débit limite en téléchargement :</translation>
+        <translation>Débit limite en téléchargement&#xa0;:</translation>
     </message>
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the default folder for downloads.</translatorcomment>
-        <translation>Téléchargements :</translation>
+        <translation>Téléchargements&#xa0;:</translation>
     </message>
     <message>
         <source>Enable Windows Explorer integration</source>
@@ -7078,7 +7222,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
-        <translation>Paramètres du mandataire :</translation>
+        <translation>Paramètres du mandataire&#xa0;:</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -7123,7 +7267,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Space used:</source>
         <translatorcomment>Label used to indicate ammount of space in byte denominations for local, remote cache and file versions.</translatorcomment>
-        <translation>Espace utilisé :</translation>
+        <translation>Espace utilisé&#xa0;:</translation>
     </message>
     <message>
         <source>Storage Space</source>
@@ -7178,25 +7322,25 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Form label text indicating the active upload rate limit.</translatorcomment>
-        <translation>Débit limite en téléversement :</translation>
+        <translation>Débit limite en téléversement&#xa0;:</translation>
     </message>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads.</translatorcomment>
-        <translation>Téléversements :</translation>
+        <translation>Téléversements&#xa0;:</translation>
     </message>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
         <translation>
-            <numerusform>Quota utilisé durant la dernière heures :</numerusform>
-            <numerusform>Quota utilisé durant les %n dernières heures :</numerusform>
+            <numerusform>Quota utilisé durant la dernière heures&#xa0;:</numerusform>
+            <numerusform>Quota utilisé durant les %n dernières heures&#xa0;:</numerusform>
         </translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
-        <translation>Vous êtes sur le point de supprimer définitivement toutes les versions du fichier. Voulez-vous continuer ?</translation>
+        <translation>Vous êtes sur le point de supprimer définitivement toutes les versions du fichier. Voulez-vous continuer&#xa0;?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -7259,16 +7403,16 @@ Voulez-vous le supprimer quand même ?</translation>
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
         <translation>
-            <numerusform>%n fichier</numerusform>
-            <numerusform>%n fichiers</numerusform>
+            <numerusform>%n&#xa0;fichier</numerusform>
+            <numerusform>%n&#xa0;fichiers</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
         <translation>
-            <numerusform>%n dossier</numerusform>
-            <numerusform>%n dossiers</numerusform>
+            <numerusform>%n&#xa0;dossier</numerusform>
+            <numerusform>%n&#xa0;dossiers</numerusform>
         </translation>
     </message>
     <message>
@@ -7280,6 +7424,11 @@ Voulez-vous le supprimer quand même ?</translation>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
         <translation>Ajouter une synchronisation</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Sauvegarder</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7300,6 +7449,11 @@ Voulez-vous le supprimer quand même ?</translation>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>Partager avec un utilisateur de MEGA</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Synchroniser</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -7358,17 +7512,17 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>CRC:</source>
         <translatorcomment>Label indicating fingerprint for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation>CRC :</translation>
+        <translation>CRC&#xa0;:</translation>
     </message>
     <message>
         <source>Created at:</source>
         <translatorcomment>Label indicating creation time for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation>Créé :</translation>
+        <translation>Créé&#xa0;:</translation>
     </message>
     <message>
         <source>Last modified:</source>
         <translatorcomment>Label indicating last modification time for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation>Dernière modification :</translation>
+        <translation>Dernière modification&#xa0;:</translation>
     </message>
     <message>
         <source>Loading size</source>
@@ -7388,22 +7542,22 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Size:</source>
         <translatorcomment>Label indicating size for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation>Taille :</translation>
+        <translation>Taille&#xa0;:</translation>
     </message>
     <message>
         <source>Upload at:</source>
         <translatorcomment>Label indicating upload time for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation>Téléversé :</translation>
+        <translation>Téléversé&#xa0;:</translation>
     </message>
     <message>
         <source>Upload by:</source>
         <translatorcomment>Label indicating uploader for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation>Téléversé par :</translation>
+        <translation>Téléversé par&#xa0;:</translation>
     </message>
     <message>
         <source>Versions:</source>
         <translatorcomment>Label indicating number of versions for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation>Versions :</translation>
+        <translation>Versions&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -7504,7 +7658,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Local:</source>
         <translatorcomment>Subtitle for the section containg local file details of the sync stall.SNC-2565</translatorcomment>
-        <translation>Local :</translation>
+        <translation>Local&#xa0;:</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
@@ -7554,7 +7708,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>on MEGA:</source>
         <translatorcomment>Label descriping where the sync stall is originating.SNC-2565</translatorcomment>
-        <translation>Dans MEGA :</translation>
+        <translation>Dans MEGA&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -7615,46 +7769,46 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>All issues: %1</source>
         <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
-        <translation>Nbre de problèmes : %1</translation>
+        <translation>Nbre de problèmes&#xa0;: %1</translation>
     </message>
     <message numerus="yes">
         <source>Failed: %n</source>
         <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
         <translation>
-            <numerusform>Échec : %n</numerusform>
-            <numerusform>Échec : %n</numerusform>
+            <numerusform>Échec&#xa0;: %n</numerusform>
+            <numerusform>Échec&#xa0;: %n</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
         <translation>
-            <numerusform>Conflit de type d’élément : %n</numerusform>
-            <numerusform>Conflits de type d’élément : %n</numerusform>
+            <numerusform>Conflit de type d’élément&#xa0;: %n</numerusform>
+            <numerusform>Conflits de type d’élément&#xa0;: %n</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
         <translation>
-            <numerusform>Conflit de nom : %n</numerusform>
-            <numerusform>Conflits de nom : %n</numerusform>
+            <numerusform>Conflit de nom&#xa0;: %n</numerusform>
+            <numerusform>Conflits de nom&#xa0;: %n</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
         <translation>
-            <numerusform>Autre : %n</numerusform>
-            <numerusform>Autres : %n</numerusform>
+            <numerusform>Autre&#xa0;: %n</numerusform>
+            <numerusform>Autres&#xa0;: %n</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
         <translation>
-            <numerusform>Résolu : %n</numerusform>
-            <numerusform>Résolus : %n</numerusform>
+            <numerusform>Résolu&#xa0;: %n</numerusform>
+            <numerusform>Résolus&#xa0;: %n</numerusform>
         </translation>
     </message>
 </context>
@@ -7698,16 +7852,16 @@ Voulez-vous le supprimer quand même ?</translation>
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>%1 et %n problème non résolu</numerusform>
-            <numerusform>%1 et %n problèmes non résolus</numerusform>
+            <numerusform>%1 et %n&#xa0;problème non résolu</numerusform>
+            <numerusform>%1 et %n&#xa0;problèmes non résolus</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>%n problème non résolu</numerusform>
-            <numerusform>%n problèmes non résolus</numerusform>
+            <numerusform>%n&#xa0;problème non résolu</numerusform>
+            <numerusform>%n&#xa0;problèmes non résolus</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7715,24 +7869,24 @@ Voulez-vous le supprimer quand même ?</translation>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
         when several issues have failed. SNC-2565</translatorcomment>
         <translation>
-            <numerusform>%n problème a été résolu</numerusform>
-            <numerusform>%n problèmes ont été résolus</numerusform>
+            <numerusform>%n&#xa0;problème a été résolu</numerusform>
+            <numerusform>%n&#xa0;problèmes ont été résolus</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>%n problème résolu et 1 problème non résolu</numerusform>
-            <numerusform>%n problèmes résolus et 1 problème non résolu</numerusform>
+            <numerusform>%n&#xa0;problème résolu et 1 problème non résolu</numerusform>
+            <numerusform>%n&#xa0;problèmes résolus et 1 problème non résolu</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>1 problème résolu et %n problème non résolu</numerusform>
-            <numerusform>1 problème résolu et %n problèmes non résolus</numerusform>
+            <numerusform>1 problème résolu et %n&#xa0;problème non résolu</numerusform>
+            <numerusform>1 problème résolu et %n&#xa0;problèmes non résolus</numerusform>
         </translation>
     </message>
     <message>
@@ -7838,7 +7992,7 @@ Actualisez la liste.</translation>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation>Disque nuagique</translation>
+        <translation>Disque Cloud</translation>
     </message>
     <message>
         <source>Default application</source>
@@ -7848,7 +8002,7 @@ Actualisez la liste.</translation>
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation>Saisir un lien de fichier MEGA :</translation>
+        <translation>Saisir un lien de fichier MEGA&#xa0;:</translation>
     </message>
     <message>
         <source>Error generating streaming link</source>
@@ -7863,7 +8017,7 @@ Actualisez la liste.</translation>
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation>Renseignements sur le fichier :</translation>
+        <translation>Renseignements sur le fichier&#xa0;:</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -7888,7 +8042,7 @@ Actualisez la liste.</translation>
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation>Ouvrir avec :</translation>
+        <translation>Ouvrir avec&#xa0;:</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -7913,7 +8067,7 @@ Actualisez la liste.</translation>
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>Erreur de diffusion en continu : le quota de transfert est dépassé.</translation>
+        <translation>Erreur de diffusion en continu&#xa0;: le quota de transfert est dépassé.</translation>
     </message>
     <message>
         <source>Stream from MEGA</source>
@@ -7986,7 +8140,7 @@ Actualisez la liste.</translation>
     <message>
         <source>The following characters are not allowed: %1</source>
         <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
-        <translation>Les caractères suivants ne sont pas autorisés : %1</translation>
+        <translation>Les caractères suivants ne sont pas autorisés&#xa0;: %1</translation>
     </message>
     <message>
         <source>Try again</source>
@@ -8050,7 +8204,7 @@ Actualisez la liste.</translation>
     <message>
         <source>Detected sym link: [B]%1[/B]</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced is a sym link.[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Un lien symbolique a été détecté : [B]%1[/B]</translation>
+        <translation>Un lien symbolique a été détecté&#xa0;: [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -8071,12 +8225,12 @@ Actualisez la liste.</translation>
     <message>
         <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
         <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
-        <translation>Impossible de sauvegarder le dossier racine « %1 ». Afin de poursuivre, sélectionnez un autre dossier.</translation>
+        <translation>Impossible de sauvegarder le dossier racine «&#xa0;%1&#xa0;». Afin de poursuivre, sélectionnez un autre dossier.</translation>
     </message>
     <message>
         <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
         <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
-        <translation>Impossible de synchroniser le dossier racine « %1 ». Afin de poursuivre, sélectionnez un autre dossier.</translation>
+        <translation>Impossible de synchroniser le dossier racine «&#xa0;%1&#xa0;». Afin de poursuivre, sélectionnez un autre dossier.</translation>
     </message>
     <message>
         <source>Folder already synced.</source>
@@ -8209,12 +8363,12 @@ Actualisez la liste.</translation>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation>Votre sauvegarde « %1 » a été désactivée, car le dossier local est inaccessible ou vous n’avez pas le droit de lecture et d’écriture.</translation>
+        <translation>Votre sauvegarde «&#xa0;%1&#xa0;» a été désactivée, car le dossier local est inaccessible ou vous n’avez pas le droit de lecture et d’écriture.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>Votre sauvegarde « %1 » a été désactivée, car le dossier local a changé.</translation>
+        <translation>Votre sauvegarde «&#xa0;%1&#xa0;» a été désactivée, car le dossier local a changé.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
@@ -8229,72 +8383,72 @@ Actualisez la liste.</translation>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation>Votre sauvegarde « %1 » a été désactivée, car la sauvegarde de dossiers partagés VirtualBox n’est pas prise en charge en raison de lacunes de ce système de fichiers.</translation>
+        <translation>Votre sauvegarde «&#xa0;%1&#xa0;» a été désactivée, car la sauvegarde de dossiers partagés VirtualBox n’est pas prise en charge en raison de lacunes de ce système de fichiers.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation>Votre sauvegarde « %1 » a été désactivée. Raison : %2</translation>
+        <translation>Votre sauvegarde «&#xa0;%1&#xa0;» a été désactivée. Raison&#xa0;: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>Votre sauvegarde « %1 » a été désactivée. Vous n’avez pas l’accès total au dossier sur MEGA (ou à l’une de ces parties).</translation>
+        <translation>Votre sauvegarde «&#xa0;%1&#xa0;» a été désactivée. Vous n’avez pas l’accès total au dossier sur MEGA (ou à l’une de ces parties).</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason.SNC-3654</translatorcomment>
-        <translation>Votre sauvegarde « %1 » a été désactivée temporairement : %2</translation>
+        <translation>Votre sauvegarde «&#xa0;%1&#xa0;» a été désactivée temporairement&#xa0;: %2</translation>
     </message>
     <message>
         <source>Your backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
-        <translation>Vos sauvegardes ont été désactivées : %1</translation>
+        <translation>Vos sauvegardes ont été désactivées&#xa0;: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation>Votre synchronisation « %1 » a été désactivée, car le dossier local est inaccessible ou vous n’avez pas le droit de lecture et d’écriture.</translation>
+        <translation>Votre synchronisation «&#xa0;%1&#xa0;» a été désactivée, car le dossier local est inaccessible ou vous n’avez pas le droit de lecture et d’écriture.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Votre synchronisation « %1 » a été désactivée, car le dossier local a changé</translation>
+        <translation>Votre synchronisation «&#xa0;%1 » a été désactivée, car le dossier local a changé</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation>Votre synchronisation « %1 » a été désactivée, car le dossier local est inaccessible ou vous n’avez pas le droit de lecture et d’écriture.</translation>
+        <translation>Votre synchronisation «&#xa0;%1&#xa0;» a été désactivée, car le dossier local est inaccessible ou vous n’avez pas le droit de lecture et d’écriture.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Votre synchronisation « %1 » a été désactivée, car le dossier sur MEGA est dans la Corbeille</translation>
+        <translation>Votre synchronisation «&#xa0;%1&#xa0;» a été désactivée, car le dossier sur MEGA est dans la Corbeille</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Votre synchronisation « %1 » a été désactivée, car MEGA ne pas synchroniser ni sauvegarder les dossiers VirtualBox.</translation>
+        <translation>Votre synchronisation «&#xa0;%1&#xa0;» a été désactivée, car MEGA ne pas synchroniser ni sauvegarder les dossiers VirtualBox.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation>Votre synchronisation « %1 » a été désactivée. Raison : %2</translation>
+        <translation>Votre synchronisation «&#xa0;%1&#xa0;» a été désactivée. Raison&#xa0;: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Votre synchronisation « %1 » a été désactivée. Vous n’avez pas l’accès total au dossier sur MEGA (ou à l’une de ces parties).</translation>
+        <translation>Votre synchronisation «&#xa0;%1&#xa0;» a été désactivée. Vous n’avez pas l’accès total au dossier sur MEGA (ou à l’une de ces parties).</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
-        <translation>Vos synchronisations et sauvegardes ont été désactivées : %1</translation>
+        <translation>Vos synchronisations et sauvegardes ont été désactivées&#xa0;: %1</translation>
     </message>
     <message>
         <source>Your syncs have been disabled: %1</source>
         <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
-        <translation>Vos synchronisations ont été désactivées : %1</translation>
+        <translation>Vos synchronisations ont été désactivées&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -8303,7 +8457,7 @@ Actualisez la liste.</translation>
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>La cible est située trop profondément dans votre structure de dossiers. Arrêtez la synchronisation, déplacez le dossier vers un emplacement dont la profondeur est inférieure à 64 dossiers et recréez votre synchronisation.
+        <translation>La cible est située trop profondément dans votre structure de dossiers. Arrêtez la synchronisation, déplacez le dossier vers un emplacement dont la profondeur est inférieure à 64&#xa0;dossiers et recréez votre synchronisation.
 Si le problème persiste, contactez support@mega.io.</translation>
     </message>
     <message>
@@ -8426,7 +8580,7 @@ Si le problème persiste, contactez support@mega.io.</translation>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation>Impossible de synchroniser le dossier. Assurez-vous que les noms de dossier ne comportent ni « \ », ni « / », ni « : ».</translation>
+        <translation>Impossible de synchroniser le dossier. Assurez-vous que les noms de dossier ne comportent ni «&#xa0;\&#xa0;», ni «&#xa0;/&#xa0;», ni «&#xa0;:&#xa0;».</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -8436,21 +8590,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 </context>
 <context>
     <name>SyncSettingsElements</name>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation>Appliquer</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation>Les règles d’exclusion que vous avez définies dans une version précédente de l’application seront appliquées à toutes vos synchronisations et sauvegardes. Toutes les règles créées depuis lors seront remplacées.</translation>
-    </message>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation>[B]Appliquer les règles d’exclusion précédentes ?[/B]</translation>
-    </message>
 </context>
 <context>
     <name>SyncSettingsUI</name>
@@ -8467,7 +8606,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
         <translatorcomment>Text in message box shown when an error occurs when removing a sync.SNC-2565</translatorcomment>
-        <translation>Votre dossier « %1 » ne peut pas être synchronisé. Raison : %2</translation>
+        <translation>Votre dossier «&#xa0;%1&#xa0;» ne peut pas être synchronisé. Raison&#xa0;: %2</translation>
     </message>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
@@ -8487,7 +8626,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>MEssage box text shown when an error occurs when removing sync.SNC-4208</translatorcomment>
-        <translation>Votre synchronisation ne peut pas être supprimée. Raison : %1 </translation>
+        <translation>Votre synchronisation ne peut pas être supprimée. Raison&#xa0;: %1&#xa0;</translation>
     </message>
 </context>
 <context>
@@ -8495,7 +8634,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>[B]%1[/B] ne peut pas être ajouté, car votre compte Pro Flexi a été désactivé pour défaut de paiement ou vous avez annulé votre abonnement. Afin de poursuivre, effectuez un paiement et réactivez votre abonnement.</translation>
+        <translation>[B]%1[/B] ne peut pas être ajouté, car votre compte Pro&#xa0;Flexi a été désactivé pour défaut de paiement ou vous avez annulé votre abonnement. Afin de poursuivre, effectuez un paiement et réactivez votre abonnement.</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
@@ -8514,16 +8653,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Advanced</source>
         <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
         <translation>Avancé</translation>
-    </message>
-    <message>
-        <source>Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation>Appliquer les règles d’exclusion précédentes</translation>
-    </message>
-    <message>
-        <source>Apply rules</source>
-        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation>Appliquer les règles</translation>
     </message>
     <message>
         <source>Get full control of the sync issues</source>
@@ -8594,12 +8723,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Local path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the local path of the sync.</translatorcomment>
-        <translation>Chemin local :</translation>
+        <translation>Chemin local&#xa0;:</translation>
     </message>
     <message>
         <source>MEGA path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the remote path of the sync.</translatorcomment>
-        <translation>Chemin sur MEGA :</translation>
+        <translation>Chemin sur MEGA&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -8607,7 +8736,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
-        <translation>Le dossier « %1 » n’existe pas</translation>
+        <translation>Le dossier «&#xa0;%1&#xa0;» n’existe pas</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
@@ -8646,6 +8775,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Select folders to sync</source>
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>Sélectionnez les dossiers à synchroniser</translation>
+    </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]En savoir plus[/A]</translation>
     </message>
 </context>
 <context>
@@ -8756,8 +8890,8 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
         <translation>
-            <numerusform>%1 résultat a été trouvé</numerusform>
-            <numerusform>%1 résultats ont été trouvés</numerusform>
+            <numerusform>%1&#xa0;résultat a été trouvé</numerusform>
+            <numerusform>%1&#xa0;résultats ont été trouvés</numerusform>
         </translation>
     </message>
     <message>
@@ -8964,8 +9098,8 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
         <translation>
-            <numerusform>%1, mais %n élément n’a pas pu être téléchargé.</numerusform>
-            <numerusform>%1, mais %n éléments n’ont pas pu être téléchargés.</numerusform>
+            <numerusform>%1, mais %n&#xa0;élément n’a pas pu être téléchargé.</numerusform>
+            <numerusform>%1, mais %n&#xa0;éléments n’ont pas pu être téléchargés.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -8973,24 +9107,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
         <translation>
-            <numerusform>%1, mais %n élément n’a pas pu être téléversé.</numerusform>
-            <numerusform>%1, mais %n éléments n’ont pas pu être téléversés.</numerusform>
+            <numerusform>%1, mais %n&#xa0;élément n’a pas pu être téléversé.</numerusform>
+            <numerusform>%1, mais %n&#xa0;éléments n’ont pas pu être téléversés.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
         <translation>
-            <numerusform>%n élément n’a pas pu être téléchargé vers %1.</numerusform>
-            <numerusform>%n éléments n’ont pas pu être téléchargés vers %1.</numerusform>
+            <numerusform>%n&#xa0;élément n’a pas pu être téléchargé vers %1.</numerusform>
+            <numerusform>%n&#xa0;éléments n’ont pas pu être téléchargés vers %1.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
         <translation>
-            <numerusform>%n élément n’a pas pu être téléversé vers %1.</numerusform>
-            <numerusform>%n éléments n’ont pas pu être téléversés vers %1.</numerusform>
+            <numerusform>%n&#xa0;élément n’a pas pu être téléversé vers %1.</numerusform>
+            <numerusform>%n&#xa0;éléments n’ont pas pu être téléversés vers %1.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -8998,32 +9132,32 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
         <translation>
-            <numerusform>%n élément a été téléchargé</numerusform>
-            <numerusform>%n éléments ont été téléchargés</numerusform>
+            <numerusform>%n&#xa0;élément a été téléchargé</numerusform>
+            <numerusform>%n&#xa0;éléments ont été téléchargés</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
         <translation>
-            <numerusform>%n élément a été téléchargé vers %1.</numerusform>
-            <numerusform>%n éléments ont été téléchargés vers %1.</numerusform>
+            <numerusform>%n&#xa0;élément a été téléchargé vers %1.</numerusform>
+            <numerusform>%n&#xa0;éléments ont été téléchargés vers %1.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
         <translation>
-            <numerusform>%n élément n’existe plus ou a été renommé.</numerusform>
-            <numerusform>%n éléments n’existent plus ou ont été renommés.</numerusform>
+            <numerusform>%n&#xa0;élément n’existe plus ou a été renommé.</numerusform>
+            <numerusform>%n&#xa0;éléments n’existent plus ou ont été renommés.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
         <translation>
-            <numerusform>%n élément n’existe plus.</numerusform>
-            <numerusform>%n éléments n’existent plus.</numerusform>
+            <numerusform>%n&#xa0;élément n’existe plus.</numerusform>
+            <numerusform>%n&#xa0;éléments n’existent plus.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -9031,16 +9165,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
         <translation>
-            <numerusform>%n élément a été téléversé</numerusform>
-            <numerusform>%n éléments ont été téléversés</numerusform>
+            <numerusform>%n&#xa0;élément a été téléversé</numerusform>
+            <numerusform>%n&#xa0;éléments ont été téléversés</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
         <translation>
-            <numerusform>%n élément a été téléversé vers %1.</numerusform>
-            <numerusform>%n éléments ont été téléversés vers %1.</numerusform>
+            <numerusform>%n&#xa0;élément a été téléversé vers %1.</numerusform>
+            <numerusform>%n&#xa0;éléments ont été téléversés vers %1.</numerusform>
         </translation>
     </message>
     <message>
@@ -9574,7 +9708,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder in which the selected files/folders will be uploaded (String short as possible)</translatorcomment>
-        <translation>Dossier sur MEGA :</translation>
+        <translation>Dossier sur MEGA&#xa0;:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -9584,7 +9718,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Sélectionnez le dossier de téléversement de vos fichiers :</translation>
+        <translation>Sélectionnez le dossier de téléversement de vos fichiers&#xa0;:</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -9595,14 +9729,9 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UpsellStrings</name>
     <message>
-        <source>%1 billed yearly</source>
-        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 facturé annuellement</translation>
-    </message>
-    <message>
-        <source>%1 per month</source>
-        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 par mois</translation>
+        <source>%1 after tax</source>
+        <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
+        <translation>%1 TTC</translation>
     </message>
     <message>
         <source>%1 storage</source>
@@ -9613,6 +9742,24 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation>%1 de transferts</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1% off for %n month</source>
+        <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
+        <translation>
+            <numerusform>%1 % de réduction pendant %n mois</numerusform>
+            <numerusform>%1 % de réduction pendant %n mois</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1/month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format.SNC-6228</translatorcomment>
+        <translation>%1/mois</translation>
+    </message>
+    <message>
+        <source>%1/month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
+        <translation>%1/mois, facturés annuellement</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -9625,19 +9772,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>* Prix estimé dans votre devise locale. Toutes les transactions sont en euros.</translation>
     </message>
     <message>
-        <source>Billed monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
-        <translation>Facturation mensuelle</translation>
-    </message>
-    <message>
-        <source>Billed yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
-        <translation>Facturation annuelle</translation>
-    </message>
-    <message>
         <source>Buy %1</source>
         <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
         <translation>Acheter %1</translation>
+    </message>
+    <message>
+        <source>Charged monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
+        <translation>Facturé mensuellement</translation>
+    </message>
+    <message>
+        <source>Charged yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
+        <translation>Facturé annuellement</translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -9645,14 +9792,14 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Abonnement actuel</translation>
     </message>
     <message>
-        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
-        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Vous avez besoin de plus d’espace de stockage ?[BR][B][A]Essayez Pro Flexi[/A][/B]</translation>
+        <source>Most Popular</source>
+        <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
+        <translation>Le plus populaire</translation>
     </message>
     <message>
-        <source>Recommended</source>
-        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
-        <translation>Recommandé</translation>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>Vous avez besoin de plus d’espace de stockage&#xa0;?[BR][B][A]Essayez Pro&#xa0;Flexi[/A][/B]</translation>
     </message>
     <message>
         <source>Save up to %1% with yearly billing</source>
@@ -9682,17 +9829,27 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your MEGA cloud storage is almost full</source>
         <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
-        <translation>Votre espace de stockage nuagique MEGA est presque saturé</translation>
+        <translation>Votre espace de stockage Cloud&#xa0;MEGA est presque saturé</translation>
     </message>
     <message>
         <source>Your MEGA cloud storage is full</source>
         <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
-        <translation>Votre espace de stockage nuagique MEGA est saturé</translation>
+        <translation>Votre espace de stockage Cloud&#xa0;MEGA est saturé</translation>
+    </message>
+    <message>
+        <source>only</source>
+        <translatorcomment>Text shown ont top of the price of a plan.SNC-6228</translatorcomment>
+        <translation>seulement</translation>
     </message>
     <message>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>par mois</translation>
+    </message>
+    <message>
+        <source>per month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
+        <translation>par mois, facturés annuellement</translation>
     </message>
 </context>
 <context>
@@ -9709,8 +9866,8 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
         <translation>
-            <numerusform>%1 (%2 %) utilisé sur %3</numerusform>
-            <numerusform>%1 (%2 %) utilisés sur %3</numerusform>
+            <numerusform>%1 (%2&#xa0;%) utilisé sur %3</numerusform>
+            <numerusform>%1 (%2&#xa0;%) utilisés sur %3</numerusform>
         </translation>
     </message>
     <message>
@@ -9722,6 +9879,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
         <translation>%1 de %2</translation>
+    </message>
+    <message>
+        <source>%1 sec</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
+        <translation>%1 s</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -9755,54 +9917,59 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
         <translation>
-            <numerusform>Le transfert s’est terminé il y a %n jour</numerusform>
-            <numerusform>Le transfert s’est terminé il y a %n jours</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;jour</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;jours</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
         <translation>
-            <numerusform>Le transfert s’est terminé il y a %n heure</numerusform>
-            <numerusform>Le transfert s’est terminé il y a %n heures</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;heure</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;heures</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
         <translation>
-            <numerusform>Le transfert s’est terminé il y a %n minute</numerusform>
-            <numerusform>Le transfert s’est terminé il y a %n minutes</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;minute</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;minutes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
         <translation>
-            <numerusform>Le transfert s’est terminé il y a %n mois</numerusform>
-            <numerusform>Le transfert s’est terminé il y a %n mois</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;mois</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;mois</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
         <translation>
-            <numerusform>Le transfert s’est terminé il y a %n seconde</numerusform>
-            <numerusform>Le transfert s’est terminé il y a %n secondes</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;seconde</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;secondes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
         <translation>
-            <numerusform>Le transfert s’est terminé il y a %n an</numerusform>
-            <numerusform>Le transfert s’est terminé il y a %n ans</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;an</numerusform>
+            <numerusform>Le transfert s’est terminé il y a %n&#xa0;ans</numerusform>
         </translation>
     </message>
     <message>
         <source>Added just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
         <translation>Le transfert vient de se terminer</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9813,6 +9980,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation>octets</translation>
+    </message>
+    <message>
+        <source>Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9837,42 +10009,47 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>TB</source>

@@ -13,7 +13,7 @@
 
 namespace UserAttributes
 {
-class DeviceName;
+class DeviceNames;
 class MyBackupsHandle;
 }
 
@@ -88,7 +88,7 @@ private:
 
     static const int mBackupItemIndent = 1;
     QPointer<MegaMenuItemAction> mDevNameAction;
-    std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
+    std::shared_ptr<UserAttributes::DeviceNames> mDeviceNameRequest;
     std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
 };
 

@@ -1,35 +1,35 @@
 #ifndef QMLDEVICENAME_H
 #define QMLDEVICENAME_H
 
-#include "DeviceName.h"
+#include "DeviceNames.h"
 
 #include <QObject>
 
 #include <memory>
 
-class QmlDeviceName : public QObject
+class QmlDeviceName: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name MEMBER mName READ getDeviceName WRITE setDeviceName NOTIFY deviceNameChanged)
+    Q_PROPERTY(
+        QString name MEMBER mName READ getDeviceName WRITE setDeviceName NOTIFY deviceNameChanged)
 
 public:
-    explicit QmlDeviceName(QObject *parent = nullptr);
+    explicit QmlDeviceName(QObject* parent = nullptr);
 
-    Q_INVOKABLE QString getDeviceName();
-    Q_INVOKABLE bool setDeviceName(const QString& newName);
+    Q_INVOKABLE QString getDeviceName() const;
+    Q_INVOKABLE void setDeviceName(const QString& newName);
 
 signals:
     void deviceNameChanged();
-    void deviceNameSet();
+    void deviceNameSetRequestCompleted();
 
 private slots:
     void onDeviceNameSet();
 
 private:
     QString mName;
-    std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
-    bool mChanging;
-    bool mRequesting;
+    bool mSetDeviceNameRequested;
+    std::shared_ptr<UserAttributes::DeviceNames> mDeviceNameRequest;
 };
 
 #endif // QMLDEVICENAME_H

@@ -8,6 +8,7 @@
 #include "CommonMessages.h"
 #include "CrashHandler.h"
 #include "CrashReportDialog.h"
+#include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DateTimeFormatter.h"
 #include "DeviceCentre.h"
@@ -19,6 +20,7 @@
 #include "ExportProcessor.h"
 #include "FatalEventHandler.h"
 #include "FullName.h"
+#include "gui/TrayIconManager.h"
 #include "GuiUtilities.h"
 #include "IconTokenizer.h"
 #include "ImportMegaLinksDialog.h"
@@ -31,6 +33,7 @@
 #include "MyBackupsHandle.h"
 #include "NodeSelector.h"
 #include "NodeSelectorSpecializations.h"
+#include "offer/OfferComponent.h"
 #include "Onboarding.h"
 #include "OverQuotaDialog.h"
 #include "ParallelConnectionsValues.h"
@@ -239,7 +242,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
 
     updateAvailable = false;
     networkConnectivity = true;
-    trayIcon = nullptr;
     infoDialogMenu = nullptr;
     guestMenu = nullptr;
     megaApi = nullptr;
@@ -256,7 +258,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     settingsActionGuest = nullptr;
     importLinksAction = nullptr;
     initialTrayMenu = nullptr;
-    lastHovered = nullptr;
     isPublic = false;
     prevVersion = 0;
     mTransfersModel = nullptr;
@@ -334,10 +335,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     transferOverQuotaWaitTimeExpiredReceived = false;
 
-#ifdef __APPLE__
-    scanningTimer = nullptr;
-#endif
-
     // Passing "--nogfx" or "/nogfx" disables graphics processing for the current run.
     // To always disable graphics processing, create a "megasync.nogfx" file in the user data dir.
     mDisableGfx |=
@@ -376,6 +373,11 @@ MegaApplication::~MegaApplication()
     {
         mMutexStealerThread->join();
     }
+}
+
+QSystemTrayIcon* MegaApplication::trayIcon() const
+{
+    return mTrayIconManager ? mTrayIconManager->trayIcon() : nullptr;
 }
 
 void MegaApplication::showInterface(QString)
@@ -481,7 +483,7 @@ void MegaApplication::initialize()
     QString language = preferences->language();
     changeLanguage(language);
 
-    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon);
+    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon());
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
     if (modifiers.testFlag(Qt::ControlModifier)
@@ -598,7 +600,7 @@ void MegaApplication::initialize()
         Preferences::overridePreferences(settings);
         Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
     }
-    trayIcon->show();
+    mTrayIconManager->show();
 
     megaApi->log(MegaApi::LOG_LEVEL_INFO,
                  QString::fromUtf8("MEGA Desktop App is starting. Version string: %1   Version "
@@ -626,6 +628,14 @@ void MegaApplication::initialize()
     mStatusController = new AccountStatusController(this);
     QmlManager::instance()->setRootContextProperty(mStatusController);
     AccountDetailsManager::instance()->init(megaApi);
+
+    connect(AccountDetailsManager::instance(),
+            &AccountDetailsManager::accountDetailsUpdated,
+            this,
+            [this]
+            {
+                requestUserDiscounts(true);
+            });
 
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
@@ -805,101 +815,50 @@ void MegaApplication::changeLanguage(QString languageCode)
         currentLanguageCode = languageCode;
     }
 
+    emit languageChanged();
+
     QmlManager::instance()->retranslate();
 
     createTrayIcon();
 }
 
-#ifdef Q_OS_LINUX
-void MegaApplication::setTrayIconFromTheme(QString icon)
-{
-    QString name = QString(icon).replace(QString::fromUtf8("://images/"), QString::fromUtf8("mega")).replace(QString::fromUtf8(".svg"),QString::fromUtf8(""));
-    const bool needsToBeUpdated{name != trayIcon->icon().name()};
-    if(needsToBeUpdated)
-    {
-        trayIcon->setIcon(QIcon::fromTheme(name, QIcon(icon)));
-    }
-}
-#endif
-
 void MegaApplication::updateTrayIcon()
 {
-    if (appfinished || !trayIcon)
+    if (appfinished || !mTrayIconManager || !mTrayIconManager->trayIcon())
     {
         return;
     }
 
     QString tooltipState;
-    QString icon;
+    QString iconState;
+    TrayIconManager::Animation animation = TrayIconManager::Animation::None;
 
-    static std::map<std::string, QString> icons = {
-    #ifndef __APPLE__
-        #ifdef _WIN32
-            { "warning", QString::fromUtf8("://images/warning_ico.ico") },
-            { "synching", QString::fromUtf8("://images/tray_sync.ico") },
-            { "uptodate", QString::fromUtf8("://images/app_ico.ico") },
-            { "paused", QString::fromUtf8("://images/tray_pause.ico") },
-            { "logging", QString::fromUtf8("://images/login_ico.ico") },
-            { "alert", QString::fromUtf8("://images/alert_ico.ico") },
-            { "someissues", QString::fromUtf8("://images/warning_ico.ico") }
+    const bool isStorageOverQuotaOrPaywall = appliedStorageState == MegaApi::STORAGE_STATE_RED ||
+                                             appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
 
-        #else
-            { "warning", QString::fromUtf8("://images/warning.svg") },
-            { "synching", QString::fromUtf8("://images/synching.svg") },
-            { "uptodate", QString::fromUtf8("://images/uptodate.svg") },
-            { "paused", QString::fromUtf8("://images/paused.svg") },
-            { "logging", QString::fromUtf8("://images/logging.svg") },
-            { "alert", QString::fromUtf8("://images/alert.svg") },
-            { "someissues", QString::fromUtf8("://images/warning.svg") }
-        #endif
-    #else
-            { "warning", QString::fromUtf8("://images/icon_overquota_mac.png") },
-            { "synching", QString::fromUtf8("://images/icon_syncing_mac.png") },
-            { "uptodate", QString::fromUtf8("://images/icon_synced_mac.png") },
-            { "paused", QString::fromUtf8("://images/icon_paused_mac.png") },
-            { "logging", QString::fromUtf8("://images/icon_logging_mac.png") },
-            { "alert", QString::fromUtf8("://images/icon_alert_mac.png") },
-            { "someissues", QString::fromUtf8("://images/icon_overquota_mac.png") }
-    #endif
-        };
-
-    const bool isStorageOverQuotaOrPaywall = appliedStorageState == MegaApi::STORAGE_STATE_RED
-                                                || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
+    bool showPromoAnimation =
+        mDiscountStateMachine && mDiscountStateMachine->showTrayIconAnimation();
 
     if (AppState::instance()->getAppState() == AppState::FATAL_ERROR)
     {
-        icon = icons["alert"];
+        iconState = QStringLiteral("alert");
         tooltipState = FatalEventHandler::instance()->getErrorTitle();
     }
     else if (isStorageOverQuotaOrPaywall || mTransferQuota->isOverQuota())
     {
-        tooltipState = isStorageOverQuotaOrPaywall ? tr("Storage full") : tr("Transfer quota exceeded");
-        icon = icons["warning"];
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
+        tooltipState =
+            isStorageOverQuotaOrPaywall ? tr("Storage full") : tr("Transfer quota exceeded");
+        iconState = QStringLiteral("warning");
     }
     else if (mStatusController->isAccountBlocked())
     {
         tooltipState = tr("Locked account");
-
-        icon = icons["alert"];
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
+        iconState = QStringLiteral("alert");
     }
     else if (model->hasUnattendedDisabledSyncs({MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP}))
     {
-        if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY)
-            && model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
+        if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY) &&
+            model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
         {
             tooltipState = tr("Some syncs and backups have been disabled");
         }
@@ -912,91 +871,62 @@ void MegaApplication::updateTrayIcon()
             tooltipState = tr("One or more syncs have been disabled");
         }
 
-        icon = icons["alert"];
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
-
+        iconState = QStringLiteral("alert");
     }
     else if (!megaApi->isLoggedIn())
     {
         if (!infoDialog)
         {
             tooltipState = tr("Logging in");
-            icon = icons["synching"];
-    #ifdef __APPLE__
-            if (!scanningTimer->isActive())
-            {
-                scanningAnimationIndex = 1;
-                scanningTimer->start();
-            }
-    #endif
+            animation = TrayIconManager::Animation::Logging;
         }
         else
         {
             tooltipState = tr("You are not logged in");
-            icon = icons["uptodate"];
-
-    #ifdef __APPLE__
-            if (scanningTimer->isActive())
-            {
-                scanningTimer->stop();
-            }
-    #endif
+            iconState = QStringLiteral("uptodate");
         }
     }
     else if (!nodescurrent || !getRootNode() ||
              AppState::instance()->getAppState() == AppState::RELOADING)
     {
         tooltipState = tr("Fetching file list...");
-        icon = icons["synching"];
-
-#ifdef __APPLE__
-        if (!scanningTimer->isActive())
-        {
-            scanningAnimationIndex = 1;
-            scanningTimer->start();
-        }
-#endif
+        animation = TrayIconManager::Animation::Progress;
     }
     else if (mSyncStalled && !mStalledIssuesModel->isEmpty())
     {
         tooltipState = tr("Stalled");
-        icon = icons["alert"];
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
+        iconState = QStringLiteral("alert");
+    }
+    else if (showPromoAnimation)
+    {
+        auto discountInfo = mDiscountPolicy ? mDiscountPolicy->getDiscountInfo() : nullptr;
+        if (discountInfo)
         {
-            scanningTimer->stop();
+            tooltipState = QCoreApplication::translate("InfoDialog", "%1% off %2")
+                               .arg(discountInfo->getPercentageDiscount())
+                               .arg(Utilities::getReadablePlanFromId(
+                                   mDiscountPolicy->getDiscountInfo()->getAccountLevel(),
+                                   false));
         }
-#endif
+        animation = TrayIconManager::Animation::Promo;
     }
     else if (paused)
     {
         auto transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
-        if(transfersFailed > 0)
+        if (transfersFailed > 0)
         {
-            //We won´t never have thousand of millions of failed issues...so overflow is not a problem here
-            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", static_cast<int>(transfersFailed));
-            icon = icons["someissues"];
+            tooltipState = QCoreApplication::translate("TransferManager",
+                                                       "Issue found",
+                                                       "",
+                                                       static_cast<int>(transfersFailed));
+            iconState = QStringLiteral("someissues");
         }
         else
         {
             tooltipState = tr("Paused");
-            icon = icons["paused"];
+            iconState = QStringLiteral("paused");
         }
-
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
     }
     else if (mIndexing || mWaiting || mSyncing || mTransferring)
     {
@@ -1016,38 +946,26 @@ void MegaApplication::updateTrayIcon()
         {
             tooltipState = tr("Transferring");
         }
-
-        icon = icons["synching"];
-
-#ifdef __APPLE__
-        if (!scanningTimer->isActive())
-        {
-            scanningAnimationIndex = 1;
-            scanningTimer->start();
-        }
-#endif
+        animation = TrayIconManager::Animation::Progress;
     }
     else
     {
         auto transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
-        if(transfersFailed > 0)
+        if (transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", static_cast<int>(transfersFailed));
-            icon = icons["someissues"];
+            tooltipState = QCoreApplication::translate("TransferManager",
+                                                       "Issue found",
+                                                       "",
+                                                       static_cast<int>(transfersFailed));
+            iconState = QStringLiteral("someissues");
         }
         else
         {
             tooltipState = tr("Up to date");
-            icon = icons["uptodate"];
+            iconState = QStringLiteral("uptodate");
         }
 
-#ifdef __APPLE__
-        if (scanningTimer->isActive())
-        {
-            scanningTimer->stop();
-        }
-#endif
         if (reboot)
         {
             rebootApplication();
@@ -1056,17 +974,16 @@ void MegaApplication::updateTrayIcon()
 
     if (!networkConnectivity)
     {
-        //Override the current state
         tooltipState = tr("No Internet connection");
-        icon = icons["logging"];
+        iconState = QStringLiteral("logging");
     }
 
-    QString tooltip = QString::fromUtf8("%1 %2\n").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING);
+    QString tooltip = QString::fromUtf8("%1 %2\n")
+                          .arg(QString::fromUtf8("MEGA"))
+                          .arg(Preferences::VERSION_STRING);
 
     if (updateAvailable)
     {
-        // Only overwrite the tooltipState if it is "Up to date", because
-        // in that case it would be conflicting with "Update available!"
         if (tooltipState != tr("Up to date"))
         {
             tooltip += tooltipState + QString::fromUtf8("\n");
@@ -1079,25 +996,23 @@ void MegaApplication::updateTrayIcon()
         tooltip += tooltipState;
     }
 
-    // Finally apply icon and tooltip
-    if (!icon.isEmpty())
+    if (!iconState.isEmpty())
     {
-#ifndef __APPLE__
-    #ifdef _WIN32
-        trayIcon->setIcon(QIcon(icon));
-    #else
-        setTrayIconFromTheme(icon);
-    #endif
-#else
-    QIcon ic = QIcon(icon);
-    ic.setIsMask(true);
-    trayIcon->setIcon(ic);
-#endif
+        mTrayIconManager->setIcon(iconState);
+    }
+
+    if (animation != TrayIconManager::Animation::None)
+    {
+        mTrayIconManager->startAnimation(animation);
+    }
+    else
+    {
+        mTrayIconManager->stopAnimation();
     }
 
     if (!tooltip.isEmpty())
     {
-        trayIcon->setToolTip(tooltip);
+        mTrayIconManager->setTooltip(tooltip);
     }
 }
 
@@ -1131,25 +1046,11 @@ void MegaApplication::start()
     transferOverQuotaWaitTimeExpiredReceived = false;
     updateTrayIconMenu();
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        trayIcon->setIcon(QIcon(QString::fromUtf8("://images/tray_sync.ico")));
-    #else
-        setTrayIconFromTheme(QString::fromUtf8("://images/synching.svg"));
-    #endif
-#else
-    QIcon ic = QIcon(QString::fromUtf8("://images/icon_syncing_mac.png"));
-    ic.setIsMask(true);
-    trayIcon->setIcon(ic);
-
-    if (!scanningTimer->isActive())
-    {
-        scanningAnimationIndex = 1;
-        scanningTimer->start();
-    }
-#endif
-    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromUtf8(" ") + Preferences::VERSION_STRING + QString::fromUtf8("\n") + tr("Logging in"));
-    trayIcon->show();
+    mTrayIconManager->startAnimation(TrayIconManager::Animation::Progress);
+    mTrayIconManager->setTooltip(QCoreApplication::applicationName() + QString::fromUtf8(" ") +
+                                 Preferences::VERSION_STRING + QString::fromUtf8("\n") +
+                                 tr("Logging in"));
+    mTrayIconManager->show();
 
     //In case the previous session did not remove all of them
     Preferences::instance()->clearTempTransfersPath();
@@ -1252,6 +1153,60 @@ void MegaApplication::start()
     }
 
     updateTrayIcon();
+
+    // Target discounts init
+
+    mDiscountPolicy = new DiscountPolicy(this);
+
+    mDiscountStateMachine = new DiscountStateMachine(mDiscountPolicy);
+
+    connect(infoDialog,
+            &InfoDialog::requestShowDiscountDialog,
+            mDiscountStateMachine,
+            &DiscountStateMachine::onDiscountButtonClicked,
+            Qt::UniqueConnection);
+
+    connect(mDiscountStateMachine,
+            &DiscountStateMachine::requestShowDialog,
+            [this]()
+            {
+                auto dialog = QMLComponent::showDialog<OfferComponent>();
+                dialog->getDialog()->wrapper()->setDiscountInfo(mDiscountPolicy->getDiscountInfo());
+
+                mDiscountPolicy->recordShown();
+
+                QObject::connect(dialog->getDialog(),
+                                 &QmlDialogWrapper<OfferComponent>::rejected,
+                                 this,
+                                 [this]()
+                                 {
+                                     mDiscountPolicy->recordDismissed();
+                                     emit mDiscountStateMachine->discountDismissed();
+                                 });
+                QObject::connect(dialog->getDialog(),
+                                 &QmlDialogWrapper<OfferComponent>::accepted,
+                                 this,
+                                 [this]()
+                                 {
+                                     mDiscountPolicy->recordAccepted();
+                                     emit mDiscountStateMachine->discountAccepted();
+                                 });
+            });
+
+    connect(mDiscountStateMachine,
+            &DiscountStateMachine::updateDiscountCampaignSignaling,
+            this,
+            &MegaApplication::updateTrayIcon);
+    connect(mDiscountStateMachine,
+            &DiscountStateMachine::requestUserDiscounts,
+            this,
+            &MegaApplication::requestUserDiscounts);
+    connect(this,
+            &MegaApplication::meaningfulInteraction,
+            mDiscountStateMachine,
+            &DiscountStateMachine::onMeaningfulInteraction);
+
+    mDiscountStateMachine->start();
 }
 
 void MegaApplication::requestUserData()
@@ -1264,6 +1219,7 @@ void MegaApplication::requestUserData()
     UserAttributes::FullName::requestFullName();
     UserAttributes::Avatar::requestAvatar();
 
+    requestUserDiscounts(true);
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
 }
@@ -1458,7 +1414,8 @@ if (!infoDialog)
 
     if (!preferences->isFirstSyncDone())
     {
-        mSyncReminderNotificationManager = new SyncReminderNotificationManager(comesFromOnboarding);
+        mSyncReminderNotificationManager =
+            new SyncReminderNotificationManager(comesFromOnboarding, this);
         connect(&SyncController::instance(),
                 &SyncController::syncAddStatus,
                 mSyncReminderNotificationManager,
@@ -1477,6 +1434,8 @@ void MegaApplication::onLoginFinished()
         connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
                 this, &MegaApplication::onScheduledExecution);
     }
+
+    requestUserDiscounts(true);
 
     // Init desktop integration
     ThemeManager::instance()->init();
@@ -1537,11 +1496,14 @@ void MegaApplication::onLogout()
                 DialogOpener::closeAllDialogs();
                 mGfxProvider.reset();
                 mUserMessageController.reset();
-                mSyncReminderNotificationManager->deleteLater();
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
                 removeSyncsAndBackupsMenus();
+                mDiscountStateMachine->deleteLater();
+                mDiscountStateMachine = nullptr;
+                mDiscountPolicy->deleteLater();
+                mDiscountPolicy = nullptr;
                 start();
                 periodicTasks();
                 ThemeManager::instance()->init();
@@ -1777,13 +1739,19 @@ void MegaApplication::createTransferManagerDialog()
     mTransferManager = new TransferManager(megaApi);
     infoDialog->setTransferManager(mTransferManager);
 
-    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
-    // active, tracking is disabled
-    connect(mTransferManager.data() , &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
+    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If
+    // Completed tab is active, tracking is disabled
+    connect(mTransferManager.data(),
+            &TransferManager::userActivity,
+            this,
+            &MegaApplication::registerUserActivity,
+            Qt::UniqueConnection);
     connect(mTransferQuota.get(), &TransferQuota::sendState,
             mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
     connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     scanStageController.updateReference(mTransferManager);
+
+    emit meaningfulInteraction();
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -1807,7 +1775,7 @@ void MegaApplication::rebootApplication(bool update)
         return;
     }
 
-    trayIcon->hide();
+    mTrayIconManager->hide();
     QApplication::exit();
 }
 
@@ -1995,9 +1963,25 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
              ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) >
               Preferences::OQ_DIALOG_INTERVAL_MS)))
         {
-            preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
-            mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
-            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_FULL);
+            if (!mDiscountPolicy->isCampaignActive() || mDiscountStateMachine->isInCooldownState())
+            {
+                preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
+                mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
+                showUpsellDialog(UpsellPlans::ViewMode::STORAGE_FULL);
+            }
+            else
+            {
+                emit mDiscountStateMachine->enterOverquota();
+                // We don't want to show both upsell dialog and discount dialog back to back, but
+                // still want to show the upsell dialog, so we leave
+                // OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS after showin the discount dialog. To do
+                // that, we postdate the last time the upsell was shown to its disable duration
+                // minus OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS
+                preferences->setOverStorageDialogExecution(
+                    QDateTime::currentMSecsSinceEpoch() -
+                    Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION.count() +
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS.count());
+            }
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
@@ -2036,8 +2020,25 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
                preferences->getAlmostOverStorageDialogExecution()) >
               Preferences::OQ_DIALOG_INTERVAL_MS)))
         {
-            preferences->setAlmostOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
-            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
+            if (!mDiscountPolicy->isCampaignActive() || mDiscountStateMachine->isInCooldownState())
+            {
+                preferences->setAlmostOverStorageDialogExecution(
+                    QDateTime::currentMSecsSinceEpoch());
+                showUpsellDialog(UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
+            }
+            else
+            {
+                emit mDiscountStateMachine->enterOverquota();
+                // We don't want to show both upsell dialog and discount dialog back to back, but
+                // still want to show the upsell dialog, so we leave
+                // OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS after showin the discount dialog. To do
+                // that, we postdate the last time the upsell was shown to its disable duration
+                // minus OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS
+                preferences->setAlmostOverStorageDialogExecution(
+                    QDateTime::currentMSecsSinceEpoch() -
+                    Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION.count() +
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS.count());
+            }
         }
 
         if (infoDialog)
@@ -2158,22 +2159,22 @@ void MegaApplication::periodicTasks()
                         });
                 });
         }
-
+        requestUserDiscounts();
         onGlobalSyncStateChanged(megaApi);
     }
 
     sendPeriodicStats();
 
-    if (trayIcon)
+    if (trayIcon())
     {
 #ifdef Q_OS_LINUX
         const QString xdgEnvVar = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
         if (counter == 4 && !xdgEnvVar.isEmpty() && xdgEnvVar == QString::fromUtf8("XFCE"))
         {
-            trayIcon->hide();
+            mTrayIconManager->hide();
         }
 #endif
-        trayIcon->show();
+        mTrayIconManager->show();
     }
 }
 
@@ -2226,7 +2227,6 @@ void MegaApplication::cleanAll()
 
     mGfxProvider.reset();
     mUserMessageController.reset();
-    mSyncReminderNotificationManager->deleteLater();
     infoDialog->deleteLater();
 
     // Delete menus and menu items
@@ -2257,8 +2257,9 @@ void MegaApplication::cleanAll()
 
     QTMegaApiManager::removeMegaApis();
 
-    trayIcon->deleteLater();
-    trayIcon = nullptr;
+    mTrayIconManager->hide();
+    mTrayIconManager->deleteLater();
+    mTrayIconManager = nullptr;
 
     logger.reset();
 
@@ -2312,6 +2313,7 @@ void MegaApplication::onAboutClicked()
 
     mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_ABOUT_CLICKED,
                                          sender(), aboutAction, true);
+
     showChangeLog();
 }
 
@@ -2438,6 +2440,7 @@ void MegaApplication::showInfoDialog()
                                                            true,
                                                            USERSTATS_SHOWMAINDIALOG);
     }
+    emit meaningfulInteraction();
 }
 
 void MegaApplication::showInfoDialogNotifications()
@@ -2489,28 +2492,6 @@ void MegaApplication::initLocalServer()
     }
 }
 
-bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
-{
-    if (!appfinished && obj == infoDialogMenu)
-    {
-        if (e->type() == QEvent::Leave)
-        {
-            if (lastHovered)
-            {
-                lastHovered->setHighlight(false);
-                lastHovered = nullptr;
-            }
-        }
-    }
-
-    if (!appfinished && e->type() == QEvent::LanguageChange)
-    {
-        emit languageChanged();
-    }
-
-    return QApplication::eventFilter(obj, e);
-}
-
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
@@ -2520,10 +2501,14 @@ void MegaApplication::createInfoDialog()
             this, &MegaApplication::onDismissStorageOverquota);
     connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange,
             mTransferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
-    connect(infoDialog.data(), &InfoDialog::almostTransferOverquotaMsgVisibilityChange,
-            mTransferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
-    connect(infoDialog.data(), &InfoDialog::userActivity,
-            this, &MegaApplication::registerUserActivity);
+    connect(infoDialog.data(),
+            &InfoDialog::almostTransferOverquotaMsgVisibilityChange,
+            mTransferQuota.get(),
+            &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
+    connect(infoDialog.data(),
+            &InfoDialog::userActivity,
+            this,
+            &MegaApplication::registerUserActivity);
     connect(mTransferQuota.get(), &TransferQuota::sendState,
             infoDialog.data(), &InfoDialog::setBandwidthOverquotaState);
     connect(mTransferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown,
@@ -2537,6 +2522,18 @@ void MegaApplication::createInfoDialog()
     connect(mUserMessageController.get(), &UserMessageController::unseenAlertsChanged,
             infoDialog.data(), &InfoDialog::onUnseenAlertsChanged);
     scanStageController.updateReference(infoDialog);
+
+    connect(infoDialog,
+            &InfoDialog::requestShowDiscountDialog,
+            mDiscountStateMachine,
+            &DiscountStateMachine::onDiscountButtonClicked,
+            Qt::UniqueConnection);
+    infoDialog->setDiscountPolicy(mDiscountPolicy);
+}
+
+QPointer<DiscountPolicy> MegaApplication::getDiscountPolicy()
+{
+    return mDiscountPolicy;
 }
 
 void MegaApplication::updateUsedStorage(const bool sendEvent)
@@ -2579,23 +2576,6 @@ void MegaApplication::triggerInstallUpdate()
     }
 
     emit installUpdate();
-}
-
-void MegaApplication::scanningAnimationStep()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    scanningAnimationIndex = scanningAnimationIndex%4;
-    scanningAnimationIndex++;
-    QIcon ic = QIcon(QString::fromUtf8("://images/icon_syncing_mac") +
-                     QString::number(scanningAnimationIndex) + QString::fromUtf8(".png"));
-#ifdef __APPLE__
-    ic.setIsMask(true);
-#endif
-    trayIcon->setIcon(ic);
 }
 
 QList<QNetworkInterface> MegaApplication::findNewNetworkInterfaces()
@@ -2850,19 +2830,6 @@ bool MegaApplication::isIdleForTooLong() const
     return (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS;
 }
 
-void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target, MegaCancelToken* cancelToken)
-{
-    auto localPathArray = QDir::toNativeSeparators(rawLocalPath).toUtf8();
-    const char* appData = nullptr;
-    const char* fileName = nullptr;
-    const bool startFirst = false;
-    const bool isSrcTemporary = false;
-    int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
-    MegaTransferListener* listener = nullptr;
-
-    megaApi->startUpload(localPathArray.constData(), target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
-}
-
 void MegaApplication::cancelScanningStage()
 {
     mBlockingBatch.cancelTransfer();
@@ -2954,6 +2921,11 @@ void MegaApplication::ConnectServerSignals(HTTPServer* server)
     connect(server, &HTTPServer::onExternalDownloadRequestFinished, this, &MegaApplication::processDownloads, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalFileUploadRequested, this, &MegaApplication::externalFileUpload, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalFolderUploadRequested, this, &MegaApplication::externalFolderUpload, Qt::QueuedConnection);
+    connect(server,
+            &HTTPServer::onExternalFileFolderUploadRequested,
+            this,
+            &MegaApplication::externalFileFolderUpload,
+            Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalFolderSyncRequested, this, &MegaApplication::externalFolderSync, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalOpenTransferManagerRequested, this, &MegaApplication::externalOpenTransferManager, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalShowInFolderRequested, this, &MegaApplication::openFolderPath, Qt::QueuedConnection);
@@ -2969,7 +2941,7 @@ bool MegaApplication::dontAskForExitConfirmation(bool force)
 void MegaApplication::exitApplication()
 {
     reboot = false;
-    trayIcon->hide();
+    mTrayIconManager->hide();
     QApplication::exit();
 }
 
@@ -2990,10 +2962,18 @@ MegaApplication::NodeCount MegaApplication::countFilesAndFolders(const QStringLi
     count.files = 0;
     count.folders = 0;
 
-    for (const auto& path : paths)
+    for (const auto& path: paths)
     {
+        QFileInfo fileInfo(path);
+        if (fileInfo.isFile())
+        {
+            count.files++;
+            continue;
+        }
         count.folders++;
-        QDirIterator it (path, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        QDirIterator it(path,
+                        QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot,
+                        QDirIterator::Subdirectories);
         while (it.hasNext())
         {
             it.next();
@@ -3031,8 +3011,8 @@ void MegaApplication::processUpgradeSecurityEvent()
 
     // Prepare the dialog
     QString message = tr("Your account's security is now being upgraded. "
-                         "This will happen only once. If you have seen this message for "
-                         "this account before, press Cancel.");
+           "This will happen only once. If you have seen this message for "
+           "this account before, press Cancel.");
     if (!outSharesStrings.isEmpty())
     {
         message.append(QLatin1String("<br><br>"));
@@ -3638,7 +3618,7 @@ void MegaApplication::enableFinderExt()
 
 QSystemTrayIcon *MegaApplication::getTrayIcon()
 {
-    return trayIcon;
+    return trayIcon();
 }
 
 LoginController *MegaApplication::getLoginController()
@@ -3673,6 +3653,7 @@ void MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired()
 void MegaApplication::registerUserActivity()
 {
     lastUserActivityExecution = QDateTime::currentMSecsSinceEpoch();
+    emit mDiscountStateMachine->userActive();
 }
 
 void MegaApplication::PSAseen(int id)
@@ -4332,34 +4313,38 @@ void MegaApplication::changeDisplay(QScreen*)
 
 void MegaApplication::updateTrayIconMenu()
 {
-    if (trayIcon)
+    if (trayIcon())
     {
 #if defined(Q_OS_MACX)
         if (infoDialog)
         {
-            trayIcon->setContextMenu(&emptyMenu);
+            trayIcon()->setContextMenu(&emptyMenu);
         }
         else
         {
-            trayIcon->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() : &emptyMenu);
+            trayIcon()->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() :
+                                                                &emptyMenu);
         }
 #else
 
-        trayIcon->setContextMenu(nullptr); //prevents duplicated context menu in qt 5.12.8 64 bits
+        trayIcon()->setContextMenu(nullptr); // prevents duplicated context menu in qt 5.12.8 64
+                                             // bits
 
         if (preferences && preferences->logged() && getRootNode() &&
             !mStatusController->isAccountBlocked() &&
             AppState::instance()->getAppState() != AppState::FATAL_ERROR)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
-            trayIcon->setContextMenu(windowsMenu.data() ? windowsMenu.data() : &emptyMenu);
+            trayIcon()->setContextMenu(windowsMenu.data() ? windowsMenu.data() : &emptyMenu);
 #else
-            trayIcon->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() : &emptyMenu);
+            trayIcon()->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() :
+                                                                &emptyMenu);
 #endif
         }
         else
         {
-            trayIcon->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() : &emptyMenu);
+            trayIcon()->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() :
+                                                                &emptyMenu);
         }
 #endif
     }
@@ -4375,50 +4360,30 @@ void MegaApplication::createTrayIcon()
     createAppMenus();
     createGuestMenu();
 
-    if (!trayIcon)
+    if (!mTrayIconManager)
     {
-        trayIcon = new QSystemTrayIcon();
+        mTrayIconManager = new TrayIconManager(this);
+        mTrayIconManager->initTrayIcon();
 
-        connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
-        connect(trayIcon, &QSystemTrayIcon::activated,
-                this, &MegaApplication::trayIconActivated);
-
-    #ifdef __APPLE__
-        scanningTimer = new QTimer();
-        scanningTimer->setSingleShot(false);
-        scanningTimer->setInterval(500);
-        scanningAnimationIndex = 1;
-        connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
-    #endif
+        connect(mTrayIconManager,
+                &TrayIconManager::messageClicked,
+                this,
+                &MegaApplication::onMessageClicked);
+        connect(mTrayIconManager,
+                &TrayIconManager::activated,
+                this,
+                &MegaApplication::trayIconActivated);
     }
 
     updateTrayIconMenu();
 
-    trayIcon->setToolTip(QCoreApplication::applicationName()
-                     + QString::fromUtf8(" ")
-                     + Preferences::VERSION_STRING
-                     + QString::fromUtf8("\n")
-                     + tr("Starting"));
+    QString initialTooltip = QCoreApplication::applicationName() + QString::fromUtf8(" ") +
+                             Preferences::VERSION_STRING + QString::fromUtf8("\n") + tr("Starting");
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        trayIcon->setIcon(QIcon(QString::fromUtf8("://images/tray_sync.ico")));
-    #else
-        setTrayIconFromTheme(QString::fromUtf8("://images/synching.svg"));
-    #endif
-#else
-    QIcon ic = QIcon(QString::fromUtf8("://images/icon_syncing_mac.png"));
-    ic.setIsMask(true);
-    trayIcon->setIcon(ic);
-
-    if (!scanningTimer->isActive())
-    {
-        scanningAnimationIndex = 1;
-        scanningTimer->start();
-    }
-#endif
+    mTrayIconManager->setIconAndTooltip(QStringLiteral("synching"), initialTooltip);
+    mTrayIconManager->startAnimation(TrayIconManager::Animation::Progress);
+    mTrayIconManager->show();
 }
-
 void MegaApplication::processUploads()
 {
     if (appfinished || !megaApi->isLoggedIn())
@@ -4515,11 +4480,13 @@ void MegaApplication::processDownloads()
     {
         showInfoDialogIfHTTPServerSender();
         processDownloadQueue(preferences->downloadFolder());
+        emit meaningfulInteraction();
         return;
     }
 
     auto downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
     DialogOpener::showDialog<DownloadFromMegaDialog, TransferManager>(downloadFolderSelector, false, this, &MegaApplication::onDownloadFromMegaFinished);
+    emit meaningfulInteraction();
 }
 
 bool MegaApplication::hasDefaultDownloadFolder() const
@@ -4646,16 +4613,56 @@ void MegaApplication::closeUpsellStorageDialog()
 
 void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
 {
-    auto dialogInfo(DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>());
-    if (dialogInfo)
+    if (!mDiscountPolicy->isCampaignActive() || mDiscountStateMachine->isInCooldownState())
     {
-        dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
-        DialogOpener::showDialog(dialogInfo->getDialog());
+        auto dialogInfo(DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>());
+        if (dialogInfo)
+        {
+            dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
+        }
+        else
+        {
+            dialogInfo = QMLComponent::addDialog<UpsellComponent>(nullptr, viewMode);
+            dialogInfo->getDialog()->setShowWhenCreated();
+        }
     }
     else
     {
-        dialogInfo = QMLComponent::addDialog<UpsellComponent>(nullptr, viewMode);
-        dialogInfo->getDialog()->setShowWhenCreated();
+        emit mDiscountStateMachine->enterOverquota();
+
+        // We don't want to show both upsell dialog and discount dialog back to back, but still want
+        // to show the upsell dialog, so we leave OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS after showin
+        // the discount dialog. To do that, we postdate the last time the upsell was shown to its
+        // disable duration minus OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS
+        switch (viewMode)
+        {
+            case UpsellPlans::ViewMode::TRANSFER_EXCEEDED:
+            {
+                preferences->setTransferOverQuotaDialogLastExecution(
+                    std::chrono::system_clock::now() -
+                    Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION +
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS);
+                break;
+            }
+            case UpsellPlans::ViewMode::STORAGE_ALMOST_FULL:
+            {
+                preferences->setAlmostOverStorageDialogExecution(
+                    QDateTime::currentMSecsSinceEpoch() -
+                    Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION.count() +
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS.count());
+                break;
+            }
+            case UpsellPlans::ViewMode::STORAGE_FULL:
+            {
+                preferences->setOverStorageDialogExecution(
+                    QDateTime::currentMSecsSinceEpoch() -
+                    Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION.count() +
+                    Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS.count());
+                break;
+            }
+            default:
+                break;
+        }
     }
 }
 
@@ -4687,7 +4694,7 @@ void MegaApplication::processSetDownload(const QString& publicLink,
     {
         showInfoDialogIfHTTPServerSender();
 
-        // Request to download Set
+               // Request to download Set
         if (mSetManager)
         {
             mSetManager->requestDownloadSetFromLink(publicLink,
@@ -4797,7 +4804,6 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     {
         return;
     }
-
     //Append the list of files to the upload queue, but avoid duplicates
     std::for_each(newUploadQueue.begin(), newUploadQueue.end(), [&](const QString &str) {
         if (!uploadQueue.contains(str)) {
@@ -4805,6 +4811,44 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
         }
     });
     processUploads();
+    emit meaningfulInteraction();
+}
+
+void MegaApplication::shellBackup(QStringList newBackupList)
+{
+    if (appfinished)
+    {
+        return;
+    }
+    if (megaApi && megaApi->isLoggedIn())
+    {
+        CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
+                                              newBackupList);
+        emit meaningfulInteraction();
+    }
+    else
+    {
+        QmlDialogManager::instance()->openOnboardingDialog();
+    }
+}
+
+void MegaApplication::shellSync(QString localFolder)
+{
+    if (appfinished)
+    {
+        return;
+    }
+    if (megaApi && megaApi->isLoggedIn())
+    {
+        CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SHELL_EXT_ORIGIN,
+                                          ::mega::INVALID_HANDLE,
+                                          localFolder);
+        emit meaningfulInteraction();
+    }
+    else
+    {
+        QmlDialogManager::instance()->openOnboardingDialog();
+    }
 }
 
 void MegaApplication::shellExport(QQueue<QString> newExportQueue)
@@ -4991,6 +5035,59 @@ void MegaApplication::externalFolderUpload(MegaHandle targetFolder)
     Platform::getInstance()->folderSelector(info);
 }
 
+void MegaApplication::externalFileFolderUpload(MegaHandle targetFolder)
+{
+    if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
+    {
+        return;
+    }
+
+    folderUploadTarget = targetFolder;
+
+    auto processUpload = [this](const QStringList& foldersSelected)
+    {
+        if (!foldersSelected.isEmpty())
+        {
+            QFuture<NodeCount> future;
+            QFutureWatcher<NodeCount>* watcher(new QFutureWatcher<NodeCount>());
+
+            connect(watcher,
+                    &QFutureWatcher<NodeCount>::finished,
+                    this,
+                    [this, foldersSelected, watcher]()
+                    {
+                        const NodeCount nodeCount = watcher->result();
+                        processUploads(foldersSelected);
+                        HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+                        watcher->deleteLater();
+                    });
+
+            future = QtConcurrent::run(countFilesAndFolders, foldersSelected);
+            watcher->setFuture(future);
+        }
+        else
+        {
+            HTTPServer::onUploadSelectionDiscarded();
+        }
+    };
+
+    QString defaultFolderPath = getDefaultUploadPath();
+
+    QWidget* parent(nullptr);
+
+#ifdef Q_OS_WIN
+    parent = infoDialog;
+#endif
+
+    SelectorInfo info;
+    info.title = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
+    info.defaultDir = defaultFolderPath;
+    info.multiSelection = true;
+    info.parent = parent;
+    info.func = processUpload;
+    Platform::getInstance()->fileAndFolderSelector(info);
+}
+
 void MegaApplication::externalFolderSync(MegaHandle targetFolder)
 {
     if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
@@ -5057,31 +5154,29 @@ void MegaApplication::onRequestLinksFinished()
         message = tr("The links have been copied to the clipboard");
     }
 
-    if (!preferences->getDontShowExportLinkDialog() &&
-        (!mOsNotifications ||
-         (mOsNotifications &&
-          !preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))))
-    {
-        MessageDialogInfo msgInfo;
-        msgInfo.descriptionText = message;
-        msgInfo.checkboxText = tr("Don’t show me again");
-        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msgResult)
-        {
-            if (msgResult->result() == QMessageBox::StandardButton::Ok)
-            {
-                preferences->setDontShowExportLinkDialog(msgResult->isChecked());
-            }
-        };
-
-        MessageDialogOpener::success(msgInfo);
-    }
-    else
+    /* notifications are alwaus prefered over pop-ups */
+    if (mOsNotifications && preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
     {
         DesktopNotifications::NotificationInfo info;
         info.title = MegaSyncApp->getMEGAString();
         info.message = message;
 
         showInfoMessage(info);
+    }
+    else if (!preferences->getDontShowExportLinkDialog())
+    {
+        MessageDialogInfo msgInfo;
+        msgInfo.descriptionText = message;
+        msgInfo.checkboxText = tr("Don’t show me again");
+        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msgResult)
+        {
+            if (msgResult->result() == QMessageBox::StandardButton::Close)
+            {
+                preferences->setDontShowExportLinkDialog(msgResult->isChecked());
+            }
+        };
+
+        MessageDialogOpener::success(msgInfo);
     }
 
     exportProcessor->deleteLater();
@@ -5208,7 +5303,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 
     registerUserActivity();
-
+    meaningfulInteraction();
     if (AppState::instance()->getAppState() == AppState::FATAL_ERROR)
     {
         if (reason == QSystemTrayIcon::Trigger)
@@ -5260,6 +5355,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                     checkSystemTray();
                     createTrayIcon();
                     showInfoDialog();
+                    emit meaningfulInteraction();
                 }
                 else
                 {
@@ -5400,6 +5496,9 @@ void MegaApplication::openSettings(int tab)
         mSettingsDialog = new SettingsDialog(this, proxyOnly);
         mSettingsDialog->setUpdateAvailable(updateAvailable);
         connect(mSettingsDialog.data(), &SettingsDialog::userActivity, this, &MegaApplication::registerUserActivity);
+
+        emit meaningfulInteraction();
+
         DialogOpener::showDialog(mSettingsDialog);
         if (proxyOnly)
         {
@@ -5463,8 +5562,6 @@ void MegaApplication::createAppMenus()
 // Create menus for the tray icon.
 void MegaApplication::createTrayIconMenus()
 {
-    lastHovered = nullptr;
-
     // First, create the initial Menu, shown while not connected
 
     // Clear menu if it exists
@@ -6289,8 +6386,45 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_OK)
         {
             getUserDataRequestReady = true;
+            auto list = request->getMegaDiscountCodeList();
+            preferences->setUserDiscountLastCheck(QDateTime::currentMSecsSinceEpoch());
+            if (list->size())
+            {
+                megaApi->getDiscountCodeInformation(
+                    list->get(0)->getCode()); // if we have multible discounts, we will always
+                                              // use the first one to trigger the offer dialog.
+            }
+            else
+            {
+                mDiscountPolicy->deactivateCampaign();
+            }
             checkOverStorageStates();
         }
+        break;
+    }
+    case MegaRequest::TYPE_GET_DISCOUNT_CODE_INFORMATION:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            if (auto discountInfo = request->getMegaDiscountCodeInfo())
+            {
+                if (infoDialog)
+                {
+                    infoDialog->setDiscountPolicy(mDiscountPolicy);
+                }
+                mDiscountPolicy->activateCampaign(
+                    std::shared_ptr<MegaDiscountCodeInfo>(discountInfo->copy()));
+            }
+            else
+            {
+                mDiscountPolicy->deactivateCampaign();
+            }
+        }
+        else
+        {
+            mDiscountPolicy->deactivateCampaign();
+        }
+
         break;
     }
     case MegaRequest::TYPE_SEND_EVENT:
@@ -6817,7 +6951,32 @@ void MegaApplication::showStalledIssuesDialog()
     {
         auto newStalledIssuesDialog = new StalledIssuesDialog();
         DialogOpener::showDialog<StalledIssuesDialog>(newStalledIssuesDialog);
+				}
+}
+
+
+void MegaApplication::requestUserDiscounts(bool skipChecks)
+{
+    auto logged = preferences->logged();
+    if (appfinished || !logged)
+    {
+        return;
+    }
+
+    auto difference = QDateTime::currentMSecsSinceEpoch() - preferences->getUserDiscountLastCheck();
+    if (skipChecks || (difference > Preferences::TARGETED_DISCOUNT_CHECK_INTERVAL_MS))
+    {
+        megaApi->getUserData();
     }
 }
 
+bool MegaApplication::isOnboarding()
+{
+	bool isOnboardingDialogVisible(false);
+	if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+	{
+			isOnboardingDialogVisible = dialogInfo->getDialog()->isVisible();
+	}
+	return isOnboardingDialogVisible;
+}
 // clang-format on

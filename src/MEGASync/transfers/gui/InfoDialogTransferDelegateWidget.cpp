@@ -32,7 +32,6 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
     mUi->lFileNameCompleted->installEventFilter(this);
     mUi->lFileName->installEventFilter(this);
     mUi->lElapsedTime->installEventFilter(this);
-    setProperty("TOKENIZED", true);
     TokenParserWidgetManager::instance()->polish(this);
 }
 

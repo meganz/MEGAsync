@@ -250,7 +250,9 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A]添加了%n个项目</numerusform></translation>
+        <translation>
+            <numerusform>[A]添加了%n个项目</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -285,7 +287,9 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A]移除了%n个项目</numerusform></translation>
+        <translation>
+            <numerusform>[A]移除了%n个项目</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
@@ -295,7 +299,9 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A]已更新%n个项目</numerusform></translation>
+        <translation>
+            <numerusform>[A]已更新%n个项目</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -395,12 +401,16 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation><numerusform>%1，但%n个文件夹无法备份</numerusform></translation>
+        <translation>
+            <numerusform>%1，但%n个文件夹无法备份</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation><numerusform>%n文件夹已备份</numerusform></translation>
+        <translation>
+            <numerusform>%n文件夹已备份</numerusform>
+        </translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
@@ -413,7 +423,9 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>您的备份中已经存在一些同名的文件夹。重命名新文件夹以继续备份。您计算机上的文件夹名称不会更改。</numerusform></translation>
+        <translation>
+            <numerusform>您的备份中已经存在一些同名的文件夹。重命名新文件夹以继续备份。您计算机上的文件夹名称不会更改。</numerusform>
+        </translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -428,7 +440,9 @@
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>这些文件夹没有备份。请再试一次。</numerusform></translation>
+        <translation>
+            <numerusform>这些文件夹没有备份。请再试一次。</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -513,7 +527,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>仅当传输未启动时才启用此选项。在所有其他情况下，MEGA已为所有数据进行加密，HTTP选项可正常工作。</translation>
     </message>
     <message>
@@ -821,8 +835,10 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>解决问题？</numerusform></translation>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation>
+            <numerusform>解决问题？</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -841,18 +857,22 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>解决</translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>此操作会将文件下载到临时位置，修复问题，然后删除临时文件。</numerusform></translation>
+        <translation>
+            <numerusform>此操作会将文件下载到临时位置，修复问题，然后删除临时文件。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>恢复您的传输以修复问题。</numerusform></translation>
+        <translation>
+            <numerusform>恢复您的传输以修复问题。</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -906,12 +926,16 @@
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>您的Pro会员方案已于%n天前到期</numerusform></translation>
+        <translation>
+            <numerusform>您的Pro会员方案已于%n天前到期</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>您的Pro会员方案将于%n天后到期</numerusform></translation>
+        <translation>
+            <numerusform>您的Pro会员方案将于%n天后到期</numerusform>
+        </translation>
     </message>
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
@@ -1033,12 +1057,12 @@
     <name>DeleteWaitingOnMovesHeader</name>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>正在等待其它进程完成。</translation>
     </message>
     <message>
         <source>Waiting to move [B]%1[/B]</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
         <translation>正在等待移动[B]%1[/B]</translation>
     </message>
 </context>
@@ -1122,7 +1146,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro Flexi帐户已停用</translation>
+        <translation>Pro&#xa0;Flexi帐户已停用</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1192,7 +1216,9 @@
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>您还有%n天时间保存您的数据</numerusform></translation>
+        <translation>
+            <numerusform>您还有%n天时间保存您的数据</numerusform>
+        </translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1257,7 +1283,9 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A]添加了%n个项目</numerusform></translation>
+        <translation>
+            <numerusform>[A]添加了%n个项目</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1272,7 +1300,9 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A]已更新%n个项目</numerusform></translation>
+        <translation>
+            <numerusform>[A]已更新%n个项目</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1319,7 +1349,7 @@
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>您没有这个本地文件夹的编写权限。</translation>
     </message>
 </context>
@@ -1342,13 +1372,17 @@
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>已选择%1个项目</numerusform></translation>
+        <translation>
+            <numerusform>已选择%1个项目</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1。%2个已被移除。要重新选择，请关闭此窗口，然后重试。</numerusform></translation>
+        <translation>
+            <numerusform>%1。%2个已被移除。要重新选择，请关闭此窗口，然后重试。</numerusform>
+        </translation>
     </message>
     <message>
         <source>Download</source>
@@ -1358,12 +1392,16 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>您选择的项目已被移除。要重新选择，请关闭此窗口，然后重试。</numerusform></translation>
+        <translation>
+            <numerusform>您选择的项目已被移除。要重新选择，请关闭此窗口，然后重试。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>您无法再访问这些项目。请联系与您共享它们的人重新分享。</numerusform></translation>
+        <translation>
+            <numerusform>您无法再访问这些项目。请联系与您共享它们的人重新分享。</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1399,7 +1437,9 @@
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>应用到所有%1个重复项</numerusform></translation>
+        <translation>
+            <numerusform>应用到所有%1个重复项</numerusform>
+        </translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1578,7 +1618,7 @@
         <translation>按大小排除文件</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>通过设置最小和最大的限制来排除文件，或大于或小于特定大小的文件以排除文件。</translation>
     </message>
@@ -1910,17 +1950,17 @@
     <name>FileIssueHeader</name>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>单个文件存在需要您决定才能解决的问题</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>单个文件夹存在需要您决定才能解决的问题</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>无法同步[B]%1[/B]</translation>
     </message>
 </context>
@@ -1952,12 +1992,16 @@
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n个文件</numerusform></translation>
+        <translation>
+            <numerusform>%n个文件</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n个文件夹</numerusform></translation>
+        <translation>
+            <numerusform>%n个文件夹</numerusform>
+        </translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
@@ -2007,12 +2051,12 @@
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>您正在尝试同步的文件没有扩展名，并且与现有文件夹同名称</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>无法同步[B]%1[/B]</translation>
     </message>
 </context>
@@ -2041,7 +2085,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
-        <translation>登 出</translation>
+        <translation>登&#xa0;出</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -2219,7 +2263,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -2229,6 +2273,11 @@ Check your email inbox for instructions on unlocking your account and tips on ho
 </context>
 <context>
     <name>InfoDialog</name>
+    <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%1%折扣%2</translation>
+    </message>
     <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
@@ -2271,22 +2320,22 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>无通知</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
         <translation>无联系人通知</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
         <translation>无传入的共享通知</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>无付款通知</translation>
     </message>
     <message>
@@ -2402,7 +2451,9 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>我们已经在[B]向您的邮箱[A]发送了邮件，但您的MEGA帐户仍然有%n个文件并占用了[D]的存储空间，因此我们为您推荐[E]会员方案。</numerusform></translation>
+        <translation>
+            <numerusform>我们已经在[B]向您的邮箱[A]发送了邮件，但您的MEGA帐户仍然有%n个文件并占用了[D]的存储空间，因此我们为您推荐[E]会员方案。</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
@@ -2412,12 +2463,16 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message numerus="yes">
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>您还有%n天时间可以升级，否则您的数据将被删除</numerusform></translation>
+        <translation>
+            <numerusform>您还有%n天时间可以升级，否则您的数据将被删除</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>您还有%n个小时可以升级，否则您的数据将被删除</numerusform></translation>
+        <translation>
+            <numerusform>您还有%n个小时可以升级，否则您的数据将被删除</numerusform>
+        </translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2548,7 +2603,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
-        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translatorcomment>This is the text of an error message displayed when there&apos;s a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn&apos;t be installed. SNC-2270</translatorcomment>
         <translation>无法安装必要的组件。</translation>
     </message>
     <message>
@@ -2601,7 +2656,7 @@ Please log out of your computer to complete the installation.</source>
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
-        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
         <translation>要手动安装，请运行以下命令：
 
 sudo dnf install gnome-shell-extensions
@@ -2793,7 +2848,9 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>已存储在MEGA中的文件将添加一个像（1）这样的后缀。</numerusform></translation>
+        <translation>
+            <numerusform>已存储在MEGA中的文件将添加一个像（1）这样的后缀。</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -2803,7 +2860,9 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>已存储在MEGA中的文件夹将添加一个像（1）这样的后缀。</numerusform></translation>
+        <translation>
+            <numerusform>已存储在MEGA中的文件夹将添加一个像（1）这样的后缀。</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2888,7 +2947,9 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>恢复您的传输以修复问题。</numerusform></translation>
+        <translation>
+            <numerusform>恢复您的传输以修复问题。</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3262,7 +3323,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro Flexi帐户已停用</translation>
+        <translation>Pro&#xa0;Flexi帐户已停用</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3296,7 +3357,7 @@ Please wait for the upload to complete.</source>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
         <translation>已检测到问题</translation>
     </message>
     <message>
@@ -3353,8 +3414,10 @@ Please wait for the upload to complete.</source>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>当前有正在进行中的传输。是否退出应用程序？
-当您重新打开应用程序时，传输将自动恢复。</numerusform></translation>
+        <translation>
+            <numerusform>当前有正在进行中的传输。是否退出应用程序？
+当您重新打开应用程序时，传输将自动恢复。</numerusform>
+        </translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -3389,7 +3452,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>已是最新</translation>
     </message>
     <message>
@@ -3415,7 +3478,9 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>您正在分享以下文件夹：%1</numerusform></translation>
+        <translation>
+            <numerusform>您正在分享以下文件夹：%1</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3593,7 +3658,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation>登 出</translation>
+        <translation>登&#xa0;出</translation>
     </message>
     <message>
         <source>No error</source>
@@ -3724,7 +3789,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>您的帐户因违反MEGA的服务条款而被终止。
 您将无法重新获得对您存储数据的访问权限，也无法获得注册新的MEGA帐户的授权。</translation>
     </message>
@@ -3897,7 +3962,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Mismatch on sync root FSID.</source>
-        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
         <translation>由于本地文件夹发生变动，同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服支持。</translation>
     </message>
     <message>
@@ -3993,7 +4058,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>由于您进行备份的设备没有名称，因此无法创建备份。请为您的设备命名，然后重试。如果问题仍然存在，请联系客服。</translation>
+        <translation>无法创建备份，因为要备份的设备没有名称。请为您的设备命名，然后再试一次。如果问题仍然存在，请联系客服。</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4091,12 +4156,16 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>取消并清除传输</numerusform></translation>
+        <translation>
+            <numerusform>取消并清除传输</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>取消传输</numerusform></translation>
+        <translation>
+            <numerusform>取消传输</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -4116,7 +4185,9 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>清空传输</numerusform></translation>
+        <translation>
+            <numerusform>清空传输</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -4181,12 +4252,16 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>暂停传输</numerusform></translation>
+        <translation>
+            <numerusform>暂停传输</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>恢复传输</numerusform></translation>
+        <translation>
+            <numerusform>恢复传输</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -4194,7 +4269,7 @@ https://mega.co.nz/#sync</source>
         <translation>在文件夹中显示</translation>
     </message>
     <message>
-        <source>Your incomplete sync transfers won't be cancelled
+        <source>Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>无法取消同步传输，但所有其他传输都将被取消和清除</translation>
@@ -4205,7 +4280,7 @@ All the other transfers will be cancelled and cleared.</source>
         <translation>无法取消同步传输</translation>
     </message>
     <message>
-        <source>Your selected incomplete sync transfers won't be cancelled
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>无法取消同步传输，但所有其他选定的传输都将被取消和清除</translation>
@@ -4348,12 +4423,12 @@ Please refresh the view</source>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
         <translation>已从外部修改</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
         <translation>无需采取任何行动</translation>
     </message>
     <message>
@@ -4891,7 +4966,7 @@ Enter a different name</source>
     <message>
         <source>Upload</source>
         <translatorcomment>Contextual menu text that appears when we right click on an empty space (or empty folder) on node selector. It uploads to the selected. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>上传</translation>
     </message>
 </context>
 <context>
@@ -4929,12 +5004,14 @@ Enter a different name</source>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>空文件夹</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>离开这些共享文件夹后，您将无法再次查看。</numerusform></translation>
+        <translation>
+            <numerusform>离开这些共享文件夹后，您将无法再次查看。</numerusform>
+        </translation>
     </message>
     <message>
         <source>Leave</source>
@@ -4944,7 +5021,9 @@ Enter a different name</source>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>离开这些共享文件夹？</numerusform></translation>
+        <translation>
+            <numerusform>离开这些共享文件夹？</numerusform>
+        </translation>
     </message>
     <message>
         <source>Move</source>
@@ -4959,7 +5038,9 @@ Enter a different name</source>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
-        <translation><numerusform>移动%n个项目到回收站？</numerusform></translation>
+        <translation>
+            <numerusform>移动%n个项目到回收站？</numerusform>
+        </translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4974,17 +5055,23 @@ Enter a different name</source>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation><numerusform>您即将永久删除%n个文件。您想继续吗？</numerusform></translation>
+        <translation>
+            <numerusform>您即将永久删除%n个文件。您想继续吗？</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation><numerusform>您即将永久删除%n个文件夹。您想继续吗？</numerusform></translation>
+        <translation>
+            <numerusform>您即将永久删除%n个文件夹。您想继续吗？</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation><numerusform>您将永久删除%n个项目。您想继续吗？</numerusform></translation>
+        <translation>
+            <numerusform>您将永久删除%n个项目。您想继续吗？</numerusform>
+        </translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
@@ -5039,7 +5126,9 @@ Enter a different name</source>
     <message numerus="yes">
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
-        <translation><numerusform>%n个已找到结果</numerusform></translation>
+        <translation>
+            <numerusform>%n个已找到结果</numerusform>
+        </translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5062,27 +5151,35 @@ Enter a different name</source>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>优惠将于%1 分钟%2 秒后到期</translation>
+        <translation>优惠将于%1&#xa0;分钟%2&#xa0;秒后到期</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>优惠将于%n天后到期</numerusform></translation>
+        <translation>
+            <numerusform>优惠将于%n天后到期</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>优惠将于%n小时后到期</numerusform></translation>
+        <translation>
+            <numerusform>优惠将于%n小时后到期</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>优惠将于%n分钟后到期</numerusform></translation>
+        <translation>
+            <numerusform>优惠将于%n分钟后到期</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>优惠将于%n秒后到期</numerusform></translation>
+        <translation>
+            <numerusform>优惠将于%n秒后到期</numerusform>
+        </translation>
     </message>
     <message>
         <source>PROMO</source>
@@ -5156,6 +5253,97 @@ Enter a different name</source>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
         <translation>上传和下载</translation>
+    </message>
+</context>
+<context>
+    <name>OfferStrings</name>
+    <message>
+        <source>%1 %2</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
+        <translation>%1 %2</translation>
+    </message>
+    <message>
+        <source>%1 of storage</source>
+        <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1储存空间</translation>
+    </message>
+    <message>
+        <source>%1 of transfer</source>
+        <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1传输流量</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n天</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <translatorcomment>Number of remaining hours before the offer expire variable is for remaining hours. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n小时</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <translatorcomment>Number of remaining minutes before the offer expire,variable is for remaining minutes. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n分钟</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>*%1</source>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation>*%1</translation>
+    </message>
+    <message>
+        <source>Estimated price in your local currency.</source>
+        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
+        <translation>以您本地货币预估的价格。</translation>
+    </message>
+    <message>
+        <source>Grab Deal</source>
+        <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
+        <translation>抢购优惠</translation>
+    </message>
+    <message>
+        <source>MEGA %1</source>
+        <translatorcomment>Plan name used in the offer dialog, the variable is for plan name snc.6228</translatorcomment>
+        <translation>MEGA %1</translation>
+    </message>
+    <message>
+        <source>MEGA Pass</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA Pass</translation>
+    </message>
+    <message>
+        <source>MEGA VPN</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA VPN</translation>
+    </message>
+    <message>
+        <source>Object storage</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>对象储存</translation>
+    </message>
+    <message>
+        <source>Special offers ends in:</source>
+        <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
+        <translation>特惠活动将于以下时间结束:</translation>
+    </message>
+    <message>
+        <source>Tax may apply.</source>
+        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
+        <translation>可能会有税费。</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]%1% off[/B] for %n month</source>
+        <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n个月享受[B]%1%折扣[/B]</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5413,7 +5601,7 @@ Enter a different name</source>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>登 录</translation>
+        <translation>登&#xa0;录</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
@@ -5607,7 +5795,7 @@ Enter a different name</source>
     </message>
     <message>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
+        <translatorcomment>Text indicating that the user can view the backups in settings&apos; backups tab CON-738</translatorcomment>
         <translation>您可以在设置中的备份选项卡下查看您的备份及其状态。</translation>
     </message>
     <message>
@@ -5664,7 +5852,9 @@ Enter a different name</source>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A]移除了%n个项目</numerusform></translation>
+        <translation>
+            <numerusform>[A]移除了%n个项目</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5902,17 +6092,17 @@ Enter a different name</source>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
         <translation>项目已移至回收站</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
         <translation>项目已移至废纸篓</translation>
     </message>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
         <translation>项目已移至废纸篓</translation>
     </message>
     <message>
@@ -5939,10 +6129,13 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We've fixed bugs and made the app more reliable.
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
 </source>
-        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- 提高了Windows系统上存在问题的图形驱动程序支持的可靠性
+- 修复了一些小错误并提升了性能
+</translation>
     </message>
 </context>
 <context>
@@ -6115,7 +6308,7 @@ Do you want to replace it?</source>
         <translation>&amp;保存</translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>“%1”已被写保护。
@@ -6347,27 +6540,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 字节</translation>
+        <translation>%1&#xa0;字节</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -6486,8 +6679,13 @@ Do you want to delete it anyway?</source>
     <name>RemoveBackup</name>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
         <translation>该位置已有同名文件夹，请选择其他位置</translation>
+    </message>
+    <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>目标文件夹不存在。请选择另一个文件夹。</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -6518,6 +6716,11 @@ Do you want to delete it anyway?</source>
         <translation>从 MEGA 中删除文件夹</translation>
     </message>
     <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>该文件夹将从 MEGA 中删除，但不会从您的设备中删除。此操作无法撤消。</translation>
+    </message>
+    <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
         <translation>将文件夹移至云盘</translation>
@@ -6541,11 +6744,6 @@ Do you want to delete it anyway?</source>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
         <translation>停止备份</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
-        <translation>该文件夹将从 MEGA 中删除，但不会从您的设备中删除。此操作无法撤消。</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
@@ -6635,12 +6833,16 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n个文件</numerusform></translation>
+        <translation>
+            <numerusform>%n个文件</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n个文件夹</numerusform></translation>
+        <translation>
+            <numerusform>%n个文件夹</numerusform>
+        </translation>
     </message>
     <message>
         <source>Adding transfers…</source>
@@ -6889,6 +7091,11 @@ Do you want to delete it anyway?</source>
         <translation>登录时启动</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>了解更多</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>一个包含文件备份的本地文件夹在MEGA中被删除</translation>
@@ -6896,7 +7103,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>登 出</translation>
+        <translation>登&#xa0;出</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -7034,6 +7241,11 @@ Do you want to delete it anyway?</source>
         <translation>同步将会被禁用。</translation>
     </message>
     <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>主题</translation>
+    </message>
+    <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>传输流量</translation>
@@ -7066,7 +7278,9 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>过去%n小时的已用流量：</numerusform></translation>
+        <translation>
+            <numerusform>过去%n小时的已用流量：</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -7096,17 +7310,9 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>天</numerusform></translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation>主题</translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
-        <translation>了解更多</translation>
+        <translation>
+            <numerusform>天</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7140,12 +7346,16 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n个文件</numerusform></translation>
+        <translation>
+            <numerusform>%n个文件</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n个文件夹</numerusform></translation>
+        <translation>
+            <numerusform>%n个文件夹</numerusform>
+        </translation>
     </message>
     <message>
         <source>Add backup</source>
@@ -7156,6 +7366,11 @@ Do you want to delete it anyway?</source>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
         <translation>添加同步</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>备份</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7176,6 +7391,11 @@ Do you want to delete it anyway?</source>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>与MEGA用户共享</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>同步</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -7384,7 +7604,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
         <translation>MAC验证失败</translation>
     </message>
     <message>
@@ -7394,7 +7614,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
         <translation>对文件系统而言名称太长</translation>
     </message>
     <message>
@@ -7496,27 +7716,37 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Failed: %n</source>
         <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
-        <translation><numerusform>失败：%n</numerusform></translation>
+        <translation>
+            <numerusform>失败：%n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>项目类型冲突：%n</numerusform></translation>
+        <translation>
+            <numerusform>项目类型冲突：%n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation><numerusform>名称冲突：%n</numerusform></translation>
+        <translation>
+            <numerusform>名称冲突：%n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>其它：%n</numerusform></translation>
+        <translation>
+            <numerusform>其它：%n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation><numerusform>已解决：%n</numerusform></translation>
+        <translation>
+            <numerusform>已解决：%n</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7558,28 +7788,38 @@ Do you want to delete it anyway?</source>
         <source>%1 and %n issues failed.</source>
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
-        <translation><numerusform>%1，%n个问题解决失败</numerusform></translation>
+        <translation>
+            <numerusform>%1，%n个问题解决失败</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>%n个问题修复失败</numerusform></translation>
+        <translation>
+            <numerusform>%n个问题修复失败</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
         when several issues have failed. SNC-2565</translatorcomment>
-        <translation><numerusform>已解决%n个问题</numerusform></translation>
+        <translation>
+            <numerusform>已解决%n个问题</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
-        <translation><numerusform>%n个问题已修复，1个问题修复失败</numerusform></translation>
+        <translation>
+            <numerusform>%n个问题已修复，1个问题修复失败</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>1个问题已修复，%n个问题修复失败</numerusform></translation>
+        <translation>
+            <numerusform>1个问题已修复，%n个问题修复失败</numerusform>
+        </translation>
     </message>
     <message>
         <source>Fixing issues</source>
@@ -7587,7 +7827,7 @@ Do you want to delete it anyway?</source>
         <translation>正在解决问题…</translation>
     </message>
     <message>
-        <source>Issues can't be fixed.
+        <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>某些问题无法解决。
@@ -7604,7 +7844,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <translation>刷新</translation>
     </message>
     <message>
-        <source>Some issues can't be fixed.
+        <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>某些问题无法解决。
@@ -8282,21 +8522,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 </context>
 <context>
     <name>SyncSettingsElements</name>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation>应用</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation>您在以前版本的应用程序中设置的排除规则将应用于您的所有同步和备份。从那以后创建的任何规则都将被覆盖。</translation>
-    </message>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation>[B]应用之前的排除规则？[/B]</translation>
-    </message>
 </context>
 <context>
     <name>SyncSettingsUI</name>
@@ -8341,7 +8566,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>无法添加[B]%1[/B]，因为付款失败或您已取消订阅，您的Pro Flexi帐户已被停用。要继续，请付款并重新激活您的订阅。</translation>
+        <translation>无法添加[B]%1[/B]，因为付款失败或您已取消订阅，您的Pro&#xa0;Flexi帐户已被停用。要继续，请付款并重新激活您的订阅。</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
@@ -8360,16 +8585,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Advanced</source>
         <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
         <translation>高级</translation>
-    </message>
-    <message>
-        <source>Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation>应用以前的排除规则</translation>
-    </message>
-    <message>
-        <source>Apply rules</source>
-        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation>应用规则</translation>
     </message>
     <message>
         <source>Get full control of the sync issues</source>
@@ -8493,13 +8708,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>选择要同步的文件夹</translation>
     </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]了解更多[/A]</translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>
     <message numerus="yes">
         <source>Maximum length is %n characters.</source>
         <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation><numerusform>最大长度为%n字符。</numerusform></translation>
+        <translation>
+            <numerusform>最大长度为%n字符。</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8598,7 +8820,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>找到%1个结果</numerusform></translation>
+        <translation>
+            <numerusform>找到%1个结果</numerusform>
+        </translation>
     </message>
     <message>
         <source>All</source>
@@ -8803,55 +9027,75 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1，但是%n个项目无法下载。</numerusform></translation>
+        <translation>
+            <numerusform>%1，但是%n个项目无法下载。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1，但是%n个项目无法上传。</numerusform></translation>
+        <translation>
+            <numerusform>%1，但是%n个项目无法上传。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n个项目无法下载到%1。</numerusform></translation>
+        <translation>
+            <numerusform>%n个项目无法下载到%1。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n个项目无法上传到%1。</numerusform></translation>
+        <translation>
+            <numerusform>%n个项目无法上传到%1。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n个项目已下载</numerusform></translation>
+        <translation>
+            <numerusform>%n个项目已下载</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n个项目已下载到%1。</numerusform></translation>
+        <translation>
+            <numerusform>%n个项目已下载到%1。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n个项目已不存在或已被重命名。</numerusform></translation>
+        <translation>
+            <numerusform>%n个项目已不存在或已被重命名。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n个项目已不存在。</numerusform></translation>
+        <translation>
+            <numerusform>%n个项目已不存在。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n个项目已上传</numerusform></translation>
+        <translation>
+            <numerusform>%n个项目已上传</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n个项目已上传到%1。</numerusform></translation>
+        <translation>
+            <numerusform>%n个项目已上传到%1。</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not download</source>
@@ -8891,7 +9135,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>重试失败的项目</numerusform></translation>
+        <translation>
+            <numerusform>重试失败的项目</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -8916,12 +9162,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>上传已停止</numerusform></translation>
+        <translation>
+            <numerusform>上传已停止</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>你登出了MEGA，所以您的上传已停止。重新登入后，您可以继续上传。</numerusform></translation>
+        <translation>
+            <numerusform>你登出了MEGA，所以您的上传已停止。重新登入后，您可以继续上传。</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -9338,12 +9588,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>无法访问目标文件夹</translation>
     </message>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>无法上传[B]%1[/B]到所选位置</translation>
     </message>
 </context>
@@ -9396,14 +9646,9 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UpsellStrings</name>
     <message>
-        <source>%1 billed yearly</source>
-        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1按年结算</translation>
-    </message>
-    <message>
-        <source>%1 per month</source>
-        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1每月</translation>
+        <source>%1 after tax</source>
+        <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
+        <translation>税后%1</translation>
     </message>
     <message>
         <source>%1 storage</source>
@@ -9414,6 +9659,23 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation>%1传输流量</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1% off for %n month</source>
+        <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
+        <translation>
+            <numerusform>%n个月享受%1%折扣</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1/month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format.SNC-6228</translatorcomment>
+        <translation>%1/月</translation>
+    </message>
+    <message>
+        <source>%1/month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
+        <translation>%1/月，按年收费</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -9426,19 +9688,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>* 您的本地货币价格仅供参考。所有交易都将以欧元向您收费。</translation>
     </message>
     <message>
-        <source>Billed monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
-        <translation>按月结算</translation>
-    </message>
-    <message>
-        <source>Billed yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
-        <translation>按年结算</translation>
-    </message>
-    <message>
         <source>Buy %1</source>
         <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
         <translation>购买%1</translation>
+    </message>
+    <message>
+        <source>Charged monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
+        <translation>按月计费</translation>
+    </message>
+    <message>
+        <source>Charged yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
+        <translation>按年计费</translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -9446,14 +9708,14 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>当前方案</translation>
     </message>
     <message>
-        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
-        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>需要更多存储空间吗？[BR][B][A]试试Pro Flexi[/A][/B]</translation>
+        <source>Most Popular</source>
+        <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
+        <translation>最受欢迎</translation>
     </message>
     <message>
-        <source>Recommended</source>
-        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
-        <translation>推荐</translation>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>需要更多存储空间吗？[BR][B][A]试试Pro&#xa0;Flexi[/A][/B]</translation>
     </message>
     <message>
         <source>Save up to %1% with yearly billing</source>
@@ -9491,9 +9753,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>您的MEGA云盘空间已满</translation>
     </message>
     <message>
+        <source>only</source>
+        <translatorcomment>Text shown ont top of the price of a plan.SNC-6228</translatorcomment>
+        <translation>只要</translation>
+    </message>
+    <message>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>每月</translation>
+    </message>
+    <message>
+        <source>per month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
+        <translation>每月，按年收费</translation>
     </message>
 </context>
 <context>
@@ -9509,7 +9781,9 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>已使用%1（%2%），共%3</numerusform></translation>
+        <translation>
+            <numerusform>已使用%1（%2%），共%3</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 / %2</source>
@@ -9524,12 +9798,14 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1秒</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>已使用%1</numerusform></translation>
+        <translation>
+            <numerusform>已使用%1</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1d</source>
@@ -9554,32 +9830,44 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>传输于%n天前完成</numerusform></translation>
+        <translation>
+            <numerusform>传输于%n天前完成</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>传输于%n小时前完成</numerusform></translation>
+        <translation>
+            <numerusform>传输于%n小时前完成</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>传输于%n分钟前完成</numerusform></translation>
+        <translation>
+            <numerusform>传输于%n分钟前完成</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>传输于%n个月前完成</numerusform></translation>
+        <translation>
+            <numerusform>传输于%n个月前完成</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>传输于%n秒钟前完成</numerusform></translation>
+        <translation>
+            <numerusform>传输于%n秒钟前完成</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>传输于%n年前完成</numerusform></translation>
+        <translation>
+            <numerusform>传输于%n年前完成</numerusform>
+        </translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -9589,7 +9877,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9604,7 +9892,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9629,47 +9917,47 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>TB</source>

@@ -46,9 +46,7 @@
         <file alias="images/qml/lock.png">images/qml/lock.png</file>
         <file alias="images/qml/lock@2x.png">images/qml/lock@2x.png</file>
         <file alias="images/qml/lock@3x.png">images/qml/lock@3x.png</file>
-        <file alias="images/qml/guest/warning.png">images/qml/guest/warning.png</file>
-        <file alias="images/qml/guest/warning@2x.png">images/qml/guest/warning@2x.png</file>
-        <file alias="images/qml/guest/warning@3x.png">images/qml/guest/warning@3x.png</file>
+        <file alias="images/qml/guest/warning.svg">images/qml/guest/warning.svg</file>
         <file alias="images/qml/onboarding/syncb.svg">images/qml/onboarding/syncb.svg</file>
         <file alias="images/qml/guest/setting_up.png">images/qml/guest/setting_up.png</file>
         <file alias="images/qml/guest/setting_up@2x.png">images/qml/guest/setting_up@2x.png</file>
@@ -119,5 +117,10 @@
         <file alias="images/qml/mega_3d_devices.png">images/qml/mega_3d_devices.png</file>
         <file alias="images/qml/mega_3d_devices@2x.png">images/qml/mega_3d_devices@2x.png</file>
         <file alias="images/qml/mega_3d_devices@3x.png">images/qml/mega_3d_devices@3x.png</file>
+        <file alias="images/qml/external-link.svg">images/qml/external-link.svg</file>
+        <file alias="images/qml/offer_banner@3x.png">images/qml/offer_banner@3x.png</file>
+        <file alias="images/qml/offer_banner@2x.png">images/qml/offer_banner@2x.png</file>
+        <file alias="images/qml/offer_banner.png">images/qml/offer_banner.png</file>
+        <file alias="tag-01-medium-thin-outline.svg">images/themed/tokenizable/tag-01-medium-thin-outline.svg</file>
     </qresource>
 </RCC>

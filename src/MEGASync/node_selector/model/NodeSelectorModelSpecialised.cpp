@@ -2,11 +2,13 @@
 
 #include "DuplicatedNodeDialog.h"
 #include "MegaApplication.h"
+#include "MegaNodeNames.h"
 #include "MyBackupsHandle.h"
 #include "Utilities.h"
 
 #include <QApplication>
 #include <QToolTip>
+#include <QVariant>
 
 using namespace mega;
 
@@ -15,6 +17,22 @@ NodeSelectorModelCloudDrive::NodeSelectorModelCloudDrive(QObject* parent):
     NodeSelectorModel(parent)
 {
     setAcceptDragAndDrop(true);
+}
+
+QVariant NodeSelectorModelCloudDrive::getDisplayText(NodeSelectorModelItem* item) const
+{
+    return item->isCloudDrive() ? MegaNodeNames::getRootNodeName(item->getNode().get()) :
+                                  NodeSelectorModel::getDisplayText(item);
+}
+
+QVariant NodeSelectorModelCloudDrive::getAddedDateText(NodeSelectorModelItem* item) const
+{
+    return item->isCloudDrive() ? QVariant() : NodeSelectorModel::getAddedDateText(item);
+}
+
+QVariant NodeSelectorModelCloudDrive::getLastModifiedDateText(NodeSelectorModelItem* item) const
+{
+    return item->isCloudDrive() ? QVariant() : NodeSelectorModel::getLastModifiedDateText(item);
 }
 
 void NodeSelectorModelCloudDrive::createRootNodes()
@@ -86,8 +104,9 @@ void NodeSelectorModelIncomingShares::onItemInfoUpdated(int role)
     {
         for (int i = 0; i < rowCount(); ++i)
         {
-            QModelIndex idx = index(i, COLUMN::USER); // we only update this column because we
-                                                      // retrieve the data in async mode
+            QModelIndex idx =
+                index(i, NodeSelectorModel::Column::USER); // we only update this column because we
+                                                           // retrieve the data in async mode
             if (idx.isValid()) // so it is possible that we doesn´t have the information from the
                                // start
             {
@@ -275,8 +294,38 @@ void NodeSelectorModelIncomingShares::firstLoad()
 NodeSelectorModelBackups::NodeSelectorModelBackups(QObject* parent):
     NodeSelectorModel(parent),
     mBackupsHandle(INVALID_HANDLE),
-    mBackupDevicesSize(0)
+    mBackupDevicesSize(0),
+    mDeviceNamesRequest(UserAttributes::DeviceNames::requestDeviceNames())
 {}
+
+QVariant NodeSelectorModelBackups::getDisplayText(NodeSelectorModelItem* item) const
+{
+    if (item->isMyBackupsFolder())
+    {
+        return MegaNodeNames::getBackupsName();
+    }
+    if (item->isDeviceFolder())
+    {
+        const auto deviceId = QString::fromUtf8(item->getNode()->getDeviceId());
+        const auto deviceName = mDeviceNamesRequest->getDeviceName(deviceId);
+        if (!deviceName.isEmpty())
+        {
+            return deviceName;
+        }
+    }
+    return NodeSelectorModel::getDisplayText(item);
+}
+
+QVariant NodeSelectorModelBackups::getAddedDateText(NodeSelectorModelItem* item) const
+{
+    return item->isMyBackupsFolder() ? QVariant() : NodeSelectorModel::getAddedDateText(item);
+}
+
+QVariant NodeSelectorModelBackups::getLastModifiedDateText(NodeSelectorModelItem* item) const
+{
+    return item->isMyBackupsFolder() ? QVariant() :
+                                       NodeSelectorModel::getLastModifiedDateText(item);
+}
 
 void NodeSelectorModelBackups::createRootNodes()
 {
@@ -315,6 +364,11 @@ void NodeSelectorModelBackups::firstLoad()
             this,
             &NodeSelectorModelBackups::onMyBackupsHandleReceived);
 
+    connect(mDeviceNamesRequest.get(),
+            &UserAttributes::DeviceNames::attributeReady,
+            this,
+            &NodeSelectorModelBackups::onDeviceNamesUpdated);
+
     addRootItems();
 }
 
@@ -339,10 +393,22 @@ bool NodeSelectorModelBackups::canDropMimeData() const
 
 void NodeSelectorModelBackups::onMyBackupsHandleReceived(mega::MegaHandle handle)
 {
-    if (mBackupsHandle == INVALID_HANDLE && handle != INVALID_HANDLE)
+    if (mBackupsHandle != handle && handle != INVALID_HANDLE)
     {
         mBackupsHandle = handle;
         addRootItems();
+    }
+}
+
+void NodeSelectorModelBackups::onDeviceNamesUpdated()
+{
+    QModelIndex rootIndex(index(0, 0));
+    auto rowcount = rowCount(rootIndex);
+    if (rowcount > 0)
+    {
+        emit dataChanged(index(0, NodeSelectorModel::Column::NODE, rootIndex),
+                         index(rowcount - 1, NodeSelectorModel::Column::NODE, rootIndex),
+                         {Qt::DisplayRole});
     }
 }
 
@@ -382,7 +448,7 @@ void NodeSelectorModelBackups::onRootItemCreated()
 {
     rootItemsLoaded();
 
-    QModelIndex rootIndex(index(0, 0));
+    const QModelIndex rootIndex(index(0, 0));
     // Add the item of the Backups Drive
     if (canFetchMore(rootIndex))
     {
@@ -576,14 +642,8 @@ bool NodeSelectorModelSearch::showAccess(mega::MegaNode* node) const
     {
         return true;
     }
-
     auto access = Utilities::getNodeAccess(node);
-    if (access < mega::MegaShare::ACCESS_OWNER && access > mega::MegaShare::ACCESS_UNKNOWN)
-    {
-        return true;
-    }
-
-    return false;
+    return access < mega::MegaShare::ACCESS_OWNER && access > mega::MegaShare::ACCESS_UNKNOWN;
 }
 
 void NodeSelectorModelSearch::onRootItemsCreated()
@@ -638,8 +698,9 @@ void NodeSelectorModelRubbish::onItemInfoUpdated(int role)
     {
         for (int i = 0; i < rowCount(); ++i)
         {
-            QModelIndex idx = index(i, COLUMN::USER); // we only update this column because we
-                                                      // retrieve the data in async mode
+            QModelIndex idx =
+                index(i, NodeSelectorModel::Column::USER); // we only update this column because we
+                                                           // retrieve the data in async mode
             if (idx.isValid()) // so it is possible that we doesn´t have the information from the
                                // start
             {
@@ -726,12 +787,6 @@ bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData* data,
                                                int,
                                                const QModelIndex& parent) const
 {
-    if (action == Qt::MoveAction)
-    {
-        // Allow copying/moving items to all the view space
-        return checkDraggedMimeData(data);
-    }
-
     return false;
 }
 

@@ -225,13 +225,17 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
 
     if(dbussSupportsActions && notification)
     {
-        connect(notification, &QObject::destroyed, this, [this, notification](){
-            if (mMode == Freedesktop && dbussSupportsActions)
-            {
-                uint32_t id = static_cast<uint32_t>(notification->getId());
-                interface->call(QDBus::NoBlock, QString::fromUtf8("CloseNotification"),id);
-            }
-        });
+        const uint32_t id = static_cast<uint32_t>(notification->getId());
+        connect(notification,
+                &QObject::destroyed,
+                this,
+                [this, id]()
+                {
+                    if (mMode == Freedesktop && dbussSupportsActions && interface)
+                    {
+                        interface->call(QDBus::NoBlock, QString::fromUtf8("CloseNotification"), id);
+                    }
+                });
 
         // fire with callback to gather ID
         interface->callWithCallback(QString::fromUtf8("Notify"), args, notification,
@@ -326,6 +330,8 @@ void DesktopAppNotification::dBusNotificationSentCallback(QDBusMessage dbusMssag
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Notification sent to DBUS: missing id").toUtf8().constData());
         assert(false && "QDBusMessage missing id");
     }
+
+    deleteLater();
 }
 
 void DesktopAppNotification::dbusNotificationSentErrorCallback(QDBusError error)

@@ -65,6 +65,7 @@ class HTTPServer: public QTcpServer
         EXTERNAL_DOWNLOAD_REQUEST_START,
         EXTERNAL_FILE_UPLOAD_REQUEST_START,
         EXTERNAL_FOLDER_UPLOAD_REQUEST_START,
+        EXTERNAL_FILE_FOLDER_UPLOAD_REQUEST_START,
         EXTERNAL_FOLDER_SYNC_REQUEST_START,
         EXTERNAL_FOLDER_SYNC_CHECK_START,
         EXTERNAL_OPEN_TRANSFER_MANAGER_START,
@@ -100,6 +101,7 @@ class HTTPServer: public QTcpServer
         void onExternalFileUploadRequested(mega::MegaHandle targetHandle);
         void onExternalFolderUploadRequested(mega::MegaHandle targetHandle);
         void onExternalFolderSyncRequested(mega::MegaHandle targetHandle);
+        void onExternalFileFolderUploadRequested(mega::MegaHandle targetHandle);
         void onExternalOpenTransferManagerRequested(int tab);
         void onExternalShowInFolderRequested(QString path);
         void onExternalAddBackup();
@@ -138,6 +140,7 @@ class HTTPServer: public QTcpServer
         void externalDownloadRequest(QString& response, const HTTPRequest& request, QAbstractSocket* socket, bool undelete = false);
         void externalDownloadSetRequest(QString &response, const HTTPRequest& request);
         void externalFileUploadRequest(QString& response, const HTTPRequest& request);
+        void externalFileFolderUploadRequest(QString& response, const HTTPRequest& request);
         void externalFolderUploadRequest(QString& response, const HTTPRequest& request);
         void externalFolderSyncRequest(QString& response, const HTTPRequest& request);
         void externalFolderSyncCheck(QString& response, const HTTPRequest& request);

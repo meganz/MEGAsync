@@ -7,6 +7,7 @@
 #include "DesktopNotifications.h"
 #include "DownloadFromMegaDialog.h"
 #include "DuplicatedNodeInfo.h"
+#include "gui/TrayIconManager.h"
 #include "HTTPServer.h"
 #include "InfoDialog.h"
 #include "LinkProcessor.h"
@@ -15,13 +16,17 @@
 #include "MegaMenuItemAction.h"
 #include "MegaSyncLogger.h"
 #include "MegaUploader.h"
+#include "MenuItemAction.h"
 #include "PasteMegaLinksDialog.h"
 #include "Preferences.h"
 #include "QTMegaListener.h"
 #include "ScanStageController.h"
 #include "SetManager.h"
 #include "SettingsDialog.h"
+#include "state_machines/DiscountPolicy.h"
+#include "state_machines/DiscountStateMachine.h"
 #include "SyncInfo.h"
+#include "SyncsMenu.h"
 #include "ThreadPool.h"
 #include "TransferManager.h"
 #include "TransferQuota.h"
@@ -84,10 +89,6 @@ class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
 
-#ifdef Q_OS_LINUX
-    void setTrayIconFromTheme(QString icon);
-#endif
-
     static void loadDataPath();
 
 public:
@@ -119,12 +120,6 @@ public:
 
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
-
-    /**
-     * @brief Migrate sync configuration to sdk cache
-     * @param email of sync configuration to migrate from sprevious sessions
-     */
-    void migrateSyncConfToSdk(QString email = QString());
 
     mega::MegaApi *getMegaApi() { return megaApi; }
     mega::MegaApi *getMegaApiFolders() { return megaApiFolders; }
@@ -204,6 +199,7 @@ public:
     void updateUsedStorage(const bool sendEvent = false);
     void showUpsellDialog(UpsellPlans::ViewMode viewMode);
     static void showStalledIssuesDialog();
+    bool isOnboarding();
 
 signals:
     void startUpdaterThread();
@@ -223,6 +219,7 @@ signals:
     void requestAppState(AppState::AppStates newAppState);
     void syncsDialogClosed();
     void languageChanged();
+    void meaningfulInteraction();
 
 public slots:
     void updateTrayIcon();
@@ -253,6 +250,8 @@ public slots:
     void processSetDownload(const QString& publicLink, const QList<mega::MegaHandle>& elementHandleList);
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
+    void shellBackup(QStringList);
+    void shellSync(QString);
     void shellExport(QQueue<QString> newExportQueue);
     void shellViewOnMega(const QString& localPath, bool versions);
     void shellViewOnMegaByHandle(mega::MegaHandle handle, bool versions);
@@ -262,6 +261,7 @@ public slots:
     void externalLinkDownload(QString megaLink, QString auth);
     void externalFileUpload(mega::MegaHandle targetFolder);
     void externalFolderUpload(mega::MegaHandle targetFolder);
+    void externalFileFolderUpload(mega::MegaHandle targetFolder);
     void externalFolderSync(mega::MegaHandle targetFolder);
     void externalAddBackup();
     void externalOpenTransferManager(int tab);
@@ -285,9 +285,9 @@ public slots:
     void showInfoDialog();
     void showInfoDialogNotifications();
     void triggerInstallUpdate();
-    void scanningAnimationStep();
     void clearDownloadAndPendingLinks();
     void changeState();
+    void requestUserDiscounts(bool skipChecks = false);
 
 #ifdef _WIN32
     void changeDisplay(QScreen *disp);
@@ -344,10 +344,9 @@ protected:
     void refreshStorageUIs();
     void manageBusinessStatus(int64_t event);
 
-    bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
 
-    QSystemTrayIcon *trayIcon;
+    QPointer<DiscountPolicy> getDiscountPolicy();
 
     QAction *guestSettingsAction;
     QAction *initialExitAction;
@@ -388,15 +387,15 @@ protected:
 
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
-    MenuItemAction *updateActionGuest;
-    MenuItemAction* lastHovered;
+    MenuItemAction* updateActionGuest;
 
-#ifdef __APPLE__
-    QTimer *scanningTimer;
-#endif
+    // Tray icon manager — owns QSystemTrayIcon, animation timer, icon cache
+    TrayIconManager* mTrayIconManager = nullptr;
+
+    // Convenience accessor for code that needs the raw QSystemTrayIcon*
+    QSystemTrayIcon* trayIcon() const;
 
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
-    int scanningAnimationIndex;
     QPointer<SettingsDialog> mSettingsDialog;
     QPointer<InfoDialog> infoDialog;
     std::shared_ptr<Preferences> preferences;
@@ -506,11 +505,12 @@ protected:
 
     QPointer<SyncReminderNotificationManager> mSyncReminderNotificationManager;
 
+    QPointer<DiscountPolicy> mDiscountPolicy;
+    QPointer<DiscountStateMachine> mDiscountStateMachine;
+
     bool misSyncingStateWrongLogged;
 
 private:
-    void loadSyncExclusionRules(QString email = QString());
-
     QList<QNetworkInterface> findNewNetworkInterfaces();
     bool checkNetworkInterfaces(const QList<QNetworkInterface>& newNetworkInterfaces) const;
     bool checkNetworkInterface(const QNetworkInterface& newNetworkInterface) const;
@@ -532,8 +532,6 @@ private:
 
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
-
-    void startUpload(const QString& rawLocalPath, mega::MegaNode* target, mega::MegaCancelToken *cancelToken);
 
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 

@@ -1,5 +1,13 @@
 #include "UpsellPlans.h"
 
+#include "Utilities.h"
+
+#include <cmath>
+
+namespace
+{
+constexpr double DOUBLE_COMPARISON_EPSILON = 1e-5;
+}
 // ************************************************************************************************
 // * UpsellPlans
 // ************************************************************************************************
@@ -7,7 +15,7 @@
 UpsellPlans::UpsellPlans(QObject* parent):
     QObject(parent),
     mViewMode(ViewMode::NONE),
-    mIsMonthly(true),
+    mIsMonthly(false),
     mIsBillingCurrency(true),
     mCurrentDiscount(-1),
     mTransferFinishTime(0ll),
@@ -24,6 +32,14 @@ void UpsellPlans::addPlans(const QList<std::shared_ptr<Data>>& plans)
     }
 
     mPlans.append(plans);
+    // Switch to monthly view if there are no discount on the yearly plan and a discount on the
+    // monthly plan.
+    bool isMonthly = false;
+    if (!hasYearlyDiscount() && hasMonthlyDiscount())
+    {
+        isMonthly = true;
+    }
+    setMonthly(isMonthly);
     emit sizeChanged();
 }
 
@@ -122,6 +138,12 @@ bool UpsellPlans::isMonthly() const
     return mIsMonthly;
 }
 
+std::optional<UpsellPlans::Data::DiscountInfo>
+    UpsellPlans::getPlanDiscount(std::shared_ptr<UpsellPlans::Data> plan) const
+{
+    return mIsMonthly ? plan->monthlyData().discount() : plan->yearlyData().discount();
+}
+
 void UpsellPlans::setMonthly(bool monthly)
 {
     if (mIsMonthly != monthly)
@@ -140,7 +162,7 @@ void UpsellPlans::setBillingCurrency(bool isCurrencyBilling)
     }
 }
 
-void UpsellPlans::setCurrentDiscount(int discount)
+void UpsellPlans::setCurrentDiscount(long discount)
 {
     if (mCurrentDiscount != discount)
     {
@@ -172,7 +194,7 @@ bool UpsellPlans::isBillingCurrency() const
     return mIsBillingCurrency;
 }
 
-int UpsellPlans::getCurrentDiscount() const
+long UpsellPlans::getCurrentDiscount() const
 {
     return mCurrentDiscount;
 }
@@ -180,6 +202,53 @@ int UpsellPlans::getCurrentDiscount() const
 QList<std::shared_ptr<UpsellPlans::Data>> UpsellPlans::plans() const
 {
     return mPlans;
+}
+
+bool UpsellPlans::hasDiscounts() const
+{
+    return std::any_of(mPlans.begin(),
+                       mPlans.end(),
+                       [this](std::shared_ptr<Data> plan)
+                       {
+                           return mIsMonthly ? plan->hasMonthlyDiscount() :
+                                               plan->hasYearlyDiscount();
+                       });
+}
+
+bool UpsellPlans::hasMonthlyDiscount() const
+{
+    return std::any_of(mPlans.begin(),
+                       mPlans.end(),
+                       [](std::shared_ptr<Data> plan)
+                       {
+                           return plan->hasMonthlyDiscount();
+                       });
+}
+
+bool UpsellPlans::hasYearlyDiscount() const
+{
+    return std::any_of(mPlans.begin(),
+                       mPlans.end(),
+                       [](std::shared_ptr<Data> plan)
+                       {
+                           return plan->hasYearlyDiscount();
+                       });
+}
+
+long UpsellPlans::getMaximumYearlyDiscount() const
+{
+    if (mPlans.empty())
+        return 0; // or throw, depending on your design
+
+    auto it =
+        std::max_element(mPlans.begin(),
+                         mPlans.end(),
+                         [](const std::shared_ptr<Data>& a, const std::shared_ptr<Data>& b)
+                         {
+                             return a->calculateYearlyDiscount() < b->calculateYearlyDiscount();
+                         });
+
+    return (*it)->calculateYearlyDiscount();
 }
 
 // ************************************************************************************************
@@ -195,20 +264,26 @@ UpsellPlans::Data::Data(int proLevel, const QString& name):
 QHash<int, QByteArray> UpsellPlans::Data::roleNames()
 {
     static QHash<int, QByteArray> roles{
-        {Qt::DisplayRole,                                "display"                  },
-        {UpsellPlans::NAME_ROLE,                         "name"                     },
-        {UpsellPlans::BUTTON_NAME_ROLE,                  "buttonName"               },
-        {UpsellPlans::RECOMMENDED_ROLE,                  "recommended"              },
-        {UpsellPlans::STORAGE_ROLE,                      "gbStorage"                },
-        {UpsellPlans::TRANSFER_ROLE,                     "gbTransfer"               },
-        {UpsellPlans::PRICE_ROLE,                        "price"                    },
+        {Qt::DisplayRole, "display"},
+        {UpsellPlans::NAME_ROLE, "name"},
+        {UpsellPlans::BUTTON_NAME_ROLE, "buttonName"},
+        {UpsellPlans::RECOMMENDED_ROLE, "recommended"},
+        {UpsellPlans::STORAGE_ROLE, "gbStorage"},
+        {UpsellPlans::TRANSFER_ROLE, "gbTransfer"},
+        {UpsellPlans::PRICE_AFTER_TAX_ROLE, "priceAfterTax"},
         {UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE, "totalPriceWithoutDiscount"},
-        {UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE,  "monthlyPriceWithDiscount" },
-        {UpsellPlans::CURRENT_PLAN_ROLE,                 "currentPlan"              },
-        {UpsellPlans::AVAILABLE_ROLE,                    "available"                },
-        {UpsellPlans::SHOW_PRO_FLEXI_MESSAGE,            "showProFlexiMessage"      },
-        {UpsellPlans::SHOW_ONLY_PRO_FLEXI,               "showOnlyProFlexi"         }
-    };
+        {UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE, "monthlyPriceWithDiscount"},
+        {UpsellPlans::CURRENT_PLAN_ROLE, "currentPlan"},
+        {UpsellPlans::AVAILABLE_ROLE, "available"},
+        {UpsellPlans::SHOW_PRO_FLEXI_MESSAGE, "showProFlexiMessage"},
+        {UpsellPlans::SHOW_ONLY_PRO_FLEXI, "showOnlyProFlexi"},
+        {UpsellPlans::HAS_DISCOUNT, "hasDiscount"},
+        {UpsellPlans::DISCOUNT_MONTHS, "discountMonths"},
+        {UpsellPlans::DISCOUNT_PERCENTAGE, "discountPercentage"},
+        {UpsellPlans::IS_HIGHLIGHTED, "isHighlighted"},
+        {UpsellPlans::PRICE_BEFORE_TAX_ROLE, "priceBeforeTax"},
+        {UpsellPlans::MONTHLY_BASE_PRICE_ROLE, "monthlyBasePrice"},
+        {UpsellPlans::HAS_TAX, "hasTax"}};
 
     return roles;
 }
@@ -228,14 +303,66 @@ const QString& UpsellPlans::Data::name() const
     return mName;
 }
 
-const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::monthlyData() const
+UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::monthlyData()
 {
     return mMonthlyData;
 }
 
-const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData() const
+UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData()
 {
     return mYearlyData;
+}
+
+bool UpsellPlans::Data::hasMonthlyDiscount() const
+{
+    return mMonthlyData.hasDiscount();
+}
+
+bool UpsellPlans::Data::hasYearlyDiscount() const
+{
+    return mYearlyData.hasDiscount();
+}
+
+long UpsellPlans::Data::calculateMonthlyDiscount() const
+{
+    return mMonthlyData.isValid() && mMonthlyData.hasDiscount() ?
+               mMonthlyData.discount()->percentage :
+               0;
+}
+
+long UpsellPlans::Data::calculateYearlyDiscount() const
+{
+    auto yearlyDiscountP = 0L;
+
+    if (mYearlyData.isValid())
+    {
+        constexpr double PERCENTAGE(100.);
+        const auto yearlyPrice = mYearlyData.priceBeforeTax();
+        auto yearlyPriceWithInstDisc = yearlyPrice;
+
+        // Take instant discount into account
+        if (mYearlyData.hasDiscount())
+        {
+            const auto instDiscP = mYearlyData.discount()->percentage;
+            const auto instDiscountMult = (PERCENTAGE - instDiscP) / PERCENTAGE;
+            yearlyPriceWithInstDisc *= instDiscountMult;
+            yearlyDiscountP = instDiscP;
+        }
+
+        // Take savings wrt monthly plan into account
+        if (mMonthlyData.isValid())
+        {
+            constexpr double NUM_MONTHS_PER_PLAN(12.);
+            const auto priceFor12Months = mMonthlyData.priceBeforeTax() * NUM_MONTHS_PER_PLAN;
+            if (yearlyPrice < priceFor12Months)
+            {
+                yearlyDiscountP = std::lround(
+                    PERCENTAGE -
+                    Utilities::softCeil((yearlyPriceWithInstDisc * PERCENTAGE) / priceFor12Months));
+            }
+        }
+    }
+    return yearlyDiscountP;
 }
 
 void UpsellPlans::Data::setProLevel(int newProLevel)
@@ -270,20 +397,24 @@ void UpsellPlans::Data::setMonthlyData(const AccountBillingPlanData& newMonthlyD
 UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData():
     mGBStorage(-1),
     mGBTransfer(-1),
-    mPrice(-1.0f)
+    mPriceAfterTax(-1.),
+    mPriceBeforeTax(-1.)
 {}
 
 UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int64_t gbStorage,
                                                                   int64_t gbTransfer,
-                                                                  float price):
+                                                                  double priceAfterTax,
+                                                                  double priceBeforeTax):
     mGBStorage(gbStorage),
     mGBTransfer(gbTransfer),
-    mPrice(price)
+    mPriceAfterTax(priceAfterTax),
+    mPriceBeforeTax(priceBeforeTax),
+    mHasTax(std::abs(mPriceBeforeTax - mPriceAfterTax) > ::DOUBLE_COMPARISON_EPSILON)
 {}
 
 bool UpsellPlans::Data::AccountBillingPlanData::isValid() const
 {
-    return mGBStorage != -1 && mGBTransfer != -1 && mPrice != -1.0f;
+    return mGBStorage != -1 && mGBTransfer != -1 && mPriceAfterTax != -1.;
 }
 
 int64_t UpsellPlans::Data::AccountBillingPlanData::gBStorage() const
@@ -296,11 +427,37 @@ int64_t UpsellPlans::Data::AccountBillingPlanData::gBTransfer() const
     return mGBTransfer;
 }
 
-float UpsellPlans::Data::AccountBillingPlanData::price() const
+double UpsellPlans::Data::AccountBillingPlanData::priceAfterTax() const
 {
-    return mPrice;
+    return mPriceAfterTax;
 }
 
+double UpsellPlans::Data::AccountBillingPlanData::priceBeforeTax() const
+{
+    return mPriceBeforeTax;
+}
+
+std::optional<UpsellPlans::Data::DiscountInfo>
+    UpsellPlans::Data::AccountBillingPlanData::discount() const
+{
+    return mDiscount;
+}
+
+bool UpsellPlans::Data::AccountBillingPlanData::hasDiscount() const
+{
+    return mDiscount.has_value();
+}
+
+void UpsellPlans::Data::AccountBillingPlanData::setDiscount(
+    UpsellPlans::Data::DiscountInfo discount)
+{
+    mDiscount = discount;
+}
+
+bool UpsellPlans::Data::AccountBillingPlanData::hasTax() const
+{
+    return mHasTax;
+}
 // ************************************************************************************************
 // * UpsellPlans::CurrencyData
 // ************************************************************************************************

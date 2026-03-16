@@ -57,6 +57,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.h
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.h
     ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.h
+    ${CMAKE_CURRENT_LIST_DIR}/TrayIconManager.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.h
@@ -83,6 +84,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/OnboardingQmlDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestContent.h
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/DeviceNameChecker.h
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/ExclusionRulesModel.h
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.h
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.h
@@ -140,6 +142,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordController.h
+    ${CMAKE_CURRENT_LIST_DIR}/offer/OfferComponent.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -198,6 +201,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/ApiImageLabel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/TabSelector.cpp
     ${CMAKE_CURRENT_LIST_DIR}/SearchLineEdit.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/TrayIconManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/NewFolderDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -223,6 +227,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestQmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/OnboardingQmlDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/onboarding/GuestContent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding/DeviceNameChecker.cpp
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/ExclusionRulesModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions/SyncExclusions.cpp
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer/TokenParserWidgetManager.cpp
@@ -274,6 +279,7 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/offer/OfferComponent.cpp
 )
 
 target_sources_conditional(${ExecutableTarget}

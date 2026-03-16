@@ -41,9 +41,6 @@ background-color: #F7F7F7; /*colorToken.surface-1*/
 background-color: #FFFFFF; /*colorToken.page-background*/
 }</string>
   </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
-  </property>
   <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,0">
    <property name="spacing">
     <number>0</number>

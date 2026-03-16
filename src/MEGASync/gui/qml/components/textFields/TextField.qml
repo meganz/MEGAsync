@@ -237,7 +237,7 @@ FocusScope {
             left: parent.left
             right: parent.right
             top: textField.bottom
-            topMargin: 2
+            topMargin: sizes.hintTextMargin
             leftMargin: sizes.focusBorderWidth
             rightMargin: sizes.focusBorderWidth
         }
@@ -259,7 +259,7 @@ FocusScope {
             left: parent.left
             right: parent.right
             top: hintItem.bottom
-            topMargin: 2
+            topMargin: sizes.hintTextMargin
             leftMargin: sizes.focusBorderWidth
             rightMargin: sizes.focusBorderWidth
         }

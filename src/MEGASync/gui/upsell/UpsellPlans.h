@@ -7,6 +7,7 @@
 #include <QObject>
 
 #include <memory>
+#include <optional>
 
 class UpsellPlans: public QObject
 {
@@ -15,7 +16,7 @@ class UpsellPlans: public QObject
     Q_PROPERTY(ViewMode viewMode READ getViewMode NOTIFY viewModeChanged)
     Q_PROPERTY(bool monthly READ isMonthly NOTIFY monthlyChanged)
     Q_PROPERTY(bool billingCurrency READ isBillingCurrency NOTIFY isCurrencyBillingChanged)
-    Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
+    Q_PROPERTY(long currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
     Q_PROPERTY(QString currencyName READ getCurrencyName NOTIFY currencyChanged)
     Q_PROPERTY(
         QString transferRemainingTime READ getTransferRemainingTime NOTIFY remainingTimeChanged)
@@ -41,13 +42,20 @@ public:
         RECOMMENDED_ROLE,
         STORAGE_ROLE,
         TRANSFER_ROLE,
-        PRICE_ROLE,
+        PRICE_AFTER_TAX_ROLE,
         TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE,
         MONTHLY_PRICE_WITH_DISCOUNT_ROLE,
         CURRENT_PLAN_ROLE,
         AVAILABLE_ROLE,
         SHOW_PRO_FLEXI_MESSAGE,
-        SHOW_ONLY_PRO_FLEXI
+        SHOW_ONLY_PRO_FLEXI,
+        HAS_DISCOUNT,
+        DISCOUNT_MONTHS,
+        DISCOUNT_PERCENTAGE,
+        IS_HIGHLIGHTED,
+        PRICE_BEFORE_TAX_ROLE,
+        MONTHLY_BASE_PRICE_ROLE,
+        HAS_TAX
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -56,23 +64,40 @@ public:
     class Data
     {
     public:
+        struct DiscountInfo
+        {
+            QString code;
+            int months;
+            int percentage = 0;
+        };
         class AccountBillingPlanData
         {
         public:
             AccountBillingPlanData();
-            AccountBillingPlanData(int64_t gbStorage, int64_t gbTransfer, float price);
+            AccountBillingPlanData(int64_t gbStorage,
+                                   int64_t gbTransfer,
+                                   double priceAfterTax,
+                                   double priceBeforeTax);
             ~AccountBillingPlanData() = default;
 
             bool isValid() const;
 
             int64_t gBStorage() const;
             int64_t gBTransfer() const;
-            float price() const;
+            double priceAfterTax() const;
+            double priceBeforeTax() const;
+            std::optional<DiscountInfo> discount() const;
+            bool hasDiscount() const;
+            void setDiscount(DiscountInfo discount);
+            bool hasTax() const;
 
         private:
             int64_t mGBStorage;
             int64_t mGBTransfer;
-            float mPrice;
+            double mPriceAfterTax;
+            double mPriceBeforeTax;
+            bool mHasTax = true;
+            std::optional<DiscountInfo> mDiscount = std::nullopt;
         };
 
         Data(int proLevel, const QString& name);
@@ -82,8 +107,12 @@ public:
         int proLevel() const;
         bool isRecommended() const;
         const QString& name() const;
-        const AccountBillingPlanData& monthlyData() const;
-        const AccountBillingPlanData& yearlyData() const;
+        AccountBillingPlanData& monthlyData();
+        AccountBillingPlanData& yearlyData();
+        bool hasMonthlyDiscount() const;
+        bool hasYearlyDiscount() const;
+        long calculateMonthlyDiscount() const;
+        long calculateYearlyDiscount() const;
 
     private:
         int mProLevel;
@@ -99,6 +128,7 @@ public:
         void setRecommended(bool newRecommended);
         void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
         void setYearlyData(const AccountBillingPlanData& newYearlyData);
+        void setDiscount(DiscountInfo discount);
         void setName(const QString& name);
     };
 
@@ -129,8 +159,10 @@ public:
 
     ViewMode getViewMode() const;
     bool isMonthly() const;
+    std::optional<Data::DiscountInfo>
+        getPlanDiscount(std::shared_ptr<UpsellPlans::Data> plan) const;
     bool isBillingCurrency() const;
-    int getCurrentDiscount() const;
+    long getCurrentDiscount() const;
     QString getCurrencySymbol() const;
     QString getCurrencyName() const;
     QString getTransferRemainingTime() const;
@@ -138,7 +170,10 @@ public:
     bool isOnlyProFlexiAvailable() const;
     bool isPro() const;
     bool isAnyPlanClicked() const;
-
+    bool hasDiscounts() const;
+    bool hasMonthlyDiscount() const;
+    bool hasYearlyDiscount() const;
+    long getMaximumYearlyDiscount() const;
 signals:
     void viewModeChanged();
     void currencyChanged();
@@ -156,7 +191,7 @@ private:
     ViewMode mViewMode;
     bool mIsMonthly;
     bool mIsBillingCurrency;
-    int mCurrentDiscount;
+    long mCurrentDiscount;
     QString mTransferRemainingTime;
     long long mTransferFinishTime; // Seconds since epoch.
     bool mIsOnlyProFlexiAvailable;
@@ -168,7 +203,7 @@ private:
     void setViewMode(ViewMode viewMode);
     void setMonthly(bool monthly);
     void setBillingCurrency(bool isCurrencyBilling);
-    void setCurrentDiscount(int discount);
+    void setCurrentDiscount(long discount);
     void setTransferRemainingTime(const QString& time);
     void setCurrency(const QString& symbol, const QString& name);
     void setTransferFinishTime(long long newTime);

@@ -2,6 +2,8 @@
 #include <KOverlayIconPlugin>
 #include <KPluginFactory>
 
+#include <KConfigGroup>
+#include <KDesktopFile>
 #include <QDir>
 #include <QMetaEnum>
 #include <QStandardPaths>
@@ -45,70 +47,67 @@ class MegasyncDolphinOverlayPlugin : public KOverlayIconPlugin
 
 private Q_SLOTS:
 
-    void sockNotifyServer_connected()
+    static void sockNotifyServer_connected()
     {
         qDebug("MEGASYNCOVERLAYPLUGIN: connected to Notify Server");
     }
 
-    void sockNotifyServer_disconnected()
+    static void sockNotifyServer_disconnected()
     {
         qDebug("MEGASYNCOVERLAYPLUGIN: disconnected from Notify Server");
     }
 
-    void sockNotifyServer_error(QLocalSocket::LocalSocketError err)
+    static void sockNotifyServer_error(QLocalSocket::LocalSocketError err)
     {
-        QMetaEnum metaEnum = QMetaEnum::fromType<QAbstractSocket::SocketError>();
+        const auto metaEnum = QMetaEnum::fromType<QAbstractSocket::SocketError>();
         qCritical("MEGASYNCOVERLAYPLUGIN: error in connection to notify server: %s", metaEnum.valueToKey(err));
     }
 
-    void sockExtServer_connected()
+    static void sockExtServer_connected()
     {
         qDebug("MEGASYNCOVERLAYPLUGIN: connected to Ext Server");
     }
 
-    void sockExtServer_disconnected()
+    static void sockExtServer_disconnected()
     {
         qDebug("MEGASYNCOVERLAYPLUGIN: disconnected from Ext Server");
     }
 
-    void sockExtServer_error(QLocalSocket::LocalSocketError err)
+    static void sockExtServer_error(QLocalSocket::LocalSocketError err)
     {
-        QMetaEnum metaEnum = QMetaEnum::fromType<QAbstractSocket::SocketError>();
+        const auto metaEnum = QMetaEnum::fromType<QAbstractSocket::SocketError>();
         qCritical("MEGASYNCOVERLAYPLUGIN: error in connection to ext server: %s", metaEnum.valueToKey(err));
     }
 
     void notifiedfromServer()
     {
-        qDebug("MEGASYNCOVERLAYPLUGIN: notifiedfromServer");
+        // qDebug("MEGASYNCOVERLAYPLUGIN: notifiedfromServer");
 
         while(sockNotifyServer.canReadLine())
         {
-
             char type[1];
             sockNotifyServer.read(type, 1); //TODO: control errors
 
-            QString action = QLatin1String("unknown");
+            // QString action = QLatin1String("unknown");
 
-            switch(*type) {
-            case 'P': // item state changed
-                action = QLatin1String("item state changed");
-                break;
-            case 'A': // sync folder added
-                action = QLatin1String("sync folder added");
-                break;
-            case 'D': // sync folder deleted
-                action = QLatin1String("sync folder deleted");
-                break;
-            default:
-                qCritical("MEGASYNCOVERLAYPLUGIN: unexpected read from notifyServer. type=%s", type);
-                break;
-            }
+            // switch(*type) {
+            // case 'P': // item state changed
+            //     action = QLatin1String("item state changed");
+            //     break;
+            // case 'A': // sync folder added
+            //     action = QLatin1String("sync folder added");
+            //     break;
+            // case 'D': // sync folder deleted
+            //     action = QLatin1String("sync folder deleted");
+            //     break;
+            // default:
+            //     qCritical("MEGASYNCOVERLAYPLUGIN: unexpected read from notifyServer. type=%s", type);
+            //     break;
+            // }
 
-            QString url = QString::fromLatin1(sockNotifyServer.readLine());
-            while (url.endsWith(QLatin1Char('\n')))
-                url.chop(1);
+            const auto url = QString::fromUtf8(sockNotifyServer.readLine().trimmed());
 
-            qDebug("MEGASYNCOVERLAYPLUGIN: Server notified <%s>: %s",action.toUtf8().constData(), url.toUtf8().constData());
+            // qDebug("MEGASYNCOVERLAYPLUGIN: Server notified <%s>: %s",action.toUtf8().constData(), url.toUtf8().constData());
 
             Q_EMIT overlaysChanged(QUrl::fromLocalFile(url), getOverlays(QUrl::fromLocalFile(url)));
         }
@@ -120,17 +119,15 @@ public:
     {
         qDebug("MEGASYNCOVERLAYPLUGIN: Loading plugin ... ");
 
-        connect(&sockNotifyServer, SIGNAL(connected()), this, SLOT(sockNotifyServer_connected()));
-        connect(&sockNotifyServer, SIGNAL(disconnected()), this, SLOT(sockNotifyServer_disconnected()));
+        connect(&sockNotifyServer, &QLocalSocket::connected, this, &MegasyncDolphinOverlayPlugin::sockNotifyServer_connected);
+        connect(&sockNotifyServer, &QLocalSocket::disconnected, this, &MegasyncDolphinOverlayPlugin::sockNotifyServer_disconnected);
 
-        connect(&sockNotifyServer, SIGNAL(readyRead()), this, SLOT(notifiedfromServer()));
-        connect(&sockNotifyServer, SIGNAL(error(QLocalSocket::LocalSocketError)),
-                this, SLOT(sockNotifyServer_error(QLocalSocket::LocalSocketError)));
+        connect(&sockNotifyServer,  &QLocalSocket::readyRead, this, &MegasyncDolphinOverlayPlugin::notifiedfromServer);
+        connect(&sockNotifyServer,  &QLocalSocket::errorOccurred, this, &MegasyncDolphinOverlayPlugin::sockNotifyServer_error);
 
-        connect(&sockExtServer, SIGNAL(connected()), this, SLOT(sockExtServer_connected()));
-        connect(&sockExtServer, SIGNAL(disconnected()), this, SLOT(sockExtServer_disconnected()));
-        connect(&sockExtServer, SIGNAL(error(QLocalSocket::LocalSocketError)),
-                this, SLOT(sockExtServer_error(QLocalSocket::LocalSocketError)));
+        connect(&sockExtServer, &QLocalSocket::connected, this, &MegasyncDolphinOverlayPlugin::sockExtServer_connected);
+        connect(&sockExtServer, &QLocalSocket::disconnected, this, &MegasyncDolphinOverlayPlugin::sockExtServer_disconnected);
+        connect(&sockExtServer, &QLocalSocket::errorOccurred, this, &MegasyncDolphinOverlayPlugin::sockExtServer_error);
 
         sockPathNofityServer = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
         sockPathNofityServer.append(QDir::separator())
@@ -152,30 +149,62 @@ public:
     {
         if (!url.isLocalFile())
         {
-            return QStringList();
+            return {};
         }
+
+        auto restoreDefaultIconIfNeeded = [&](const QString& qStrURL/*, int state*/)
+        {
+            // qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: %d",
+            //        qStrURL.toUtf8().constData(),
+            //        state);
+            const auto icon_path = getFolderIconPath(qStrURL);
+            if (!icon_path.isEmpty())
+            {
+                // qDebug() << "MEGASYNCOVERLAYPLUGIN: icon_path =" << icon_path;
+                if (icon_path == "mega" ||
+                    (icon_path.contains("/usr/share/icons") && icon_path.contains("apps/mega.png")))
+                {
+                    // qDebug() << "MEGASYNCOVERLAYPLUGIN: Restore " << qStrURL << " to default icon";
+                    // Restore to default icon
+                    changeFolderIcon(qStrURL, QString());
+                }
+            }
+        };
 
         QStringList r;
 
-        int state = getState(url.toLocalFile());
+        const auto qStrURL = url.toLocalFile();
+        const auto state = getState(qStrURL);
 
         switch (state)
         {
             case RESPONSE_SYNCED:
                 r << QLatin1String("mega-dolphin-synced");
-                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-synced",url.toLocalFile().toUtf8().constData());
+                // qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-synced", cStrURL);
                 break;
             case RESPONSE_PENDING:
                 r << QLatin1String("mega-dolphin-pending");
-                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-pending",url.toLocalFile().toUtf8().constData());
+                // qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-pending", cStrURL);
                 break;
             case RESPONSE_SYNCING:
                 r << QLatin1String("mega-dolphin-syncing");
-                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-syncing",url.toLocalFile().toUtf8().constData());
+                // qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-syncing", cStrURL);
                 break;
+            case RESPONSE_DEFAULT:
+                // qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-default", cStrURL);
+                // Fallthrough
+            case RESPONSE_IGNORED:
+                // qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-ignored", cStrURL);
+                restoreDefaultIconIfNeeded(qStrURL/*, state*/);
+                break;
+
+            case RESPONSE_ERROR:
             default:
-                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: %d",url.toLocalFile().toUtf8().constData(),state);
+            {
+                // Don't change or remove the icon if MEGASync is not running
+                // qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-error", cStrURL);
                 break;
+            }
         }
 
         return r;
@@ -183,7 +212,7 @@ public:
 
 private:
 
-    int getState(QString path)
+    int getState(const QString& path)
     {
         QString res;
         res = sendRequest(OP_PATH_STATE, QFileInfo(path).canonicalFilePath());
@@ -193,32 +222,104 @@ private:
 
     // send request and receive response from Extension server
     // Return newly-allocated response string
-    QString sendRequest(char type, QString command)
+    QString sendRequest(char type, const QString& command)
     {
-        int waitTime = -1; // This (instead of a timeout) makes dolphin hang until the location for
+        const int waitTime = -1; // This (instead of a timeout) makes dolphin hang until the location for
                            // an upload is selected  (will be corrected in megasync>3.0.1).
                            // Otherwise megaync segafaults accesing client socket
 
-        if(!sockExtServer.isOpen()) {
+        if(!sockExtServer.isOpen())
+        {
             sockExtServer.connectToServer(sockPathExtServer);
             if(!sockExtServer.waitForConnected(waitTime))
-                return QString();
+            {
+                return {};
+            }
         }
 
-        QString req = QString::fromLatin1("%1:%2").arg(type).arg(command);
+        const auto req = QString::fromLatin1("%1:%2").arg(type).arg(command);
 
         sockExtServer.write(req.toUtf8());
         sockExtServer.flush();
 
-        if(!sockExtServer.waitForReadyRead(waitTime)) {
+        if(!sockExtServer.waitForReadyRead(waitTime))
+        {
             sockExtServer.close();
-            return QString();
+            return {};
         }
 
-        QString reply;
-        reply.append(QLatin1String(sockExtServer.readAll()));
+        // Answer is latin1 encoded
+        return QString::fromLatin1(sockExtServer.readAll());
+    }
 
-        return reply;
+    // Function to get folder icon path
+    static QString getFolderIconPath(const QString& folderPath)
+    {
+        if (folderPath.isEmpty())
+        {
+            return {};
+        }
+
+        QString iconPath;
+        KDesktopFile desktopFile(folderPath + "/.directory");
+        if (desktopFile.hasGroup("Desktop Entry"))
+        {
+            KConfigGroup group = desktopFile.group("Desktop Entry");
+            iconPath = group.readEntry("Icon", QString());
+        }
+
+        return iconPath;
+    }
+
+    static void changeFolderIcon(const QString& folderPath, const QString& iconPath)
+    {
+        if (folderPath.isEmpty())
+        {
+            // qDebug() << "MegasyncDolphinOverlayPlugin::changeFolderIcon - Folder path is empty. "
+            //             "Aborting icon change.";
+            return;
+        }
+
+        QString desktopFilePath = folderPath + "/.directory";
+        KDesktopFile desktopFile(desktopFilePath);
+
+        if (desktopFile.hasGroup("Desktop Entry"))
+        {
+            KConfigGroup group = desktopFile.group("Desktop Entry");
+
+            if (iconPath.isEmpty())
+            {
+                group.deleteEntry("Icon");
+                // qDebug() << "MegasyncDolphinOverlayPlugin::changeFolderIcon - Icon removed.";
+
+                // Ensure changes are written to the file
+                group.sync();
+
+                QFile desktopFileHandle(desktopFilePath);
+                // Check if the file is empty after syncing changes
+                const bool fileIsEmpty = desktopFileHandle.size() == 0;
+
+                if (fileIsEmpty)
+                {
+                    // qDebug() << "MegasyncDolphinOverlayPlugin::changeFolderIcon - .directory file "
+                    //             "is empty, removing it.";
+                    desktopFileHandle.remove();
+                }
+                else
+                {
+                    // qDebug() << "MegasyncDolphinOverlayPlugin::changeFolderIcon - .directory file "
+                    //             "is not empty, leaving it.";
+                }
+            }
+            else
+            {
+                group.writeEntry("Icon", iconPath);
+                // qDebug() << "MegasyncDolphinOverlayPlugin::changeFolderIcon - Icon set to:"
+                //          << iconPath;
+                // Ensure changes are written to the file
+                group.sync();
+            }
+        }
     }
 };
 

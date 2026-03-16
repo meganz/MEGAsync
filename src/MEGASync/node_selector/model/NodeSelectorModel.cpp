@@ -2,15 +2,14 @@
 
 #include "CameraUploadFolder.h"
 #include "IconTokenizer.h"
-#include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
 #include "MergeMEGAFolders.h"
 #include "MyChatFilesFolder.h"
 #include "NodeSelectorModelSpecialised.h"
 #include "RequestListenerManager.h"
+#include "TokenParserWidgetManager.h"
 #include "Utilities.h"
-#include "ViewLoadingScene.h"
 
 #include <QApplication>
 #include <QFont>
@@ -408,7 +407,7 @@ void NodeRequester::onAddNodesRequested(QList<std::shared_ptr<mega::MegaNode>> n
 {
     auto lastChild = parentItem->getNumChildren();
     lockDataMutex(true);
-    auto childrenItem = parentItem->addNodes(newNodes);
+    auto childrenItem = parentItem->addNodes(std::move(newNodes));
     lockDataMutex(false);
     foreach(auto& childItem, childrenItem)
     {
@@ -738,7 +737,7 @@ void NodeSelectorModel::executeExtraSpaceLogic()
 
 int NodeSelectorModel::columnCount(const QModelIndex&) const
 {
-    return last;
+    return NodeSelectorModel::Column::last;
 }
 
 QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
@@ -774,7 +773,7 @@ QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
                 case Qt::FontRole:
                 {
                     QFont font; // This will use the app default font.
-                    if (index.column() == NODE)
+                    if (index.column() == NodeSelectorModel::Column::NODE)
                     {
                         font.setPixelSize(12);
                     }
@@ -786,7 +785,7 @@ QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
                 }
                 case Qt::ToolTipRole:
                 {
-                    if (index.column() == USER)
+                    if (index.column() == NodeSelectorModel::Column::USER)
                     {
                         return item->getOwnerName() + QLatin1String(" (") + item->getOwnerEmail() +
                                QLatin1String(")");
@@ -845,11 +844,11 @@ QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
                 }
                 case toInt(NodeSelectorModelRoles::ICON_SIZE_ROLE):
                 {
-                    if (index.column() == USER)
+                    if (index.column() == NodeSelectorModel::Column::USER)
                     {
                         return QSize(20, 20);
                     }
-                    else if (index.column() == NODE)
+                    else if (index.column() == NodeSelectorModel::Column::NODE)
                     {
                         return QSize(24, 24);
                     }
@@ -1723,7 +1722,7 @@ bool NodeSelectorModel::hasChildren(const QModelIndex& parent) const
     // as the first column in a row.
     // Usually the second column shouldn't have children.
 
-    if (parent.isValid() && parent.column() != NODE)
+    if (parent.isValid() && parent.column() != NodeSelectorModel::Column::NODE)
     {
         return false;
     }
@@ -1750,23 +1749,23 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
         {
             switch (section)
             {
-                case NODE:
+                case NodeSelectorModel::Column::NODE:
                 {
                     return tr("Name");
                 }
-                case USER:
+                case NodeSelectorModel::Column::USER:
                 {
                     return tr("Owner");
                 }
-                case ACCESS:
+                case NodeSelectorModel::Column::ACCESS:
                 {
                     return tr("Access");
                 }
-                case ADDED_DATE:
+                case NodeSelectorModel::Column::ADDED_DATE:
                 {
                     return tr("Date added");
                 }
-                case LAST_MODIFIED_DATE:
+                case NodeSelectorModel::Column::LAST_MODIFIED_DATE:
                 {
                     return tr("Last modified");
                 }
@@ -1776,23 +1775,23 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
         {
             switch (section)
             {
-                case USER:
+                case NodeSelectorModel::Column::USER:
                 {
                     return tr("Sort by owner name");
                 }
-                case ACCESS:
+                case NodeSelectorModel::Column::ACCESS:
                 {
                     return tr("Sort by access");
                 }
-                case ADDED_DATE:
+                case NodeSelectorModel::Column::ADDED_DATE:
                 {
                     return tr("Sort by date added");
                 }
-                case LAST_MODIFIED_DATE:
+                case NodeSelectorModel::Column::LAST_MODIFIED_DATE:
                 {
                     return tr("Sort by last modified date");
                 }
-                case NODE:
+                case NodeSelectorModel::Column::NODE:
                 {
                     return tr("Sort by name");
                 }
@@ -1800,7 +1799,7 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
         }
         else if (role == toInt(HeaderRoles::ICON_ROLE))
         {
-            if (section == USER)
+            if (section == NodeSelectorModel::Column::USER)
             {
                 return QIcon(QLatin1String("://images/node_selector/icon_small_user.png"));
             }
@@ -2428,7 +2427,7 @@ QVariant NodeSelectorModel::getIcon(const QModelIndex& index, NodeSelectorModelI
 
     switch (index.column())
     {
-        case COLUMN::NODE:
+        case NodeSelectorModel::Column::NODE:
         {
             auto iconSize(data(index, toInt(NodeSelectorModelRoles::ICON_SIZE_ROLE)).toSize());
             auto info = getFolderIcon(item);
@@ -2443,16 +2442,16 @@ QVariant NodeSelectorModel::getIcon(const QModelIndex& index, NodeSelectorModelI
             }
             return QVariant::fromValue<QPixmap>(pixmap);
         }
-        case COLUMN::ADDED_DATE:
-        case COLUMN::LAST_MODIFIED_DATE:
+        case NodeSelectorModel::Column::ADDED_DATE:
+        case NodeSelectorModel::Column::LAST_MODIFIED_DATE:
         {
             break;
         }
-        case COLUMN::USER:
+        case NodeSelectorModel::Column::USER:
         {
             return QVariant::fromValue<QPixmap>(item->getOwnerIcon());
         }
-        case COLUMN::ACCESS:
+        case NodeSelectorModel::Column::ACCESS:
         {
             if (showAccess(item->getNode().get()))
             {
@@ -2476,70 +2475,53 @@ QVariant NodeSelectorModel::getText(const QModelIndex& index, NodeSelectorModelI
 {
     switch (index.column())
     {
-        case COLUMN::NODE:
-        {
-            if (item->isVault() || item->isCloudDrive())
-            {
-                return MegaNodeNames::getRootNodeName(item->getNode().get());
-            }
-            // SDK returns "Rubbish Bin" and we use "Rubbish bin", so we cannot directly translate
-            // the node name (we don´t have "Rubbish Bin" in our translation files)
-            else if (item->isRubbishBin())
-            {
-                return MegaNodeNames::getRubbishName();
-            }
-            else
-            {
-                return MegaNodeNames::getNodeName(item->getNode().get());
-            }
-        }
-        case COLUMN::ADDED_DATE:
-        {
-            if (item->isCloudDrive() || item->isVault())
-            {
-                return QVariant();
-            }
-
-            QDateTime dateTime = dateTime.fromSecsSinceEpoch(item->getNode()->getCreationTime());
-            return MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime,
-                                                                  QLocale::FormatType::ShortFormat);
-        }
-        case COLUMN::LAST_MODIFIED_DATE:
-        {
-            if (item->isCloudDrive() || item->isVault() || (item->getNode()->isFolder()))
-            {
-                return QVariant();
-            }
-
-            QDateTime dateTime =
-                dateTime.fromSecsSinceEpoch(item->getNode()->getModificationTime());
-            return MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime,
-                                                                  QLocale::FormatType::ShortFormat);
-        }
-        case COLUMN::ACCESS:
-        {
-            // Only for the top parent inshare
-            if (showAccess(item->getNode().get()))
-            {
-                return Utilities::getNodeStringAccess(item->getNode().get());
-            }
-
-            return QString();
-        }
-        case COLUMN::USER:
-        {
-            // Only for the top parent inshare
-            if (showAccess(item->getNode().get()))
-            {
-                return item->getOwnerName();
-            }
-
-            return QString();
-        }
+        case Column::NODE:
+            return getDisplayText(item);
+        case Column::ADDED_DATE:
+            return getAddedDateText(item);
+        case Column::LAST_MODIFIED_DATE:
+            return getLastModifiedDateText(item);
+        case Column::ACCESS:
+            return getAccessText(item);
+        case Column::USER:
+            return getUserText(item);
         default:
             break;
     }
-    return QVariant();
+    return {};
+}
+
+QVariant NodeSelectorModel::getDisplayText(NodeSelectorModelItem* item) const
+{
+    return MegaNodeNames::getNodeName(item->getNode().get());
+}
+
+QVariant NodeSelectorModel::getAddedDateText(NodeSelectorModelItem* item) const
+{
+    return MegaSyncApp->getFormattedDateByCurrentLanguage(
+        QDateTime::fromSecsSinceEpoch(item->getNode()->getCreationTime()),
+        QLocale::FormatType::ShortFormat);
+}
+
+QVariant NodeSelectorModel::getLastModifiedDateText(NodeSelectorModelItem* item) const
+{
+    return item->getNode()->isFolder() ?
+               QVariant() :
+               MegaSyncApp->getFormattedDateByCurrentLanguage(
+                   QDateTime::fromSecsSinceEpoch(item->getNode()->getModificationTime()),
+                   QLocale::FormatType::ShortFormat);
+}
+
+QVariant NodeSelectorModel::getAccessText(NodeSelectorModelItem* item) const
+{
+    return showAccess(item->getNode().get()) ?
+               Utilities::getNodeStringAccess(item->getNode().get()) :
+               QVariant();
+}
+
+QVariant NodeSelectorModel::getUserText(NodeSelectorModelItem* item) const
+{
+    return showAccess(item->getNode().get()) ? item->getOwnerName() : QVariant();
 }
 
 QList<QPair<mega::MegaHandle, QModelIndex>> NodeSelectorModel::needsToBeExpanded()
@@ -2749,7 +2731,7 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
     {
         // Just in case the children changed
         item->resetChildrenCounter();
-        int itemNumChildren = item->getNumChildren();
+        const auto itemNumChildren = item->getNumChildren();
         if (itemNumChildren > 0)
         {
             sendBlockUiSignal(true);
@@ -2812,7 +2794,7 @@ QModelIndex NodeSelectorModel::findIndexByNodeHandle(const mega::MegaHandle& han
 {
     for (int i = 0; i < rowCount(parent); ++i)
     {
-        QModelIndex idx = index(i, COLUMN::NODE, parent);
+        QModelIndex idx = index(i, NodeSelectorModel::Column::NODE, parent);
         if (idx.isValid())
         {
             if (NodeSelectorModelItem* chkItem =
@@ -2827,8 +2809,8 @@ QModelIndex NodeSelectorModel::findIndexByNodeHandle(const mega::MegaHandle& han
     }
     for (int i = 0; i < rowCount(parent); ++i)
     {
-        QModelIndex child =
-            parent.isValid() ? index(i, COLUMN::NODE, parent) : index(i, COLUMN::NODE);
+        QModelIndex child = parent.isValid() ? index(i, NodeSelectorModel::Column::NODE, parent) :
+                                               index(i, NodeSelectorModel::Column::NODE);
         if (child.isValid())
         {
             auto ret = findIndexByNodeHandle(handle, child);
@@ -2911,7 +2893,7 @@ QPair<QIcon, QString> NodeSelectorModel::getFolderIcon(NodeSelectorModelItem* it
                 {
                     if (auto backupItem = dynamic_cast<NodeSelectorModelItemBackup*>(item))
                     {
-                        if (backupItem->isVaultDevice())
+                        if (backupItem->isDeviceFolder())
                         {
                             QString nodeDeviceId(QString::fromUtf8(node->getDeviceId()));
                             if (!nodeDeviceId.isEmpty())
@@ -2943,7 +2925,7 @@ QPair<QIcon, QString> NodeSelectorModel::getFolderIcon(NodeSelectorModelItem* it
                                 token = QLatin1String("background-inverse");
                             }
                         }
-                        else if (backupItem->isVaultTopIndex())
+                        else if (backupItem->isBackupFolder())
                         {
                             icon = Utilities::getFolderPixmap(Utilities::FolderType::TYPE_BACKUP_2,
                                                               Utilities::AttributeType::MEDIUM);

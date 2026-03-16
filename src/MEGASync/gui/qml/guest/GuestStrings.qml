@@ -16,4 +16,5 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     readonly property string logOut: qsTr("Log out")
     readonly property string loggedInOnboarding: qsTr("Setting up your account…")
     readonly property string statusWaitingForEmail: qsTr("Waiting for email confirmation…")
+    readonly property string whyISeeThis: qsTranslate("VerifyLockMessage", "Why am I seeing this?")
 }

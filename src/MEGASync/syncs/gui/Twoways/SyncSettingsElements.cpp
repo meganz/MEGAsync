@@ -58,15 +58,6 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
         syncStallModeSelectorUI->AdvanceSelector->setChecked(true);
     }
 
-    // If user doesn´t have legacy rules, we don´t show the button as it won´t do anything
-    syncStallModeSelectorUI->gBugReport->setVisible(
-        Preferences::instance()->logged() && Preferences::instance()->hasLegacyExclusionRules());
-
-    connect(syncStallModeSelectorUI->bApplyLegacyExclusions,
-            &QPushButton::clicked,
-            this,
-            &SyncSettingsElements::applyPreviousExclusions);
-
     connect(syncStallModeSelectorUI->SmartSelector,
             &QRadioButton::toggled,
             this,
@@ -144,28 +135,4 @@ void SyncSettingsElements::onPreferencesValueChanged(QString key)
             syncStallModeSelectorUI->AdvanceSelector->blockSignals(false);
         }
     }
-}
-
-void SyncSettingsElements::applyPreviousExclusions()
-{
-    MessageDialogInfo msgInfo;
-    msgInfo.parent = mSyncStallModeSelector;
-    msgInfo.titleText = tr("[B]Apply previous exclusion rules?[/B]");
-    msgInfo.descriptionText =
-        tr("The exclusion rules you set up in a previous version of the app will be applied to all "
-           "of your syncs and backups. Any rules created since then will be overwritten.");
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
-    msgInfo.buttonsText = textsByButton;
-    msgInfo.finishFunc = [](QPointer<MessageDialogResult> msg)
-    {
-        if (msg->result() == QMessageBox::Ok)
-        {
-            // Replace existing mega ignores files in all syncs
-            SyncController::instance().resetAllSyncsMegaIgnoreUsingLegacyRules();
-        }
-    };
-    MessageDialogOpener::warning(msgInfo);
 }

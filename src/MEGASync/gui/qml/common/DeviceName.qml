@@ -15,7 +15,7 @@ QtObject {
         NONE = 4
     }
 
-    function getErrorCode(existingDeviceChecker, name) {
+    function getErrorCode(name) {
         if (name.length === 0) {
             return DeviceName.Error.NAME_EMPTY;
         }
@@ -25,9 +25,6 @@ QtObject {
         else if (name.match(RegexExpressions.deviceNameSpecialCharacters)) {
             return DeviceName.Error.SPECIAL_CHARACTERS;
         } 
-        else if (existingDeviceChecker !== null && existingDeviceChecker.deviceNameAlreadyExists(name)) {
-            return DeviceName.Error.NAME_EXIST;
-        }
         return DeviceName.Error.NONE;
     }
 

@@ -28,9 +28,7 @@ private slots:
     void onPurchaseMoreStorage();
     void onSmartModeSelected(bool checked);
     void onAdvanceModeSelected(bool checked);
-
     void onPreferencesValueChanged(QString key);
-    void applyPreviousExclusions();
 
 private:
     Ui::SyncAccountFullMessage* syncAccountFullMessageUI;

@@ -134,6 +134,18 @@ image-position: left;
 text-align: right;
 qproperty-icon: url(:/plus_icon_secondary.svg);
 }
+#bUpgrade[state=&quot;normal&quot;]
+{
+font-weight: 600;
+qproperty-icon: url();
+}
+#bUpgrade[state=&quot;offer&quot;]
+{
+image-position: left;
+text-align: right;
+font-weight: 600;
+qproperty-icon: url(:/tag-01-medium-thin-outline.svg);
+}
 #bSettings
 {
 qproperty-icon: url(:/menu.svg);
@@ -263,9 +275,6 @@ background-color: transparent;
   </property>
   <property name="modal">
    <bool>false</bool>
-  </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
@@ -3682,6 +3691,12 @@ background-color: transparent;
    <header>tokenizer/TokenizableItems/TokenizableButtons.h </header>
   </customwidget>
   <customwidget>
+   <class>CircularUsageProgressBar</class>
+   <extends>QWidget</extends>
+   <header>CircularUsageProgressBar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>StatusInfo</class>
    <extends>QWidget</extends>
    <header location="global">StatusInfo.h</header>
@@ -3697,12 +3712,6 @@ background-color: transparent;
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CircularUsageProgressBar</class>
-   <extends>QWidget</extends>
-   <header>CircularUsageProgressBar.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

@@ -250,7 +250,14 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] أضاف %n عنصر</numerusform><numerusform>[A] أضاف %n عنصر</numerusform><numerusform>[A]  أضاف %n عنصرين</numerusform><numerusform>[A] أضاف %n عناصر</numerusform><numerusform> [A] أضاف %n عنصراً</numerusform><numerusform>[A] أضاف %n عنصر</numerusform></translation>
+        <translation>
+            <numerusform>[A] أضاف %n عنصر</numerusform>
+            <numerusform>[A] أضاف %n عنصر</numerusform>
+            <numerusform>[A]  أضاف %n عنصرين</numerusform>
+            <numerusform>[A] أضاف %n عناصر</numerusform>
+            <numerusform> [A] أضاف %n عنصراً</numerusform>
+            <numerusform>[A] أضاف %n عنصر</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -285,7 +292,14 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] أزال %n عنصر</numerusform><numerusform>[A] أزال %n عنصر</numerusform><numerusform>[A] أزال %n عنصرين</numerusform><numerusform>[A] أزال %n عناصر</numerusform><numerusform>[A] أزال %n عنصراً</numerusform><numerusform>[A] أزال %n عنصر</numerusform></translation>
+        <translation>
+            <numerusform>[A] أزال %n عنصر</numerusform>
+            <numerusform>[A] أزال %n عنصر</numerusform>
+            <numerusform>[A] أزال %n عنصرين</numerusform>
+            <numerusform>[A] أزال %n عناصر</numerusform>
+            <numerusform>[A] أزال %n عنصراً</numerusform>
+            <numerusform>[A] أزال %n عنصر</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
@@ -295,7 +309,14 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>قام [A] بتحديث %n عنصر</numerusform><numerusform>قام [A] بتحديث %n عنصر</numerusform><numerusform>قام [A] بتحديث %n عنصرين</numerusform><numerusform>قام [A] بتحديث %n عناصر</numerusform><numerusform>قام [A] بتحديث %n عنصراً</numerusform><numerusform>قام [A] بتحديث %n عنصر </numerusform></translation>
+        <translation>
+            <numerusform>قام [A] بتحديث %n عنصر</numerusform>
+            <numerusform>قام [A] بتحديث %n عنصر</numerusform>
+            <numerusform>قام [A] بتحديث %n عنصرين</numerusform>
+            <numerusform>قام [A] بتحديث %n عناصر</numerusform>
+            <numerusform>قام [A] بتحديث %n عنصراً</numerusform>
+            <numerusform>قام [A] بتحديث %n عنصر </numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -395,12 +416,26 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation><numerusform>%1، ولكن %n مجلد لا يمكن نسخه احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلد لا يمكن نسخه احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلدين لا يمكن نسخهما احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلدات لا يمكن نسخهم احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلد لا يمكن نسخهم احتياطيًا</numerusform><numerusform>%1، ولكن %n مجلد لا يمكن نسخهم احتياطيًا</numerusform></translation>
+        <translation>
+            <numerusform>%1، ولكن %n مجلد لا يمكن نسخه احتياطيًا</numerusform>
+            <numerusform>%1، ولكن %n مجلد لا يمكن نسخه احتياطيًا</numerusform>
+            <numerusform>%1، ولكن %n مجلدين لا يمكن نسخهما احتياطيًا</numerusform>
+            <numerusform>%1، ولكن %n مجلدات لا يمكن نسخهم احتياطيًا</numerusform>
+            <numerusform>%1، ولكن %n مجلد لا يمكن نسخهم احتياطيًا</numerusform>
+            <numerusform>%1، ولكن %n مجلد لا يمكن نسخهم احتياطيًا</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation><numerusform>%n مجلد تم نسخه احتياطيًا</numerusform><numerusform>%n مجلد تم نسخه احتياطيًا</numerusform><numerusform>%n مجلدين تم نسخهما احتياطيًا</numerusform><numerusform>%n مجلدات تم نسخهم احتياطيًا</numerusform><numerusform>%n مجلد تم نسخهم احتياطيًا</numerusform><numerusform>%n مجلد تم نسخهم احتياطيًا</numerusform></translation>
+        <translation>
+            <numerusform>%n مجلد تم نسخه احتياطيًا</numerusform>
+            <numerusform>%n مجلد تم نسخه احتياطيًا</numerusform>
+            <numerusform>%n مجلدين تم نسخهما احتياطيًا</numerusform>
+            <numerusform>%n مجلدات تم نسخهم احتياطيًا</numerusform>
+            <numerusform>%n مجلد تم نسخهم احتياطيًا</numerusform>
+            <numerusform>%n مجلد تم نسخهم احتياطيًا</numerusform>
+        </translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
@@ -413,7 +448,14 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform><numerusform>يوجد مجلد بنفس الاسم بالفعل في النسخ الاحتياطية. أعد تسمية المجلد الجديد لمتابعة النسخ الاحتياطي. لن يتغير اسم المجلد على جهاز الحاسوب الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform></translation>
+        <translation>
+            <numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform>
+            <numerusform>يوجد مجلد بنفس الاسم بالفعل في النسخ الاحتياطية. أعد تسمية المجلد الجديد لمتابعة النسخ الاحتياطي. لن يتغير اسم المجلد على جهاز الحاسوب الخاص بك.</numerusform>
+            <numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform>
+            <numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform>
+            <numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform>
+            <numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -428,7 +470,14 @@
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ المجلد احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform></translation>
+        <translation>
+            <numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform>
+            <numerusform>لم يتم نسخ المجلد احتياطيًا. حاول مرة أخرى.</numerusform>
+            <numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform>
+            <numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform>
+            <numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform>
+            <numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -513,7 +562,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>قم بتمكين هذا الخيار فقط إذا لم تبدأ عمليات التراسل. في ظل جميع الظروف الأخرى، يعد استخدام HTTP مُرضيًا لأن جميع عمليات التراسل مشفرة بالفعل بواسطة ميغا MEGA.</translation>
     </message>
     <message>
@@ -821,8 +870,15 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>حل المشكلة؟</numerusform><numerusform>حل المشكلة؟</numerusform><numerusform>حل المشكلتين؟</numerusform><numerusform>حل المشكلات؟</numerusform><numerusform>حل المشكلات؟</numerusform><numerusform>حل المشكلات؟</numerusform></translation>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation>
+            <numerusform>حل المشكلة؟</numerusform>
+            <numerusform>حل المشكلة؟</numerusform>
+            <numerusform>حل المشكلتين؟</numerusform>
+            <numerusform>حل المشكلات؟</numerusform>
+            <numerusform>حل المشكلات؟</numerusform>
+            <numerusform>حل المشكلات؟</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -841,18 +897,32 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>حل</translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملف إلى موقع مؤقت وإصلاح المشكلة ثم حذف الملف المؤقت.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform><numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform></translation>
+        <translation>
+            <numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform>
+            <numerusform>سيؤدي هذا الإجراء إلى تنزيل الملف إلى موقع مؤقت وإصلاح المشكلة ثم حذف الملف المؤقت.</numerusform>
+            <numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform>
+            <numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform>
+            <numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform>
+            <numerusform>سيؤدي هذا الإجراء إلى تنزيل الملفات إلى موقع مؤقت وإصلاح المشكلات ثم حذف الملفات المؤقتة.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلة.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform></translation>
+        <translation>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلة.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -906,12 +976,26 @@
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوم</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوم</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يومين</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n أيام</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوماً</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوم</numerusform></translation>
+        <translation>
+            <numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوم</numerusform>
+            <numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوم</numerusform>
+            <numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يومين</numerusform>
+            <numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n أيام</numerusform>
+            <numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوماً</numerusform>
+            <numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوم</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوم</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوم</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يومين</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n أيام</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوماً</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوم</numerusform></translation>
+        <translation>
+            <numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوم</numerusform>
+            <numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوم</numerusform>
+            <numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يومين</numerusform>
+            <numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n أيام</numerusform>
+            <numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوماً</numerusform>
+            <numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوم</numerusform>
+        </translation>
     </message>
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
@@ -1033,12 +1117,12 @@
     <name>DeleteWaitingOnMovesHeader</name>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>في انتظار اكتمال العمليات الأخرى.</translation>
     </message>
     <message>
         <source>Waiting to move [B]%1[/B]</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
         <translation>في الانتظار لنقل [B]%1[/B]</translation>
     </message>
 </context>
@@ -1122,7 +1206,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>تم تعطيل حساب برو فليكسي Pro Flexi</translation>
+        <translation>تم تعطيل حساب برو فليكسي Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1192,7 +1276,14 @@
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>لديك %n يوم متبقي للحفاظ على بياناتك</numerusform><numerusform>لديك %n يوم متبقي للحفاظ على بياناتك</numerusform><numerusform>لديك %n يومان متبقيان للحفاظ على بياناتك</numerusform><numerusform>لديك %n أيام متبقية للحفاظ على بياناتك</numerusform><numerusform>لديك %n يوماً متبقي للحفاظ على بياناتك</numerusform><numerusform>لديك %n يوم متبقي للحفاظ على بياناتك</numerusform></translation>
+        <translation>
+            <numerusform>لديك %n يوم متبقي للحفاظ على بياناتك</numerusform>
+            <numerusform>لديك %n يوم متبقي للحفاظ على بياناتك</numerusform>
+            <numerusform>لديك %n يومان متبقيان للحفاظ على بياناتك</numerusform>
+            <numerusform>لديك %n أيام متبقية للحفاظ على بياناتك</numerusform>
+            <numerusform>لديك %n يوماً متبقي للحفاظ على بياناتك</numerusform>
+            <numerusform>لديك %n يوم متبقي للحفاظ على بياناتك</numerusform>
+        </translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1257,7 +1348,14 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] أضاف %n عنصر</numerusform><numerusform>[A] أضاف %n عنصر</numerusform><numerusform>[A] أضاف %n عنصرين</numerusform><numerusform>[A] أضاف %n عناصر</numerusform><numerusform>[A] أضاف %n عنصراً</numerusform><numerusform>[A] أضاف %n عنصر</numerusform></translation>
+        <translation>
+            <numerusform>[A] أضاف %n عنصر</numerusform>
+            <numerusform>[A] أضاف %n عنصر</numerusform>
+            <numerusform>[A] أضاف %n عنصرين</numerusform>
+            <numerusform>[A] أضاف %n عناصر</numerusform>
+            <numerusform>[A] أضاف %n عنصراً</numerusform>
+            <numerusform>[A] أضاف %n عنصر</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1272,7 +1370,14 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>قام [A] بتحديث %n عنصر</numerusform><numerusform>قام [A] بتحديث %n عنصر</numerusform><numerusform>قام [A] بتحديث %n عنصرين</numerusform><numerusform>قام [A] بتحديث %n عناصر</numerusform><numerusform>قام [A] بتحديث %n عنصراً</numerusform><numerusform>قام [A] بتحديث %n عنصر </numerusform></translation>
+        <translation>
+            <numerusform>قام [A] بتحديث %n عنصر</numerusform>
+            <numerusform>قام [A] بتحديث %n عنصر</numerusform>
+            <numerusform>قام [A] بتحديث %n عنصرين</numerusform>
+            <numerusform>قام [A] بتحديث %n عناصر</numerusform>
+            <numerusform>قام [A] بتحديث %n عنصراً</numerusform>
+            <numerusform>قام [A] بتحديث %n عنصر </numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1319,7 +1424,7 @@
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>لا يوجد لديك تصريح الكتابة في هذا المجلد المحلي.</translation>
     </message>
 </context>
@@ -1342,13 +1447,27 @@
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>تم تحديد %1 عنصر</numerusform><numerusform>تم تحديد %1 عنصر</numerusform><numerusform>تم تحديد %1 عنصرين</numerusform><numerusform>تم تحديد %1 عناصر</numerusform><numerusform>تم تحديد %1 عنصراً</numerusform><numerusform>تم تحديد %1 عنصر</numerusform></translation>
+        <translation>
+            <numerusform>تم تحديد %1 عنصر</numerusform>
+            <numerusform>تم تحديد %1 عنصر</numerusform>
+            <numerusform>تم تحديد %1 عنصرين</numerusform>
+            <numerusform>تم تحديد %1 عناصر</numerusform>
+            <numerusform>تم تحديد %1 عنصراً</numerusform>
+            <numerusform>تم تحديد %1 عنصر</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 تم إزالته. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>%1. %2 تم إزالته. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى..</numerusform><numerusform>%1. %2 تم إزالتهما. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى..</numerusform><numerusform>%1. %2 تم إزالتهم. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى..</numerusform><numerusform>%1. %2 تم إزالتهم. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>%1. %2 تم إزالتهم. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform></translation>
+        <translation>
+            <numerusform>%1. %2 تم إزالته. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform>
+            <numerusform>%1. %2 تم إزالته. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى..</numerusform>
+            <numerusform>%1. %2 تم إزالتهما. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى..</numerusform>
+            <numerusform>%1. %2 تم إزالتهم. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى..</numerusform>
+            <numerusform>%1. %2 تم إزالتهم. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform>
+            <numerusform>%1. %2 تم إزالتهم. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Download</source>
@@ -1358,12 +1477,26 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>العنصر الذي حددته قد أزيل. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>العنصر الذي حددته قد أزيل. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>العناصر التي حددتها قد أزيلت. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>العناصر التي حددتها قد أزيلت. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>العناصر التي حددتها قد أزيلت. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>العناصر التي حددتها قد أزيلت. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform></translation>
+        <translation>
+            <numerusform>العنصر الذي حددته قد أزيل. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform>
+            <numerusform>العنصر الذي حددته قد أزيل. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform>
+            <numerusform>العناصر التي حددتها قد أزيلت. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform>
+            <numerusform>العناصر التي حددتها قد أزيلت. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform>
+            <numerusform>العناصر التي حددتها قد أزيلت. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform>
+            <numerusform>العناصر التي حددتها قد أزيلت. لإعادة التحديد أغلق هذه النافذة وحاول مرة أخرى.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>لم يعد لديك حق الوصول إلى هذا العنصر. اطلب من الشخص الذي شاركه معك أن يشاركه مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذا العنصر. اطلب من الشخص الذي شاركه معك أن يشاركه مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من الشخص الذي شاركها معك أن يشاركها مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من الشخص الذي شاركها معك أن يشاركها مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من الشخص الذي شاركها معك أن يشاركها مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من الشخص الذي شاركها معك أن يشاركها مرة أخرى.</numerusform></translation>
+        <translation>
+            <numerusform>لم يعد لديك حق الوصول إلى هذا العنصر. اطلب من الشخص الذي شاركه معك أن يشاركه مرة أخرى.</numerusform>
+            <numerusform>لم يعد لديك حق الوصول إلى هذا العنصر. اطلب من الشخص الذي شاركه معك أن يشاركه مرة أخرى.</numerusform>
+            <numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من الشخص الذي شاركها معك أن يشاركها مرة أخرى.</numerusform>
+            <numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من الشخص الذي شاركها معك أن يشاركها مرة أخرى.</numerusform>
+            <numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من الشخص الذي شاركها معك أن يشاركها مرة أخرى.</numerusform>
+            <numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من الشخص الذي شاركها معك أن يشاركها مرة أخرى.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1399,7 +1532,14 @@
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>طبق على %1 نسخ المكرر</numerusform><numerusform>طبق على النسخة المكررة الأخرى</numerusform><numerusform>طبق على %1 نسختين المكررتين</numerusform><numerusform>طبق على جميع %1 نسخ المكرر</numerusform><numerusform>طبق على جميع %1 نسخة المكررة</numerusform><numerusform>طبق على جميع %1 نسخة المكررة</numerusform></translation>
+        <translation>
+            <numerusform>طبق على %1 نسخ المكرر</numerusform>
+            <numerusform>طبق على النسخة المكررة الأخرى</numerusform>
+            <numerusform>طبق على %1 نسختين المكررتين</numerusform>
+            <numerusform>طبق على جميع %1 نسخ المكرر</numerusform>
+            <numerusform>طبق على جميع %1 نسخة المكررة</numerusform>
+            <numerusform>طبق على جميع %1 نسخة المكررة</numerusform>
+        </translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1578,7 +1718,7 @@
         <translation>استبعاد الملفات حسب الحجم</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>استبعد الملفات عن طريق تعيين حد أدنى وأقصى للحجم أو ملفات أكبر أو أصغر من حجم معين.</translation>
     </message>
@@ -1910,17 +2050,17 @@
     <name>FileIssueHeader</name>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>يحتوي الملف على مشكلة تحتاج إلى قرارك لحلها</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>يحتوي المجلد على مشكلة تحتاج إلى قرارك لحلها</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>لا يمكن مزامنة [B]%1[/B]</translation>
     </message>
 </context>
@@ -1952,12 +2092,26 @@
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n ملف</numerusform><numerusform>%n ملف</numerusform><numerusform>%n ملفان</numerusform><numerusform>%n ملفات</numerusform><numerusform>%n ملفاً</numerusform><numerusform>%n ملف</numerusform></translation>
+        <translation>
+            <numerusform>%n ملف</numerusform>
+            <numerusform>%n ملف</numerusform>
+            <numerusform>%n ملفان</numerusform>
+            <numerusform>%n ملفات</numerusform>
+            <numerusform>%n ملفاً</numerusform>
+            <numerusform>%n ملف</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n مجلد</numerusform><numerusform>%n مجلد</numerusform><numerusform>%n مجلدان</numerusform><numerusform>%n مجلدات</numerusform><numerusform>%n مجلداً</numerusform><numerusform>%n مجلد</numerusform></translation>
+        <translation>
+            <numerusform>%n مجلد</numerusform>
+            <numerusform>%n مجلد</numerusform>
+            <numerusform>%n مجلدان</numerusform>
+            <numerusform>%n مجلدات</numerusform>
+            <numerusform>%n مجلداً</numerusform>
+            <numerusform>%n مجلد</numerusform>
+        </translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
@@ -2007,12 +2161,12 @@
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>لا يحتوي الملف الذي تحاول مزامنته على أي لاحقة وله نفس اسم المجلد الحالي</translation>
     </message>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>لا يمكن مزامنة [B]%1[/B]</translation>
     </message>
 </context>
@@ -2041,7 +2195,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
-        <translation>تسجيل الخروج</translation>
+        <translation>تسجيل&#xa0;الخروج</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -2219,7 +2373,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -2229,6 +2383,11 @@ Check your email inbox for instructions on unlocking your account and tips on ho
 </context>
 <context>
     <name>InfoDialog</name>
+    <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>خصم %1% على %2</translation>
+    </message>
     <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
@@ -2271,22 +2430,22 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>لا يوجد إشعارات جديدة</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
         <translation>لا إشعارات لجهات الاتصال</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
         <translation>لا إشعارات للمشاركات الواردة</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>لا إشعارات للدفعات</translation>
     </message>
     <message>
@@ -2402,7 +2561,14 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملف يستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملف يستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملفان يستخدمان [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملفات تستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملفاً تستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك%n ملف تستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform></translation>
+        <translation>
+            <numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملف يستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform>
+            <numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملف يستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform>
+            <numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملفان يستخدمان [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform>
+            <numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملفات تستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform>
+            <numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملفاً تستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform>
+            <numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك%n ملف تستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
@@ -2412,12 +2578,26 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message numerus="yes">
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>لديك %n يوم متبقي للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n يوم متبقي للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n يومين متبقيين للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n أيام متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n يوماً متبقياً للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n يوم متبقي للترقية أو ستخضع بياناتك للحذف</numerusform></translation>
+        <translation>
+            <numerusform>لديك %n يوم متبقي للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n يوم متبقي للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n يومين متبقيين للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n أيام متبقية للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n يوماً متبقياً للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n يوم متبقي للترقية أو ستخضع بياناتك للحذف</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعتين متبقيتان للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعات متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform><numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform></translation>
+        <translation>
+            <numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n ساعتين متبقيتان للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n ساعات متبقية للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform>
+            <numerusform>لديك %n ساعة متبقية للترقية أو ستخضع بياناتك للحذف</numerusform>
+        </translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2548,7 +2728,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
-        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translatorcomment>This is the text of an error message displayed when there&apos;s a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn&apos;t be installed. SNC-2270</translatorcomment>
         <translation>فشلت عملية تثبيت المكونات الضرورية.</translation>
     </message>
     <message>
@@ -2601,7 +2781,7 @@ Please log out of your computer to complete the installation.</source>
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
-        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
         <translation>للتثبيت يدويًا، قم بتشغيل الأوامر التالية:
 
 sudo dnf install gnome-shell-extensions
@@ -2793,7 +2973,14 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للملف الموجود في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform></translation>
+        <translation>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للملف الموجود في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للملفات المخزنة بالفعل في ميغا MEGA.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -2803,7 +2990,14 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للمجلد المُخزن في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform><numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform></translation>
+        <translation>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للمجلد المُخزن في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform>
+            <numerusform>سيتم إضافة لاحقة مثل (1) للمجلدات المخزنة بالفعل في ميغا MEGA.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2888,7 +3082,14 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلة.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform><numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform></translation>
+        <translation>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلة.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+            <numerusform>استأنف عمليات تراسل المعطيات لإصلاح المشكلات.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3262,7 +3463,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>تم تعطيل حساب برو فليكسي Pro Flexi</translation>
+        <translation>تم تعطيل حساب برو فليكسي Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3296,7 +3497,7 @@ Please wait for the upload to complete.</source>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
         <translation>تم اكتشاف المشكلة</translation>
     </message>
     <message>
@@ -3353,13 +3554,20 @@ Please wait for the upload to complete.</source>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>هناك عملية تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عملية التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عملية تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عملية التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليتا تراسل نشطتين. هل تريد الخروج من التطبيق؟
-سيتم استئناف عمليتا التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform></translation>
+        <translation>
+            <numerusform>هناك عملية تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عملية التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform>
+            <numerusform>هناك عملية تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عملية التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform>
+            <numerusform>هناك عمليتا تراسل نشطتين. هل تريد الخروج من التطبيق؟
+سيتم استئناف عمليتا التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform>
+            <numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform>
+            <numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform>
+            <numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform>
+        </translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -3394,7 +3602,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>لا يوجد تحديثات</translation>
     </message>
     <message>
@@ -3420,7 +3628,14 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>أنت تشارك حاليًا المجلد التالي: %1</numerusform><numerusform>أنت تشارك حاليًا المجلد التالي: %1</numerusform><numerusform>أنت تشارك حاليًا المجلدان التاليان: %1</numerusform><numerusform>أنت تشارك حاليًا المجلدات التالية: %1</numerusform><numerusform>أنت تشارك حاليًا المجلدات التالية: %1</numerusform><numerusform>أنت تشارك حاليًا المجلدات التالية: %1</numerusform></translation>
+        <translation>
+            <numerusform>أنت تشارك حاليًا المجلد التالي: %1</numerusform>
+            <numerusform>أنت تشارك حاليًا المجلد التالي: %1</numerusform>
+            <numerusform>أنت تشارك حاليًا المجلدان التاليان: %1</numerusform>
+            <numerusform>أنت تشارك حاليًا المجلدات التالية: %1</numerusform>
+            <numerusform>أنت تشارك حاليًا المجلدات التالية: %1</numerusform>
+            <numerusform>أنت تشارك حاليًا المجلدات التالية: %1</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3598,7 +3813,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation>تسجيل خروج</translation>
+        <translation>تسجيل&#xa0;خروج</translation>
     </message>
     <message>
         <source>No error</source>
@@ -3729,7 +3944,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>تم إنهاء حسابك بسبب خرق شروط خدمة ميغا MEGA.
 لن تتمكن من استعادة الوصول إلى بياناتك المخزنة أو السماح لك بالتسجيل للحصول على حساب ميغا MEGA جديد.</translation>
     </message>
@@ -3902,7 +4117,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Mismatch on sync root FSID.</source>
-        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
         <translation>حدثت مشكلة في مزامنة هذا المجلد أو نسخه احتياطيًا بسبب التغييرات التي طرأت على المجلد المحلي. أوقف المزامنة أو النسخ الاحتياطي وحاول إعدادها مرة أخرى في الإعدادات أو تواصل مع الدعم.</translation>
     </message>
     <message>
@@ -3998,7 +4213,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>غير قادر على إنشاء نسخة احتياطية لأن الجهاز الذي تقوم بالنسخ الاحتياطي منه ليس له اسم. قم بتسمية جهازك ثم حاول مرة أخرى. في حالة استمرار المشكلة، تواصل مع الدعم.</translation>
+        <translation>يتعذر إنشاء نسخة احتياطية لأن الجهاز الذي تقوم بنسخه لا يحتوي على اسم. قم بتسمية جهازك ثم حاول مرة أخرى. إذا استمرت المشكلة، تواصل مع الدعم.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4096,12 +4311,26 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>إلغاء ومسح عملية تراسل المعطيات</numerusform><numerusform>إلغاء ومسح عملية تراسل المعطيات</numerusform><numerusform>إلغاء ومسح عمليتا تراسل المعطيات</numerusform><numerusform>إلغاء ومسح عمليات تراسل المعطيات</numerusform><numerusform>إلغاء ومسح عمليات تراسل المعطيات</numerusform><numerusform>إلغاء ومسح عمليات تراسل المعطيات</numerusform></translation>
+        <translation>
+            <numerusform>إلغاء ومسح عملية تراسل المعطيات</numerusform>
+            <numerusform>إلغاء ومسح عملية تراسل المعطيات</numerusform>
+            <numerusform>إلغاء ومسح عمليتا تراسل المعطيات</numerusform>
+            <numerusform>إلغاء ومسح عمليات تراسل المعطيات</numerusform>
+            <numerusform>إلغاء ومسح عمليات تراسل المعطيات</numerusform>
+            <numerusform>إلغاء ومسح عمليات تراسل المعطيات</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>إلغاء عملية تراسل المعطيات</numerusform><numerusform>إلغاء عملية تراسل المعطيات</numerusform><numerusform>إلغاء عمليتا تراسل المعطيات</numerusform><numerusform>إلغاء عمليات تراسل المعطيات</numerusform><numerusform>إلغاء عمليات تراسل المعطيات</numerusform><numerusform>إلغاء عمليات تراسل المعطيات</numerusform></translation>
+        <translation>
+            <numerusform>إلغاء عملية تراسل المعطيات</numerusform>
+            <numerusform>إلغاء عملية تراسل المعطيات</numerusform>
+            <numerusform>إلغاء عمليتا تراسل المعطيات</numerusform>
+            <numerusform>إلغاء عمليات تراسل المعطيات</numerusform>
+            <numerusform>إلغاء عمليات تراسل المعطيات</numerusform>
+            <numerusform>إلغاء عمليات تراسل المعطيات</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -4121,7 +4350,14 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>مسح عملية تراسل المعطيات</numerusform><numerusform>مسح عملية تراسل المعطيات</numerusform><numerusform>مسح عمليتا تراسل المعطيات</numerusform><numerusform>مسح عمليات تراسل المعطيات</numerusform><numerusform>مسح عمليات تراسل المعطيات</numerusform><numerusform>مسح عمليات تراسل المعطيات</numerusform></translation>
+        <translation>
+            <numerusform>مسح عملية تراسل المعطيات</numerusform>
+            <numerusform>مسح عملية تراسل المعطيات</numerusform>
+            <numerusform>مسح عمليتا تراسل المعطيات</numerusform>
+            <numerusform>مسح عمليات تراسل المعطيات</numerusform>
+            <numerusform>مسح عمليات تراسل المعطيات</numerusform>
+            <numerusform>مسح عمليات تراسل المعطيات</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -4186,12 +4422,26 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>إيقاف عملية تراسل المعطيات مؤقتاً</numerusform><numerusform>إيقاف عملية تراسل المعطيات مؤقتاً</numerusform><numerusform>إيقاف عمليتا تراسل المعطيات مؤقتاً</numerusform><numerusform>إيقاف عمليات تراسل المعطيات مؤقتاً</numerusform><numerusform>إيقاف عمليات تراسل المعطيات مؤقتاً</numerusform><numerusform>إيقاف عمليات تراسل المعطيات مؤقتاً</numerusform></translation>
+        <translation>
+            <numerusform>إيقاف عملية تراسل المعطيات مؤقتاً</numerusform>
+            <numerusform>إيقاف عملية تراسل المعطيات مؤقتاً</numerusform>
+            <numerusform>إيقاف عمليتا تراسل المعطيات مؤقتاً</numerusform>
+            <numerusform>إيقاف عمليات تراسل المعطيات مؤقتاً</numerusform>
+            <numerusform>إيقاف عمليات تراسل المعطيات مؤقتاً</numerusform>
+            <numerusform>إيقاف عمليات تراسل المعطيات مؤقتاً</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>استئناف عملية تراسل المعطيات</numerusform><numerusform>استئناف عملية تراسل المعطيات</numerusform><numerusform>استئناف عمليتا تراسل المعطيات</numerusform><numerusform>استئناف عمليات تراسل المعطيات</numerusform><numerusform>استئناف عمليات تراسل المعطيات</numerusform><numerusform>استئناف عمليات تراسل المعطيات</numerusform></translation>
+        <translation>
+            <numerusform>استئناف عملية تراسل المعطيات</numerusform>
+            <numerusform>استئناف عملية تراسل المعطيات</numerusform>
+            <numerusform>استئناف عمليتا تراسل المعطيات</numerusform>
+            <numerusform>استئناف عمليات تراسل المعطيات</numerusform>
+            <numerusform>استئناف عمليات تراسل المعطيات</numerusform>
+            <numerusform>استئناف عمليات تراسل المعطيات</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -4199,7 +4449,7 @@ https://mega.co.nz/#sync</source>
         <translation>العرض في المجلد</translation>
     </message>
     <message>
-        <source>Your incomplete sync transfers won't be cancelled
+        <source>Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>لا يمكن إلغاء عمليات تراسل المعطيات المتزامنة ولكن سيتم إلغاء جميع عمليات تراسل المعطيات الأخرى ومسحها</translation>
@@ -4210,7 +4460,7 @@ All the other transfers will be cancelled and cleared.</source>
         <translation>لا يمكن إلغاء عمليات تراسل المعطيات المزامنة</translation>
     </message>
     <message>
-        <source>Your selected incomplete sync transfers won't be cancelled
+        <source>Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>لا يمكن إلغاء عمليات تراسل المعطيات المتزامنة ولكن سيتم إلغاء جميع عمليات تراسل المعطيات المحددة الأخرى ومسحها</translation>
@@ -4353,12 +4603,12 @@ Please refresh the view</source>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
         <translation>تم تعديله خارجيًا</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
         <translation>لا حاجة لاتخاذ أي إجراء</translation>
     </message>
     <message>
@@ -4934,12 +5184,19 @@ Enter a different name</source>
     <message>
         <source>Folder is empty</source>
         <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>المجلد فارغ</translation>
     </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>إذا غادرت هذا المجلد، فلن تتمكن من رؤيته مرة أخرى.</numerusform><numerusform>إذا غادرت هذا المجلد، فلن تتمكن من رؤيته مرة أخرى.</numerusform><numerusform>إذا غادرت هذين المجلدين، فلن تتمكن من رؤيتهما مرة أخرى.</numerusform><numerusform>إذا غادرت هذه المجلدات، فلن تتمكن من رؤيتهم مرة أخرى.</numerusform><numerusform>إذا غادرت هذه المجلدات، فلن تتمكن من رؤيتهم مرة أخرى.</numerusform><numerusform>إذا غادرت هذه المجلدات، فلن تتمكن من رؤيتهم مرة أخرى.</numerusform></translation>
+        <translation>
+            <numerusform>إذا غادرت هذا المجلد، فلن تتمكن من رؤيته مرة أخرى.</numerusform>
+            <numerusform>إذا غادرت هذا المجلد، فلن تتمكن من رؤيته مرة أخرى.</numerusform>
+            <numerusform>إذا غادرت هذين المجلدين، فلن تتمكن من رؤيتهما مرة أخرى.</numerusform>
+            <numerusform>إذا غادرت هذه المجلدات، فلن تتمكن من رؤيتهم مرة أخرى.</numerusform>
+            <numerusform>إذا غادرت هذه المجلدات، فلن تتمكن من رؤيتهم مرة أخرى.</numerusform>
+            <numerusform>إذا غادرت هذه المجلدات، فلن تتمكن من رؤيتهم مرة أخرى.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Leave</source>
@@ -4949,7 +5206,14 @@ Enter a different name</source>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>هل تريد مغادرة هذا المجلد المشارك؟</numerusform><numerusform>هل تريد مغادرة هذا المجلد المشارك؟</numerusform><numerusform>هل تريد مغادرة هذان المجلدان المشاركان؟</numerusform><numerusform>هل تريد مغادرة هذه المجلدات المشاركة؟</numerusform><numerusform>هل تريد مغادرة هذه المجلدات المشاركة؟</numerusform><numerusform>هل تريد مغادرة هذه المجلدات المشاركة؟</numerusform></translation>
+        <translation>
+            <numerusform>هل تريد مغادرة هذا المجلد المشارك؟</numerusform>
+            <numerusform>هل تريد مغادرة هذا المجلد المشارك؟</numerusform>
+            <numerusform>هل تريد مغادرة هذان المجلدان المشاركان؟</numerusform>
+            <numerusform>هل تريد مغادرة هذه المجلدات المشاركة؟</numerusform>
+            <numerusform>هل تريد مغادرة هذه المجلدات المشاركة؟</numerusform>
+            <numerusform>هل تريد مغادرة هذه المجلدات المشاركة؟</numerusform>
+        </translation>
     </message>
     <message>
         <source>Move</source>
@@ -4964,7 +5228,14 @@ Enter a different name</source>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
-        <translation><numerusform>نقل %n عنصر إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عنصر إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عنصرين إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عناصر إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عنصراً إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عنصر إلى سلة المحذوفات؟</numerusform></translation>
+        <translation>
+            <numerusform>نقل %n عنصر إلى سلة المحذوفات؟</numerusform>
+            <numerusform>نقل %n عنصر إلى سلة المحذوفات؟</numerusform>
+            <numerusform>نقل %n عنصرين إلى سلة المحذوفات؟</numerusform>
+            <numerusform>نقل %n عناصر إلى سلة المحذوفات؟</numerusform>
+            <numerusform>نقل %n عنصراً إلى سلة المحذوفات؟</numerusform>
+            <numerusform>نقل %n عنصر إلى سلة المحذوفات؟</numerusform>
+        </translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4979,17 +5250,38 @@ Enter a different name</source>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation><numerusform>أنت على وشك حذف %n ملف نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n ملف نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n ملفين نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n ملفات نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n ملفاً نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n ملف نهائيًا. هل ترغب في المتابعة؟</numerusform></translation>
+        <translation>
+            <numerusform>أنت على وشك حذف %n ملف نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n ملف نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n ملفين نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n ملفات نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n ملفاً نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n ملف نهائيًا. هل ترغب في المتابعة؟</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation><numerusform>أنت على وشك حذف %n مجلد نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n مجلد نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n مجلدين نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n مجلدات نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n مجلداً نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n مجلد نهائيًا. هل ترغب في المتابعة؟</numerusform></translation>
+        <translation>
+            <numerusform>أنت على وشك حذف %n مجلد نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n مجلد نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n مجلدين نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n مجلدات نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n مجلداً نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n مجلد نهائيًا. هل ترغب في المتابعة؟</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation><numerusform>أنت على وشك حذف %n عنصر نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n عنصر نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n عنصرين نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n عناصر نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n عنصراً نهائيًا. هل ترغب في المتابعة؟</numerusform><numerusform>أنت على وشك حذف %n عنصر نهائيًا. هل ترغب في المتابعة؟</numerusform></translation>
+        <translation>
+            <numerusform>أنت على وشك حذف %n عنصر نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n عنصر نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n عنصرين نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n عناصر نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n عنصراً نهائيًا. هل ترغب في المتابعة؟</numerusform>
+            <numerusform>أنت على وشك حذف %n عنصر نهائيًا. هل ترغب في المتابعة؟</numerusform>
+        </translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
@@ -5044,7 +5336,14 @@ Enter a different name</source>
     <message numerus="yes">
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
-        <translation><numerusform>%n نتيجة بحث تم العثور عليها</numerusform><numerusform>%n نتيجة بحث تم العثور عليها</numerusform><numerusform>%n نتيجة بحث تم العثور عليها</numerusform><numerusform>%n نتائج بحث تم العثور عليها</numerusform><numerusform>%n نتيجة بحث تم العثور عليها</numerusform><numerusform>%n نتيجة بحث تم العثور عليها</numerusform></translation>
+        <translation>
+            <numerusform>%n نتيجة بحث تم العثور عليها</numerusform>
+            <numerusform>%n نتيجة بحث تم العثور عليها</numerusform>
+            <numerusform>%n نتيجة بحث تم العثور عليها</numerusform>
+            <numerusform>%n نتائج بحث تم العثور عليها</numerusform>
+            <numerusform>%n نتيجة بحث تم العثور عليها</numerusform>
+            <numerusform>%n نتيجة بحث تم العثور عليها</numerusform>
+        </translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5067,27 +5366,55 @@ Enter a different name</source>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>ينتهي العرض في %1 م %2 ث</translation>
+        <translation>ينتهي العرض في %1&#xa0;م %2&#xa0;ث</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>ينتهي العرض في %n يوم</numerusform><numerusform>ينتهي العرض في %n يوم</numerusform><numerusform>ينتهي العرض في %n يومين</numerusform><numerusform>ينتهي العرض في %n أيام</numerusform><numerusform>ينتهي العرض في %n يوم</numerusform><numerusform>ينتهي العرض في %n يوم</numerusform></translation>
+        <translation>
+            <numerusform>ينتهي العرض في %n يوم</numerusform>
+            <numerusform>ينتهي العرض في %n يوم</numerusform>
+            <numerusform>ينتهي العرض في %n يومين</numerusform>
+            <numerusform>ينتهي العرض في %n أيام</numerusform>
+            <numerusform>ينتهي العرض في %n يوم</numerusform>
+            <numerusform>ينتهي العرض في %n يوم</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>ينتهي العرض في %n ساعة</numerusform><numerusform>ينتهي العرض في %n ساعة</numerusform><numerusform>ينتهي العرض في %n ساعتين</numerusform><numerusform>ينتهي العرض في %n ساعات</numerusform><numerusform>ينتهي العرض في %n ساعة</numerusform><numerusform>ينتهي العرض في %n ساعة</numerusform></translation>
+        <translation>
+            <numerusform>ينتهي العرض في %n ساعة</numerusform>
+            <numerusform>ينتهي العرض في %n ساعة</numerusform>
+            <numerusform>ينتهي العرض في %n ساعتين</numerusform>
+            <numerusform>ينتهي العرض في %n ساعات</numerusform>
+            <numerusform>ينتهي العرض في %n ساعة</numerusform>
+            <numerusform>ينتهي العرض في %n ساعة</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>ينتهي العرض في %n دقيقة</numerusform><numerusform>ينتهي العرض في %n دقيقة</numerusform><numerusform>ينتهي العرض في %n دقيقتين</numerusform><numerusform>ينتهي العرض في %n دقائق</numerusform><numerusform>ينتهي العرض في %n دقيقة</numerusform><numerusform>ينتهي العرض في %n دقيقة</numerusform></translation>
+        <translation>
+            <numerusform>ينتهي العرض في %n دقيقة</numerusform>
+            <numerusform>ينتهي العرض في %n دقيقة</numerusform>
+            <numerusform>ينتهي العرض في %n دقيقتين</numerusform>
+            <numerusform>ينتهي العرض في %n دقائق</numerusform>
+            <numerusform>ينتهي العرض في %n دقيقة</numerusform>
+            <numerusform>ينتهي العرض في %n دقيقة</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>ينتهي العرض في %n ثانية</numerusform><numerusform>ينتهي العرض في %n ثانية</numerusform><numerusform>ينتهي العرض في %n ثانيتين</numerusform><numerusform>ينتهي العرض في %n ثواني</numerusform><numerusform>ينتهي العرض في %n ثانية</numerusform><numerusform>ينتهي العرض في %n ثانية</numerusform></translation>
+        <translation>
+            <numerusform>ينتهي العرض في %n ثانية</numerusform>
+            <numerusform>ينتهي العرض في %n ثانية</numerusform>
+            <numerusform>ينتهي العرض في %n ثانيتين</numerusform>
+            <numerusform>ينتهي العرض في %n ثواني</numerusform>
+            <numerusform>ينتهي العرض في %n ثانية</numerusform>
+            <numerusform>ينتهي العرض في %n ثانية</numerusform>
+        </translation>
     </message>
     <message>
         <source>PROMO</source>
@@ -5161,6 +5488,117 @@ Enter a different name</source>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
         <translation>عمليات الترفيع والتنزيل</translation>
+    </message>
+</context>
+<context>
+    <name>OfferStrings</name>
+    <message>
+        <source>%1 %2</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
+        <translation>%1 %2</translation>
+    </message>
+    <message>
+        <source>%1 of storage</source>
+        <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 من مساحة تخزين</translation>
+    </message>
+    <message>
+        <source>%1 of transfer</source>
+        <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 من تراسل البيانات</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n يوم</numerusform>
+            <numerusform>%n يوم</numerusform>
+            <numerusform>%n يومان</numerusform>
+            <numerusform>%n أيام</numerusform>
+            <numerusform>%n يوماً</numerusform>
+            <numerusform>%n يوم</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <translatorcomment>Number of remaining hours before the offer expire variable is for remaining hours. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n ساعة</numerusform>
+            <numerusform>%n ساعة</numerusform>
+            <numerusform>%n ساعتان</numerusform>
+            <numerusform>%n ساعات</numerusform>
+            <numerusform>%n ساعة</numerusform>
+            <numerusform>%n ساعة</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <translatorcomment>Number of remaining minutes before the offer expire,variable is for remaining minutes. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n دقيقة</numerusform>
+            <numerusform>%n دقيقة</numerusform>
+            <numerusform>%n دقيقتان</numerusform>
+            <numerusform>%n دقائق</numerusform>
+            <numerusform>%n دقيقة</numerusform>
+            <numerusform>%n دقيقة</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>*%1</source>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is € and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation>*%1</translation>
+    </message>
+    <message>
+        <source>Estimated price in your local currency.</source>
+        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
+        <translation>السعر المقدر بعملتك المحلية.</translation>
+    </message>
+    <message>
+        <source>Grab Deal</source>
+        <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
+        <translation>اغتنم الفرصة</translation>
+    </message>
+    <message>
+        <source>MEGA %1</source>
+        <translatorcomment>Plan name used in the offer dialog, the variable is for plan name snc.6228</translatorcomment>
+        <translation>MEGA ميغا %1</translation>
+    </message>
+    <message>
+        <source>MEGA Pass</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>ميغا باس MEGA Pass</translation>
+    </message>
+    <message>
+        <source>MEGA VPN</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>ميغا في بي إن MEGA VPN</translation>
+    </message>
+    <message>
+        <source>Object storage</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>خدمة تخزين الأغراض</translation>
+    </message>
+    <message>
+        <source>Special offers ends in:</source>
+        <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
+        <translation>ينتهي العرض الخاص في:</translation>
+    </message>
+    <message>
+        <source>Tax may apply.</source>
+        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
+        <translation>قد تُفرض الضريبة.</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]%1% off[/B] for %n month</source>
+        <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهر</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهر</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهرين</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n أشهر</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهر</numerusform>
+            <numerusform>[B]خصم %1%[/B] لمدة %n شهر</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5418,7 +5856,7 @@ Enter a different name</source>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>تسجيل الدخول</translation>
+        <translation>تسجيل&#xa0;الدخول</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
@@ -5612,7 +6050,7 @@ Enter a different name</source>
     </message>
     <message>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
+        <translatorcomment>Text indicating that the user can view the backups in settings&apos; backups tab CON-738</translatorcomment>
         <translation>يمكنك عرض النسخ الاحتياطية وحالاتها ضمن صفحة النسخ الاحتياطي في الإعدادات.</translation>
     </message>
     <message>
@@ -5669,7 +6107,14 @@ Enter a different name</source>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] أزال %n عنصر</numerusform><numerusform>[A] أزال %n عنصر</numerusform><numerusform>[A] أزال %n عنصرين</numerusform><numerusform>[A] أزال %n عناصر</numerusform><numerusform>[A] أزال %n عنصراً</numerusform><numerusform>[A] أزال %n عنصر</numerusform></translation>
+        <translation>
+            <numerusform>[A] أزال %n عنصر</numerusform>
+            <numerusform>[A] أزال %n عنصر</numerusform>
+            <numerusform>[A] أزال %n عنصرين</numerusform>
+            <numerusform>[A] أزال %n عناصر</numerusform>
+            <numerusform>[A] أزال %n عنصراً</numerusform>
+            <numerusform>[A] أزال %n عنصر</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5907,17 +6352,17 @@ Enter a different name</source>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
         <translation>تم نقل العنصر إلى سلة المحذوفات</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
         <translation>تم نقل العنصر إلى المحذوفات</translation>
     </message>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
         <translation>تم نقل العنصر إلى المحذوفات</translation>
     </message>
     <message>
@@ -5944,10 +6389,13 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We've fixed bugs and made the app more reliable.
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
 </source>
-        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- تحسين موثوقية تعريفات الرسومات التي تواجه مشاكل على ويندوز Windows
+- إصلاح أخطاء طفيفة وتحسينات على الأداء
+</translation>
     </message>
 </context>
 <context>
@@ -6033,7 +6481,7 @@ Enter a different name</source>
     <message>
         <source>Your system doesn’t have a proxy set. To connect, set a valid http_proxy or https_proxy value in your environment.</source>
         <translatorcomment>Error banner shown when proxy settings is not found in the environment . SNC-5411</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لم يتم اكتشاف بروكسي. للاتصال، قم بتعيين قيمة صالحة لـ http_proxy أو https_proxy في بيئتك.</translation>
     </message>
 </context>
 <context>
@@ -6120,7 +6568,7 @@ Do you want to replace it?</source>
         <translation>&amp;حفظ</translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>“%1” محمي ضد التعديل.
@@ -6352,27 +6800,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 غيغابايت</translation>
+        <translation>%1&#xa0;غيغابايت</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 كيلوبايت</translation>
+        <translation>%1&#xa0;كيلوبايت</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 ميغا بايت</translation>
+        <translation>%1&#xa0;ميغا بايت</translation>
     </message>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 تيرابايت</translation>
+        <translation>%1&#xa0;تيرابايت</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 بايت</translation>
+        <translation>%1&#xa0;بايت</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -6491,18 +6939,23 @@ Do you want to delete it anyway?</source>
     <name>RemoveBackup</name>
     <message>
         <source>Backup folder already exists on destination. Choose another.</source>
-        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can't move it there! SNC-6067 </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder already contains a folder with the backup name, can&apos;t move it there! SNC-6067 </translatorcomment>
+        <translation>هناك مجلد بنفس هذا الاسم في ذلك الموقع بالفعل، اختر موقعًا آخر</translation>
+    </message>
+    <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>المجلد المستهدف غير موجود. اختر غيره.</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ أثناء نقل أو حذف مجلد النسخ الاحتياطي في ميغا MEGA</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن نقل مجلد النسخ الاحتياطي أو حذفه في ميغا MEGA. السبب: %1</translation>
     </message>
 </context>
 <context>
@@ -6521,6 +6974,11 @@ Do you want to delete it anyway?</source>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>حذف المجلد من ميغا MEGA</translation>
+    </message>
+    <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>سيتم حذف المجلد من ميغا MEGA ولكن لن يتم حذفه من جهازك. لا يمكن التراجع عن هذا الإجراء.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6546,11 +7004,6 @@ Do you want to delete it anyway?</source>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
         <translation>أوقف النسخ الاحتياطي</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
-        <translation>سيتم حذف المجلد من ميغا MEGA ولكن لن يتم حذفه من جهازك. لا يمكن التراجع عن هذا الإجراء.</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
@@ -6640,12 +7093,26 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n ملف</numerusform><numerusform>%n ملف</numerusform><numerusform>%n ملفان</numerusform><numerusform>%n ملفات</numerusform><numerusform>%n ملفاً</numerusform><numerusform>%n ملف</numerusform></translation>
+        <translation>
+            <numerusform>%n ملف</numerusform>
+            <numerusform>%n ملف</numerusform>
+            <numerusform>%n ملفان</numerusform>
+            <numerusform>%n ملفات</numerusform>
+            <numerusform>%n ملفاً</numerusform>
+            <numerusform>%n ملف</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n مجلد</numerusform><numerusform>%n مجلد</numerusform><numerusform>%n مجلدان</numerusform><numerusform>%n مجلدات</numerusform><numerusform>%n مجلداً</numerusform><numerusform>%n مجلد</numerusform></translation>
+        <translation>
+            <numerusform>%n مجلد</numerusform>
+            <numerusform>%n مجلد</numerusform>
+            <numerusform>%n مجلدان</numerusform>
+            <numerusform>%n مجلدات</numerusform>
+            <numerusform>%n مجلداً</numerusform>
+            <numerusform>%n مجلد</numerusform>
+        </translation>
     </message>
     <message>
         <source>Adding transfers…</source>
@@ -6894,6 +7361,11 @@ Do you want to delete it anyway?</source>
         <translation>إطلاق عند تسجيل الدخول</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>اعرف أكثر</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>مجلد محلي مع نسخة احتياطية من ملفات تم حذفهم من ميغا MEGA</translation>
@@ -6901,7 +7373,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>تسجيل الخروج</translation>
+        <translation>تسجيل&#xa0;الخروج</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -7039,6 +7511,11 @@ Do you want to delete it anyway?</source>
         <translation>سيتم تعطيل المزامنة.</translation>
     </message>
     <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>حصة تراسل المعطيات</translation>
@@ -7071,7 +7548,14 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>الحجم المستخدم لآخر %n ساعة:</numerusform><numerusform>الحجم المستخدم لآخر ساعة:</numerusform><numerusform>الحجم المستخدم لآخر %n ساعتين:</numerusform><numerusform>الحجم المستخدم لآخر %n ساعات:</numerusform><numerusform>الحجم المستخدم لآخر %n ساعة:</numerusform><numerusform>الحجم المستخدم لآخر %n ساعة:</numerusform></translation>
+        <translation>
+            <numerusform>الحجم المستخدم لآخر %n ساعة:</numerusform>
+            <numerusform>الحجم المستخدم لآخر ساعة:</numerusform>
+            <numerusform>الحجم المستخدم لآخر %n ساعتين:</numerusform>
+            <numerusform>الحجم المستخدم لآخر %n ساعات:</numerusform>
+            <numerusform>الحجم المستخدم لآخر %n ساعة:</numerusform>
+            <numerusform>الحجم المستخدم لآخر %n ساعة:</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -7101,17 +7585,14 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>يوم</numerusform><numerusform>يوم</numerusform><numerusform>يومان</numerusform><numerusform>أيام</numerusform><numerusform>يوم</numerusform><numerusform>يوم</numerusform></translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
-        <translation>اعرف أكثر</translation>
+        <translation>
+            <numerusform>يوم</numerusform>
+            <numerusform>يوم</numerusform>
+            <numerusform>يومان</numerusform>
+            <numerusform>أيام</numerusform>
+            <numerusform>يوم</numerusform>
+            <numerusform>يوم</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7145,12 +7626,26 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n ملف</numerusform><numerusform>%n ملف</numerusform><numerusform>%n ملفان</numerusform><numerusform>%n ملفات</numerusform><numerusform>%n ملفاً</numerusform><numerusform>%n ملف</numerusform></translation>
+        <translation>
+            <numerusform>%n ملف</numerusform>
+            <numerusform>%n ملف</numerusform>
+            <numerusform>%n ملفان</numerusform>
+            <numerusform>%n ملفات</numerusform>
+            <numerusform>%n ملفاً</numerusform>
+            <numerusform>%n ملف</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n مجلد</numerusform><numerusform>%n مجلد</numerusform><numerusform>%n مجلدان</numerusform><numerusform>%n مجلدات</numerusform><numerusform>%n مجلداً</numerusform><numerusform>%n مجلد</numerusform></translation>
+        <translation>
+            <numerusform>%n مجلد</numerusform>
+            <numerusform>%n مجلد</numerusform>
+            <numerusform>%n مجلدان</numerusform>
+            <numerusform>%n مجلدات</numerusform>
+            <numerusform>%n مجلداً</numerusform>
+            <numerusform>%n مجلد</numerusform>
+        </translation>
     </message>
     <message>
         <source>Add backup</source>
@@ -7161,6 +7656,11 @@ Do you want to delete it anyway?</source>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
         <translation>إضافة مزامنة</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7181,6 +7681,11 @@ Do you want to delete it anyway?</source>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>مشاركة مع مستخدم ميغا MEGA</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>تزامن</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -7389,7 +7894,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
         <translation>فشل التحقق من MAC</translation>
     </message>
     <message>
@@ -7399,7 +7904,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
         <translation>الاسم طويل جدًا لنظام الملفات</translation>
     </message>
     <message>
@@ -7501,27 +8006,62 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Failed: %n</source>
         <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
-        <translation><numerusform>فشلت: %n</numerusform><numerusform>فشلت: %n</numerusform><numerusform>فشلت: %n</numerusform><numerusform>فشلت: %n</numerusform><numerusform>فشلت: %n</numerusform><numerusform>فشلت: %n</numerusform></translation>
+        <translation>
+            <numerusform>فشلت: %n</numerusform>
+            <numerusform>فشلت: %n</numerusform>
+            <numerusform>فشلت: %n</numerusform>
+            <numerusform>فشلت: %n</numerusform>
+            <numerusform>فشلت: %n</numerusform>
+            <numerusform>فشلت: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform></translation>
+        <translation>
+            <numerusform>تعارضات نوع العنصر: %n</numerusform>
+            <numerusform>تعارضات نوع العنصر: %n</numerusform>
+            <numerusform>تعارضات نوع العنصر: %n</numerusform>
+            <numerusform>تعارضات نوع العنصر: %n</numerusform>
+            <numerusform>تعارضات نوع العنصر: %n</numerusform>
+            <numerusform>تعارضات نوع العنصر: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform></translation>
+        <translation>
+            <numerusform>تعارضات الأسماء: %n</numerusform>
+            <numerusform>تعارضات الأسماء: %n</numerusform>
+            <numerusform>تعارضات الأسماء: %n</numerusform>
+            <numerusform>تعارضات الأسماء: %n</numerusform>
+            <numerusform>تعارضات الأسماء: %n</numerusform>
+            <numerusform>تعارضات الأسماء: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform></translation>
+        <translation>
+            <numerusform>أخرى: %n</numerusform>
+            <numerusform>أخرى: %n</numerusform>
+            <numerusform>أخرى: %n</numerusform>
+            <numerusform>أخرى: %n</numerusform>
+            <numerusform>أخرى: %n</numerusform>
+            <numerusform>أخرى: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform></translation>
+        <translation>
+            <numerusform>تم الحل: %n</numerusform>
+            <numerusform>تم الحل: %n</numerusform>
+            <numerusform>تم الحل: %n</numerusform>
+            <numerusform>تم الحل: %n</numerusform>
+            <numerusform>تم الحل: %n</numerusform>
+            <numerusform>تم الحل: %n</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7563,28 +8103,63 @@ Do you want to delete it anyway?</source>
         <source>%1 and %n issues failed.</source>
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
-        <translation><numerusform>%1 و فشل اصلاح %n مشكلة</numerusform><numerusform>%1 و فشل اصلاح %n مشكلة</numerusform><numerusform>%1 و فشل اصلاح %n مشكلتين</numerusform><numerusform>%1 و فشل اصلاح %n مشاكل</numerusform><numerusform>%1 و فشل اصلاح %n مشكلة</numerusform><numerusform>%1 و فشل اصلاح %n مشكلة</numerusform></translation>
+        <translation>
+            <numerusform>%1 و فشل اصلاح %n مشكلة</numerusform>
+            <numerusform>%1 و فشل اصلاح %n مشكلة</numerusform>
+            <numerusform>%1 و فشل اصلاح %n مشكلتين</numerusform>
+            <numerusform>%1 و فشل اصلاح %n مشاكل</numerusform>
+            <numerusform>%1 و فشل اصلاح %n مشكلة</numerusform>
+            <numerusform>%1 و فشل اصلاح %n مشكلة</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>فشل اصلاح %n مشكلة</numerusform><numerusform>فشل اصلاح %n مشكلة</numerusform><numerusform>فشل اصلاح %n مشكلتين</numerusform><numerusform>فشل اصلاح %n مشاكل</numerusform><numerusform>فشل اصلاح %n مشكلة</numerusform><numerusform>فشل اصلاح %n مشكلة</numerusform></translation>
+        <translation>
+            <numerusform>فشل اصلاح %n مشكلة</numerusform>
+            <numerusform>فشل اصلاح %n مشكلة</numerusform>
+            <numerusform>فشل اصلاح %n مشكلتين</numerusform>
+            <numerusform>فشل اصلاح %n مشاكل</numerusform>
+            <numerusform>فشل اصلاح %n مشكلة</numerusform>
+            <numerusform>فشل اصلاح %n مشكلة</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
         when several issues have failed. SNC-2565</translatorcomment>
-        <translation><numerusform>%n مشكلة تم حلها</numerusform><numerusform>%n مشكلة تم حلها</numerusform><numerusform>%n مشكلتين تم حلهما</numerusform><numerusform>%n مشاكل تم حلهم</numerusform><numerusform>%n مشكلة تم حلهم</numerusform><numerusform>%n مشكلة تم حلهم</numerusform></translation>
+        <translation>
+            <numerusform>%n مشكلة تم حلها</numerusform>
+            <numerusform>%n مشكلة تم حلها</numerusform>
+            <numerusform>%n مشكلتين تم حلهما</numerusform>
+            <numerusform>%n مشاكل تم حلهم</numerusform>
+            <numerusform>%n مشكلة تم حلهم</numerusform>
+            <numerusform>%n مشكلة تم حلهم</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
-        <translation><numerusform>تم إصلاح %n مشكلة و فشل اصلاح 1 مشكلة</numerusform><numerusform>تم إصلاح %n مشكلة و فشل اصلاح 1 مشكلة</numerusform><numerusform>تم إصلاح %n مشكلتين و فشل اصلاح 1 مشكلة</numerusform><numerusform>تم إصلاح %n مشاكل و فشل اصلاح 1 مشكلة</numerusform><numerusform>تم إصلاح %n مشكلة و فشل اصلاح 1 مشكلة</numerusform><numerusform>تم إصلاح %n مشكلة و فشل اصلاح 1 مشكلة</numerusform></translation>
+        <translation>
+            <numerusform>تم إصلاح %n مشكلة و فشل اصلاح 1 مشكلة</numerusform>
+            <numerusform>تم إصلاح %n مشكلة و فشل اصلاح 1 مشكلة</numerusform>
+            <numerusform>تم إصلاح %n مشكلتين و فشل اصلاح 1 مشكلة</numerusform>
+            <numerusform>تم إصلاح %n مشاكل و فشل اصلاح 1 مشكلة</numerusform>
+            <numerusform>تم إصلاح %n مشكلة و فشل اصلاح 1 مشكلة</numerusform>
+            <numerusform>تم إصلاح %n مشكلة و فشل اصلاح 1 مشكلة</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلة</numerusform><numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلة</numerusform><numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلتين</numerusform><numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشاكل</numerusform><numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلة</numerusform><numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلة</numerusform></translation>
+        <translation>
+            <numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلة</numerusform>
+            <numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلة</numerusform>
+            <numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلتين</numerusform>
+            <numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشاكل</numerusform>
+            <numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلة</numerusform>
+            <numerusform>تم إصلاح 1 مشكلة و فشل اصلاح %n مشكلة</numerusform>
+        </translation>
     </message>
     <message>
         <source>Fixing issues</source>
@@ -7592,7 +8167,7 @@ Do you want to delete it anyway?</source>
         <translation>جاري حل المشاكل…</translation>
     </message>
     <message>
-        <source>Issues can't be fixed.
+        <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>لا يمكن حل بعض المشاكل.
@@ -7609,7 +8184,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <translation>إعادة تحميل</translation>
     </message>
     <message>
-        <source>Some issues can't be fixed.
+        <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>لا يمكن حل بعض المشاكل.
@@ -8287,21 +8862,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 </context>
 <context>
     <name>SyncSettingsElements</name>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation>تطبيق</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation>سيتم تطبيق قواعد الاستبعاد التي قمت بإعدادها في إصدار سابق من التطبيق على جميع عمليات المزامنة والنسخ الاحتياطية. سيتم استبدال أي قواعد تم إنشاؤها منذ ذلك الحين.</translation>
-    </message>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation>[B]هل تريد تطبيق قواعد الاستبعاد السابقة؟[/B]</translation>
-    </message>
 </context>
 <context>
     <name>SyncSettingsUI</name>
@@ -8346,7 +8906,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>لا يمكن إضافة [B]%1[/B] لأنه تم إلغاء تفعيل حساب برو فلكسي Pro Flexi الخاص بك بسبب فشل الدفع أو إلغاء اشتراكك. للمتابعة قم بالدفع وإعادة تفعيل اشتراكك.</translation>
+        <translation>لا يمكن إضافة [B]%1[/B] لأنه تم إلغاء تفعيل حساب برو فلكسي Pro&#xa0;Flexi الخاص بك بسبب فشل الدفع أو إلغاء اشتراكك. للمتابعة قم بالدفع وإعادة تفعيل اشتراكك.</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
@@ -8365,16 +8925,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Advanced</source>
         <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
         <translation>متقدم</translation>
-    </message>
-    <message>
-        <source>Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation>تطبيق قواعد الاستبعاد السابقة</translation>
-    </message>
-    <message>
-        <source>Apply rules</source>
-        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation>تطبيق القواعد</translation>
     </message>
     <message>
         <source>Get full control of the sync issues</source>
@@ -8498,13 +9048,25 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>حدد مجلدات للمزامنة</translation>
     </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]اعرف المزيد[/A]</translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>
     <message numerus="yes">
         <source>Maximum length is %n characters.</source>
         <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation><numerusform>الحد الأقصى للطول هو %n محرف</numerusform><numerusform>الحد الأقصى للطول هو %n محرف</numerusform><numerusform>الحد الأقصى للطول هو %n محرفين</numerusform><numerusform>الحد الأقصى للطول هو %n محارف</numerusform><numerusform>الحد الأقصى للطول هو %n محرفاً</numerusform><numerusform>الحد الأقصى للطول هو %n محرف</numerusform></translation>
+        <translation>
+            <numerusform>الحد الأقصى للطول هو %n محرف</numerusform>
+            <numerusform>الحد الأقصى للطول هو %n محرف</numerusform>
+            <numerusform>الحد الأقصى للطول هو %n محرفين</numerusform>
+            <numerusform>الحد الأقصى للطول هو %n محارف</numerusform>
+            <numerusform>الحد الأقصى للطول هو %n محرفاً</numerusform>
+            <numerusform>الحد الأقصى للطول هو %n محرف</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8603,7 +9165,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>تم العثور على %1 نتيجة</numerusform><numerusform>تم العثور على %1 نتيجة</numerusform><numerusform>تم العثور على %1 نتيجتين</numerusform><numerusform>تم العثور على %1 نتائج</numerusform><numerusform>تم العثور على %1 نتيجة</numerusform><numerusform>تم العثور على %1 نتيجة</numerusform></translation>
+        <translation>
+            <numerusform>تم العثور على %1 نتيجة</numerusform>
+            <numerusform>تم العثور على %1 نتيجة</numerusform>
+            <numerusform>تم العثور على %1 نتيجتين</numerusform>
+            <numerusform>تم العثور على %1 نتائج</numerusform>
+            <numerusform>تم العثور على %1 نتيجة</numerusform>
+            <numerusform>تم العثور على %1 نتيجة</numerusform>
+        </translation>
     </message>
     <message>
         <source>All</source>
@@ -8808,55 +9377,125 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1 لكن تعذر تنزيل %n عنصر.</numerusform><numerusform>%1 لكن تعذر تنزيل %n عنصر.</numerusform><numerusform>%1 لكن تعذر تنزيل %n عنصرين.</numerusform><numerusform>%1 لكن تعذر تنزيل %n عناصر.</numerusform><numerusform>%1 لكن تعذر تنزيل %n عنصر</numerusform><numerusform>%1 لكن تعذر تنزيل %n عنصر.</numerusform></translation>
+        <translation>
+            <numerusform>%1 لكن تعذر تنزيل %n عنصر.</numerusform>
+            <numerusform>%1 لكن تعذر تنزيل %n عنصر.</numerusform>
+            <numerusform>%1 لكن تعذر تنزيل %n عنصرين.</numerusform>
+            <numerusform>%1 لكن تعذر تنزيل %n عناصر.</numerusform>
+            <numerusform>%1 لكن تعذر تنزيل %n عنصر</numerusform>
+            <numerusform>%1 لكن تعذر تنزيل %n عنصر.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1 لكن تعذر ترفيع %n عنصر.</numerusform><numerusform>%1 لكن تعذر ترفيع %n عنصر.</numerusform><numerusform>%1 لكن تعذر ترفيع %n عنصرين.</numerusform><numerusform>%1 لكن تعذر ترفيع %n عناصر.</numerusform><numerusform>%1 لكن تعذر ترفيع %n عنصر</numerusform><numerusform>%1 لكن تعذر ترفيع %n عنصر.</numerusform></translation>
+        <translation>
+            <numerusform>%1 لكن تعذر ترفيع %n عنصر.</numerusform>
+            <numerusform>%1 لكن تعذر ترفيع %n عنصر.</numerusform>
+            <numerusform>%1 لكن تعذر ترفيع %n عنصرين.</numerusform>
+            <numerusform>%1 لكن تعذر ترفيع %n عناصر.</numerusform>
+            <numerusform>%1 لكن تعذر ترفيع %n عنصر</numerusform>
+            <numerusform>%1 لكن تعذر ترفيع %n عنصر.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>تعذر تنزيل %n عنصر إلى %1.</numerusform><numerusform>تعذر تنزيل %n عنصر إلى %1.</numerusform><numerusform>تعذر تنزيل %n عنصرين إلى %1.</numerusform><numerusform>تعذر تنزيل %n عناصر إلى %1.</numerusform><numerusform>تعذر تنزيل %n عنصر إلى %1.</numerusform><numerusform>تعذر تنزيل %n عنصر إلى %1.</numerusform></translation>
+        <translation>
+            <numerusform>تعذر تنزيل %n عنصر إلى %1.</numerusform>
+            <numerusform>تعذر تنزيل %n عنصر إلى %1.</numerusform>
+            <numerusform>تعذر تنزيل %n عنصرين إلى %1.</numerusform>
+            <numerusform>تعذر تنزيل %n عناصر إلى %1.</numerusform>
+            <numerusform>تعذر تنزيل %n عنصر إلى %1.</numerusform>
+            <numerusform>تعذر تنزيل %n عنصر إلى %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>تعذر ترفيع %n عنصر إلى %1.</numerusform><numerusform>تعذر ترفيع %n عنصر إلى %1.</numerusform><numerusform>تعذر ترفيع %n عنصرين إلى %1.</numerusform><numerusform>تعذر ترفيع %n عناصر إلى %1.</numerusform><numerusform>تعذر ترفيع %n عنصر إلى %1.</numerusform><numerusform>تعذر ترفيع %n عنصر إلى %1.</numerusform></translation>
+        <translation>
+            <numerusform>تعذر ترفيع %n عنصر إلى %1.</numerusform>
+            <numerusform>تعذر ترفيع %n عنصر إلى %1.</numerusform>
+            <numerusform>تعذر ترفيع %n عنصرين إلى %1.</numerusform>
+            <numerusform>تعذر ترفيع %n عناصر إلى %1.</numerusform>
+            <numerusform>تعذر ترفيع %n عنصر إلى %1.</numerusform>
+            <numerusform>تعذر ترفيع %n عنصر إلى %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>تم تنزيل %n عنصر</numerusform><numerusform>تم تنزيل %n عنصر</numerusform><numerusform>تم تنزيل %n عنصرين </numerusform><numerusform>تم تنزيل %n عناصر </numerusform><numerusform>تم تنزيل %n عنصراً</numerusform><numerusform>تم تنزيل %n عنصر </numerusform></translation>
+        <translation>
+            <numerusform>تم تنزيل %n عنصر</numerusform>
+            <numerusform>تم تنزيل %n عنصر</numerusform>
+            <numerusform>تم تنزيل %n عنصرين </numerusform>
+            <numerusform>تم تنزيل %n عناصر </numerusform>
+            <numerusform>تم تنزيل %n عنصراً</numerusform>
+            <numerusform>تم تنزيل %n عنصر </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>تم تنزيل %n عنصر إلى %1.</numerusform><numerusform>تم تنزيل %n عنصر إلى %1.</numerusform><numerusform>تم تنزيل %n عنصرين إلى %1.</numerusform><numerusform>تم تنزيل %n عناصر إلى %1.</numerusform><numerusform>تم تنزيل %n عنصراً إلى %1.</numerusform><numerusform>تم تنزيل %n عنصر إلى %1.</numerusform></translation>
+        <translation>
+            <numerusform>تم تنزيل %n عنصر إلى %1.</numerusform>
+            <numerusform>تم تنزيل %n عنصر إلى %1.</numerusform>
+            <numerusform>تم تنزيل %n عنصرين إلى %1.</numerusform>
+            <numerusform>تم تنزيل %n عناصر إلى %1.</numerusform>
+            <numerusform>تم تنزيل %n عنصراً إلى %1.</numerusform>
+            <numerusform>تم تنزيل %n عنصر إلى %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n عنصر لم يعد موجوداً أو تمت إعادة تسميته.</numerusform><numerusform>%n عنصر لم يعد موجوداً أو تمت إعادة تسميته.</numerusform><numerusform>%n عنصرين لم يعودا موجودين أو تمت إعادة تسميتهما.</numerusform><numerusform>%n عناصر لم تعد موجودة أو تمت إعادة تسميتهم.</numerusform><numerusform>%n عنصراً لم يعدوا موجودين أو تمت إعادة تسميتهم.</numerusform><numerusform>%n عنصر لم يعدوا موجودين أو تمت إعادة تسميتهم.</numerusform></translation>
+        <translation>
+            <numerusform>%n عنصر لم يعد موجوداً أو تمت إعادة تسميته.</numerusform>
+            <numerusform>%n عنصر لم يعد موجوداً أو تمت إعادة تسميته.</numerusform>
+            <numerusform>%n عنصرين لم يعودا موجودين أو تمت إعادة تسميتهما.</numerusform>
+            <numerusform>%n عناصر لم تعد موجودة أو تمت إعادة تسميتهم.</numerusform>
+            <numerusform>%n عنصراً لم يعدوا موجودين أو تمت إعادة تسميتهم.</numerusform>
+            <numerusform>%n عنصر لم يعدوا موجودين أو تمت إعادة تسميتهم.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n عنصر لم يعد موجوداً.</numerusform><numerusform>%n عنصر لم يعد موجوداً.</numerusform><numerusform>%n عنصرين لم يعودا موجودين.</numerusform><numerusform>%n عناصر لم يعدوا موجودين.</numerusform><numerusform>%n عنصراً لم يعدوا موجودين.</numerusform><numerusform>%n عنصر لم يعدوا موجودين.</numerusform></translation>
+        <translation>
+            <numerusform>%n عنصر لم يعد موجوداً.</numerusform>
+            <numerusform>%n عنصر لم يعد موجوداً.</numerusform>
+            <numerusform>%n عنصرين لم يعودا موجودين.</numerusform>
+            <numerusform>%n عناصر لم يعدوا موجودين.</numerusform>
+            <numerusform>%n عنصراً لم يعدوا موجودين.</numerusform>
+            <numerusform>%n عنصر لم يعدوا موجودين.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>تم ترفيع %n عنصر</numerusform><numerusform>تم ترفيع %n عنصر</numerusform><numerusform>تم ترفيع %n عنصرين </numerusform><numerusform>تم ترفيع %n عناصر </numerusform><numerusform>تم ترفيع %n عنصراً</numerusform><numerusform>تم ترفيع %n عنصر </numerusform></translation>
+        <translation>
+            <numerusform>تم ترفيع %n عنصر</numerusform>
+            <numerusform>تم ترفيع %n عنصر</numerusform>
+            <numerusform>تم ترفيع %n عنصرين </numerusform>
+            <numerusform>تم ترفيع %n عناصر </numerusform>
+            <numerusform>تم ترفيع %n عنصراً</numerusform>
+            <numerusform>تم ترفيع %n عنصر </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>تم ترفيع %n عنصر إلى %1.</numerusform><numerusform>تم ترفيع %n عنصر إلى %1.</numerusform><numerusform>تم ترفيع %n عنصرين إلى %1.</numerusform><numerusform>تم ترفيع %n عناصر إلى %1.</numerusform><numerusform>تم ترفيع %n عنصراً إلى %1.</numerusform><numerusform>تم ترفيع %n عنصر إلى %1.</numerusform></translation>
+        <translation>
+            <numerusform>تم ترفيع %n عنصر إلى %1.</numerusform>
+            <numerusform>تم ترفيع %n عنصر إلى %1.</numerusform>
+            <numerusform>تم ترفيع %n عنصرين إلى %1.</numerusform>
+            <numerusform>تم ترفيع %n عناصر إلى %1.</numerusform>
+            <numerusform>تم ترفيع %n عنصراً إلى %1.</numerusform>
+            <numerusform>تم ترفيع %n عنصر إلى %1.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not download</source>
@@ -8896,7 +9535,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform><numerusform>إعادة المحاولة للعنصر الفاشل</numerusform><numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform><numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform><numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform><numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform></translation>
+        <translation>
+            <numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform>
+            <numerusform>إعادة المحاولة للعنصر الفاشل</numerusform>
+            <numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform>
+            <numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform>
+            <numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform>
+            <numerusform>إعادة المحاولة للعناصر الفاشلة</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -8921,12 +9567,26 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>تم إيقاف الترفيع</numerusform><numerusform>تم إيقاف الترفيع</numerusform><numerusform>تم إيقاف الترفيعات</numerusform><numerusform>تم إيقاف الترفيعات</numerusform><numerusform>تم إيقاف الترفيعات</numerusform><numerusform>تم إيقاف الترفيعات</numerusform></translation>
+        <translation>
+            <numerusform>تم إيقاف الترفيع</numerusform>
+            <numerusform>تم إيقاف الترفيع</numerusform>
+            <numerusform>تم إيقاف الترفيعات</numerusform>
+            <numerusform>تم إيقاف الترفيعات</numerusform>
+            <numerusform>تم إيقاف الترفيعات</numerusform>
+            <numerusform>تم إيقاف الترفيعات</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>لقد قمت بتسجيل الخروج من MEGA حتى تتوقف التحميلات الخاصة بك. يمكنك استئناف التحميلات بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقف الترفيع الخاص بك. يمكنك استئناف الترفيع بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform></translation>
+        <translation>
+            <numerusform>لقد قمت بتسجيل الخروج من MEGA حتى تتوقف التحميلات الخاصة بك. يمكنك استئناف التحميلات بعد تسجيل الدخول مرة أخرى.</numerusform>
+            <numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقف الترفيع الخاص بك. يمكنك استئناف الترفيع بعد تسجيل الدخول مرة أخرى.</numerusform>
+            <numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform>
+            <numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform>
+            <numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform>
+            <numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -9343,12 +10003,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>لا يمكن الوصول إلى مجلد الوجهة</translation>
     </message>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>لا يمكن ترفيع [B]%1[/B] إلى الموقع المحدد</translation>
     </message>
 </context>
@@ -9401,14 +10061,9 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UpsellStrings</name>
     <message>
-        <source>%1 billed yearly</source>
-        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 تتم محاسبتها سنويًا</translation>
-    </message>
-    <message>
-        <source>%1 per month</source>
-        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 في الشهر</translation>
+        <source>%1 after tax</source>
+        <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
+        <translation>%1 بعد الضريبة</translation>
     </message>
     <message>
         <source>%1 storage</source>
@@ -9419,6 +10074,28 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation>%1 تراسل متاح</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1% off for %n month</source>
+        <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
+        <translation>
+            <numerusform>خصم %1% لمدة %n شهر</numerusform>
+            <numerusform>خصم %1% لمدة %n شهر</numerusform>
+            <numerusform>خصم %1% لمدة %n شهرين</numerusform>
+            <numerusform>خصم %1% لمدة %n أشهر</numerusform>
+            <numerusform>خصم %1% لمدة %n شهراً</numerusform>
+            <numerusform>خصم %1% لمدة %n شهر</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1/month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format.SNC-6228</translatorcomment>
+        <translation>%1/شهر</translation>
+    </message>
+    <message>
+        <source>%1/month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
+        <translation>%1/شهر، يتم تحصيله سنوياً</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -9431,19 +10108,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>* السعر المقدر بعملتك المحلية. سيتم محاسبتك باليورو على جميع المعاملات.</translation>
     </message>
     <message>
-        <source>Billed monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
-        <translation>الدفعة شهرياً</translation>
-    </message>
-    <message>
-        <source>Billed yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
-        <translation>الدفعة سنوياً</translation>
-    </message>
-    <message>
         <source>Buy %1</source>
         <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
         <translation>شراء %1</translation>
+    </message>
+    <message>
+        <source>Charged monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
+        <translation>يتم تحصيله شهرياً</translation>
+    </message>
+    <message>
+        <source>Charged yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
+        <translation>يتم تحصيله سنويًا</translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -9451,14 +10128,14 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>الباقة الحالية</translation>
     </message>
     <message>
-        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
-        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>هل تحتاج إلى المزيد من مساحة التخزين؟[BR][B][A]جرب برو فليكسي Pro Flexi[/A][/B]</translation>
+        <source>Most Popular</source>
+        <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
+        <translation>الأكثر رواجاً</translation>
     </message>
     <message>
-        <source>Recommended</source>
-        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
-        <translation>موصي به</translation>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>هل تحتاج إلى المزيد من مساحة التخزين؟[BR][B][A]جرب برو فليكسي Pro&#xa0;Flexi[/A][/B]</translation>
     </message>
     <message>
         <source>Save up to %1% with yearly billing</source>
@@ -9496,9 +10173,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>سحابة تخزين ميغا MEGA الخاصة بك ممتلئة</translation>
     </message>
     <message>
+        <source>only</source>
+        <translatorcomment>Text shown ont top of the price of a plan.SNC-6228</translatorcomment>
+        <translation>فقط</translation>
+    </message>
+    <message>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>في الشهر</translation>
+    </message>
+    <message>
+        <source>per month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
+        <translation>شهريًا، يتم تحصيل الرسوم سنويًا</translation>
     </message>
 </context>
 <context>
@@ -9514,7 +10201,14 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform><numerusform>%1 (%2%) من %3 مُستخدم</numerusform></translation>
+        <translation>
+            <numerusform>%1 (%2%) من %3 مُستخدم</numerusform>
+            <numerusform>%1 (%2%) من %3 مُستخدم</numerusform>
+            <numerusform>%1 (%2%) من %3 مُستخدم</numerusform>
+            <numerusform>%1 (%2%) من %3 مُستخدم</numerusform>
+            <numerusform>%1 (%2%) من %3 مُستخدم</numerusform>
+            <numerusform>%1 (%2%) من %3 مُستخدم</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 / %2</source>
@@ -9529,12 +10223,19 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 ثانية</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform><numerusform>%1 مُستخدم</numerusform></translation>
+        <translation>
+            <numerusform>%1 مُستخدم</numerusform>
+            <numerusform>%1 مُستخدم</numerusform>
+            <numerusform>%1 مُستخدم</numerusform>
+            <numerusform>%1 مُستخدم</numerusform>
+            <numerusform>%1 مُستخدم</numerusform>
+            <numerusform>%1 مُستخدم</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1d</source>
@@ -9559,32 +10260,74 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يوم</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يوم</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يومين</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n أيام</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يوماً</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يوم</numerusform></translation>
+        <translation>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يوم</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يوم</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يومين</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n أيام</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يوماً</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n يوم</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعة</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعة</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعتين</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعات</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعة</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعة</numerusform></translation>
+        <translation>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعة</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعة</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعتين</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعات</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعة</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ساعة</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقة</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقة</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقتين</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقائق</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقة</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقة</numerusform></translation>
+        <translation>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقة</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقة</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقتين</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقائق</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقة</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n دقيقة</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهر</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهر</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهرين</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n أشهر</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهراً</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهر</numerusform></translation>
+        <translation>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهر</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهر</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهرين</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n أشهر</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهراً</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n شهر</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانية</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانية</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانيتين</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثوان</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانية</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانية</numerusform></translation>
+        <translation>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانية</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانية</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانيتين</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثوان</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانية</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n ثانية</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنة</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنة</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنتين</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنوات</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنة</numerusform><numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنة</numerusform></translation>
+        <translation>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنة</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنة</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنتين</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنوات</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنة</numerusform>
+            <numerusform>تم الانتهاء من عملية تراسل المعطيات منذ %n سنة</numerusform>
+        </translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -9594,7 +10337,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أساسي</translation>
     </message>
     <message>
         <source>Business</source>
@@ -9609,7 +10352,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ضروري</translation>
     </message>
     <message>
         <source>Free</source>
@@ -9634,47 +10377,47 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>برو Pro I</translation>
+        <translation>برو Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>برو Pro II</translation>
+        <translation>برو Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>برو Pro III</translation>
+        <translation>برو Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>برو لايت Pro Lite</translation>
+        <translation>برو لايت Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مفتاح التشغيل</translation>
     </message>
     <message>
         <source>TB</source>

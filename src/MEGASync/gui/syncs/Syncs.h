@@ -53,7 +53,8 @@ protected:
         EMPTY_PATH,
         NO_ACCESS_PERMISSIONS_NO_EXIST,
         NO_ACCESS_PERMISSIONS_CANT_CREATE,
-        CANT_SYNC
+        CANT_SYNC,
+        CANT_ADD_SYNC,
     };
 
     enum class RemoteErrors
@@ -62,10 +63,10 @@ protected:
         CANT_SYNC,
         CANT_CREATE_REMOTE_FOLDER,
         CANT_CREATE_REMOTE_FOLDER_MSG,
-        CANT_ADD_SYNC
+        CANT_ADD_SYNC,
     };
 
-    struct MegaRemoteCodeError
+    struct MegaCodeError
     {
         int error;
         int syncError;
@@ -86,7 +87,8 @@ protected:
 
 private:
     SyncController& mSyncController;
-    MegaRemoteCodeError mRemoteMegaError;
+    MegaCodeError mRemoteMegaError;
+    MegaCodeError mLocalMegaError;
     QString mRemoteStringMessage;
     QString mRemoteFolder;
 

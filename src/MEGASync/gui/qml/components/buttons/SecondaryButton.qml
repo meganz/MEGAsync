@@ -4,17 +4,17 @@ Button {
     id: root
 
     icons {
-        colorEnabled: ColorTheme.iconSecondary
-        colorHovered: ColorTheme.iconSecondary
-        colorPressed: ColorTheme.iconSecondary
+        colorEnabled: ColorTheme.iconPrimary
+        colorHovered: ColorTheme.iconPrimary
+        colorPressed: ColorTheme.iconPrimary
     }
 
     colors {
         background: ColorTheme.buttonSecondary
         border: colors.background
-        text: ColorTheme.textSecondary
-        textPressed: ColorTheme.textSecondary
-        textHover: ColorTheme.textSecondary
+        text: ColorTheme.textPrimary
+        textPressed: ColorTheme.textPrimary
+        textHover: ColorTheme.textPrimary
         textDisabled: ColorTheme.textDisabled
         pressed: ColorTheme.buttonSecondaryPressed
         borderPressed: colors.pressed

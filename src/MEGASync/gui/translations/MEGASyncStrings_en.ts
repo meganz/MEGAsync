@@ -250,7 +250,10 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] added %n item</numerusform><numerusform>[A] added %n items</numerusform></translation>
+        <translation>
+            <numerusform>[A] added %n item</numerusform>
+            <numerusform>[A] added %n items</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -285,7 +288,10 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] removed %n item</numerusform><numerusform>[A] removed %n items</numerusform></translation>
+        <translation>
+            <numerusform>[A] removed %n item</numerusform>
+            <numerusform>[A] removed %n items</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
@@ -295,7 +301,10 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] updated %n item</numerusform><numerusform>[A] updated %n items</numerusform></translation>
+        <translation>
+            <numerusform>[A] updated %n item</numerusform>
+            <numerusform>[A] updated %n items</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -395,12 +404,18 @@
     <message numerus="yes">
         <source>%1, but %n folder couldn’t be backed up</source>
         <translatorcomment>Notification message to indicate that backups have been created (%1) but other %n backups have failed. Keep both %1 indicating a text with correctly created backups and %n to indicate the number of backups failed. SNC-5495</translatorcomment>
-        <translation><numerusform>%1, but %n folder couldn’t be backed up</numerusform><numerusform>%1, but %n folders couldn’t be backed up</numerusform></translation>
+        <translation>
+            <numerusform>%1, but %n folder couldn’t be backed up</numerusform>
+            <numerusform>%1, but %n folders couldn’t be backed up</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was backed up</source>
         <translatorcomment>Notification message to indicate that %n backups have been created. Keep %n to indicate the number of backups created. SNC-5495</translatorcomment>
-        <translation><numerusform>%n folder was backed up</numerusform><numerusform>%n folders were backed up</numerusform></translation>
+        <translation>
+            <numerusform>%n folder was backed up</numerusform>
+            <numerusform>%n folders were backed up</numerusform>
+        </translation>
     </message>
     <message>
         <source>Not all folders were backed up</source>
@@ -413,7 +428,10 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</numerusform><numerusform>Some folders with the same name already exist in your Backups. Rename the new folders to continue with the backup. Folder names will not change on your computer.</numerusform></translation>
+        <translation>
+            <numerusform>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</numerusform>
+            <numerusform>Some folders with the same name already exist in your Backups. Rename the new folders to continue with the backup. Folder names will not change on your computer.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -428,7 +446,10 @@
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>Folder wasn’t backed up. Try again.</numerusform><numerusform>These folders weren’t backed up. Try again.</numerusform></translation>
+        <translation>
+            <numerusform>Folder wasn’t backed up. Try again.</numerusform>
+            <numerusform>These folders weren’t backed up. Try again.</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -822,7 +843,10 @@
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>Resolve the issue?</numerusform><numerusform>Resolve the issues?</numerusform></translation>
+        <translation>
+            <numerusform>Resolve the issue?</numerusform>
+            <numerusform>Resolve the issues?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -847,12 +871,18 @@
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>This action will download the file to a temporary location, fix the issue and then delete the temporary file.</numerusform><numerusform>This action will download the files to a temporary location, fix the issues and then delete the temporary files.</numerusform></translation>
+        <translation>
+            <numerusform>This action will download the file to a temporary location, fix the issue and then delete the temporary file.</numerusform>
+            <numerusform>This action will download the files to a temporary location, fix the issues and then delete the temporary files.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Resume your transfers to fix the issue.</numerusform><numerusform>Resume your transfers to fix the issues.</numerusform></translation>
+        <translation>
+            <numerusform>Resume your transfers to fix the issue.</numerusform>
+            <numerusform>Resume your transfers to fix the issues.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -906,12 +936,18 @@
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Your Pro membership plan expired %n day ago</numerusform><numerusform>Your Pro membership plan expired %n days ago</numerusform></translation>
+        <translation>
+            <numerusform>Your Pro membership plan expired %n day ago</numerusform>
+            <numerusform>Your Pro membership plan expired %n days ago</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Your Pro membership plan will expire in %n day</numerusform><numerusform>Your Pro membership plan will expire in %n days</numerusform></translation>
+        <translation>
+            <numerusform>Your Pro membership plan will expire in %n day</numerusform>
+            <numerusform>Your Pro membership plan will expire in %n days</numerusform>
+        </translation>
     </message>
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
@@ -1122,7 +1158,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro Flexi account deactivated</translation>
+        <translation>Pro&#xa0;Flexi account deactivated</translation>
     </message>
     <message>
         <source>Reject</source>
@@ -1192,7 +1228,10 @@
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>You have %n day left to save your data</numerusform><numerusform>You have %n days left to save your data</numerusform></translation>
+        <translation>
+            <numerusform>You have %n day left to save your data</numerusform>
+            <numerusform>You have %n days left to save your data</numerusform>
+        </translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1257,7 +1296,10 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] added %n item</numerusform><numerusform>[A] added %n items</numerusform></translation>
+        <translation>
+            <numerusform>[A] added %n item</numerusform>
+            <numerusform>[A] added %n items</numerusform>
+        </translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1272,7 +1314,10 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] updated %n item</numerusform><numerusform>[A] updated %n items</numerusform></translation>
+        <translation>
+            <numerusform>[A] updated %n item</numerusform>
+            <numerusform>[A] updated %n items</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1342,13 +1387,19 @@
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 item selected.</numerusform><numerusform>%1 items selected.</numerusform></translation>
+        <translation>
+            <numerusform>%1 item selected.</numerusform>
+            <numerusform>%1 items selected.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform><numerusform>%1. %2 have been removed. To reselect, close this window and try again.</numerusform></translation>
+        <translation>
+            <numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform>
+            <numerusform>%1. %2 have been removed. To reselect, close this window and try again.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Download</source>
@@ -1358,12 +1409,18 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>The item you selected has been removed. To reselect, close this window and try again.</numerusform><numerusform>The items you selected have been removed. To reselect, close this window and try again.</numerusform></translation>
+        <translation>
+            <numerusform>The item you selected has been removed. To reselect, close this window and try again.</numerusform>
+            <numerusform>The items you selected have been removed. To reselect, close this window and try again.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>You no longer have access to this item. Ask the person who shared it with you to share again.</numerusform><numerusform>You no longer have access to these items. Ask the person who shared them with you to share again.</numerusform></translation>
+        <translation>
+            <numerusform>You no longer have access to this item. Ask the person who shared it with you to share again.</numerusform>
+            <numerusform>You no longer have access to these items. Ask the person who shared them with you to share again.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1399,7 +1456,10 @@
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Apply to the other duplicate</numerusform><numerusform>Apply to all %1 duplicates</numerusform></translation>
+        <translation>
+            <numerusform>Apply to the other duplicate</numerusform>
+            <numerusform>Apply to all %1 duplicates</numerusform>
+        </translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1578,7 +1638,7 @@
         <translation>Exclude files by size</translation>
     </message>
     <message>
-        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
         <translation>Exclude files by setting a minimum and maximum size limit, or files larger or smaller than a specific size.</translation>
     </message>
@@ -1952,12 +2012,18 @@
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n files</numerusform></translation>
+        <translation>
+            <numerusform>%n file</numerusform>
+            <numerusform>%n files</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n folders</numerusform></translation>
+        <translation>
+            <numerusform>%n folder</numerusform>
+            <numerusform>%n folders</numerusform>
+        </translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
@@ -2041,7 +2107,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
-        <translation>Log out</translation>
+        <translation>Log&#xa0;out</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -2219,7 +2285,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -2229,6 +2295,11 @@ Check your email inbox for instructions on unlocking your account and tips on ho
 </context>
 <context>
     <name>InfoDialog</name>
+    <message>
+        <source>%1% off %2</source>
+        <translatorcomment>Button text when there&amp;apos;s an offer available to the use.r, placeholder one is for discount percentage, and placeholder 2 is for the plan name. snc-6228</translatorcomment>
+        <translation>%1% off %2</translation>
+    </message>
     <message>
         <source>Add sync</source>
         <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
@@ -2402,7 +2473,10 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</numerusform><numerusform>We have contacted you by email to [A] on [B] but you still have %n files taking up [D] in your MEGA account, which requires you to have [E].</numerusform></translation>
+        <translation>
+            <numerusform>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</numerusform>
+            <numerusform>We have contacted you by email to [A] on [B] but you still have %n files taking up [D] in your MEGA account, which requires you to have [E].</numerusform>
+        </translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
@@ -2412,12 +2486,18 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message numerus="yes">
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>You have %n day left to upgrade, or your data will be subject to deletion</numerusform><numerusform>You have %n days left to upgrade, or your data will be subject to deletion</numerusform></translation>
+        <translation>
+            <numerusform>You have %n day left to upgrade, or your data will be subject to deletion</numerusform>
+            <numerusform>You have %n days left to upgrade, or your data will be subject to deletion</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>You have %n hour left to upgrade, or your data will be subject to deletion</numerusform><numerusform>You have %n hours left to upgrade, or your data will be subject to deletion</numerusform></translation>
+        <translation>
+            <numerusform>You have %n hour left to upgrade, or your data will be subject to deletion</numerusform>
+            <numerusform>You have %n hours left to upgrade, or your data will be subject to deletion</numerusform>
+        </translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2793,7 +2873,10 @@ Wait for the upload to complete.</translation>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>The file in MEGA will have a suffix like (1) added.</numerusform><numerusform>The files already stored in MEGA will have a suffix like (1) added.</numerusform></translation>
+        <translation>
+            <numerusform>The file in MEGA will have a suffix like (1) added.</numerusform>
+            <numerusform>The files already stored in MEGA will have a suffix like (1) added.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -2803,7 +2886,10 @@ Wait for the upload to complete.</translation>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>The folder already stored in MEGA will have a suffix like (1) added.</numerusform><numerusform>The folders already stored in MEGA will have a suffix like (1) added.</numerusform></translation>
+        <translation>
+            <numerusform>The folder already stored in MEGA will have a suffix like (1) added.</numerusform>
+            <numerusform>The folders already stored in MEGA will have a suffix like (1) added.</numerusform>
+        </translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2888,7 +2974,10 @@ Wait for the upload to complete.</translation>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Resume your transfers to fix the issue.</numerusform><numerusform>Resume your transfers to fix the issues.</numerusform></translation>
+        <translation>
+            <numerusform>Resume your transfers to fix the issue.</numerusform>
+            <numerusform>Resume your transfers to fix the issues.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3262,7 +3351,7 @@ Wait for the upload to complete.</translation>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro Flexi account deactivated</translation>
+        <translation>Pro&#xa0;Flexi account deactivated</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -3353,9 +3442,12 @@ Wait for the upload to complete.</translation>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>There is an active transfer. Exit the app?
-Transfer will automatically resume when you re-open the app.</numerusform><numerusform>There are active transfers. Exit the app?
-Transfers will automatically resume when you re-open the app.</numerusform></translation>
+        <translation>
+            <numerusform>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</numerusform>
+            <numerusform>There are active transfers. Exit the app?
+Transfers will automatically resume when you re-open the app.</numerusform>
+        </translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -3416,7 +3508,10 @@ https://mega.co.nz/#sync</source>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>You’re currently sharing the following folder: %1</numerusform><numerusform>You’re currently sharing the following folders: %1</numerusform></translation>
+        <translation>
+            <numerusform>You’re currently sharing the following folder: %1</numerusform>
+            <numerusform>You’re currently sharing the following folders: %1</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3594,7 +3689,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation>Log out</translation>
+        <translation>Log&#xa0;out</translation>
     </message>
     <message>
         <source>No error</source>
@@ -4092,12 +4187,18 @@ You will not be able to regain access to your stored data or be authorised to si
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>Cancel and clear transfer</numerusform><numerusform>Cancel and clear transfers</numerusform></translation>
+        <translation>
+            <numerusform>Cancel and clear transfer</numerusform>
+            <numerusform>Cancel and clear transfers</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>Cancel transfer</numerusform><numerusform>Cancel transfers</numerusform></translation>
+        <translation>
+            <numerusform>Cancel transfer</numerusform>
+            <numerusform>Cancel transfers</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -4117,7 +4218,10 @@ You will not be able to regain access to your stored data or be authorised to si
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>Clear transfer</numerusform><numerusform>Clear transfers</numerusform></translation>
+        <translation>
+            <numerusform>Clear transfer</numerusform>
+            <numerusform>Clear transfers</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -4182,12 +4286,18 @@ You will not be able to regain access to your stored data or be authorised to si
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>Pause transfer</numerusform><numerusform>Pause transfers</numerusform></translation>
+        <translation>
+            <numerusform>Pause transfer</numerusform>
+            <numerusform>Pause transfers</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>Resume transfer</numerusform><numerusform>Resume transfers</numerusform></translation>
+        <translation>
+            <numerusform>Resume transfer</numerusform>
+            <numerusform>Resume transfers</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -4935,7 +5045,10 @@ Enter a different name.</translation>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>If you leave the folder, you will not be able to see it again.</numerusform><numerusform>If you leave these folders, you will not be able to see them again.</numerusform></translation>
+        <translation>
+            <numerusform>If you leave the folder, you will not be able to see it again.</numerusform>
+            <numerusform>If you leave these folders, you will not be able to see them again.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Leave</source>
@@ -4945,7 +5058,10 @@ Enter a different name.</translation>
     <message numerus="yes">
         <source>Leave this shared folder?</source>
         <translatorcomment>Title of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
-        <translation><numerusform>Leave this shared folder?</numerusform><numerusform>Leave these shared folders?</numerusform></translation>
+        <translation>
+            <numerusform>Leave this shared folder?</numerusform>
+            <numerusform>Leave these shared folders?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Move</source>
@@ -4960,7 +5076,10 @@ Enter a different name.</translation>
     <message numerus="yes">
         <source>Move %n items to Rubbish bin?</source>
         <translatorcomment>Main text of the confirmation messagebox to move some items (files or folders) pto the rubbish bin. %n is the number of items to delete. CON-334</translatorcomment>
-        <translation><numerusform>Move %n item to Rubbish bin?</numerusform><numerusform>Move %n items to Rubbish bin?</numerusform></translation>
+        <translation>
+            <numerusform>Move %n item to Rubbish bin?</numerusform>
+            <numerusform>Move %n items to Rubbish bin?</numerusform>
+        </translation>
     </message>
     <message>
         <source>New folder</source>
@@ -4975,17 +5094,26 @@ Enter a different name.</translation>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a file(s) from the rubbish bin. %n is the number of files to delete. CON-1258</translatorcomment>
-        <translation><numerusform>You are about to permanently delete %n file. Would you like to proceed?</numerusform><numerusform>You are about to permanently delete %n files. Would you like to proceed?</numerusform></translation>
+        <translation>
+            <numerusform>You are about to permanently delete %n file. Would you like to proceed?</numerusform>
+            <numerusform>You are about to permanently delete %n files. Would you like to proceed?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n folder. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently a folder(s) from the rubbish bin. %n is the number of folders to delete. CON-1258</translatorcomment>
-        <translation><numerusform>You are about to permanently delete %n folder. Would you like to proceed?</numerusform><numerusform>You are about to permanently delete %n folders. Would you like to proceed?</numerusform></translation>
+        <translation>
+            <numerusform>You are about to permanently delete %n folder. Would you like to proceed?</numerusform>
+            <numerusform>You are about to permanently delete %n folders. Would you like to proceed?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n items. Would you like to proceed?</source>
         <translatorcomment>Main text of the confirmation messagebox to delete permanently some items (files and folders) from the rubbish bin. %n is the number of items to delete. CON-1258</translatorcomment>
-        <translation><numerusform>You are about to permanently delete %n item. Would you like to proceed?</numerusform><numerusform>You are about to permanently delete %n items. Would you like to proceed?</numerusform></translation>
+        <translation>
+            <numerusform>You are about to permanently delete %n item. Would you like to proceed?</numerusform>
+            <numerusform>You are about to permanently delete %n items. Would you like to proceed?</numerusform>
+        </translation>
     </message>
     <message>
         <source>You cannot undo this action</source>
@@ -5040,7 +5168,10 @@ Enter a different name.</translation>
     <message numerus="yes">
         <source>%n result found</source>
         <translatorcomment>Search tab subtitle that shows the number of coincidences found. %n is the number of found nodes. SNC-5804</translatorcomment>
-        <translation><numerusform>%n result found</numerusform><numerusform>%n results found</numerusform></translation>
+        <translation>
+            <numerusform>%n result found</numerusform>
+            <numerusform>%n results found</numerusform>
+        </translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5063,27 +5194,39 @@ Enter a different name.</translation>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation>Offer expires in %1 m %2 s</translation>
+        <translation>Offer expires in %1&#xa0;m %2&#xa0;s</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Offer expires in %n day</numerusform><numerusform>Offer expires in %n days</numerusform></translation>
+        <translation>
+            <numerusform>Offer expires in %n day</numerusform>
+            <numerusform>Offer expires in %n days</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation><numerusform>Offer expires in %n hour</numerusform><numerusform>Offer expires in %n hours</numerusform></translation>
+        <translation>
+            <numerusform>Offer expires in %n hour</numerusform>
+            <numerusform>Offer expires in %n hours</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Offer expires in %n minute</numerusform><numerusform>Offer expires in %n minutes</numerusform></translation>
+        <translation>
+            <numerusform>Offer expires in %n minute</numerusform>
+            <numerusform>Offer expires in %n minutes</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation><numerusform>Offer expires in %n second</numerusform><numerusform>Offer expires in %n seconds</numerusform></translation>
+        <translation>
+            <numerusform>Offer expires in %n second</numerusform>
+            <numerusform>Offer expires in %n seconds</numerusform>
+        </translation>
     </message>
     <message>
         <source>PROMO</source>
@@ -5157,6 +5300,101 @@ Enter a different name.</translation>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
         <translation>Uploads and downloads</translation>
+    </message>
+</context>
+<context>
+    <name>OfferStrings</name>
+    <message>
+        <source>%1 %2</source>
+        <translatorcomment>Disclaimer for the promoted price. %1 is the &quot;Estimated price in your local currency.&quot; string. %2 is the &quot;Tax may apply.&quot; string.SNC-6271</translatorcomment>
+        <translation>%1 %2</translation>
+    </message>
+    <message>
+        <source>%1 of storage</source>
+        <translatorcomment>Description of available storage for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 of storage</translation>
+    </message>
+    <message>
+        <source>%1 of transfer</source>
+        <translatorcomment>Description of available transfer quota for the promoted plan.snc.6228</translatorcomment>
+        <translation>%1 of transfer</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <translatorcomment>Number of remaining days before the offer expire.variable is for days minutes snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n day</numerusform>
+            <numerusform>%n days</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <translatorcomment>Number of remaining hours before the offer expire variable is for remaining hours. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n hour</numerusform>
+            <numerusform>%n hours</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <translatorcomment>Number of remaining minutes before the offer expire,variable is for remaining minutes. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>%n minute</numerusform>
+            <numerusform>%n minutes</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>*%1</source>
+        <translatorcomment>Please keep the &apos;*&apos; symbol. Disclaimer for the promoted price. %1 is the &quot;Tax may apply.&quot; string if local currency is â‚¬ and &quot;Estimated price in your local currency. Tax may apply.&quot; if not; or &quot;Estimated price in your local currency.&quot; if there is no tax information and the billing price is not Euro. SNC-6271</translatorcomment>
+        <translation>*%1</translation>
+    </message>
+    <message>
+        <source>Estimated price in your local currency.</source>
+        <translatorcomment>Disclaimer that promoted prices are an estimated price in the user&apos;s local currency .SNC-6271</translatorcomment>
+        <translation>Estimated price in your local currency.</translation>
+    </message>
+    <message>
+        <source>Grab Deal</source>
+        <translatorcomment>Button to direct the user to take the offer. snc.6228</translatorcomment>
+        <translation>Grab deal</translation>
+    </message>
+    <message>
+        <source>MEGA %1</source>
+        <translatorcomment>Plan name used in the offer dialog, the variable is for plan name snc.6228</translatorcomment>
+        <translation>MEGA %1</translation>
+    </message>
+    <message>
+        <source>MEGA Pass</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA Pass</translation>
+    </message>
+    <message>
+        <source>MEGA VPN</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>MEGA VPN</translation>
+    </message>
+    <message>
+        <source>Object storage</source>
+        <translatorcomment>Label representing the products included in a plan.snc.6228</translatorcomment>
+        <translation>Object storage</translation>
+    </message>
+    <message>
+        <source>Special offers ends in:</source>
+        <translatorcomment>Text to till the user the offer is limited.snc.6228</translatorcomment>
+        <translation>Special offer ends in:</translation>
+    </message>
+    <message>
+        <source>Tax may apply.</source>
+        <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
+        <translation>Tax may apply.</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]%1% off[/B] for %n month</source>
+        <translatorcomment>Description of the amount of discount (%1) and how many months (%n) the discount is for. snc.6228</translatorcomment>
+        <translation>
+            <numerusform>[B]%1% off[/B] for %n month</numerusform>
+            <numerusform>[B]%1% off[/B] for %n months</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5414,7 +5652,7 @@ Enter a different name.</translation>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>Log in</translation>
+        <translation>Log&#xa0;in</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
@@ -5665,7 +5903,10 @@ Enter a different name.</translation>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] removed %n item</numerusform><numerusform>[A] removed %n items</numerusform></translation>
+        <translation>
+            <numerusform>[A] removed %n item</numerusform>
+            <numerusform>[A] removed %n items</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5940,10 +6181,13 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve fixed bugs and made the app more reliable.
+        <source>- Improved reliability for problematic graphics drivers on Windows.
+- Minor bug fixes and performance improvements.
 </source>
-        <translatorcomment>Change log for version 6.1.0. CON-1538</translatorcomment>
-        <translation>- We’ve fixed bugs and made the app more reliable</translation>
+        <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
+        <translation>- Improved reliability for problematic graphics drivers on Windows
+- Minor bug fixes and performance improvements
+</translation>
     </message>
 </context>
 <context>
@@ -6348,27 +6592,27 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1&#xa0;bytes</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -6491,6 +6735,11 @@ Do you want to delete it anyway?</translation>
         <translation>There is already a folder with this name in that location, choose another location</translation>
     </message>
     <message>
+        <source>Destination folder doesn’t exist. Choose another.</source>
+        <translatorcomment>Error hint to inform the user about the situation : the destination folder doesn&apos;t exist, can&apos;t move it there! SNC-6155 </translatorcomment>
+        <translation>Destination folder doesn’t exist. Choose another.</translation>
+    </message>
+    <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208, SNC-6067</translatorcomment>
         <translation>Error moving or deleting the backup folder in MEGA</translation>
@@ -6519,6 +6768,11 @@ Do you want to delete it anyway?</translation>
         <translation>Delete folder from MEGA</translation>
     </message>
     <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
+        <translation>The folder will be deleted from MEGA, but it won’t be deleted from your device. This action can’t be undone.</translation>
+    </message>
+    <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
         <translation>Move folder to Cloud drive</translation>
@@ -6542,11 +6796,6 @@ Do you want to delete it anyway?</translation>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
         <translation>Stop backup</translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. [B]This action cannot be undone.[/B]</source>
-        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option. SNC-6067</translatorcomment>
-        <translation>The folder will be deleted from MEGA, but it won’t be deleted from your device. This action can’t be undone.</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either [B]move it[/B] or [B]delete it[/B].</source>
@@ -6636,12 +6885,18 @@ Do you want to delete it anyway?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n files</numerusform></translation>
+        <translation>
+            <numerusform>%n file</numerusform>
+            <numerusform>%n files</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n folders</numerusform></translation>
+        <translation>
+            <numerusform>%n folder</numerusform>
+            <numerusform>%n folders</numerusform>
+        </translation>
     </message>
     <message>
         <source>Adding transfers…</source>
@@ -6890,6 +7145,11 @@ Do you want to delete it anyway?</translation>
         <translation>Launch at login</translation>
     </message>
     <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
+        <translation>Learn more</translation>
+    </message>
+    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>A local folder with a backup of files deleted in MEGA</translation>
@@ -6897,7 +7157,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>Log out</translation>
+        <translation>Log&#xa0;out</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -7035,6 +7295,11 @@ Do you want to delete it anyway?</translation>
         <translation>Syncs will be disabled.</translation>
     </message>
     <message>
+        <source>Theme</source>
+        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
+        <translation>Theme</translation>
+    </message>
+    <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>Transfer quota</translation>
@@ -7067,7 +7332,10 @@ Do you want to delete it anyway?</translation>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Used quota for the last hour:</numerusform><numerusform>Used quota for the last %n hours:</numerusform></translation>
+        <translation>
+            <numerusform>Used quota for the last hour:</numerusform>
+            <numerusform>Used quota for the last %n hours:</numerusform>
+        </translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -7097,17 +7365,10 @@ Do you want to delete it anyway?</translation>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>day</numerusform><numerusform>days</numerusform></translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translatorcomment>Label for the theme selection area in the settings dialog. SNC-6085</translatorcomment>
-        <translation>Theme</translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.CON-681</translatorcomment>
-        <translation>Learn more</translation>
+        <translation>
+            <numerusform>day</numerusform>
+            <numerusform>days</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7141,12 +7402,18 @@ Do you want to delete it anyway?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n files</numerusform></translation>
+        <translation>
+            <numerusform>%n file</numerusform>
+            <numerusform>%n files</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n folders</numerusform></translation>
+        <translation>
+            <numerusform>%n folder</numerusform>
+            <numerusform>%n folders</numerusform>
+        </translation>
     </message>
     <message>
         <source>Add backup</source>
@@ -7157,6 +7424,11 @@ Do you want to delete it anyway?</translation>
         <source>Add sync</source>
         <translatorcomment>Context menu option to sync a folder. CON-1364.</translatorcomment>
         <translation>Add sync</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Label displayed when a user is trying to backup folders to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Backup</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -7177,6 +7449,11 @@ Do you want to delete it anyway?</translation>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>Share with a MEGA user</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Label displayed when a user is trying to sync a folder to MEGA from the shell extension. String as short as possible.SNC-5130</translatorcomment>
+        <translation>Sync</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -7497,27 +7774,42 @@ Do you want to delete it anyway?</translation>
     <message numerus="yes">
         <source>Failed: %n</source>
         <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
-        <translation><numerusform>Failed: %n</numerusform><numerusform>Failed: %n</numerusform></translation>
+        <translation>
+            <numerusform>Failed: %n</numerusform>
+            <numerusform>Failed: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>Item type conflicts: %n</numerusform><numerusform>Item type conflicts: %n</numerusform></translation>
+        <translation>
+            <numerusform>Item type conflicts: %n</numerusform>
+            <numerusform>Item type conflicts: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation><numerusform>Name conflicts: %n</numerusform><numerusform>Name conflicts: %n</numerusform></translation>
+        <translation>
+            <numerusform>Name conflicts: %n</numerusform>
+            <numerusform>Name conflicts: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>Others: %n</numerusform><numerusform>Others: %n</numerusform></translation>
+        <translation>
+            <numerusform>Others: %n</numerusform>
+            <numerusform>Others: %n</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation><numerusform>Resolved: %n</numerusform><numerusform>Resolved: %n</numerusform></translation>
+        <translation>
+            <numerusform>Resolved: %n</numerusform>
+            <numerusform>Resolved: %n</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7559,28 +7851,43 @@ Do you want to delete it anyway?</translation>
         <source>%1 and %n issues failed.</source>
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
-        <translation><numerusform>%1 and %n issue failed to resolve</numerusform><numerusform>%1 and %n issues failed to resolve</numerusform></translation>
+        <translation>
+            <numerusform>%1 and %n issue failed to resolve</numerusform>
+            <numerusform>%1 and %n issues failed to resolve</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>%n issue failed to resolve</numerusform><numerusform>%n issues failed to resolve</numerusform></translation>
+        <translation>
+            <numerusform>%n issue failed to resolve</numerusform>
+            <numerusform>%n issues failed to resolve</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
         when several issues have failed. SNC-2565</translatorcomment>
-        <translation><numerusform>%n issue resolved</numerusform><numerusform>%n issues resolved</numerusform></translation>
+        <translation>
+            <numerusform>%n issue resolved</numerusform>
+            <numerusform>%n issues resolved</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
-        <translation><numerusform>%n issue fixed and 1 issue failed to resolve</numerusform><numerusform>%n issues fixed and 1 issue failed to resolve</numerusform></translation>
+        <translation>
+            <numerusform>%n issue fixed and 1 issue failed to resolve</numerusform>
+            <numerusform>%n issues fixed and 1 issue failed to resolve</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
-        <translation><numerusform>1 issue fixed and %n issue failed to resolve</numerusform><numerusform>1 issue fixed and %n issues failed to resolve</numerusform></translation>
+        <translation>
+            <numerusform>1 issue fixed and %n issue failed to resolve</numerusform>
+            <numerusform>1 issue fixed and %n issues failed to resolve</numerusform>
+        </translation>
     </message>
     <message>
         <source>Fixing issues</source>
@@ -8283,21 +8590,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 </context>
 <context>
     <name>SyncSettingsElements</name>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation>Apply</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</translation>
-    </message>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation>[B]Apply previous exclusion rules?[/B]</translation>
-    </message>
 </context>
 <context>
     <name>SyncSettingsUI</name>
@@ -8342,7 +8634,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>[B]%1[/B] can’t be added as your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
+        <translation>[B]%1[/B] can’t be added as your Pro&#xa0;Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
@@ -8361,16 +8653,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Advanced</source>
         <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
         <translation>Advanced</translation>
-    </message>
-    <message>
-        <source>Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation>Apply previous exclusion rules</translation>
-    </message>
-    <message>
-        <source>Apply rules</source>
-        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation>Apply rules</translation>
     </message>
     <message>
         <source>Get full control of the sync issues</source>
@@ -8494,13 +8776,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-1268</translatorcomment>
         <translation>Select folders to sync</translation>
     </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
+        <translation>[A]Learn more[/A]</translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>
     <message numerus="yes">
         <source>Maximum length is %n characters.</source>
         <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation><numerusform>Maximum length is %n character</numerusform><numerusform>Maximum length is %n characters</numerusform></translation>
+        <translation>
+            <numerusform>Maximum length is %n character</numerusform>
+            <numerusform>Maximum length is %n characters</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8599,7 +8889,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1 result found</numerusform><numerusform>%1 results found</numerusform></translation>
+        <translation>
+            <numerusform>%1 result found</numerusform>
+            <numerusform>%1 results found</numerusform>
+        </translation>
     </message>
     <message>
         <source>All</source>
@@ -8804,55 +9097,85 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, but %n item couldn’t be downloaded.</numerusform><numerusform>%1, but %n items couldn’t be downloaded.</numerusform></translation>
+        <translation>
+            <numerusform>%1, but %n item couldn’t be downloaded.</numerusform>
+            <numerusform>%1, but %n items couldn’t be downloaded.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, but %n item couldn’t be uploaded.</numerusform><numerusform>%1, but %n items couldn’t be uploaded.</numerusform></translation>
+        <translation>
+            <numerusform>%1, but %n item couldn’t be uploaded.</numerusform>
+            <numerusform>%1, but %n items couldn’t be uploaded.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item couldn’t be downloaded to %1.</numerusform><numerusform>%n items couldn’t be downloaded to %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item couldn’t be downloaded to %1.</numerusform>
+            <numerusform>%n items couldn’t be downloaded to %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item couldn’t be uploaded to %1.</numerusform><numerusform>%n items couldn’t be uploaded to %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item couldn’t be uploaded to %1.</numerusform>
+            <numerusform>%n items couldn’t be uploaded to %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n item downloaded</numerusform><numerusform>%n items downloaded</numerusform></translation>
+        <translation>
+            <numerusform>%n item downloaded</numerusform>
+            <numerusform>%n items downloaded</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item downloaded to %1.</numerusform><numerusform>%n items downloaded to %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item downloaded to %1.</numerusform>
+            <numerusform>%n items downloaded to %1.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item no longer exist or was renamed.</numerusform><numerusform>%n items no longer exist or were renamed.</numerusform></translation>
+        <translation>
+            <numerusform>%n item no longer exist or was renamed.</numerusform>
+            <numerusform>%n items no longer exist or were renamed.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item no longer exist.</numerusform><numerusform>%n items no longer exist.</numerusform></translation>
+        <translation>
+            <numerusform>%n item no longer exist.</numerusform>
+            <numerusform>%n items no longer exist.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n item uploaded</numerusform><numerusform>%n items uploaded</numerusform></translation>
+        <translation>
+            <numerusform>%n item uploaded</numerusform>
+            <numerusform>%n items uploaded</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n item uploaded to %1.</numerusform><numerusform>%n items uploaded to %1.</numerusform></translation>
+        <translation>
+            <numerusform>%n item uploaded to %1.</numerusform>
+            <numerusform>%n items uploaded to %1.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not download</source>
@@ -8892,7 +9215,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>Retry failed item</numerusform><numerusform>Retry failed items</numerusform></translation>
+        <translation>
+            <numerusform>Retry failed item</numerusform>
+            <numerusform>Retry failed items</numerusform>
+        </translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -8917,12 +9243,18 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>Upload stopped</numerusform><numerusform>Uploads stopped</numerusform></translation>
+        <translation>
+            <numerusform>Upload stopped</numerusform>
+            <numerusform>Uploads stopped</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation><numerusform>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</numerusform><numerusform>You logged out of MEGA so your uploads have stopped. You can resume the uploads after logging back in.</numerusform></translation>
+        <translation>
+            <numerusform>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</numerusform>
+            <numerusform>You logged out of MEGA so your uploads have stopped. You can resume the uploads after logging back in.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -9397,14 +9729,9 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UpsellStrings</name>
     <message>
-        <source>%1 billed yearly</source>
-        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 billed yearly</translation>
-    </message>
-    <message>
-        <source>%1 per month</source>
-        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
-        <translation>%1 per month</translation>
+        <source>%1 after tax</source>
+        <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
+        <translation>%1 after tax</translation>
     </message>
     <message>
         <source>%1 storage</source>
@@ -9415,6 +9742,24 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 transfer</source>
         <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation>%1 transfer</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1% off for %n month</source>
+        <translatorcomment>Label indicating the discount for a plan. placeholder %1 is for the discount percentage, and placeholder %n for the number of months getting discounted.SNC-6228</translatorcomment>
+        <translation>
+            <numerusform>%1% off for %n month</numerusform>
+            <numerusform>%1% off for %n months</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1/month</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format.SNC-6228</translatorcomment>
+        <translation>%1/month</translation>
+    </message>
+    <message>
+        <source>%1/month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is charged yearly, the placeholder %1 is for the currency name (EUR/month charged yearly).SNC-6228</translatorcomment>
+        <translation>%1/month, charged yearly</translation>
     </message>
     <message>
         <source>(%1 per month)</source>
@@ -9427,19 +9772,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>* Estimated price in your local currency. You will be charged in euros for all transactions.</translation>
     </message>
     <message>
-        <source>Billed monthly</source>
-        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
-        <translation>Billed monthly</translation>
-    </message>
-    <message>
-        <source>Billed yearly</source>
-        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
-        <translation>Billed yearly</translation>
-    </message>
-    <message>
         <source>Buy %1</source>
         <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
         <translation>Buy %1</translation>
+    </message>
+    <message>
+        <source>Charged monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription.SNC-5636</translatorcomment>
+        <translation>Charged monthly</translation>
+    </message>
+    <message>
+        <source>Charged yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription.SNC-5636</translatorcomment>
+        <translation>Charged yearly</translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -9447,14 +9792,14 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Current plan</translation>
     </message>
     <message>
-        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
-        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
-        <translation>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</translation>
+        <source>Most Popular</source>
+        <translatorcomment>Label to indicate which is the recommended plan. SNC-6228</translatorcomment>
+        <translation>Most popular</translation>
     </message>
     <message>
-        <source>Recommended</source>
-        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
-        <translation>Recommended</translation>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation>Need more storage?[BR][B][A]Try Pro&#xa0;Flexi[/A][/B]</translation>
     </message>
     <message>
         <source>Save up to %1% with yearly billing</source>
@@ -9492,9 +9837,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>Your MEGA cloud storage is full</translation>
     </message>
     <message>
+        <source>only</source>
+        <translatorcomment>Text shown ont top of the price of a plan.SNC-6228</translatorcomment>
+        <translation>only</translation>
+    </message>
+    <message>
         <source>per month</source>
         <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation>per month</translation>
+    </message>
+    <message>
+        <source>per month, charged yearly</source>
+        <translatorcomment>Text explaining the price shown is monthly price charged yearly.SNC-5636</translatorcomment>
+        <translation>per month, charged yearly</translation>
     </message>
 </context>
 <context>
@@ -9510,7 +9865,10 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 (%2%) of %3 used</numerusform><numerusform>%1 (%2%) of %3 used</numerusform></translation>
+        <translation>
+            <numerusform>%1 (%2%) of %3 used</numerusform>
+            <numerusform>%1 (%2%) of %3 used</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 / %2</source>
@@ -9525,12 +9883,15 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 sec</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. SNC-5623</translatorcomment>
-        <translation>%1 sec</translation>
+        <translation>%1&#xa0;sec</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 used</numerusform><numerusform>%1 used</numerusform></translation>
+        <translation>
+            <numerusform>%1 used</numerusform>
+            <numerusform>%1 used</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1d</source>
@@ -9555,32 +9916,50 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer completed %n day ago</numerusform><numerusform>Transfer completed %n days ago</numerusform></translation>
+        <translation>
+            <numerusform>Transfer completed %n day ago</numerusform>
+            <numerusform>Transfer completed %n days ago</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer completed %n hour ago</numerusform><numerusform>Transfer completed %n hours ago</numerusform></translation>
+        <translation>
+            <numerusform>Transfer completed %n hour ago</numerusform>
+            <numerusform>Transfer completed %n hours ago</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer completed %n minute ago</numerusform><numerusform>Transfer completed %n minutes ago</numerusform></translation>
+        <translation>
+            <numerusform>Transfer completed %n minute ago</numerusform>
+            <numerusform>Transfer completed %n minutes ago</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer completed %n month ago</numerusform><numerusform>Transfer completed %n months ago</numerusform></translation>
+        <translation>
+            <numerusform>Transfer completed %n month ago</numerusform>
+            <numerusform>Transfer completed %n months ago</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer completed %n second ago</numerusform><numerusform>Transfer completed %n seconds ago</numerusform></translation>
+        <translation>
+            <numerusform>Transfer completed %n second ago</numerusform>
+            <numerusform>Transfer completed %n seconds ago</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transfer completed %n year ago</numerusform><numerusform>Transfer completed %n years ago</numerusform></translation>
+        <translation>
+            <numerusform>Transfer completed %n year ago</numerusform>
+            <numerusform>Transfer completed %n years ago</numerusform>
+        </translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -9630,42 +10009,42 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Starter</source>

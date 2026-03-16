@@ -51,7 +51,7 @@ public:
 
 #ifdef USE_DBUS
 private:
-    QDBusInterface *interface;
+    QPointer<QDBusInterface> interface;
     bool dbussSupportsActions;
 
     void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, const QStringList &actions = QStringList(), DesktopAppNotification *notification = nullptr);

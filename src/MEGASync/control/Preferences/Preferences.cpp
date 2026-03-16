@@ -40,6 +40,12 @@ long long Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS = 259200000; // 72 hours
 long long Preferences::OQ_UI_MESSAGE_INTERVAL_MS = 129600000; // 36 hours
 long long Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS = 86400000; //24 hours
 long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
+long long Preferences::TARGETED_DISCOUNT_COOLDOWN_MS = 604800000; // 7 days
+long long Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS = 120000; // 2 mins
+long long Preferences::TARGETED_DISCOUNT_CHECK_INTERVAL_MS = 86400000; // 24 hours
+long long Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS = 900000; // 15 mins
+std::chrono::milliseconds Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS{
+    std::chrono::hours(6)}; // 6 Hours
 
 std::chrono::milliseconds Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION{std::chrono::hours(7*24)};
 std::chrono::milliseconds Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
@@ -91,8 +97,7 @@ const char Preferences::UPDATE_PUBLIC_KEY[] =
     "EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
 const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromLatin1("update");
 const QString Preferences::UPDATE_BACKUP_FOLDER_NAME = QString::fromLatin1("backup");
-const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("-2");
-const QString Preferences::syncsGroupKey            = QString::fromLatin1("Syncs");
+const QString Preferences::PROXY_TEST_SUBSTRING = QString::fromUtf8("-2");
 const QString Preferences::syncsGroupByTagKey       = QString::fromLatin1("SyncsByTag");
 const QString Preferences::currentAccountKey        = QString::fromLatin1("currentAccount");
 const QString Preferences::currentAccountStatusKey  = QString::fromLatin1("currentAccountStatus");
@@ -144,6 +149,13 @@ const QString Preferences::transferOverQuotaStreamDialogLastExecutionKey = QStri
 const QString Preferences::storageOverQuotaUploadsDialogLastExecutionKey = QString::fromLatin1("storageOverQuotaUploadsDialogLastExecution");
 const QString Preferences::storageOverQuotaSyncsDialogLastExecutionKey = QString::fromLatin1("storageOverQuotaSyncsDialogLastExecution");
 
+const QString Preferences::offerDialogLastExecutionKey =
+    QString::fromLatin1("offerDialogLastExecution");
+const QString Preferences::offerDialogCampaignExpiryDateKey =
+    QString::fromLatin1("offerDialogCampaignExpiryDate");
+const QString Preferences::userDiscountLastCheckKey = QString::fromLatin1("userDiscountLastCheck");
+const QString Preferences::discountCodeKey = QString::fromLatin1("discountCode");
+
 const bool Preferences::defaultShowNotifications = true;
 
 const bool Preferences::defaultDeprecatedNotifications      = true;
@@ -174,17 +186,8 @@ const QString Preferences::downloadLimitKBKey       = QString::fromLatin1("downl
 const QString Preferences::parallelUploadConnectionsKey       = QString::fromLatin1("parallelUploadConnections");
 const QString Preferences::parallelDownloadConnectionsKey     = QString::fromLatin1("parallelDownloadConnections");
 
-const QString Preferences::upperSizeLimitKey        = QString::fromLatin1("upperSizeLimit");
-const QString Preferences::lowerSizeLimitKey        = QString::fromLatin1("lowerSizeLimit");
-
-const QString Preferences::lastCustomStreamingAppKey    = QString::fromLatin1("lastCustomStreamingApp");
-
-const QString Preferences::upperSizeLimitValueKey       = QString::fromLatin1("upperSizeLimitValue");
-const QString Preferences::lowerSizeLimitValueKey       = QString::fromLatin1("lowerSizeLimitValue");
-const QString Preferences::upperSizeLimitUnitKey        = QString::fromLatin1("upperSizeLimitUnit");
-const QString Preferences::lowerSizeLimitUnitKey        = QString::fromLatin1("lowerSizeLimitUnit");
-
-
+const QString Preferences::lastCustomStreamingAppKey =
+    QString::fromLatin1("lastCustomStreamingApp");
 const QString Preferences::cleanerDaysLimitKey       = QString::fromLatin1("cleanerDaysLimit");
 const QString Preferences::cleanerDaysLimitValueKey  = QString::fromLatin1("cleanerDaysLimitValue");
 
@@ -198,14 +201,7 @@ const QString Preferences::proxyPortKey             = QString::fromLatin1("proxy
 const QString Preferences::proxyRequiresAuthKey     = QString::fromLatin1("proxyRequiresAuth");
 const QString Preferences::proxyUsernameKey         = QString::fromLatin1("proxyUsername");
 const QString Preferences::proxyPasswordKey         = QString::fromLatin1("proxyPassword");
-const QString Preferences::configuredSyncsKey       = QString::fromLatin1("configuredSyncs");
-const QString Preferences::syncNameKey              = QString::fromLatin1("syncName");
-const QString Preferences::syncIdKey                = QString::fromLatin1("syncId");
-const QString Preferences::localFolderKey           = QString::fromLatin1("localFolder");
-const QString Preferences::megaFolderKey            = QString::fromLatin1("megaFolder");
-const QString Preferences::megaFolderHandleKey      = QString::fromLatin1("megaFolderHandle");
-const QString Preferences::folderActiveKey          = QString::fromLatin1("folderActive");
-const QString Preferences::temporaryInactiveKey     = QString::fromLatin1("temporaryInactive");
+const QString Preferences::configuredSyncsKey = QString::fromLatin1("configuredSyncs");
 const QString Preferences::downloadFolderKey        = QString::fromLatin1("downloadFolder");
 const QString Preferences::uploadFolderKey          = QString::fromLatin1("uploadFolder");
 const QString Preferences::importFolderKey          = QString::fromLatin1("importFolder");
@@ -226,7 +222,7 @@ const QString Preferences::lastUpdateTimeKey        = QString::fromLatin1("lastU
 const QString Preferences::lastUpdateVersionKey     = QString::fromLatin1("lastUpdateVersion");
 const QString Preferences::previousCrashesKey       = QString::fromLatin1("previousCrashes");
 const QString Preferences::lastRebootKey            = QString::fromLatin1("lastReboot");
-const QString Preferences::lastExitKey              = QString::fromLatin1("lastExit");
+const QString Preferences::lastExitKey = QString::fromLatin1("lastExit");
 const QString Preferences::disableOverlayIconsKey   = QString::fromLatin1("disableOverlayIcons");
 const QString Preferences::disableFileVersioningKey = QString::fromLatin1("disableFileVersioning");
 const QString Preferences::disableLeftPaneIconsKey  = QString::fromLatin1("disableLeftPaneIcons");
@@ -274,10 +270,7 @@ const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInacti
 const bool Preferences::defaultAwakeIfActive = false;
 
 const bool Preferences::defaultStartOnStartup = true;
-const bool Preferences::defaultUpdateAutomatically  = true;
-const bool Preferences::defaultUpperSizeLimit       = false;
-const bool Preferences::defaultLowerSizeLimit       = false;
-
+const bool Preferences::defaultUpdateAutomatically = true;
 const bool Preferences::defaultCleanerDaysLimit     = true;
 
 const bool Preferences::defaultUseHttpsOnly         = true;
@@ -288,11 +281,7 @@ const long long Preferences::defaultTimeStamp       = 0;
 
 //The default appDataId starts from 1, as 0 will be used for invalid appDataId
 const unsigned long long Preferences::defaultTransferIdentifier = 1;
-const unsigned long long  Preferences::defaultUpperSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
-const unsigned long long  Preferences::defaultLowerSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
-const int  Preferences::defaultCleanerDaysLimitValue                        = 30;
-const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
-const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
+const int Preferences::defaultCleanerDaysLimitValue = 30;
 const int Preferences::defaultFolderPermissions = 0;
 const int Preferences::defaultFilePermissions   = 0;
 #ifdef WIN32
@@ -815,6 +804,54 @@ void Preferences::setOverStorageDialogExecution(long long timestamp)
 {
     assert(logged());
     setValueConcurrently(overStorageDialogExecutionKey, timestamp);
+}
+
+QDateTime Preferences::getOfferDialogLastExecution()
+{
+    assert(logged());
+    return getValueConcurrent<QDateTime>(offerDialogLastExecutionKey, QDateTime());
+}
+
+void Preferences::setOfferDialogLastExecution(QDateTime timestamp)
+{
+    assert(logged());
+    setValueConcurrently(offerDialogLastExecutionKey, timestamp);
+}
+
+QDateTime Preferences::getOfferDialogCampaignExpiryDate()
+{
+    assert(logged());
+    return getValueConcurrent<QDateTime>(offerDialogCampaignExpiryDateKey, QDateTime());
+}
+
+void Preferences::setOfferDialogCampaignExpiryDate(QDateTime timestamp)
+{
+    assert(logged());
+    setValueConcurrently(offerDialogCampaignExpiryDateKey, timestamp);
+}
+
+QString Preferences::getDiscountCode()
+{
+    assert(logged());
+    return getValueConcurrent<QString>(discountCodeKey, QString());
+}
+
+void Preferences::setDiscountCode(QString discountCode)
+{
+    assert(logged());
+    setValueConcurrently(discountCodeKey, discountCode);
+}
+
+long long Preferences::getUserDiscountLastCheck()
+{
+    assert(logged());
+    return getValueConcurrent<long long>(userDiscountLastCheckKey, defaultTimeStamp);
+}
+
+void Preferences::setUserDiscountLastCheck(long long timestamp)
+{
+    assert(logged());
+    setValueConcurrently(userDiscountLastCheckKey, timestamp);
 }
 
 long long Preferences::getOverStorageNotificationExecution()
@@ -1582,28 +1619,6 @@ void Preferences::setDownloadLimitKB(int value)
     setValueConcurrently(downloadLimitKBKey, value);
 }
 
-bool Preferences::upperSizeLimit()
-{
-    return getValueConcurrent<bool>(upperSizeLimitKey, defaultUpperSizeLimit);
-}
-
-void Preferences::setUpperSizeLimit(bool value)
-{
-    setValueConcurrently(upperSizeLimitKey, value);
-}
-
-unsigned long long Preferences::upperSizeLimitValue()
-{
-    assert(logged());
-    return getValueConcurrent<unsigned long long>(upperSizeLimitValueKey, defaultUpperSizeLimitValue);
-}
-
-void Preferences::setUpperSizeLimitValue(unsigned long long value)
-{
-    assert(logged());
-    setValueConcurrently(upperSizeLimitValueKey, value);
-}
-
 bool Preferences::cleanerDaysLimit()
 {
     return getValueConcurrent<bool>(cleanerDaysLimitKey, defaultCleanerDaysLimit);
@@ -1624,51 +1639,6 @@ void Preferences::setCleanerDaysLimitValue(int value)
 {
     assert(logged());
     setValueConcurrently(cleanerDaysLimitValueKey, value);
-}
-
-int Preferences::upperSizeLimitUnit()
-{
-    assert(logged());
-    return getValueConcurrent<int>(upperSizeLimitUnitKey, defaultUpperSizeLimitUnit);
-}
-void Preferences::setUpperSizeLimitUnit(int value)
-{
-    assert(logged());
-    setValueConcurrently(upperSizeLimitUnitKey, value);
-}
-
-bool Preferences::lowerSizeLimit()
-{
-    return getValueConcurrent<bool>(lowerSizeLimitKey, defaultLowerSizeLimit);
-}
-
-void Preferences::setLowerSizeLimit(bool value)
-{
-    setValueConcurrently(lowerSizeLimitKey, value);
-}
-
-unsigned long long Preferences::lowerSizeLimitValue()
-{
-    assert(logged());
-    return getValueConcurrent<unsigned long long>(lowerSizeLimitValueKey, defaultLowerSizeLimitValue);
-}
-
-void Preferences::setLowerSizeLimitValue(unsigned long long value)
-{
-    assert(logged());
-    setValueConcurrently(lowerSizeLimitValueKey, value);
-}
-
-int Preferences::lowerSizeLimitUnit()
-{
-    assert(logged());
-    return getValueConcurrent<int>(lowerSizeLimitUnitKey, defaultLowerSizeLimitUnit);
-}
-
-void Preferences::setLowerSizeLimitUnit(int value)
-{
-    assert(logged());
-    setValueConcurrently(lowerSizeLimitUnitKey, value);
 }
 
 int Preferences::folderPermissionsValue()
@@ -2064,19 +2034,6 @@ void Preferences::removeAllFolders()
     mSettings->beginGroup(syncsGroupByTagKey);
     mSettings->remove(QLatin1String("")); //remove group and all its settings
     mSettings->endGroup();
-}
-QStringList Preferences::getExcludedSyncNames()
-{
-    assert(logged());
-    QStringList value = excludedSyncNames;
-    return value;
-}
-
-QStringList Preferences::getExcludedSyncPaths()
-{
-    assert(logged());
-    QStringList value = excludedSyncPaths;
-    return value;
 }
 
 bool Preferences::isOneTimeActionDone(int action)
@@ -2701,11 +2658,9 @@ void Preferences::setEmailAndGeneralSettings(const QString &email)
     bool proxyAuth = this->proxyRequiresAuth();
     QString proxyUsername = this->getProxyUsername();
     QString proxyPassword = this->getProxyPassword();
-
     QString session = this->getSessionInGeneral();
 
     this->setEmail(email);
-
     this->setSessionInUserGroup(session); //this is required to provide backwards compatibility
     this->setProxyType(proxyType);
     this->setProxyServer(proxyServer);
@@ -2730,7 +2685,6 @@ void Preferences::login(QString account)
     mSettings->setValue(currentAccountKey, account);
     mSettings->beginGroup(account);
     readFolders();
-    loadExcludedSyncNames();
     const auto previousVersion =
         mSettings->value(lastVersionKey, Preferences::defaultLastVersion).toInt();
     if (previousVersion != Preferences::VERSION_CODE)
@@ -2787,36 +2741,6 @@ void Preferences::logout()
     mutex.unlock();
 }
 
-static bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
-{
-    return s1.toLower() < s2.toLower();
-}
-void Preferences::loadExcludedSyncNames()
-{
-    excludedSyncNames = getValue<QString>(excludedSyncNamesKey).split(QString::fromLatin1("\n", Qt::SkipEmptyParts));
-    if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
-    {
-        excludedSyncNames.clear();
-    }
-
-    excludedSyncPaths = getValue<QString>(excludedSyncPathsKey).split(QString::fromLatin1("\n", Qt::SkipEmptyParts));
-    if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
-    {
-        excludedSyncPaths.clear();
-    }
-    excludedSyncNames.removeDuplicates();
-    std::sort(excludedSyncNames.begin(), excludedSyncNames.end(), caseInsensitiveLessThan);
-
-    excludedSyncPaths.removeDuplicates();
-    std::sort(excludedSyncPaths.begin(), excludedSyncPaths.end(), caseInsensitiveLessThan);
-}
-
-bool Preferences::hasLegacyExclusionRules()
-{
-    return (!getExcludedSyncNames().isEmpty() || !getExcludedSyncPaths().isEmpty() ||
-            lowerSizeLimit() || upperSizeLimit());
-}
-
 QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > Preferences::getLoadedSyncsMap() const
 {
     return loadedSyncsMap;
@@ -2850,178 +2774,6 @@ void Preferences::readFolders()
     mSettings->endGroup();
     mutex.unlock();
 }
-
-SyncData::SyncData(QString name,
-                   QString localFolder,
-                   mega::MegaHandle megaHandle,
-                   QString megaFolder,
-                   long long localfp,
-                   bool enabled,
-                   bool tempDisabled,
-                   int pos,
-                   QString syncID):
-    mName(name),
-    mLocalFolder(localFolder),
-    mMegaHandle(megaHandle),
-    mMegaFolder(megaFolder),
-    mLocalfp(localfp),
-    mEnabled(enabled),
-    mTemporarilyDisabled(tempDisabled),
-    mPos(pos),
-    mSyncID(syncID)
-{}
-
-void Preferences::removeOldCachedSync(int position, QString email)
-{
-    QMutexLocker qm(&mutex);
-    assert(logged() || !email.isEmpty());
-
-    // if not logged, use email to get into that user group and remove just some specific sync group
-    if (!logged() && email.size() && mSettings->containsGroup(email))
-    {
-        mSettings->beginGroup(email);
-        mSettings->beginGroup(syncsGroupKey);
-        mSettings->beginGroup(QString::number(position));
-        mSettings->remove(QString::fromLatin1("")); //Remove all previous values
-        mSettings->endGroup();//sync
-        mSettings->endGroup();//old syncs
-        mSettings->endGroup();//user
-        return;
-    }
-
-    // otherwise remove oldSync and rewrite all
-    auto it = oldSyncs.begin();
-    while (it != oldSyncs.end())
-    {
-        if (it->mPos == position)
-        {
-            it = oldSyncs.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
-    saveOldCachedSyncs();
-}
-
-QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *cachedBlockedState, int *cachedStorageState, QString email)
-{
-    QMutexLocker qm(&mutex);
-    oldSyncs.clear();
-
-    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
-    bool temporarilyLoggedPrefs = false;
-    if (!instance()->logged() && !email.isEmpty())
-    {
-        loadedSyncsMap.clear(); //ensure loaded are empty even when there is no email
-        temporarilyLoggedPrefs = instance()->enterUser(email);
-        if (temporarilyLoggedPrefs)
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Migrating syncs data to SDK cache from previous session")
-                         .toUtf8().constData());
-        }
-        else
-        {
-            return oldSyncs;
-        }
-    }
-
-    assert(logged());
-    //restore cached status
-    if (cachedBusinessState) *cachedBusinessState = getValue<int>(businessStateQKey, -2);
-    if (cachedBlockedState) *cachedBlockedState = getValue<int>(blockedStateQKey, -2);
-    if (cachedStorageState) *cachedStorageState = getValue<int>(storageStateQKey, MegaApi::STORAGE_STATE_UNKNOWN);
-
-    mSettings->beginGroup(syncsGroupKey);
-    int numSyncs = mSettings->numChildGroups();
-    for (int i = 0; i < numSyncs; i++)
-    {
-        mSettings->beginGroup(i);
-
-        bool enabled = mSettings->value(folderActiveKey, true).toBool();
-
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Reading old cache sync setting ... ").toUtf8().constData());
-
-        if (temporarilyLoggedPrefs) //coming from old session
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromLatin1(" ... sync configuration rescued from old session. Set as disabled.")
-                         .toUtf8().constData());
-
-            enabled = false; // syncs coming from old sessions are now considered unsafe to continue automatically
-            // Note: in this particular case, we are not showing any error in the sync (since that information is not carried out
-            // to the SDK)
-        }
-
-        oldSyncs.push_back(SyncData(
-            mSettings->value(syncNameKey).toString(),
-            mSettings->value(localFolderKey).toString(),
-            mSettings->value(megaFolderHandleKey, QVariant::fromValue<mega::MegaHandle>(INVALID_HANDLE)).value<mega::MegaHandle>(),
-            mSettings->value(megaFolderKey).toString(),
-            mSettings->value(localFingerprintKey, 0).toLongLong(),
-            enabled,
-            mSettings->value(temporaryInactiveKey, false).toBool(),
-            i,
-            mSettings->value(syncIdKey, true).toString()));
-
-        mSettings->endGroup();
-    }
-    mSettings->endGroup();
-
-    if (temporarilyLoggedPrefs)
-    {
-        instance()->leaveUser();
-    }
-
-    return oldSyncs;
-}
-
-void Preferences::saveOldCachedSyncs()
-{
-    QMutexLocker qm(&mutex);
-    assert(logged());
-
-    if (!logged())
-    {
-        return;
-    }
-
-    mSettings->beginGroup(syncsGroupKey);
-
-    mSettings->remove(QString::fromLatin1("")); //Remove all previous values
-
-    int i = 0 ;
-    foreach(SyncData osd, oldSyncs) //normally if no errors happened it'll be empty
-    {
-        mSettings->beginGroup(QString::number(i));
-
-        mSettings->setValue(syncNameKey, osd.mName);
-        mSettings->setValue(localFolderKey, osd.mLocalFolder);
-        mSettings->setValue(localFingerprintKey, osd.mLocalfp);
-        mSettings->setValue(megaFolderHandleKey, QVariant::fromValue<mega::MegaHandle>(osd.mMegaHandle));
-        mSettings->setValue(megaFolderKey, osd.mMegaFolder);
-        mSettings->setValue(folderActiveKey, osd.mEnabled);
-        mSettings->setValue(syncIdKey, osd.mSyncID);
-
-        mSettings->endGroup();
-    }
-
-    mSettings->endGroup();
-}
-
-
-void Preferences::removeAllSyncSettings()
-{
-    QMutexLocker qm(&mutex);
-    assert(logged());
-
-    mSettings->beginGroup(syncsGroupByTagKey);
-
-    mSettings->remove(QString::fromLatin1("")); //removes group and all its settings
-
-    mSettings->endGroup();
-}
-
 
 void Preferences::removeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
 {
@@ -3127,6 +2879,22 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_MS"), Preferences::MUTEX_STEALER_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_MS"), Preferences::MUTEX_STEALER_PERIOD_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_ONLY_ONCE"), Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE);
+
+    overridePreference(settings,
+                       QString::fromUtf8("TARGETED_DISCOUNT_COOLDOWN_MS"),
+                       Preferences::TARGETED_DISCOUNT_COOLDOWN_MS);
+    overridePreference(settings,
+                       QString::fromUtf8("TARGETED_DISCOUNT_CHECK_INTERVAL_MS"),
+                       Preferences::TARGETED_DISCOUNT_CHECK_INTERVAL_MS);
+    overridePreference(settings,
+                       QString::fromUtf8("TARGETED_DISCOUNT_STARTUP_DELAY_MS"),
+                       Preferences::TARGETED_DISCOUNT_STARTUP_DELAY_MS);
+    overridePreference(settings,
+                       QString::fromUtf8("TARGETED_DISCOUNT_WAITING_FALLBACK_MS"),
+                       Preferences::TARGETED_DISCOUNT_WAITING_FALLBACK_MS);
+    overridePreference(settings,
+                       QString::fromUtf8("OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS"),
+                       Preferences::OQ_COOL_DOWN_AFTER_OFFER_INTERVAL_MS);
 }
 
 void Preferences::updateFullName()

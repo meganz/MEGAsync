@@ -44,9 +44,6 @@ qproperty-icon: url(:/chevron_down_small_thin_outline_secondary);
 
 </string>
   </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
-  </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
    <property name="spacing">
     <number>5</number>

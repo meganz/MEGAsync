@@ -293,6 +293,9 @@ void HTTPServer::processRequest(QPointer<QAbstractSocket> socket, HTTPRequest re
     case EXTERNAL_FOLDER_UPLOAD_REQUEST_START:
         externalFolderUploadRequest(response, request);
         break;
+    case EXTERNAL_FILE_FOLDER_UPLOAD_REQUEST_START:
+        externalFileFolderUploadRequest(response, request);
+        break;
     case EXTERNAL_FOLDER_SYNC_REQUEST_START:
         externalFolderSyncRequest(response, request);
         break;
@@ -661,6 +664,38 @@ void HTTPServer::externalFileUploadRequest(QString &response, const HTTPRequest&
     }
 }
 
+void HTTPServer::externalFileFolderUploadRequest(QString& response, const HTTPRequest& request)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Files and folders command received from the webclient");
+    QString targetHandle = Utilities::extractJSONString(request.data, QString::fromUtf8("h"));
+    MegaHandle handle = ::mega::INVALID_HANDLE;
+    if (targetHandle.size())
+    {
+        handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
+    }
+
+    MegaNode* targetNode = megaApi->getNodeByHandle(handle);
+    if (!targetNode)
+    {
+        response = QString::number(MegaError::API_ENOENT);
+    }
+    else
+    {
+        delete targetNode;
+        QString bid = Utilities::extractJSONString(request.data, QString::fromUtf8("bid"));
+        if (!bid.isEmpty())
+        {
+            webDataRequests.insert(bid, new RequestData());
+            emit onExternalFileFolderUploadRequested(handle);
+            response = QString::number(MegaError::API_OK);
+        }
+        else
+        {
+            response = QString::number(MegaError::API_EARGS);
+        }
+    }
+}
+
 void HTTPServer::externalFolderUploadRequest(QString &response, const HTTPRequest& request)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "UploadFolder command received from the webclient");
@@ -944,6 +979,7 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
     static const QString externalRewindRequestStart(QLatin1String("{\"a\":\"gd\","));
     static const QString externalFileUploadRequestStart(QLatin1String("{\"a\":\"ufi\","));
     static const QString externalFolderUploadRequestStart(QLatin1String("{\"a\":\"ufo\","));
+    static const QString externalFileFolderUploadRequestStart(QLatin1String("{\"a\":\"uff\","));
     static const QString externalFolderSyncRequestStart(QLatin1String("{\"a\":\"s\","));
     static const QString externalFolderSyncCheckStart(QLatin1String("{\"a\":\"sp\","));
     static const QString externalOpenTransferManagerStart(QLatin1String("{\"a\":\"tm\","));
@@ -976,6 +1012,10 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
     else if (request.data.startsWith(externalFolderUploadRequestStart))
     {
         return EXTERNAL_FOLDER_UPLOAD_REQUEST_START;
+    }
+    else if (request.data.startsWith(externalFileFolderUploadRequestStart))
+    {
+        return EXTERNAL_FILE_FOLDER_UPLOAD_REQUEST_START;
     }
     else if (request.data.startsWith(externalUploadSelectionStatusStart))
     {

@@ -34,19 +34,17 @@ void MegaUploader::upload(QString path, const QString& nodeName, std::shared_ptr
 
 void MegaUploader::startUpload(const QString& localPath, const QString &nodeName, unsigned long long appDataID, MegaNode* parent, MegaCancelToken* cancelToken)
 {
-    const bool startFirst = false;
     QByteArray localPathArray = localPath.toUtf8();
 
-    const char* fileName = nullptr;
-    QByteArray fileNameArray;
-    if(!nodeName.isEmpty())
-    {
-        fileNameArray = nodeName.toUtf8();
-        fileName = fileNameArray.constData();
-    }
-
     QByteArray appData = appDataID > 0 ? (QString::number(appDataID) + QLatin1Char('*')).toUtf8() : QByteArray();
-    const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
-    const bool isSrcTemporary = false;
-    megaApi->startUpload(localPathArray.constData(), parent, fileName, mtime, appData.isEmpty() ? nullptr : appData.constData(), isSrcTemporary, startFirst, cancelToken, mFolderTransferListenerDelegate.get());
+    MegaUploadOptions options;
+    options.fileName = nodeName.toStdString();
+    options.appData = appData.isEmpty() ? nullptr : appData.constData();
+    options.pitagTrigger = ::mega::MegaApi::PITAG_TRIGGER_PICKER;
+
+    megaApi->startUpload(localPathArray.constData(),
+                         parent,
+                         cancelToken,
+                         &options,
+                         mFolderTransferListenerDelegate.get());
 }

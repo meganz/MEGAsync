@@ -46,9 +46,6 @@ background-color: #EFEFF0; /*colorToken.surface-2*/
 border-radius:4px;
 }</string>
   </property>
-  <property name="TOKENIZED" stdset="0">
-   <bool>true</bool>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>24</number>

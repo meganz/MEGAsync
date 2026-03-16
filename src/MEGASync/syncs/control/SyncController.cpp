@@ -6,15 +6,11 @@
 #include "MyBackupsHandle.h"
 #include "Platform.h"
 #include "RequestListenerManager.h"
-#include "StalledIssuesUtilities.h"
-#include "StatsEventHandler.h"
 
 #include <QStorageInfo>
 #include <QTemporaryFile>
 
 using namespace mega;
-
-const QLatin1String MEGA_IGNORE_FILE_NAME = QLatin1String(".megaignore");
 
 SyncController::SyncController(QObject* parent)
     : QObject(parent)
@@ -28,7 +24,7 @@ SyncController::SyncController(QObject* parent)
     assert(mSyncInfo);
 }
 
-void SyncController::createPendingBackups(SyncInfo::SyncOrigin origin)
+void SyncController::createPendingBackups()
 {
     for(auto it = mPendingBackups.cbegin(); it != mPendingBackups.cend(); it++)
     {
@@ -36,15 +32,12 @@ void SyncController::createPendingBackups(SyncInfo::SyncOrigin origin)
         conf.localFolder = QDir::toNativeSeparators(it.key());
         conf.syncName = it.value().isEmpty() ? getSyncNameFromPath(it.key()) : it.value();
         conf.type = mega::MegaSync::TYPE_BACKUP;
-        conf.origin = origin;
         addSync(conf);
     }
     mPendingBackups.clear();
 }
 
-void SyncController::addBackup(const QString& localFolder,
-                               const QString& syncName,
-                               SyncInfo::SyncOrigin origin)
+void SyncController::addBackup(const QString& localFolder, const QString& syncName)
 {
     mPendingBackups.insert(localFolder, syncName);
 
@@ -52,18 +45,11 @@ void SyncController::addBackup(const QString& localFolder,
     connect(request.get(),
             &UserAttributes::MyBackupsHandle::attributeReady,
             this,
-            [this, origin]() {
-                createPendingBackups(origin);
+            [this]()
+            {
+                createPendingBackups();
             });
-
-    if(request->isAttributeReady())
-    {
-        createPendingBackups(origin);
-    }
-    else
-    {
-        request->createMyBackupsFolderIfNeeded();
-    }
+    request->createMyBackupsFolderIfNeeded();
 }
 
 QString SyncController::getErrorString(int errorCode, int syncErrorCode) const
@@ -147,11 +133,9 @@ void SyncController::addSync(SyncConfig& sync)
     }
     syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
 
-    auto correctlyCreated = createMegaIgnoreUsingLegacyRules(sync.localFolder);
-
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [sync, correctlyCreated, this](MegaRequest* request, MegaError* e)
+        [sync, this](MegaRequest* request, MegaError* e)
         {
             int errorCode = e->getErrorCode();
             int syncErrorCode = request->getNumDetails();
@@ -169,20 +153,12 @@ void SyncController::addSync(SyncConfig& sync)
                                  MegaSyncApp->getMegaApi()->getNodePath(remoteNode.get())),
                              getErrorString(errorCode, syncErrorCode));
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-
-                // Remove if legacy rules .megaignore was created
-                if (correctlyCreated.has_value() &&
-                    correctlyCreated.value() == mega::MegaError::API_OK)
-                {
-                    removeMegaIgnore(sync.localFolder);
-                }
             }
 
             emit syncAddStatus(errorCode, syncErrorCode, sync.localFolder);
             syncOperationEnds();
         });
 
-    mSyncInfo->setSyncToCreateOrigin(sync.origin);
     mApi->syncFolder(sync.type,
                      // The SDK wants the path in utf8, even in Windows!!
                      sync.localFolder.toStdString(),
@@ -787,70 +763,6 @@ QString SyncController::getRemoteFolderErrorMessage(int errorCode, int syncError
     }
 
     return message;
-}
-
-void SyncController::resetAllSyncsMegaIgnoreUsingLegacyRules()
-{
-    const auto syncsSettings = mSyncInfo->getAllSyncSettings();
-    for (const auto& sync: syncsSettings)
-    {
-        overwriteMegaIgnoreUsingLegacyRules(sync);
-    }
-}
-
-std::optional<int> SyncController::createMegaIgnoreUsingLegacyRules(const QString& syncLocalFolder)
-{
-    return performMegaIgnoreCreation(syncLocalFolder, mega::INVALID_HANDLE);
-}
-
-std::optional<int>
-    SyncController::overwriteMegaIgnoreUsingLegacyRules(std::shared_ptr<SyncSettings> sync)
-{
-    return performMegaIgnoreCreation(sync->getLocalFolder(), sync->backupId());
-}
-
-std::optional<int> SyncController::performMegaIgnoreCreation(const QString& syncLocalFolder,
-                                                             mega::MegaHandle backupId)
-{
-    std::optional<int> result(std::nullopt);
-
-    if (Preferences::instance()->hasLegacyExclusionRules())
-    {
-        if (backupId != mega::INVALID_HANDLE)
-        {
-            removeMegaIgnore(syncLocalFolder, backupId);
-        }
-
-        std::unique_ptr<mega::MegaError> error(
-            MegaSyncApp->getMegaApi()->exportLegacyExclusionRules(
-                syncLocalFolder.toStdString().c_str()));
-
-        if (error)
-        {
-            result = error->getErrorCode();
-        }
-    }
-
-    return result;
-}
-
-bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::MegaHandle backupId)
-{
-    QFile ignoreFile(syncLocalFolder + QString::fromUtf8("/") + MEGA_IGNORE_FILE_NAME);
-
-    if (ignoreFile.exists())
-    {
-        if (backupId != mega::INVALID_HANDLE)
-        {
-            Utilities::removeLocalFile(ignoreFile.fileName(), backupId);
-        }
-        else
-        {
-            return ignoreFile.remove();
-        }
-    }
-
-    return false;
 }
 
 Qt::CaseSensitivity SyncController::isSyncCaseSensitive(mega::MegaHandle backupId)

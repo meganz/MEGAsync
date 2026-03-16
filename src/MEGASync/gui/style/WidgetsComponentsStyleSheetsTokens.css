@@ -477,6 +477,32 @@ QAbstractButton:disabled[type="primary"]
 color: #ffC1C2C4; /*colorToken.text-disabled*/
 background-color: #ff797c80; /*colorToken.button-disabled*/
 }
+/*
+    type = brand
+*/
+QAbstractButton[type="brand"]
+{
+background-color: #ff04101E; /*colorToken.button-brand*/
+color: #ffFAFAFB; /*colorToken.text-on-color*/
+}
+
+QAbstractButton:hover[type="brand"]
+{
+color: #ffFAFAFB; /*colorToken.text-on-color*/
+background-color: #ff39424E; /*colorToken.button-brand-hover*/
+}
+
+QAbstractButton:pressed[type="brand"]
+{
+color: #ffFAFAFB; /*colorToken.text-on-color*/
+background-color: #ff535B65; /*colorToken.button-brand-pressed*/
+}
+
+QAbstractButton:disabled[type="brand"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+background-color: #ff797c80; /*colorToken.button-disabled*/
+}
 
 /*
     type = outline

@@ -24,6 +24,7 @@
 #include <QScreen>
 #include <QTextStream>
 
+#include <cmath>
 #include <iostream>
 
 #ifndef WIN32
@@ -61,6 +62,11 @@ const long long KB = 1024;
 const long long MB = 1024 * KB;
 const long long GB = 1024 * MB;
 const long long TB = 1024 * GB;
+
+const long long DECIMAL_KB = 1000LL;
+const long long DECIMAL_MB = 1000LL * DECIMAL_KB;
+const long long DECIMAL_GB = 1000LL * DECIMAL_MB;
+const long long DECIMAL_TB = 1000LL * DECIMAL_GB;
 
 // Human-friendly list of forbidden chars for New Remote Folder
 const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");
@@ -822,6 +828,39 @@ QString Utilities::getSizeString(long long bytes)
 
     return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ")
                     + QCoreApplication::translate("Utilities", "Bytes");
+}
+
+QString Utilities::getDecimalSizeString(long long bytes)
+{
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+
+    if (bytes >= DECIMAL_TB)
+    {
+        return locale.toString(toDoubleInUnit(bytes, DECIMAL_TB)) + QString::fromLatin1(" ") +
+               QCoreApplication::translate("Utilities", "TB");
+    }
+
+    if (bytes >= DECIMAL_GB)
+    {
+        return locale.toString(toDoubleInUnit(bytes, DECIMAL_GB)) + QString::fromLatin1(" ") +
+               QCoreApplication::translate("Utilities", "GB");
+    }
+
+    if (bytes >= DECIMAL_MB)
+    {
+        return locale.toString(toDoubleInUnit(bytes, DECIMAL_MB)) + QString::fromLatin1(" ") +
+               QCoreApplication::translate("Utilities", "MB");
+    }
+
+    if (bytes >= DECIMAL_KB)
+    {
+        return locale.toString(toDoubleInUnit(bytes, DECIMAL_KB)) + QString::fromLatin1(" ") +
+               QCoreApplication::translate("Utilities", "KB");
+    }
+
+    return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ") +
+           QCoreApplication::translate("Utilities", "Bytes");
 }
 
 QString Utilities::getSizeStringLocalized(qint64 bytes)
@@ -2151,6 +2190,57 @@ QString Utilities::getFileHash(const QString& filePath)
     QString hashString = QString::fromUtf8(resultHash.toHex());
 
     return hashString;
+}
+
+QString Utilities::decodeUnicodeEscapes(const QString& input)
+{
+    QString out;
+    out.reserve(input.size());
+
+    QChar c = u'\\';
+    QChar u = u'u';
+
+    for (int i = 0; i < input.size();)
+    {
+        if (input[i] == c && i + 5 < input.size() && input[i + 1] == u)
+        {
+            bool ok = false;
+            ushort code = input.mid(i + 2, 4).toUShort(&ok, 16);
+
+            if (ok)
+            {
+                out.append(QChar(code));
+                i += 6;
+                continue;
+            }
+        }
+        out.append(input[i++]);
+    }
+    return out;
+}
+
+QString Utilities::toPrice(double value, const QString& currencySymbol, bool showRemark)
+{
+    // Build locale: it is necessary to build it like this because using QLocale::system()
+    // ignores the precision when using toCurrencyString.
+    const QLocale locale(QLocale().language(), QLocale().country());
+    const int precision(std::fmod(std::abs(value), 1.) > 0. ? 2 : 0);
+
+    auto price(locale.toCurrencyString(value, currencySymbol, precision));
+    if (showRemark)
+    {
+        price += QLatin1Char('*');
+    }
+    return price;
+}
+
+double Utilities::softCeil(double value)
+{
+    // softCeil(number) {
+    //     'use strict';
+    //     return Math.ceil(Math.round(number * 10) / 10);
+    // }
+    return std::ceil(std::round(value * 10.) / 10.);
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)

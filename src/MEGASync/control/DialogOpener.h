@@ -56,6 +56,8 @@ private:
         virtual void raise(bool raiseIfMinimized = false) = 0;
         virtual void show() = 0;
         virtual void close() = 0;
+        virtual bool isVisible() = 0;
+        virtual bool isActive() = 0;
         virtual bool isParent(QObject* parent) = 0;
         virtual void applyCurrentTheme() = 0;
 
@@ -105,6 +107,15 @@ private:
             mDialog->setWindowState(Qt::WindowActive);
         }
 
+        bool isVisible() override
+        {
+            return mDialog->isVisible();
+        }
+
+        bool isActive() override
+        {
+            return mDialog->isActiveWindow();
+        }
         void close() override
         {
             Platform::getInstance()->closeFileFolderSelectors(mDialog);
@@ -406,6 +417,26 @@ public:
         {
             dialogInfo->applyCurrentTheme();
         }
+    }
+
+    static bool anyVisibleAndActiveDialogs()
+    {
+        return std::any_of(mOpenedDialogs.begin(),
+                           mOpenedDialogs.end(),
+                           [](std::shared_ptr<DialogInfoBase> dialogInfo)
+                           {
+                               return dialogInfo->isVisible() && dialogInfo->isActive();
+                           });
+    }
+
+    static bool isAnyDialogVisible()
+    {
+        return std::any_of(mOpenedDialogs.begin(),
+                           mOpenedDialogs.end(),
+                           [](std::shared_ptr<DialogInfoBase> dialogInfo)
+                           {
+                               return dialogInfo->isVisible();
+                           });
     }
 
     static QList<QPointer<QWidget>> getAllOpenedDialogs();

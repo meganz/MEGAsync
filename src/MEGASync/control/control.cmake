@@ -53,6 +53,8 @@ set(DESKTOP_APP_CONTROL_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/UsersUpdateListener.h
     ${CMAKE_CURRENT_LIST_DIR}/EnumConverters.h
     ${CMAKE_CURRENT_LIST_DIR}/ServiceUrls.h
+    ${CMAKE_CURRENT_LIST_DIR}/state_machines/DiscountPolicy.h
+    ${CMAKE_CURRENT_LIST_DIR}/state_machines/DiscountStateMachine.h
 )
 
 set(DESKTOP_APP_CONTROL_SOURCES
@@ -102,6 +104,8 @@ set(DESKTOP_APP_CONTROL_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/ReloadingEventHandler.cpp
     ${CMAKE_CURRENT_LIST_DIR}/UsersUpdateListener.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ServiceUrls.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/state_machines/DiscountPolicy.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/state_machines/DiscountStateMachine.cpp
 )
 
 target_sources(${ExecutableTarget}

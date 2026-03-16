@@ -12,7 +12,6 @@ Text {
     property bool manageMouse: false
     property bool manageHover: false
     property bool manageClick: false
-    property bool hovered: false
     property bool visited: false
     property bool underlineLink: false
     property color urlColor: ColorTheme.linkPrimary
@@ -98,7 +97,7 @@ Text {
 
             // truly corner case :-) link is located on the edge of the text, last line & end of line.
             if (found && !closed) {
-                linkCoords.width = root.width - linkCoords.xi;
+                linkCoords.width = root.width - linkCoords.x;
                 linkCoordsList.push(linkCoords);
             }
 
@@ -175,10 +174,6 @@ Text {
         }
     }
 
-    onLinkHovered: {
-        hovered = link.length;
-    }
-
     onEnabledChanged: {
         updateLinkColor();
     }
@@ -219,12 +214,8 @@ Text {
         }
     }
 
-    Qml.MouseArea {
-        id: mouseArea
-
-        anchors.fill: parent
-        cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
-        onPressed: { mouse.accepted = false; }
+    textMouseArea {
+        cursorShape: (root.hoveredLink.length > 0) ? Qt.PointingHandCursor : Qt.ArrowCursor
         enabled: root.manageMouse
         hoverEnabled: root.manageHover
     }
