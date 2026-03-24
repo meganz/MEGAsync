@@ -30,7 +30,7 @@ url="https://mega.io/desktop"
 license=() #TODO
 groups=()
 depends=('ca-certificates' 'megasync>=5.3.0' 'nemo')
-makedepends=('ca-certificates' 'qt5-tools' 'nemo')
+makedepends=('ca-certificates' 'cmake')
 checkdepends=()
 optdepends=()
 provides=("nemo-megasync=${pkgver}")
@@ -46,22 +46,10 @@ noextract=()
 md5sums=('MD5SUM') # generated with makepkg -g
 validpgpkeys=()
 
-prepare() {
-	cd "$pkgname-$pkgver"
-}
-
 build() {
-	cd "$pkgname-$pkgver"
-	sed -i "s#update_cache.path = \$\$PWD#update_cache.path = \$\${HICOLOR}#g" MEGAShellExtNemo.pro
-	if [ 0$(pacman -Q nemo | awk '{print $NF}' | awk -F='-' '{print $1}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}') -gt 31503 ]; then 
-	 echo "NEWER NEMO REQUIRES SMALLER OVERLAY ICONS"
-	 for i in data/emblems/64x64/*smaller.png; do mv $i ${i/-smaller/}; done
-	else
-	 echo "OLDER NEMO DOES NOT REQUIRE SMALLER OVERLAY ICONS"
-	 rm data/emblems/64x64/*smaller.png
-	fi    
-	qmake
-	make
+	cmake -B build -S "$pkgname-$pkgver" \
+		-DCMAKE_INSTALL_PREFIX='/usr'
+    cmake --build build ${BUILD_PARALLEL_JOBS}
 }
 
 check() {
@@ -70,8 +58,5 @@ check() {
 }
 
 package() {
-	cd "$pkgname-$pkgver"
-#	make install
-	#sed -i "s#gtk-update-icon-cache -f -t /#gtk-update-icon-cache -f -t \$(INSTALL_ROOT)/#g" Makefile
-	make install INSTALL_ROOT=$pkgdir
+	DESTDIR="$pkgdir" cmake --install build
 }

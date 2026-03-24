@@ -218,7 +218,7 @@ ln -s ../../src/MEGAShellExtNemo/mega_notify_client.h $EXT_NAME/mega_notify_clie
 ln -s ../../src/MEGAShellExtNemo/mega_notify_client.c $EXT_NAME/mega_notify_client.c
 ln -s ../../src/MEGAShellExtNemo/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtNemo/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
-ln -s ../../src/MEGAShellExtNemo/MEGAShellExtNemo.pro $EXT_NAME/MEGAShellExtNemo.pro
+ln -s ../../src/MEGAShellExtNemo/CMakeLists.txt $EXT_NAME/CMakeLists.txt
 ln -s ../../src/MEGAShellExtNemo/data $EXT_NAME/data
 ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 
@@ -274,7 +274,7 @@ ln -s ../../src/MEGAShellExtThunar/mega_ext_client.c $EXT_NAME/mega_ext_client.c
 ln -s ../../src/MEGAShellExtThunar/mega_ext_client.h $EXT_NAME/mega_ext_client.h
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
-ln -s ../../src/MEGAShellExtThunar/MEGAShellExtThunar.pro $EXT_NAME/MEGAShellExtThunar.pro
+ln -s ../../src/MEGAShellExtThunar/CMakeLists.txt $EXT_NAME/CMakeLists.txt
 ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 
 export GZIP=-9

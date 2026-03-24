@@ -1,3 +1,8 @@
+nautilus-megasync (6.2.0) stable; urgency=low
+
+  * Add "Sync" and "Backup" actions for folders to context menu
+
+ -- MEGA Team <linux@mega.io>  Mon, 23 Mar 2026 18:29:00 +0200
 nautilus-megasync (5.4.0) stable; urgency=low
 
   * Bug fixes

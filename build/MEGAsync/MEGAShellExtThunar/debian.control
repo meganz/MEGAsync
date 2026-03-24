@@ -3,11 +3,13 @@ Section: xfce
 Priority: optional
 Maintainer: MEGA Linux Team <linux@mega.io>
 Homepage: https://mega.io/desktop
-Build-Depends: debhelper, qt4-qmake | qt5-qmake | qt5-qmake-bin, libthunarx-2-dev | libthunarx-3-dev
+Build-Depends: debhelper, cmake, dh-cmake,libthunarx-2-dev | libthunarx-3-dev
 
 Package: thunar-megasync
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, megasync
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: thunar,
+            megasync (>= 5.3.0)
 Description: MEGA Desktop App plugin for Thunar
   - Easily see and track your sync statuses.
   - Send files and folders to MEGA.
