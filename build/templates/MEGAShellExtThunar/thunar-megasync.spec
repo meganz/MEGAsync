@@ -9,22 +9,20 @@ Source0:	thunar-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.io>
 
+BuildRequires: cmake, gcc-c++
 
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?almalinux} || 0%{?rhel}
 %global debug_package %{nil}
 BuildRequires: redhat-rpm-config
-BuildRequires: gcc-c++
 BuildRequires: Thunar-devel
-BuildRequires: qt5-qtbase-devel
 %endif
 
 %if 0%{?suse_version}
-BuildRequires:  glib2-devel, thunar-devel, libqt5-qtbase-devel
+BuildRequires:  glib2-devel, thunar-devel
 %endif
 
 %if 0%{?fedora}
 BuildRequires: Thunar-devel
-BuildRequires: qt5-qtbase-devel
 %global debug_package %{nil}
 %endif
 
@@ -44,24 +42,16 @@ Requires:       thunar, megasync >= 5.3.0
 %setup -q
 
 %build
-export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-
-qmake-qt5 || qmake-qt4 || qmake
-
-%if 0%{?fedora_version} >= 27 || 0%{?centos_version} >=800 || 0%{?rhel_version} >= 800
-#tweak to have debug symbols to stripe: for some reason they seem gone by default in Fedora 27,
-#   causing "gdb-add-index: No index was created for ..." which lead to error "Empty %files file ....debugsourcefiles.list"
-sed "s# gcc# gcc -g#g" -i Makefile
-%endif
-make
+cmake -S . -B %{_builddir} -DCMAKE_INSTALL_PREFIX=%{_prefix}
+cmake --build %{_builddir}
 
 %install
-make install
+DESTDIR=%{buildroot} cmake --install %{_builddir}
 echo "== INSTALLED TREE =="
 find %{buildroot} -type f | sort
 
 %clean
-%{?buildroot:%__rm -rf "%{buildroot}"}
+rm -fr %{buildroot}/%{_datadir}/icons/hicolor/icon-theme.cache || true
 
 %files
 %defattr(-,root,root)

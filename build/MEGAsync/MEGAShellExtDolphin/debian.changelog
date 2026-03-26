@@ -1,4 +1,11 @@
-dolphin-megasync (5.4.0) stable; urgency=low
+dolphin-megasync (6.2.0) stable; urgency=low
+
+  * Fix a charset issue
+  * Add "Sync" and "Backup" actions for folders to context menu
+  * Remove "MEGA" icon for folders that are not synced
+
+ -- MEGA Team <linux@mega.io>  Mon, 23 Mar 2026 18:29:00 +0200
+ dolphin-megasync (5.4.0) stable; urgency=low
 
   * Build for kf5 and kf6
 

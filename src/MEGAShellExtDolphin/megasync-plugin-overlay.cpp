@@ -161,8 +161,9 @@ public:
             if (!icon_path.isEmpty())
             {
                 // qDebug() << "MEGASYNCOVERLAYPLUGIN: icon_path =" << icon_path;
-                if (icon_path == "mega" ||
-                    (icon_path.contains("/usr/share/icons") && icon_path.contains("apps/mega.png")))
+                if (icon_path == QLatin1String("mega") ||
+                    (icon_path.contains(QLatin1String("/usr/share/icons")) &&
+                     icon_path.contains(QLatin1String("apps/mega.png"))))
                 {
                     // qDebug() << "MEGASYNCOVERLAYPLUGIN: Restore " << qStrURL << " to default icon";
                     // Restore to default icon
@@ -261,11 +262,11 @@ private:
         }
 
         QString iconPath;
-        KDesktopFile desktopFile(folderPath + "/.directory");
-        if (desktopFile.hasGroup("Desktop Entry"))
+        KDesktopFile desktopFile(folderPath + QLatin1String("/.directory"));
+        if (desktopFile.hasGroup(QLatin1String("Desktop Entry")))
         {
-            KConfigGroup group = desktopFile.group("Desktop Entry");
-            iconPath = group.readEntry("Icon", QString());
+            KConfigGroup group = desktopFile.group(QLatin1String("Desktop Entry"));
+            iconPath = group.readEntry(QLatin1String("Icon"), QString());
         }
 
         return iconPath;
@@ -280,16 +281,16 @@ private:
             return;
         }
 
-        QString desktopFilePath = folderPath + "/.directory";
+        QString desktopFilePath = folderPath + QLatin1String("/.directory");
         KDesktopFile desktopFile(desktopFilePath);
 
-        if (desktopFile.hasGroup("Desktop Entry"))
+        if (desktopFile.hasGroup(QLatin1String("Desktop Entry")))
         {
-            KConfigGroup group = desktopFile.group("Desktop Entry");
+            KConfigGroup group = desktopFile.group(QLatin1String("Desktop Entry"));
 
             if (iconPath.isEmpty())
             {
-                group.deleteEntry("Icon");
+                group.deleteEntry(QLatin1String("Icon"));
                 // qDebug() << "MegasyncDolphinOverlayPlugin::changeFolderIcon - Icon removed.";
 
                 // Ensure changes are written to the file
@@ -313,7 +314,7 @@ private:
             }
             else
             {
-                group.writeEntry("Icon", iconPath);
+                group.writeEntry(QLatin1String("Icon"), iconPath);
                 // qDebug() << "MegasyncDolphinOverlayPlugin::changeFolderIcon - Icon set to:"
                 //          << iconPath;
                 // Ensure changes are written to the file

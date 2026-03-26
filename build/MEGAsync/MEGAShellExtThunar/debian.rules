@@ -1,57 +1,8 @@
 #!/usr/bin/make -f
+export DH_VERBOSE=1
 
-MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
-DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 25\|Questing Quokka\|Plucky Puffin\|Ubuntu 24\|Oracular Oriole\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
+%:
+	dh $@
 
-build: build-stamp
-build-stamp:
-	dh_testdir
-	sed -i -E "0,/thunar-megasync \(([0-9.]*)[^\)]*\)/s//thunar-megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
-	qmake
-	make
-	touch build-stamp
-
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp
-
-install: build
-	dh_install libMEGAShellExtThunar.so* `pkg-config --variable=extensionsdir thunarx-2 || pkg-config --variable=extensionsdir thunarx-3`/
-
-# Build architecture-independent files here.
-binary-indep: build install
-	# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-#	dh_installdebconf
-	dh_installdocs
-	dh_installexamples
-	dh_installmenu
-#	dh_installlogrotate
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_installinit
-	dh_installcron
-	dh_installman
-	dh_installinfo
-#	dh_undocumented
-	dh_installchangelogs
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-#	dh_makeshlibs
-	dh_installdeb
-#	dh_perl
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb $(DPKGXZ)
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
+override_dh_builddeb:
+	dh_builddeb -- -Zxz

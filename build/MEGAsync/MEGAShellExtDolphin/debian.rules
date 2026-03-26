@@ -1,7 +1,6 @@
 #!/usr/bin/make -f
 
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
-DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 25\|Questing Quokka\|Plucky Puffin\|Ubuntu 24\|Oracular Oriole\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 
 KIO_DEV_PACKAGES := $$(apt-cache pkgnames | grep "libkf.*kio-dev")
 KF_VERSIONS := $(shell for p in ${KIO_DEV_PACKAGES}; do KF_VERSION=$$(dpkg -L $${p} | grep -m1 -oP '/usr/include/KF\K\w+(?=/)') && printf "kf$${KF_VERSION} "; done)
@@ -59,7 +58,7 @@ binary-arch: build install
 #	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
-	dh_builddeb $(DPKGXZ)
+	dh_builddeb -- -Zxz
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install
