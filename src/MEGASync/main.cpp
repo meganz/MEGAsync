@@ -432,7 +432,13 @@ int main(int argc, char *argv[])
     if (!qEnvironmentVariableIsSet("DO_NOT_UNSET_XDG_SESSION_TYPE"))
     {
         QString sessionType = qEnvironmentVariable("XDG_SESSION_TYPE");
-        if (!sessionType.isEmpty() && sessionType == QString::fromUtf8("wayland"))
+        const QString currentDesktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+        const bool hyprlandSession =
+            currentDesktop.contains(QString::fromUtf8("Hyprland"), Qt::CaseInsensitive) ||
+            qEnvironmentVariableIsSet("HYPRLAND_INSTANCE_SIGNATURE");
+
+        if (!hyprlandSession && !sessionType.isEmpty() &&
+            sessionType == QString::fromUtf8("wayland"))
         {
             std::cerr << "Avoiding wayland" << std::endl;
             qunsetenv("XDG_SESSION_TYPE");

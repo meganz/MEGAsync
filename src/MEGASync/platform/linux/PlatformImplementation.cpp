@@ -943,6 +943,31 @@ void PlatformImplementation::setRenderingBackend() const
         qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
     }
 
+    const QByteArray sessionType = qgetenv("XDG_SESSION_TYPE");
+    const QByteArray currentDesktop = qgetenv("XDG_CURRENT_DESKTOP").toLower();
+    const QByteArray waylandDisplay = qgetenv("WAYLAND_DISPLAY");
+    const bool likelyWaylandSession =
+        sessionType == "wayland" || !waylandDisplay.isEmpty() ||
+        currentDesktop.contains("hyprland");
+
+    if (!qEnvironmentVariableIsSet("MEGA_USE_SOFTWARE_OPENGL"))
+    {
+        if (likelyWaylandSession)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                         "Enabling software OpenGL fallback on Linux");
+            QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+            qputenv("QT_QUICK_BACKEND", "software");
+        }
+    }
+    else if (qEnvironmentVariable("MEGA_USE_SOFTWARE_OPENGL") == QLatin1String("1"))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     "Enabling software OpenGL fallback on Linux due to env override");
+        QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+        qputenv("QT_QUICK_BACKEND", "software");
+    }
+
     // Improve QtQuickWidget compatibility
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 }
@@ -1181,7 +1206,7 @@ void PlatformImplementation::maybeEmitTheme()
     {
         mLastEmittedTheme = appTheme;
         mLastEmittedPanelTheme = panelTheme;
-        emit themeChanged({appTheme, appTheme});
+        emit themeChanged({panelTheme, appTheme});
     }
 }
 
@@ -1273,5 +1298,18 @@ Preferences::ThemeAppeareance PlatformImplementation::getPanelTheme() const
         return Preferences::ThemeAppeareance::DARK;
     }
 
-    return effectiveTheme();
+    const auto theme = effectiveTheme();
+    if (theme != Preferences::ThemeAppeareance::UNINITIALIZED)
+    {
+        return theme;
+    }
+
+    // Hyprland commonly exposes no theme metadata. Default to a light tray icon so it
+    // remains visible on the typical dark / translucent bar setup.
+    if (desktop.contains(QLatin1String("HYPRLAND")))
+    {
+        return Preferences::ThemeAppeareance::DARK;
+    }
+
+    return Preferences::ThemeAppeareance::LIGHT;
 }

@@ -29,6 +29,7 @@
 #include <QDesktopWidget>
 #include <QEvent>
 #include <QFileInfo>
+#include <QGuiApplication>
 #include <QHelpEvent>
 #include <QRect>
 #include <QScrollBar>
@@ -49,6 +50,15 @@ static constexpr int FONT_SIZE_BUSINESS_PX{12};
 static constexpr int FONT_SIZE_NO_BUSINESS_PX{12};
 
 static const char* TRANSPARENT_HEADER = "transparent_header";
+
+namespace
+{
+bool isNativeWaylandSession()
+{
+    return QGuiApplication::platformName().contains(QString::fromUtf8("wayland"),
+                                                    Qt::CaseInsensitive);
+}
+}
 
 void InfoDialog::pauseResumeClicked()
 {
@@ -155,7 +165,14 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 #ifdef Q_OS_LINUX
     doNotActAsPopup = Platform::getInstance()->getValue("USE_MEGASYNC_AS_REGULAR_WINDOW", false);
 
-    if (!doNotActAsPopup && QSystemTrayIcon::isSystemTrayAvailable())
+    if (isNativeWaylandSession())
+    {
+        // Native Wayland focus transitions from tray hosts are not stable enough
+        // for the emulated-popup path. Treat the status window as a regular window.
+        setWindowFlags(Qt::Window);
+        doNotActAsPopup = true;
+    }
+    else if (!doNotActAsPopup && QSystemTrayIcon::isSystemTrayAvailable())
     {
         // To avoid issues with text input we implement a popup ourselves
         // instead of using Qt::Popup by listening to the WindowDeactivate
