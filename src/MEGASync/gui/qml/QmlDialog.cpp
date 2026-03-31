@@ -1,7 +1,22 @@
 #include "QmlDialog.h"
 
 #include <QEvent>
+#include <QGuiApplication>
 #include <QScreen>
+
+namespace
+{
+bool isHyprlandSession()
+{
+    if (qEnvironmentVariableIsSet("HYPRLAND_INSTANCE_SIGNATURE"))
+    {
+        return true;
+    }
+
+    const auto desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+    return desktop.contains(QString::fromUtf8("Hyprland"), Qt::CaseInsensitive);
+}
+}
 
 namespace
 {
@@ -64,9 +79,23 @@ void QmlDialog::centerAndRaise()
     int yPos(geometry.y() +
              static_cast<int>(geometry.height() * CENTERING_FACTOR - height() * CENTERING_FACTOR));
 
-    hide();
-    QmlDialog::setPosition(xPos, yPos);
-    show();
+    if (isHyprlandSession())
+    {
+        if (width() <= 1 || height() <= 1)
+        {
+            resize(minimumWidth(), minimumHeight());
+        }
+
+        QmlDialog::showNormal();
+        QmlDialog::setPosition(xPos, yPos);
+        QmlDialog::setVisible(true);
+    }
+    else
+    {
+        hide();
+        QmlDialog::setPosition(xPos, yPos);
+        show();
+    }
 
     // The following two lines are required by Windows (activate) and macOS (raise)
     QmlDialog::requestActivate();

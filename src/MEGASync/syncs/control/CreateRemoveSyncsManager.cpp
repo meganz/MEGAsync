@@ -2,10 +2,51 @@
 
 #include "DialogOpener.h"
 #include "QmlDialogWrapper.h"
+#include "QmlDialog.h"
 #include "RemoveSyncConfirmationDialog.h"
 #include "SyncController.h"
 #include "SyncsComponent.h"
+#include "SyncsQmlDialog.h"
 #include "SyncSettings.h"
+
+#include <QPointer>
+#include <QTimer>
+
+namespace
+{
+void surfaceSyncsDialog(QPointer<QmlDialogWrapper<SyncsComponent>> dialog)
+{
+    if (!dialog)
+    {
+        return;
+    }
+
+    dialog->show();
+    dialog->activateWindow();
+    dialog->raise();
+
+    if (auto syncsWindow = dynamic_cast<SyncsQmlDialog*>(dialog->windowHandle()))
+    {
+        if (syncsWindow->width() <= 1 || syncsWindow->height() <= 1)
+        {
+            syncsWindow->resize(syncsWindow->minimumWidth(), syncsWindow->minimumHeight());
+        }
+
+        syncsWindow->showNormal();
+        syncsWindow->raise();
+    }
+}
+
+void queueSyncsDialogSurface(QPointer<QmlDialogWrapper<SyncsComponent>> dialog)
+{
+    QTimer::singleShot(
+        0,
+        [dialog]()
+        {
+            surfaceSyncsDialog(dialog);
+        });
+}
+}
 
 void CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin origin,
                                        mega::MegaHandle handle,
@@ -104,5 +145,13 @@ void CreateRemoveSyncsManager::showSyncDialog(SyncInfo::SyncOrigin origin,
         syncsDialog->wrapper()->setLocalFolder(localFolder);
     }
 
-    DialogOpener::showDialog(syncsDialog);
+    if (origin == SyncInfo::SyncOrigin::SETTINGS_ORIGIN)
+    {
+        DialogOpener::showDialogWithoutWindowModality(syncsDialog);
+    }
+    else
+    {
+        DialogOpener::showDialog(syncsDialog);
+    }
+    queueSyncsDialogSurface(syncsDialog);
 }

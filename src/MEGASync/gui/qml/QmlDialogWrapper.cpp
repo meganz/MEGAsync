@@ -1,4 +1,6 @@
 #include "QmlDialogWrapper.h"
+#include "Platform.h"
+#include "megaapi.h"
 
 #include <QQmlProperty>
 #include <QWindow>
@@ -6,6 +8,26 @@
 namespace
 {
 const QLatin1String NAMESPACE_SEPARATOR("::");
+
+void surfaceQmlWindow(QPointer<QmlDialog> window)
+{
+    if (!window)
+    {
+        return;
+    }
+
+    if (window->width() <= 1 || window->height() <= 1)
+    {
+        window->resize(window->minimumWidth(), window->minimumHeight());
+    }
+
+    window->showNormal();
+
+    if (!QMetaObject::invokeMethod(window.data(), "raise", Qt::DirectConnection))
+    {
+        window->centerAndRaise();
+    }
+}
 }
 
 // ************************************************************************************************
@@ -166,7 +188,14 @@ void QmlDialogWrapperBase::show()
         mShowDelay.start();
     }
 #else
-    setWindowState(mWindow->windowState());
+    if (Platform::getInstance()->isTilingWindowManager())
+    {
+        surfaceQmlWindow(mWindow);
+    }
+    else
+    {
+        setWindowState(mWindow->windowState());
+    }
 #endif
 }
 
@@ -179,7 +208,14 @@ void QmlDialogWrapperBase::showSync()
     }
 #endif
 
-    setWindowState(mWindow->windowState());
+    if (Platform::getInstance()->isTilingWindowManager())
+    {
+        surfaceQmlWindow(mWindow);
+    }
+    else
+    {
+        setWindowState(mWindow->windowState());
+    }
 }
 
 void QmlDialogWrapperBase::activateWindow()

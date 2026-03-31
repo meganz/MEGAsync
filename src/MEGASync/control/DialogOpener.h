@@ -312,6 +312,18 @@ public:
     }
 
     template <class DialogType>
+    static std::shared_ptr<DialogInfo<DialogType>> showDialogWithoutWindowModality(
+        QPointer<DialogType> dialog)
+    {
+        if (dialog)
+        {
+            removeWhenClose(dialog);
+            return showDialogImpl(dialog, false);
+        }
+        return nullptr;
+    }
+
+    template <class DialogType>
     static void showGeometryRetainerDialog(QPointer<DialogType> dialog)
     {
         if(dialog)
@@ -516,6 +528,24 @@ private:
             if (dialog->parent() && changeWindowModality)
             {
                 dialog->setWindowModality(Qt::WindowModal);
+
+                if (auto childWindow = dialog->windowHandle())
+                {
+                    if (auto parentWindow = dialog->parentWidget()->windowHandle())
+                    {
+                        childWindow->setTransientParent(parentWindow);
+                    }
+                }
+            }
+
+            std::shared_ptr<DialogInfoBase> parentInfo;
+            if (dialog->parent())
+            {
+                parentInfo = findDialogInfo(dialog->parent());
+                if (parentInfo)
+                {
+                    parentInfo->raise(true);
+                }
             }
 
             auto geoInfo = mSavedGeometries.value(classType, GeometryInfo());
@@ -563,15 +593,6 @@ private:
                 }
 
                 dialog->show();
-            }
-
-            if (dialog->parent())
-            {
-                auto parentInfo = findDialogInfo(dialog->parent());
-                if (parentInfo)
-                {
-                    parentInfo->raise(true);
-                }
             }
 
             info->raise(true);

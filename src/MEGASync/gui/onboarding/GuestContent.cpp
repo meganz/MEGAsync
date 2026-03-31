@@ -2,9 +2,14 @@
 
 #include "GuestQmlDialog.h"
 #include "MegaApplication.h"
+#include "DialogOpener.h"
+#include "Onboarding.h"
 #include "QmlDialogManager.h"
+#include "QmlDialogWrapper.h"
 
+#include <QApplication>
 #include <QQmlEngine>
+#include <QTimer>
 
 GuestContent::GuestContent(QObject *parent)
     : QMLComponent(parent)
@@ -16,7 +21,22 @@ GuestContent::GuestContent(QObject *parent)
 void GuestContent::onInitialPageButtonClicked()
 {
 #ifndef WIN32
-    QmlDialogManager::instance()->openOnboardingDialog();
+    DialogOpener::removeDialogByClass<QmlDialogWrapper<GuestContent>>();
+    qApp->processEvents();
+
+    // After logout the previous onboarding wrapper can remain around in a hidden state.
+    // Remove it completely before creating a fresh one, otherwise the close lifecycle can
+    // race the new dialog and make it disappear immediately.
+    DialogOpener::removeDialogByClass<QmlDialogWrapper<Onboarding>>();
+    qApp->processEvents();
+
+    QTimer::singleShot(
+        150,
+        []()
+        {
+            QmlDialogManager::instance()->openOnboardingDialog(true);
+            QmlDialogManager::instance()->raiseOnboardingDialog();
+        });
 #endif
 }
 

@@ -223,7 +223,8 @@ LoginPageForm {
 
         function onLogout() {
             password.text = "";
-            window.forceClose();
+            // After logout we want the login window to remain usable if it is opened from the
+            // guest tray flow. Force-closing it here races that flow and makes the dialog flash.
         }
     }
 
