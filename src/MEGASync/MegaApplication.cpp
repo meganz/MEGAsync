@@ -6958,7 +6958,7 @@ void MegaApplication::showStalledIssuesDialog()
 void MegaApplication::requestUserDiscounts(bool skipChecks)
 {
     auto logged = preferences->logged();
-    if (appfinished || !logged)
+    if (appfinished || !logged || AppState::instance()->getAppState() == AppState::FATAL_ERROR)
     {
         return;
     }
