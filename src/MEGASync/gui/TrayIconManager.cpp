@@ -70,7 +70,11 @@ void TrayIconManager::initTrayIcon()
 
 QString TrayIconManager::themePrefix() const
 {
+#ifdef Q_OS_LINUX
+    return QStringLiteral(":/reddish/");
+#else
     return (mTheme == Theme::Dark) ? QStringLiteral(":/dark/") : QStringLiteral(":/light/");
+#endif
 }
 
 QIcon TrayIconManager::loadIcon(const QString& filename) const
