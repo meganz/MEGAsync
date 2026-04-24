@@ -48,14 +48,14 @@ FooterButtonsPage {
 
 
         ColumnLayout {
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
             spacing: (localFolder.folderField.hint.visible && remoteFolder.folderField.hint.visible) ?
                          textSpacings / 4
                        : textSpacings
             HeaderTexts {
                 id: header
 
-                Layout.preferredWidth: parent.width
+                Layout.fillWidth: true
                 title: SyncsStrings.selectiveSyncTitle
                 description: SyncsStrings.selectiveSyncDescription
             }
@@ -73,7 +73,7 @@ FooterButtonsPage {
         }
 
         ColumnLayout {
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
             spacing: Constants.defaultComponentSpacing
                      - (localFolder.folderField.hint.visible + remoteFolder.folderField.hint.visible)
                         * Constants.defaultComponentSpacing / 2.5
@@ -84,8 +84,7 @@ FooterButtonsPage {
                 title: SyncsStrings.selectLocalFolder
                 leftIconSource: Images.pc
                 chosenPath: syncsDataAccess.defaultLocalFolder
-                Layout.preferredWidth: parent.width + 8
-                Layout.leftMargin: -4
+                Layout.fillWidth: true
             }
 
             ChooseSyncFolder {
@@ -94,8 +93,7 @@ FooterButtonsPage {
                 title: SyncsStrings.selectMEGAFolder
                 leftIconSource: Images.megaOutline
                 chosenPath: syncsDataAccess.defaultRemoteFolder
-                Layout.preferredWidth: parent.width + 8
-                Layout.leftMargin: -4
+                Layout.fillWidth: true
             }
         }
     }

@@ -1,8 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
-
 import common 1.0
 
 import components.texts 1.0 as Texts
@@ -173,26 +171,9 @@ Qml.RoundButton {
             }
             radius: sizes.radius
             color: getBackgroundColor()
-            layer {
-                enabled: true
-                effect: OpacityMask {
-                    id: mask
-
-                    maskSource: Item {
-                        width: backgroundRect.width
-                        height: backgroundRect.height
-
-                        Rectangle {
-                            id: maskRect
-
-                            anchors.centerIn: parent
-                            width:  backgroundRect.width
-                            height: backgroundRect.height
-                            radius: sizes.radius
-                        }
-                    }
-                }
-            }
+            // GraphicalEffects-based masking renders unreliably with the Linux software
+            // backend. Plain clipping keeps the rounded button visible on Hyprland.
+            clip: true
 
             Progress {
                 id: backgroundProgress

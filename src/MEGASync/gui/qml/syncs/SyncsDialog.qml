@@ -11,7 +11,7 @@ SyncsQmlDialog {
     id: window
 
     title: SyncsStrings.syncsWindowTitle
-    visible: false
+    flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint
     modality: Qt.NonModal
     width: 640
     height: 402

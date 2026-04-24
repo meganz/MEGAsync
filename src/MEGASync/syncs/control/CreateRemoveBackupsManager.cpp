@@ -3,7 +3,48 @@
 #include "BackupCandidatesComponent.h"
 #include "DialogOpener.h"
 #include "QmlDialogWrapper.h"
+#include "QmlDialog.h"
+#include "SyncsQmlDialog.h"
 #include "SyncSettings.h"
+
+#include <QPointer>
+#include <QTimer>
+
+namespace
+{
+void surfaceBackupsDialog(QPointer<QmlDialogWrapper<BackupCandidatesComponent>> dialog)
+{
+    if (!dialog)
+    {
+        return;
+    }
+
+    dialog->show();
+    dialog->activateWindow();
+    dialog->raise();
+
+    if (auto backupsWindow = dynamic_cast<SyncsQmlDialog*>(dialog->windowHandle()))
+    {
+        if (backupsWindow->width() <= 1 || backupsWindow->height() <= 1)
+        {
+            backupsWindow->resize(backupsWindow->minimumWidth(), backupsWindow->minimumHeight());
+        }
+
+        backupsWindow->showNormal();
+        backupsWindow->raise();
+    }
+}
+
+void queueBackupsDialogSurface(QPointer<QmlDialogWrapper<BackupCandidatesComponent>> dialog)
+{
+    QTimer::singleShot(
+        0,
+        [dialog]()
+        {
+            surfaceBackupsDialog(dialog);
+        });
+}
+}
 
 void CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin origin,
                                            const QStringList& localFolders)
@@ -60,5 +101,13 @@ void CreateRemoveBackupsManager::showBackupDialog(SyncInfo::SyncOrigin origin,
         backupsDialog->wrapper()->insertFolders(localFolders);
     }
 
-    DialogOpener::showDialog(backupsDialog);
+    if (origin == SyncInfo::SyncOrigin::SETTINGS_ORIGIN)
+    {
+        DialogOpener::showDialogWithoutWindowModality(backupsDialog);
+    }
+    else
+    {
+        DialogOpener::showDialog(backupsDialog);
+    }
+    queueBackupsDialogSurface(backupsDialog);
 }

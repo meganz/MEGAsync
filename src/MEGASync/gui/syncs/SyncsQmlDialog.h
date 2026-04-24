@@ -15,6 +15,7 @@ public:
 
     bool isBackup() const;
     void setIsBackup(bool newIsBackup);
+    Q_INVOKABLE void raise();
 
 protected:
     bool event(QEvent*) override;

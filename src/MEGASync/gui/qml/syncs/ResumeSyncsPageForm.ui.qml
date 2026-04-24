@@ -47,7 +47,7 @@ FooterButtonsPage {
         Texts.Text {
             id: titleItem
 
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
             Layout.topMargin: 40
             text: SyncsStrings.finalStepSyncTitle
             font {
@@ -61,7 +61,7 @@ FooterButtonsPage {
             id: descriptionItem
 
             Layout.topMargin: 30
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
             text: SyncsStrings.finalStepSync
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap

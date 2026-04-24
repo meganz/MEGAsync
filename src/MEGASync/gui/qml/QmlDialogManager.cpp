@@ -61,6 +61,26 @@ bool QmlDialogManager::openOnboardingDialog(bool force)
             onboardingInfo->setIgnoreCloseAllAction(true);
         }
     }
+
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        dialog->show();
+        dialog->getDialog()->activateWindow();
+        dialog->raise();
+
+        if (auto onboardingWindow =
+                dynamic_cast<OnboardingQmlDialog*>(dialog->getDialog()->windowHandle()))
+        {
+            if (onboardingWindow->width() <= 1 || onboardingWindow->height() <= 1)
+            {
+                onboardingWindow->resize(onboardingWindow->minimumWidth(),
+                                         onboardingWindow->minimumHeight());
+            }
+            onboardingWindow->showNormal();
+            onboardingWindow->centerAndRaise();
+        }
+    }
+
     emit openOnboardingDialogSignal();
     return true;
 }
@@ -68,6 +88,14 @@ bool QmlDialogManager::openOnboardingDialog(bool force)
 bool QmlDialogManager::raiseGuestDialog()
 {
     bool raisedGuestDialog = false;
+
+    if (Preferences::instance()->getSession().isEmpty())
+    {
+        openOnboardingDialog(true);
+        raiseOnboardingDialog();
+        return true;
+    }
+
     if (MegaSyncApp->getAccountStatusController()->isAccountBlocked() ||
         (MegaSyncApp->getLoginController() &&
          MegaSyncApp->getLoginController()->getState() != LoginController::FETCH_NODES_FINISHED) ||

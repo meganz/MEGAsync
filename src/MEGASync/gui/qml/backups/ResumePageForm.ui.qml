@@ -44,7 +44,7 @@ FooterButtonsPage {
         Texts.Text {
             id: titleItem
 
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
             Layout.topMargin: 40
             text: BackupsStrings.finalStepBackupTitle
             font {
@@ -57,7 +57,7 @@ FooterButtonsPage {
         Texts.SecondaryText {
             id: descriptionItem
 
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
             text: BackupsStrings.finalStepBackup
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
@@ -68,7 +68,7 @@ FooterButtonsPage {
         Texts.SecondaryText {
             id: descriptionItem2
 
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
             text: BackupsStrings.finalStepBackup2
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap

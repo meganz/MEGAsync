@@ -19,10 +19,6 @@ Item {
     readonly property int headerFooterHeight: 40
     readonly property int tableRadius: 8
 
-    Layout.preferredWidth: parent.width
-    Layout.preferredHeight: height
-    width: parent.width
-
     Rectangle {
         id: backgroundRectangle
 

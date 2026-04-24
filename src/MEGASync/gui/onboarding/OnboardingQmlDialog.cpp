@@ -55,6 +55,11 @@ void OnboardingQmlDialog::forceClose()
 
 void OnboardingQmlDialog::raise()
 {
+    if (Platform::getInstance()->isTilingWindowManager())
+    {
+        setFlags(flags() | Qt::WindowStaysOnTopHint);
+    }
+
     // The following four lines are required by Ubuntu to bring the window to the front and
     // move it to the center of the current screen, if the screen is a part of a virtual desktop or multiple screen
     // we will need add the current screen offset(topleft) to the calculated central position.

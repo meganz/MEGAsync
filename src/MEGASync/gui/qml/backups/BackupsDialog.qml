@@ -14,7 +14,7 @@ SyncsQmlDialog {
     id: window
 
     title: BackupsStrings.backupsWindowTitle
-    visible: false
+    flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint
     modality: Qt.NonModal
     width: 640
     height: 403

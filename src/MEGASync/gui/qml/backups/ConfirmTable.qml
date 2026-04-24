@@ -17,9 +17,7 @@ Rectangle {
     readonly property int headerHeight: 40
     readonly property int tableRadius: 8
 
-    Layout.preferredWidth: width
-    Layout.preferredHeight: height
-    width: 400
+    implicitHeight: 184
     height: 184
     radius: tableRadius
     color: ColorTheme.pageBackground
