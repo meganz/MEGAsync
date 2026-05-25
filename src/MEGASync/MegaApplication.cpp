@@ -1155,9 +1155,9 @@ void MegaApplication::start()
     //In case the previous session did not remove all of them
     Preferences::instance()->clearTempTransfersPath();
 
-    const auto startupSession = preferences->getSession();
-    const bool startupHasSession = !startupSession.isEmpty();
-    const bool startupLogged = preferences->logged();
+    auto startupSession = preferences->getSession();
+    bool startupHasSession = !startupSession.isEmpty();
+    bool startupLogged = preferences->logged();
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                  QString::fromUtf8(
@@ -1167,6 +1167,25 @@ void MegaApplication::start()
                      .arg(QVariant::fromValue(AppState::instance()->getAppState()).toString())
                      .toUtf8()
                      .constData());
+
+    if (!startupHasSession && startupLogged)
+    {
+        if (preferences->repairMissingUserSessionFromGeneral())
+        {
+            startupSession = preferences->getSession();
+            startupHasSession = !startupSession.isEmpty();
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_WARNING,
+                QString::fromUtf8(
+                    "Logout diagnostics: repaired missing account session from general session. "
+                    "sessionEmpty=%1")
+                    .arg(startupSession.isEmpty())
+                    .toUtf8()
+                    .constData());
+        }
+
+        startupLogged = preferences->logged();
+    }
 
     // Self-heal stale account context persisted in settings. If there is no session to resume,
     // startup should not keep an account group open as "logged".

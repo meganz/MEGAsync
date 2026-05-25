@@ -531,6 +531,49 @@ void Preferences::setSessionInUserGroup(QString session)
     syncSettingsLocked("setSessionInUserGroup");
 }
 
+bool Preferences::repairMissingUserSessionFromGeneral()
+{
+    QMutexLocker locker(&mutex);
+    if (!logged())
+    {
+        return false;
+    }
+
+    const auto userSession = mSettings->value(sessionKey).toString();
+    if (!userSession.isEmpty())
+    {
+        return false;
+    }
+
+    mSettings->endGroup();
+    const auto currentAccount = mSettings->value(currentAccountKey).toString();
+    const auto generalSession = getValue<QString>(sessionKey);
+    if (!currentAccount.isEmpty())
+    {
+        mSettings->beginGroup(currentAccount);
+    }
+
+    if (currentAccount.isEmpty() || generalSession.isEmpty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     QString::fromUtf8("Session repair skipped. currentAccountEmpty=%1 %2")
+                         .arg(currentAccount.isEmpty())
+                         .arg(sessionSummaryForLog(generalSession))
+                         .toUtf8()
+                         .constData());
+        return false;
+    }
+
+    mSettings->setValue(sessionKey, generalSession);
+    MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                 QString::fromUtf8("Session repaired. source=general destination=user %1")
+                     .arg(sessionSummaryForLog(generalSession))
+                     .toUtf8()
+                     .constData());
+    syncSettingsLocked("repairMissingUserSessionFromGeneral");
+    return true;
+}
+
 void Preferences::storeSessionInGeneral(QString session)
 {
     QMutexLocker locker(&mutex);

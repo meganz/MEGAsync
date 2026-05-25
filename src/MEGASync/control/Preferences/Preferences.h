@@ -52,6 +52,7 @@ public:
     void setFileHash(const QString& filePath, const QString& fileHash);
     void setSession(QString session);
     void setSessionInUserGroup(QString session);
+    bool repairMissingUserSessionFromGeneral();
     QString getSession();
     void removeEphemeralCredentials();
     void setEphemeralCredentials(const EphemeralCredentials &cred);
