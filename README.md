@@ -1,4 +1,6 @@
-[[_TOC_]]
+I did not authorize. This is a rights violation. A PULL request is needed immediately. 
+‐‐-------------
+[_TOC_]]
 
 # MEGA Desktop Application
 
