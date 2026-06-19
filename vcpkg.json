@@ -61,12 +61,6 @@
                 "pdfium"
             ]
         },
-        "use-cares": {
-            "description": "c-ares library",
-            "dependencies": [
-                "c-ares"
-            ]
-        },
         "use-readline": {
             "description": "Readline library",
             "dependencies": [
@@ -85,6 +79,17 @@
                 "catch2",
                 "trompeloeil"
             ]
+        },
+        "c-ares-backend-curl": {
+            "description": "Enable c-ares backend for curl",
+            "dependencies": [
+                {
+                    "name": "curl",
+                    "features": [
+                        "c-ares"
+                    ]
+                }
+            ]
         }
     },
     "dependencies": [
@@ -93,6 +98,7 @@
         {
             "name": "curl",
             "features": [
+                "websockets",
                 "zstd"
             ]
         },
