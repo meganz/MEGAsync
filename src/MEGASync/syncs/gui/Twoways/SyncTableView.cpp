@@ -113,6 +113,8 @@ void SyncTableView::initTable()
     horizontalHeader()->resizeSection(SyncItemModel::Column::UPLOADS, UploadsColumnWidth + 10);
 
     horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    horizontalHeader()->setHighlightSections(false);
+    horizontalHeader()->setProperty("ForceReadableHeaderLabels", true);
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::ENABLED, QHeaderView::Fixed);
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::MENU, QHeaderView::Fixed);
     horizontalHeader()->resizeSection(SyncItemModel::Column::LNAME,

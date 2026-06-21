@@ -13,7 +13,41 @@
 #include <QTreeView>
 #include <QWindow>
 
+#include <algorithm>
+#include <cmath>
+
 const int TOOLTIP_DELAY = 250;
+
+namespace
+{
+double relativeLuminance(const QColor& color)
+{
+    const auto channel = [](double value)
+    {
+        value /= 255.0;
+        return value <= 0.03928 ? value / 12.92 : std::pow((value + 0.055) / 1.055, 2.4);
+    };
+
+    return 0.2126 * channel(color.red()) + 0.7152 * channel(color.green()) +
+           0.0722 * channel(color.blue());
+}
+
+double contrastRatio(const QColor& first, const QColor& second)
+{
+    const double lighter = std::max(relativeLuminance(first), relativeLuminance(second));
+    const double darker = std::min(relativeLuminance(first), relativeLuminance(second));
+    return (lighter + 0.05) / (darker + 0.05);
+}
+
+QColor highContrastTextColor(const QColor& background)
+{
+    const QColor darkText(QString::fromLatin1("#ff303233"));
+    const QColor lightText(QString::fromLatin1("#fff3f4f4"));
+    return contrastRatio(darkText, background) >= contrastRatio(lightText, background)
+               ? darkText
+               : lightText;
+}
+} // namespace
 
 void MegaProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const
 {
@@ -39,30 +73,63 @@ void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOpt
                 break;
             }
 
-        if(!headerView->property("HeaderIconCenter").isValid()
-                || !headerView->property("HeaderIconCenter").toBool())
+            if (const QStyleOptionHeader* header = qstyleoption_cast<const QStyleOptionHeader*>(option))
             {
-                break;
-            }
-
-        if (const QStyleOptionHeader* header = qstyleoption_cast<const QStyleOptionHeader*>(option))
-            {
-                if (!header->icon.isNull() && header->text.isEmpty())
+                if (headerView->property("HeaderIconCenter").isValid()
+                    && headerView->property("HeaderIconCenter").toBool()
+                    && !header->icon.isNull() && header->text.isEmpty())
                 {
                     QRect rect = header->rect;
-                if (!header->icon.isNull()) {
+                    if (!header->icon.isNull())
+                    {
                         int size = qRound(headerView->height() * 0.8);
-                    QPixmap pixmap
+                        QPixmap pixmap
                             = header->icon.pixmap(QSize(size, size), (header->state & State_Enabled) ? QIcon::Normal : QIcon::Disabled);
 
-                    QRect aligned = alignedRect(header->direction, QFlag(Qt::AlignCenter), pixmap.size() / pixmap.devicePixelRatio(), rect);
+                        QRect aligned = alignedRect(header->direction, QFlag(Qt::AlignCenter), pixmap.size() / pixmap.devicePixelRatio(), rect);
                         QRect inter = aligned.intersected(rect);
-                    painter->drawPixmap(inter.x(), inter.y(), pixmap,
-                                        inter.x() - aligned.x(), inter.y() - aligned.y(),
-                            qRound(aligned.width() * pixmap.devicePixelRatio() + 0.5),
-                            qRound(pixmap.height() * pixmap.devicePixelRatio() + 0.5));
+                        painter->drawPixmap(inter.x(), inter.y(), pixmap,
+                                            inter.x() - aligned.x(), inter.y() - aligned.y(),
+                                            qRound(aligned.width() * pixmap.devicePixelRatio() + 0.5),
+                                            qRound(pixmap.height() * pixmap.devicePixelRatio() + 0.5));
                         return;
                     }
+                }
+
+                if (!header->text.isEmpty())
+                {
+                    QStyleOptionHeader headerCopy(*header);
+                    QRect textRect = subElementRect(SE_HeaderLabel, &headerCopy, widget);
+                    Qt::Alignment alignment = header->textAlignment;
+                    if (!alignment)
+                    {
+                        alignment = Qt::AlignLeft | Qt::AlignVCenter;
+                    }
+
+                    painter->save();
+                    if (headerView->property("ForceReadableHeaderLabels").toBool())
+                    {
+                        painter->setPen(QColor(QString::fromLatin1("#ff303233")));
+                    }
+                    else
+                    {
+                        const QColor background =
+                            header->palette.color(QPalette::Button).isValid()
+                                ? header->palette.color(QPalette::Button)
+                                : header->palette.color(QPalette::Window);
+                        const QColor foreground =
+                            header->palette.color(QPalette::ButtonText).isValid()
+                                ? header->palette.color(QPalette::ButtonText)
+                                : header->palette.color(QPalette::WindowText);
+                        painter->setPen(contrastRatio(background, foreground) < 3.0
+                                            ? highContrastTextColor(background)
+                                            : foreground);
+                    }
+                    painter->drawText(textRect.adjusted(0, 0, -6, 0),
+                                      alignment | Qt::TextSingleLine,
+                                      header->text);
+                    painter->restore();
+                    return;
                 }
             }
             break;
