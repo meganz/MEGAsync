@@ -1444,7 +1444,12 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     remainDays  = remainHours / HOURS_IN_1_DAY;
 }
 
-QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode, const QString &currentName, bool unescapeName, const QStringList& itemsBeingRenamed)
+QString Utilities::getNonDuplicatedNodeName(MegaNode* node,
+                                            MegaNode* parentNode,
+                                            const QString& currentName,
+                                            bool unescapeName,
+                                            const QStringList& itemsBeingRenamed,
+                                            const QString& localFolderToCheck)
 {
     QString newName;
     QString nodeName;
@@ -1502,6 +1507,22 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
                 }
             }
 
+            // Also reject the name if it already exists in the local folder, so it
+            // won't clash when the rename syncs down to local.
+            if (!nameFound && !localFolderToCheck.isEmpty())
+            {
+                QDir localDir(localFolderToCheck);
+                const auto entries = localDir.entryList(QDir::Files | QDir::Dirs |
+                                                        QDir::NoDotAndDotDot | QDir::NoSymLinks);
+                for (const auto& entry: entries)
+                {
+                    if (suggestedName.compare(entry, Qt::CaseInsensitive) == 0)
+                    {
+                        nameFound = true;
+                        break;
+                    }
+                }
+            }
 
             if(!nameFound)
             {

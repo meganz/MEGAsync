@@ -513,6 +513,16 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                                                                QStringList& cloudItemsBeingRenamed)
 {
     auto result(true);
+
+    // Folder on the local side where these cloud items will sync to; used to avoid
+    // choosing a new name that already exists locally.
+    QString localFolderToCheck;
+    if (!localConflictedNames.isEmpty())
+    {
+        localFolderToCheck =
+            QFileInfo(localConflictedNames.first()->mConflictedPath).absolutePath();
+    }
+
     for (auto i = cloudConflictedNames.crbegin(), end = cloudConflictedNames.crend(); i != end; ++i)
     {
         auto& cloudConflictedName = *i;
@@ -538,7 +548,13 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                     std::shared_ptr<mega::MegaError> error(nullptr);
 
                     std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedNode->getParentHandle()));
-                    auto newName = Utilities::getNonDuplicatedNodeName(conflictedNode.get(), parentNode.get(), cloudConflictedName->getConflictedName(), true, cloudItemsBeingRenamed);
+                    auto newName = Utilities::getNonDuplicatedNodeName(
+                        conflictedNode.get(),
+                        parentNode.get(),
+                        cloudConflictedName->getConflictedName(),
+                        true,
+                        cloudItemsBeingRenamed,
+                        localFolderToCheck);
                     MegaApiSynchronizedRequest::runRequestWithResult(
                         &mega::MegaApi::renameNode,
                         MegaSyncApp->getMegaApi(),
