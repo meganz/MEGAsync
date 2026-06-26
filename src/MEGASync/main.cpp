@@ -410,6 +410,67 @@ int main(int argc, char *argv[])
             qunsetenv("XDG_SESSION_TYPE");
         }
     }
+
+    // Qt5-ONLY Wayland workaround: when the app ends up on the native Wayland
+    // QPA (via "-platform wayland", QT_QPA_PLATFORM=wayland, or
+    // DO_NOT_UNSET_XDG_SESSION_TYPE keeping a wayland session above), two
+    // top-level QQuickWindows (a parent window and a modal QML dialog) fail GL
+    // context activation under Qt5's *threaded* scene-graph render loop with
+    //   "QWaylandGLContext::makeCurrent: eglError: 3002" (EGL_BAD_ACCESS)
+    // and the dialog never renders a frame, so it appears not to open at all.
+    // EGL_BAD_ACCESS means the EGL context is already current on another
+    // thread: this is a threaded-render-loop + multi-window bug, NOT a driver
+    // bug — forcing software GL (LIBGL_ALWAYS_SOFTWARE/llvmpipe) does NOT help
+    // because the loop is still threaded. The single-threaded "basic" render
+    // loop serialises GL-context use across windows and resolves it while
+    // keeping the OpenGL backend (so ShaderEffect/layers still render, unlike
+    // QT_QUICK_BACKEND=software). Evaluated AFTER the unset above so it reflects
+    // the platform the app will actually start on; never overrides a value the
+    // user/distro already set. TODO Qt6: re-evaluate — the Qt6 Wayland backend
+    // does not exhibit this multi-window makeCurrent contention.
+    if (!qEnvironmentVariableIsSet("DO_NOT_SET_QSG_RENDER_LOOP") &&
+        !qEnvironmentVariableIsSet("QSG_RENDER_LOOP"))
+    {
+        // Resolve the QPA platform the app will actually start on, following
+        // Qt's own precedence: the "-platform <name>" command-line argument
+        // wins over the QT_QPA_PLATFORM environment variable, which wins over
+        // session auto-detection (XDG_SESSION_TYPE, possibly already cleared
+        // above to steer toward XWayland). argv is parsed here because Qt has
+        // not consumed it yet (QApplication is constructed further down).
+        QString platform;
+        for (int i = 1; i < argc; ++i)
+        {
+            QString arg = QString::fromLocal8Bit(argv[i]);
+            // Qt strips one leading '-', so both -platform and --platform work.
+            if (arg.startsWith(QString::fromUtf8("--")))
+            {
+                arg.remove(0, 1);
+            }
+            if (arg == QString::fromUtf8("-platform") && (i + 1) < argc)
+            {
+                // Name may carry ":options", e.g. "wayland:no-window-decorations".
+                platform = QString::fromLocal8Bit(argv[i + 1]);
+                break;
+            }
+        }
+        if (platform.isEmpty())
+        {
+            platform = qEnvironmentVariable("QT_QPA_PLATFORM");
+        }
+
+        const bool willUseWayland =
+            platform.contains(QString::fromUtf8("wayland")) ||
+            (platform.isEmpty() &&
+             qEnvironmentVariable("XDG_SESSION_TYPE") == QString::fromUtf8("wayland"));
+        if (willUseWayland)
+        {
+            logMessages.emplace_back(
+                MegaApi::LOG_LEVEL_INFO,
+                QStringLiteral("Native Wayland detected: forcing QSG_RENDER_LOOP=basic "
+                               "to avoid EGL_BAD_ACCESS on multi-window QML dialogs"));
+            qputenv("QSG_RENDER_LOOP", "basic");
+        }
+    }
 #endif
 
 #ifndef Q_OS_MACOS

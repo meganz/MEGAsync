@@ -114,7 +114,28 @@ void QmlDialog::readyToBeShow()
     // Set the opacity to 0.0 to hide the window even if it is shown
     // The opacity will be set again to the real opacity
     mPreviousOpacity = opacity() > HIDDEN_OPACITY ? opacity() : DEFAULT_VISIBLE_OPACITY;
-    setOpacity(HIDDEN_OPACITY);
+
+    // Qt5-ONLY Wayland branch: the opacity-hide trick is unreliable on Qt5
+    // Wayland. The qtwayland QPA plugin does not implement window opacity
+    // (every setOpacity() call logs "This plugin does not support setting
+    // window opacity" and is ignored), so on most compositors the hide is a
+    // no-op that only spams warnings; on plugins/compositors that DO honor it,
+    // the later restore in mRestoreOpacityTimer is not re-presented (no forced
+    // surface commit), leaving the dialog mapped-but-invisible. A Wayland
+    // client also cannot position its own window, so there is nothing to hide
+    // *for*: placeAndRaise()'s setFramePosition() is a no-op there. Keep the
+    // window opaque; the fallback timer still drives the subsequent
+    // raise/activate. TODO Qt6: remove this branch — Qt6 Wayland honors live
+    // opacity changes, so the cross-platform opacity path below works there.
+    if (Platform::getInstance()->isWayland())
+    {
+        setOpacity(mPreviousOpacity);
+    }
+    else
+    {
+        setOpacity(HIDDEN_OPACITY);
+    }
+
     show();
     mShowWhenCreatedFallbackTimer.start();
 }
