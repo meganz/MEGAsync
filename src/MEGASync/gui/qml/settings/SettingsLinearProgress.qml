@@ -140,7 +140,9 @@ Item {
                 return
             }
 
-            legend.push(segment)
+            if (Number(segment.value) > 0) {
+                legend.push(segment)
+            }
             ;(segment.children || []).forEach(function(childSegment) {
                 if (childSegment && Number(childSegment.value) > 0) {
                     legend.push(childSegment)
