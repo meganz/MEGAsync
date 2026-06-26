@@ -176,6 +176,7 @@ Rectangle {
                 hoverEnabled: true
                 propagateComposedEvents: true
                 acceptedButtons: Qt.RightButton
+                enabled: status !== SettingsModel.REMOVING
 
                 onClicked: function(mouse) {
                     if (mouse.button === Qt.RightButton) {
