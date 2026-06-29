@@ -22,8 +22,19 @@ Qml.Menu {
     topPadding: defaultPadding
     bottomPadding: defaultPadding
 
+    width: {
+        var maxMenuItemWidth = 0;
+        for (var menuItemIndex = 0; menuItemIndex < count; menuItemIndex++) {
+            var menuItem = itemAt(menuItemIndex);
+            if (menuItem && menuItem.implicitWidth > maxMenuItemWidth){
+                maxMenuItemWidth = menuItem.implicitWidth;
+            }
+        }
+        return maxMenuItemWidth;
+    }
+
     background: Rectangle {
-        implicitWidth: defaultMenuWidth
+        implicitWidth: Math.max(defaultMenuWidth, root.width)
         border.width: 1
         border.color: colors.menuBorder
         color: colors.menuBackground
