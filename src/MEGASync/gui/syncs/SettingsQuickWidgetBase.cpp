@@ -127,12 +127,7 @@ void SettingsQuickWidgetBase::removeNonConfirmation(int index) const
 
 void SettingsQuickWidgetBase::openOverQuotaDialog() const
 {
-    auto overQuotaDialog = MegaSyncApp->createOverquotaDialogIfNeeded();
-
-    if (overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog);
-    }
+    Utilities::upgradeClicked();
 }
 
 void SettingsQuickWidgetBase::sortModelByName(bool ascending)
