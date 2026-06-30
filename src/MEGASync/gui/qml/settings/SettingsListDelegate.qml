@@ -71,9 +71,6 @@ Rectangle {
 
     // context-menu per-tab differences
     property url openInMegaIcon: Images.mega_medium_thin_outline
-    property string showInFolderText: OS.isMac() ? SettingsStrings.menuActionsShowInFinder
-                                                 : OS.isWindows() ? SettingsStrings.menuActionsShowInFileExplorer
-                                                                  : SettingsStrings.menuActionsShowInFolder
     property url exclusionsIcon: Images.file_ignore_small_thin_outline
     property url rebootIcon: Images.rotate_cw_small_thin_outline
     property string rebootText: SettingsStrings.menuActionsRebootSync
@@ -138,6 +135,18 @@ Rectangle {
                 return Images.pause_thin_small_thin_outline;
             default:
                 return root.idleIcon;
+        }
+    }
+
+    function getShowInFolderLiteral() {
+        if (OS.isMac()) {
+            return SettingsStrings.menuActionsShowInFinder;
+        }
+        else if (OS.isWindows()) {
+            return SettingsStrings.menuActionsShowInFileExplorer;
+        }
+        else {
+            return SettingsStrings.menuActionsShowInFolder;
         }
     }
 
@@ -249,7 +258,7 @@ Rectangle {
 
                                 ToolTip {
                                     visible: nameAndFolderSearchMouseArea.containsMouse
-                                    text: SettingsStrings.toolTipShowInFolder
+                                    text: getShowInFolderLiteral()
                                     delay: root.toolTipShowDelay
                                 }
 
@@ -382,7 +391,7 @@ Rectangle {
                 }
 
                 ContextMenuItem {
-                    text: root.showInFolderText
+                    text: getShowInFolderLiteral()
                     icon.source: Images.folder_small_thin_outline
                     onTriggered: {
                         settingsAccess.exploreLocal(folder);

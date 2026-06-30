@@ -4006,17 +4006,25 @@ void MegaApplication::onSyncModelUpdated(std::shared_ptr<SyncSettings>)
 
 void MegaApplication::enableLogOffDisabledSyncs()
 {
-    auto syncsUnattended = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_TWOWAY);
-    for (auto& sync: as_const(syncsUnattended))
+    auto enableSyncs = [](auto& syncs)
     {
-        if (sync->getRunState() == ::mega::MegaSync::RUNSTATE_DISABLED)
+        for (auto& sync: as_const(syncs))
         {
-            if (sync->getError() == ::mega::MegaSync::LOGGED_OUT)
+            if (sync->getRunState() == ::mega::MegaSync::RUNSTATE_DISABLED)
             {
-                SyncController::instance().setSyncToRun(sync);
+                if (sync->getError() == ::mega::MegaSync::LOGGED_OUT)
+                {
+                    SyncController::instance().setSyncToRun(sync);
+                }
             }
         }
-    }
+    };
+
+    auto syncs = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_TWOWAY);
+    enableSyncs(syncs);
+
+    auto backups = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_BACKUP);
+    enableSyncs(backups);
 }
 
 void MegaApplication::onBlocked()
