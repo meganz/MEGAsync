@@ -52,7 +52,9 @@ ColumnLayout {
                      SyncErrors.SYNC_CONFIG_READ_FAILURE,
                      SyncErrors.UNABLE_TO_OPEN_DATABASE,
                      SyncErrors.UNKNOWN_DRIVE_PATH,
+                     SyncErrors.ACCOUNT_EXPIRED,
                      SyncErrors.LOCAL_PATH_UNAVAILABLE];
+
         if (retryOnIgnoreFileError) {
             codes.push(SyncErrors.COULD_NOT_CREATE_IGNORE_FILE);
         }
@@ -125,7 +127,7 @@ ColumnLayout {
             id: getMoreStorageButton
 
             errorId: root.errorId
-            triggerErrors: [SyncErrors.STORAGE_OVERQUOTA]
+            triggerErrors: [SyncErrors.STORAGE_OVERQUOTA, SyncErrors.ACCOUNT_EXPIRED]
             resetInterval: root.timeToResetActionButtonState
             sizes: SmallSizes { verticalPadding: root.buttonVerticalPadding }
             text: SettingsStrings.solveIssueGetMoreStorage

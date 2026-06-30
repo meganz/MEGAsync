@@ -24,6 +24,7 @@ enum Code
     LOCAL_PATH_UNAVAILABLE = static_cast<int>(mega::MegaSync::LOCAL_PATH_UNAVAILABLE),
     REMOTE_NODE_NOT_FOUND = static_cast<int>(mega::MegaSync::REMOTE_NODE_NOT_FOUND),
     STORAGE_OVERQUOTA = static_cast<int>(mega::MegaSync::STORAGE_OVERQUOTA),
+    ACCOUNT_EXPIRED = static_cast<int>(mega::MegaSync::ACCOUNT_EXPIRED),
     LOCAL_FILESYSTEM_MISMATCH = static_cast<int>(mega::MegaSync::LOCAL_FILESYSTEM_MISMATCH),
     REMOTE_NODE_MOVED_TO_RUBBISH = static_cast<int>(mega::MegaSync::REMOTE_NODE_MOVED_TO_RUBBISH),
     REMOTE_NODE_INSIDE_RUBBISH = static_cast<int>(mega::MegaSync::REMOTE_NODE_INSIDE_RUBBISH),
