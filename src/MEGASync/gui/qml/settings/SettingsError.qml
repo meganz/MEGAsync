@@ -53,6 +53,7 @@ ColumnLayout {
                      SyncErrors.UNABLE_TO_OPEN_DATABASE,
                      SyncErrors.UNKNOWN_DRIVE_PATH,
                      SyncErrors.ACCOUNT_EXPIRED,
+                     SyncErrors.FOREIGN_TARGET_OVERSTORAGE,
                      SyncErrors.LOCAL_PATH_UNAVAILABLE];
 
         if (retryOnIgnoreFileError) {
