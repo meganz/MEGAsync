@@ -116,7 +116,7 @@ void SettingsQuickWidgetBase::rescan(int index) const
 void SettingsQuickWidgetBase::reboot(int index) const
 {
     const auto& sync = mModel->getSyncSetting(index);
-    mController.resetSync(sync, mega::MegaSync::SyncRunningState::RUNSTATE_SUSPENDED);
+    mController.resetSync(sync, mega::MegaSync::SyncRunningState::RUNSTATE_DISABLED);
 }
 
 void SettingsQuickWidgetBase::removeNonConfirmation(int index) const

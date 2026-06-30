@@ -270,7 +270,11 @@ SyncSettingsModelBase::State
         }
         case ::mega::MegaSync::RUNSTATE_DISABLED:
         {
-            return State::FAIL;
+            if (sync->getError())
+            {
+                return State::FAIL;
+            }
+            break;
         }
         case ::mega::MegaSync::RUNSTATE_RUNNING:
         {
