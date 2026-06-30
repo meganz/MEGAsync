@@ -76,6 +76,7 @@ private:
     State getState(std::shared_ptr<SyncSettings> sync) const;
     void sendDataChanged(int row);
     QString getErrorMessage(std::shared_ptr<SyncSettings> sync) const;
+    void onLanguageChanged();
 
     SyncInfo* mSyncInfo;
     mega::MegaSync::SyncType mType;
