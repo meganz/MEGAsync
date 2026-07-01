@@ -407,13 +407,6 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIn
     {
         auto& conflictName = mLocalConflictedNames[conflictIndex];
 
-        auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
-        auto siblingItem(findOtherSideItem(cloudConflictedNames, conflictName));
-        if(siblingItem)
-        {
-            siblingItem->solveByRename(renameTo);
-        }
-
         conflictName->solveByRename(renameTo);
         result = checkAndSolveConflictedNamesSolved();
     }
@@ -431,13 +424,6 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
         auto conflictName = conflictedNames.at(conflictIndex);
         if(conflictName)
         {
-
-            auto siblingItem(findOtherSideItem(mLocalConflictedNames, conflictName));
-            if(siblingItem)
-            {
-                siblingItem->solveByRename(renameTo);
-            }
-
             conflictName->solveByRename(renameTo);
 
             result = checkAndSolveConflictedNamesSolved();
@@ -480,27 +466,32 @@ bool NameConflictedStalledIssue::renameNodesAutomatically()
     }
     else
     {
-        auto lastModifiedCloudName = cloudConflictedNames.first();
-        auto lastModifiedLocalName = localConflictedNames.first();
-
-        if (lastModifiedCloudName->mItemAttributes->modifiedTimeInMSecs() >
-            lastModifiedLocalName->mItemAttributes->modifiedTimeInMSecs())
+        // Keep each matched local/remote pair with their original names; only the unpaired
+        // items (the ones actually causing the conflict) are renamed, each on its own side.
+        for (const auto& localConflictedName: localConflictedNames)
         {
-            if((result = renameCloudNodesAutomatically(
-                   cloudConflictedNames, localConflictedNames, true, itemsBeingRenamed)))
+            if (!localConflictedName->isSolved())
             {
-                result = renameLocalItemsAutomatically(
-                    cloudConflictedNames, localConflictedNames, false, itemsBeingRenamed);
+                if (auto cloudSibling =
+                        findOtherSideItem(cloudConflictedNames, localConflictedName))
+                {
+                    cloudSibling->solveByOtherSide();
+                    localConflictedName->solveByOtherSide();
+                }
             }
         }
-        else
+
+        result = renameCloudNodesAutomatically(cloudConflictedNames,
+                                               localConflictedNames,
+                                               false,
+                                               itemsBeingRenamed);
+
+        if (result)
         {
-            if((result = renameLocalItemsAutomatically(
-                    cloudConflictedNames, localConflictedNames, true, itemsBeingRenamed)))
-            {
-                result = renameCloudNodesAutomatically(
-                    cloudConflictedNames, localConflictedNames, false, itemsBeingRenamed);
-            }
+            result = renameLocalItemsAutomatically(cloudConflictedNames,
+                                                   localConflictedNames,
+                                                   false,
+                                                   itemsBeingRenamed);
         }
     }
 
