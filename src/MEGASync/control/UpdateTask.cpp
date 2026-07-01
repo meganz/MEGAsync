@@ -7,8 +7,34 @@
 #include <QAuthenticator>
 #include <QDesktopServices>
 
+#include <algorithm>
+
 using namespace mega;
 using namespace std;
+
+namespace
+{
+QString normalizedManifestPath(const QString& path)
+{
+    QString normalized = QDir::cleanPath(QDir::fromNativeSeparators(path));
+    while (normalized.startsWith(QLatin1Char('/')))
+    {
+        normalized.remove(0, 1);
+    }
+
+    return normalized == QLatin1String(".") ? QString() : normalized;
+}
+
+QString manifestPathKey(const QString& path)
+{
+    const QString normalized = normalizedManifestPath(path);
+#ifdef _WIN32
+    return normalized.toCaseFolded();
+#else
+    return normalized;
+#endif
+}
+} // namespace
 
 UpdateTask::UpdateTask(MegaApi *megaApi, QString appFolder, bool isPublic, QObject *parent) :
     QObject(parent)
@@ -144,6 +170,8 @@ void UpdateTask::initialCleanup()
     downloadURLs.clear();
     localPaths.clear();
     fileSignatures.clear();
+    manifestLocalPaths.clear();
+    obsoletePaths.clear();
     currentFile = -1;
 }
 
@@ -280,6 +308,7 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
         addToSignature(localPath);
         addToSignature(fileSignature);
 
+        manifestLocalPaths.append(normalizedManifestPath(localPath));
         if (alreadyInstalled(localPath, fileSignature))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("File already installed: %1").arg(localPath).toUtf8().constData());
@@ -291,32 +320,34 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
         fileSignatures.append(fileSignature);
     }
 
+    if (!checkSignature(updateSignature))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Invalid update info (invalid signature)");
+        return false;
+    }
+
     if (!downloadURLs.size())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "All files are up to date");
 
-        int intVersion = 0;
         QDir dataDir(preferences->getDataPath());
         QString appVersionPath = dataDir.filePath(QString::fromLatin1("megasync.version"));
         QFile f(appVersionPath);
         if (f.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&f);
-            QString versionIn = in.readAll();
-            intVersion = versionIn.toInt();
-            if (intVersion > Preferences::VERSION_CODE)
+            const QString versionIn = in.readAll();
+            if (versionIn.toInt() > Preferences::VERSION_CODE)
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "External update detected");
                 return true;
             }
         }
 
-        return false;
-    }
-
-    if (!checkSignature(updateSignature))
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,"Invalid update info (invalid signature)");
+        // No files to install and no externally applied update: nothing to do.
+        // Returning false here avoids running performUpdate() (and its reboot via
+        // updateCompleted) on every up-to-date check. Obsolete-file cleanup still
+        // runs during real updates, when at least one file differs and is downloaded.
         return false;
     }
 
@@ -438,6 +469,13 @@ bool UpdateTask::performUpdate()
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("File installed: %1").arg(file).toUtf8().constData());
     }
 
+    if (!cleanupObsoleteFiles())
+    {
+        rollbackObsoleteFiles(obsoletePaths.size() - 1);
+        rollbackUpdate(localPaths.size() - 1);
+        return false;
+    }
+
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update successfully installed");
     return true;
 }
@@ -453,6 +491,134 @@ void UpdateTask::rollbackUpdate(int fileNum)
         MegaApi::log(MegaApi::LOG_LEVEL_INFO,QString::fromUtf8("File restored: %1").arg(file).toUtf8().constData());
     }
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update uninstalled");
+}
+
+bool UpdateTask::cleanupObsoleteFiles()
+{
+    if (manifestLocalPaths.isEmpty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     "Skipping obsolete file cleanup because the update manifest is empty");
+        return true;
+    }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Cleaning obsolete install files...");
+
+    QSet<QString> expectedPaths;
+    for (const QString& manifestPath: manifestLocalPaths)
+    {
+        expectedPaths.insert(manifestPathKey(manifestPath));
+    }
+
+    QDirIterator it(appFolder.absolutePath(),
+                    QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot,
+                    QDirIterator::Subdirectories);
+    while (it.hasNext())
+    {
+        it.next();
+
+        const QFileInfo info = it.fileInfo();
+        if (info.isDir() && !info.isSymLink())
+        {
+            continue;
+        }
+
+        const QString relativePath =
+            normalizedManifestPath(appFolder.relativeFilePath(info.absoluteFilePath()));
+        if (expectedPaths.contains(manifestPathKey(relativePath)))
+        {
+            continue;
+        }
+
+        const QFileInfo backupInfo(backupFolder.absoluteFilePath(relativePath));
+        if (!backupInfo.dir().mkpath(QString::fromUtf8(".")))
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Error creating obsolete file backup folder: %1")
+                             .arg(backupInfo.dir().absolutePath())
+                             .toUtf8()
+                             .constData());
+            return false;
+        }
+
+        // QFile::rename (unlike QDir::rename) falls back to copy + delete when the source
+        // and destination are on different filesystems, which the install and backup
+        // folders may well be.
+        if (!QFile::rename(info.absoluteFilePath(), backupInfo.absoluteFilePath()))
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Error moving obsolete file %1 to backup %2")
+                             .arg(info.absoluteFilePath(), backupInfo.absoluteFilePath())
+                             .toUtf8()
+                             .constData());
+            return false;
+        }
+
+        obsoletePaths.append(relativePath);
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     QString::fromUtf8("Obsolete file removed from install folder: %1")
+                         .arg(relativePath)
+                         .toUtf8()
+                         .constData());
+    }
+
+    removeEmptyInstallFolders();
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                 QString::fromUtf8("Obsolete install file cleanup completed. Files removed: %1")
+                     .arg(obsoletePaths.size())
+                     .toUtf8()
+                     .constData());
+    return true;
+}
+
+void UpdateTask::rollbackObsoleteFiles(int fileNum)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Restoring obsolete files...");
+    for (int i = fileNum; i >= 0; i--)
+    {
+        const QString file = obsoletePaths[i];
+        const QFileInfo dstInfo(appFolder.absoluteFilePath(file));
+        dstInfo.dir().mkpath(QString::fromUtf8("."));
+
+        if (!QFile::rename(backupFolder.absoluteFilePath(file), appFolder.absoluteFilePath(file)))
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Error restoring obsolete file: %1")
+                             .arg(file)
+                             .toUtf8()
+                             .constData());
+            continue;
+        }
+
+        MegaApi::log(
+            MegaApi::LOG_LEVEL_INFO,
+            QString::fromUtf8("Obsolete file restored: %1").arg(file).toUtf8().constData());
+    }
+}
+
+void UpdateTask::removeEmptyInstallFolders()
+{
+    QStringList folders;
+    QDirIterator it(appFolder.absolutePath(),
+                    QDir::Dirs | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot |
+                        QDir::NoSymLinks,
+                    QDirIterator::Subdirectories);
+    while (it.hasNext())
+    {
+        folders.append(it.next());
+    }
+
+    std::sort(folders.begin(),
+              folders.end(),
+              [](const QString& lhs, const QString& rhs)
+              {
+                  return lhs.size() > rhs.size();
+              });
+
+    for (const QString& folder: folders)
+    {
+        QDir().rmdir(folder);
+    }
 }
 
 void UpdateTask::addToSignature(QString value)

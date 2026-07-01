@@ -13,6 +13,7 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QProcess>
+#include <QSet>
 #include <QStringList>
 #include <QThread>
 #include <QTimer>
@@ -35,6 +36,9 @@ protected:
    bool processFile(QNetworkReply *reply);
    bool performUpdate();
    void rollbackUpdate(int fileNum);
+   bool cleanupObsoleteFiles();
+   void rollbackObsoleteFiles(int fileNum);
+   void removeEmptyInstallFolders();
    void addToSignature(QString value);
    void addToSignature(QByteArray bytes);
    void initSignature();
@@ -47,6 +51,8 @@ protected:
    QStringList downloadURLs;
    QStringList localPaths;
    QStringList fileSignatures;
+   QStringList manifestLocalPaths;
+   QStringList obsoletePaths;
    QNetworkAccessManager *m_WebCtrl;
    mega::MegaHashSignature *signatureChecker;
    char signature[512];
