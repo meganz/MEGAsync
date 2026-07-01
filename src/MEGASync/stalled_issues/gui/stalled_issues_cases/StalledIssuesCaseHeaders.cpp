@@ -84,7 +84,7 @@ void DefaultHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Error detected with [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("Reason not found."));
 }
 
@@ -97,7 +97,8 @@ void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Detected sym link: [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
+    header->setText(headerText.arg(
+        header->getData().consultData()->consultLocalData()->getNativeFilePath().toHtmlEscaped()));
     header->setTitleDescriptionText(QString());
 }
 
@@ -121,8 +122,11 @@ void HardSpecialLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
         }
 
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-        header->setText(headerText.arg(
-            header->getData().consultData()->consultLocalData()->getNativeFilePath()));
+        header->setText(headerText.arg(header->getData()
+                                           .consultData()
+                                           ->consultLocalData()
+                                           ->getNativeFilePath()
+                                           .toHtmlEscaped()));
         header->setTitleDescriptionText(QString());
     }
 }
@@ -172,7 +176,8 @@ void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header
 {
     QString headerText =tr("Can´t download [B]%1[/B] to the selected location");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->getData().consultData()->consultCloudData()->getNativeFilePath()));
+    header->setText(headerText.arg(
+        header->getData().consultData()->consultCloudData()->getNativeFilePath().toHtmlEscaped()));
     header->setTitleDescriptionText(tr("File fingerprint missing"));
 }
 
@@ -192,12 +197,13 @@ CloudNodeIsBlockedHeader::CloudNodeIsBlockedHeader(StalledIssueHeader* header)
 void CloudNodeIsBlockedHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     auto headerText = tr("The file %1 is unavailable because it was reported to contain content in "
-                         "breach of [A]MEGA’s Terms of Service[/A].")
-                          .arg(header->displayFileName());
+                         "breach of [A]MEGA’s Terms of Service[/A].");
     QStringList links;
     links << ServiceUrls::getServiceTermsUrl().toString();
+    // Decorate the trusted template first, then interpolate the escaped (untrusted) name,
+    // so a name containing markup can neither render as HTML nor perturb link decoration.
     StalledIssuesLinkTextDecorator::process(links, headerText);
-    header->setText(headerText);
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
 }
 
 //Local folder not scannable
@@ -209,7 +215,7 @@ void FileIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText =tr("Can´t sync [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     if(header->getData().consultData()->filesCount() > 0)
     {
         header->setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
@@ -229,10 +235,9 @@ void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header
 {
     if(auto moveOrRenameIssue = header->getData().convert<MoveOrRenameCannotOccurIssue>())
     {
-        QString headerText = tr("Can’t move or rename some items in [B]%1[/B]")
-                                 .arg(moveOrRenameIssue->syncName());
+        QString headerText = tr("Can’t move or rename some items in [B]%1[/B]");
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-        header->setText(headerText);
+        header->setText(headerText.arg(moveOrRenameIssue->syncName().toHtmlEscaped()));
 
         header->setTitleDescriptionText(
             tr("The local and remote locations have changed at the same time"));
@@ -248,7 +253,7 @@ void DeleteOrMoveWaitingOnScanningHeader::refreshCaseTitles(StalledIssueHeader* 
 {
     QString headerText = tr("Can´t find [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
 }
 
@@ -261,7 +266,7 @@ void DeleteWaitingOnMovesHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Waiting to move [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("Waiting for other processes to complete."));
 }
 
@@ -275,7 +280,7 @@ void UploadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Can´t upload [B]%1[/B] to the selected location");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("Cannot reach the destination folder."));
 }
 
@@ -289,7 +294,7 @@ void DownloadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Can´t download [B]%1[/B] to the selected location");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName(true)));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe(true)));
     header->setTitleDescriptionText(tr("A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location."));
 }
 
@@ -354,7 +359,7 @@ void CannotCreateFolderHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Cannot create [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
 
@@ -367,7 +372,7 @@ void CannotPerformDeletionHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Cannot perform deletion [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
 
@@ -381,7 +386,7 @@ void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseTitles(StalledIssueHead
 {
     QString headerText = tr("Unable to sync [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
 }
 
@@ -418,7 +423,7 @@ void FolderMatchedAgainstFileHeader::refreshCaseTitles(StalledIssueHeader* heade
 {
     QString headerText = tr("Can´t sync [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("Cannot sync folders against files."));
 }
 
@@ -467,7 +472,7 @@ void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseTitles(StalledIssu
 {
     QString headerText = tr("Can´t sync [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("This file has conflicting copies"));
 }
 
@@ -481,7 +486,7 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseTitles(StalledI
 {
     QString headerText = tr("Can´t sync [B]%1[/B]");
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
+    header->setText(headerText.arg(header->displayFileNameHtmlSafe()));
     header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
 }
 
@@ -577,14 +582,14 @@ void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
         auto cloudData = nameConflict->getNameConflictCloudData();
         if(cloudData.firstNameConflict())
         {
-            text = text.arg(cloudData.getConflictedName());
+            text = text.arg(cloudData.getConflictedName().toHtmlEscaped());
         }
         else
         {
             auto localConflictedNames = nameConflict->getNameConflictLocalData();
             if(!localConflictedNames.isEmpty())
             {
-                text = text.arg(localConflictedNames.first()->getConflictedName());
+                text = text.arg(localConflictedNames.first()->getConflictedName().toHtmlEscaped());
             }
         }
 
@@ -673,7 +678,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
                 selectionInfo.msgInfo.descriptionText =
                     tr("This action will replace the older files with the same name with the most "
                        "recently modified file (%1).")
-                        .arg(mostRecentlyModifiedFile);
+                        .arg(mostRecentlyModifiedFile.toHtmlEscaped());
             }
             else if(!(index & NameConflictedStalledIssue::MergeFolders))
             {

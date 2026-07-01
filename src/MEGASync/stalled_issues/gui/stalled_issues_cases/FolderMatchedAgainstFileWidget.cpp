@@ -69,7 +69,7 @@ void FolderMatchedAgainstFileWidget::refreshUi()
             {
                 ui->remoteCopy->setMessage(
                     QApplication::translate("NameConflict", "Renamed to \"%1\"")
-                        .arg(result.newName),
+                        .arg(result.newName.toHtmlEscaped()),
                     iconName,
                     iconToken);
                 break;
@@ -78,7 +78,7 @@ void FolderMatchedAgainstFileWidget::refreshUi()
             {
                 ui->localCopy->setMessage(
                     QApplication::translate("NameConflict", "Renamed to \"%1\"")
-                        .arg(result.newName),
+                        .arg(result.newName.toHtmlEscaped()),
                     iconName,
                     iconToken);
                 break;

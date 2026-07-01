@@ -61,6 +61,9 @@ public:
 
     void setText(const QString& text, const QString& tooltip = QString());
     QString displayFileName(bool preferCloud = false);
+    // HTML-escaped variant of displayFileName() for use in AutoText/rich-text labels,
+    // where an unescaped name containing markup would be rendered as live HTML.
+    QString displayFileNameHtmlSafe(bool preferCloud = false);
 
     void setTitleDescriptionText(const QString& text);
 
