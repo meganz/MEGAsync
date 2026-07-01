@@ -2362,22 +2362,26 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
 {
     if (mExecuteInAppThread)
     {
-        MegaRequest *requestCopy = request->copy();
-        MegaError *errorCopy = e->copy();
+        std::unique_ptr<MegaRequest> requestCopy(request->copy());
+        std::unique_ptr<MegaError> errorCopy(e->copy());
         QObject temporary;
-        QObject::connect(&temporary, &QObject::destroyed, qApp, [this, api, requestCopy, errorCopy](){
-
-            if (onRequestFinishCallback)
+        QObject::connect(
+            &temporary,
+            &QObject::destroyed,
+            qApp,
+            [this, api, requestCopy = std::move(requestCopy), errorCopy = std::move(errorCopy)]()
             {
-                onRequestFinishCallback(api, requestCopy, errorCopy);
-            }
+                if (onRequestFinishCallback)
+                {
+                    onRequestFinishCallback(api, requestCopy.get(), errorCopy.get());
+                }
 
-            if (mAutoremove)
-            {
-                delete this;
-            }
-
-        }, Qt::QueuedConnection);
+                if (mAutoremove)
+                {
+                    delete this;
+                }
+            },
+            Qt::QueuedConnection);
     }
     else
     {
