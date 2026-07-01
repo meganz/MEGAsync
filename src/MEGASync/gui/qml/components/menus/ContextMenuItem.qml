@@ -41,7 +41,7 @@ Qml.MenuItem {
     contentItem: Rectangle {
         id: itemBorder
 
-        implicitWidth: parent.width
+        implicitWidth: row.implicitWidth
         implicitHeight: parent.height
         radius: sizes.focusRadius
         color: getBackgroundColor()
