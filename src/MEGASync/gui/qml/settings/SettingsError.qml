@@ -129,7 +129,7 @@ ColumnLayout {
             resetInterval: root.timeToResetActionButtonState
             sizes: SmallSizes { verticalPadding: root.buttonVerticalPadding }
             text: SettingsStrings.solveIssueGetMoreStorage
-            onActionTriggered: settingsAccess.openOverQuotaDialog()
+            onActionTriggered: settingsAccess.onGetMoreQuotaClicked()
         }
 
         ErrorActionButton {

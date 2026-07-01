@@ -125,7 +125,7 @@ void SettingsQuickWidgetBase::removeNonConfirmation(int index) const
     mController.removeSync(sync);
 }
 
-void SettingsQuickWidgetBase::openOverQuotaDialog() const
+void SettingsQuickWidgetBase::onGetMoreQuotaClicked() const
 {
     Utilities::upgradeClicked();
 }

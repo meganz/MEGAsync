@@ -29,7 +29,7 @@ public:
     Q_INVOKABLE void rescan(int index) const;
     Q_INVOKABLE void reboot(int index) const;
     Q_INVOKABLE void removeNonConfirmation(int index) const;
-    Q_INVOKABLE void openOverQuotaDialog() const;
+    Q_INVOKABLE void onGetMoreQuotaClicked() const;
     Q_INVOKABLE void sortModelByName(bool ascending = true);
     Q_INVOKABLE void sortModelByStatus(bool ascending = true);
 
