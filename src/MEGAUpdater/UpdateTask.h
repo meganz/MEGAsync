@@ -77,6 +77,9 @@ protected:
     bool alreadyExists(std::string absolutePath, std::string fileSignature);
     bool performUpdate();
     void rollbackUpdate(int fileNum);
+    bool cleanupObsoleteFiles();
+    void rollbackObsoleteFiles(int fileNum);
+    void removeEmptyInstallFolders();
     void initialCleanup();
     void finalCleanup();
     bool setPermissions(const char *path);
@@ -99,6 +102,8 @@ protected:
     std::vector<std::string> downloadURLs;
     std::vector<std::string> localPaths;
     std::vector<std::string> fileSignatures;
+    std::vector<std::string> manifestLocalPaths;
+    std::vector<std::string> obsoletePaths;
 };
 
 #endif // UPDATETASK_H
