@@ -14,7 +14,6 @@
 #include "DeviceCentre.h"
 #include "DialogOpener.h"
 #include "EmailRequester.h"
-#include "EphemeralCredentials.h"
 #include "EventUpdater.h"
 #include "ExportProcessor.h"
 #include "FatalEventHandler.h"
@@ -598,13 +597,10 @@ void MegaApplication::initialize()
     MegaApiStartupConfig::initialConfiguration(megaApiFolders);
 
     model = SyncInfo::instance();
+    connect(model, &SyncInfo::syncDisabledListUpdated, this, &MegaApplication::enableDisabledSyncs);
     connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncRemoved, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncDisabledListUpdated, this, &MegaApplication::updateTrayIcon);
-    connect(model,
-            &SyncInfo::syncDisabledListUpdated,
-            this,
-            &MegaApplication::enableLogOffDisabledSyncs);
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Graphics processing %1")
                  .arg(mDisableGfx ? QLatin1String("disabled")
@@ -4004,15 +4000,20 @@ void MegaApplication::onSyncModelUpdated(std::shared_ptr<SyncSettings>)
     }
 }
 
-void MegaApplication::enableLogOffDisabledSyncs()
+void MegaApplication::enableDisabledSyncs()
 {
     auto enableSyncs = [](auto& syncs)
     {
+        const std::array allowedErrorsToTryToRestart{::mega::MegaSync::LOGGED_OUT,
+                                                     ::mega::MegaSync::ACCOUNT_BLOCKED};
+
         for (auto& sync: as_const(syncs))
         {
             if (sync->getRunState() == ::mega::MegaSync::RUNSTATE_DISABLED)
             {
-                if (sync->getError() == ::mega::MegaSync::LOGGED_OUT)
+                if (std::find(allowedErrorsToTryToRestart.begin(),
+                              allowedErrorsToTryToRestart.end(),
+                              sync->getError()) != allowedErrorsToTryToRestart.end())
                 {
                     SyncController::instance().setSyncToRun(sync);
                 }
@@ -4035,6 +4036,7 @@ void MegaApplication::onBlocked()
 void MegaApplication::onUnblocked()
 {
     updateTrayIconMenu();
+    enableDisabledSyncs();
 }
 
 void MegaApplication::onTransfersModelUpdate()

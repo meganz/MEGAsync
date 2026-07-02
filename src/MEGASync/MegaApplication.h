@@ -648,7 +648,7 @@ private:
 
     void addFont(const QString& fontPath);
     void addFonts();
-    void enableLogOffDisabledSyncs();
+    void enableDisabledSyncs();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
