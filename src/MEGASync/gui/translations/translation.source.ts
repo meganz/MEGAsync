@@ -3425,6 +3425,23 @@ https://mega.co.nz/#sync</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation>contact</translation>
     </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation type="unfinished">Upload to MEGA</translation>
+    </message>
+    <message>
+        <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file to be uploade to your account</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you want to upload %n file to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Do you want to upload %n file to MEGA?</numerusform>
+            <numerusform>Do you want to upload %n files to MEGA?</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
