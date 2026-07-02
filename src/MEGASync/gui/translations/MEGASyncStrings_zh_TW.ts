@@ -579,7 +579,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>想要取消上傳您報告的問題嗎？</translation>
+        <translation>要取消上傳回報的問題嗎？</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
@@ -589,7 +589,12 @@
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation>報告問題</translation>
+        <translation>回報問題</translation>
+    </message>
+    <message>
+        <source>Bug report can&apos;t be submitted due to some error. Please try again or contact [A]Support[/A].</source>
+        <translatorcomment>Warning message shown when some error occurs during uploading a bug report. [A][/A] is a hyperlink placeholder linking to the support form.</translatorcomment>
+        <translation>由於發生錯誤，無法提交您的問題。請稍後重試，若問題仍未解決，請聯繫[A]客服[/A]。</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
@@ -599,12 +604,12 @@
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
         <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation>你的問題報告正在上傳，這可能需要幾分鐘時間。</translation>
+        <translation>你的問題回報正在上傳，這可能需要幾分鐘時間。</translation>
     </message>
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>已報告您的問題。</translation>
+        <translation>已回報您的問題。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -629,7 +634,7 @@
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>上傳問題報告時出錯。</translation>
+        <translation>上傳問題回報時出錯。</translation>
     </message>
     <message>
         <source>Optional</source>
@@ -645,6 +650,11 @@
         <source>Please describe your issue in detail. Must be at least 30 characters.</source>
         <translatorcomment>Validation error shown when the reported issue description does not reach the minimum required length. SNC-6268</translatorcomment>
         <translation>請詳細描述您遇到的問題。字數至少需30個字。</translation>
+    </message>
+    <message>
+        <source>Please try again later or contact [A]Support[/A] if the problem persists.</source>
+        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins. [A][/A] is a hyperlink placeholder linking to the support form. con-364</translatorcomment>
+        <translation>請稍後再試。如果問題持續發生，請聯繫[A]客服[/A]。</translation>
     </message>
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
@@ -674,7 +684,7 @@
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>目前有另一個問題報告正在上傳。</translation>
+        <translation>目前有另一個問題回報正在上傳。</translation>
     </message>
     <message>
         <source>Title</source>
@@ -996,22 +1006,22 @@
     <message>
         <source>Error report sent</source>
         <translatorcomment>Title for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
-        <translation>錯誤報告已發送</translation>
+        <translation>錯誤回報已發送</translation>
     </message>
     <message>
         <source>Failed to send error report</source>
         <translatorcomment>Title for system notification sent when sending crash report fails.CON-1280</translatorcomment>
-        <translation>錯誤報告發送失敗</translation>
+        <translation>錯誤回報發送失敗</translation>
     </message>
     <message>
         <source>Unable to send the error report. Please contact support for assistance.</source>
         <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
-        <translation>無法發送錯誤報告。請聯絡客服尋求協助。</translation>
+        <translation>無法發送錯誤回報。請聯絡客服協助。</translation>
     </message>
     <message>
         <source>Your error report was successfully submitted. Thank you for your feedback!</source>
         <translatorcomment>Body for system notification sent when sending crash report succeeds.CON-1280</translatorcomment>
-        <translation>您的錯誤報告已成功提交。感謝您的回饋！</translation>
+        <translation>您的錯誤回報已成功提交。感謝您的回饋！</translation>
     </message>
 </context>
 <context>
@@ -1039,22 +1049,22 @@
     <message>
         <source>Please describe the issue or attach diagnostic log files to send the error report.</source>
         <translatorcomment>Error label shown when the user tries to send the report without both logs and issue description. Con-1280</translatorcomment>
-        <translation>請描述問題或附加日誌檔案來發送錯誤報告</translation>
+        <translation>請描述問題或附加日誌檔案來發送錯誤回報</translation>
     </message>
     <message>
         <source>Send crash report</source>
         <translatorcomment>Title for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
-        <translation>發送崩潰報告</translation>
+        <translation>發送崩潰回報</translation>
     </message>
     <message>
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
-        <translation>傳送報告</translation>
+        <translation>傳送回報</translation>
     </message>
     <message>
         <source>You can help us to improve MEGA by sending this error report to the Helpdesk.</source>
         <translatorcomment>Body for the dialog shown on the first start after a crash.CON-1280</translatorcomment>
-        <translation>您可以透過將此錯誤報告發送給客服來幫助我們改進MEGA</translation>
+        <translation>您可以透過將此錯誤回報發送給客服以幫助我們改進MEGA服務</translation>
     </message>
 </context>
 <context>
@@ -1353,12 +1363,12 @@
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Checkbox label in the node selector destination breadcrumb to set the current folder as the default upload destination. SNC-6420</translatorcomment>
-        <translation>總是上傳到此目的地</translation>
+        <translation>一律上傳到此目的地</translation>
     </message>
     <message>
         <source>Destination</source>
         <translatorcomment>Label/title of the destination breadcrumb in the node selector, showing the folder files will be uploaded to. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>目的地</translation>
     </message>
 </context>
 <context>
@@ -1535,7 +1545,7 @@
     <message>
         <source>The folder will be renamed as:</source>
         <translatorcomment>Text explaining the result of the folder rename action. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>資料夾將重新命名為：</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -2027,15 +2037,18 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message>
+    <message numerus="yes">
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>
+            <numerusform>%n result</numerusform>
+            <numerusform>%n results</numerusform>
+        </translation>
     </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>所有項目都將永久刪除，此操作[B]無法[/B] 復原。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2050,7 +2063,7 @@
     <message>
         <source>Empty Rubbish bin?</source>
         <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>是否清空垃圾筒？</translation>
+        <translation>清空垃圾筒？</translation>
     </message>
 </context>
 <context>
@@ -2337,7 +2350,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Available storage:</source>
         <translatorcomment>Label indicating that the number in the right is the available storage CON-467</translatorcomment>
-        <translation>可用儲存空間</translation>
+        <translation>可用儲存空間：</translation>
     </message>
     <message>
         <source>Business</source>
@@ -2357,7 +2370,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Storage space:</source>
         <translatorcomment>Label indicating that the number in the right is the storage space CON-467</translatorcomment>
-        <translation>儲存空間</translation>
+        <translation>儲存空間：</translation>
     </message>
 </context>
 <context>
@@ -2400,7 +2413,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>I will wait</source>
         <translatorcomment>Button label to dismiss (hide) overquota dialogs. Shown for free users only if they do not want to upgrade account for extra transfer quota.</translatorcomment>
-        <translation>我願意等待。</translation>
+        <translation>繼續等待</translation>
     </message>
     <message>
         <source>Limited available transfer quota</source>
@@ -2725,7 +2738,7 @@ Would you like to install the necessary components now?</source>
     <message>
         <source>Installing notification area icon...</source>
         <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
-        <translation>正在安裝通知區域圖示⋯</translation>
+        <translation>正在安裝通知區域圖示…</translation>
     </message>
     <message>
         <source>The notification area icon installation was cancelled.</source>
@@ -2966,7 +2979,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>The backup will be disabled in order to protect the local files</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
-        <translation>為了保護本地檔案，備份將被停用</translation>
+        <translation>已停用備份以保護本地檔案。</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local folder %1</source>
@@ -3129,6 +3142,11 @@ Please wait for the upload to complete.</source>
         <translation>您已從其它位置登出此裝置</translation>
     </message>
     <message>
+        <source>You have been logged out. Please contact [A]Support[/A] if this issue persists.</source>
+        <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. [A][/A] is a hyperlink placeholder linking to the support form. CON-541</translatorcomment>
+        <translation>您已登出。若問題仍未解決，請聯繫[A]客服[/A]。</translation>
+    </message>
+    <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
         <translation>您已登出。如果此問題仍然存在，請前往[A]https://mega.nz/support[/A]聯繫客服。</translation>
@@ -3202,7 +3220,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>檢查更新⋯</translation>
+        <translation>正在檢查更新…</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
@@ -3252,7 +3270,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>錯誤：無效的目的資料夾。上傳已被取消。</translation>
+        <translation>錯誤：目標資料夾無效。上傳已取消</translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -3267,7 +3285,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Tooltip for Desktop app tray icon while the app is fetching data in syncing process</translatorcomment>
-        <translation>取得檔案列表⋯</translation>
+        <translation>正在取得檔案列表…</translation>
     </message>
     <message>
         <source>Files</source>
@@ -3287,7 +3305,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>安裝更新⋯</translation>
+        <translation>正在安裝更新…</translation>
     </message>
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -3552,7 +3570,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGA is being downloaded.</translatorcomment>
-        <translation>有可用的更新。下載中⋯</translation>
+        <translation>有可用的更新。正在下載…</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -3949,7 +3967,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>請等待⋯</translation>
+        <translation>請稍候…</translation>
     </message>
 </context>
 <context>
@@ -4443,7 +4461,7 @@ All the other selected transfers will be cancelled and cleared.</source>
     <message>
         <source>Access your data from anywhere, collaborate with ease, and instantly get the most up-to-date version of your files</source>
         <translatorcomment>Description text in O.S. notification to remind that the user can create syncs after days or months (e.g. 10 days, 1 month) if the user has never created a sync. CON-1207</translatorcomment>
-        <translation>隨時隨地存取您的資料，輕鬆協作，並立即取得檔案的最新版本。</translation>
+        <translation>隨時隨地存取您的資料，輕鬆進行協作，並立即取得最新版本的檔案</translation>
     </message>
     <message>
         <source>Set up sync</source>
@@ -4714,7 +4732,7 @@ Enter a different name</source>
     <message>
         <source>Searching…</source>
         <translatorcomment>Loading text shown in the node selector while a search for nodes is in progress. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>正在搜尋…</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -4732,37 +4750,37 @@ Enter a different name</source>
     <message>
         <source>Blue</source>
         <translatorcomment>Color name for the &quot;Blue&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>藍色</translation>
     </message>
     <message>
         <source>Green</source>
         <translatorcomment>Color name for the &quot;Green&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>綠色</translation>
     </message>
     <message>
         <source>Grey</source>
         <translatorcomment>Color name for the &quot;Grey&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>灰色</translation>
     </message>
     <message>
         <source>Orange</source>
         <translatorcomment>Color name for the &quot;Orange&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>橘色</translation>
     </message>
     <message>
         <source>Purple</source>
         <translatorcomment>Color name for the &quot;Purple&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>紫色</translation>
     </message>
     <message>
         <source>Red</source>
         <translatorcomment>Color name for the &quot;Red&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>紅色</translation>
     </message>
     <message>
         <source>Yellow</source>
         <translatorcomment>Color name for the &quot;Yellow&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>黃色</translation>
     </message>
 </context>
 <context>
@@ -4885,17 +4903,17 @@ Enter a different name</source>
     <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>資料夾已同步。</translation>
+        <translation>資料夾已同步</translation>
     </message>
     <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>資料夾內容已經同步。</translation>
+        <translation>資料夾內容已同步</translation>
     </message>
     <message>
         <source>Label</source>
         <translatorcomment>Column header for the node label in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>標籤</translation>
     </message>
     <message>
         <source>Last modified</source>
@@ -4925,7 +4943,7 @@ Enter a different name</source>
     <message>
         <source>Sort by label</source>
         <translatorcomment>Sort option to order nodes by their label in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>依標籤排序</translation>
     </message>
     <message>
         <source>Sort by last modified date</source>
@@ -5146,7 +5164,7 @@ Enter a different name</source>
     <message>
         <source>Create a folder to move your content here</source>
         <translatorcomment>Empty-state hint in the node selector inviting the user to create a folder. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>建立資料夾以將內容移至此處</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5171,7 +5189,7 @@ Enter a different name</source>
     <message>
         <source>Drag and drop your files here</source>
         <translatorcomment>Empty-state hint in the node selector inviting the user to drag and drop files. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>將您的檔案拖放至此</translation>
     </message>
     <message>
         <source>Empty Rubbish bin</source>
@@ -5181,7 +5199,7 @@ Enter a different name</source>
     <message>
         <source>Empty folder</source>
         <translatorcomment>Empty state label shown in the node selector view when the selected folder has no items. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>空資料夾</translation>
     </message>
     <message>
         <source>Folder is empty</source>
@@ -5232,7 +5250,7 @@ Enter a different name</source>
     <message>
         <source>No folders in Cloud drive</source>
         <translatorcomment>Empty-state message shown in the node selector when the Cloud drive has no folders. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>雲端硬碟中沒有資料夾</translation>
     </message>
     <message>
         <source>No folders to select</source>
@@ -5242,7 +5260,7 @@ Enter a different name</source>
     <message>
         <source>Nothing in your private vault yet</source>
         <translatorcomment>Empty-state message shown in the node selector when the private vault has no items yet. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的私密保管庫目前沒有任何項目</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5262,17 +5280,17 @@ Enter a different name</source>
     <message>
         <source>This folder is empty. Keep something safe with zero-knowledge encryption.</source>
         <translatorcomment>Empty-state message shown in the node selector when the current folder has no items. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>此資料夾是空的。採用零知識加密，安全保護您的檔案。</translation>
     </message>
     <message>
         <source>This folder is read and write. Ask for full access to sync</source>
         <translatorcomment>Informational message in the node selector shown for a read-and-write shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>此資料夾為讀寫權限，需取得完整存取權限才能同步</translation>
     </message>
     <message>
         <source>This folder is read-only. Ask for full access to sync</source>
         <translatorcomment>Informational message in the node selector shown for a read-only shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>此資料夾為唯讀。請要求完整存取權限以進行同步</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -5327,7 +5345,7 @@ Enter a different name</source>
     <message>
         <source>Folders shared with you will appear here</source>
         <translatorcomment>Empty-state message in the node selector incoming shares view, shown when there are no shared folders. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>他人與您共享的資料夾會顯示在這裡</translation>
     </message>
     <message>
         <source>No incoming shares</source>
@@ -5370,7 +5388,7 @@ Enter a different name</source>
     <message>
         <source>No results found</source>
         <translatorcomment>Empty-state title in the node selector search view, shown when the search returns no matches. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>無搜尋結果</translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5380,7 +5398,7 @@ Enter a different name</source>
     <message>
         <source>Try a different name or check the spelling</source>
         <translatorcomment>Empty-state hint in the node selector search view, suggesting the user refine their search. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>請嘗試其它名稱或檢查拼字是否正確</translation>
     </message>
 </context>
 <context>
@@ -5593,7 +5611,7 @@ Enter a different name</source>
     <message>
         <source>Tax may apply.</source>
         <translatorcomment>Disclaimer that promoted prices are tax exclusive .SNC-6271</translatorcomment>
-        <translation>可能包含稅費</translation>
+        <translation>可能需要計稅。</translation>
     </message>
     <message numerus="yes">
         <source>[B]%1% off[/B] for %n month</source>
@@ -5738,7 +5756,7 @@ Enter a different name</source>
     <message>
         <source>Creating account…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
-        <translation>正在建立帳戶⋯</translation>
+        <translation>正在建立帳戶…</translation>
     </message>
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time. Files deleted from your computer will be deleted from MEGA.</source>
@@ -5803,7 +5821,7 @@ Enter a different name</source>
     <message>
         <source>Fetching file list…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>正在取得檔案列表⋯</translation>
+        <translation>正在取得檔案列表…</translation>
     </message>
     <message>
         <source>First name</source>
@@ -5828,7 +5846,7 @@ Enter a different name</source>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation>如果您在一小時內沒有收到電子郵件，請檢查您的垃圾郵件資料夾。如果您仍然找不到信件，[B][A]請聯繫客服[/A][/B]。</translation>
+        <translation>如果您在一小時內沒有收到電子郵件，請檢查您的垃圾郵件匣。如果您仍然找不到信件，[B][A]請聯繫客服[/A][/B]。</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -5868,7 +5886,7 @@ Enter a different name</source>
     <message>
         <source>Logging in…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>正在登入⋯</translation>
+        <translation>正在登入…</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -5943,7 +5961,7 @@ Enter a different name</source>
     <message>
         <source>Select a local folder to sync.</source>
         <translatorcomment>Text input title indicating the user to select a local folder CON-467</translatorcomment>
-        <translation>選擇要同步的本地資料夾。</translation>
+        <translation>選擇要同步的本地資料夾</translation>
     </message>
     <message>
         <source>Select folders to back up</source>
@@ -5953,7 +5971,7 @@ Enter a different name</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>當桌面應用程式運行時，選定的資料夾將自動以唯讀資料夾備份到MEGA。僅可以對本機裝置上的備份進行變更。</translation>
+        <translation>當桌面應用程式運行時，選定的資料夾將自動備份到MEGA並成為唯讀資料夾。您只能對本地裝置上的備份進行變更。 </translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -6033,7 +6051,7 @@ Enter a different name</source>
     <message>
         <source>Validating 2FA code…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>正在驗證2FA雙重驗證代碼⋯</translation>
+        <translation>正在驗證2FA雙重驗證代碼…</translation>
     </message>
     <message>
         <source>View in Settings</source>
@@ -6421,7 +6439,10 @@ Enter a different name</source>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.5.0. SNC-6656</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 全面升級並改良了檔案管理器。
+- 全面升級設定對話方塊中的同步與備份分頁。
+- 改良了對Wayland的支援。
+- 修正了錯誤並提升效能。</translation>
     </message>
 </context>
 <context>
@@ -6763,7 +6784,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>List of places and bookmarks</source>
         <translatorcomment>Name to indicate the list of places and bookmarks area of the window</translatorcomment>
-        <translation>位置與書籤清單</translation>
+        <translation>位置與書籤列表</translation>
     </message>
     <message>
         <source>Look in:</source>
@@ -6828,7 +6849,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>Unknown</translation>
+        <translation>無法識別</translation>
     </message>
 </context>
 <context>
@@ -6942,7 +6963,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation>應用程式檢測到問題並正在重新載入您的帳戶。請稍候⋯</translation>
+        <translation>應用程式檢測到問題並正在重新載入您的帳戶。請稍候…</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
@@ -7168,7 +7189,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Adding transfers…</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
-        <translation>新增傳輸⋯</translation>
+        <translation>正在新增傳輸…</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7178,7 +7199,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Creating folders</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
-        <translation>正在建立資料夾⋯</translation>
+        <translation>正在建立資料夾…</translation>
     </message>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
@@ -7188,7 +7209,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>正在掃描⋯</translation>
+        <translation>正在掃描…</translation>
     </message>
     <message>
         <source>found %1, %2</source>
@@ -7279,7 +7300,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>變更設定⋯</translation>
+        <translation>變更設定…</translation>
     </message>
     <message>
         <source>Check for Updates</source>
@@ -7888,6 +7909,11 @@ Do you want to delete it anyway?</source>
         <translation>移除同步資料夾</translation>
     </message>
     <message>
+        <source>Removing</source>
+        <translatorcomment>Status description for the removal of a sync or backup state. SNC-6404</translatorcomment>
+        <translation>正在移除</translation>
+    </message>
+    <message>
         <source>Rescan</source>
         <translatorcomment>Sync menu command to rescan the sync. SNC-6404</translatorcomment>
         <translation>重新掃描</translation>
@@ -8146,17 +8172,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Loading size</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>正在載入大小⋯</translation>
+        <translation>正在載入大小…</translation>
     </message>
     <message>
         <source>Loading time…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>正在載入時間戳記⋯</translation>
+        <translation>正在載入時間戳記…</translation>
     </message>
     <message>
         <source>Loading user…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>正在獲取使用者⋯</translation>
+        <translation>正在取得使用者資訊…</translation>
     </message>
     <message>
         <source>Size:</source>
@@ -8355,7 +8381,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Being solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
-        <translation>修復中⋯</translation>
+        <translation>正在解決…</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -8501,7 +8527,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>正在解決問題⋯</translation>
+        <translation>正在解決問題…</translation>
     </message>
     <message>
         <source>Issues can&apos;t be fixed.
@@ -8513,7 +8539,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>正在解決問題⋯</translation>
+        <translation>正在解決問題…</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -8550,7 +8576,7 @@ Please, refresh the list.</source>
     <message>
         <source>Scanning…</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state. SNC-5938</translatorcomment>
-        <translation>正在掃描⋯</translation>
+        <translation>正在掃描…</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -8560,12 +8586,12 @@ Please, refresh the list.</source>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.  SNC-5938</translatorcomment>
-        <translation>正在同步⋯</translation>
+        <translation>正在同步…</translation>
     </message>
     <message>
         <source>Transferring…</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers. SNC-5938</translatorcomment>
-        <translation>正在傳輸⋯</translation>
+        <translation>正在傳輸…</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -8575,7 +8601,7 @@ Please, refresh the list.</source>
     <message>
         <source>Waiting…</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state. SNC-5938</translatorcomment>
-        <translation>等待中⋯</translation>
+        <translation>等待中…</translation>
     </message>
 </context>
 <context>
@@ -8588,7 +8614,7 @@ Please, refresh the list.</source>
     <message>
         <source>Select a file to stream</source>
         <translatorcomment>Guidance message in the streaming node selector prompting the user to pick a file to stream. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>選擇要串流播放的檔案</translation>
     </message>
 </context>
 <context>
@@ -8661,7 +8687,7 @@ Please, refresh the list.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
-        <translation>請等待⋯</translation>
+        <translation>請稍候…</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -8676,7 +8702,7 @@ Please, refresh the list.</source>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>從⋯選擇媒體</translation>
+        <translation>選取媒體來源…</translation>
     </message>
     <message>
         <source>Stream error: transfer overquota</source>
@@ -8849,7 +8875,7 @@ Please, refresh the list.</source>
     <message>
         <source>Folder already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
-        <translation>資料夾已同步</translation>
+        <translation>資料夾已同步。</translation>
     </message>
     <message>
         <source>Folder can&apos;t be backed up as it is already synced.</source>
@@ -8879,7 +8905,7 @@ Please, refresh the list.</source>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
         <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
-        <translation>無法同步資料夾，因為它在MEGA垃圾筒中。</translation>
+        <translation>資料夾位於MEGA垃圾筒中，無法進行同步</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
@@ -8904,7 +8930,7 @@ Please, refresh the list.</source>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation>無法同步此MEGA資料夾。</translation>
+        <translation>無法同步此MEGA資料夾。 </translation>
     </message>
     <message>
         <source>This folder is already being synced.</source>
@@ -8974,7 +9000,7 @@ Please, refresh the list.</source>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-        <translation>您沒有此共享資料夾的完全存取權限所以無法進行同步。</translation>
+        <translation>您沒有此共享資料夾的完全存取權限，因此無法進行同步。 </translation>
     </message>
 </context>
 <context>
@@ -9052,7 +9078,7 @@ Please, refresh the list.</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>由於MEGA中的資料夾位於垃圾筒中，您的同步「%1」已停用。</translation>
+        <translation>因資料夾已移到MEGA垃圾筒，您的「%1」同步已被停用</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -9208,17 +9234,17 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Choose a different folder. This folder is already synced</source>
         <translatorcomment>Validation message in the sync node selector shown when the selected folder is already synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>請選擇其他資料夾。此資料夾已在同步中。</translation>
     </message>
     <message>
         <source>Choose a different folder. This location contains a folder that&apos;s already synced</source>
         <translatorcomment>Validation message in the sync node selector shown when the selected location contains a folder that is already synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>請選擇其它資料夾。此位置包含一個已進行同步的資料夾。</translation>
     </message>
     <message>
         <source>Folder to sync</source>
         <translatorcomment>Label in the sync node selector for the folder that will be synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>要同步的資料夾</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -9229,12 +9255,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Only shared folders with full access can be synced</source>
         <translatorcomment>Informational message in the sync node selector indicating only full-access shared folders can be synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>僅能同步具備完整存取權限的共享資料夾</translation>
     </message>
     <message>
         <source>Select a full access shared folder to sync</source>
         <translatorcomment>Guidance message in the sync node selector prompting the user to choose a full-access shared folder to sync. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>請選取具備完整存取權限的共享資料夾以進行同步</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -9326,7 +9352,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
-        <translation>正在儲存同步資料夾⋯</translation>
+        <translation>正在儲存同步資料夾設定…</translation>
     </message>
 </context>
 <context>
@@ -9507,12 +9533,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Completing</source>
         <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation>正在完成⋯</translation>
+        <translation>正在完成…</translation>
     </message>
     <message>
         <source>Downloading…</source>
         <translatorcomment>Transfer is being downloaded</translatorcomment>
-        <translation>正在下載⋯</translation>
+        <translation>正在下載…</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -9547,22 +9573,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>正在重試⋯</translation>
+        <translation>正在重試…</translation>
     </message>
     <message>
         <source>Starting…</source>
         <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
-        <translation>正在開始⋯</translation>
+        <translation>正在開始…</translation>
     </message>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation>正在同步⋯</translation>
+        <translation>正在同步…</translation>
     </message>
     <message>
         <source>Uploading…</source>
         <translatorcomment>Transfer is being uploaded</translatorcomment>
-        <translation>正在上傳⋯</translation>
+        <translation>正在上傳…</translation>
     </message>
 </context>
 <context>
@@ -10047,7 +10073,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>取消下載中的所有傳輸</translation>
+        <translation>取消所有下載傳輸 </translation>
     </message>
     <message>
         <source>Cancel all failed</source>
@@ -10352,7 +10378,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Select a shared folder to upload your items to</source>
         <translatorcomment>Guidance banner in the upload node selector, shown in Incoming Shares when no folder is selected, prompting the user to pick a shared folder as the upload destination. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>請選擇要上傳項目的共享資料夾</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>

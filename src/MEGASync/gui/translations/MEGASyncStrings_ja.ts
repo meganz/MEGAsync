@@ -1363,7 +1363,7 @@
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Checkbox label in the node selector destination breadcrumb to set the current folder as the default upload destination. SNC-6420</translatorcomment>
-        <translation>常にこの宛先にアップロードする</translation>
+        <translation>常にこの保存先にアップロードする</translation>
     </message>
     <message>
         <source>Destination</source>
@@ -1545,7 +1545,7 @@
     <message>
         <source>The folder will be renamed as:</source>
         <translatorcomment>Text explaining the result of the folder rename action. SNC-6420</translatorcomment>
-        <translation>フォルダ名は以下のように変更されます：</translation>
+        <translation>フォルダは次のように名前が変更されます：</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -2041,13 +2041,14 @@
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>%n件の結果</numerusform>
+            <numerusform>%n result</numerusform>
+            <numerusform>%n results</numerusform>
         </translation>
     </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>すべてのアイテムが完全に削除されます。この操作は取り消すことが[B]できません[/B]。</translation>
+        <translation>すべてのアイテムが完全に削除されます。この操作は[B]取り消せません[/B]。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2062,7 +2063,7 @@
     <message>
         <source>Empty Rubbish bin?</source>
         <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>ごみ箱を空にしますか？</translation>
+        <translation>ゴミ箱を空にしますか？</translation>
     </message>
 </context>
 <context>
@@ -5162,7 +5163,7 @@ Enter a different name</source>
     <message>
         <source>Create a folder to move your content here</source>
         <translatorcomment>Empty-state hint in the node selector inviting the user to create a folder. SNC-6420</translatorcomment>
-        <translation>ここにコンテンツを移動するにはフォルダを作成してください</translation>
+        <translation>ここにコンテンツを移動するには、フォルダを作成してください</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5248,7 +5249,7 @@ Enter a different name</source>
     <message>
         <source>No folders in Cloud drive</source>
         <translatorcomment>Empty-state message shown in the node selector when the Cloud drive has no folders. SNC-6420</translatorcomment>
-        <translation>クラウドドライブ内にフォルダがありません</translation>
+        <translation>クラウドドライブにフォルダがありません</translation>
     </message>
     <message>
         <source>No folders to select</source>
@@ -5258,7 +5259,7 @@ Enter a different name</source>
     <message>
         <source>Nothing in your private vault yet</source>
         <translatorcomment>Empty-state message shown in the node selector when the private vault has no items yet. SNC-6420</translatorcomment>
-        <translation>プライベート保管庫にはまだ何もありません</translation>
+        <translation>プライベートボルトにはまだ何もありません</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5283,7 +5284,7 @@ Enter a different name</source>
     <message>
         <source>This folder is read and write. Ask for full access to sync</source>
         <translatorcomment>Informational message in the node selector shown for a read-and-write shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
-        <translation>このフォルダは読み書き可能です。同期するにはフルアクセス権をリクエストしてください。</translation>
+        <translation>このフォルダは読み書き専用です。同期するにはフルアクセス権をリクエストしてください。※</translation>
     </message>
     <message>
         <source>This folder is read-only. Ask for full access to sync</source>
@@ -5343,7 +5344,7 @@ Enter a different name</source>
     <message>
         <source>Folders shared with you will appear here</source>
         <translatorcomment>Empty-state message in the node selector incoming shares view, shown when there are no shared folders. SNC-6420</translatorcomment>
-        <translation>共有されたフォルダがここに表示されます</translation>
+        <translation>あなたと共有されたフォルダがここに表示されます</translation>
     </message>
     <message>
         <source>No incoming shares</source>
@@ -5366,7 +5367,7 @@ Enter a different name</source>
     <message>
         <source>Rubbish bin is empty</source>
         <translatorcomment>Empty-state message in the node selector rubbish bin view, shown when the rubbish bin has no items. SNC-6420</translatorcomment>
-        <translation>ごみ箱は空です</translation>
+        <translation>ゴミ箱は空です</translation>
     </message>
     <message>
         <source>The Rubbish bin is empty</source>
@@ -6437,10 +6438,10 @@ Enter a different name</source>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.5.0. SNC-6656</translatorcomment>
-        <translation>- ファイルマネージャーを刷新し、機能を改善しました。
-- 設定ダイアログの「同期」および「バックアップ」タブを刷新しました。
-- Waylandのサポートを向上させました。
-- バグを修正し、パフォーマンスが向上しました。</translation>
+        <translation>- ファイルマネージャーの刷新と改善
+- 設定ダイアログ内の「同期」および「バックアップ」タブの刷新
+- Waylandサポートの向上
+- バグ修正とパフォーマンスの向上</translation>
     </message>
 </context>
 <context>
@@ -9237,7 +9238,7 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Choose a different folder. This location contains a folder that&apos;s already synced</source>
         <translatorcomment>Validation message in the sync node selector shown when the selected location contains a folder that is already synced. SNC-6420</translatorcomment>
-        <translation>別のフォルダを選択してください。この場所にはすでに同期されているフォルダが含まれています。</translation>
+        <translation>別のフォルダを選択してください。この場所には、すでに同期済みのフォルダが含まれています。</translation>
     </message>
     <message>
         <source>Folder to sync</source>
@@ -9253,7 +9254,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Only shared folders with full access can be synced</source>
         <translatorcomment>Informational message in the sync node selector indicating only full-access shared folders can be synced. SNC-6420</translatorcomment>
-        <translation>フルアクセス権のある共有フォルダのみ同期できます</translation>
+        <translation>同期できるのはフルアクセス権のある共有フォルダのみです</translation>
     </message>
     <message>
         <source>Select a full access shared folder to sync</source>
@@ -10376,7 +10377,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Select a shared folder to upload your items to</source>
         <translatorcomment>Guidance banner in the upload node selector, shown in Incoming Shares when no folder is selected, prompting the user to pick a shared folder as the upload destination. SNC-6420</translatorcomment>
-        <translation>アイテムのアップロード先となる共有フォルダを選択してください</translation>
+        <translation>アイテムのアップロード先の共有フォルダを選択してください</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
