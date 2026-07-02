@@ -1368,7 +1368,7 @@
     <message>
         <source>Destination</source>
         <translatorcomment>Label/title of the destination breadcrumb in the node selector, showing the folder files will be uploaded to. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ปลายทาง</translation>
     </message>
 </context>
 <context>
@@ -1545,7 +1545,7 @@
     <message>
         <source>The folder will be renamed as:</source>
         <translatorcomment>Text explaining the result of the folder rename action. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ระบบจะเปลี่ยนชื่อโฟลเดอร์เป็น:</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -2037,15 +2037,18 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message>
+    <message numerus="yes">
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>
+            <numerusform>%n result</numerusform>
+            <numerusform>%n results</numerusform>
+        </translation>
     </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ระบบจะลบทุกรายการอย่างถาวร โดยการดำเนินการนี้ [B]ไม่สามารถ[/B] ย้อนกลับได้</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2060,7 +2063,7 @@
     <message>
         <source>Empty Rubbish bin?</source>
         <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>ล้างข้อมูลในถังขยะหรือไม่</translation>
+        <translation>ต้องการล้างถังขยะหรือไม่</translation>
     </message>
 </context>
 <context>
@@ -4726,7 +4729,7 @@ Enter a different name</source>
     <message>
         <source>Searching…</source>
         <translatorcomment>Loading text shown in the node selector while a search for nodes is in progress. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังค้นหา…</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -4744,37 +4747,37 @@ Enter a different name</source>
     <message>
         <source>Blue</source>
         <translatorcomment>Color name for the &quot;Blue&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>สีน้ำเงิน</translation>
     </message>
     <message>
         <source>Green</source>
         <translatorcomment>Color name for the &quot;Green&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>สีเขียว</translation>
     </message>
     <message>
         <source>Grey</source>
         <translatorcomment>Color name for the &quot;Grey&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>สีเทา</translation>
     </message>
     <message>
         <source>Orange</source>
         <translatorcomment>Color name for the &quot;Orange&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>สีส้ม</translation>
     </message>
     <message>
         <source>Purple</source>
         <translatorcomment>Color name for the &quot;Purple&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>สีม่วง</translation>
     </message>
     <message>
         <source>Red</source>
         <translatorcomment>Color name for the &quot;Red&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>สีแดง</translation>
     </message>
     <message>
         <source>Yellow</source>
         <translatorcomment>Color name for the &quot;Yellow&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>สีเหลือง</translation>
     </message>
 </context>
 <context>
@@ -4907,7 +4910,7 @@ Enter a different name</source>
     <message>
         <source>Label</source>
         <translatorcomment>Column header for the node label in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ป้ายกำกับ</translation>
     </message>
     <message>
         <source>Last modified</source>
@@ -4937,7 +4940,7 @@ Enter a different name</source>
     <message>
         <source>Sort by label</source>
         <translatorcomment>Sort option to order nodes by their label in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เรียงตามป้ายกำกับ</translation>
     </message>
     <message>
         <source>Sort by last modified date</source>
@@ -5158,7 +5161,7 @@ Enter a different name</source>
     <message>
         <source>Create a folder to move your content here</source>
         <translatorcomment>Empty-state hint in the node selector inviting the user to create a folder. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>สร้างโฟลเดอร์เพื่อย้ายคอนเทนต์มายังที่นี่</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5183,7 +5186,7 @@ Enter a different name</source>
     <message>
         <source>Drag and drop your files here</source>
         <translatorcomment>Empty-state hint in the node selector inviting the user to drag and drop files. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ลากและวางไฟล์มาที่นี่</translation>
     </message>
     <message>
         <source>Empty Rubbish bin</source>
@@ -5193,7 +5196,7 @@ Enter a different name</source>
     <message>
         <source>Empty folder</source>
         <translatorcomment>Empty state label shown in the node selector view when the selected folder has no items. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์นี้ว่างเปล่า</translation>
     </message>
     <message>
         <source>Folder is empty</source>
@@ -5244,7 +5247,7 @@ Enter a different name</source>
     <message>
         <source>No folders in Cloud drive</source>
         <translatorcomment>Empty-state message shown in the node selector when the Cloud drive has no folders. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีโฟลเดอร์ในคลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>No folders to select</source>
@@ -5254,7 +5257,7 @@ Enter a different name</source>
     <message>
         <source>Nothing in your private vault yet</source>
         <translatorcomment>Empty-state message shown in the node selector when the private vault has no items yet. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยังไม่มีข้อมูลในตู้นิรภัยส่วนตัวของคุณ</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5274,17 +5277,17 @@ Enter a different name</source>
     <message>
         <source>This folder is empty. Keep something safe with zero-knowledge encryption.</source>
         <translatorcomment>Empty-state message shown in the node selector when the current folder has no items. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์นี้ว่างเปล่า ช่วยปกป้องไฟล์ให้ปลอดภัยด้วยการเข้ารหัสด้วยวิธีซีโร่-นอว์เลจ</translation>
     </message>
     <message>
         <source>This folder is read and write. Ask for full access to sync</source>
         <translatorcomment>Informational message in the node selector shown for a read-and-write shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์นี้สำหรับอ่านและเขียน กรุณาขอสิทธิ์เข้าถึงแบบเต็มที่เพื่อซิงค์</translation>
     </message>
     <message>
         <source>This folder is read-only. Ask for full access to sync</source>
         <translatorcomment>Informational message in the node selector shown for a read-only shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์นี้สำหรับอ่านอย่างเดียว กรุณาขอสิทธิ์เข้าถึงแบบเต็มที่เพื่อซิงค์</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -5339,7 +5342,7 @@ Enter a different name</source>
     <message>
         <source>Folders shared with you will appear here</source>
         <translatorcomment>Empty-state message in the node selector incoming shares view, shown when there are no shared folders. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์ที่มีการแชร์กับคุณจะแสดงขึ้นที่นี่</translation>
     </message>
     <message>
         <source>No incoming shares</source>
@@ -5362,7 +5365,7 @@ Enter a different name</source>
     <message>
         <source>Rubbish bin is empty</source>
         <translatorcomment>Empty-state message in the node selector rubbish bin view, shown when the rubbish bin has no items. SNC-6420</translatorcomment>
-        <translation>ถังขยะนี้ว่างเปล่า</translation>
+        <translation>ถังขยะว่างเปล่า</translation>
     </message>
     <message>
         <source>The Rubbish bin is empty</source>
@@ -5382,7 +5385,7 @@ Enter a different name</source>
     <message>
         <source>No results found</source>
         <translatorcomment>Empty-state title in the node selector search view, shown when the search returns no matches. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่พบผลลัพธ์</translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5392,7 +5395,7 @@ Enter a different name</source>
     <message>
         <source>Try a different name or check the spelling</source>
         <translatorcomment>Empty-state hint in the node selector search view, suggesting the user refine their search. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กรุณาลองใช้ชื่ออื่นหรือตรวจสอบการสะกดคำ</translation>
     </message>
 </context>
 <context>
@@ -6433,7 +6436,10 @@ Enter a different name</source>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.5.0. SNC-6656</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- ปรับปรุงและเปลี่ยนโฉมระบบจัดการไฟล์ใหม่
+- ปรับโฉมแท็บการซิงค์และสำรองข้อมูลในหน้าต่างการตั้งค่า
+- เพิ่มประสิทธิภาพการรองรับ Wayland ให้ดียิ่งขึ้น
+- แก้ไขข้อผิดพลาดและปรับปรุงประสิทธิภาพการทำงานทั่วไป</translation>
     </message>
 </context>
 <context>
@@ -8605,7 +8611,7 @@ Please, refresh the list.</source>
     <message>
         <source>Select a file to stream</source>
         <translatorcomment>Guidance message in the streaming node selector prompting the user to pick a file to stream. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เลือกไฟล์ที่ต้องการสตรีม</translation>
     </message>
 </context>
 <context>
@@ -9225,17 +9231,17 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Choose a different folder. This folder is already synced</source>
         <translatorcomment>Validation message in the sync node selector shown when the selected folder is already synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กรุณาเลือกโฟลเดอร์อื่น เนื่องจากโฟลเดอร์นี้ซิงค์ข้อมูลเรียบร้อยแล้ว</translation>
     </message>
     <message>
         <source>Choose a different folder. This location contains a folder that&apos;s already synced</source>
         <translatorcomment>Validation message in the sync node selector shown when the selected location contains a folder that is already synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กรุณาเลือกโฟลเดอร์อื่น เนื่องจากตำแหน่งที่ตั้งนี้มีโฟลเดอร์ที่ซิงค์ข้อมูลอยู่แล้ว</translation>
     </message>
     <message>
         <source>Folder to sync</source>
         <translatorcomment>Label in the sync node selector for the folder that will be synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์สำหรับซิงค์ข้อมูล</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -9246,12 +9252,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Only shared folders with full access can be synced</source>
         <translatorcomment>Informational message in the sync node selector indicating only full-access shared folders can be synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ซิงค์ได้เฉพาะโฟลเดอร์แชร์ที่ได้รับสิทธิ์เข้าถึงแบบเต็มที่เท่านั้น</translation>
     </message>
     <message>
         <source>Select a full access shared folder to sync</source>
         <translatorcomment>Guidance message in the sync node selector prompting the user to choose a full-access shared folder to sync. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เลือกโฟลเดอร์แชร์ที่ได้รับสิทธิ์เข้าถึงแบบเต็มที่เพื่อซิงค์ข้อมูล</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -10369,7 +10375,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Select a shared folder to upload your items to</source>
         <translatorcomment>Guidance banner in the upload node selector, shown in Incoming Shares when no folder is selected, prompting the user to pick a shared folder as the upload destination. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เลือกโฟลเดอร์แชร์ที่ต้องการอัปโหลดรายการของคุณ</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>

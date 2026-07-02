@@ -592,6 +592,11 @@
         <translation>문제 신고</translation>
     </message>
     <message>
+        <source>Bug report can&apos;t be submitted due to some error. Please try again or contact [A]Support[/A].</source>
+        <translatorcomment>Warning message shown when some error occurs during uploading a bug report. [A][/A] is a hyperlink placeholder linking to the support form.</translatorcomment>
+        <translation>오류로 인해 문제가 접수되지 않았습니다. 나중에 다시 시도하거나 문제가 계속 되면 [A]지원 부서[/A]에 연락하세요.</translation>
+    </message>
+    <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
         <translation>오류로 인해 문제를 업로드할 수 없습니다. 나중에 다시 시도하거나 문제가 지속될 경우 [A]https://mega.nz/support[/A]에서 지원 팀에 연락하세요.</translation>
@@ -645,6 +650,11 @@
         <source>Please describe your issue in detail. Must be at least 30 characters.</source>
         <translatorcomment>Validation error shown when the reported issue description does not reach the minimum required length. SNC-6268</translatorcomment>
         <translation>문제를 자세히 설명해주세요. 최소 30자 이상이어야 합니다.</translation>
+    </message>
+    <message>
+        <source>Please try again later or contact [A]Support[/A] if the problem persists.</source>
+        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins. [A][/A] is a hyperlink placeholder linking to the support form. con-364</translatorcomment>
+        <translation>나중에 다시 시도하거나 문제가 계속 되면 [A]지원 부서[/A]에 연락하세요.</translation>
     </message>
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
@@ -936,7 +946,7 @@
     <message>
         <source>Remote Copy</source>
         <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
-        <translation>MEGA에 복사</translation>
+        <translation>MEGA 사본</translation>
     </message>
 </context>
 <context>
@@ -1006,7 +1016,7 @@
     <message>
         <source>Unable to send the error report. Please contact support for assistance.</source>
         <translatorcomment>Body for system notification sent when sending crash report fails.CON-1280</translatorcomment>
-        <translation>오류 보고를 보낼 수 없었습니다. 도움을 받으려면 지원에 연락하세요.</translation>
+        <translation>오류 보고를 보낼 수 없었습니다. 도움을 받으려면 지원 부서에 연락하세요.</translation>
     </message>
     <message>
         <source>Your error report was successfully submitted. Thank you for your feedback!</source>
@@ -1358,7 +1368,7 @@
     <message>
         <source>Destination</source>
         <translatorcomment>Label/title of the destination breadcrumb in the node selector, showing the folder files will be uploaded to. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>목적지</translation>
     </message>
 </context>
 <context>
@@ -1535,7 +1545,7 @@
     <message>
         <source>The folder will be renamed as:</source>
         <translatorcomment>Text explaining the result of the folder rename action. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더의 이름이 다음과 같이 바뀝니다:</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -2027,15 +2037,18 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message>
+    <message numerus="yes">
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>
+            <numerusform>%n result</numerusform>
+            <numerusform>%n results</numerusform>
+        </translation>
     </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>모든 항목은 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 [B]없습니다[/B].</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2045,7 +2058,7 @@
     <message>
         <source>Empty</source>
         <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>비우기</translation>
+        <translation>비어있음</translation>
     </message>
     <message>
         <source>Empty Rubbish bin?</source>
@@ -3129,9 +3142,14 @@ Please wait for the upload to complete.</source>
         <translation>다른 위치에서 이 장치를 로그아웃 하였습니다</translation>
     </message>
     <message>
+        <source>You have been logged out. Please contact [A]Support[/A] if this issue persists.</source>
+        <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. [A][/A] is a hyperlink placeholder linking to the support form. CON-541</translatorcomment>
+        <translation>로그아웃 되었습니다. 문제가 계속 되면 [A]지원 부서[/A]에 연락하세요.</translation>
+    </message>
+    <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>로그아웃 되었습니다. 문제가 계속 되면 [A]https://mega.nz/support[/A]에서 지원 부서에 연락주세요.</translation>
+        <translation>로그아웃 되었습니다. 문제가 계속 되면 [A]https://mega.nz/support[/A]에서 지원 부서에 연락하세요.</translation>
     </message>
 </context>
 <context>
@@ -3972,7 +3990,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Backup externally modified</source>
         <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
-        <translation>이 폴더를 동기화 또는 백업하던 중 MEGA 폴더의 변경으로 인해 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원에 연락주세요.</translation>
+        <translation>이 폴더를 동기화 또는 백업하던 중 MEGA 폴더의 변경으로 인해 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원 부서에 연락하세요.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4052,7 +4070,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>이 폴더를 동기화 또는 백업하던 중 로컬 폴더의 변경으로 인해 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원에 연락주세요.</translation>
+        <translation>이 폴더를 동기화 또는 백업하던 중 로컬 폴더의 변경으로 인해 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원 부서에 연락하세요.</translation>
     </message>
     <message>
         <source>No error</source>
@@ -4132,7 +4150,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to open state cache database.</source>
         <translatorcomment>SDK error indicating that state cache chouldn´t be opened. CON-537</translatorcomment>
-        <translation>이 폴더를 동기화 또는 백업하던 중 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원에 연락주세요.</translation>
+        <translation>이 폴더를 동기화 또는 백업하던 중 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원 부서에 연락하세요.</translation>
     </message>
     <message>
         <source>Unable to read sync configs from disk.</source>
@@ -4147,7 +4165,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation>백업 하는 장치에 이름이 없어서 백업을 만들 수 없습니다. 장치에 이름을 짓고 다시 시도하세요. 문제가 계속 되면 지원에 연락하세요.</translation>
+        <translation>백업 하는 장치에 이름이 없어서 백업을 만들 수 없습니다. 장치에 이름을 짓고 다시 시도하세요. 문제가 계속 되면 지원 부서에 연락하세요.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -4714,7 +4732,7 @@ Enter a different name</source>
     <message>
         <source>Searching…</source>
         <translatorcomment>Loading text shown in the node selector while a search for nodes is in progress. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>검색 중…</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -4732,37 +4750,37 @@ Enter a different name</source>
     <message>
         <source>Blue</source>
         <translatorcomment>Color name for the &quot;Blue&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>파랑</translation>
     </message>
     <message>
         <source>Green</source>
         <translatorcomment>Color name for the &quot;Green&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>초록</translation>
     </message>
     <message>
         <source>Grey</source>
         <translatorcomment>Color name for the &quot;Grey&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>회색</translation>
     </message>
     <message>
         <source>Orange</source>
         <translatorcomment>Color name for the &quot;Orange&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>주황</translation>
     </message>
     <message>
         <source>Purple</source>
         <translatorcomment>Color name for the &quot;Purple&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>보라</translation>
     </message>
     <message>
         <source>Red</source>
         <translatorcomment>Color name for the &quot;Red&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>빨강</translation>
     </message>
     <message>
         <source>Yellow</source>
         <translatorcomment>Color name for the &quot;Yellow&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>노랑</translation>
     </message>
 </context>
 <context>
@@ -4895,7 +4913,7 @@ Enter a different name</source>
     <message>
         <source>Label</source>
         <translatorcomment>Column header for the node label in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>레이블</translation>
     </message>
     <message>
         <source>Last modified</source>
@@ -4925,7 +4943,7 @@ Enter a different name</source>
     <message>
         <source>Sort by label</source>
         <translatorcomment>Sort option to order nodes by their label in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>레이블로 정렬</translation>
     </message>
     <message>
         <source>Sort by last modified date</source>
@@ -5146,7 +5164,7 @@ Enter a different name</source>
     <message>
         <source>Create a folder to move your content here</source>
         <translatorcomment>Empty-state hint in the node selector inviting the user to create a folder. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>콘텐츠를 여기로 이동하려면 폴더를 만드세요</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5171,7 +5189,7 @@ Enter a different name</source>
     <message>
         <source>Drag and drop your files here</source>
         <translatorcomment>Empty-state hint in the node selector inviting the user to drag and drop files. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>파일을 여기로 끌어다 놓으세요</translation>
     </message>
     <message>
         <source>Empty Rubbish bin</source>
@@ -5181,7 +5199,7 @@ Enter a different name</source>
     <message>
         <source>Empty folder</source>
         <translatorcomment>Empty state label shown in the node selector view when the selected folder has no items. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>빈 폴더</translation>
     </message>
     <message>
         <source>Folder is empty</source>
@@ -5232,7 +5250,7 @@ Enter a different name</source>
     <message>
         <source>No folders in Cloud drive</source>
         <translatorcomment>Empty-state message shown in the node selector when the Cloud drive has no folders. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>클라우드 드라이브에 폴더 없음</translation>
     </message>
     <message>
         <source>No folders to select</source>
@@ -5242,7 +5260,7 @@ Enter a different name</source>
     <message>
         <source>Nothing in your private vault yet</source>
         <translatorcomment>Empty-state message shown in the node selector when the private vault has no items yet. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>개인 금고에 아직 아무 것도 없습니다</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5262,17 +5280,17 @@ Enter a different name</source>
     <message>
         <source>This folder is empty. Keep something safe with zero-knowledge encryption.</source>
         <translatorcomment>Empty-state message shown in the node selector when the current folder has no items. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이 폴더는 비어 있습니다. 파일을 영지식 암호화로 안전하게 보관하세요.</translation>
     </message>
     <message>
         <source>This folder is read and write. Ask for full access to sync</source>
         <translatorcomment>Informational message in the node selector shown for a read-and-write shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이 폴더는 읽기와 쓰기만 가능합니다. 동기화를 위해 전체 접근 권한을 요청하세요</translation>
     </message>
     <message>
         <source>This folder is read-only. Ask for full access to sync</source>
         <translatorcomment>Informational message in the node selector shown for a read-only shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이 폴더는 읽기 전용입니다. 동기화를 위해 전체 접근 권한을 요청하세요</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -5327,7 +5345,7 @@ Enter a different name</source>
     <message>
         <source>Folders shared with you will appear here</source>
         <translatorcomment>Empty-state message in the node selector incoming shares view, shown when there are no shared folders. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신과 공유된 폴더는 여기에 나타납니다</translation>
     </message>
     <message>
         <source>No incoming shares</source>
@@ -5350,7 +5368,7 @@ Enter a different name</source>
     <message>
         <source>Rubbish bin is empty</source>
         <translatorcomment>Empty-state message in the node selector rubbish bin view, shown when the rubbish bin has no items. SNC-6420</translatorcomment>
-        <translation>휴지통이 비어 있습니다</translation>
+        <translation>휴지통이 비어있습니다</translation>
     </message>
     <message>
         <source>The Rubbish bin is empty</source>
@@ -5370,7 +5388,7 @@ Enter a different name</source>
     <message>
         <source>No results found</source>
         <translatorcomment>Empty-state title in the node selector search view, shown when the search returns no matches. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>결과 없음</translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5380,7 +5398,7 @@ Enter a different name</source>
     <message>
         <source>Try a different name or check the spelling</source>
         <translatorcomment>Empty-state hint in the node selector search view, suggesting the user refine their search. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>다른 이름을 시도하거나 철자를 확인하세요</translation>
     </message>
 </context>
 <context>
@@ -5828,7 +5846,7 @@ Enter a different name</source>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation>만약 1시간 내에 이메일을 받지 못 했다면, 스팸 폴더를 확인하세요. 만약 여전히 찾지 못 하였다면, [B][A]지원에 연락하세요[/A][/B].</translation>
+        <translation>만약 1시간 내에 이메일을 받지 못 했다면, 스팸 폴더를 확인하세요. 만약 여전히 찾지 못 하였다면, [B][A]지원 부서에 연락하세요[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -6421,7 +6439,10 @@ Enter a different name</source>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.5.0. SNC-6656</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 파일 관리자를 개조하고 향상하였습니다.
+- 설정 대화창의 동기화와 백업 탭을 개조하였습니다.
+- Wayland 지원을 향상하였습니다.
+- 버그를 수정하고 성능을 향상하였습니다.</translation>
     </message>
 </context>
 <context>
@@ -7735,12 +7756,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Add a backup to protect your folders automatically</source>
         <translatorcomment>Description for the empty-state page shown when no backups are configured. SNC-6588</translatorcomment>
-        <translation>폴더를 자동으로 보호하려면 백업을 추가하세요.</translation>
+        <translation>폴더를 자동으로 보호하려면 백업을 추가하세요</translation>
     </message>
     <message>
         <source>Add a sync to keep folders up to date</source>
         <translatorcomment>Description for the no syncs page. SNC-6404</translatorcomment>
-        <translation>여러 기기에서 폴더를 최신 상태로 유지하세요.</translation>
+        <translation>여러 기기에서 폴더를 최신 상태로 유지하세요</translation>
     </message>
     <message>
         <source>Add backup</source>
@@ -7755,7 +7776,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Automatic sync issue resolution</source>
         <translatorcomment>Title of the switch button region to automatically solve sync issues. SNC-6404</translatorcomment>
-        <translation>동기화 문제를 자동으로 해결합니다.</translation>
+        <translation>동기화 문제를 자동으로 해결합니다</translation>
     </message>
     <message>
         <source>Available[BR]%1</source>
@@ -7830,7 +7851,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Get more storage</source>
         <translatorcomment>Solve issue button to open the get more storage dialog. SNC-6404</translatorcomment>
-        <translation>더 많은 저장소 받기</translation>
+        <translation>저장소 늘리기</translation>
     </message>
     <message>
         <source>Loading</source>
@@ -7840,7 +7861,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>MEGA automatically detects and resolves sync issues for you. Turn it off if you prefer to review and handle them manually. [A]Learn more[/A]</source>
         <translatorcomment>Description of the switch button region to automatically solve sync issues. SNC-6404</translatorcomment>
-        <translation>MEGA가 자동으로 동기화 문제를 감지하고 해결해 드립니다. 수동으로 검토하고 처리하려면 끄세요. [A]자세히 알아보기[/A]</translation>
+        <translation>MEGA가 자동으로 동기화 문제를 감지하고 해결해드립니다. 수동으로 검토하고 처리하려면 끄세요. [A]자세히 알아보기[/A]</translation>
     </message>
     <message>
         <source>Manage exclusions</source>
@@ -7888,6 +7909,11 @@ Do you want to delete it anyway?</source>
         <translation>동기화 폴더 삭제</translation>
     </message>
     <message>
+        <source>Removing</source>
+        <translatorcomment>Status description for the removal of a sync or backup state. SNC-6404</translatorcomment>
+        <translation>제거 중</translation>
+    </message>
+    <message>
         <source>Rescan</source>
         <translatorcomment>Sync menu command to rescan the sync. SNC-6404</translatorcomment>
         <translation>다시 스캔</translation>
@@ -7920,7 +7946,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Identifier of a sync state. SNC-6404</translatorcomment>
-        <translation>탐색중</translation>
+        <translation>스캔 중</translation>
     </message>
     <message>
         <source>Show in File Explorer</source>
@@ -7935,7 +7961,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Sync menu command to open the local sync folder in the file explorer. SNC-6404</translatorcomment>
-        <translation>폴더 안에 보이기</translation>
+        <translation>폴더에서 보기</translation>
     </message>
     <message>
         <source>Start new backup</source>
@@ -7970,7 +7996,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Synced folders</source>
         <translatorcomment>Title for the local folder column of the current created syncs. SNC-6404</translatorcomment>
-        <translation>동기화된 폴더</translation>
+        <translation>동기화 폴더</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -8257,7 +8283,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Hard link or Reparse Point detected.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a hard link and cannot be synced.SNC-2565</translatorcomment>
-        <translation>하드 링크 또는 재분석 지점이 감지되었습니다. 이 위치에 하드 링크 또는 재분석 지점이 없다면 지원에 연락하세요.</translation>
+        <translation>하드 링크 또는 재분석 지점이 감지되었습니다. 이 위치에 하드 링크 또는 재분석 지점이 없다면 지원 부서에 연락하세요.</translation>
     </message>
     <message>
         <source>Ignore file malformed.</source>
@@ -8588,7 +8614,7 @@ Please, refresh the list.</source>
     <message>
         <source>Select a file to stream</source>
         <translatorcomment>Guidance message in the streaming node selector prompting the user to pick a file to stream. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>스트리밍할 파일을 선택하세요</translation>
     </message>
 </context>
 <context>
@@ -9087,7 +9113,7 @@ Please, refresh the list.</source>
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>대상이 폴더 구조의 너무 깊은 곳에 있습니다. 동기화를 정지하고, 폴더를 64단계보다 얕은 곳으로 이동한 뒤 동기화를 다시 만드세요.
-이렇게 해도 문제가 해결되지 않는다면, https://mega.nz/support에서 지원 부서에 연락주세요</translation>
+이렇게 해도 문제가 해결되지 않는다면, https://mega.nz/support에서 지원 부서에 연락하세요</translation>
     </message>
     <message>
         <source>Unable to sync [B]%1[/B]</source>
@@ -9208,17 +9234,17 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Choose a different folder. This folder is already synced</source>
         <translatorcomment>Validation message in the sync node selector shown when the selected folder is already synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>다른 폴더를 선택하세요. 이 폴더는 이미 동기화되어 있습니다.</translation>
     </message>
     <message>
         <source>Choose a different folder. This location contains a folder that&apos;s already synced</source>
         <translatorcomment>Validation message in the sync node selector shown when the selected location contains a folder that is already synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>다른 폴더를 선택하세요. 이 위치에 이미 동기화된 폴더가 있습니다.</translation>
     </message>
     <message>
         <source>Folder to sync</source>
         <translatorcomment>Label in the sync node selector for the folder that will be synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화할 폴더</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -9229,12 +9255,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Only shared folders with full access can be synced</source>
         <translatorcomment>Informational message in the sync node selector indicating only full-access shared folders can be synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>전체 접근 권한이 있는 공유된 폴더만 동기화할 수 있습니다</translation>
     </message>
     <message>
         <source>Select a full access shared folder to sync</source>
         <translatorcomment>Guidance message in the sync node selector prompting the user to choose a full-access shared folder to sync. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화할 전체 접근 권한이 있는 공유된 폴더를 선택하세요</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -9250,7 +9276,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Can&apos;t restore %1 mega folder</source>
         <translatorcomment>MessageBox error description, after we failed to recover the deleted mega folder. SNC-6404</translatorcomment>
-        <translation>MEGA 폴더 %1을 복원할 수 없습니다.</translation>
+        <translation>%1 MEGA 폴더를 복원할 수 없습니다</translation>
     </message>
     <message>
         <source>Close</source>
@@ -10352,7 +10378,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Select a shared folder to upload your items to</source>
         <translatorcomment>Guidance banner in the upload node selector, shown in Incoming Shares when no folder is selected, prompting the user to pick a shared folder as the upload destination. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>항목을 업로드할 공유된 폴더를 선택하세요</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>

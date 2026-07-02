@@ -2081,9 +2081,8 @@
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>%n wynik</numerusform>
-            <numerusform>%n wyniki</numerusform>
-            <numerusform>%n wyniki</numerusform>
+            <numerusform>%n result</numerusform>
+            <numerusform>%n results</numerusform>
         </translation>
     </message>
     <message>
@@ -2099,7 +2098,7 @@
     <message>
         <source>Empty</source>
         <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Usuń</translation>
+        <translation>Opróżnij</translation>
     </message>
     <message>
         <source>Empty Rubbish bin?</source>
@@ -5339,7 +5338,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Nothing in your private vault yet</source>
         <translatorcomment>Empty-state message shown in the node selector when the private vault has no items yet. SNC-6420</translatorcomment>
-        <translation>Na razie nic nie ma w twoim prywatnym sejfie</translation>
+        <translation>Jeszcze nic nie ma w Twoim prywatnym sejfie</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5354,7 +5353,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Sync</source>
         <translatorcomment>Action button in the node selector to sync the selected folder. SNC-6420</translatorcomment>
-        <translation>Sync</translation>
+        <translation>Synchronizuj</translation>
     </message>
     <message>
         <source>This folder is empty. Keep something safe with zero-knowledge encryption.</source>
@@ -5430,7 +5429,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Folders shared with you will appear here</source>
         <translatorcomment>Empty-state message in the node selector incoming shares view, shown when there are no shared folders. SNC-6420</translatorcomment>
-        <translation>Foldery udostępnione Tobie pojawią się tutaj</translation>
+        <translation>Katalogi Tobie udostępnione pojawią się tutaj</translation>
     </message>
     <message>
         <source>No incoming shares</source>
@@ -9396,7 +9395,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Select a full access shared folder to sync</source>
         <translatorcomment>Guidance message in the sync node selector prompting the user to choose a full-access shared folder to sync. SNC-6420</translatorcomment>
-        <translation>Wybierz folder udostępniony z pełnym dostępem do synchronizacji</translation>
+        <translation>Wybierz do synchronizacji folder udostępniony z pełnym dostępem</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -10544,7 +10543,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Select a shared folder to upload your items to</source>
         <translatorcomment>Guidance banner in the upload node selector, shown in Incoming Shares when no folder is selected, prompting the user to pick a shared folder as the upload destination. SNC-6420</translatorcomment>
-        <translation>Wybierz współdzielony folder, do którego chcesz przesłać swoje pliki</translation>
+        <translation>Wybierz współdzielony folder, do którego chcesz przesłać swoje elementy</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>

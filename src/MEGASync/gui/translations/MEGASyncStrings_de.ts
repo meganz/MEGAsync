@@ -1383,7 +1383,7 @@
     <message>
         <source>Destination</source>
         <translatorcomment>Label/title of the destination breadcrumb in the node selector, showing the folder files will be uploaded to. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ziel</translation>
     </message>
 </context>
 <context>
@@ -1565,7 +1565,7 @@
     <message>
         <source>The folder will be renamed as:</source>
         <translatorcomment>Text explaining the result of the folder rename action. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Der Ordner wird umbenannt in:</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -2057,15 +2057,18 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message>
+    <message numerus="yes">
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>
+            <numerusform>%n result</numerusform>
+            <numerusform>%n results</numerusform>
+        </translation>
     </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle Elemente werden unwiderruflich gelöscht. Dieser Vorgang kann [B]nicht[/B] rückgängig gemacht werden.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4765,7 +4768,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Searching…</source>
         <translatorcomment>Loading text shown in the node selector while a search for nodes is in progress. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Suchvorgang läuft…</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -4783,37 +4786,37 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Blue</source>
         <translatorcomment>Color name for the &quot;Blue&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Blau</translation>
     </message>
     <message>
         <source>Green</source>
         <translatorcomment>Color name for the &quot;Green&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Grün</translation>
     </message>
     <message>
         <source>Grey</source>
         <translatorcomment>Color name for the &quot;Grey&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Grau</translation>
     </message>
     <message>
         <source>Orange</source>
         <translatorcomment>Color name for the &quot;Orange&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Orange</translation>
     </message>
     <message>
         <source>Purple</source>
         <translatorcomment>Color name for the &quot;Purple&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Violett</translation>
     </message>
     <message>
         <source>Red</source>
         <translatorcomment>Color name for the &quot;Red&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rot</translation>
     </message>
     <message>
         <source>Yellow</source>
         <translatorcomment>Color name for the &quot;Yellow&quot; node label option in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Gelb</translation>
     </message>
 </context>
 <context>
@@ -4946,7 +4949,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Label</source>
         <translatorcomment>Column header for the node label in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Markierung</translation>
     </message>
     <message>
         <source>Last modified</source>
@@ -4976,7 +4979,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Sort by label</source>
         <translatorcomment>Sort option to order nodes by their label in the node selector. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nach Markierung sortieren</translation>
     </message>
     <message>
         <source>Sort by last modified date</source>
@@ -5197,7 +5200,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Create a folder to move your content here</source>
         <translatorcomment>Empty-state hint in the node selector inviting the user to create a folder. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Erstellen Sie einen Ordner, um Ihre Inhalte hierher zu verschieben</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5222,7 +5225,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Drag and drop your files here</source>
         <translatorcomment>Empty-state hint in the node selector inviting the user to drag and drop files. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ziehen Sie Ihre Dateien hierher</translation>
     </message>
     <message>
         <source>Empty Rubbish bin</source>
@@ -5232,7 +5235,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Empty folder</source>
         <translatorcomment>Empty state label shown in the node selector view when the selected folder has no items. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keine Dateien im Ordner</translation>
     </message>
     <message>
         <source>Folder is empty</source>
@@ -5286,7 +5289,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>No folders in Cloud drive</source>
         <translatorcomment>Empty-state message shown in the node selector when the Cloud drive has no folders. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keine Ordner im Cloud Drive</translation>
     </message>
     <message>
         <source>No folders to select</source>
@@ -5296,7 +5299,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Nothing in your private vault yet</source>
         <translatorcomment>Empty-state message shown in the node selector when the private vault has no items yet. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Noch keine Inhalte in Ihrem privaten Datentresor</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5316,17 +5319,17 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>This folder is empty. Keep something safe with zero-knowledge encryption.</source>
         <translatorcomment>Empty-state message shown in the node selector when the current folder has no items. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Ordner ist leer. Sie können hier Ihre Dateien mit Zero-Knowledge-Verschlüsselung sicher speichern.</translation>
     </message>
     <message>
         <source>This folder is read and write. Ask for full access to sync</source>
         <translatorcomment>Informational message in the node selector shown for a read-and-write shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dies ist ein Ordner mit Lese- und Schreibzugriff. Zum Synchronisieren fordern Sie Vollzugriff an</translation>
     </message>
     <message>
         <source>This folder is read-only. Ask for full access to sync</source>
         <translatorcomment>Informational message in the node selector shown for a read-only shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Ordner ist schreibgeschützt. Zum Synchronisieren fordern Sie Vollzugriff an</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -5384,7 +5387,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Folders shared with you will appear here</source>
         <translatorcomment>Empty-state message in the node selector incoming shares view, shown when there are no shared folders. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hier werden die für Sie freigegebenen Ordner angezeigt</translation>
     </message>
     <message>
         <source>No incoming shares</source>
@@ -5428,7 +5431,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>No results found</source>
         <translatorcomment>Empty-state title in the node selector search view, shown when the search returns no matches. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keine Ergebnisse</translation>
     </message>
     <message>
         <source>No search results</source>
@@ -5438,7 +5441,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Try a different name or check the spelling</source>
         <translatorcomment>Empty-state hint in the node selector search view, suggesting the user refine their search. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Versuchen Sie es mit einem anderen Namen oder überprüfen Sie die Schreibweise</translation>
     </message>
 </context>
 <context>
@@ -6488,7 +6491,10 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.5.0. SNC-6656</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Überarbeiteter und verbesserter Dateimanager.
+- Die Reiter „Synchronisierung“ und „Backup“ im Dialog „Einstellungen“ wurden überarbeitet.
+- Verbesserte Wayland-Unterstützung.
+- Fehlerkorrekturen und Leistungsverbesserungen.</translation>
     </message>
 </context>
 <context>
@@ -8676,7 +8682,7 @@ Aktualisieren Sie die Liste.</translation>
     <message>
         <source>Select a file to stream</source>
         <translatorcomment>Guidance message in the streaming node selector prompting the user to pick a file to stream. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie zum Streamen eine Datei aus</translation>
     </message>
 </context>
 <context>
@@ -9296,17 +9302,17 @@ Wenn das Problem dadurch nicht behoben wird, wenden Sie sich bitte an den Suppor
     <message>
         <source>Choose a different folder. This folder is already synced</source>
         <translatorcomment>Validation message in the sync node selector shown when the selected folder is already synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie einen anderen Ordner. Dieser Ordner ist bereits synchronisiert.</translation>
     </message>
     <message>
         <source>Choose a different folder. This location contains a folder that&apos;s already synced</source>
         <translatorcomment>Validation message in the sync node selector shown when the selected location contains a folder that is already synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie einen anderen Ordner. An diesem Speicherort befindet sich ein Ordner, der bereits synchronisiert wird.</translation>
     </message>
     <message>
         <source>Folder to sync</source>
         <translatorcomment>Label in the sync node selector for the folder that will be synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Zu synchronisierender Ordner</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -9317,12 +9323,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Only shared folders with full access can be synced</source>
         <translatorcomment>Informational message in the sync node selector indicating only full-access shared folders can be synced. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Es können nur freigegebene Ordner mit Vollzugriff synchronisiert werden</translation>
     </message>
     <message>
         <source>Select a full access shared folder to sync</source>
         <translatorcomment>Guidance message in the sync node selector prompting the user to choose a full-access shared folder to sync. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie einen freigegebenen Ordner mit Vollzugriff für die Synchronisierung aus</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -10455,7 +10461,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Select a shared folder to upload your items to</source>
         <translatorcomment>Guidance banner in the upload node selector, shown in Incoming Shares when no folder is selected, prompting the user to pick a shared folder as the upload destination. SNC-6420</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie den freigegebenen Ordner aus, in den Sie Ihre Inhalte hochladen möchten</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
