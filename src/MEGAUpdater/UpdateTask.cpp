@@ -716,12 +716,7 @@ bool UpdateTask::performUpdate()
         LOG(LOG_LEVEL_INFO, "File correctly installed: %s",  localPaths[i].c_str());
     }
 
-    if (!cleanupObsoleteFiles())
-    {
-        rollbackObsoleteFiles(static_cast<int>(obsoletePaths.size()) - 1);
-        rollbackUpdate(static_cast<int>(localPaths.size()) - 1);
-        return false;
-    }
+    cleanupObsoleteFiles();
 
 #ifndef _WIN32
     if (symlinksPath.empty())
@@ -768,13 +763,17 @@ void UpdateTask::rollbackUpdate(int fileNum)
     LOG(LOG_LEVEL_INFO, "Update uninstalled");
 }
 
-bool UpdateTask::cleanupObsoleteFiles()
+// Best effort: a leftover obsolete file is strictly less harmful than failing (and rolling
+// back) an already fully installed update, so per-file failures are logged and skipped
+// instead of aborting. A file that cannot be moved now (e.g. locked by another process)
+// will be retried on the next update.
+void UpdateTask::cleanupObsoleteFiles()
 {
     if (manifestLocalPaths.empty())
     {
         LOG(LOG_LEVEL_WARNING,
             "Skipping obsolete file cleanup because the update manifest is empty");
-        return true;
+        return;
     }
 
     LOG(LOG_LEVEL_INFO, "Cleaning obsolete install files...");
@@ -792,23 +791,26 @@ bool UpdateTask::cleanupObsoleteFiles()
     const fs::recursive_directory_iterator end;
     if (ec)
     {
-        LOG(LOG_LEVEL_ERROR, "Error opening install folder for cleanup: %s", ec.message().c_str());
-        return false;
+        LOG(LOG_LEVEL_WARNING,
+            "Error opening install folder for cleanup: %s",
+            ec.message().c_str());
+        return;
     }
 
+    int removedCount = 0;
+    int skippedCount = 0;
     while (it != end)
     {
         const fs::path entryPath = it->path();
         const fs::file_status status = it->symlink_status(ec);
         if (ec)
         {
-            LOG(LOG_LEVEL_ERROR,
+            LOG(LOG_LEVEL_WARNING,
                 "Error reading install file status for cleanup: %s",
                 entryPath.u8string().c_str());
-            return false;
+            skippedCount++;
         }
-
-        if (!fs::is_directory(status))
+        else if (!fs::is_directory(status))
         {
             const string relativePath =
                 normalizedManifestPath(entryPath.lexically_relative(appRoot).generic_u8string());
@@ -819,74 +821,45 @@ bool UpdateTask::cleanupObsoleteFiles()
                 fs::create_directories(backupPath.parent_path(), ec);
                 if (ec)
                 {
-                    LOG(LOG_LEVEL_ERROR,
+                    LOG(LOG_LEVEL_WARNING,
                         "Error creating obsolete file backup folder: %s",
                         backupPath.parent_path().u8string().c_str());
-                    return false;
+                    skippedCount++;
                 }
-
-                moveFileAcrossFilesystems(entryPath, backupPath, ec);
-                if (ec)
+                else if (!moveFileAcrossFilesystems(entryPath, backupPath, ec))
                 {
-                    LOG(LOG_LEVEL_ERROR,
+                    LOG(LOG_LEVEL_WARNING,
                         "Error moving obsolete file %s to backup %s: %s",
                         entryPath.u8string().c_str(),
                         backupPath.u8string().c_str(),
                         ec.message().c_str());
-                    return false;
+                    skippedCount++;
                 }
-
-                obsoletePaths.push_back(relativePath);
-                LOG(LOG_LEVEL_INFO,
-                    "Obsolete file removed from install folder: %s",
-                    relativePath.c_str());
+                else
+                {
+                    removedCount++;
+                    LOG(LOG_LEVEL_INFO,
+                        "Obsolete file removed from install folder: %s",
+                        relativePath.c_str());
+                }
             }
         }
 
         it.increment(ec);
         if (ec)
         {
-            LOG(LOG_LEVEL_ERROR,
+            LOG(LOG_LEVEL_WARNING,
                 "Error iterating install folder during cleanup: %s",
                 ec.message().c_str());
-            return false;
+            break;
         }
     }
 
     removeEmptyInstallFolders();
     LOG(LOG_LEVEL_INFO,
-        "Obsolete install file cleanup completed. Files removed: %zu",
-        obsoletePaths.size());
-    return true;
-}
-
-void UpdateTask::rollbackObsoleteFiles(int fileNum)
-{
-    LOG(LOG_LEVEL_INFO, "Restoring obsolete files...");
-
-    const fs::path appRoot = pathFromUtf8(appFolder);
-    const fs::path backupRoot = pathFromUtf8(backupFolder);
-    for (int i = fileNum; i >= 0; i--)
-    {
-        const string& relativePath = obsoletePaths[static_cast<size_t>(i)];
-        const fs::path backupPath = backupRoot / pathFromUtf8(relativePath);
-        const fs::path installPath = appRoot / pathFromUtf8(relativePath);
-
-        std::error_code ec;
-        fs::create_directories(installPath.parent_path(), ec);
-        if (!ec)
-        {
-            moveFileAcrossFilesystems(backupPath, installPath, ec);
-        }
-
-        if (ec)
-        {
-            LOG(LOG_LEVEL_ERROR, "Error restoring obsolete file: %s", relativePath.c_str());
-            continue;
-        }
-
-        LOG(LOG_LEVEL_INFO, "Obsolete file restored: %s", relativePath.c_str());
-    }
+        "Obsolete install file cleanup completed. Files removed: %d, skipped: %d",
+        removedCount,
+        skippedCount);
 }
 
 void UpdateTask::removeEmptyInstallFolders()
@@ -945,7 +918,6 @@ void UpdateTask::initialCleanup()
     localPaths.clear();
     fileSignatures.clear();
     manifestLocalPaths.clear();
-    obsoletePaths.clear();
 }
 
 void UpdateTask::finalCleanup()
