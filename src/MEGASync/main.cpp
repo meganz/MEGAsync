@@ -8,6 +8,7 @@
 #include "PowerOptions.h"
 #include "ProxyStatsEventHandler.h"
 #include "qtlockedfile/qtlockedfile.h"
+#include "UpdateTask.h"
 
 #include <QFontDatabase>
 
@@ -281,10 +282,15 @@ int main(int argc, char *argv[])
 
     Platform::create();
 
-    // This call is responsible for rebuilding the Qt symlinks in platforms where it applies.
-    // This needs to be done when starting the first time after an update.
-    // For this to work, the call needs to know the version of the app BEFORE updating,
-    // so needs to be made before the file megasync.version is updated.
+    // Sweep the install-dir files made obsolete by the last applied update. The sweep is
+    // deferred to startup because at update time the previous version is still running
+    // from those files. It must run before the bundle symlinks are recreated below,
+    // because it removes any symlink that is not part of the update manifest.
+    UpdateTask::runPendingObsoleteCleanup(MegaApplication::applicationDataPath());
+
+    // This call is responsible for rebuilding the app bundle symlinks in platforms where
+    // it applies. The auto-update removes them (they are not part of the update manifest),
+    // so any missing link is recreated on every start.
     Platform::getInstance()->processSymLinks();
 
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
@@ -645,8 +651,7 @@ int main(int argc, char *argv[])
         #endif
     }
 
-    // The megasync.version file update needs to be done AFTER Platform::getInstance()->processSymLinks(),
-    // because it needs the old version number.
+    // megasync.version is read by the auto-updater to detect externally applied updates.
     QString appVersionPath = dataDir.filePath(QString::fromUtf8("megasync.version"));
     QFile fappVersionPath(appVersionPath);
     if (fappVersionPath.open(QIODevice::WriteOnly))

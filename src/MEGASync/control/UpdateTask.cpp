@@ -6,6 +6,7 @@
 
 #include <QAuthenticator>
 #include <QDesktopServices>
+#include <QSaveFile>
 
 #include <algorithm>
 
@@ -14,6 +15,8 @@ using namespace std;
 
 namespace
 {
+const char PENDING_CLEANUP_FILE_NAME[] = "megasync.cleanup";
+
 QString normalizedManifestPath(const QString& path)
 {
     QString normalized = QDir::cleanPath(QDir::fromNativeSeparators(path));
@@ -468,7 +471,7 @@ bool UpdateTask::performUpdate()
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("File installed: %1").arg(file).toUtf8().constData());
     }
 
-    cleanupObsoleteFiles();
+    schedulePendingObsoleteCleanup();
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update successfully installed");
     return true;
@@ -487,13 +490,124 @@ void UpdateTask::rollbackUpdate(int fileNum)
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update uninstalled");
 }
 
-// Best effort: a leftover obsolete file is strictly less harmful than failing (and rolling
-// back) an already fully installed update, so per-file failures are logged and skipped
-// instead of aborting. A file that cannot be moved now (e.g. locked by another process)
-// will be retried on the next update.
-void UpdateTask::cleanupObsoleteFiles()
+// The obsolete-file sweep is deferred to the next application start (see
+// runPendingObsoleteCleanup): sweeping now would pull the assets of the still-running
+// previous version from under it (loaded modules can be moved on every platform), and
+// the post-update restart can be postponed for a long time while transfers are running.
+void UpdateTask::schedulePendingObsoleteCleanup()
 {
     if (manifestLocalPaths.isEmpty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     "Skipping obsolete file cleanup because the update manifest is empty");
+        return;
+    }
+
+    QDir dataDir(preferences->getDataPath());
+    QSaveFile pendingFile(dataDir.filePath(QString::fromLatin1(PENDING_CLEANUP_FILE_NAME)));
+    if (!pendingFile.open(QIODevice::WriteOnly))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     QString::fromUtf8("Error scheduling obsolete file cleanup: %1")
+                         .arg(pendingFile.fileName())
+                         .toUtf8()
+                         .constData());
+        return;
+    }
+
+    QByteArray content = appFolder.absolutePath().toUtf8();
+    content.append('\n');
+    for (const QString& manifestPath: manifestLocalPaths)
+    {
+        content.append(manifestPath.toUtf8());
+        content.append('\n');
+    }
+
+    // QSaveFile only renames the finished file into place on commit, so a crash cannot
+    // leave a truncated keep-list behind (which would sweep files the app needs).
+    pendingFile.write(content);
+    if (!pendingFile.commit())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     QString::fromUtf8("Error scheduling obsolete file cleanup: %1")
+                         .arg(pendingFile.fileName())
+                         .toUtf8()
+                         .constData());
+        return;
+    }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                 "Obsolete file cleanup scheduled for the next application start");
+}
+
+void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath)
+{
+#if defined(_WIN32) || defined(__APPLE__)
+    const QString pendingPath =
+        QDir(dataPath).filePath(QString::fromLatin1(PENDING_CLEANUP_FILE_NAME));
+    QFile pendingFile(pendingPath);
+    if (!pendingFile.exists())
+    {
+        return;
+    }
+
+    QStringList lines;
+    if (pendingFile.open(QFile::ReadOnly | QFile::Text))
+    {
+        lines =
+            QString::fromUtf8(pendingFile.readAll()).split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+        pendingFile.close();
+    }
+    // Consume the request up front: the sweep is best effort and must not be retried
+    // (and potentially keep failing) on every start; the next update reschedules it.
+    pendingFile.remove();
+
+    if (lines.size() < 2)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     "Skipping obsolete file cleanup: invalid pending cleanup file");
+        return;
+    }
+
+    const QDir appFolder(lines.takeFirst());
+
+    // Safety guard: the folder to sweep is read from a file, so before moving anything
+    // out of it make sure it really is a MEGAsync installation folder.
+#ifdef _WIN32
+    const QString appMarker = QString::fromLatin1("MEGAsync.exe");
+#else
+    const QString appMarker = QString::fromLatin1("Contents/MacOS/MEGAsync");
+#endif
+    if (!QFile::exists(appFolder.filePath(appMarker)))
+    {
+        MegaApi::log(
+            MegaApi::LOG_LEVEL_WARNING,
+            QString::fromUtf8("Skipping obsolete file cleanup: unexpected installation path %1")
+                .arg(appFolder.absolutePath())
+                .toUtf8()
+                .constData());
+        return;
+    }
+
+    const QDir backupFolder(QDir(dataPath).absoluteFilePath(
+        Preferences::UPDATE_BACKUP_FOLDER_NAME +
+        QDateTime::currentDateTime().toString(QString::fromLatin1("_dd_MM_yy__hh_mm_ss"))));
+
+    sweepObsoleteFiles(appFolder, backupFolder, lines);
+#else
+    Q_UNUSED(dataPath)
+#endif
+}
+
+// Best effort: a leftover obsolete file is strictly less harmful than failing an already
+// fully installed update, so per-file failures are logged and skipped instead of
+// aborting. A file that cannot be moved now (e.g. locked by another process) will be
+// retried when the next update reschedules the sweep.
+void UpdateTask::sweepObsoleteFiles(const QDir& appFolder,
+                                    const QDir& backupFolder,
+                                    const QStringList& manifestPaths)
+{
+    if (manifestPaths.isEmpty())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
                      "Skipping obsolete file cleanup because the update manifest is empty");
@@ -503,7 +617,7 @@ void UpdateTask::cleanupObsoleteFiles()
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Cleaning obsolete install files...");
 
     QSet<QString> expectedPaths;
-    for (const QString& manifestPath: manifestLocalPaths)
+    for (const QString& manifestPath: manifestPaths)
     {
         expectedPaths.insert(manifestPathKey(manifestPath));
     }
@@ -564,7 +678,7 @@ void UpdateTask::cleanupObsoleteFiles()
                          .constData());
     }
 
-    removeEmptyInstallFolders();
+    removeEmptyInstallFolders(appFolder);
     MegaApi::log(
         MegaApi::LOG_LEVEL_INFO,
         QString::fromUtf8("Obsolete install file cleanup completed. Files removed: %1, skipped: %2")
@@ -574,7 +688,7 @@ void UpdateTask::cleanupObsoleteFiles()
             .constData());
 }
 
-void UpdateTask::removeEmptyInstallFolders()
+void UpdateTask::removeEmptyInstallFolders(const QDir& appFolder)
 {
     QStringList folders;
     QDirIterator it(appFolder.absolutePath(),

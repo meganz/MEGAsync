@@ -26,6 +26,12 @@ public:
     explicit UpdateTask(mega::MegaApi *megaApi, QString appFolder, bool isPublic = false, QObject *parent = 0);
     ~UpdateTask();
 
+    // Applies the obsolete-file cleanup scheduled by the last applied update (see
+    // schedulePendingObsoleteCleanup). Must be called early at application start, before
+    // the app bundle symlinks are recreated: the sweep removes any symlink that is not
+    // part of the update manifest.
+    static void runPendingObsoleteCleanup(const QString& dataPath);
+
 protected:
    void initialCleanup();
    void finalCleanup();
@@ -36,8 +42,11 @@ protected:
    bool processFile(QNetworkReply *reply);
    bool performUpdate();
    void rollbackUpdate(int fileNum);
-   void cleanupObsoleteFiles();
-   void removeEmptyInstallFolders();
+   void schedulePendingObsoleteCleanup();
+   static void sweepObsoleteFiles(const QDir& appFolder,
+                                  const QDir& backupFolder,
+                                  const QStringList& manifestPaths);
+   static void removeEmptyInstallFolders(const QDir& appFolder);
    void addToSignature(QString value);
    void addToSignature(QByteArray bytes);
    void initSignature();
