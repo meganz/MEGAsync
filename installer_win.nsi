@@ -673,27 +673,60 @@ Var CLEAN_LAST_LEFTOVER
 
 ; Empty the directory passed in $R0: delete what is deletable, move locked-but-movable
 ; files (e.g. loaded exes/dlls) into $CLEAN_OBSOLETE_DIR under a unique name, and count
-; in $CLEAN_LEFTOVERS the files that can be neither deleted nor moved ($CLEAN_LAST_LEFTOVER
-; keeps the last such path for error reporting). Subdirectories are emptied recursively
-; and removed once empty.
+; in $CLEAN_LEFTOVERS the entries that can be neither deleted nor moved, including
+; directories that cannot be listed ($CLEAN_LAST_LEFTOVER keeps the last such path for
+; error reporting). Subdirectories are emptied recursively and removed once empty.
+; Reparse points (directory junctions/symlinks) are never recursed into: only the link
+; itself is removed, leaving its target untouched.
 Function EmptyObsoleteDirectory
   Push $R1
   Push $R2
   Push $R3
   Push $R4
+  ClearErrors
   FindFirst $R1 $R2 "$R0\*"
+  IfErrors 0 empty_obsolete_loop
+    ; The directory cannot be listed (e.g. access denied): its content can be neither
+    ; cleaned nor counted, so count the directory itself as a leftover. A listable
+    ; directory always yields at least ".", so an error here means listing failed.
+    ; The find handle is invalid on failure: exit without FindClose.
+    IntOp $CLEAN_LEFTOVERS $CLEAN_LEFTOVERS + 1
+    StrCpy $CLEAN_LAST_LEFTOVER $R0
+    Goto empty_obsolete_exit
   empty_obsolete_loop:
     StrCmp $R2 "" empty_obsolete_done
     StrCmp $R2 "." empty_obsolete_next
     StrCmp $R2 ".." empty_obsolete_next
     StrCpy $R3 "$R0\$R2"
+    System::Call 'kernel32::GetFileAttributesW(w "$R3")i.R4'
+    IntCmp $R4 -1 empty_obsolete_file
+    IntOp $R4 $R4 & 0x400
+    IntCmp $R4 0 empty_obsolete_direntry empty_obsolete_direntry empty_obsolete_reparse
+  empty_obsolete_direntry:
     IfFileExists "$R3\*.*" 0 empty_obsolete_file
       Push $R0
       StrCpy $R0 $R3
       Call EmptyObsoleteDirectory
       Pop $R0
+      ; A failed removal is only reported, not counted: files still inside were already
+      ; counted (or the directory was counted as unlistable), and an empty-but-locked
+      ; directory is harmless to the new payload.
+      ClearErrors
       RMDir "$R3"
+      IfErrors 0 empty_obsolete_next
+      DetailPrint "Could not remove directory: $R3"
       Goto empty_obsolete_next
+  empty_obsolete_reparse:
+    ; Junctions/symlinks are removed as links, never recursed into.
+    ClearErrors
+    RMDir "$R3"
+    IfErrors 0 empty_obsolete_next
+    ClearErrors
+    Delete "$R3"
+    IfErrors 0 empty_obsolete_next
+    IntOp $CLEAN_LEFTOVERS $CLEAN_LEFTOVERS + 1
+    StrCpy $CLEAN_LAST_LEFTOVER $R3
+    Goto empty_obsolete_next
   empty_obsolete_file:
     ClearErrors
     Delete $R3
@@ -712,6 +745,7 @@ Function EmptyObsoleteDirectory
     Goto empty_obsolete_loop
   empty_obsolete_done:
   FindClose $R1
+  empty_obsolete_exit:
   Pop $R4
   Pop $R3
   Pop $R2
@@ -798,10 +832,13 @@ FunctionEnd
     Call EmptyObsoleteDirectory
     Pop $R0
     RMDir /r /REBOOTOK "$CLEAN_OBSOLETE_DIR"
-    IntCmp $CLEAN_LEFTOVERS 0 clean_install_directory_done clean_install_directory_done clean_install_directory_failed
-
-  clean_install_directory_failed:
-    !insertmacro ExitWithError ${ERROR_PACKAGE_REJECTED} "Unable to remove files from the previous installation ($CLEAN_LAST_LEFTOVER is in use by another program). Please close MEGA Desktop App and any program using the installation folder, then try again."
+    IntCmp $CLEAN_LEFTOVERS 0 clean_install_directory_done clean_install_directory_done 0
+    ; Some files could be neither deleted nor moved. At this point the old installation
+    ; has already been partially removed, so aborting would leave the machine without a
+    ; working install and nothing to roll back to. Proceed instead: the new payload is
+    ; written with "SetOverwrite on", so each leftover is either overwritten by the
+    ; matching new file or, if it does not belong to the new payload, simply left behind.
+    DetailPrint "Warning: $CLEAN_LEFTOVERS item(s) from the previous installation are in use and could not be removed (last: $CLEAN_LAST_LEFTOVER). They will be overwritten by the new installation where needed."
 
   clean_install_directory_done:
   ClearErrors
