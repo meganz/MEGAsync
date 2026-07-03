@@ -200,9 +200,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
 
 #endif
 
-    connect(this, SIGNAL(blocked()), this, SLOT(onBlocked()));
-    connect(this, SIGNAL(unblocked()), this, SLOT(onUnblocked()));
-
 #ifdef _WIN32
     connect(this, SIGNAL(screenAdded(QScreen*)), this, SLOT(changeDisplay(QScreen*)));
     connect(this, SIGNAL(screenRemoved(QScreen*)), this, SLOT(changeDisplay(QScreen*)));
@@ -4002,41 +3999,34 @@ void MegaApplication::onSyncModelUpdated(std::shared_ptr<SyncSettings>)
 
 void MegaApplication::enableDisabledSyncs()
 {
-    auto enableSyncs = [](auto& syncs)
+    if (mStatusController != nullptr && !mStatusController->isAccountBlocked())
     {
-        const std::array allowedErrorsToTryToRestart{::mega::MegaSync::LOGGED_OUT,
-                                                     ::mega::MegaSync::ACCOUNT_BLOCKED};
-
-        for (auto& sync: as_const(syncs))
+        auto enableSyncs = [](auto& syncs)
         {
-            if (sync->getRunState() == ::mega::MegaSync::RUNSTATE_DISABLED)
+            const std::array allowedErrorsToTryToRestart{::mega::MegaSync::LOGGED_OUT,
+                                                         ::mega::MegaSync::ACCOUNT_BLOCKED};
+
+            for (auto& sync: as_const(syncs))
             {
-                if (std::find(allowedErrorsToTryToRestart.begin(),
-                              allowedErrorsToTryToRestart.end(),
-                              sync->getError()) != allowedErrorsToTryToRestart.end())
+                if (sync->getRunState() == ::mega::MegaSync::RUNSTATE_DISABLED ||
+                    sync->getRunState() == ::mega::MegaSync::RUNSTATE_SUSPENDED)
                 {
-                    SyncController::instance().setSyncToRun(sync);
+                    if (std::find(allowedErrorsToTryToRestart.begin(),
+                                  allowedErrorsToTryToRestart.end(),
+                                  sync->getError()) != allowedErrorsToTryToRestart.end())
+                    {
+                        SyncController::instance().setSyncToRun(sync);
+                    }
                 }
             }
-        }
-    };
+        };
 
-    auto syncs = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_TWOWAY);
-    enableSyncs(syncs);
+        auto syncs = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_TWOWAY);
+        enableSyncs(syncs);
 
-    auto backups = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_BACKUP);
-    enableSyncs(backups);
-}
-
-void MegaApplication::onBlocked()
-{
-    updateTrayIconMenu();
-}
-
-void MegaApplication::onUnblocked()
-{
-    updateTrayIconMenu();
-    enableDisabledSyncs();
+        auto backups = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_BACKUP);
+        enableSyncs(backups);
+    }
 }
 
 void MegaApplication::onTransfersModelUpdate()
@@ -7299,6 +7289,8 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
 
         updateTrayIcon();
     }
+
+    enableDisabledSyncs();
 }
 
 void MegaApplication::requestFetchSetFromLink(const QString& link)

@@ -214,10 +214,8 @@ signals:
     void installUpdate();
     void clearAllFinishedTransfers();
     void fetchNodesAfterBlock();
-    void unblocked();
     void nodeMoved(mega::MegaHandle handle);
     void nodeAttributesChanged(mega::MegaHandle handle);
-    void blocked();
     void storageStateChanged(int);
     void pauseStateChanged();
     void addBackup();
@@ -332,8 +330,6 @@ private slots:
     void registerUserActivity();
     void PSAseen(int id);
     void onSyncModelUpdated(std::shared_ptr<SyncSettings> syncSettings);
-    void onBlocked();
-    void onUnblocked();
     void onTransfersModelUpdate();
 
     void startingUpload();
