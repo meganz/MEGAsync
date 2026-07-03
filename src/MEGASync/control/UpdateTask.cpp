@@ -28,7 +28,7 @@ QString normalizedManifestPath(const QString& path)
 QString manifestPathKey(const QString& path)
 {
     const QString normalized = normalizedManifestPath(path);
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__APPLE__)
     return normalized.toCaseFolded();
 #else
     return normalized;
