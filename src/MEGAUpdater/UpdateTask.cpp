@@ -53,12 +53,14 @@ string normalizedManifestPath(string path)
 {
     std::replace(path.begin(), path.end(), '\\', '/');
 
+    path = fs::u8path(path).lexically_normal().generic_u8string();
+
     while (!path.empty() && path.front() == '/')
     {
         path.erase(path.begin());
     }
 
-    return path;
+    return path == "." ? string() : path;
 }
 
 string manifestPathKey(string path)
