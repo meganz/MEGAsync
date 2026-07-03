@@ -17,6 +17,7 @@ ChangePasswordDialog {
     title: ChangePasswordStrings.title
     visible: false
     modality: Qt.WindowModal
+    color: ColorTheme.pageBackground
     width: passwordChangePageWidth
     height: passwordChangePageHeigh
     maximumHeight: height
@@ -43,11 +44,18 @@ ChangePasswordDialog {
             State {
                 name: changePasswordContentItem.two_fa
                 StateChangeScript {
-                    script: stackView.replace(twoFAPage);
+                    script: {
+                        // Grow the window before switching page. maximumHeight is
+                        // raised before height so setHeight is not clamped by the
+                        // stale passwordChangePageHeigh maximum, which would otherwise
+                        // leave the window at 344 until a geometry event (e.g. moving
+                        // the dialog) re-applied the constraints.
+                        window.maximumHeight = twoFAPageHeigh;
+                        window.height = twoFAPageHeigh;
+                        window.minimumHeight = twoFAPageHeigh;
+                        stackView.replace(twoFAPage);
+                    }
                 }
-                PropertyChanges { target: window; height: twoFAPageHeigh; }
-                PropertyChanges { target: window; maximumHeight: twoFAPageHeigh; }
-                PropertyChanges { target: window; minimumHeight: twoFAPageHeigh; }
             }
         ]
 
