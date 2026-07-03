@@ -903,7 +903,7 @@ void UpdateTask::removeEmptyInstallFolders()
               folders.end(),
               [](const fs::path& lhs, const fs::path& rhs)
               {
-                  return lhs.u8string().size() > rhs.u8string().size();
+                  return lhs.native().size() > rhs.native().size();
               });
 
     for (const fs::path& folder: folders)
