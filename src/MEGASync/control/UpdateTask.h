@@ -36,8 +36,7 @@ protected:
    bool processFile(QNetworkReply *reply);
    bool performUpdate();
    void rollbackUpdate(int fileNum);
-   bool cleanupObsoleteFiles();
-   void rollbackObsoleteFiles(int fileNum);
+   void cleanupObsoleteFiles();
    void removeEmptyInstallFolders();
    void addToSignature(QString value);
    void addToSignature(QByteArray bytes);
@@ -52,7 +51,6 @@ protected:
    QStringList localPaths;
    QStringList fileSignatures;
    QStringList manifestLocalPaths;
-   QStringList obsoletePaths;
    QNetworkAccessManager *m_WebCtrl;
    mega::MegaHashSignature *signatureChecker;
    char signature[512];
