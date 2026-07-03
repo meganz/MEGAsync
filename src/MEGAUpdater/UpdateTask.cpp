@@ -66,7 +66,7 @@ string normalizedManifestPath(string path)
 string manifestPathKey(string path)
 {
     path = normalizedManifestPath(path);
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__APPLE__)
     std::transform(path.begin(),
                    path.end(),
                    path.begin(),
