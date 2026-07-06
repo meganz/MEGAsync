@@ -24,6 +24,9 @@ enum Code
     LOCAL_PATH_UNAVAILABLE = static_cast<int>(mega::MegaSync::LOCAL_PATH_UNAVAILABLE),
     REMOTE_NODE_NOT_FOUND = static_cast<int>(mega::MegaSync::REMOTE_NODE_NOT_FOUND),
     STORAGE_OVERQUOTA = static_cast<int>(mega::MegaSync::STORAGE_OVERQUOTA),
+    ACCOUNT_EXPIRED = static_cast<int>(mega::MegaSync::ACCOUNT_EXPIRED),
+    ACCOUNT_BLOCKED = static_cast<int>(mega::MegaSync::ACCOUNT_BLOCKED),
+    FOREIGN_TARGET_OVERSTORAGE = static_cast<int>(mega::MegaSync::FOREIGN_TARGET_OVERSTORAGE),
     LOCAL_FILESYSTEM_MISMATCH = static_cast<int>(mega::MegaSync::LOCAL_FILESYSTEM_MISMATCH),
     REMOTE_NODE_MOVED_TO_RUBBISH = static_cast<int>(mega::MegaSync::REMOTE_NODE_MOVED_TO_RUBBISH),
     REMOTE_NODE_INSIDE_RUBBISH = static_cast<int>(mega::MegaSync::REMOTE_NODE_INSIDE_RUBBISH),
@@ -39,7 +42,7 @@ enum Code
     INSUFFICIENT_DISK_SPACE = static_cast<int>(mega::MegaSync::INSUFFICIENT_DISK_SPACE),
     FAILURE_ACCESSING_PERSISTENT_STORAGE =
         static_cast<int>(mega::MegaSync::FAILURE_ACCESSING_PERSISTENT_STORAGE),
-    MISMATCH_OF_ROOT_FSID = static_cast<int>(mega::MegaSync::MISMATCH_OF_ROOT_FSID),
+    MISMATCH_OF_ROOT_FSID = static_cast<int>(mega::MegaSync::MISMATCH_OF_ROOT_FSID)
 };
 Q_ENUM_NS(Code)
 };

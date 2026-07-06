@@ -1,6 +1,8 @@
 #include "SyncSettingsModelBase.h"
 
+#include "MegaApplication.h"
 #include "SyncInfo.h"
+#include "Utilities.h"
 
 #include <QCoreApplication>
 
@@ -15,6 +17,10 @@ SyncSettingsModelBase::SyncSettingsModelBase(mega::MegaSync::SyncType type, QObj
     connect(mSyncInfo, &SyncInfo::syncStateChanged, this, &SyncSettingsModelBase::insertItem);
     connect(mSyncInfo, &SyncInfo::syncStatsUpdated, this, &SyncSettingsModelBase::updateStats);
     connect(mSyncInfo, &SyncInfo::syncRemoved, this, &SyncSettingsModelBase::removeItem);
+    connect(MegaSyncApp,
+            &MegaApplication::languageChanged,
+            this,
+            &SyncSettingsModelBase::onLanguageChanged);
 
     mList = mSyncInfo->getSyncSettingsByType(mType);
     sortByName(true);
@@ -37,6 +43,14 @@ void SyncSettingsModelBase::onSyncRemoveBegins(mega::MegaHandle backupId)
     {
         sendDataChanged(static_cast<int>(std::distance(mList.cbegin(), foundIt)));
     }
+}
+
+void SyncSettingsModelBase::onLanguageChanged()
+{
+    if (rowCount() == 0)
+        return;
+
+    emit dataChanged(index(0), index(rowCount() - 1), {Role::ErrorMessage});
 }
 
 void SyncSettingsModelBase::onSyncRemoveEnds(mega::MegaHandle backupId)

@@ -130,7 +130,6 @@ Item {
                 errorRadius: root.errorBackupItemRadius
                 idleIcon: Images.database_small_thin_outline
                 errorShowRestore: false
-                errorRetryOnIgnoreFileError: false
                 errorEnableText: SettingsStrings.solveIssueEnableBackup
                 errorStartNewText: SettingsStrings.solveIssueStartNewBackup
                 errorStartNewIcon: Images.database_plus_small_thin_outline

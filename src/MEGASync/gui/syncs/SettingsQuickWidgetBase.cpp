@@ -69,7 +69,7 @@ bool SettingsQuickWidgetBase::eventFilter(QObject* watched, QEvent* event)
 
 void SettingsQuickWidgetBase::exploreLocal(const QString& localFolder) const
 {
-    Platform::getInstance()->showInFolder(localFolder);
+    Utilities::openUrl(QUrl::fromLocalFile(localFolder));
 }
 
 void SettingsQuickWidgetBase::openInMega(int index) const

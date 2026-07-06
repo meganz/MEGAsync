@@ -14,7 +14,6 @@
 #include "DeviceCentre.h"
 #include "DialogOpener.h"
 #include "EmailRequester.h"
-#include "EphemeralCredentials.h"
 #include "EventUpdater.h"
 #include "ExportProcessor.h"
 #include "FatalEventHandler.h"
@@ -200,9 +199,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     logToStdout |= args.contains(QLatin1String("--debug"));
 
 #endif
-
-    connect(this, SIGNAL(blocked()), this, SLOT(onBlocked()));
-    connect(this, SIGNAL(unblocked()), this, SLOT(onUnblocked()));
 
 #ifdef _WIN32
     connect(this, SIGNAL(screenAdded(QScreen*)), this, SLOT(changeDisplay(QScreen*)));
@@ -598,13 +594,10 @@ void MegaApplication::initialize()
     MegaApiStartupConfig::initialConfiguration(megaApiFolders);
 
     model = SyncInfo::instance();
+    connect(model, &SyncInfo::syncDisabledListUpdated, this, &MegaApplication::enableDisabledSyncs);
     connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncRemoved, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncDisabledListUpdated, this, &MegaApplication::updateTrayIcon);
-    connect(model,
-            &SyncInfo::syncDisabledListUpdated,
-            this,
-            &MegaApplication::enableLogOffDisabledSyncs);
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Graphics processing %1")
                  .arg(mDisableGfx ? QLatin1String("disabled")
@@ -4004,29 +3997,36 @@ void MegaApplication::onSyncModelUpdated(std::shared_ptr<SyncSettings>)
     }
 }
 
-void MegaApplication::enableLogOffDisabledSyncs()
+void MegaApplication::enableDisabledSyncs()
 {
-    auto syncsUnattended = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_TWOWAY);
-    for (auto& sync: as_const(syncsUnattended))
+    if (mStatusController != nullptr && !mStatusController->isAccountBlocked())
     {
-        if (sync->getRunState() == ::mega::MegaSync::RUNSTATE_DISABLED)
+        auto enableSyncs = [](auto& syncs)
         {
-            if (sync->getError() == ::mega::MegaSync::LOGGED_OUT)
+            const std::array allowedErrorsToTryToRestart{::mega::MegaSync::LOGGED_OUT,
+                                                         ::mega::MegaSync::ACCOUNT_BLOCKED};
+
+            for (auto& sync: as_const(syncs))
             {
-                SyncController::instance().setSyncToRun(sync);
+                if (sync->getRunState() == ::mega::MegaSync::RUNSTATE_DISABLED ||
+                    sync->getRunState() == ::mega::MegaSync::RUNSTATE_SUSPENDED)
+                {
+                    if (std::find(allowedErrorsToTryToRestart.begin(),
+                                  allowedErrorsToTryToRestart.end(),
+                                  sync->getError()) != allowedErrorsToTryToRestart.end())
+                    {
+                        SyncController::instance().setSyncToRun(sync);
+                    }
+                }
             }
-        }
+        };
+
+        auto syncs = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_TWOWAY);
+        enableSyncs(syncs);
+
+        auto backups = model->getSyncSettingsByType(MegaSync::SyncType::TYPE_BACKUP);
+        enableSyncs(backups);
     }
-}
-
-void MegaApplication::onBlocked()
-{
-    updateTrayIconMenu();
-}
-
-void MegaApplication::onUnblocked()
-{
-    updateTrayIconMenu();
 }
 
 void MegaApplication::onTransfersModelUpdate()
@@ -7289,6 +7289,8 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
 
         updateTrayIcon();
     }
+
+    enableDisabledSyncs();
 }
 
 void MegaApplication::requestFetchSetFromLink(const QString& link)
