@@ -34,34 +34,9 @@ ColumnLayout {
     property url removeIcon: Images.trash_small_thin_outline
     property var removeAction: function() { settingsAccess.removeNonConfirmation(itemIndex); }
     property bool showRestore: true
-    // COULD_NOT_CREATE_IGNORE_FILE only applies to syncs; backups omit it.
-    property bool retryOnIgnoreFileError: true
     // Vertical padding for the (non-destructive) action buttons. Defaults to the
     // SmallSizes default so the sync variant is unchanged; backup overrides it.
     property int buttonVerticalPadding: defaultButtonSizes.verticalPadding
-
-    // Error codes that show the retry button (resume the sync/backup).
-    readonly property var retryErrorCodes: {
-        var codes = [SyncErrors.LOCAL_PATH_TEMPORARY_UNAVAILABLE,
-                     SyncErrors.NOTIFICATION_SYSTEM_UNAVAILABLE,
-                     SyncErrors.UNABLE_TO_ADD_WATCH,
-                     SyncErrors.INSUFFICIENT_DISK_SPACE,
-                     SyncErrors.FAILURE_ACCESSING_PERSISTENT_STORAGE,
-                     SyncErrors.MISMATCH_OF_ROOT_FSID,
-                     SyncErrors.SYNC_CONFIG_WRITE_FAILURE,
-                     SyncErrors.SYNC_CONFIG_READ_FAILURE,
-                     SyncErrors.UNABLE_TO_OPEN_DATABASE,
-                     SyncErrors.UNKNOWN_DRIVE_PATH,
-                     SyncErrors.ACCOUNT_EXPIRED,
-                     SyncErrors.ACCOUNT_BLOCKED,
-                     SyncErrors.FOREIGN_TARGET_OVERSTORAGE,
-                     SyncErrors.LOCAL_PATH_UNAVAILABLE];
-
-        if (retryOnIgnoreFileError) {
-            codes.push(SyncErrors.COULD_NOT_CREATE_IGNORE_FILE);
-        }
-        return codes;
-    }
 
     readonly property int issueHandlerSpacing: 4
     readonly property int topErrorLabelMargin: 8
@@ -115,7 +90,7 @@ ColumnLayout {
             id: retryButton
 
             errorId: root.errorId
-            triggerErrors: root.retryErrorCodes
+            alwaysVisible: true
             spins: true
             resetInterval: root.timeToResetActionButtonState
             spinDuration: root.buttonIconbusyAnimationDurationTime

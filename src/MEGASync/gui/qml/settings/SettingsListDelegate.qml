@@ -83,7 +83,6 @@ Rectangle {
 
     // error panel per-tab configuration (defaults match the sync variant)
     property bool errorShowRestore: true
-    property bool errorRetryOnIgnoreFileError: true
     property string errorEnableText: SettingsStrings.solveIssueEnableSync
     property string errorStartNewText: SettingsStrings.solveIssueStartNewSync
     property url errorStartNewIcon: Images.sync_plus_small_thin_outline
@@ -507,7 +506,6 @@ Rectangle {
                 localFolder: folder
                 itemIndex: index
                 showRestore: root.errorShowRestore
-                retryOnIgnoreFileError: root.errorRetryOnIgnoreFileError
                 enableText: root.errorEnableText
                 startNewText: root.errorStartNewText
                 startNewIcon: root.errorStartNewIcon
