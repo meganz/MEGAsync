@@ -56,6 +56,8 @@ public:
 
     void restoreDefaults();
 
+    bool isDefault() const;
+
     enum ApplyChangesError
     {
         OK,
@@ -73,7 +75,17 @@ public:
 
     int getNameRulesCount() const;
 
-    template<class Type>
+private:
+    static QString getDefaultFilePath();
+    static QStringList readTrimmedLines(const QString& filePath);
+
+    template <class Type>
+    static const std::shared_ptr<Type> convert(const std::shared_ptr<MegaIgnoreRule> data)
+    {
+        return std::dynamic_pointer_cast<Type>(data);
+    }
+
+    template <class Type>
     bool addRule(std::shared_ptr<Type> rule)
     {
         const auto ruleText = rule->getModifiedRule();
