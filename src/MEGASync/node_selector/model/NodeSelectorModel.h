@@ -363,6 +363,7 @@ public:
     void setFetchStep(int step);
 
     void loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node);
+    bool isLoadingTreePath() const;
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node,
                                  const QModelIndex& parent);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle, const QModelIndex& parent);

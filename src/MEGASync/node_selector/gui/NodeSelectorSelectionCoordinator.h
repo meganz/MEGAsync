@@ -3,6 +3,7 @@
 
 #include "megaapi.h"
 
+#include <QHash>
 #include <QList>
 #include <QModelIndex>
 #include <QMultiHash>
@@ -11,6 +12,7 @@
 #include <QSet>
 
 #include <functional>
+#include <memory>
 
 class NodeSelectorModel;
 class NodeSelectorModelItem;
@@ -69,6 +71,7 @@ public slots:
 
 private:
     void checkNewFolderAdded(QPointer<NodeSelectorModelItem> item);
+    void triggerTreePathLoad(const std::shared_ptr<mega::MegaNode>& node);
 
     mega::MegaApi* mMegaApi;
     NodeSelectorModel* mModel;
@@ -95,9 +98,11 @@ private:
     // selectPendingIndexes can re-enter itself synchronously (an unresolved handle triggers a
     // loadTreeFromNode that emits blockUi(false) synchronously, which re-invokes it).
     // mResolvingPendingIndexes marks an active call so a synchronous re-entry returns immediately
-    // and the recursion stays bounded; mHandlesPendingLoad records the handles already sent to
-    // load so an unmappable one is not retried (and re-loaded) forever across calls.
-    QSet<mega::MegaHandle> mHandlesPendingLoad;
+    // and the recursion stays bounded; mLoadAttempts counts the tree path loads triggered per
+    // handle so a handle whose load died (failed synchronously, aborted or clobbered by another
+    // load) is retried a bounded number of times and then dropped, instead of being re-queued
+    // (or re-loaded) forever.
+    QHash<mega::MegaHandle, int> mLoadAttempts;
     bool mResolvingPendingIndexes = false;
 };
 

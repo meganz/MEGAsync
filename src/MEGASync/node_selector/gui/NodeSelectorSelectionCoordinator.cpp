@@ -6,6 +6,17 @@
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorTreeView.h"
 
+#include <QScopedValueRollback>
+
+namespace
+{
+// A queued handle's tree path load can die before the handle becomes mappable (the model was
+// still empty, the chain failed synchronously, was aborted, or was clobbered by another load).
+// Retry a few times -- transient states resolve within a pass or two -- then drop the handle:
+// one that never maps (e.g. filtered out by the proxy) must not be re-queued forever.
+constexpr int MAX_TREE_PATH_LOAD_ATTEMPTS = 3;
+}
+
 NodeSelectorSelectionCoordinator::NodeSelectorSelectionCoordinator(mega::MegaApi* megaApi,
                                                                    Objects objects,
                                                                    Policy policy):
@@ -61,8 +72,14 @@ void NodeSelectorSelectionCoordinator::setSelectedNodeHandle(const mega::MegaHan
         return;
     }
 
-    mProxyModel->setExpandMapped(true);
     mModel->selectIndexesByHandleAsync(QSet<mega::MegaHandle>() << node->getHandle());
+    triggerTreePathLoad(node);
+}
+
+void NodeSelectorSelectionCoordinator::triggerTreePathLoad(
+    const std::shared_ptr<mega::MegaNode>& node)
+{
+    mProxyModel->setExpandMapped(true);
     mModel->loadTreeFromNode(node);
 }
 
@@ -93,11 +110,24 @@ void NodeSelectorSelectionCoordinator::expandPendingIndexes()
 
 void NodeSelectorSelectionCoordinator::selectPendingIndexes()
 {
+    // A synchronous re-entry (an unresolved handle below triggers loadTreeFromNode, which emits
+    // blockUi(false) synchronously and re-invokes this) must bail out before draining the queue,
+    // so the recursion stays bounded and the pending handles survive for the real later pass.
+    if (mResolvingPendingIndexes)
+    {
+        return;
+    }
+
     auto indexesToBeSelected = mModel->needsToBeSelected();
     if (indexesToBeSelected.isEmpty())
     {
         return;
     }
+
+    // Rollback guard so the flag is restored on ANY exit path (early return added in the
+    // future, exception from a policy callback); a flag stuck at true would silently disable
+    // selection for the widget's lifetime.
+    QScopedValueRollback<bool> resolvingGuard(mResolvingPendingIndexes, true);
 
     // Only a restore jumps to the top root (nodes may have different parents); a move/merge
     // stays in the current folder.
@@ -115,18 +145,57 @@ void NodeSelectorSelectionCoordinator::selectPendingIndexes()
             for (const auto& item: indexesToBeSelected)
             {
                 auto handle = item.first;
-                if (handle != mega::INVALID_HANDLE)
+                if (handle == mega::INVALID_HANDLE)
                 {
-                    auto proxyIndex = mProxyModel->getIndexFromHandle(handle);
-                    if (proxyIndex.isValid())
-                    {
-                        mSelectIndex(proxyIndex, true, false);
-                    }
-                    else
-                    {
-                        setSelectedNodeHandle(handle);
-                        allSelected = false;
-                    }
+                    continue;
+                }
+
+                auto proxyIndex = mProxyModel->getIndexFromHandle(handle);
+                if (proxyIndex.isValid())
+                {
+                    mLoadAttempts.remove(handle);
+                    mSelectIndex(proxyIndex, true, false);
+                    continue;
+                }
+
+                auto node = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(handle));
+                if (!node)
+                {
+                    // The node is gone (deleted, or its share was revoked): it can never be
+                    // mapped. Drop it so the pending queue drains; re-queuing it would make
+                    // every later pass clear the selection and jump to the top root, forever.
+                    mLoadAttempts.remove(handle);
+                }
+                else if (mModel->isLoadingTreePath())
+                {
+                    // A tree path load is in flight: its rows arrive through queued signals,
+                    // so they are inserted only after this synchronous pass returns. Keep the
+                    // handle queued WITHOUT touching the load, and let the pass fired on
+                    // insertion resolve it. Triggering a load here would clobber the chain in
+                    // flight (loadTreeFromNode restarts mNodesToLoad from scratch).
+                    mModel->selectIndexesByHandleAsync(QSet<mega::MegaHandle>() << handle);
+                    allSelected = false;
+                }
+                else if (mLoadAttempts.value(handle, 0) < MAX_TREE_PATH_LOAD_ATTEMPTS)
+                {
+                    // No load in flight: trigger this handle's tree path load, or re-trigger
+                    // it when the previous chain died before the handle became mappable (it
+                    // failed synchronously, was aborted, or was clobbered by another load).
+                    // The attempt cap keeps a handle that can never be mapped (e.g. filtered
+                    // out by the proxy) from being retried forever; the re-entrancy guard
+                    // above keeps each attempt from recursing. Re-queue explicitly: the load
+                    // can fail synchronously without leaving the handle queued.
+                    ++mLoadAttempts[handle];
+                    mModel->selectIndexesByHandleAsync(QSet<mega::MegaHandle>() << handle);
+                    triggerTreePathLoad(node);
+                    allSelected = false;
+                }
+                else
+                {
+                    // All attempts spent and still unmappable: give up so the queue drains.
+                    // Terminal like the selected case, so allSelected stays true and the
+                    // deferred selection notification can still fire for this pass.
+                    mLoadAttempts.remove(handle);
                 }
             }
             return allSelected;

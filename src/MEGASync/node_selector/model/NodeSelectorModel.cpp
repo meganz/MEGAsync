@@ -3006,12 +3006,20 @@ QList<QPair<mega::MegaHandle, QModelIndex>> NodeSelectorModel::needsToBeSelected
 
 void NodeSelectorModel::abort()
 {
+    // The cancelled request never delivers nodesReady, so a tree path chain in progress would
+    // stay in mNodesToLoad forever and keep isLoadingTreePath() stuck at true.
+    mNodesToLoad.clear();
     mNodeRequesterWorker->cancelCurrentRequest();
 }
 
 bool NodeSelectorModel::canBeDeleted() const
 {
     return true;
+}
+
+bool NodeSelectorModel::isLoadingTreePath() const
+{
+    return !mNodesToLoad.isEmpty();
 }
 
 void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
