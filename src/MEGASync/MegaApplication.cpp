@@ -4903,6 +4903,11 @@ void MegaApplication::confirmAndProcessExternalUploads()
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
 
+    QMap<QMessageBox::StandardButton, QString> buttonsText;
+    buttonsText.insert(QMessageBox::Yes, tr("Upload"));
+    buttonsText.insert(QMessageBox::No, tr("Cancel"));
+    msgInfo.buttonsText = buttonsText;
+
     msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)

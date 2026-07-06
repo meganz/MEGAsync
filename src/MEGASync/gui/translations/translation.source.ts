@@ -3442,6 +3442,11 @@ https://mega.co.nz/#sync</source>
             <numerusform>Do you want to upload %n files to MEGA?</numerusform>
         </translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
