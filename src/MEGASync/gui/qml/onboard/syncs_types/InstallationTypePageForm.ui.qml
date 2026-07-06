@@ -50,6 +50,7 @@ FooterButtonsPage {
             id: buttonsLayout
 
             spacing: 12
+            Layout.fillWidth: true
 
             SyncsHorizontalButton {
                 id: syncButtonItem

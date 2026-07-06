@@ -38,6 +38,7 @@ Item {
             id: textColumn
 
             spacing: root.textSpacings
+            Layout.fillWidth: true
 
             HeaderTexts {
                 id: header
