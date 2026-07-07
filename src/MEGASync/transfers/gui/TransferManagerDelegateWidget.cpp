@@ -583,9 +583,10 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
             mUi->lItemPausedQueued_1->setText(mUi->lItemPausedQueued_1->fontMetrics().elidedText(mUi->lItemPausedQueued_1->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_1->width()
                                           ));
 
-            mUi->lItemPausedQueued_2->setText(mUi->lItemPausedQueued_2->fontMetrics().elidedText(mUi->lItemPausedQueued_2->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_2->width()
-                                          ));
-            mUi->lItemPausedQueued_1->parentWidget()->adjustSize();
+            mUi->lItemPausedQueued_2->setText(mUi->lItemPausedQueued_2->fontMetrics().elidedText(
+                mUi->lItemPausedQueued_2->text(),
+                Qt::ElideMiddle,
+                mUi->lItemPausedQueued_2->width()));
         }
         else if(watched == mUi->lItemFailed)
         {
@@ -593,7 +594,6 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
                 mUi->lItemFailed->fontMetrics().elidedText(mUi->lItemFailed->text(),
                                                            Qt::ElideMiddle,
                                                            mUi->lItemFailed->width()));
-            mUi->lItemFailed->parentWidget()->adjustSize();
         }
         // Adapt manually stack page (just failed as, for the moment, is the only one bigger than
         // its original size)
