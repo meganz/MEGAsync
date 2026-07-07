@@ -255,13 +255,18 @@ void MegaProxyStyle::polish(QWidget *widget)
 
         EventManager::addEvent(menu,
                                QEvent::MouseButtonPress,
-                               [pressSeen](QEvent* event)
+                               [pressSeen, menu](QEvent* event)
                                {
                                    if (auto mouseEvent = dynamic_cast<QMouseEvent*>(event))
                                    {
                                        if (mouseEvent->button() != Qt::MouseButton::LeftButton)
                                        {
-                                           return true;
+                                           // Block non-left presses only when they land on the
+                                           // menu itself, where they could activate an entry.
+                                           // Presses outside the popup must reach QMenu so it
+                                           // closes itself (e.g. right-clicking another row
+                                           // while a context menu is already open).
+                                           return menu->rect().contains(mouseEvent->pos());
                                        }
                                        *pressSeen = true;
                                    }
