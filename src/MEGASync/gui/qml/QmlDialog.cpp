@@ -277,8 +277,17 @@ void QmlDialog::placeAndRaise()
     mCenterAndRaiseAfterFirstHeightChangeEvent = false;
 
     QSize dialogSize = geometry().size();
-    auto parentGeometry = QmlDialogWrapperUtilities::getParentGeometry(this);
-    QmlDialog::setFramePosition(DialogOpener::initialDialogPosition(dialogSize, parentGeometry));
+    auto parentGeometry = DialogOpener::getParentGeometry(this);
+    const QPoint targetPos = DialogOpener::initialDialogPosition(dialogSize, parentGeometry);
+
+    // Multi-monitor (Qt5): a freshly created QQuickWindow is associated with the
+    // primary screen, so setFramePosition() converts the global coordinates with
+    // the primary screen's DPI and the dialog lands off-position on secondary
+    // monitors. Bind it to the target screen first so the conversion is correct.
+    const QPoint screenRef = parentGeometry.isValid() ? parentGeometry.center() : targetPos;
+    QmlDialogWrapperUtilities::bindToScreenForPositioning(this, screenRef, targetPos);
+
+    QmlDialog::setFramePosition(targetPos);
 
     mRestoreOpacityTimer.start();
 }

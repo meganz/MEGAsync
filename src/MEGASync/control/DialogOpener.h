@@ -19,6 +19,10 @@
 #include <functional>
 #include <memory>
 
+// Needed to store a QPointer<QWidget> in a dynamic property (QVariant) so the
+// visual-parent reference nulls automatically when the parent is destroyed.
+Q_DECLARE_METATYPE(QPointer<QWidget>)
+
 template<typename T>
 class QmlDialogWrapper;
 
@@ -209,6 +213,9 @@ private:
         bool isEmpty() const {return geometry.isEmpty();}
     };
 
+    static constexpr const char* PARENT_GEOMETRY_PROPERTY = "ParentGeometry";
+    static constexpr const char* VISUAL_PARENT_PROPERTY = "VisualParent";
+
 public:
     static QPoint initialDialogPosition(const QSize& dialogSize)
     {
@@ -218,6 +225,59 @@ public:
     static QPoint initialDialogPosition(const QSize& dialogSize, const QRect& parentGeometry)
     {
         return Platform::getInstance()->initialDialogPosition(dialogSize, parentGeometry);
+    }
+
+    // Remembers, on a dialog, the geometry of the window it should be centered
+    // on. Stored as a dynamic property so it works for any dialog type (QML
+    // wrappers and plain QWidget/QDialog alike) and, crucially, lets a dialog be
+    // centered on a window WITHOUT making that window its Qt parent (which would
+    // couple modality and lifetime). Read back when positioning the dialog.
+    // For plain QWidget dialogs, prefer setVisualParent() instead — it derives
+    // the geometry live and also supplies the QWindow* needed on Wayland.
+    static void setParentGeometry(QObject* dialog, const QRect& parentGeometry)
+    {
+        if (dialog)
+        {
+            dialog->setProperty(PARENT_GEOMETRY_PROPERTY, parentGeometry);
+        }
+    }
+
+    static QRect getParentGeometry(const QObject* dialog)
+    {
+        if (!dialog)
+        {
+            return QRect();
+        }
+
+        const auto value(dialog->property(PARENT_GEOMETRY_PROPERTY));
+        return value.isValid() ? value.toRect() : QRect();
+    }
+
+    // Stores the visual parent widget so showDialogImpl() can derive both the
+    // centering geometry and (on Wayland) the transient-parent window handle
+    // from a single source — without adding Wayland-specific storage.
+    // Use this instead of setParentGeometry() whenever a QWidget* is available.
+    static void setVisualParent(QObject* dialog, QWidget* parentWidget)
+    {
+        if (dialog && parentWidget)
+        {
+            // Stored as a QPointer so it nulls automatically if the parent window
+            // is destroyed before the dialog is shown. The dialog is deliberately
+            // NOT Qt-parented to the visual parent (see setParentGeometry's note on
+            // decoupling lifetime), so their lifetimes are independent; a raw
+            // pointer would dangle and crash getVisualParent()/showDialogImpl().
+            dialog->setProperty(VISUAL_PARENT_PROPERTY,
+                                QVariant::fromValue(QPointer<QWidget>(parentWidget->window())));
+        }
+    }
+
+    static QWidget* getVisualParent(const QObject* dialog)
+    {
+        if (!dialog)
+        {
+            return nullptr;
+        }
+        return dialog->property(VISUAL_PARENT_PROPERTY).value<QPointer<QWidget>>().data();
     }
 
     template <class DialogType>
@@ -628,16 +688,69 @@ private:
             else
             {
                 QRect parentGeo;
-                // QML dialogs with parent are centered on its parent
-                if (isQML)
+                QWindow* visualParentWindow = nullptr;
+                // Prefer a stored visual parent (setVisualParent): derives the
+                // centering geometry live and — for non-QML dialogs on Wayland —
+                // also supplies the transient-parent window handle so the
+                // compositor can centre the dialog itself.
+                // Falls back to an explicit QRect (setParentGeometry, used by the
+                // QML→QML path where only a QQuickWindow* is available) or the
+                // Qt parent's top-level frame. Geometry-retaining dialogs
+                // (NodeSelector, TransferManager, StalledIssuesDialog) have none
+                // of the above and keep restoring their saved geometry.
+                if (QWidget* visualParent = getVisualParent(dialog))
                 {
-                    parentGeo = QmlDialogWrapperUtilities::getParentGeometry(dialog);
+                    parentGeo = visualParent->frameGeometry();
+                    if (!isQML)
+                    {
+                        visualParentWindow = visualParent->windowHandle();
+                    }
+                }
+                else if (isQML)
+                {
+                    parentGeo = getParentGeometry(dialog);
+                }
+                else
+                {
+                    // Non-QML without visual parent
+                    parentGeo = getParentGeometry(dialog);
+                    if (!parentGeo.isValid())
+                    {
+                        if (QWidget* parentWidget = dialog->parentWidget())
+                        {
+                            parentGeo = parentWidget->window()->frameGeometry();
+                        }
+                    }
                 }
 
                 if (parentGeo.isValid())
                 {
-                    dialog->move(initialDialogPosition(dialog->geometry().size(), parentGeo));
-                    dialog->show();
+                    QWindow* qmlWindow = isQML ? dialog->windowHandle() : nullptr;
+                    if (qmlWindow)
+                    {
+                        // QML dialogs: the visible window is the inner QQuickWindow,
+                        // not the wrapper QWidget. Moving the wrapper mis-converts
+                        // the coordinates on high-DPI secondary monitors (the wrapper
+                        // and the QML window can be bound to different screens/DPR, so
+                        // the logical->native conversion lands the window off-screen).
+                        // Position the QML window directly, binding it to the target
+                        // screen first so the conversion uses the right DPI.
+                        const QPoint targetPos =
+                            initialDialogPosition(qmlWindow->size(), parentGeo);
+                        QmlDialogWrapperUtilities::bindToScreenForPositioning(qmlWindow,
+                                                                              parentGeo.center(),
+                                                                              targetPos);
+                        qmlWindow->setFramePosition(targetPos);
+                        dialog->show();
+                    }
+                    else
+                    {
+                        Platform::getInstance()->moveDialog(
+                            dialog,
+                            initialDialogPosition(dialog->geometry().size(), parentGeo),
+                            visualParentWindow);
+                        dialog->show();
+                    }
                 }
                 else
                 {

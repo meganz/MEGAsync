@@ -59,6 +59,10 @@ public:
     virtual QPoint initialDialogPosition(const QSize& dialogSize) const;
     virtual QPoint initialDialogPosition(const QSize& dialogSize,
                                          const QRect& parentGeometry) const;
+    // Moves a plain QWidget dialog to `pos`. On Wayland, move() is ignored by
+    // the compositor, so the override uses `visualParent` to set the transient
+    // parent instead, letting the compositor centre the dialog itself.
+    virtual void moveDialog(QWidget* dialog, const QPoint& pos, QWindow* visualParent = nullptr);
     virtual bool showInFolder(QString pathIn) = 0;
     virtual void startShellDispatcher(MegaApplication *receiver) = 0;
     virtual void stopShellDispatcher() = 0;

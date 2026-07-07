@@ -5,8 +5,10 @@
 #include "MultiQFileDialog.h"
 #include "TokenParserWidgetManager.h"
 
+#include <QCursor>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QWindow>
 
 using namespace mega;
 
@@ -35,17 +37,37 @@ bool AbstractPlatform::isWayland()
     return QGuiApplication::platformName().startsWith(QLatin1String("wayland"));
 }
 
+void AbstractPlatform::moveDialog(QWidget* dialog, const QPoint& pos, QWindow* /*visualParent*/)
+{
+    dialog->move(pos);
+}
+
 QPoint AbstractPlatform::initialDialogPosition(const QSize& dialogSize) const
 {
-    auto primaryScreen = QGuiApplication::primaryScreen();
-    if (!primaryScreen)
+    // Without a parent to center on, prefer the screen the user is working on
+    // (under the cursor, then the active window) instead of always falling back
+    // to the primary monitor, which would otherwise make dialogs jump to the
+    // primary screen on multi-monitor setups.
+    auto screen = QGuiApplication::screenAt(QCursor::pos());
+    if (!screen)
+    {
+        if (auto activeWindow = QGuiApplication::focusWindow())
+        {
+            screen = activeWindow->screen();
+        }
+    }
+    if (!screen)
+    {
+        screen = QGuiApplication::primaryScreen();
+    }
+    if (!screen)
     {
         return QPoint();
     }
 
-    const auto primaryGeometry = primaryScreen->geometry();
-    return QPoint(primaryGeometry.x() + (primaryGeometry.width() - dialogSize.width()) / 2,
-                  primaryGeometry.y() + (primaryGeometry.height() - dialogSize.height()) / 2);
+    const auto screenGeometry = screen->geometry();
+    return QPoint(screenGeometry.x() + (screenGeometry.width() - dialogSize.width()) / 2,
+                  screenGeometry.y() + (screenGeometry.height() - dialogSize.height()) / 2);
 }
 
 QPoint AbstractPlatform::initialDialogPosition(const QSize& dialogSize,

@@ -35,12 +35,12 @@ void BackupSettingsQuickWidget::addItem() const
 {
     CreateRemoveBackupsManager::addBackup(SyncInfo::SyncOrigin::SETTINGS_ORIGIN,
                                           QStringList(),
-                                          this->parentWidget());
+                                          this->window());
 }
 
 void BackupSettingsQuickWidget::remove(int index) const
 {
-    CreateRemoveBackupsManager::removeBackup(model()->getSyncSetting(index), this->parentWidget());
+    CreateRemoveBackupsManager::removeBackup(model()->getSyncSetting(index), this->window());
 }
 
 void BackupSettingsQuickWidget::openBackupFolder() const

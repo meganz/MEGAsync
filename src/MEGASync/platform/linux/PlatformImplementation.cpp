@@ -233,6 +233,23 @@ QPoint PlatformImplementation::initialDialogPosition(const QSize& dialogSize,
     return QPoint(xPos, yPos);
 }
 
+void PlatformImplementation::moveDialog(QWidget* dialog, const QPoint& pos, QWindow* visualParent)
+{
+    if (isWayland() && visualParent)
+    {
+        // On Wayland, clients cannot set absolute window positions — move() is
+        // silently ignored. Setting a transient parent lets the compositor
+        // centre the dialog over the parent window instead.
+        dialog->winId(); // force native window creation before querying the handle
+        if (QWindow* handle = dialog->windowHandle())
+        {
+            handle->setTransientParent(visualParent);
+            return;
+        }
+    }
+    dialog->move(pos);
+}
+
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
     QString fileBrowser = getDefaultFileBrowserApp();

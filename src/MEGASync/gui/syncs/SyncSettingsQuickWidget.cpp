@@ -27,7 +27,10 @@ SyncSettingsQuickWidget::SyncSettingsQuickWidget(QWidget* parent):
 
 void SyncSettingsQuickWidget::addItem() const
 {
-    CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SETTINGS_ORIGIN);
+    CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::SETTINGS_ORIGIN,
+                                      mega::INVALID_HANDLE,
+                                      QString(),
+                                      this->window());
 }
 
 void SyncSettingsQuickWidget::remove(int index) const

@@ -30,6 +30,7 @@ public:
     QPoint initialDialogPosition(const QSize& dialogSize) const override;
     QPoint initialDialogPosition(const QSize& dialogSize,
                                  const QRect& parentGeometry) const override;
+    void moveDialog(QWidget* dialog, const QPoint& pos, QWindow* visualParent = nullptr) override;
     bool showInFolder(QString pathIn) override;
     void startShellDispatcher(MegaApplication *receiver) override;
     void stopShellDispatcher() override;

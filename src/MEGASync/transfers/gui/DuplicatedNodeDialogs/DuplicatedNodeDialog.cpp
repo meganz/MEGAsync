@@ -375,11 +375,21 @@ bool DuplicatedNodeDialog::eventFilter(QObject* watched, QEvent* event)
 
 void DuplicatedNodeDialog::resizeEvent(QResizeEvent *)
 {
-    if(auto screen = QGuiApplication::screenAt(this->pos()))
+    QRect targetGeo;
+    if (QWidget* parent = parentWidget())
     {
-        QRect rect = screen->geometry();
+        // Keep centered on the parent window as the dialog grows
+        targetGeo = parent->window()->frameGeometry();
+    }
+    else if (auto screen = QGuiApplication::screenAt(this->pos()))
+    {
+        targetGeo = screen->geometry();
+    }
+
+    if (targetGeo.isValid())
+    {
         QRect geo = geometry();
-        geo.moveCenter(rect.center());
+        geo.moveCenter(targetGeo.center());
         move(geo.topLeft());
     }
 }
