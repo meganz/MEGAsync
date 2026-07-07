@@ -146,7 +146,7 @@ void LoginController::setState(State state)
         else if (mForceOnboarding || showOnboarding)
         {
             mOnboardingShown = true;
-            QmlDialogManager::instance()->openOnboardingDialog(mForceOnboarding);
+            QmlDialogManager::instance()->openOnboardingDialog(mForceOnboarding || showOnboarding);
             state = State::FETCH_NODES_FINISHED_ONBOARDING;
             mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN,
                                                    true);
