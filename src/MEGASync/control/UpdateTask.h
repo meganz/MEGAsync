@@ -18,6 +18,8 @@
 #include <QThread>
 #include <QTimer>
 
+#include <functional>
+
 class UpdateTask : public QObject
 {
     Q_OBJECT
@@ -26,11 +28,15 @@ public:
     explicit UpdateTask(mega::MegaApi *megaApi, QString appFolder, bool isPublic = false, QObject *parent = 0);
     ~UpdateTask();
 
+    // Receives mega::MegaApi::LOG_LEVEL_* messages from the startup sweep, which runs
+    // before the MegaApi logger is available.
+    using CleanupLogger = std::function<void(int logLevel, const QString& message)>;
+
     // Applies the obsolete-file cleanup scheduled by the last applied update (see
     // schedulePendingObsoleteCleanup). Must be called early at application start, before
     // the app bundle symlinks are recreated: the sweep removes any symlink that is not
     // part of the update manifest.
-    static void runPendingObsoleteCleanup(const QString& dataPath);
+    static void runPendingObsoleteCleanup(const QString& dataPath, const CleanupLogger& logger);
 
 protected:
    void initialCleanup();
@@ -45,7 +51,8 @@ protected:
    void schedulePendingObsoleteCleanup();
    static void sweepObsoleteFiles(const QDir& appFolder,
                                   const QDir& backupFolder,
-                                  const QStringList& manifestPaths);
+                                  const QStringList& manifestPaths,
+                                  const CleanupLogger& logger);
    static void removeEmptyInstallFolders(const QDir& appFolder);
    void addToSignature(QString value);
    void addToSignature(QByteArray bytes);

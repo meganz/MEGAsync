@@ -540,7 +540,7 @@ void UpdateTask::schedulePendingObsoleteCleanup()
                  "Obsolete file cleanup scheduled for the next application start");
 }
 
-void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath)
+void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath, const CleanupLogger& logger)
 {
 #if defined(_WIN32) || defined(__APPLE__)
     const QString pendingPath =
@@ -564,8 +564,8 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath)
 
     if (lines.size() < 2)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
-                     "Skipping obsolete file cleanup: invalid pending cleanup file");
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8("Skipping obsolete file cleanup: invalid pending cleanup file"));
         return;
     }
 
@@ -580,12 +580,9 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath)
 #endif
     if (!QFile::exists(appFolder.filePath(appMarker)))
     {
-        MegaApi::log(
-            MegaApi::LOG_LEVEL_WARNING,
-            QString::fromUtf8("Skipping obsolete file cleanup: unexpected installation path %1")
-                .arg(appFolder.absolutePath())
-                .toUtf8()
-                .constData());
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8("Skipping obsolete file cleanup: unexpected installation path %1")
+                   .arg(appFolder.absolutePath()));
         return;
     }
 
@@ -593,9 +590,10 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath)
         Preferences::UPDATE_BACKUP_FOLDER_NAME +
         QDateTime::currentDateTime().toString(QString::fromLatin1("_dd_MM_yy__hh_mm_ss"))));
 
-    sweepObsoleteFiles(appFolder, backupFolder, lines);
+    sweepObsoleteFiles(appFolder, backupFolder, lines, logger);
 #else
     Q_UNUSED(dataPath)
+    Q_UNUSED(logger)
 #endif
 }
 
@@ -605,16 +603,18 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath)
 // retried when the next update reschedules the sweep.
 void UpdateTask::sweepObsoleteFiles(const QDir& appFolder,
                                     const QDir& backupFolder,
-                                    const QStringList& manifestPaths)
+                                    const QStringList& manifestPaths,
+                                    const CleanupLogger& logger)
 {
     if (manifestPaths.isEmpty())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
-                     "Skipping obsolete file cleanup because the update manifest is empty");
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8(
+                   "Skipping obsolete file cleanup because the update manifest is empty"));
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Cleaning obsolete install files...");
+    logger(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Cleaning obsolete install files..."));
 
     QSet<QString> expectedPaths;
     for (const QString& manifestPath: manifestPaths)
@@ -647,11 +647,9 @@ void UpdateTask::sweepObsoleteFiles(const QDir& appFolder,
         const QFileInfo backupInfo(backupFolder.absoluteFilePath(relativePath));
         if (!backupInfo.dir().mkpath(QString::fromUtf8(".")))
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
-                         QString::fromUtf8("Error creating obsolete file backup folder: %1")
-                             .arg(backupInfo.dir().absolutePath())
-                             .toUtf8()
-                             .constData());
+            logger(MegaApi::LOG_LEVEL_WARNING,
+                   QString::fromUtf8("Error creating obsolete file backup folder: %1")
+                       .arg(backupInfo.dir().absolutePath()));
             skippedCount++;
             continue;
         }
@@ -661,31 +659,25 @@ void UpdateTask::sweepObsoleteFiles(const QDir& appFolder,
         // folders may well be.
         if (!QFile::rename(info.absoluteFilePath(), backupInfo.absoluteFilePath()))
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
-                         QString::fromUtf8("Error moving obsolete file %1 to backup %2")
-                             .arg(info.absoluteFilePath(), backupInfo.absoluteFilePath())
-                             .toUtf8()
-                             .constData());
+            logger(MegaApi::LOG_LEVEL_WARNING,
+                   QString::fromUtf8("Error moving obsolete file %1 to backup %2")
+                       .arg(info.absoluteFilePath(), backupInfo.absoluteFilePath()));
             skippedCount++;
             continue;
         }
 
         removedCount++;
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                     QString::fromUtf8("Obsolete file removed from install folder: %1")
-                         .arg(relativePath)
-                         .toUtf8()
-                         .constData());
+        logger(
+            MegaApi::LOG_LEVEL_INFO,
+            QString::fromUtf8("Obsolete file removed from install folder: %1").arg(relativePath));
     }
 
     removeEmptyInstallFolders(appFolder);
-    MegaApi::log(
+    logger(
         MegaApi::LOG_LEVEL_INFO,
         QString::fromUtf8("Obsolete install file cleanup completed. Files removed: %1, skipped: %2")
             .arg(removedCount)
-            .arg(skippedCount)
-            .toUtf8()
-            .constData());
+            .arg(skippedCount));
 }
 
 void UpdateTask::removeEmptyInstallFolders(const QDir& appFolder)

@@ -285,8 +285,14 @@ int main(int argc, char *argv[])
     // Sweep the install-dir files made obsolete by the last applied update. The sweep is
     // deferred to startup because at update time the previous version is still running
     // from those files. It must run before the bundle symlinks are recreated below,
-    // because it removes any symlink that is not part of the update manifest.
-    UpdateTask::runPendingObsoleteCleanup(MegaApplication::applicationDataPath());
+    // because it removes any symlink that is not part of the update manifest. The MegaApi
+    // logger is not available yet, so messages are buffered and flushed after the
+    // application is created.
+    UpdateTask::runPendingObsoleteCleanup(MegaApplication::applicationDataPath(),
+                                          [](int logLevel, const QString& message)
+                                          {
+                                              logMessages.emplace_back(logLevel, message);
+                                          });
 
     // This call is responsible for rebuilding the app bundle symlinks in platforms where
     // it applies. The auto-update removes them (they are not part of the update manifest),
