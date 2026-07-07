@@ -13,7 +13,7 @@ import SyncInfo 1.0
 Item {
     id: root
 
-    readonly property int imageSpacing: 48
+    readonly property int imageSpacing: 0
     readonly property int textBottomSpacing: 60
     readonly property int designLineHeight: 20
 
@@ -24,6 +24,8 @@ Item {
 
     ColumnLayout {
         id: mainLayout
+
+        spacing: 0
 
         anchors {
             top: parent.top
