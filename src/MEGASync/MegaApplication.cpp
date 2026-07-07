@@ -44,6 +44,7 @@
 #include "QTMegaApiManager.h"
 #include "ReloadingEventHandler.h"
 #include "RequestListenerManager.h"
+#include "ScreenshotsController.h"
 #include "ServiceUrls.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"

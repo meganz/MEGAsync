@@ -22,7 +22,6 @@
 #include "Preferences.h"
 #include "QTMegaListener.h"
 #include "ScanStageController.h"
-#include "ScreenshotsController.h"
 #include "SetManager.h"
 #include "SettingsDialog.h"
 #include "state_machines/DiscountPolicy.h"
@@ -68,6 +67,7 @@ class AccountStatusController;
 class StatsEventHandler;
 class UserMessageController;
 class SyncReminderNotificationManager;
+class ScreenshotsController;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,

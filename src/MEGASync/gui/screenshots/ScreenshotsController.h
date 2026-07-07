@@ -1,12 +1,13 @@
 #ifndef SCREENSHOTS_CONTROLLER_H
 #define SCREENSHOTS_CONTROLLER_H
 
-#include "MegaApplication.h"
 #include "ScreenCaptureDetector.h"
 #include "ScreenshotLinkGenerator.h"
 #include "ScreenshotUploader.h"
 
 #include <QObject>
+
+class MegaApplication;
 
 // Entry point of the screenshot workflow. Owns the capture detector.
 // Started by MegaApplication once the account is ready; stopped on logout.
