@@ -35,8 +35,12 @@ public:
     // Applies the obsolete-file cleanup scheduled by the last applied update (see
     // schedulePendingObsoleteCleanup). Must be called early at application start, before
     // the app bundle symlinks are recreated: the sweep removes any symlink that is not
-    // part of the update manifest.
-    static void runPendingObsoleteCleanup(const QString& dataPath, const CleanupLogger& logger);
+    // part of the update manifest. instanceLockPath is the single-instance lock file:
+    // the sweep is skipped (and the pending request preserved) while another instance
+    // holds it, so files are never pulled from under a still-running previous version.
+    static void runPendingObsoleteCleanup(const QString& dataPath,
+                                          const QString& instanceLockPath,
+                                          const CleanupLogger& logger);
 
 protected:
    void initialCleanup();

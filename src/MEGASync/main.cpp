@@ -282,13 +282,20 @@ int main(int argc, char *argv[])
 
     Platform::create();
 
+    // megasync.lock is the same single-instance lock acquired authoritatively further
+    // below; the sweep probes it so it never mutates the install dir while another
+    // instance is still running from those files.
+    const QString dataPath = MegaApplication::applicationDataPath();
+    const QString appLockPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.lock"));
+
     // Sweep the install-dir files made obsolete by the last applied update. The sweep is
     // deferred to startup because at update time the previous version is still running
     // from those files. It must run before the bundle symlinks are recreated below,
     // because it removes any symlink that is not part of the update manifest. The MegaApi
     // logger is not available yet, so messages are buffered and flushed after the
     // application is created.
-    UpdateTask::runPendingObsoleteCleanup(MegaApplication::applicationDataPath(),
+    UpdateTask::runPendingObsoleteCleanup(dataPath,
+                                          appLockPath,
                                           [](int logLevel, const QString& message)
                                           {
                                               logMessages.emplace_back(logLevel, message);
@@ -585,7 +592,6 @@ int main(int argc, char *argv[])
     QDir dataDir(app.applicationDataPath());
     QString crashPath = dataDir.filePath(QString::fromUtf8("crashDumps"));
     QString avatarPath = dataDir.filePath(QString::fromUtf8("avatars"));
-    QString appLockPath = dataDir.filePath(QString::fromUtf8("megasync.lock"));
     QString appShowPath = dataDir.filePath(QString::fromUtf8("megasync.show"));
     QDir crashDir(crashPath);
     if (!crashDir.exists())

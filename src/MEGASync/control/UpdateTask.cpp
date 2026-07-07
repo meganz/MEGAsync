@@ -1,6 +1,7 @@
 #include "UpdateTask.h"
 
 #include "Platform.h"
+#include "qtlockedfile/qtlockedfile.h"
 #include "ServiceUrls.h"
 #include "Utilities.h"
 
@@ -540,7 +541,9 @@ void UpdateTask::schedulePendingObsoleteCleanup()
                  "Obsolete file cleanup scheduled for the next application start");
 }
 
-void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath, const CleanupLogger& logger)
+void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath,
+                                           const QString& instanceLockPath,
+                                           const CleanupLogger& logger)
 {
 #if defined(_WIN32) || defined(__APPLE__)
     const QString pendingPath =
@@ -548,6 +551,28 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath, const Cleanu
     QFile pendingFile(pendingPath);
     if (!pendingFile.exists())
     {
+        return;
+    }
+
+    // A previous version can still be running from the files this sweep removes: the
+    // post-update restart may be postponed for a long time, and on Windows every
+    // relaunch spawns a second process before the caller's single-instance check.
+    // Probe that same lock non-blockingly; if it cannot be acquired, skip the sweep
+    // and keep the pending request so the primary instance's next clean start applies
+    // it. The probe is released when this function returns, before the caller's
+    // authoritative lock acquisition.
+    QtLockedFile instanceProbe(instanceLockPath);
+    if (!instanceProbe.open(QtLockedFile::ReadWrite))
+    {
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8("Skipping obsolete file cleanup: cannot open instance lock %1")
+                   .arg(instanceLockPath));
+        return;
+    }
+    if (!instanceProbe.lock(QtLockedFile::WriteLock, false))
+    {
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8("Skipping obsolete file cleanup: another instance is running"));
         return;
     }
 
@@ -593,6 +618,7 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath, const Cleanu
     sweepObsoleteFiles(appFolder, backupFolder, lines, logger);
 #else
     Q_UNUSED(dataPath)
+    Q_UNUSED(instanceLockPath)
     Q_UNUSED(logger)
 #endif
 }
