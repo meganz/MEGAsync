@@ -45,7 +45,7 @@ public:
     static inline const char* REMOTE_FOLDER_NAME = "Screenshots";
 
 signals:
-    void uploadProgress(double ratio); // 0.0 .. 1.0
+    void uploadProgress(QString filename, long long currentTransfered, long long totalTransfered);
     void uploadFinished(mega::MegaHandle nodeHandle);
     void uploadFailed(ScreenshotUploader::Error error, const QString& message);
     // The SDK is retrying (typically connectivity loss). The transfer is

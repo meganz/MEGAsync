@@ -134,8 +134,7 @@ void ScreenshotUploader::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     const auto total = transfer->getTotalBytes();
     if (total > 0)
     {
-        emit uploadProgress(static_cast<double>(transfer->getTransferredBytes()) /
-                            static_cast<double>(total));
+        emit uploadProgress(mLocalPath, transfer->getTransferredBytes(), total);
     }
 }
 

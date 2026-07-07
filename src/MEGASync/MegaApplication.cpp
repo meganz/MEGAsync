@@ -155,7 +155,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mGfxProvider(nullptr),
     mSyncReminderNotificationManager(nullptr),
     misSyncingStateWrongLogged(false),
-    mScreenshotsController(ScreenshotsController::instance())
+    mScreenshotsController(nullptr)
 {
 #if defined Q_OS_MACOS && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -1625,6 +1625,9 @@ void MegaApplication::onLoginFinished()
     ThemeManager::instance()->init();
     Platform::getInstance()->disableContextMenu(Preferences::instance()->contextMenuDisabled());
     Platform::getInstance()->unHideTrayIcon();
+
+    mScreenshotsController = ScreenshotsController::instance();
+    mScreenshotsController->start();
 }
 
 void MegaApplication::onFetchNodesFinished()
@@ -1666,6 +1669,8 @@ void MegaApplication::onLogout()
     mStalledIssuesModel->fullReset();
     mStatusController->reset();
     EmailRequester::instance()->reset();
+
+    mScreenshotsController->stop();
 
     // Queue processing of logout cleanup to avoid race conditions
     // due to threadifing processing.
@@ -2593,6 +2598,8 @@ void MegaApplication::cleanAll()
     mTrayIconManager = nullptr;
 
     logger.reset();
+
+    mScreenshotsController->stop();
 
     if (reboot)
     {

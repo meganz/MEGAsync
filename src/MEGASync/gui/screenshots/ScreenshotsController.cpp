@@ -32,6 +32,11 @@ ScreenshotsController::ScreenshotsController(QObject* parent):
             this,
             &ScreenshotsController::onUploadFinished);
 
+    connect(&mUploader,
+            &ScreenshotUploader::uploadProgress,
+            this,
+            &ScreenshotsController::onUploadProgress);
+
     connect(&mLinkGenerator,
             &ScreenshotLinkGenerator::linkFailed,
             this,
@@ -92,4 +97,12 @@ void ScreenshotsController::onLinkReady(const QString& link)
     // A public link has been created, put it in the clipboard and inform users
     QApplication::clipboard()->setText(link);
     mMegaApplication->showInfoMessage(tr("The link has been copied to the clipboard"));
+}
+
+void ScreenshotsController::onUploadProgress(QString filename,
+                                             long long currentProgress,
+                                             long long totalSize)
+{
+    qDebug()
+        << QString::fromUtf8("{%0} : {%1}/{%2}").arg(filename).arg(currentProgress).arg(totalSize);
 }
