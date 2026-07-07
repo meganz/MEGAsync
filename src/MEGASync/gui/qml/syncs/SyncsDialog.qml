@@ -27,6 +27,12 @@ SyncsQmlDialog {
     readonly property int defaultWindowMargin: 24
 
     Behavior on height {
+        // Only animate height changes once the dialog has finished its
+        // initial show-and-position phase. Otherwise the multi-pass QML
+        // layout would animate from the first computed implicitHeight to
+        // the final one while the user can already see the dialog,
+        // producing a visible "shrink" glitch.
+        enabled: window.initialLayoutComplete
         NumberAnimation {
             duration: 200
             easing.type: Easing.InOutQuad
