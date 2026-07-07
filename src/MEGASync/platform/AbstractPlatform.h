@@ -155,6 +155,11 @@ public:
     // Only needed on Windows; see PlatformImplementation::disconnectAccessibilityClients().
     virtual void disconnectAccessibilityClients() {}
 
+    virtual QStringList getScreenshotsLocation()
+    {
+        return QStringList();
+    }
+
 signals:
     void themeChanged(Preferences::SystemColorScheme theme);
 

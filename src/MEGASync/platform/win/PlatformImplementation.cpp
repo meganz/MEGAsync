@@ -2089,3 +2089,177 @@ Preferences::ThemeAppeareance PlatformImplementation::getPanelTheme() const
 {
     return getCurrentThemeAppearance().systemScheme;
 }
+
+QStringList PlatformImplementation::getScreenshotsLocation()
+{
+    QStringList directories;
+
+    QString picturesPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) +
+                           QString::fromUtf8("/Screenshots");
+
+    WCHAR localAppData[MAX_PATH] = {};
+    GetEnvironmentVariableW(L"LOCALAPPDATA", localAppData, MAX_PATH);
+    std::wstring packageRoot =
+        std::wstring(localAppData) + L"\\Packages\\Microsoft.ScreenSketch_8wekyb3d8bbwe";
+
+    // Load settings.dat to get the token GUIDs
+    HKEY hSettings = nullptr;
+    if (RegLoadAppKeyW((packageRoot + L"\\Settings\\settings.dat").c_str(),
+                       &hSettings,
+                       KEY_READ,
+                       0,
+                       0) == ERROR_SUCCESS)
+    {
+        HKEY hLocal = nullptr;
+        if (RegOpenKeyExW(hSettings, L"LocalState", 0, KEY_READ, &hLocal) == ERROR_SUCCESS)
+        {
+            auto screenPathGuid = readValue(hLocal, L"AutoSaveScreenshotsLocation");
+            RegCloseKey(hLocal);
+
+            auto screenshotsToken = extractToken(screenPathGuid);
+            if (!screenshotsToken.empty())
+            {
+                // Resolve tokens via UserClasses.dat
+                std::wstring userClassesDat =
+                    packageRoot + L"\\SystemAppData\\Helium\\UserClasses.dat";
+
+                // here!
+                auto snippingToolConfiguredPath = resolveToken(userClassesDat, screenshotsToken);
+                if (!snippingToolConfiguredPath.empty())
+                {
+                    picturesPath = QString::fromStdString(snippingToolConfiguredPath);
+                }
+            }
+        }
+
+        RegCloseKey(hSettings);
+    }
+
+    directories << picturesPath;
+
+    return directories;
+}
+
+// Read raw bytes from a file that may be shared-locked by the OS
+std::vector<BYTE> PlatformImplementation::readFileLocked(const std::wstring& path)
+{
+    HANDLE h = CreateFileW(path.c_str(),
+                           GENERIC_READ,
+                           FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                           nullptr,
+                           OPEN_EXISTING,
+                           FILE_ATTRIBUTE_NORMAL,
+                           nullptr);
+
+    if (h == INVALID_HANDLE_VALUE)
+    {
+        return {};
+    }
+    DWORD size = GetFileSize(h, nullptr);
+    std::vector<BYTE> buf(size);
+    DWORD read = 0;
+    ReadFile(h, buf.data(), size, &read, nullptr);
+    CloseHandle(h);
+
+    return buf;
+}
+
+// Find ASCII path (X:\...) in buf within [start, start+window)
+std::string PlatformImplementation::findPathNearOffset(const std::vector<BYTE>& buf,
+                                                       size_t start,
+                                                       size_t window)
+{
+    size_t limit = std::min(start + window, buf.size() - 4);
+    for (size_t j = start; j < limit; j++)
+    {
+        // ASCII drive-letter path: letter + ':' + '\'
+        if (isalpha(buf[j]) && buf[j + 1] == ':' && buf[j + 2] == '\\')
+        {
+            size_t end = j;
+            while (end < buf.size() && buf[end] >= 0x20 && buf[end] <= 0x7E)
+                end++;
+            if (end - j >= 4)
+                return std::string(buf.data() + j, buf.data() + end);
+        }
+
+        // UTF-16 drive-letter path: letter + 0 + ':' + 0 + '\' + 0
+        if (j + 5 < buf.size() && isalpha(buf[j]) && buf[j + 1] == 0 && buf[j + 2] == ':' &&
+            buf[j + 3] == 0 && buf[j + 4] == '\\' && buf[j + 5] == 0)
+        {
+            const wchar_t* p = reinterpret_cast<const wchar_t*>(buf.data() + j);
+            size_t maxW = (buf.size() - j) / sizeof(wchar_t), n = 0;
+            while (n < maxW && p[n] >= 0x20 && p[n] <= 0x7E)
+                n++;
+            if (n >= 3)
+            {
+                return QString::fromWCharArray(p).toUtf8().toStdString();
+            }
+        }
+    }
+
+    return {};
+}
+
+// Resolve a UWP StorageFolder token (GUID) to a real path via UserClasses.dat.
+// resolvedPaths accumulates matched paths so a second call can exclude them.
+std::string PlatformImplementation::resolveToken(const std::wstring& userClassesDat,
+                                                 const std::string& guid)
+{
+    auto buf = readFileLocked(userClassesDat);
+    if (buf.empty())
+        return {};
+
+    // Primary: find GUID then look for path within 4KB after it
+    const BYTE* g = reinterpret_cast<const BYTE*>(guid.c_str());
+    for (size_t i = 0; i + guid.size() < buf.size(); i++)
+    {
+        if (memcmp(buf.data() + i, g, guid.size()) != 0)
+        {
+            continue;
+        }
+
+        std::string path = findPathNearOffset(buf, i + guid.size(), 4096);
+        if (!path.empty())
+        {
+            return path;
+        }
+    }
+
+    return {};
+}
+
+// Extract the printable token string from a UWP 0x5F5E10C value
+std::string PlatformImplementation::extractToken(const std::vector<BYTE>& data)
+{
+    const wchar_t DELETE_CHAR = 0x7F;
+
+    if (data.empty())
+        return {};
+
+    const wchar_t* wp = reinterpret_cast<const wchar_t*>(data.data());
+    size_t wlen = data.size() / sizeof(wchar_t), end = 0;
+    while (end < wlen && wp[end] >= L' ' && wp[end] < DELETE_CHAR)
+        end++;
+    while (end > 0 && wp[end - 1] == L' ')
+        end--;
+
+    return QString::fromWCharArray(wp).toUtf8().toStdString();
+}
+
+std::vector<BYTE> PlatformImplementation::readValue(HKEY hKey, const wchar_t* name)
+{
+    DWORD len = 0;
+    if (RegQueryValueExW(hKey, name, nullptr, nullptr, nullptr, &len) == ERROR_SUCCESS)
+    {
+        if (len != 0)
+        {
+            std::vector<BYTE> data(len);
+            if (RegQueryValueExW(hKey, name, nullptr, nullptr, data.data(), &len) == ERROR_SUCCESS)
+            {
+                return data;
+            }
+        }
+    }
+
+    return {};
+}

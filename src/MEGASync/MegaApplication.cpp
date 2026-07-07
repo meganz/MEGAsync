@@ -153,7 +153,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mUserMessageController(nullptr),
     mGfxProvider(nullptr),
     mSyncReminderNotificationManager(nullptr),
-    misSyncingStateWrongLogged(false)
+    misSyncingStateWrongLogged(false),
+    mScreenshotsController(ScreenshotsController::instance())
 {
 #if defined Q_OS_MACOS && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))

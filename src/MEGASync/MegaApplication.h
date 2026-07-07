@@ -22,6 +22,7 @@
 #include "Preferences.h"
 #include "QTMegaListener.h"
 #include "ScanStageController.h"
+#include "ScreenshotsController.h"
 #include "SetManager.h"
 #include "SettingsDialog.h"
 #include "state_machines/DiscountPolicy.h"
@@ -523,6 +524,7 @@ protected:
     QPointer<DiscountStateMachine> mDiscountStateMachine;
 
     bool misSyncingStateWrongLogged;
+    ScreenshotsController* mScreenshotsController;
 
 private:
     QList<QNetworkInterface> findNewNetworkInterfaces();
