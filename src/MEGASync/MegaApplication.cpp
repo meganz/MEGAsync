@@ -105,6 +105,15 @@ constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
 static const QString SCHEME_LOCAL_URL = QString::fromUtf8("local");
 static const QString KEEP_LOGS_ON_LOGOUT_FILE_NAME = QString::fromLatin1("megasync.keeplogs");
 
+// Cap for postponing the post-update restart. The update payload is installed in
+// place, so from the moment it lands the running (old) binary executes over the new
+// version's files; on an incompatible update (e.g. a Qt major upgrade) every lazily
+// loaded asset (QML modules, plugins) no longer matches the running binary and its
+// dialogs break until restart. Waiting for the app to become fully idle can take
+// arbitrarily long (paused transfers also count as pending), so the postponement is
+// bounded. Transfers resume automatically after the restart.
+static constexpr int MAX_UPDATE_REBOOT_DELAY_MS = 10 * 60 * 1000;
+
 void MegaApplication::loadDataPath()
 {
 #ifdef Q_OS_LINUX
@@ -340,8 +349,10 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     connect(&transferProgressController, &BlockingStageProgressController::updateUi,
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
-    // TODO Qt6: In Qt6 this is the default, so we can remove the following line
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // In Qt6 this is the default; the attribute itself was removed in Qt 6.8.
     setAttribute(Qt::AA_DisableWindowContextHelpButton);
+#endif
 
     // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
     // eg. queueing a folder with 1k items for upload/download
@@ -2000,7 +2011,14 @@ void MegaApplication::rebootApplication(bool update)
         if (!updateBlocked)
         {
             updateBlocked = true;
-            showInfoMessage(tr("An update will be applied during the next application restart"));
+            showInfoMessage(tr("An update has been installed. MEGAsync will restart "
+                               "automatically in a few minutes to finish applying it"));
+            QTimer::singleShot(MAX_UPDATE_REBOOT_DELAY_MS,
+                               this,
+                               [this]()
+                               {
+                                   rebootApplication(false);
+                               });
         }
         return;
     }
