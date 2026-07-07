@@ -80,28 +80,38 @@ void SyncSettingsQuickWidget::restoreSyncedFolder(int index)
         MegaSyncApp->getMegaApi()->getNodeByHandle(sync->getMegaHandle()));
     if (node)
     {
-        auto restoreNode = std::shared_ptr<mega::MegaNode>(
-            MegaSyncApp->getMegaApi()->getNodeByHandle(node->getRestoreHandle()));
-
-        if (restoreNode)
+        if (MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
         {
-            auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
-                this,
-                [sync, triggerErrorMessage](mega::MegaRequest* request, mega::MegaError* e)
-                {
-                    int errorCode = e->getErrorCode();
+            auto restoreNode = std::shared_ptr<mega::MegaNode>(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(node->getRestoreHandle()));
 
-                    if (errorCode != mega::MegaError::API_OK)
-                    {
-                        triggerErrorMessage();
-                    }
-                    else
-                    {
-                        SyncController::instance().setSyncToRun(sync);
-                    }
-                });
+            if (restoreNode)
+            {
+                auto listener =
+                    RequestListenerManager::instance().registerAndGetCustomFinishListener(
+                        this,
+                        [sync, triggerErrorMessage](mega::MegaRequest* request, mega::MegaError* e)
+                        {
+                            int errorCode = e->getErrorCode();
 
-            MegaSyncApp->getMegaApi()->moveNode(node.get(), restoreNode.get(), listener.get());
+                            if (errorCode != mega::MegaError::API_OK)
+                            {
+                                triggerErrorMessage();
+                            }
+                            else
+                            {
+                                SyncController::instance().setSyncToRun(sync);
+                            }
+                        });
+
+                MegaSyncApp->getMegaApi()->moveNode(node.get(), restoreNode.get(), listener.get());
+
+                return;
+            }
+        }
+        else // node is back to it's original place.
+        {
+            SyncController::instance().setSyncToRun(sync);
 
             return;
         }
