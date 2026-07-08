@@ -1,8 +1,9 @@
 #ifndef AUTORESIZESTACKEDWIDGET_H
 #define AUTORESIZESTACKEDWIDGET_H
 
-#include <QStackedWidget>
 #include <QEvent>
+#include <QResizeEvent>
+#include <QStackedWidget>
 
 class AutoResizeStackedWidget : public QStackedWidget
 {
@@ -35,6 +36,17 @@ public:
         return QStackedWidget::eventFilter(watched, event);
     }
 
+    void resizeEvent(QResizeEvent* e) override
+    {
+        QStackedWidget::resizeEvent(e);
+
+        mLaidOut = true;
+
+        // The height depends on the current width (word-wrapping pages), so a width
+        // change must recompute it; LayoutRequest alone does not fire on plain resizes.
+        onUpdateHeight();
+    }
+
 private slots:
     void onUpdateHeight()
     {
@@ -43,7 +55,18 @@ private slots:
             widget(index)->removeEventFilter(this);
         }
 
-        auto currentHeight = currentWidget() ? currentWidget()->sizeHint().height() : mMinimumHeight;
+        auto currentHeight(mMinimumHeight);
+        if (currentWidget())
+        {
+            // sizeHint() of pages with word-wrapping labels is computed for the labels'
+            // transient widths, so it overshoots; heightForWidth() gives the height for
+            // the real stack width. Before the first resizeEvent the width is a
+            // placeholder, and a fixed height computed from it would force the window
+            // to grow, so fall back to sizeHint() until then.
+            currentHeight = (mLaidOut && currentWidget()->hasHeightForWidth() && width() > 0) ?
+                                currentWidget()->heightForWidth(width()) :
+                                currentWidget()->sizeHint().height();
+        }
         setFixedHeight(currentHeight >= mMinimumHeight ? currentHeight : mMinimumHeight);
 
         if(currentWidget())
@@ -54,6 +77,7 @@ private slots:
 
 private:
     int mMinimumHeight;
+    bool mLaidOut = false;
 };
 
 #endif // AUTORESIZESTACKEDWIDGET_H

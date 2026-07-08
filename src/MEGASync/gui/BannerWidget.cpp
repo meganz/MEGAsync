@@ -74,7 +74,6 @@ void BannerWidget::setDescription(const QString& text)
     mUi->lText->setText(text);
     mUi->lText->show();
     updateTitleWeight();
-    mUi->lText->adjustSize();
     updateGeometry();
 }
 
@@ -108,14 +107,17 @@ void BannerWidget::setTitle(const QString& text)
     mUi->lTitle->setText(text);
     mUi->lTitle->show();
     updateTitleWeight();
-    mUi->lText->adjustSize();
     updateGeometry();
 }
 
 void BannerWidget::updateTitleWeight()
 {
-    mUi->lTitle->setProperty("semibold", mUi->lText->isVisible() ? QVariant(true) : QVariant());
-    TokenParserWidgetManager::instance()->polish(mUi->lTitle);
+    const QVariant semibold(mUi->lText->toPlainText().isEmpty() ? QVariant() : QVariant(true));
+    if (mUi->lTitle->property("semibold") != semibold)
+    {
+        mUi->lTitle->setProperty("semibold", semibold);
+        TokenParserWidgetManager::instance()->polish(mUi->lTitle);
+    }
 }
 
 void BannerWidget::checkLayoutOrientation()
