@@ -209,6 +209,10 @@ public:
     static void showStalledIssuesDialog();
     bool isOnboarding();
 
+    // screenshots upload.
+    void enableScreenshotUploader(bool enabled);
+    void enableClipboardCopyScreenshotLink(bool enabled);
+
 signals:
     void startUpdaterThread();
     void tryUpdate();

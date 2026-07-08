@@ -21,6 +21,7 @@ public:
     void start();
     void stop();
     bool isRunning() const;
+    void enableClipboardCopyScreenshotLink(bool enable);
 
 private slots:
     void onCaptureDetected(const QString& filePath);
@@ -37,6 +38,7 @@ private:
     ScreenshotUploader mUploader;
     ScreenshotLinkGenerator mLinkGenerator;
     MegaApplication* mMegaApplication;
+    bool mClipboardScreenshotLinkCopyEnabled = false;
 };
 
 #endif // SCREENSHOTS_CONTROLLER_H

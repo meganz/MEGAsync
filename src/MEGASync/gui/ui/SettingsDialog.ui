@@ -45,7 +45,7 @@ margin-top: 0px;
 #fUploadRateLine, #fDownloadRateLine, #fConnectionsLine, #fProxyLine,
 #fUploadsDownloadsLine, #fSharesLine, #fContactsLine, #fInfoLine,
 #fDefaultFoldersLine, #fCacheLine, #fRemoteCacheLine, #fFileVersionsLine,
-#fPermissionsLine
+#fPermissionsLine, #fScreenshotLine
 {
 background-color: #D8D9DB; /*colorToken.border-strong*/
 }
@@ -232,7 +232,7 @@ padding-left: 0px;
 border: none
 }</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0">
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
    <property name="leftMargin">
     <number>24</number>
    </property>
@@ -767,7 +767,7 @@ border: none
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QVBoxLayout" name="pGeneralLayout" stretch="0,0,0,0,10">
+      <layout class="QVBoxLayout" name="pGeneralLayout" stretch="0,0,0,0,0,10">
        <property name="spacing">
         <number>36</number>
        </property>
@@ -1351,6 +1351,153 @@ border: none
             <string notr="true">mega</string>
            </property>
           </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_91">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QVBoxLayout" name="vScreenshotTitleLine">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lScreenshotTitle">
+             <property name="text">
+              <string>Screen shots</string>
+             </property>
+             <property name="font-size" stdset="0">
+              <string notr="true">caption</string>
+             </property>
+             <property name="semibold" stdset="0">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="fScreenshotLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>1</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>1</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_19">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <item>
+            <widget class="SwitchButton" name="enableScreenshotUpload" native="true">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="NotificationType" stdset="0">
+              <UInt>0</UInt>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lScreenshotEnable">
+             <property name="text">
+              <string>Upload screen shots to MEGA</string>
+             </property>
+             <property name="font-size" stdset="0">
+              <string notr="true">caption</string>
+             </property>
+             <property name="semibold" stdset="0">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_211">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <item>
+            <widget class="SwitchButton" name="enableScreenshotLinkGeneration" native="true">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="NotificationType" stdset="0">
+              <UInt>0</UInt>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lScreenshotLinkEnable">
+             <property name="text">
+              <string>Copy a screen shot MEGA link to clipboard</string>
+             </property>
+             <property name="font-size" stdset="0">
+              <string notr="true">caption</string>
+             </property>
+             <property name="semibold" stdset="0">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2121">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -4380,9 +4527,6 @@ border: none
           </property>
           <item alignment="Qt::AlignRight">
            <widget class="QPushButton" name="bBackupCenter">
-            <property name="visible">
-             <bool>false</bool>
-            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -4403,6 +4547,9 @@ border: none
             </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="visible">
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Go to backup centre</string>
@@ -4537,6 +4684,12 @@ border: none
    <class>SyncSettingsQuickWidget</class>
    <extends>QWidget</extends>
    <header>syncs/SyncSettingsQuickWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SwitchButton</class>
+   <extends>QWidget</extends>
+   <header location="global">SwitchButton.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

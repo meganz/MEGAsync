@@ -410,6 +410,11 @@ public:
     void setDontShowExportLinkDialog(bool value);
     bool getDontShowExportLinkDialog();
 
+    bool uploadScreenshotsEnabled();
+    void setUploadScreenshotsEnabled(bool value);
+    bool clipboardCopyScreenshotLinkEnabled();
+    void setClipboardCopyScreenshotsLinkEnabled(bool value);
+
     enum class ThemeType
     {
         UNINITIALIZED = -1,
@@ -861,6 +866,9 @@ protected:
     static const QString reclaimPeriodSeconds;
     static const QString reclaimTargetBytes;
     static const QString reclaimThresholdBytes;
+
+    static const QString uploadScreenshotsKey;
+    static const QString clipboardCopyScreenshotsLinkKey;
 
 private:
     void updateFullName();

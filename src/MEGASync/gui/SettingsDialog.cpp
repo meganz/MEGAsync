@@ -469,6 +469,10 @@ void SettingsDialog::loadSettings()
     SettingsDialog::updateStorageElements();
     SettingsDialog::updateBandwidthElements();
 
+    // screenshots upload settings.
+    on_enableScreenshotUpload_toggled(mPreferences->uploadScreenshotsEnabled());
+    on_enableScreenshotLinkGeneration_toggled(mPreferences->clipboardCopyScreenshotLinkEnabled());
+
     updateUploadFolder();
     updateDownloadFolder();
 
@@ -865,6 +869,30 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 
         MessageDialogOpener::critical(msgInfo);
     }
+}
+
+void SettingsDialog::on_enableScreenshotUpload_toggled(bool checked)
+{
+    if (mLoadingSettings)
+        return;
+
+    if (!checked)
+    {
+        mUi->enableScreenshotLinkGeneration->setChecked(checked);
+    }
+    mUi->enableScreenshotLinkGeneration->setEnabled(checked);
+
+    mPreferences->setUploadScreenshotsEnabled(checked);
+    mApp->enableScreenshotUploader(checked);
+}
+
+void SettingsDialog::on_enableScreenshotLinkGeneration_toggled(bool checked)
+{
+    if (mLoadingSettings)
+        return;
+
+    mPreferences->setClipboardCopyScreenshotsLinkEnabled(checked);
+    mApp->enableClipboardCopyScreenshotLink(checked);
 }
 
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)

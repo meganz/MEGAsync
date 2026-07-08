@@ -63,6 +63,11 @@ bool ScreenshotsController::isRunning() const
     return mDetector.isRunning();
 }
 
+void ScreenshotsController::enableClipboardCopyScreenshotLink(bool enable)
+{
+    mClipboardScreenshotLinkCopyEnabled = enable;
+}
+
 void ScreenshotsController::onCaptureDetected(const QString& filePath)
 {
     mUploader.upload(filePath);
@@ -75,26 +80,23 @@ void ScreenshotsController::onUploadFailed(ScreenshotUploader::Error error, cons
 
 void ScreenshotsController::onUploadFinished(mega::MegaHandle nodeHandle)
 {
-    // send notification and maybe copy the link to it in the clipboard.
-
-    // 1 - if no link desired to be created, notify the user about the upload succes.
-    // 2 - if link wanted, generate link and inform user.
-    //     2.1 - if link generation fails should we notify the user :
-    //           upload success and link generation failed.
-
-    mLinkGenerator.generateLink(nodeHandle);
+    if (mClipboardScreenshotLinkCopyEnabled)
+    {
+        mLinkGenerator.generateLink(nodeHandle);
+    }
+    else
+    {
+        mMegaApplication->showInfoMessage(tr("The screenshot has been uploaded."));
+    }
 }
 
 void ScreenshotsController::onLinkFailed(const QString& message, bool authExpired)
 {
-    // send error notification
     mMegaApplication->showErrorMessage(message);
 }
 
 void ScreenshotsController::onLinkReady(const QString& link)
 {
-    // send notification & copy link to the clipboard.
-    // A public link has been created, put it in the clipboard and inform users
     QApplication::clipboard()->setText(link);
     mMegaApplication->showInfoMessage(tr("The link has been copied to the clipboard"));
 }

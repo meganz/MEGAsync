@@ -104,6 +104,8 @@ private slots:
     void on_cbTheme_currentIndexChanged(int index);
     void on_bUpdate_clicked();
     void on_bSendBug_clicked();
+    void on_enableScreenshotUpload_toggled(bool checked);
+    void on_enableScreenshotLinkGeneration_toggled(bool checked);
 
     // Account
     void on_bAccount_clicked();

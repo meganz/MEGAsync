@@ -1627,7 +1627,6 @@ void MegaApplication::onLoginFinished()
     Platform::getInstance()->unHideTrayIcon();
 
     mScreenshotsController = ScreenshotsController::instance();
-    mScreenshotsController->start();
 }
 
 void MegaApplication::onFetchNodesFinished()
@@ -2895,6 +2894,23 @@ void MegaApplication::updateUsedStorage(const bool sendEvent)
     {
         preferences->setUsedStorage(receivedStorageSum);
     }
+}
+
+void MegaApplication::enableScreenshotUploader(bool enabled)
+{
+    if (enabled && !mScreenshotsController->isRunning())
+    {
+        mScreenshotsController->start();
+    }
+    else if (!enabled && mScreenshotsController->isRunning())
+    {
+        mScreenshotsController->stop();
+    }
+}
+
+void MegaApplication::enableClipboardCopyScreenshotLink(bool enabled)
+{
+    mScreenshotsController->enableClipboardCopyScreenshotLink(enabled);
 }
 
 std::shared_ptr<TransferQuota> MegaApplication::getTransferQuota() const
