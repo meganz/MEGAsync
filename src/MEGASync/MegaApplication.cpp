@@ -582,7 +582,6 @@ void MegaApplication::initialize()
                                     !preferences->SSLcertificateException());
     megaApi->disableGfxFeatures(mDisableGfx);
     MegaApiStartupConfig::initialConfiguration(megaApi);
-    MegaApiStartupConfig::applyFileServiceReclaimOptions(megaApi);
 
     QTMegaApiManager::createMegaApi(megaApiFolders,
                                     Preferences::CLIENT_KEY,
@@ -650,6 +649,12 @@ void MegaApplication::initialize()
         Preferences::overridePreferences(settings);
         Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
     }
+
+    // Apply FileService reclaim options only after megasync.staging has been parsed, so any
+    // reclaim* overrides in the staging file reach the SDK. On non-staging builds the staging
+    // block is skipped and the compile-time production defaults are applied.
+    MegaApiStartupConfig::applyFileServiceReclaimOptions(megaApi);
+
     mTrayIconManager->show();
 
     megaApi->log(MegaApi::LOG_LEVEL_INFO,
