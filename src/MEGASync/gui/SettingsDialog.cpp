@@ -470,8 +470,12 @@ void SettingsDialog::loadSettings()
     SettingsDialog::updateBandwidthElements();
 
     // screenshots upload settings.
-    on_enableScreenshotUpload_toggled(mPreferences->uploadScreenshotsEnabled());
-    on_enableScreenshotLinkGeneration_toggled(mPreferences->clipboardCopyScreenshotLinkEnabled());
+    mUi->enableScreenshotUpload->setChecked(mPreferences->uploadScreenshotsEnabled());
+    mUi->enableScreenshotLinkGeneration->setEnabled(mPreferences->uploadScreenshotsEnabled());
+    mUi->enableScreenshotLinkGeneration->setChecked(
+        mPreferences->clipboardCopyScreenshotLinkEnabled());
+    mApp->enableScreenshotUploader(mPreferences->uploadScreenshotsEnabled());
+    mApp->enableClipboardCopyScreenshotLink(mPreferences->clipboardCopyScreenshotLinkEnabled());
 
     updateUploadFolder();
     updateDownloadFolder();

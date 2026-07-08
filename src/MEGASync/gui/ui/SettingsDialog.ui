@@ -1430,12 +1430,6 @@ border: none
              <property name="text">
               <string>Upload screen shots to MEGA</string>
              </property>
-             <property name="font-size" stdset="0">
-              <string notr="true">caption</string>
-             </property>
-             <property name="semibold" stdset="0">
-              <bool>true</bool>
-             </property>
             </widget>
            </item>
            <item>
@@ -1475,12 +1469,6 @@ border: none
             <widget class="QLabel" name="lScreenshotLinkEnable">
              <property name="text">
               <string>Copy a screen shot MEGA link to clipboard</string>
-             </property>
-             <property name="font-size" stdset="0">
-              <string notr="true">caption</string>
-             </property>
-             <property name="semibold" stdset="0">
-              <bool>true</bool>
              </property>
             </widget>
            </item>

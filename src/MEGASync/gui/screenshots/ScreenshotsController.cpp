@@ -97,8 +97,7 @@ void ScreenshotsController::onLinkFailed(const QString& message, bool authExpire
 
 void ScreenshotsController::onLinkReady(const QString& link)
 {
-    QApplication::clipboard()->setText(link);
-    mMegaApplication->showInfoMessage(tr("The link has been copied to the clipboard"));
+    // no need to do anything, will be handled at MegaApplication::onRequestFinish.
 }
 
 void ScreenshotsController::onUploadProgress(QString filename,
