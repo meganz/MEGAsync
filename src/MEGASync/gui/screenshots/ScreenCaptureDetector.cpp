@@ -154,7 +154,7 @@ void ScreenCaptureDetector::scanDirectory(const QString& path)
     const QFileInfoList entries = QDir(path).entryInfoList(QDir::Files, QDir::Time);
     for (const QFileInfo& info: entries)
     {
-        const QString filePath = info.absoluteFilePath();
+        const QString filePath = QDir::toNativeSeparators(info.absoluteFilePath());
 
         if (mKnownFiles.contains(filePath) || mPendingFiles.contains(filePath))
         {

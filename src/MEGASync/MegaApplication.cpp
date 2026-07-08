@@ -1627,6 +1627,9 @@ void MegaApplication::onLoginFinished()
     Platform::getInstance()->unHideTrayIcon();
 
     mScreenshotsController = ScreenshotsController::instance();
+    enableScreenshotUploader(Preferences::instance()->uploadScreenshotsEnabled());
+    enableClipboardCopyScreenshotLink(
+        Preferences::instance()->clipboardCopyScreenshotLinkEnabled());
 }
 
 void MegaApplication::onFetchNodesFinished()
