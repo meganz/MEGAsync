@@ -37,7 +37,7 @@ private:
 
     Ui::DestinationBreadcrumb* ui;
     bool mShouldShowDefaultUploadOption = false;
-    bool mHasSegments = false;
+    bool mHasClearablePath = false;
 };
 
 #endif // DESTINATIONBREADCRUMB_H

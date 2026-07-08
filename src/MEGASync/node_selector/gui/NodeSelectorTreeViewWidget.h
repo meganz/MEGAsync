@@ -276,11 +276,14 @@ private:
     bool mShowLabelText;
     int mResizeEventsReceived;
     QTimer mResizeEventsTimer;
+    // Coalesces view-state refresh requests (see checkViewOnModelChange).
+    QTimer mCheckViewOnModelChangeDebounce;
 
     virtual bool isAllowedToEnterInIndex(const QModelIndex& idx);
     virtual bool isDownloadAllowed() const;
     void setRootIndex(const QModelIndex& proxy_idx);
     void setCurrentViewWidget();
+    void executeCheckViewOnModelChange();
     void showFolderEmptyState();
     void applyEmptyState(const SelectType::EmptyPageInfo& info, ViewType type);
     void setEmptyStateButtonsVisibility(const SelectType::EmptyPageInfo& info);

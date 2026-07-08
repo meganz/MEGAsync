@@ -75,41 +75,45 @@ void DownloadNodeSelector::onOkButtonClicked()
         reject();
     };
 
-    if (wrongNodes == nodes.size())
+    if (wrongNodes == 0)
     {
-        if (ui->stackedWidget->currentIndex() == NodeSelectorTreeViewWidget::TabItem::CLOUD_DRIVE)
-        {
-            msgInfo.descriptionText =
-                tr("The item you selected has been removed. To reselect, close "
-                   "this window and try again.",
-                   "",
-                   wrongNodes);
-            MessageDialogOpener::warning(msgInfo);
-        }
-        else
-        {
-            msgInfo.descriptionText =
-                tr("You no longer have access to this item. Ask the owner to share again.",
-                   "",
-                   wrongNodes);
-            MessageDialogOpener::warning(msgInfo);
-        }
-    }
-    else if (wrongNodes > 0)
-    {
-        QString warningMsg1 = tr("%1 item selected", "", static_cast<int>(nodes.size()))
-                                  .arg(static_cast<int>(nodes.size()));
-        msgInfo.descriptionText =
-            tr("%1. %2 has been removed. To reselect, close this window and try again.",
-               "",
-               wrongNodes)
-                .arg(warningMsg1)
-                .arg(wrongNodes);
-        MessageDialogOpener::warning(msgInfo);
+        accept();
     }
     else
     {
-        accept();
+        if (wrongNodes == nodes.size())
+        {
+            if (ui->stackedWidget->currentIndex() ==
+                NodeSelectorTreeViewWidget::TabItem::CLOUD_DRIVE)
+            {
+                msgInfo.descriptionText =
+                    tr("The item you selected has been removed. To reselect, close "
+                       "this window and try again.",
+                       "",
+                       wrongNodes);
+                MessageDialogOpener::warning(msgInfo);
+            }
+            else
+            {
+                msgInfo.descriptionText =
+                    tr("You no longer have access to this item. Ask the owner to share again.",
+                       "",
+                       wrongNodes);
+                MessageDialogOpener::warning(msgInfo);
+            }
+        }
+        else
+        {
+            QString warningMsg1 = tr("%1 item selected", "", static_cast<int>(nodes.size()))
+                                      .arg(static_cast<int>(nodes.size()));
+            msgInfo.descriptionText =
+                tr("%1. %2 has been removed. To reselect, close this window and try again.",
+                   "",
+                   wrongNodes)
+                    .arg(warningMsg1)
+                    .arg(wrongNodes);
+            MessageDialogOpener::warning(msgInfo);
+        }
     }
 }
 

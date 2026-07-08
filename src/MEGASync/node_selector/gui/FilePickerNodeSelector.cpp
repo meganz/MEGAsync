@@ -56,6 +56,21 @@ void FilePickerNodeSelector::applyNewFolderSelection(NodeSelectorTreeViewWidget*
 
 void FilePickerNodeSelector::refreshDestinationBreadcrumb()
 {
+    // Building the destination path goes through the SDK (getNodeByHandle/getNodePath). While
+    // the model's worker thread is fetching children, getChildren holds the SDK mutex for
+    // hundreds of ms on huge folders, so those calls would freeze the GUI thread and prevent
+    // the loading view from showing. Skip the refresh in that case: the post-load selection
+    // pass (onUiBlocked(false) -> onSelectionHasChanged) runs it again once the fetch is done.
+    if (auto* currentWidget = getCurrentTreeViewWidget())
+    {
+        const auto proxyModel = currentWidget->getProxyModel();
+        if (proxyModel && proxyModel->getMegaModel() &&
+            proxyModel->getMegaModel()->isRequestingNodes())
+        {
+            return;
+        }
+    }
+
     const bool shouldShowPath = mSelectType && mSelectType->showsDestinationBreadcrumb() &&
                                 selectedSearchChipTreeViewWidget();
     const auto banner = destinationBannerInfo();
@@ -207,7 +222,11 @@ void FilePickerNodeSelector::configureHeader()
     if (auto* topRowLayout = ui->headerLayout)
     {
         ui->navigationRowLayout->removeWidget(ui->lNavigationRoot);
-        topRowLayout->insertWidget(0, ui->lNavigationRoot, 0, Qt::AlignLeft | Qt::AlignTop);
+        // The 8px indent only compensates the navigation row's reduced left margin; the
+        // header top row keeps the full 20px margin.
+        ui->lNavigationRoot->setIndent(0);
+        // Vertically centered so the label sits on the same line as the 40px search field.
+        topRowLayout->insertWidget(0, ui->lNavigationRoot, 0, Qt::AlignLeft | Qt::AlignVCenter);
     }
 }
 

@@ -20,8 +20,6 @@ public:
 
     void setText(const QString& text);
     void setHighlighted(bool highlighted);
-    // Drops the pill's left padding when this is also the first (single-element) segment.
-    void setFirst(bool first);
 
 signals:
     void clicked();

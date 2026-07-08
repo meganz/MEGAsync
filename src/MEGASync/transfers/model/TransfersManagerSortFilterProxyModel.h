@@ -57,7 +57,7 @@ public:
         bool isEmpty() const;
         qsizetype transfersCount() const;
 
-        bool isModelProcessing() const;
+        bool isWorking() const override;
 
         bool isDragging() const;
 

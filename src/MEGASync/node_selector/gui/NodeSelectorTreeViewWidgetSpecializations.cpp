@@ -623,6 +623,10 @@ NodeSelectorProxyModelSearch* NodeSelectorTreeViewWidgetSearch::searchProxyModel
 NodeSelectorDelegate* NodeSelectorTreeViewWidgetSearch::createItemDelegate(QObject* parent)
 {
     auto delegate = new NodeSearchRowDelegate(parent);
+    // The first search runs before the view exists, so the setSearchText() call in search()
+    // finds no delegate yet. Apply the active search text now that the delegate is created,
+    // otherwise the first search results are painted without the match highlight.
+    delegate->setSearchText(mSearchController->searchText());
     mSearchDelegate = delegate;
     return delegate;
 }
@@ -678,8 +682,10 @@ void NodeSelectorTreeViewWidgetRubbish::setViewPage()
     {
         setCurrentPage(ViewType::ROOT_EMPTY);
 
-        // The rubbish has been emptied, so we can unset the loading view
-        ui->tMegaFolders->loadingView().toggleLoadingScene(false);
+        // The rubbish has been emptied, so we can unset the loading view. If a proxy job
+        // is still running, the loading scene ignores this request (isWorking()) and the
+        // job's finished handler hides it instead.
+        setLoadingSceneVisible(false);
     }
     else
     {

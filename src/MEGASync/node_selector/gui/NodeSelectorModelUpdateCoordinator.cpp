@@ -145,7 +145,7 @@ bool NodeSelectorModelUpdateCoordinator::onNodesUpdate(mega::MegaNodeList* nodes
 
 void NodeSelectorModelUpdateCoordinator::processCachedNodesUpdated()
 {
-    if (!mProxyModel->isModelProcessing() && !mModel->isRequestingNodes() && hasPendingUpdates())
+    if (!mProxyModel->isWorking() && !mModel->isRequestingNodes() && hasPendingUpdates())
     {
         int moveProcessedCounter = 0;
 

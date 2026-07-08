@@ -4,6 +4,8 @@
 #include "DeviceNames.h"
 #include "NodeSelectorModel.h"
 
+#include <QTimer>
+
 #include <memory>
 
 namespace UserAttributes
@@ -181,7 +183,6 @@ public:
 
 protected:
     void proxyInvalidateFinished() override;
-    bool showAccess(mega::MegaNode* node) const override;
 
 signals:
     void searchNodes(const QString& text, TabTypes, bool flatten);
@@ -203,8 +204,10 @@ private:
 
     TabTypes mAllowedTabTypes;
     bool mFlattenSearchResults;
+    bool mSearchInFlight = false;
     QString mLastSearchText;
     std::shared_ptr<const UserAttributes::DeviceNames> mDeviceNamesRequest;
+    QTimer mSearchPathItemsAddedDebounce;
 };
 
 class NodeSelectorModelRubbish: public NodeSelectorModel

@@ -657,7 +657,7 @@ qsizetype TransfersManagerSortFilterProxyModel::activeTransfers() const
     return mActiveTransfers.size();
 }
 
-bool TransfersManagerSortFilterProxyModel::isModelProcessing() const
+bool TransfersManagerSortFilterProxyModel::isWorking() const
 {
     return mFilterWatcher.isRunning();
 }

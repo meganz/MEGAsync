@@ -41,6 +41,7 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/BugReportDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/ProgressIndicatorDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/VerifyLockMessage.h
+    ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ILoadingViewModel.h
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ViewLoadingScene.h
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ViewLoadingMessage.h
     ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.h

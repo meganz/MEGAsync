@@ -1,6 +1,7 @@
 #ifndef NODESELECTORPROXYMODEL_H
 #define NODESELECTORPROXYMODEL_H
 
+#include "ILoadingViewModel.h"
 #include "megaapi.h"
 #include "NodeSelectorModelItem.h"
 
@@ -17,7 +18,7 @@ class MegaNode;
 }
 class NodeSelectorModel;
 
-class NodeSelectorProxyModel: public QSortFilterProxyModel
+class NodeSelectorProxyModel: public QSortFilterProxyModel, public ILoadingViewModel
 {
     Q_OBJECT
 
@@ -47,7 +48,8 @@ public:
     }
 
     NodeSelectorModel* getMegaModel() const;
-    bool isModelProcessing() const;
+    bool isWorking() const override;
+    void onSortIndicatorChanged(int column, Qt::SortOrder order);
 
     virtual bool canBeDeleted() const;
     bool hasContextMenuOptions(const QModelIndexList& indexes) const;

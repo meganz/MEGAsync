@@ -79,6 +79,17 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
 
     ui->incomingShareContainer->hide();
 
+    connect(ui->incomingShareHeaderWidget,
+            &IncomingShareHeaderWidget::menuRequested,
+            this,
+            [this](const QPoint& globalPos)
+            {
+                if (auto* wid = getCurrentTreeViewWidget())
+                {
+                    wid->showCurrentRootContextMenu(globalPos);
+                }
+            });
+
     resize(1024, 720);
     setMinimumSize(660, 560);
 }
@@ -799,7 +810,7 @@ void NodeSelector::closeEvent(QCloseEvent* event)
         if (viewContainer)
         {
             viewContainer->abort();
-            if (viewContainer->getProxyModel()->isModelProcessing())
+            if (viewContainer->getProxyModel()->isWorking())
             {
                 connect(viewContainer->getProxyModel()->getMegaModel(),
                         &NodeSelectorModel::blockUi,
@@ -1323,9 +1334,8 @@ void NodeSelector::configureSearchWidget(TabType type)
     mSearchWidget->setColumnHidden(NodeSelectorModel::Column::IS_EXPORTED,
                                    (type == TabType::RUBBISH || type == TabType::INCOMING_SHARE));
 
-    // Search results are flat (no shares top-root list), so the Incoming Shares owner/access
-    // columns are never shown in the search view.
-    setIncomingShareColumnsVisibility(mSearchWidget, false);
+    // Mirror the Incoming Shares tab columns while its search chip is active.
+    setIncomingShareColumnsVisibility(mSearchWidget, type == TabType::INCOMING_SHARE);
     configureTypeSpecificColumns(mSearchWidget);
 
     mSearchWidget->resetAutoColumnWidths();

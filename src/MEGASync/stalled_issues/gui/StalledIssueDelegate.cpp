@@ -479,13 +479,19 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
 {
     if (object == mView)
     {
-        // Throttle instead of debounce: a single-shot timer restarted on every resize event
-        // only fires once the drag stops, so rows keep their stale height during the whole
-        // resize and snap at the end. Not restarting while it is already pending makes it fire
-        // periodically during the drag, so row heights track the width smoothly.
-        if (!mUpdateSizeHintTimerFromResize.isActive())
+        // Only react to geometry changes. Reacting to every event (Paint, Timer,
+        // MetaCall...) turns this into a self-sustaining loop: sizeHintChanged() triggers a
+        // relayout/repaint, whose events re-enter here and restart the timer, and so on.
+        if (event->type() == QEvent::Resize || event->type() == QEvent::Show)
         {
-            mUpdateSizeHintTimerFromResize.start(UPDATE_SIZE_TIMER);
+            // Throttle instead of debounce: a single-shot timer restarted on every resize event
+            // only fires once the drag stops, so rows keep their stale height during the whole
+            // resize and snap at the end. Not restarting while it is already pending makes it fire
+            // periodically during the drag, so row heights track the width smoothly.
+            if (!mUpdateSizeHintTimerFromResize.isActive())
+            {
+                mUpdateSizeHintTimerFromResize.start(UPDATE_SIZE_TIMER);
+            }
         }
 
         // The view is watched only to track resizes. Never forward its events

@@ -25,9 +25,9 @@ border-radius: 8px;
 padding: 4px 8px 4px 8px; 
 }
 
-#NodeSelectorDestinationOverflowPopup ClickableLabel:hover
+#NodeSelectorDestinationOverflowPopup ClickableLabel[hovered=&quot;true&quot;]
 {
-background-color: #2A2B2C; /*Background---color-surface-2*/
+background-color: #EFEFF0; /*colorToken.surface-2*/
 }
 
 #scrollArea

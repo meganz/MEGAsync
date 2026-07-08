@@ -1,12 +1,16 @@
 #ifndef TRANSFERSSORTFILTERPROXYBASEMODEL_H
 #define TRANSFERSSORTFILTERPROXYBASEMODEL_H
 
+#include "ILoadingViewModel.h"
+
 #include <QSortFilterProxyModel>
 
 class TransferBaseDelegateWidget;
 class TransfersModel;
 
-class TransfersSortFilterProxyBaseModel : public QSortFilterProxyModel
+// isWorking() is inherited pure from ILoadingViewModel: every transfers proxy attached to a
+// loading-scene view must state explicitly whether it does threaded work.
+class TransfersSortFilterProxyBaseModel: public QSortFilterProxyModel, public ILoadingViewModel
 {
     Q_OBJECT
 

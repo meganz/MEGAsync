@@ -1,6 +1,7 @@
 #ifndef VIEWLOADINGSCENE_H
 #define VIEWLOADINGSCENE_H
 
+#include "ILoadingViewModel.h"
 #include "TokenParserWidgetManager.h"
 
 #include <QDateTime>
@@ -346,6 +347,13 @@ private slots:
 
     void onDelayTimerToHideTimeout()
     {
+        // The model is still working in another thread: keep the loading view.
+        // The model will request the hide again when it finishes.
+        if (isViewModelBusy())
+        {
+            return;
+        }
+
         hideLoadingScene();
     }
 };
@@ -408,6 +416,15 @@ public:
             return;
         }
 
+        if (state)
+        {
+            // A deferred hide (MIN_TIME_DISPLAYING_VIEW) still pending must never fire once
+            // the UI is blocked again: it would reattach the view while the newly started
+            // concurrent sort/filter job is mutating the proxy -> use-after-free. Cancel it
+            // even when the loading scene is already visible (early return below).
+            mDelayTimerToHide.stop();
+        }
+
         if (state && isLoadingViewSet())
         {
             return;
@@ -425,6 +442,14 @@ public:
         // stop...)
         if (!state && getLoadingMessageHandler() &&
             getLoadingMessageHandler()->needsAnswerFromUser())
+        {
+            return;
+        }
+
+        // Don´t close the loading view if the model is still working in another thread;
+        // reattaching the view now would race the worker over the proxy mapping. The
+        // model will request the hide again when it finishes.
+        if (!state && isViewModelBusy())
         {
             return;
         }
@@ -457,7 +482,6 @@ public:
 
         if (state)
         {
-            mDelayTimerToHide.stop();
             if (mDelayTimeToShowInMs > 0)
             {
                 if (!mDelayTimerToShow.isActive())
@@ -540,6 +564,17 @@ protected:
         }
 
         return ViewLoadingSceneBase::getTopParent();
+    }
+
+    bool isViewModelBusy() const override
+    {
+        if (!mView)
+        {
+            return false;
+        }
+
+        auto workingModel = dynamic_cast<const ILoadingViewModel*>(mView->currentModel());
+        return workingModel && workingModel->isWorking();
     }
 
 private:
@@ -847,6 +882,13 @@ public:
     void markScrollHandledExternally()
     {
         mScrollHandledExternally = true;
+    }
+
+    // Model currently driving the view: the detached one while the loading scene is
+    // shown (the view's own model() is null then), the attached one otherwise.
+    QAbstractItemModel* currentModel() const
+    {
+        return mDetachedModel ? mDetachedModel.data() : this->model();
     }
 
     ViewLoadingScene<DelegateWidget, ViewType>& loadingView()

@@ -22,6 +22,10 @@
 
 const int CHECK_UPDATED_NODES_INTERVAL = 1000;
 const int IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD = 200;
+// Coalescing window for view-state refreshes on model row changes. Keep in sync with
+// SEARCH_PATH_ITEMS_RESORT_DEBOUNCE_MS (NodeSelectorModelSpecialised.cpp): both coalesce
+// the two halves of the same node-update storm.
+const int VIEW_REFRESH_DEBOUNCE_MS = 100;
 
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode,
                                                        TabItem tabType,
@@ -77,6 +81,19 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode,
 
                 mResizeEventsReceived = 0;
             });
+
+    // A proxy refilter emits one rowsInserted per contiguous range (~1600 on a search chip
+    // switch), and bulk node updates from other clients arrive as long bursts of add/remove
+    // events. Refreshing the page/header/breadcrumb per event froze the UI, so the requests
+    // are coalesced: the first one arms the timer and the refresh runs once when it fires,
+    // with the final model state (at most one execution per interval during a sustained
+    // stream).
+    mCheckViewOnModelChangeDebounce.setSingleShot(true);
+    mCheckViewOnModelChangeDebounce.setInterval(VIEW_REFRESH_DEBOUNCE_MS);
+    connect(&mCheckViewOnModelChangeDebounce,
+            &QTimer::timeout,
+            this,
+            &NodeSelectorTreeViewWidget::executeCheckViewOnModelChange);
 
     // Empty pages
     ui->emptyPage->installEventFilter(this);
@@ -230,7 +247,19 @@ void NodeSelectorTreeViewWidget::init()
     enableDragAndDrop(mSelectType->acceptDrops(mTabType));
     mModel->setExtraSpaceEnabled(!mSelectType->isFilePicker());
 
-    ui->tMegaFolders->setSortingEnabled(true);
+    // Do not use QTreeView::setSortingEnabled(): with it enabled, QTreeView::setModel() and
+    // QHeaderView::restoreState() re-trigger model->sort() while the loading scene is
+    // reattaching the view. At that point the previous QFutureWatcher already reports
+    // finished, so a new concurrent sort job starts and mutates the proxy mapping while the
+    // reattach walks it (setSelectionModel -> QHeaderView::currentChanged) -> crash.
+    // Replicate the same UX (clickable header + sort indicator) and route genuine indicator
+    // changes to the proxy explicitly instead.
+    ui->tMegaFolders->header()->setSortIndicatorShown(true);
+    ui->tMegaFolders->header()->setSectionsClickable(true);
+    connect(ui->tMegaFolders->header(),
+            &QHeaderView::sortIndicatorChanged,
+            mProxyModel.get(),
+            &NodeSelectorProxyModel::onSortIndicatorChanged);
     ui->tMegaFolders->viewport()->installEventFilter(this);
 
     mProxyModel->setSourceModel(mModel.get());
@@ -338,12 +367,16 @@ void NodeSelectorTreeViewWidget::setCurrentPage(ViewType type)
     {
         case ViewType::ROOT_EMPTY:
         {
+            mWasEmpty = true;
+            mRootWasEmpty = true;
             showRootEmptyState();
             ui->stackedWidget->setCurrentWidget(ui->emptyPage);
             break;
         }
         case ViewType::FOLDER_EMPTY:
         {
+            mWasEmpty = true;
+            mRootWasEmpty = true;
             showFolderEmptyState();
             ui->stackedWidget->setCurrentWidget(ui->emptyPage);
             break;
@@ -351,6 +384,8 @@ void NodeSelectorTreeViewWidget::setCurrentPage(ViewType type)
         case ViewType::VIEW:
         default:
         {
+            mWasEmpty = false;
+            mRootWasEmpty = false;
             mCurrentViewType = ViewType::VIEW;
             ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
             break;
@@ -869,6 +904,22 @@ void NodeSelectorTreeViewWidget::rebuildVisibleColumns()
 
 void NodeSelectorTreeViewWidget::checkViewOnModelChange()
 {
+    // While the UI is blocked (a concurrent proxy job is running / the loading scene is
+    // shown) the refresh is pointless and unsafe: onUiBlocked(false) runs it
+    // unconditionally on unblock, so just skip.
+    if (mUiBlocked)
+    {
+        return;
+    }
+
+    if (!mCheckViewOnModelChangeDebounce.isActive())
+    {
+        mCheckViewOnModelChangeDebounce.start();
+    }
+}
+
+void NodeSelectorTreeViewWidget::executeCheckViewOnModelChange()
+{
     setCurrentViewWidget();
     emit viewStateChanged();
 }
@@ -1198,10 +1249,19 @@ QModelIndex NodeSelectorTreeViewWidget::getAddedNodeParent(mega::MegaHandle pare
 
 void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
 {
+    // Blocking always precedes the concurrent proxy job (sort() emits blockUi(true)
+    // synchronously before launching it), so cancelling here guarantees the debounced
+    // refresh can never touch the proxy mid-job; the unblock branch below re-runs the
+    // same refresh (setCurrentViewWidget + viewStateChanged) unconditionally.
+    mCheckViewOnModelChangeDebounce.stop();
+
     if (mUiBlocked != state)
     {
         mUiBlocked = state;
     }
+
+    // Hide the header separator while the loading scene is shown.
+    ui->headerDivider->setVisible(!state);
 
     emit uiIsBlocked(mUiBlocked);
     ui->searchButtonsWidget->setDisabled(state);
@@ -1482,8 +1542,11 @@ void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selecte
 
 QList<MegaHandle> NodeSelectorTreeViewWidget::getMultiSelectionNodeHandle()
 {
-    auto selectedRows(ui->tMegaFolders->selectedRows());
-    return ui->tMegaFolders->getMultiSelectionNodeHandle(selectedRows);
+    // Use the same selection source as okButtonEnabled() (getSelectedIndexes(), which
+    // falls back to the current folder when nothing is explicitly selected): Ok enablement
+    // and the handles actually returned must never disagree, otherwise Ok can accept with
+    // an empty list and silently do nothing.
+    return ui->tMegaFolders->getMultiSelectionNodeHandle(getSelectedIndexes());
 }
 
 QModelIndexList NodeSelectorTreeViewWidget::getSelectedIndexes() const
@@ -1582,12 +1645,10 @@ void NodeSelectorTreeViewWidget::setCurrentViewWidget()
     auto currentRootIndex(getCurrentRootIndex());
     auto topRootIndex(mProxyModel->getTopRootIndex());
 
-    // Keep the empty-state flags in sync with the shown folder so a later content change
-    // (e.g. an async OS upload into an empty folder) is detected as a toggle and the view
-    // switches away from the empty page.
+    // The empty-state flags (mWasEmpty / mRootWasEmpty) are owned by setCurrentPage(), which
+    // sets them from the page actually shown. Here we only need the emptiness of the current
+    // root to choose between the "Empty folder" page and the normal view.
     const bool isEmpty = (mProxyModel->rowCount(currentRootIndex) == 0);
-    mWasEmpty = isEmpty;
-    mRootWasEmpty = isEmpty;
 
     // If we are inside a folder, show the "Empty folder" page.
     if ((currentRootIndex != topRootIndex) && isEmpty)

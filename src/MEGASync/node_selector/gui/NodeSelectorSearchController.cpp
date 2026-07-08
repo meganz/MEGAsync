@@ -77,6 +77,11 @@ bool NodeSelectorSearchController::matchesNodeName(mega::MegaNode* node) const
     return nodeName.contains(mSearchText, Qt::CaseInsensitive);
 }
 
+const QString& NodeSelectorSearchController::searchText() const
+{
+    return mSearchText;
+}
+
 void NodeSelectorSearchController::activateMode(TabType type,
                                                 NodeSelectorProxyModelSearch* proxyModel,
                                                 const std::function<void(TabType)>& applyColumns,

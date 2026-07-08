@@ -272,6 +272,11 @@ public:
     TabTypes allowedTabTypes() override;
     QString okButtonText() const override;
 
+    bool hasNewFolderButton() const override
+    {
+        return true;
+    }
+
     bool showsDestinationBreadcrumb() const override
     {
         return true;

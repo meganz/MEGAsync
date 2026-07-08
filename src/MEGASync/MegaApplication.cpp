@@ -5357,6 +5357,15 @@ void MegaApplication::uploadFilesToNode(const QList<QUrl>& files,
     for (const auto& file: files)
     {
         auto newUpload = file.toLocalFile();
+
+        // URLs that do not resolve to a local path (web images, iCloud files not downloaded,
+        // promised files from sandboxed apps, etc.). Skip them instead of
+        // enqueuing an empty path, which would start an invalid transfer.
+        if (newUpload.isEmpty())
+        {
+            continue;
+        }
+
         const auto noDuplicates = std::none_of(mUploadQueue.cbegin(),
                                                mUploadQueue.cend(),
                                                [&newUpload](const auto& upload)

@@ -7,7 +7,7 @@ QRect NodeSelectorViewStyle::subElementRect(SubElement element,
                                             const QStyleOption* option,
                                             const QWidget* widget) const
 {
-    QRect rect = QProxyStyle::subElementRect(element, option, widget);
+    QRect rect = MegaProxyStyle::subElementRect(element, option, widget);
 
     if (element == SE_ItemViewItemText)
     {
@@ -42,7 +42,7 @@ void NodeSelectorViewStyle::drawControl(ControlElement element,
             QStyleOptionViewItem iconOnly(*viewItem);
             iconOnly.text.clear();
             iconOnly.features &= ~QStyleOptionViewItem::HasDisplay;
-            QProxyStyle::drawControl(element, &iconOnly, painter, widget);
+            MegaProxyStyle::drawControl(element, &iconOnly, painter, widget);
 
             const int iconRight = viewItem->rect.left() + viewItem->decorationSize.width();
             QRect textRect = viewItem->rect;
@@ -61,5 +61,5 @@ void NodeSelectorViewStyle::drawControl(ControlElement element,
         }
     }
 
-    QProxyStyle::drawControl(element, option, painter, widget);
+    MegaProxyStyle::drawControl(element, option, painter, widget);
 }

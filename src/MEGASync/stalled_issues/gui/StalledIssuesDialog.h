@@ -61,7 +61,7 @@ private:
     StalledIssueFilterCriterion mCurrentTab;
     StalledIssuesProxyModel* mProxyModel;
     StalledIssueDelegate* mDelegate;
-
+    bool mViewModelInitialized = false;
 };
 
 #endif // STALLEDISSUESDIALOG_H

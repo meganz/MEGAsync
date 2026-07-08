@@ -18,6 +18,7 @@
 #include <QFont>
 #include <QPainter>
 #include <QToolTip>
+#include <QUrl>
 
 const char* INDEX_PROPERTY = "INDEX";
 
@@ -128,6 +129,13 @@ void NodeRequester::search(const QString& text, TabTypes typesAllowed, bool flat
     mSearchedTypes = TabType::NONE;
     int validMatches = 0;
 
+    // Items already placed in the result tree, keyed by node handle (each node appears at most
+    // once in the tree, so the handle is a unique key). Turns the per-path lookups from linear
+    // scans -- O(N^2) with tens of thousands of results under the same parents -- into O(1)
+    // hash lookups.
+    QHash<mega::MegaHandle, NodeSelectorModelItem*> alreadyProcessedItemsByHandle;
+    alreadyProcessedItemsByHandle.reserve(nodeList->size());
+
     for (int i = 0; i < nodeList->size(); i++)
     {
         auto type = NodeSelectorModelSearch::calculateSearchType(nodeList->get(i));
@@ -145,7 +153,7 @@ void NodeRequester::search(const QString& text, TabTypes typesAllowed, bool flat
             else
             {
                 auto path = createSearchPath(nodeList->get(i), type);
-                addSearchPath(items, path, type);
+                addSearchPath(items, path, type, {}, &alreadyProcessedItemsByHandle);
             }
         }
     }
@@ -336,7 +344,8 @@ void NodeRequester::addSearchPathItems(QList<std::shared_ptr<mega::MegaNode>> no
 void NodeRequester::addSearchPath(QList<NodeSelectorModelItem*>& items,
                                   const QList<std::shared_ptr<mega::MegaNode>>& path,
                                   TabTypes type,
-                                  AppendChildrenFn appendChildren)
+                                  AppendChildrenFn appendChildren,
+                                  QHash<mega::MegaHandle, NodeSelectorModelItem*>* handleIndex)
 {
     if (path.isEmpty())
     {
@@ -348,8 +357,11 @@ void NodeRequester::addSearchPath(QList<NodeSelectorModelItem*>& items,
     NodeSelectorModelItem* parentItem(nullptr);
     for (const auto& node: path)
     {
-        auto existingItem = parentItem ? findSearchChild(parentItem, node->getHandle()) :
-                                         findSearchItem(items, node->getHandle());
+        const auto handle = node->getHandle();
+
+        auto existingItem = handleIndex ? handleIndex->value(handle, nullptr) :
+                                          (parentItem ? findSearchChild(parentItem, handle) :
+                                                        findSearchItem(items, handle));
         if (!existingItem)
         {
             if (parentItem)
@@ -385,6 +397,11 @@ void NodeRequester::addSearchPath(QList<NodeSelectorModelItem*>& items,
         if (!existingItem)
         {
             return;
+        }
+
+        if (handleIndex)
+        {
+            handleIndex->insert(handle, existingItem);
         }
 
         parentItem = existingItem;
@@ -1057,8 +1074,12 @@ QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
                 {
                     if (index.column() == NodeSelectorModel::Column::USER)
                     {
-                        return item->getOwnerName() + QLatin1String(" (") + item->getOwnerEmail() +
-                               QLatin1String(")");
+                        if (showAccess(item->getNode().get()))
+                        {
+                            return item->getOwnerName() + QLatin1String(" (") +
+                                   item->getOwnerEmail() + QLatin1String(")");
+                        }
+                        return QVariant();
                     }
                     else if (item->isTakenDown())
                     {
@@ -1108,7 +1129,7 @@ QVariant NodeSelectorModel::data(const QModelIndex& index, int role) const
                 }
                 case toInt(NodeSelectorModelRoles::ACCESS_ROLE):
                 {
-                    return Utilities::getNodeAccess(item->getNode().get());
+                    return item->getNodeAccess();
                 }
                 case toInt(NodeSelectorModelRoles::HANDLE_ROLE):
                 {
@@ -1230,7 +1251,27 @@ void NodeSelectorModel::setExtraSpaceEnabled(bool enabled)
 
 bool NodeSelectorModel::acceptDragAndDrop(const QMimeData* data)
 {
-    return (data->hasUrls() || data->hasFormat(MIME_DATA_INTERNAL_MOVE));
+    if (data->hasFormat(MIME_DATA_INTERNAL_MOVE))
+    {
+        return true;
+    }
+
+    if (data->hasUrls())
+    {
+        // Only accept the drop when at least one URL resolves to a local file.
+        // A drag&drop from the OS file manager can carry non-local URLs (web
+        // images, iCloud files not downloaded, promised files, etc.) that
+        // cannot be uploaded.
+        const auto urls = data->urls();
+        return std::any_of(urls.cbegin(),
+                           urls.cend(),
+                           [](const QUrl& url)
+                           {
+                               return !url.toLocalFile().isEmpty();
+                           });
+    }
+
+    return false;
 }
 
 bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
@@ -2867,13 +2908,18 @@ QVariant NodeSelectorModel::getIcon(const QModelIndex& index, NodeSelectorModelI
         }
         case NodeSelectorModel::Column::USER:
         {
-            return QVariant::fromValue<QPixmap>(item->getOwnerIcon());
+            // Keep the icon consistent with getUserText(): only inshare roots show the owner.
+            if (showAccess(item->getNode().get()))
+            {
+                return QVariant::fromValue<QPixmap>(item->getOwnerIcon());
+            }
+            break;
         }
         case NodeSelectorModel::Column::ACCESS:
         {
             if (showAccess(item->getNode().get()))
             {
-                auto icon = Utilities::getNodeAccessIcon(item->getNode().get());
+                auto icon = Utilities::getNodeAccessIcon(item->getNodeAccess());
                 return QVariant::fromValue<QPixmap>(
                     IconTokenizer::changePixmapColor(
                         icon.pixmap(
@@ -2981,7 +3027,7 @@ QVariant NodeSelectorModel::getLastModifiedDateText(NodeSelectorModelItem* item)
 QVariant NodeSelectorModel::getAccessText(NodeSelectorModelItem* item) const
 {
     return showAccess(item->getNode().get()) ?
-               Utilities::getNodeStringAccess(item->getNode().get()) :
+               Utilities::getNodeStringAccess(item->getNodeAccess()) :
                QVariant();
 }
 
@@ -3370,7 +3416,14 @@ void NodeSelectorModel::updateItemNode(const QModelIndex& indexToUpdate,
     auto item = getItemByIndex(indexToUpdate);
     if (item)
     {
+        // updateNode() may walk the item's child subtree (propagateNodeAccessToChildren on a
+        // share-permission change). That traversal reads mChildItems, which the NodeRequester
+        // worker structurally mutates (createChildItems/initializeChildItems/appendNodes) under
+        // this same data mutex. Serialize against the worker so the GUI-thread walk cannot race
+        // an in-flight child fetch of the affected subtree.
+        mNodeRequesterWorker->lockDataMutex(true);
         item->updateNode(node);
+        mNodeRequesterWorker->lockDataMutex(false);
         updateRow(indexToUpdate);
     }
 }

@@ -67,6 +67,20 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
     }
 }
 
+void NodeSelectorProxyModel::onSortIndicatorChanged(int column, Qt::SortOrder order)
+{
+    // QHeaderView::restoreState() re-emits sortIndicatorChanged unconditionally with the
+    // column/order already applied. Re-sorting here would launch a concurrent sort job in
+    // the middle of the loading-scene view reattach. Genuine header clicks always change
+    // the column or toggle the order, so no-change notifications are safe to ignore.
+    if (column == mSortColumn && order == mOrder)
+    {
+        return;
+    }
+
+    sort(column, order);
+}
+
 Qt::ItemFlags NodeSelectorProxyModel::flags(const QModelIndex& index) const
 {
     auto flags = Qt::ItemFlags();
@@ -292,7 +306,7 @@ NodeSelectorModel* NodeSelectorProxyModel::getMegaModel() const
     return dynamic_cast<NodeSelectorModel*>(sourceModel());
 }
 
-bool NodeSelectorProxyModel::isModelProcessing() const
+bool NodeSelectorProxyModel::isWorking() const
 {
     return mFilterWatcher.isRunning();
 }

@@ -1691,6 +1691,10 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplici
                         std::unique_ptr<mega::MegaNode> node = failedTransferdata->getNode();
                         // If node is null, then it was intended to be undeleted
                         bool undelete = (!node);
+                        // getPath()/getFileName() may be null; pass them through untouched:
+                        // the SDK treats a null localPath/customName as "use the default
+                        // download folder / the node's name", while an empty string bypasses
+                        // that handling (and asserts in Path::normalizeAbsolute in debug).
                         mMegaApi->startDownload(node.get(),
                                                 failedTransfer->getPath(),
                                                 failedTransfer->getFileName(),
@@ -1708,11 +1712,11 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplici
                             MegaSyncApp->getMegaApi()->getNodeByHandle(
                                 failedTransfer->getParentHandle()));
                         MegaUploadOptions options;
-                        options.fileName = failedTransfer->getFileName();
+                        options.fileName = safeCharPtr(failedTransfer->getFileName());
                         options.appData = appDataRaw;
                         options.pitagTrigger = mega::MegaApi::PITAG_TRIGGER_PICKER;
 
-                        mMegaApi->startUpload(failedTransfer->getPath(),
+                        mMegaApi->startUpload(safeCharPtr(failedTransfer->getPath()),
                                               parentNode.get(),
                                               nullptr,
                                               &options,
@@ -1730,6 +1734,11 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplici
             {
                 updateTransfersCount();
             });
+}
+
+const char* TransfersModel::safeCharPtr(const char* value)
+{
+    return value ? value : "";
 }
 
 void TransfersModel::retryTransferByIndex(const QModelIndex& index)

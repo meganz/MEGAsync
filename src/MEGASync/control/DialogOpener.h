@@ -16,6 +16,7 @@
 #include <QRect>
 #include <QWindow>
 
+#include <algorithm>
 #include <functional>
 #include <memory>
 
@@ -93,6 +94,7 @@ private:
         virtual bool isVisible() = 0;
         virtual bool isActive() = 0;
         virtual bool isParent(QObject* parent) = 0;
+        virtual bool ownsWindow(QWindow* window) const = 0;
         virtual QRect frameGeometry() const = 0;
         virtual void applyCurrentTheme() = 0;
 
@@ -185,6 +187,11 @@ private:
         bool isParent(QObject* parent) override
         {
             return mDialog->parent() == parent;
+        }
+
+        bool ownsWindow(QWindow* window) const override
+        {
+            return mDialog && mDialog->windowHandle() == window;
         }
 
         QRect frameGeometry() const override
@@ -503,6 +510,11 @@ public:
                 activateWidgetWaylandSafe(dialog->parentWidget());
             }
 
+            // End any attached transient child (e.g. macOS sheet) while this
+            // dialog's native window is still alive, to avoid an orphaned sheet
+            // crashing on its own teardown.
+            detachTransientChildren(dialog->windowHandle());
+
             dialog->deleteLater();
         }
     }
@@ -593,6 +605,57 @@ private:
     static QQueue<std::shared_ptr<DialogInfoBase>> mDialogsQueue;
     static QMap<QString, GeometryInfo> mSavedGeometries;
 
+    // Before a dialog's window is destroyed or recreated, end any transient
+    // child windows (e.g. macOS sheets) while this parent is still alive.
+    // A WindowModal QML dialog attached as a macOS sheet keeps a transient-parent
+    // link to this window; if the parent goes away first, Qt silently nulls the
+    // link but the native NSWindow stays a sheet, so the child's later teardown
+    // calls endSheet on a null parent (QCocoaWindow::setVisible) and crashes.
+    // Hiding the child now ends the sheet cleanly; clearing the link drops the
+    // dangling reference.
+    static void detachTransientChildren(QWindow* parentWindow)
+    {
+        if (!parentWindow)
+        {
+            return;
+        }
+
+        const auto windows = QGuiApplication::topLevelWindows();
+        for (QWindow* window: windows)
+        {
+            if (window == parentWindow || window->transientParent() != parentWindow)
+            {
+                continue;
+            }
+
+            // A transient child backed by a dialog tracked in mOpenedDialogs
+            // (e.g. a WindowModal child opened through DialogOpener) must be
+            // closed through its dialog: finished() then drives the usual
+            // cleanup (removeWhenClose -> deleteLater -> tracking removal) and
+            // delivers any pending result callbacks. A bare hide would leave
+            // it tracked forever, invisible but still "open". Closing also
+            // ends a macOS sheet cleanly, so the crash this sweep prevents
+            // stays prevented.
+            const auto it = std::find_if(mOpenedDialogs.cbegin(),
+                                         mOpenedDialogs.cend(),
+                                         [window](const std::shared_ptr<DialogInfoBase>& info)
+                                         {
+                                             return info->ownsWindow(window);
+                                         });
+            if (it != mOpenedDialogs.cend())
+            {
+                // Keep the info alive across close(); the call can trigger
+                // cleanup of this very list entry.
+                const auto childInfo = *it;
+                childInfo->close();
+                continue;
+            }
+
+            window->setVisible(false);
+            window->setTransientParent(nullptr);
+        }
+    }
+
     template <class DialogType>
     static void removeWhenClose(QPointer<DialogType> dialog)
     {
@@ -663,6 +726,10 @@ private:
             {
                 TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
             }
+
+            // setParent() below can recreate the native window; detach attached
+            // transient children first so they don't end up orphaned sheets.
+            detachTransientChildren(dialog->windowHandle());
 
             // Use to reload the widget stylesheet. Without this line, the new stylesheet is not
             // correctly applied.

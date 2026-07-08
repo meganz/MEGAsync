@@ -36,6 +36,7 @@ public:
     bool hasRows() const;
     void setHasRows(bool hasRows);
     bool matchesNodeName(mega::MegaNode* node) const;
+    const QString& searchText() const;
 
     void activateMode(TabType type,
                       NodeSelectorProxyModelSearch* proxyModel,

@@ -32,6 +32,13 @@ TransferBaseDelegateWidget*
     return item;
 }
 
+bool InfoDialogTransfersProxyModel::isWorking() const
+{
+    // This proxy has no threaded work: filtering and invalidation run synchronously
+    // in the main thread.
+    return false;
+}
+
 void InfoDialogTransfersProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     QSortFilterProxyModel::setSourceModel(sourceModel);

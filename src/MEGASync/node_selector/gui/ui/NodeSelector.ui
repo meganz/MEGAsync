@@ -416,7 +416,7 @@ color: #303233; /*colorToken.text-primary*/
              <number>20</number>
             </property>
             <property name="topMargin">
-             <number>12</number>
+             <number>20</number>
             </property>
             <property name="rightMargin">
              <number>20</number>
@@ -563,7 +563,7 @@ color: #303233; /*colorToken.text-primary*/
              <number>0</number>
             </property>
             <property name="leftMargin">
-             <number>20</number>
+             <number>12</number>
             </property>
             <property name="topMargin">
              <number>12</number>
@@ -582,6 +582,9 @@ color: #303233; /*colorToken.text-primary*/
               <property name="text">
                <string notr="true"/>
               </property>
+              <property name="indent">
+               <number>8</number>
+              </property>
              </widget>
             </item>
             <item>
@@ -599,8 +602,11 @@ color: #303233; /*colorToken.text-primary*/
               <property name="text">
                <string notr="true"/>
               </property>
+              <property name="indent">
+               <number>8</number>
+              </property>
               <property name="font-size" stdset="0">
-               <string notr="true">body-2</string>
+               <string notr="true">body-1</string>
               </property>
               <property name="bold" stdset="0">
                <bool>true</bool>

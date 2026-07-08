@@ -43,7 +43,9 @@ DestinationBreadcrumb::~DestinationBreadcrumb()
 
 void DestinationBreadcrumb::setSegments(const QList<NodeSelectorBreadcrumbSegment>& segments)
 {
-    mHasSegments = !segments.isEmpty();
+    // The first segment is only the root context (or the "no selection" placeholder),
+    // so clearing only makes sense when the path goes beyond it.
+    mHasClearablePath = segments.size() > 1;
     ui->breadcrumb->setSegments(segments);
     updateContentVisibility();
 }
@@ -77,5 +79,5 @@ bool DestinationBreadcrumb::getDefaultUploadOption() const
 void DestinationBreadcrumb::updateContentVisibility()
 {
     ui->cbContainer->setVisible(mShouldShowDefaultUploadOption);
-    ui->bClear->setVisible(mHasSegments);
+    ui->bClear->setVisible(mHasClearablePath);
 }

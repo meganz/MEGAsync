@@ -7,7 +7,6 @@
 #include "Utilities.h"
 
 const int NodeSelectorModelItem::ICON_SIZE = 17;
-const int UPDATE_ACCESS_THRESHOLD_MS = 50;
 
 using namespace mega;
 
@@ -20,7 +19,6 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node,
     mRequestingChildren(false),
     mShowFiles(showFiles),
     mNodeAccess(mega::MegaShare::ACCESS_OWNER),
-    mNodeAccessLastUpdate(0),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mNode(std::move(node)),
     mOwner(nullptr)
@@ -29,6 +27,14 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node,
     if (!mNode)
     {
         mNode = std::make_shared<mega::MegaNode>();
+    }
+
+    // Share access is uniform across an inshare subtree: nested items inherit the parent's
+    // cached level (primed on the inshare root through the SDK on the worker), so consumers
+    // (rename/delete/link-share/sync eligibility) see the real access with no SDK call.
+    if (parentItem)
+    {
+        mNodeAccess = parentItem->mNodeAccess.load();
     }
 
     resetChildrenCounter();
@@ -161,14 +167,17 @@ void NodeSelectorModelItem::resetChildrenCounter()
 
 int NodeSelectorModelItem::getNodeAccess() const
 {
-    auto currentTimestamp(QDateTime::currentMSecsSinceEpoch());
-    if ((currentTimestamp - mNodeAccessLastUpdate) > UPDATE_ACCESS_THRESHOLD_MS)
-    {
-        mNodeAccess = Utilities::getNodeAccess(mNode.get());
-        mNodeAccessLastUpdate = currentTimestamp;
-    }
-
+    // Only inshare root nodes resolve their access level (primed on the NodeRequester worker);
+    // no consumer needs it for any other node, so the rest keep the ACCESS_OWNER default.
+    // Never resolve it here: this getter runs in paint paths on the GUI thread, and
+    // megaApi->getAccess blocks on the SDK mutex while the worker is fetching children
+    // (500ms+ freezes on huge folders).
     return mNodeAccess;
+}
+
+void NodeSelectorModelItem::primeNodeAccess()
+{
+    mNodeAccess = Utilities::getNodeAccess(mNode.get());
 }
 
 QPointer<NodeSelectorModelItem> NodeSelectorModelItem::getParent() const
@@ -421,6 +430,29 @@ int NodeSelectorModelItem::row()
 void NodeSelectorModelItem::updateNode(std::shared_ptr<mega::MegaNode> node)
 {
     mNode = node;
+    // Re-resolve the access level only when the update actually flags a share change:
+    // this runs on the GUI thread (rootNodeUpdated / update coordinator), so the blocking
+    // getAccess call must stay out of the common update storms (renames, attribute
+    // changes). A genuine permission change is rare and single-node, so the bounded
+    // SDK call is acceptable here.
+    if (mNode->isInShare() && (mNode->getChanges() & mega::MegaNode::CHANGE_TYPE_INSHARE))
+    {
+        primeNodeAccess();
+        // Descendants hold a cached copy inherited at construction: keep them in sync.
+        propagateNodeAccessToChildren();
+    }
+}
+
+void NodeSelectorModelItem::propagateNodeAccessToChildren()
+{
+    for (const auto& child: mChildItems)
+    {
+        if (child)
+        {
+            child->mNodeAccess = mNodeAccess.load();
+            child->propagateNodeAccessToChildren();
+        }
+    }
 }
 
 void NodeSelectorModelItem::calculateSyncStatus()
@@ -545,11 +577,14 @@ NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::M
     NodeSelectorModelItem(std::move(node), false, parentItem),
     mType(type)
 {
-    if (mType & TabType::INCOMING_SHARE)
+    // Owner and access are only shown for inshare roots; nested nodes keep the
+    // columns empty, so don't resolve the owner (avoids avatar/fullname requests).
+    if ((mType & TabType::INCOMING_SHARE) && mNode->isInShare())
     {
         auto user = std::unique_ptr<mega::MegaUser>(
             MegaSyncApp->getMegaApi()->getUserFromInShare(mNode.get(), true));
         setOwner(std::move(user));
+        primeNodeAccess();
     }
 
     calculateSyncStatus();
@@ -562,6 +597,10 @@ void NodeSelectorModelItemSearch::setType(TabTypes type)
     if (mType != type)
     {
         mType = type;
+        // No access re-resolution here: this runs on the GUI thread (rootNodeUpdated,
+        // CHANGE_TYPE_PARENT branch), and a type change comes from a parent move — an
+        // inshare root can never become one through a move, so there is nothing to prime.
+        // New inshare roots are created (and primed) on the NodeRequester worker.
         emit tabTypeChanged(type);
     }
 }
@@ -623,6 +662,14 @@ NodeSelectorModelItemIncomingShare::NodeSelectorModelItemIncomingShare(
     NodeSelectorModelItem* parentItem):
     NodeSelectorModelItem(std::move(node), showFiles, parentItem)
 {
+    // Only the inshare root resolves its access level through the SDK (this constructor runs
+    // on the NodeRequester worker); nested nodes inherit the cached level from their parent
+    // (see the base constructor).
+    if (mNode->isInShare())
+    {
+        primeNodeAccess();
+    }
+
     if (!parentItem)
     {
         auto user = std::unique_ptr<mega::MegaUser>(

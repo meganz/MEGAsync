@@ -428,6 +428,13 @@ private:
 
     void retryTransfers(const QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> &transfersToRetry);
 
+    // Returns an empty C string instead of nullptr so the result can be safely assigned
+    // to a std::string (MegaUploadOptions::fileName, startUpload's localPath). Do NOT use
+    // it for SDK params that keep const char* end-to-end (startDownload's
+    // localPath/customName): there nullptr means "use the default" and an empty string
+    // defeats that handling.
+    static const char* safeCharPtr(const char* value);
+
     bool isUiBlockedModeActive() const ;
     void setUiBlockedMode(bool state);
 

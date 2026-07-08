@@ -18,6 +18,8 @@ public:
 
     void setSourceModel(QAbstractItemModel* sourceModel) override;
 
+    bool isWorking() const override;
+
 protected slots:
     void onCopyTransferLinkRequested();
     void onOpenTransferFolderRequested();

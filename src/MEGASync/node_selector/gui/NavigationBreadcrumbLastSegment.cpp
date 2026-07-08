@@ -54,13 +54,6 @@ void NavigationBreadcrumbLastSegment::setHighlighted(bool highlighted)
     ui->segment->setHighlighted(highlighted);
 }
 
-void NavigationBreadcrumbLastSegment::setFirst(bool first)
-{
-    // When the last segment is also the first (single-element path), drop the pill's left
-    // padding so it aligns flush with the breadcrumb's left edge.
-    ui->lastSegmentLayout->setContentsMargins(first ? 0 : 8, 3, 8, 3);
-}
-
 void NavigationBreadcrumbLastSegment::setMenuActive(bool active)
 {
     setProperty("menuActive", active);

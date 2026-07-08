@@ -32,6 +32,9 @@ public:
     void setData(const IncomingShareHeaderData& data);
     void clear();
 
+signals:
+    void menuRequested(const QPoint& globalPos);
+
 private:
     Ui::IncomingShareHeaderWidget* ui = nullptr;
 };

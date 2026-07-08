@@ -1140,7 +1140,7 @@ void TransferManager::closeEvent(QCloseEvent *event)
 {
     auto proxy (mUi->wTransfers->getProxyModel());
 
-    if(proxy->isModelProcessing())
+    if (proxy->isWorking())
     {
         connect(proxy, &TransfersManagerSortFilterProxyModel::modelChanged, this, [this](){
             close();

@@ -252,6 +252,8 @@ bool SearchLineEdit::eventFilter(QObject* obj, QEvent* evnt)
             {
                 emit search(ui->leSearchField->text());
             }
+            evnt->accept();
+            return true;
         }
         else if (keyEvent && keyEvent->key() == Qt::Key_Escape)
         {

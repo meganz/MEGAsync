@@ -4,6 +4,7 @@
 #include "ui_IncomingShareHeaderWidget.h"
 
 #include <QStyle>
+#include <QToolButton>
 
 namespace
 {
@@ -19,6 +20,17 @@ IncomingShareHeaderWidget::IncomingShareHeaderWidget(QWidget* parent):
     setAttribute(Qt::WA_StyledBackground, true);
 
     ui->setupUi(this);
+
+    // The chevron opens the context menu for the current share folder, mirroring the chevron on
+    // the navigation breadcrumb's last segment. The owner routes it to the current tree view.
+    connect(ui->toolButton,
+            &QToolButton::clicked,
+            this,
+            [this]()
+            {
+                emit menuRequested(
+                    ui->toolButton->mapToGlobal(QPoint(0, ui->toolButton->height())));
+            });
 
     clear();
 }

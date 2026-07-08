@@ -342,9 +342,13 @@ void StalledIssuesDialog::onStalledIssuesLoaded()
 
 void StalledIssuesDialog::onModelFiltered()
 {
-    //Only the first time, in order to avoid setting the model before it is sorted
-    if(!ui->stalledIssuesTree->model())
+    // Only the first time, in order to avoid setting the model before it is sorted.
+    // NOTE: view->model() being null no longer means "first time": the loading scene detaches
+    // the model while loading, so we must track the one-time init with an explicit flag and let
+    // the loading scene own the detach/reattach (restoreLoadingViewState).
+    if (!mViewModelInitialized)
     {
+        mViewModelInitialized = true;
         ui->stalledIssuesTree->setModel(mProxyModel);
         mViewHoverManager.setView(ui->stalledIssuesTree);
 

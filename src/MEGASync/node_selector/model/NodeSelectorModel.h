@@ -10,6 +10,7 @@
 #include "Utilities.h"
 
 #include <QAbstractItemModel>
+#include <QHash>
 #include <QIcon>
 #include <QList>
 #include <QPointer>
@@ -155,10 +156,12 @@ private:
         NodeSelectorModelItem*,
         const QList<std::shared_ptr<mega::MegaNode>>&)>;
 
-    void addSearchPath(QList<NodeSelectorModelItem*>& items,
-                       const QList<std::shared_ptr<mega::MegaNode>>& path,
-                       TabTypes type,
-                       AppendChildrenFn appendChildren = {});
+    void addSearchPath(
+        QList<NodeSelectorModelItem*>& items,
+        const QList<std::shared_ptr<mega::MegaNode>>& path,
+        TabTypes type,
+        AppendChildrenFn appendChildren = {},
+        QHash<mega::MegaHandle, NodeSelectorModelItem*>* alreadyProcessedItemsByHandle = nullptr);
     NodeSelectorModelItem* findSearchItem(const QList<NodeSelectorModelItem*>& items,
                                           mega::MegaHandle handle) const;
     NodeSelectorModelItem* findSearchChild(NodeSelectorModelItem* parent,

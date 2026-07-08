@@ -1,14 +1,15 @@
 #ifndef STALLEDISSUESPROXYMODEL_H
 #define STALLEDISSUESPROXYMODEL_H
 
+#include "ILoadingViewModel.h"
 #include "StalledIssue.h"
 
-#include <QSortFilterProxyModel>
 #include <QFutureWatcher>
+#include <QSortFilterProxyModel>
 
 class StalledIssueBaseDelegateWidget;
 
-class StalledIssuesProxyModel : public QSortFilterProxyModel
+class StalledIssuesProxyModel: public QSortFilterProxyModel, public ILoadingViewModel
 {
     Q_OBJECT
 
@@ -17,6 +18,7 @@ public:
 
     int rowCount(const QModelIndex &parent) const override;
     void filter(StalledIssueFilterCriterion filterCriterion);
+    bool isWorking() const override;
 
     void setSourceModel(QAbstractItemModel *sourceModel) override;
     void updateStalledIssues();

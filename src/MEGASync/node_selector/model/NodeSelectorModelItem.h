@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QPointer>
 
+#include <atomic>
 #include <memory>
 
 namespace UserAttributes
@@ -98,14 +99,25 @@ signals:
     void infoUpdated(int role);
 
 protected:
+    // Resolves the access level through the SDK and caches it. Only inshare root nodes
+    // (isInShare() == true) need it, and only from the NodeRequester worker thread: resolving
+    // it from the GUI thread would block on the SDK mutex while a children fetch is in flight.
+    // Nested items inherit the cached level from their parent instead (see the base
+    // constructor); hot consumers (sync flags/tooltip) read the cache with no SDK call.
+    void primeNodeAccess();
+    // Copies this item's cached access level to all descendants (share access is uniform
+    // across an inshare subtree). Called after re-priming an inshare root.
+    void propagateNodeAccessToChildren();
+
     QString mOwnerEmail;
     Status mStatus;
     bool mRequestingChildren;
     int mChildrenCounter;
     bool mShowFiles;
     bool mChildrenAreInit;
-    mutable int mNodeAccess;
-    mutable qint64 mNodeAccessLastUpdate;
+    // Atomic: read from the proxy's concurrent sort/filter job (pool thread) while the GUI
+    // thread may re-prime it on a share permission change (see updateNode).
+    std::atomic<int> mNodeAccess;
 
     mega::MegaApi* mMegaApi;
     std::shared_ptr<mega::MegaNode> mNode;

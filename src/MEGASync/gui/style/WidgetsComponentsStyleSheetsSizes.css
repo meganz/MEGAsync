@@ -613,6 +613,16 @@ min-height: 40px;
 max-height: 40px;
 }
 
+TabSelector[selected = true] #lTitle
+{
+font-weight: 700;
+}
+
+TabSelector.chip[selected = true] #lTitle
+{
+font-weight: 400;
+}
+
 TabSelector.sidebar-icononly
 {
 border-radius:6px;

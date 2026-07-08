@@ -11,8 +11,11 @@ NavigationBreadcrumb::NavigationBreadcrumb(QWidget* parent):
 {
     ui->setupUi(this);
 
+    // Navigation segments keep their full 8px side padding: the navigation row's left margin
+    // is reduced to 12px so the first segment's text still lands on the 20px content line,
+    // while its highlight pill extends 8px to the left of it.
     ui->breadcrumb->setSegmentFactory(
-        [this](const QString& text, int index, bool isFirst, bool isLast) -> QWidget*
+        [this](const QString& text, int index, bool /*isFirst*/, bool isLast) -> QWidget*
         {
             // The last segment carries the chevron + context menu.
             if (isLast)
@@ -26,14 +29,12 @@ NavigationBreadcrumb::NavigationBreadcrumb(QWidget* parent):
                     segment->setText(text);
                     segment->setHighlighted(true);
                     segment->setInteractive(false);
-                    segment->setFirst(isFirst);
                     return segment;
                 }
 
                 auto* lastSegment = new NavigationBreadcrumbLastSegment;
                 lastSegment->setText(text);
                 lastSegment->setHighlighted(true);
-                lastSegment->setFirst(isFirst);
 
                 connect(lastSegment,
                         &NavigationBreadcrumbLastSegment::clicked,
@@ -54,7 +55,6 @@ NavigationBreadcrumb::NavigationBreadcrumb(QWidget* parent):
             segment->setText(text);
             segment->setHighlighted(false);
             segment->setInteractive(true);
-            segment->setFirst(isFirst);
             connect(segment,
                     &ClickableLabel::clicked,
                     this,
