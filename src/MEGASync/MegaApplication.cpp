@@ -3173,7 +3173,11 @@ void MegaApplication::enableTransferActions(bool enable)
         updateAction->setEnabled(enable);
     }
 
-    guestSettingsAction->setEnabled(enable);
+    // guestSettingsAction is not created when the app starts flagged as crashed
+    if (guestSettingsAction)
+    {
+        guestSettingsAction->setEnabled(enable);
+    }
     importLinksAction->setEnabled(enable);
     uploadAction->setEnabled(enable);
     downloadAction->setEnabled(enable);
@@ -6034,6 +6038,10 @@ void MegaApplication::createTrayIconMenus()
     {
         const bool deleteActions(true);
         clearMenu(initialTrayMenu, deleteActions);
+        // clearMenu() deleted the actions; null the members because their re-creation
+        // below can be skipped (isCrashed case) and they must not stay dangling
+        guestSettingsAction = nullptr;
+        initialExitAction = nullptr;
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
@@ -6085,7 +6093,7 @@ void MegaApplication::createTrayIconMenus()
 #endif
     connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
-    if (AppState::instance()->getAppState() != AppState::INIT)
+    if (guestSettingsAction && AppState::instance()->getAppState() != AppState::INIT)
     {
         initialTrayMenu->addAction(guestSettingsAction);
     }
