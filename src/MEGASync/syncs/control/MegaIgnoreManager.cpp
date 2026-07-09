@@ -511,7 +511,6 @@ bool MegaIgnoreManager::isDefault() const
     return currentRules == defaultRules;
 }
 
-void MegaIgnoreManager::restreDefaults()
 void MegaIgnoreManager::restoreDefaults()
 {
     if (QFile::exists(mOutputMegaIgnoreFile))
