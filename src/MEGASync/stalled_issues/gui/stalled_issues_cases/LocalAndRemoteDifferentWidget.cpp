@@ -198,11 +198,13 @@ QString LocalAndRemoteDifferentWidget::keepLocalSideString(const KeepSideInfo& i
     {
         if(info.isFile)
         {
-            return tr("Are you sure you want to keep the [B]local file[/B] %1?").arg(info.itemName);
+            return tr("Are you sure you want to keep the [B]local file[/B] %1?")
+                .arg(info.itemName.toHtmlEscaped());
         }
         else
         {
-            return tr("Are you sure you want to keep the [B]local folder[/B] %1?").arg(info.itemName);
+            return tr("Are you sure you want to keep the [B]local folder[/B] %1?")
+                .arg(info.itemName.toHtmlEscaped());
         }
     }
 }
@@ -224,11 +226,13 @@ QString LocalAndRemoteDifferentWidget::keepRemoteSideString(const KeepSideInfo& 
     {
         if(info.isFile)
         {
-            return tr("Are you sure you want to keep the [B]remote file[/B] %1?").arg(info.itemName);
+            return tr("Are you sure you want to keep the [B]remote file[/B] %1?")
+                .arg(info.itemName.toHtmlEscaped());
         }
         else
         {
-            return tr("Are you sure you want to keep the [B]remote folder[/B] %1?").arg(info.itemName);
+            return tr("Are you sure you want to keep the [B]remote folder[/B] %1?")
+                .arg(info.itemName.toHtmlEscaped());
         }
     }
 }
@@ -266,7 +270,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                     tr("The [B]local file[/B] %1 will be uploaded to MEGA and replace the "
                        "current file, which will be moved to the SyncDebris folder in your MEGA "
                        "Rubbish bin.")
-                        .arg(localInfo.fileName()) +
+                        .arg(localInfo.fileName().toHtmlEscaped()) +
                     QString::fromUtf8("[BR]");
             }
             else
@@ -286,7 +290,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                     (tr("The [B]local files[/B] will be uploaded to MEGA and added as a version to "
                         "the "
                         "remote files.\nPlease wait for the upload to complete.")
-                         .arg(localInfo.fileName())) +
+                         .arg(localInfo.fileName().toHtmlEscaped())) +
                     QString::fromUtf8("[BR]");
             }
             else
@@ -295,7 +299,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                     (tr("The [B]local file[/B] %1 will be uploaded to MEGA and added as a version "
                         "to "
                         "the remote file.\nPlease wait for the upload to complete.")
-                         .arg(localInfo.fileName())) +
+                         .arg(localInfo.fileName().toHtmlEscaped())) +
                     QString::fromUtf8("[BR]");
             }
         }
@@ -305,7 +309,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         info.msgInfo.descriptionText =
             tr("The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able "
                "to retrieve the folder from there.[/BR]")
-                .arg(localInfo.fileName());
+                .arg(localInfo.fileName().toHtmlEscaped());
         if(info.selection.size() > 1)
         {
             info.msgInfo.descriptionText =
@@ -368,8 +372,9 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     }
     else
     {
-        info.msgInfo.titleText = tr("Are you sure you want to keep the [B]remote item[/B] %1?")
-                                     .arg(ui->chooseRemoteCopy->data()->getFileName());
+        info.msgInfo.titleText =
+            tr("Are you sure you want to keep the [B]remote item[/B] %1?")
+                .arg(ui->chooseRemoteCopy->data()->getFileName().toHtmlEscaped());
         if (info.selection.size() > 1)
         {
             info.msgInfo.titleText = tr("Keep the [B]remote items[/B]?");
@@ -382,7 +387,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         {
             info.msgInfo.descriptionText =
                 tr("The [B]local file[/B] %1 will be moved to the sync debris folder")
-                    .arg(localInfo.fileName());
+                    .arg(localInfo.fileName().toHtmlEscaped());
             if (info.selection.size() > 1)
             {
                 info.msgInfo.descriptionText =
@@ -393,7 +398,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         {
             info.msgInfo.descriptionText =
                 tr("The [B]local folder[/B] %1 will be moved to the sync debris folder")
-                    .arg(localInfo.fileName());
+                    .arg(localInfo.fileName().toHtmlEscaped());
             if (info.selection.size() > 1)
             {
                 info.msgInfo.descriptionText =
@@ -407,7 +412,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         {
             info.msgInfo.descriptionText =
                 tr("The backup will be disabled in order to protect the local file %1")
-                    .arg(localInfo.fileName());
+                    .arg(localInfo.fileName().toHtmlEscaped());
             if (info.selection.size() > 1)
             {
                 info.msgInfo.descriptionText =
@@ -418,7 +423,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         {
             info.msgInfo.descriptionText =
                 tr("The backup will be disabled in order to protect the local folder %1")
-                    .arg(localInfo.fileName());
+                    .arg(localInfo.fileName().toHtmlEscaped());
             if (info.selection.size() > 1)
             {
                 info.msgInfo.descriptionText =

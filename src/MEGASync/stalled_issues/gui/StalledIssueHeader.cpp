@@ -394,6 +394,11 @@ QString StalledIssueHeader::displayFileName(bool preferCloud)
     return getData().consultData()->getFileName(preferCloud);
 }
 
+QString StalledIssueHeader::displayFileNameHtmlSafe(bool preferCloud)
+{
+    return displayFileName(preferCloud).toHtmlEscaped();
+}
+
 void StalledIssueHeader::setTitleDescriptionText(const QString &text)
 {
     if(text.isEmpty())

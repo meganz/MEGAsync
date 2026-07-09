@@ -93,7 +93,7 @@ void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
     if(sync)
     {
         QString pathStr(QString::fromUtf8(sync->getLocalFolder()));
-        ui->name->setHTML(pathStr);
+        ui->name->setHTML(pathStr.toHtmlEscaped());
         ui->name->setInfo(pathStr, mega::INVALID_HANDLE);
     }
 }
@@ -135,6 +135,6 @@ void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
         std::unique_ptr<const char[]> path(MegaSyncApp->getMegaApi()->getNodePath(remoteFolder.get()));
         QString pathStr(QString::fromUtf8(path.get()));
         ui->name->setInfo(pathStr, mega::INVALID_HANDLE);
-        ui->name->setHTML(QString::fromUtf8(path.get()));
+        ui->name->setHTML(pathStr.toHtmlEscaped());
     }
 }

@@ -185,7 +185,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
                                                         Utilities::AttributeType::OUTLINE);
                 iconToken = QLatin1String("support-success");
 
-                titleText = tr("Renamed to \"%1\"").arg(info->mRenameTo);
+                titleText = tr("Renamed to \"%1\"").arg(info->mRenameTo.toHtmlEscaped());
             }
             else if (info->getSolvedType() ==
                      NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::MERGED)
@@ -450,8 +450,8 @@ void NameConflict::onActionClicked(int actionId)
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
                     msgInfo.textFormat = Qt::RichText;
-                    msgInfo.descriptionText =
-                        tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
+                    msgInfo.descriptionText = tr("%1 no longer exists.\nPlease refresh the view")
+                                                  .arg(info.fileName().toHtmlEscaped());
                     MessageDialogOpener::warning(msgInfo);
                     return;
                 }
@@ -528,8 +528,8 @@ void NameConflict::onActionClicked(int actionId)
                     MessageDialogInfo msgInfo;
                     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
                     msgInfo.textFormat = Qt::RichText;
-                    msgInfo.descriptionText =
-                        tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
+                    msgInfo.descriptionText = tr("%1 no longer exists.\nPlease refresh the view")
+                                                  .arg(info.fileName().toHtmlEscaped());
                     MessageDialogOpener::warning(msgInfo);
                     return;
                 }
@@ -545,8 +545,8 @@ void NameConflict::onActionClicked(int actionId)
             {
                 if(isFile)
                 {
-                    msgInfo.titleText =
-                        tr("Are you sure you want to remove the remote file %1?").arg(fileName);
+                    msgInfo.titleText = tr("Are you sure you want to remove the remote file %1?")
+                                            .arg(fileName.toHtmlEscaped());
                     msgInfo.descriptionText =
                         tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin "
                            "along with its versions.[BR]You will be able to retrieve the file and "
@@ -554,8 +554,8 @@ void NameConflict::onActionClicked(int actionId)
                 }
                 else
                 {
-                    msgInfo.titleText =
-                        tr("Are you sure you want to remove the remote folder %1?").arg(fileName);
+                    msgInfo.titleText = tr("Are you sure you want to remove the remote folder %1?")
+                                            .arg(fileName.toHtmlEscaped());
                     msgInfo.descriptionText =
                         tr("It will be moved to the SyncDebris folder on the MEGA Rubbish "
                            "Bin.[BR]You will be able to retrieve the folder from there.[/BR]");
@@ -565,16 +565,16 @@ void NameConflict::onActionClicked(int actionId)
             {
                 if(isFile)
                 {
-                    msgInfo.titleText =
-                        tr("Are you sure you want to remove the local file %1?").arg(fileName);
+                    msgInfo.titleText = tr("Are you sure you want to remove the local file %1?")
+                                            .arg(fileName.toHtmlEscaped());
                     msgInfo.descriptionText =
                         tr("It will be moved to the sync rubbish folder.[BR]You will be able to "
                            "retrieve the file from there.[/BR]");
                 }
                 else
                 {
-                    msgInfo.titleText =
-                        tr("Are you sure you want to remove the local folder %1?").arg(fileName);
+                    msgInfo.titleText = tr("Are you sure you want to remove the local folder %1?")
+                                            .arg(fileName.toHtmlEscaped());
                     msgInfo.descriptionText =
                         tr("It will be moved to the sync rubbish folder.[BR]You will be able to "
                            "retrieve the folder from there.[/BR]");

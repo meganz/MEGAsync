@@ -338,7 +338,7 @@ bool StalledIssueActionTitle::updateUser(const QString& user, bool show)
     if(show)
     {
         auto titleString(tr("Upload by:"));
-        auto userText = user.isEmpty() ? tr("Loading user…") : user;
+        auto userText = user.isEmpty() ? tr("Loading user…") : user.toHtmlEscaped();
         if(!userLabel)
         {
             addExtraInfo(AttributeType::User, titleString, userText, 1);
