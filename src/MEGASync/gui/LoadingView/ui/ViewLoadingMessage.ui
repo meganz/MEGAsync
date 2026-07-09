@@ -65,6 +65,18 @@ QProgressBar::chunk
    <item row="0" column="0">
     <widget class="QWidget" name="wContainer" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item row="0" column="1">
        <spacer name="verticalSpacer_3">
         <property name="orientation">
@@ -93,110 +105,132 @@ QProgressBar::chunk
       </item>
       <item row="1" column="1">
        <widget class="QWidget" name="wMessageContainer" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>300</width>
-          <height>200</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>300</width>
-          <height>200</height>
+          <height>16777215</height>
          </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
-          <number>20</number>
+          <number>32</number>
          </property>
          <property name="leftMargin">
-          <number>48</number>
+          <number>24</number>
          </property>
          <property name="topMargin">
-          <number>10</number>
+          <number>25</number>
          </property>
          <property name="rightMargin">
-          <number>48</number>
+          <number>24</number>
          </property>
          <property name="bottomMargin">
           <number>25</number>
          </property>
          <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item alignment="Qt::AlignVCenter">
-          <widget class="QLabel" name="lMessageLabel">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-           <property name="font-size" stdset="0">
-            <string notr="true">body-1</string>
-           </property>
-           <property name="semibold" stdset="0">
-            <bool>true</bool>
-           </property>
+          <widget class="QWidget" name="wLabelsContainer" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <property name="spacing">
+             <number>20</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lMessageLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="font-size" stdset="0">
+               <string notr="true">body-1</string>
+              </property>
+              <property name="semibold" stdset="0">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QProgressBar" name="pbProgressBar">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>2</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>200</width>
+                <height>2</height>
+               </size>
+              </property>
+              <property name="value">
+               <number>24</number>
+              </property>
+              <property name="textVisible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lProgressLabel">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="font-size" stdset="0">
+               <string notr="true">body-2</string>
+              </property>
+              <property name="semibold" stdset="0">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
-         </item>
-         <item alignment="Qt::AlignVCenter">
-          <widget class="QProgressBar" name="pbProgressBar">
-           <property name="minimumSize">
-            <size>
-             <width>200</width>
-             <height>2</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>200</width>
-             <height>2</height>
-            </size>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-           <property name="textVisible">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-          <widget class="QLabel" name="lProgressLabel">
-           <property name="font-size" stdset="0">
-            <string notr="true">body-2</string>
-           </property>
-           <property name="semibold" stdset="0">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
           <widget class="QPushButton" name="bButton">
@@ -210,7 +244,7 @@ QProgressBar::chunk
             <bool>true</bool>
            </property>
            <property name="type" stdset="0">
-            <string notr="true">secondary</string>
+            <string notr="true">primary</string>
            </property>
            <property name="dimension" stdset="0">
             <string notr="true">small</string>

@@ -1126,7 +1126,10 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
             // Don´t block the UI if the issue is being solve asynchronously
             if (!info.async)
             {
-                sendFixingIssuesMessage(count.currentIssueBeingSolved, static_cast<int>(totalRows));
+                // currentIssueBeingSolved is 0-based; show it 1-based so the first
+                // issue being solved displays "1 of N" instead of "0 of N"
+                sendFixingIssuesMessage(count.currentIssueBeingSolved + 1,
+                                        static_cast<int>(totalRows));
             }
 
             if (mThreadFinished)
