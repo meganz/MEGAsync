@@ -478,7 +478,7 @@ void FileManagerNodeSelector::performMergeAction(
         targetHandles.append(info->nodeTarget->getHandle());
     }
 
-    if (actionType != MoveActionType::COPY)
+    if (actionType != MoveActionType::COPY_PASTE)
     {
         performItemsToBeMoved(sourceHandles,
                               NodeSelector::IncreaseOrDecrease::INCREASE,
@@ -518,7 +518,7 @@ void FileManagerNodeSelector::performMergeAction(
 
     if (!targetTabsInfo.cloudDriveNodes.isEmpty())
     {
-        if (actionType != MoveActionType::COPY)
+        if (actionType != MoveActionType::COPY_PASTE)
         {
             fillMergeFolders(targetTabsInfo.cloudDriveNodes, mCloudDriveWidget);
         }
@@ -541,7 +541,7 @@ void FileManagerNodeSelector::performMergeAction(
 
     if (!targetTabsInfo.incomingSharedNodes.isEmpty())
     {
-        if (actionType != MoveActionType::COPY)
+        if (actionType != MoveActionType::COPY_PASTE)
         {
             fillMergeFolders(targetTabsInfo.incomingSharedNodes, mIncomingSharesWidget);
         }
@@ -610,7 +610,7 @@ void FileManagerNodeSelector::checkMovingItems(const QList<mega::MegaHandle>& ha
     {
         performItemsToBeMoved(handles, type, true, false);
     }
-    else if (moveType == MoveActionType::COPY)
+    else if (moveType == MoveActionType::COPY_PASTE)
     {
         performItemsToBeMoved(handles, type, false, true);
     }

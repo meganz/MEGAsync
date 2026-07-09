@@ -4592,31 +4592,6 @@ Enter a different name.</translation>
         <translation>Date added</translation>
     </message>
     <message>
-        <source>Error copying file</source>
-        <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Error copying file</translation>
-    </message>
-    <message>
-        <source>Error copying files</source>
-        <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Error copying files</translation>
-    </message>
-    <message>
-        <source>Error copying folder</source>
-        <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Error copying folder</translation>
-    </message>
-    <message>
-        <source>Error copying folders</source>
-        <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Error copying folders</translation>
-    </message>
-    <message>
-        <source>Error copying items</source>
-        <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Error copying items</translation>
-    </message>
-    <message>
         <source>Error deleting file</source>
         <translatorcomment>Secondary text of a messagebox when deleting a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>Error deleting file</translation>
@@ -4752,11 +4727,6 @@ Enter a different name.</translation>
         <translation>Sort by owner name</translation>
     </message>
     <message>
-        <source>The file %1 couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation>The file %1 couldn’t be copied. Try again later.</translation>
-    </message>
-    <message>
         <source>The file %1 couldn’t be deleted. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
         <translation>The file %1 couldn’t be deleted. Try again later.</translation>
@@ -4770,11 +4740,6 @@ Enter a different name.</translation>
         <source>The file %1 couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
         <translation>The file %1 couldn’t be restored. Try again later.</translation>
-    </message>
-    <message>
-        <source>The files couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>The files couldn’t be copied. Try again later.</translation>
     </message>
     <message>
         <source>The files couldn’t be deleted. Try again later</source>
@@ -4792,11 +4757,6 @@ Enter a different name.</translation>
         <translation>The files couldn’t be restored. Try again later.</translation>
     </message>
     <message>
-        <source>The folder %1 couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
-        <translation>The folder %1 couldn’t be copied. Try again later.</translation>
-    </message>
-    <message>
         <source>The folder %1 couldn’t be deleted. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
         <translation>The folder %1 couldn’t be deleted. Try again later.</translation>
@@ -4812,11 +4772,6 @@ Enter a different name.</translation>
         <translation>The folder %1 couldn’t be restored. Try again later.</translation>
     </message>
     <message>
-        <source>The folders couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>The folders couldn’t be copied. Try again later.</translation>
-    </message>
-    <message>
         <source>The folders couldn’t be deleted. Try again later</source>
         <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>The folders couldn’t be deleted. Try again later.</translation>
@@ -4830,11 +4785,6 @@ Enter a different name.</translation>
         <source>The folders couldn’t be restored. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
         <translation>The folders couldn’t be restored. Try again later.</translation>
-    </message>
-    <message>
-        <source>The items couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>The items couldn’t be copied. Try again later.</translation>
     </message>
     <message>
         <source>The items couldn’t be deleted. Try again later</source>
@@ -4860,6 +4810,56 @@ Enter a different name.</translation>
         <source>This folder has been the subject of a takedown notice</source>
         <translatorcomment>Tooltip to explain the user that the node has been blocked due to a takedown notice. SNC-5350</translatorcomment>
         <translation>This folder has been the subject of a takedown notice</translation>
+    </message>
+    <message>
+        <source>Error pasting items</source>
+        <translatorcomment>Main text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>Error pasting items</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be pasted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>The items couldn’t be pasted. Try again later</translation>
+    </message>
+    <message>
+        <source>Error pasting files</source>
+        <translatorcomment>Main text of a messagebox when pasting some files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>Error pasting files</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be pasted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>The files couldn’t be pasted. Try again later</translation>
+    </message>
+    <message>
+        <source>Error pasting folders</source>
+        <translatorcomment>Main text of a messagebox when pasting some folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>Error pasting folders</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be pasted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>The folders couldn’t be pasted. Try again later</translation>
+    </message>
+    <message>
+        <source>Error pasting file</source>
+        <translatorcomment>Main text of a messagebox when pasting a file in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>Error pasting file</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be pasted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6713</translatorcomment>
+        <translation>The file %1 couldn’t be pasted. Try again later</translation>
+    </message>
+    <message>
+        <source>Error pasting folder</source>
+        <translatorcomment>Main text of a messagebox when pasting a folder in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>Error pasting folder</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be pasted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
+        <translation>The folder %1 couldn’t be pasted. Try again later</translation>
     </message>
 </context>
 <context>
