@@ -35,7 +35,7 @@ public:
     Q_ENUM(Error)
 
     explicit ScreenshotUploader(mega::MegaApi* megaApi, QObject* parent = nullptr);
-    ~ScreenshotUploader() override;
+    ~ScreenshotUploader() override = default;
 
     // Asynchronous; one upload at a time. Result arrives via uploadFinished()
     // or uploadFailed().

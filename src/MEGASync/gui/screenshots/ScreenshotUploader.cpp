@@ -14,8 +14,6 @@ ScreenshotUploader::ScreenshotUploader(MegaApi* megaApi, QObject* parent):
     mDelegateListener(std::make_unique<QTMegaTransferListener>(megaApi, this))
 {}
 
-ScreenshotUploader::~ScreenshotUploader() = default;
-
 void ScreenshotUploader::upload(const QString& localPath)
 {
     if (mBusy)
@@ -51,10 +49,11 @@ bool ScreenshotUploader::isBusy() const
 void ScreenshotUploader::ensureRemoteFolderAndUpload()
 {
     const QString remotePath = QString::fromUtf8("/") + QString::fromUtf8(REMOTE_FOLDER_NAME);
-    std::unique_ptr<MegaNode> folder(mMegaApi->getNodeByPath(remotePath.toUtf8().constData()));
-    if (folder && folder->isFolder())
+    std::unique_ptr<MegaNode> screenShotTarget(
+        mMegaApi->getNodeByPath(remotePath.toUtf8().constData()));
+    if (screenShotTarget && screenShotTarget->isFolder())
     {
-        startUpload(folder->getHandle());
+        startUpload(screenShotTarget->getHandle());
         return;
     }
 

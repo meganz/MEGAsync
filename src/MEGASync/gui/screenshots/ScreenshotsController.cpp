@@ -1,6 +1,7 @@
 #include "ScreenshotsController.h"
 
 #include "MegaApplication.h"
+#include "StatsEventHandler.h"
 #include "Utilities.h"
 
 #include <qclipboard.h>
@@ -63,31 +64,38 @@ bool ScreenshotsController::isRunning() const
     return mDetector.isRunning();
 }
 
-void ScreenshotsController::enableClipboardCopyScreenshotLink(bool enable)
+void ScreenshotsController::enableClipboardCopyScreenshotLink(bool enabled)
 {
-    mClipboardScreenshotLinkCopyEnabled = enable;
+    mClipboardScreenshotLinkCopyEnabled = enabled;
 }
 
 void ScreenshotsController::onCaptureDetected(const QString& filePath)
 {
+    mFile = QFileInfo(filePath).fileName();
     mUploader.upload(filePath);
+
+    MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SCREENSHOT_UPLOADED);
 }
 
 void ScreenshotsController::onUploadFailed(ScreenshotUploader::Error error, const QString& message)
 {
     mMegaApplication->showErrorMessage(message);
+    mFile.clear();
 }
 
 void ScreenshotsController::onUploadFinished(mega::MegaHandle nodeHandle)
 {
+    mMegaApplication->showInfoMessage(tr("The screenshot \"%1\" has been uploaded.").arg(mFile));
+
     if (mClipboardScreenshotLinkCopyEnabled)
     {
         mLinkGenerator.generateLink(nodeHandle);
+
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::SCREENSHOT_LINK_CREATED);
     }
-    else
-    {
-        mMegaApplication->showInfoMessage(tr("The screenshot has been uploaded."));
-    }
+
+    mFile.clear();
 }
 
 void ScreenshotsController::onLinkFailed(const QString& message, bool authExpired)
@@ -105,5 +113,5 @@ void ScreenshotsController::onUploadProgress(QString filename,
                                              long long totalSize)
 {
     qDebug()
-        << QString::fromUtf8("{%0} : {%1}/{%2}").arg(filename).arg(currentProgress).arg(totalSize);
+        << QString::fromUtf8("{%0}:{%1}/{%2}").arg(filename).arg(currentProgress).arg(totalSize);
 }
