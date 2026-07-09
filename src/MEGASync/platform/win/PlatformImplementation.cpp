@@ -2123,7 +2123,6 @@ QStringList PlatformImplementation::getScreenshotsLocation()
                 std::wstring userClassesDat =
                     packageRoot + L"\\SystemAppData\\Helium\\UserClasses.dat";
 
-                // here!
                 auto snippingToolConfiguredPath = resolveToken(userClassesDat, screenshotsToken);
                 if (!snippingToolConfiguredPath.empty())
                 {
@@ -2169,6 +2168,10 @@ std::string PlatformImplementation::findPathNearOffset(const std::vector<BYTE>& 
                                                        size_t start,
                                                        size_t window)
 {
+    // define printable ascii range.
+    const wchar_t SPACE = 0x20;
+    const wchar_t TILDE = 0x7E;
+
     size_t limit = std::min(start + window, buf.size() - 4);
     for (size_t j = start; j < limit; j++)
     {
@@ -2176,10 +2179,15 @@ std::string PlatformImplementation::findPathNearOffset(const std::vector<BYTE>& 
         if (isalpha(buf[j]) && buf[j + 1] == ':' && buf[j + 2] == '\\')
         {
             size_t end = j;
-            while (end < buf.size() && buf[end] >= 0x20 && buf[end] <= 0x7E)
+            while (end < buf.size() && buf[end] >= SPACE && buf[end] <= TILDE)
+            {
                 end++;
+            }
+
             if (end - j >= 4)
+            {
                 return std::string(buf.data() + j, buf.data() + end);
+            }
         }
 
         // UTF-16 drive-letter path: letter + 0 + ':' + 0 + '\' + 0
@@ -2187,9 +2195,13 @@ std::string PlatformImplementation::findPathNearOffset(const std::vector<BYTE>& 
             buf[j + 3] == 0 && buf[j + 4] == '\\' && buf[j + 5] == 0)
         {
             const wchar_t* p = reinterpret_cast<const wchar_t*>(buf.data() + j);
-            size_t maxW = (buf.size() - j) / sizeof(wchar_t), n = 0;
-            while (n < maxW && p[n] >= 0x20 && p[n] <= 0x7E)
+            size_t maxW = (buf.size() - j) / sizeof(wchar_t);
+            size_t n = 0;
+            while (n < maxW && p[n] >= SPACE && p[n] <= TILDE)
+            {
                 n++;
+            }
+
             if (n >= 3)
             {
                 return QString::fromWCharArray(p).toUtf8().toStdString();
@@ -2213,15 +2225,13 @@ std::string PlatformImplementation::resolveToken(const std::wstring& userClasses
     const BYTE* g = reinterpret_cast<const BYTE*>(guid.c_str());
     for (size_t i = 0; i + guid.size() < buf.size(); i++)
     {
-        if (memcmp(buf.data() + i, g, guid.size()) != 0)
+        if (memcmp(buf.data() + i, g, guid.size()) == 0)
         {
-            continue;
-        }
-
-        std::string path = findPathNearOffset(buf, i + guid.size(), 4096);
-        if (!path.empty())
-        {
-            return path;
+            std::string path = findPathNearOffset(buf, i + guid.size(), 4096);
+            if (!path.empty())
+            {
+                return path;
+            }
         }
     }
 
@@ -2231,19 +2241,23 @@ std::string PlatformImplementation::resolveToken(const std::wstring& userClasses
 // Extract the printable token string from a UWP 0x5F5E10C value
 std::string PlatformImplementation::extractToken(const std::vector<BYTE>& data)
 {
-    const wchar_t DELETE_CHAR = 0x7F;
+    const wchar_t DELETE_CHAR(0x7F);
 
     if (data.empty())
         return {};
 
     const wchar_t* wp = reinterpret_cast<const wchar_t*>(data.data());
-    size_t wlen = data.size() / sizeof(wchar_t), end = 0;
-    while (end < wlen && wp[end] >= L' ' && wp[end] < DELETE_CHAR)
+    size_t wlen = data.size() / sizeof(wchar_t);
+    QString token = QString::fromWCharArray(wp, static_cast<int>(wlen));
+    int end = 0;
+    while (end < token.size() && token.at(end) >= L' ' && token.at(end) < DELETE_CHAR)
+    {
         end++;
-    while (end > 0 && wp[end - 1] == L' ')
-        end--;
+    }
 
-    return QString::fromWCharArray(wp).toUtf8().toStdString();
+    token.truncate(end);
+
+    return token.trimmed().toUtf8().toStdString();
 }
 
 std::vector<BYTE> PlatformImplementation::readValue(HKEY hKey, const wchar_t* name)
