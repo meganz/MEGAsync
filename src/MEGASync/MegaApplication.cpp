@@ -2011,9 +2011,10 @@ void MegaApplication::rebootApplication(bool update)
         if (!updateBlocked)
         {
             updateBlocked = true;
-            showInfoMessage(tr("An update has been installed. MEGAsync will restart "
+            showInfoMessage(tr("An update has been installed. The MEGA Desktop App will restart "
                                "automatically in a few minutes to finish applying it"));
             QTimer::singleShot(MAX_UPDATE_REBOOT_DELAY_MS,
+                               Qt::VeryCoarseTimer,
                                this,
                                [this]()
                                {

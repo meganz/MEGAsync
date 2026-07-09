@@ -10,6 +10,8 @@
 #include <QSaveFile>
 
 #include <algorithm>
+#include <chrono>
+#include <thread>
 
 using namespace mega;
 using namespace std;
@@ -555,9 +557,12 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath,
     }
 
     // A previous version can still be running from the files this sweep removes: the
-    // post-update restart may be postponed for a long time, and on Windows every
-    // relaunch spawns a second process before the caller's single-instance check.
-    // Probe that same lock non-blockingly; if it cannot be acquired, skip the sweep
+    // post-update restart spawns this process while the previous one is still shutting
+    // down (it sleeps 2 seconds after the spawn and holds the single-instance lock until
+    // it fully exits), and on Windows every relaunch spawns a second process before the
+    // caller's single-instance check. Probe that same lock, retrying for as long as the
+    // caller's own acquisition loop does so the restart race is survived. If the lock
+    // still cannot be acquired, another instance is genuinely running: skip the sweep
     // and keep the pending request so the primary instance's next clean start applies
     // it. The probe is released when this function returns, before the caller's
     // authoritative lock acquisition.
@@ -569,7 +574,18 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath,
                    .arg(instanceLockPath));
         return;
     }
-    if (!instanceProbe.lock(QtLockedFile::WriteLock, false))
+
+    constexpr int lockAttempts = 10;
+    bool lockAcquired = false;
+    for (int attempt = 0; attempt < lockAttempts && !lockAcquired; attempt++)
+    {
+        if (attempt > 0)
+        {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+        lockAcquired = instanceProbe.lock(QtLockedFile::WriteLock, false);
+    }
+    if (!lockAcquired)
     {
         logger(MegaApi::LOG_LEVEL_WARNING,
                QString::fromUtf8("Skipping obsolete file cleanup: another instance is running"));
