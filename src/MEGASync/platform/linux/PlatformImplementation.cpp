@@ -128,8 +128,29 @@ bool PlatformImplementation::isTilingWindowManager()
         QLatin1String("sway")
     };
 
-    return getValue("MEGASYNC_ASSUME_TILING_WM", false)
-           || tiling_wms.contains(getWindowManagerName());
+    if (getValue("MEGASYNC_ASSUME_TILING_WM", false))
+    {
+        return true;
+    }
+
+    // The targeted compositors identify themselves in the session environment;
+    // prefer that over getWindowManagerName()'s X server round-trips, which
+    // crash inside the xcb platform plugin when the connection/screen state is
+    // degraded (e.g. XWayland churn under Hyprland).
+    if (qEnvironmentVariableIsSet("HYPRLAND_INSTANCE_SIGNATURE") ||
+        qEnvironmentVariableIsSet("SWAYSOCK") || qEnvironmentVariableIsSet("I3SOCK"))
+    {
+        return true;
+    }
+
+    // May be a colon-separated list (e.g. "ubuntu:GNOME"); the WM name is last.
+    const QString desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+    if (!desktop.isEmpty())
+    {
+        return tiling_wms.contains(desktop.section(QLatin1Char(':'), -1));
+    }
+
+    return tiling_wms.contains(getWindowManagerName());
 }
 
 namespace
@@ -529,7 +550,8 @@ QString PlatformImplementation::getWindowManagerName()
                                                                      maxLen),
                                                     nullptr);
 
-                if (reply && reply->format == 32 && reply->type == XCB_ATOM_WINDOW)
+                if (reply && reply->format == 32 && reply->type == XCB_ATOM_WINDOW &&
+                    xcb_get_property_value_length(reply) >= static_cast<int>(sizeof(xcb_window_t)))
                 {
                     // Get window manager name
                     const xcb_window_t windowManager =
