@@ -211,7 +211,9 @@ void NodeSelectorTreeView::drawRow(QPainter* painter,
     if (auto nodeSelectorDelegate = qobject_cast<NodeSelectorDelegate*>(delegate))
     {
         QString token;
-        if (selectionModel()->isSelected(index))
+        // A drop target is highlighted like a selected row, but without touching the
+        // selection model, so the multi-selection being dragged stays visible.
+        if (selectionModel()->isSelected(index) || index == mDropHoverIndex)
         {
             token = QLatin1String("surface-2");
         }
@@ -1026,15 +1028,15 @@ void NodeSelectorTreeView::startDrag(Qt::DropActions supportedActions)
         return;
     }
 
-    // Paint only the first column cell
-    QModelIndex index = indexes.first().sibling(indexes.first().row(), 0);
-    auto pixmap(delegate->paintForDrag(index, this));
+    // Stack every selected row so the drag pixmap reflects all the items being moved.
+    auto pixmap(delegate->paintForDrag(selectedRows(), this));
 
     QDrag* drag = new QDrag(this);
     QMimeData* mimeData = model()->mimeData(indexes);
     drag->setMimeData(mimeData);
     drag->setPixmap(pixmap);
     drag->exec(supportedActions);
+    setDropHoverIndex(QModelIndex());
 }
 
 void NodeSelectorTreeView::dragEnterEvent(QDragEnterEvent* event)
@@ -1067,28 +1069,48 @@ void NodeSelectorTreeView::dragMoveEvent(QDragMoveEvent* event)
             dropParent = rootIndex();
         }
 
-        // clear selection and select only the drop index
-        selectionModel()->clearSelection();
-
         if (!proxyModel()->canDropMimeData(event->mimeData(),
                                            Qt::MoveAction,
                                            dropRow,
                                            dropColumn,
                                            dropParent))
         {
+            // Not a valid target: drop the highlight without touching the user's selection.
+            setDropHoverIndex(QModelIndex());
             event->ignore();
             return;
         }
 
-        selectionModel()->select(posIndex, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        // Highlight the drop target without mutating the selection model, so the
+        // multi-selection being dragged stays visible during the drag.
+        setDropHoverIndex(posIndex);
 
         event->acceptProposedAction();
         event->accept();
     }
 }
 
+void NodeSelectorTreeView::dragLeaveEvent(QDragLeaveEvent* event)
+{
+    setDropHoverIndex(QModelIndex());
+    LoadingSceneView::dragLeaveEvent(event);
+}
+
+void NodeSelectorTreeView::setDropHoverIndex(const QModelIndex& index)
+{
+    if (mDropHoverIndex == index)
+    {
+        return;
+    }
+
+    mDropHoverIndex = index;
+    viewport()->update();
+}
+
 void NodeSelectorTreeView::dropEvent(QDropEvent* event)
 {
+    setDropHoverIndex(QModelIndex());
+
     if (proxyModel()->getMegaModel()->acceptDragAndDrop(event->mimeData()))
     {
         // Get the list of URLs
