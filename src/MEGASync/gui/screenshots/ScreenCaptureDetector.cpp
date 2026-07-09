@@ -1,17 +1,11 @@
 #include "ScreenCaptureDetector.h"
 
-#ifdef Q_OS_WIN
 #include "Platform.h"
-#endif
 
 #include <QDir>
 #include <QFileInfo>
 #include <QRegularExpression>
 #include <QStandardPaths>
-
-#ifdef Q_OS_MACOS
-#include <QProcess>
-#endif
 
 namespace
 {
@@ -20,33 +14,6 @@ constexpr int STABLE_TICKS_REQUIRED = 2; // size unchanged for ~300ms => fully w
 const QStringList IMAGE_EXTENSIONS{QString::fromUtf8("png"),
                                    QString::fromUtf8("jpg"),
                                    QString::fromUtf8("jpeg")};
-
-#ifdef Q_OS_MACOS
-QString macScreenCaptureLocation()
-{
-    // Users can relocate macOS screenshots with
-    // `defaults write com.apple.screencapture location <dir>`.
-    QProcess defaults;
-    defaults.start(QString::fromUtf8("defaults"),
-                   {QString::fromUtf8("read"),
-                    QString::fromUtf8("com.apple.screencapture"),
-                    QString::fromUtf8("location")});
-    if (defaults.waitForFinished(1000) && defaults.exitCode() == 0)
-    {
-        QString location = QString::fromUtf8(defaults.readAllStandardOutput()).trimmed();
-        if (location.startsWith(QLatin1Char('~')))
-        {
-            location.replace(0, 1, QDir::homePath());
-        }
-        if (!location.isEmpty() && QDir(location).exists())
-        {
-            return location;
-        }
-    }
-
-    return QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-}
-#endif
 }
 
 ScreenCaptureDetector::ScreenCaptureDetector(QObject* parent):
@@ -119,17 +86,9 @@ bool ScreenCaptureDetector::isRunning() const
 QStringList ScreenCaptureDetector::platformCaptureDirectories()
 {
     QStringList directories;
-
-#if defined(Q_OS_MACOS)
-    directories << macScreenCaptureLocation();
-#elif defined(Q_OS_WIN)
     directories << Platform::getInstance()->getScreenshotsLocation();
-#else
-    const QString pictures = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
-    directories << pictures << pictures + QString::fromUtf8("/Screenshots");
-#endif
-
     directories.removeDuplicates();
+
     return directories;
 }
 

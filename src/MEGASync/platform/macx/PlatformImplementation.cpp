@@ -603,3 +603,36 @@ void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* wind
                                 Preferences::ThemeAppeareance::DARK,
                             true);
 }
+
+QStringList PlatformImplementation::getScreenshotsLocation()
+{
+    QStringList directories;
+
+    // Users can relocate macOS screenshots with
+    // `defaults write com.apple.screencapture location <dir>`.
+    QProcess defaults;
+    defaults.start(QString::fromUtf8("defaults"),
+                   {QString::fromUtf8("read"),
+                    QString::fromUtf8("com.apple.screencapture"),
+                    QString::fromUtf8("location")});
+    if (defaults.waitForFinished(1000) && defaults.exitCode() == 0)
+    {
+        QString location = QString::fromUtf8(defaults.readAllStandardOutput()).trimmed();
+        if (location.startsWith(QLatin1Char('~')))
+        {
+            location.replace(0, 1, QDir::homePath());
+        }
+
+        if (!location.isEmpty() && QDir(location).exists())
+        {
+            directories << location;
+        }
+    }
+
+    if (directories.empty())
+    {
+        directories << QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    }
+
+    return directories;
+}
