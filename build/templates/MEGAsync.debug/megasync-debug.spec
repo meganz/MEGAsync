@@ -13,20 +13,19 @@ BuildRequires: qt-devel, libqt4-devel, openssl-devel, sqlite-devel, zlib-devel, 
 BuildRequires: hicolor-icon-theme, unzip, wget
 
 %if 0%{?suse_version}
-BuildRequires: libcares-devel, libcryptopp-devel
+BuildRequires: libcryptopp-devel
 BuildRequires: update-desktop-files
 BuildRequires: libqt4, libqt4-x11
 %endif
 
 %if 0%{?fedora}
-BuildRequires: c-ares-devel, cryptopp-devel
+BuildRequires: cryptopp-devel
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %endif
 
 %if 0%{?centos_version}
-BuildRequires: c-ares-devel,
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
 %endif
