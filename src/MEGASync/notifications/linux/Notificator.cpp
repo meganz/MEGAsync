@@ -307,16 +307,54 @@ void Notificator::notify(DesktopAppNotification *notification)
             actions.append(a);
             actions.append(a);
         }
-        auto sessionbus = QDBusConnection::connectToBus(QDBusConnection::BusType::SessionBus,
-                                                        QLatin1String("session"));
+        auto sessionbus = QDBusConnection::sessionBus();
+        const QString service = QString::fromUtf8("org.freedesktop.Notifications");
+        const QString path = QString::fromUtf8("/org/freedesktop/Notifications");
+        const QString actionInvokedSignal = QString::fromUtf8("ActionInvoked");
+        const QString notificationClosedSignal = QString::fromUtf8("NotificationClosed");
+        const char* callbackSlot = SLOT(dBusNotificationCallback(QDBusMessage));
 
-        if (sessionbus.connect(QString::fromUtf8(""),
-                               QString::fromUtf8("/org/freedesktop/Notifications"),
-                               QString::fromUtf8("org.freedesktop.Notifications"),
-                               QString::fromUtf8(""),
-                               notification,
-                               SLOT(dBusNotificationCallback(QDBusMessage))))
+        const bool connected = sessionbus.connect(service,
+                                                  path,
+                                                  service,
+                                                  actionInvokedSignal,
+                                                  notification,
+                                                  callbackSlot) &&
+                               sessionbus.connect(service,
+                                                  path,
+                                                  service,
+                                                  notificationClosedSignal,
+                                                  notification,
+                                                  callbackSlot);
+        if (connected)
         {
+            // Remove the bus subscriptions while the notification object is still alive, so
+            // no queued D-Bus delivery can target it once its deletion has been scheduled.
+            auto disconnectFromBus = [sessionbus,
+                                      service,
+                                      path,
+                                      actionInvokedSignal,
+                                      notificationClosedSignal,
+                                      callbackSlot,
+                                      notification]() mutable
+            {
+                sessionbus.disconnect(service,
+                                      path,
+                                      service,
+                                      actionInvokedSignal,
+                                      notification,
+                                      callbackSlot);
+                sessionbus.disconnect(service,
+                                      path,
+                                      service,
+                                      notificationClosedSignal,
+                                      notification,
+                                      callbackSlot);
+            };
+            connect(notification, &DesktopAppNotificationBase::closed, this, disconnectFromBus);
+            connect(notification, &DesktopAppNotificationBase::activated, this, disconnectFromBus);
+            connect(notification, &DesktopAppNotificationBase::failed, this, disconnectFromBus);
+
             notifyDBus((Class)notification->getType(),
                        notification->getTitle(),
                        notification->getText(),
