@@ -108,7 +108,6 @@ private:
 
     void clear();
     bool useContactSupportUrlHandler() const;
-    bool closeAllAllowed() const;
 
     static const QMessageBox::StandardButton DEFAULT_ACTION_BUTTON;
     static const QMessageBox::StandardButton SECONDARY_ACTION_BUTTON;
