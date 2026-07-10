@@ -26,7 +26,12 @@ void AddExclusionRule::copyCurrentRulesTo(const QString& sourceFolder, const QSt
 
     for (auto& rule: megaIgnoreRulesSourceFolder.getAllRules())
     {
-        megaIgnoreRulesTargetFolder.addRule(rule);
+        if (megaIgnoreRulesTargetFolder.addRule(rule))
+        {
+            // Parsed rules are not dirty, and applyChanges() only writes the file
+            // when at least one rule is dirty or deleted
+            rule->markAsDirty();
+        }
     }
 
     megaIgnoreRulesTargetFolder.applyChanges();

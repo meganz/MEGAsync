@@ -34,6 +34,8 @@ SyncsComponent::SyncsComponent(QObject* parent):
 
 void SyncsComponent::closingOnboardingDialog()
 {
+    mExclusionsRuleAddedFolder.clear();
+
     if (mEnteredOnSyncCreation)
     {
         mEnteredOnSyncCreation = false;
@@ -162,12 +164,14 @@ void SyncsComponent::syncButtonClicked(const QString& localFolder, const QString
     {
         AddExclusionRule::copyCurrentRulesTo(mExclusionsRuleAddedFolder, localFolder);
     }
+    mExclusionsRuleAddedFolder.clear();
 
     mSyncs->addSync(localFolder, megaFolder);
 }
 
 void SyncsComponent::closeDialogButtonClicked()
 {
+    mExclusionsRuleAddedFolder.clear();
     mSyncs->clearRemoteError();
     mSyncs->clearLocalError();
 }
