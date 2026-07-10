@@ -336,7 +336,10 @@ Rectangle {
 
                                 Layout.alignment: Qt.AlignVCenter
                                 text: root.statusDescription(status)
+                                wrapMode: Text.NoWrap
+                                elide: Text.ElideRight
                                 color: root.resolveStatusTextColor(status, statusMouseArea.containsMouse)
+                                Layout.preferredWidth: root.statusContentWidth - root.iconSize - (menuButton.visible ? root.contentSpacing + 2 * root.iconSize : 0)
                             }
                         }
 
