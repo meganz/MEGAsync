@@ -324,7 +324,20 @@ Function InstallerAbort
   SetErrorLevel ${ERROR_INSTALL_CANCELLED}
 FunctionEnd
 
+; Set to "1" by CleanInstallDirectory when it schedules locked leftovers for deletion on
+; reboot. It survives the mid-section "SetRebootFlag false" so .onInstSuccess can restore
+; the reboot requirement that reset would otherwise discard.
+Var INSTALL_REBOOT_PENDING
+
 Function .onInstSuccess
+  ; Install-directory cleanup may schedule locked leftovers (or a whole ".obsolete"
+  ; directory) for removal on the next boot, which raises the reboot flag. A later
+  ; "SetRebootFlag false" in the install section discards that flag, so restore it here
+  ; from the recorded state before deciding the exit code, so the finish page and the
+  ; return value both reflect the genuine reboot requirement.
+  StrCmp $INSTALL_REBOOT_PENDING "1" 0 check_reboot_flag
+    SetRebootFlag true
+  check_reboot_flag:
   IfRebootFlag reboot_required install_success
 reboot_required:
   SetErrorLevel ${ERROR_REBOOT_REQUIRED}
@@ -831,6 +844,7 @@ FunctionEnd
 !macro CleanInstallDirectory
 !ifndef BUILD_UNINSTALLER
   DetailPrint "Removing files from previous installation"
+  StrCpy $INSTALL_REBOOT_PENDING "0"
   ; Release any lock on the install dir so it can be renamed/removed. SetOutPath only
   ; changes the working directory; every delete below stays rooted at the validated
   ; "...\MEGAsync" path, so $TEMP itself is never a deletion target.
@@ -928,6 +942,13 @@ FunctionEnd
 
   clean_install_directory_done:
   ClearErrors
+  ; A /REBOOTOK deletion above may have scheduled locked leftovers (or a whole
+  ; ".obsolete" directory) for removal on the next boot, raising the reboot flag. A
+  ; later "SetRebootFlag false" in this section would silently discard that, so latch
+  ; the requirement now; .onInstSuccess re-asserts it for the exit code and finish page.
+  IfRebootFlag 0 clean_install_no_reboot_pending
+    StrCpy $INSTALL_REBOOT_PENDING "1"
+  clean_install_no_reboot_pending:
   SetOutPath "$INSTDIR"
 !endif
 !macroend
