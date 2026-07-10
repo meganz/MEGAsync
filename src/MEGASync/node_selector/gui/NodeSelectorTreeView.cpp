@@ -1098,12 +1098,17 @@ void NodeSelectorTreeView::dragLeaveEvent(QDragLeaveEvent* event)
 
 void NodeSelectorTreeView::setDropHoverIndex(const QModelIndex& index)
 {
-    if (mDropHoverIndex == index)
+    // indexAt() returns the index of the cell under the cursor, but drawRow()
+    // compares against the row's column-0 index. Normalize here so the highlight
+    // is column-independent, like the Select|Rows selection it replaced.
+    const QModelIndex rowIndex = index.isValid() ? index.sibling(index.row(), 0) : index;
+
+    if (mDropHoverIndex == rowIndex)
     {
         return;
     }
 
-    mDropHoverIndex = index;
+    mDropHoverIndex = rowIndex;
     viewport()->update();
 }
 
