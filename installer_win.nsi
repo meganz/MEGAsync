@@ -683,6 +683,17 @@ Function EmptyObsoleteDirectory
   Push $R2
   Push $R3
   Push $R4
+  ; Never enumerate through a reparse-point root: a junction/symlink passed as $R0
+  ; would otherwise be walked into and its target emptied. Treat it as a leftover link
+  ; (the caller removes the link itself; here we just avoid following it).
+  System::Call 'kernel32::GetFileAttributesW(w "$R0")i.R4'
+  IntCmp $R4 -1 empty_obsolete_rootok
+  IntOp $R4 $R4 & 0x400
+  IntCmp $R4 0 empty_obsolete_rootok empty_obsolete_rootok 0
+    IntOp $CLEAN_LEFTOVERS $CLEAN_LEFTOVERS + 1
+    StrCpy $CLEAN_LAST_LEFTOVER $R0
+    Goto empty_obsolete_exit
+  empty_obsolete_rootok:
   ClearErrors
   FindFirst $R1 $R2 "$R0\*"
   IfErrors 0 empty_obsolete_loop
@@ -751,6 +762,70 @@ Function EmptyObsoleteDirectory
   Pop $R2
   Pop $R1
 FunctionEnd
+
+; Recursively delete the directory tree in $R0 WITHOUT following reparse points
+; (directory junctions/symlinks): at every level a reparse entry is removed as a link
+; only, its target left untouched. Entries that are locked are scheduled for deletion
+; on reboot. This is the reparse-safe replacement for "RMDir /r /REBOOTOK": NSIS RMDir
+; /r recurses on FILE_ATTRIBUTE_DIRECTORY without checking FILE_ATTRIBUTE_REPARSE_POINT,
+; so it follows junctions and deletes their target - unsafe for any tree rooted under a
+; user-writable parent (e.g. the "MEGAsync.obsolete.*" sweep under %ProgramData%).
+Function RemoveTreeNoFollow
+  Push $R1
+  Push $R2
+  Push $R3
+  Push $R4
+
+  ; If the root itself is a junction/symlink, remove only the link and stop.
+  System::Call 'kernel32::GetFileAttributesW(w "$R0")i.R4'
+  IntCmp $R4 -1 rtnf_exit ; invalid/gone: nothing to do
+  IntOp $R4 $R4 & 0x400
+  IntCmp $R4 0 rtnf_scan rtnf_scan rtnf_root_reparse
+  rtnf_root_reparse:
+    RMDir /REBOOTOK "$R0"
+    Delete /REBOOTOK "$R0"
+    Goto rtnf_exit
+
+  rtnf_scan:
+  ClearErrors
+  FindFirst $R1 $R2 "$R0\*"
+  IfErrors rtnf_exit
+  rtnf_loop:
+    StrCmp $R2 "" rtnf_done
+    StrCmp $R2 "." rtnf_next
+    StrCmp $R2 ".." rtnf_next
+    StrCpy $R3 "$R0\$R2"
+    System::Call 'kernel32::GetFileAttributesW(w "$R3")i.R4'
+    IntCmp $R4 -1 rtnf_file
+    IntOp $R4 $R4 & 0x400
+    IntCmp $R4 0 rtnf_child_dir rtnf_child_dir rtnf_reparse
+  rtnf_child_dir:
+    IfFileExists "$R3\*.*" 0 rtnf_file
+      Push $R0
+      StrCpy $R0 $R3
+      Call RemoveTreeNoFollow
+      Pop $R0
+      RMDir /REBOOTOK "$R3" ; remove the now-empty subdir
+      Goto rtnf_next
+  rtnf_reparse:
+    ; Junction/symlink: drop the link, never recurse into the target.
+    RMDir /REBOOTOK "$R3"
+    Delete /REBOOTOK "$R3"
+    Goto rtnf_next
+  rtnf_file:
+    Delete /REBOOTOK "$R3"
+  rtnf_next:
+    FindNext $R1 $R2
+    Goto rtnf_loop
+  rtnf_done:
+  FindClose $R1
+  RMDir /REBOOTOK "$R0" ; remove the emptied root dir
+  rtnf_exit:
+  Pop $R4
+  Pop $R3
+  Pop $R2
+  Pop $R1
+FunctionEnd
 !endif
 
 !macro CleanInstallDirectory
@@ -783,7 +858,12 @@ FunctionEnd
     StrCpy $R1 $R2 18
     StrCmp $R1 "MEGAsync.obsolete." 0 clean_obsolete_next
     DetailPrint "Removing obsolete directory: $R4\$R2"
-    RMDir /r /REBOOTOK "$R4\$R2"
+    ; Reparse-safe delete: $R4 is the (user-writable) parent of $INSTDIR, so an entry
+    ; here may be an attacker-planted junction. Never follow it with RMDir /r.
+    Push $R0
+    StrCpy $R0 "$R4\$R2"
+    Call RemoveTreeNoFollow
+    Pop $R0
   clean_obsolete_next:
     FindNext $R3 $R2
     Goto clean_obsolete_loop
@@ -814,7 +894,10 @@ FunctionEnd
     Goto clean_install_directory_retry
 
   clean_install_directory_moved:
-    RMDir /r /REBOOTOK "$R7"
+    Push $R0
+    StrCpy $R0 "$R7"
+    Call RemoveTreeNoFollow
+    Pop $R0
     Goto clean_install_directory_done
 
   clean_install_directory_fallback:
@@ -831,7 +914,10 @@ FunctionEnd
     StrCpy $R0 "$INSTDIR"
     Call EmptyObsoleteDirectory
     Pop $R0
-    RMDir /r /REBOOTOK "$CLEAN_OBSOLETE_DIR"
+    Push $R0
+    StrCpy $R0 "$CLEAN_OBSOLETE_DIR"
+    Call RemoveTreeNoFollow
+    Pop $R0
     IntCmp $CLEAN_LEFTOVERS 0 clean_install_directory_done clean_install_directory_done 0
     ; Some files could be neither deleted nor moved. At this point the old installation
     ; has already been partially removed, so aborting would leave the machine without a
