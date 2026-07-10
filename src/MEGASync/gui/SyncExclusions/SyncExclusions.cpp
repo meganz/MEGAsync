@@ -231,7 +231,7 @@ void SyncExclusions::setFolder(const QString& folderName)
 
 void SyncExclusions::restoreDefaults()
 {
-    mMegaIgnoreManager->restreDefaults();
+    mMegaIgnoreManager->restoreDefaults();
 }
 
 void SyncExclusions::showRemoveRuleConfirmationMessageDialog(const QString& descriptionText)

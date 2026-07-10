@@ -14,6 +14,29 @@ QUrl AddExclusionRule::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/sync_exclusions/AddRuleDialog.qml"));
 }
 
+void AddExclusionRule::copyCurrentRulesTo(const QString& sourceFolder, const QString& targetFolder)
+{
+    if (sourceFolder == targetFolder)
+    {
+        return;
+    }
+
+    MegaIgnoreManager megaIgnoreRulesSourceFolder(sourceFolder, false);
+    MegaIgnoreManager megaIgnoreRulesTargetFolder(targetFolder, true);
+
+    for (auto& rule: megaIgnoreRulesSourceFolder.getAllRules())
+    {
+        if (megaIgnoreRulesTargetFolder.addRule(rule))
+        {
+            // Parsed rules are not dirty, and applyChanges() only writes the file
+            // when at least one rule is dirty or deleted
+            rule->markAsDirty();
+        }
+    }
+
+    megaIgnoreRulesTargetFolder.applyChanges();
+}
+
 void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString ruleValue)
 {
     if(ruleValue.trimmed().isEmpty())
@@ -61,6 +84,8 @@ void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString
                                          static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
         }
         megaIgnoreLoader.applyChanges();
+
+        emit exclusionRuleAdded(folder);
     }
 }
 

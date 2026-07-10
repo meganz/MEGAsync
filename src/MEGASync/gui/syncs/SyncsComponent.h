@@ -1,6 +1,7 @@
 #ifndef SYNCS_COMPONENT_H
 #define SYNCS_COMPONENT_H
 
+#include "AddExclusionRule.h"
 #include "ChooseFolder.h"
 #include "QmlDialogWrapper.h"
 #include "Syncs.h"
@@ -35,6 +36,7 @@ public:
 
 public slots:
     void onSyncSetupSuccess(bool);
+    void onExclusionRuleAdded(QString folder);
 
 signals:
     void remoteFolderChosen(QString remotePath);
@@ -49,6 +51,7 @@ private:
     std::unique_ptr<Syncs> mSyncs;
     SyncInfo::SyncOrigin mOrigin;
     bool mEnteredOnSyncCreation = false;
+    QString mExclusionsRuleAddedFolder;
 
     void onRemoteFolderChosen(QString remotePath);
     void onLocalFolderChosen(QString localPath);

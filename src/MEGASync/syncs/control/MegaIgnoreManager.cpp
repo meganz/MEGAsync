@@ -450,7 +450,7 @@ void MegaIgnoreManager::removeRule(std::shared_ptr<MegaIgnoreRule> rule)
     rule->setDeleted(true);
 }
 
-void MegaIgnoreManager::restreDefaults()
+void MegaIgnoreManager::restoreDefaults()
 {
     const auto defaultFilePath = Preferences::instance()->getDataPath() + QDir::separator()
         + QString::fromUtf8(MEGA_IGNORE_DEFAULT_FILE_NAME);

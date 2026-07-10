@@ -54,7 +54,7 @@ public:
     void updateNameRuleStrategyAcordingToCaseSensitive(std::shared_ptr<MegaIgnoreNameRule> rule);
     std::shared_ptr<MegaIgnoreExtensionRule> addExtensionRule(MegaIgnoreNameRule::Class classType, const QString& pattern);
 
-    void restreDefaults();
+    void restoreDefaults();
 
     enum ApplyChangesError
     {
@@ -73,14 +73,7 @@ public:
 
     int getNameRulesCount() const;
 
-private:
-    template <class Type>
-    static const std::shared_ptr<Type> convert(const std::shared_ptr<MegaIgnoreRule> data)
-    {
-        return std::dynamic_pointer_cast<Type>(data);
-    }
-
-    template <class Type>
+    template<class Type>
     bool addRule(std::shared_ptr<Type> rule)
     {
         const auto ruleText = rule->getModifiedRule();
@@ -94,8 +87,15 @@ private:
         {
             mNameRules.append(rule);
         }
-        //Return if the addition was succesful
+        // Return if the addition was succesful
         return !alreadyExists;
+    }
+
+private:
+    template<class Type>
+    static const std::shared_ptr<Type> convert(const std::shared_ptr<MegaIgnoreRule> data)
+    {
+        return std::dynamic_pointer_cast<Type>(data);
     }
 
     QString mMegaIgnoreFile;

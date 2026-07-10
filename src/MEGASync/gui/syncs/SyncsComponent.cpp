@@ -34,6 +34,8 @@ SyncsComponent::SyncsComponent(QObject* parent):
 
 void SyncsComponent::closingOnboardingDialog()
 {
+    mExclusionsRuleAddedFolder.clear();
+
     if (mEnteredOnSyncCreation)
     {
         mEnteredOnSyncCreation = false;
@@ -132,7 +134,18 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
     QmlDialog* parent(QmlDialogWrapperUtilities::getQmlDialog<SyncsComponent>());
     QPointer<QmlDialogWrapper<AddExclusionRule>> exclusions =
         new QmlDialogWrapper<AddExclusionRule>(parent, QStringList() << folder);
+
+    connect(exclusions->wrapper(),
+            &AddExclusionRule::exclusionRuleAdded,
+            this,
+            &SyncsComponent::onExclusionRuleAdded);
+
     DialogOpener::showDialog(exclusions);
+}
+
+void SyncsComponent::onExclusionRuleAdded(QString folder)
+{
+    mExclusionsRuleAddedFolder = folder;
 }
 
 void SyncsComponent::clearRemoteFolderErrorHint()
@@ -147,11 +160,18 @@ void SyncsComponent::clearLocalFolderErrorHint()
 
 void SyncsComponent::syncButtonClicked(const QString& localFolder, const QString& megaFolder)
 {
+    if (!mExclusionsRuleAddedFolder.isEmpty() && localFolder != mExclusionsRuleAddedFolder)
+    {
+        AddExclusionRule::copyCurrentRulesTo(mExclusionsRuleAddedFolder, localFolder);
+    }
+    mExclusionsRuleAddedFolder.clear();
+
     mSyncs->addSync(localFolder, megaFolder);
 }
 
 void SyncsComponent::closeDialogButtonClicked()
 {
+    mExclusionsRuleAddedFolder.clear();
     mSyncs->clearRemoteError();
     mSyncs->clearLocalError();
 }
