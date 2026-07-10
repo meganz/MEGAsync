@@ -132,7 +132,18 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
     QmlDialog* parent(QmlDialogWrapperUtilities::getQmlDialog<SyncsComponent>());
     QPointer<QmlDialogWrapper<AddExclusionRule>> exclusions =
         new QmlDialogWrapper<AddExclusionRule>(parent, QStringList() << folder);
+
+    connect(exclusions->wrapper(),
+            &AddExclusionRule::exclusionRuleAdded,
+            this,
+            &SyncsComponent::onExclusionRuleAdded);
+
     DialogOpener::showDialog(exclusions);
+}
+
+void SyncsComponent::onExclusionRuleAdded(QString folder)
+{
+    mExclusionsRuleAddedFolder = folder;
 }
 
 void SyncsComponent::clearRemoteFolderErrorHint()
@@ -147,6 +158,11 @@ void SyncsComponent::clearLocalFolderErrorHint()
 
 void SyncsComponent::syncButtonClicked(const QString& localFolder, const QString& megaFolder)
 {
+    if (!mExclusionsRuleAddedFolder.isEmpty() && localFolder != mExclusionsRuleAddedFolder)
+    {
+        AddExclusionRule::copyCurrentRulesTo(mExclusionsRuleAddedFolder, localFolder);
+    }
+
     mSyncs->addSync(localFolder, megaFolder);
 }
 
