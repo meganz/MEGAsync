@@ -350,6 +350,9 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
         fileSignatures.append(fileSignature);
     }
 
+    // Validated before anything acts on the manifest — including the external-update
+    // detection below, which historically ran first: an unauthenticated manifest must
+    // neither trigger a reboot nor feed the obsolete-file cleanup keep-list.
     if (!checkSignature(updateSignature))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Invalid update info (invalid signature)");
@@ -713,14 +716,6 @@ void UpdateTask::sweepObsoleteFiles(const QDir& appFolder,
                                     const QStringList& manifestPaths,
                                     const CleanupLogger& logger)
 {
-    if (manifestPaths.isEmpty())
-    {
-        logger(MegaApi::LOG_LEVEL_WARNING,
-               QString::fromUtf8(
-                   "Skipping obsolete file cleanup because the update manifest is empty"));
-        return;
-    }
-
     logger(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Cleaning obsolete install files..."));
 
     QSet<QString> expectedPaths;

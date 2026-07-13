@@ -229,7 +229,7 @@ void PlatformImplementation::processSymLinks()
     }
     else
     {
-        std::cerr << "Symlinks structure successfully recreated" << std::endl;
+        std::cout << "Symlinks structure successfully recreated" << std::endl;
     }
 }
 
