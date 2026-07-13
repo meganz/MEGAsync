@@ -31,7 +31,6 @@ FooterButtonsPage {
         HeaderTexts {
             id: headerItem
 
-            Layout.preferredWidth: parent.width
             title: OnboardingStrings.setUpMEGA
             description: OnboardingStrings.deviceNameDescription
         }

@@ -15,10 +15,12 @@ CardButton {
     readonly property int titleLineHeight: 24
     readonly property int descriptionLineHeight: 16
 
-    width: 400
-    height: titleText.height + descriptionText.height + textSpacing + verticalMargin * 2
-    Layout.preferredWidth: 408
-    Layout.preferredHeight: height
+    implicitWidth: 408
+    implicitHeight: titleText.height + descriptionText.height + textSpacing + verticalMargin * 2
+    width: implicitWidth
+    height: implicitHeight
+    Layout.preferredWidth: implicitWidth
+    Layout.preferredHeight: implicitHeight
     Layout.fillWidth: true
     imageSourceSize: Qt.size(48, 48)
 

@@ -5,7 +5,7 @@ import common 1.0
 
 import components.texts 1.0 as Texts
 
-ColumnLayout {
+Column {
     id: root
 
     property alias title: titleItem.rawText
@@ -17,11 +17,14 @@ ColumnLayout {
     property alias titleWrapMode: titleItem.wrapMode
 
     spacing: (root.title !== "" && root.description !== "") ? 8 : 0
+    Layout.fillWidth: true
+    Layout.preferredHeight: implicitHeight
 
     Texts.RichText {
         id: titleItem
 
-        Layout.fillWidth: true
+        width: root.width
+        visible: rawText !== ""
         font {
             pixelSize: Texts.Text.Size.LARGE
             weight: Font.DemiBold
@@ -31,7 +34,8 @@ ColumnLayout {
     Texts.SecondaryText {
         id: descriptionItem
 
-        Layout.fillWidth: true
+        width: root.width
+        visible: text !== ""
         font.pixelSize: Texts.Text.Size.MEDIUM
         wrapMode: Text.WordWrap
     }
