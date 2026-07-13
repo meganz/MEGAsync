@@ -13,7 +13,6 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QProcess>
-#include <QSet>
 #include <QStringList>
 #include <QThread>
 #include <QTimer>
@@ -34,13 +33,12 @@ public:
 
     // Applies the obsolete-file cleanup scheduled by the last applied update (see
     // schedulePendingObsoleteCleanup). Must be called early at application start, before
-    // the app bundle symlinks are recreated: the sweep removes any symlink that is not
-    // part of the update manifest. instanceLockPath is the single-instance lock file:
-    // the sweep is skipped (and the pending request preserved) while another instance
-    // holds it, so files are never pulled from under a still-running previous version.
-    static void runPendingObsoleteCleanup(const QString& dataPath,
-                                          const QString& instanceLockPath,
-                                          const CleanupLogger& logger);
+    // the app bundle symlinks are recreated (the sweep removes any symlink that is not
+    // part of the update manifest), and only while holding the single-instance lock, so
+    // files are never pulled from under a still-running previous version. The request is
+    // only honored when the running binary is the exact version that scheduled it; an
+    // installation refreshed by other means in the meantime is left untouched.
+    static void runPendingObsoleteCleanup(const QString& dataPath, const CleanupLogger& logger);
 
 protected:
    void initialCleanup();

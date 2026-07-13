@@ -273,6 +273,22 @@ void uninstall()
     freeStaticResources();
 }
 
+// megasync.version is read by the auto-updater of a running instance to detect
+// externally applied updates, and by the MegaApplication constructor to learn the
+// version that ran before this one (prevVersion). The primary instance therefore writes
+// it only after MegaApplication has been constructed; a secondary instance refreshes it
+// just before exiting, so installing a newer version over a running one is detected as
+// an external update.
+static void writeAppVersionFile(const QDir& dataDir)
+{
+    QFile appVersionFile(dataDir.filePath(QString::fromUtf8("megasync.version")));
+    if (appVersionFile.open(QIODevice::WriteOnly))
+    {
+        appVersionFile.write(QString::number(Preferences::VERSION_CODE).toUtf8());
+        appVersionFile.close();
+    }
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setOrganizationName(QString::fromUtf8("Mega Limited"));
@@ -282,29 +298,8 @@ int main(int argc, char *argv[])
 
     Platform::create();
 
-    // megasync.lock is the same single-instance lock acquired authoritatively further
-    // below; the sweep probes it so it never mutates the install dir while another
-    // instance is still running from those files.
     const QString dataPath = MegaApplication::applicationDataPath();
-    const QString appLockPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.lock"));
-
-    // Sweep the install-dir files made obsolete by the last applied update. The sweep is
-    // deferred to startup because at update time the previous version is still running
-    // from those files. It must run before the bundle symlinks are recreated below,
-    // because it removes any symlink that is not part of the update manifest. The MegaApi
-    // logger is not available yet, so messages are buffered and flushed after the
-    // application is created.
-    UpdateTask::runPendingObsoleteCleanup(dataPath,
-                                          appLockPath,
-                                          [](int logLevel, const QString& message)
-                                          {
-                                              logMessages.emplace_back(logLevel, message);
-                                          });
-
-    // This call is responsible for rebuilding the app bundle symlinks in platforms where
-    // it applies. The auto-update removes them (they are not part of the update manifest),
-    // so any missing link is recreated on every start.
-    Platform::getInstance()->processSymLinks();
+    QDir dataDir(dataPath);
 
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
@@ -320,6 +315,99 @@ int main(int argc, char *argv[])
         return 0;
     }
 #endif
+
+    // Acquire the single-instance lock before anything that may mutate the install dir:
+    // the obsolete-file sweep and the symlink recreation below must only run in the
+    // process that owns the instance. On the very first start the data dir (which holds
+    // the lock file) may not exist yet.
+    dataDir.mkpath(QString::fromUtf8("."));
+    const QString appLockPath = dataDir.filePath(QString::fromUtf8("megasync.lock"));
+    const QString appShowPath = dataDir.filePath(QString::fromUtf8("megasync.show"));
+
+    QtLockedFile singleInstanceChecker(appLockPath);
+    bool alreadyStarted = true;
+    for (int i = 0; i < 10; i++)
+    {
+        if (i > 0)
+        {
+            if (dataDir.exists(appShowPath))
+            {
+                QFile appShowFile(appShowPath);
+                if (appShowFile.open(QIODevice::ReadOnly))
+                {
+                    if (appShowFile.size() == 0)
+                    {
+                        // the file has been emptied; so the infoDialog was shown in the primary
+                        // MEGAsync instance.  We can exit.
+                        alreadyStarted = true;
+                        break;
+                    }
+                }
+            }
+        }
+        singleInstanceChecker.open(QtLockedFile::ReadWrite);
+        if (singleInstanceChecker.lock(QtLockedFile::WriteLock, false))
+        {
+            alreadyStarted = false;
+            break;
+        }
+        else if (i == 0)
+        {
+            QFile appShowFile(appShowPath);
+            if (appShowFile.open(QIODevice::WriteOnly))
+            {
+                appShowFile.write("open");
+                appShowFile.close();
+            }
+        }
+#ifdef __APPLE__
+        else if (i == 5)
+        {
+            QString appVersionPath = dataDir.filePath(QString::fromUtf8("megasync.version"));
+            QFile fappVersionPath(appVersionPath);
+            if (!fappVersionPath.exists())
+            {
+                QProcess::startDetached(
+                    QString::fromUtf8("/bin/bash -c \"lsof ~/Library/Application\\ Support/Mega\\ "
+                                      "Limited/MEGAsync/megasync.lock 2>/dev/null | grep MEGAclien "
+                                      "| cut -d' ' -f2 | xargs kill\""),
+                    {});
+            }
+        }
+#endif
+
+#ifdef WIN32
+        Sleep(1000);
+#else
+        sleep(1);
+#endif
+    }
+
+    if (alreadyStarted)
+    {
+        writeAppVersionFile(dataDir);
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "MEGAsync is already started");
+        freeStaticResources();
+        return 0;
+    }
+
+    // Sweep the install-dir files made obsolete by the last applied update. The sweep is
+    // deferred to startup because at update time the previous version is still running
+    // from those files, and it runs under the single-instance lock acquired above, so it
+    // never mutates an install dir another instance is running from. It must run before
+    // the bundle symlinks are recreated below, because it removes any symlink that is
+    // not part of the update manifest. The MegaApi logger is not available yet, so
+    // messages are buffered and flushed after the application is created.
+    UpdateTask::runPendingObsoleteCleanup(dataPath,
+                                          [](int logLevel, const QString& message)
+                                          {
+                                              logMessages.emplace_back(logLevel, message);
+                                          });
+
+    // This call is responsible for rebuilding the app bundle symlinks in platforms where
+    // it applies. The auto-update removes them (they are not part of the update manifest),
+    // so any missing link is recreated on every start.
+    Platform::getInstance()->processSymLinks();
 
 #ifdef Q_OS_LINUX
 
@@ -589,10 +677,8 @@ int main(int argc, char *argv[])
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
-    QDir dataDir(app.applicationDataPath());
     QString crashPath = dataDir.filePath(QString::fromUtf8("crashDumps"));
     QString avatarPath = dataDir.filePath(QString::fromUtf8("avatars"));
-    QString appShowPath = dataDir.filePath(QString::fromUtf8("megasync.show"));
     QDir crashDir(crashPath);
     if (!crashDir.exists())
     {
@@ -609,75 +695,10 @@ int main(int argc, char *argv[])
     CrashHandler::instance()->init(QDir::toNativeSeparators(crashPath));
 #endif
 #endif
-    QtLockedFile singleInstanceChecker(appLockPath);
-    bool alreadyStarted = true;
-    for (int i = 0; i < 10; i++)
-    {
-        if (i > 0)
-        {
-            if (dataDir.exists(appShowPath))
-            {
-                QFile appShowFile(appShowPath);
-                if (appShowFile.open(QIODevice::ReadOnly))
-                {
-                    if (appShowFile.size() == 0)
-                    {
-                        // the file has been emptied; so the infoDialog was shown in the primary MEGAsync instance.  We can exit.
-                        alreadyStarted = true;
-                        break;
-                    }
-                }
-            }
-        }
-        singleInstanceChecker.open(QtLockedFile::ReadWrite);
-        if (singleInstanceChecker.lock(QtLockedFile::WriteLock, false))
-        {
-            alreadyStarted = false;
-            break;
-        }
-        else if (i == 0)
-        {
-             QFile appShowFile(appShowPath);
-             if (appShowFile.open(QIODevice::WriteOnly))
-             {
-                 appShowFile.write("open");
-                 appShowFile.close();
-             }
-        }
-#ifdef __APPLE__
-        else if (i == 5)
-        {
-            QString appVersionPath = dataDir.filePath(QString::fromUtf8("megasync.version"));
-            QFile fappVersionPath(appVersionPath);
-            if (!fappVersionPath.exists())
-            {
-                QProcess::startDetached(QString::fromUtf8("/bin/bash -c \"lsof ~/Library/Application\\ Support/Mega\\ Limited/MEGAsync/megasync.lock 2>/dev/null | grep MEGAclien | cut -d' ' -f2 | xargs kill\""), {});
-            }
-        }
-#endif
+    // Written only now, after the MegaApplication constructor has read the previous
+    // run's value into prevVersion (see writeAppVersionFile).
+    writeAppVersionFile(dataDir);
 
-        #ifdef WIN32
-            Sleep(1000);
-        #else
-            sleep(1);
-        #endif
-    }
-
-    // megasync.version is read by the auto-updater to detect externally applied updates.
-    QString appVersionPath = dataDir.filePath(QString::fromUtf8("megasync.version"));
-    QFile fappVersionPath(appVersionPath);
-    if (fappVersionPath.open(QIODevice::WriteOnly))
-    {
-        fappVersionPath.write(QString::number(Preferences::VERSION_CODE).toUtf8());
-        fappVersionPath.close();
-    }
-
-    if (alreadyStarted)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "MEGAsync is already started");
-        freeStaticResources();
-        return 0;
-    }
     Platform::getInstance()->initialize(argc, argv);
 
     app.setWindowIcon(QIcon(QString::fromUtf8(":/images/app_ico.ico")));

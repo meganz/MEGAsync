@@ -1,17 +1,15 @@
 #include "UpdateTask.h"
 
 #include "Platform.h"
-#include "qtlockedfile/qtlockedfile.h"
 #include "ServiceUrls.h"
 #include "Utilities.h"
 
 #include <QAuthenticator>
 #include <QDesktopServices>
 #include <QSaveFile>
+#include <QSet>
 
 #include <algorithm>
-#include <chrono>
-#include <thread>
 
 using namespace mega;
 using namespace std;
@@ -19,6 +17,7 @@ using namespace std;
 namespace
 {
 const char PENDING_CLEANUP_FILE_NAME[] = "megasync.cleanup";
+const int PENDING_CLEANUP_FORMAT_VERSION = 2;
 
 QString normalizedManifestPath(const QString& path)
 {
@@ -531,19 +530,41 @@ void UpdateTask::schedulePendingObsoleteCleanup()
         return;
     }
 
-    QDir dataDir(preferences->getDataPath());
-    QSaveFile pendingFile(dataDir.filePath(QString::fromLatin1(PENDING_CLEANUP_FILE_NAME)));
-    if (!pendingFile.open(QIODevice::WriteOnly))
+    // The sweep validates the install folder against this marker (the manifest-relative
+    // path of the application binary). It is recorded here rather than hardcoded at
+    // sweep time, so a binary rename cannot silently disable the guard.
+    const QString marker =
+        normalizedManifestPath(appFolder.relativeFilePath(QCoreApplication::applicationFilePath()));
+    const QString markerKey = manifestPathKey(marker);
+    const bool markerInManifest = std::any_of(manifestLocalPaths.cbegin(),
+                                              manifestLocalPaths.cend(),
+                                              [&markerKey](const QString& manifestPath)
+                                              {
+                                                  return manifestPathKey(manifestPath) == markerKey;
+                                              });
+    if (marker.isEmpty() || QDir::isAbsolutePath(marker) || !markerInManifest)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
-                     QString::fromUtf8("Error scheduling obsolete file cleanup: %1")
-                         .arg(pendingFile.fileName())
+                     QString::fromUtf8("Error scheduling obsolete file cleanup: application "
+                                       "binary %1 is not part of the update manifest")
+                         .arg(marker)
                          .toUtf8()
                          .constData());
         return;
     }
 
-    QByteArray content = appFolder.absolutePath().toUtf8();
+    // Self-describing request: format version, the update version that scheduled it,
+    // the install folder, the application binary marker, then the keep-list. The sweep
+    // refuses the request unless it runs inside the exact version that scheduled it, so
+    // a keep-list can never be applied to an installation refreshed by other means in
+    // the meantime (full installer, emergency updater).
+    QByteArray content = QByteArray::number(PENDING_CLEANUP_FORMAT_VERSION);
+    content.append('\n');
+    content.append(QByteArray::number(updateVersion));
+    content.append('\n');
+    content.append(appFolder.absolutePath().toUtf8());
+    content.append('\n');
+    content.append(marker.toUtf8());
     content.append('\n');
     for (const QString& manifestPath: manifestLocalPaths)
     {
@@ -551,9 +572,15 @@ void UpdateTask::schedulePendingObsoleteCleanup()
         content.append('\n');
     }
 
-    // QSaveFile only renames the finished file into place on commit, so a crash cannot
-    // leave a truncated keep-list behind (which would sweep files the app needs).
-    pendingFile.write(content);
+    // QSaveFile only renames the finished file into place on commit (and commit() also
+    // fails when the file could not be opened), so a crash cannot leave a truncated
+    // keep-list behind (which would sweep files the app needs).
+    QDir dataDir(preferences->getDataPath());
+    QSaveFile pendingFile(dataDir.filePath(QString::fromLatin1(PENDING_CLEANUP_FILE_NAME)));
+    if (pendingFile.open(QIODevice::WriteOnly))
+    {
+        pendingFile.write(content);
+    }
     if (!pendingFile.commit())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
@@ -568,9 +595,7 @@ void UpdateTask::schedulePendingObsoleteCleanup()
                  "Obsolete file cleanup scheduled for the next application start");
 }
 
-void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath,
-                                           const QString& instanceLockPath,
-                                           const CleanupLogger& logger)
+void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath, const CleanupLogger& logger)
 {
 #if defined(_WIN32) || defined(__APPLE__)
     const QString pendingPath =
@@ -581,70 +606,87 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath,
         return;
     }
 
-    // A previous version can still be running from the files this sweep removes: the
-    // post-update restart spawns this process while the previous one is still shutting
-    // down (it sleeps 2 seconds after the spawn and holds the single-instance lock until
-    // it fully exits), and on Windows every relaunch spawns a second process before the
-    // caller's single-instance check. Probe that same lock, retrying for as long as the
-    // caller's own acquisition loop does so the restart race is survived. If the lock
-    // still cannot be acquired, another instance is genuinely running: skip the sweep
-    // and keep the pending request so the primary instance's next clean start applies
-    // it. The probe is released when this function returns, before the caller's
-    // authoritative lock acquisition.
-    QtLockedFile instanceProbe(instanceLockPath);
-    if (!instanceProbe.open(QtLockedFile::ReadWrite))
-    {
-        logger(MegaApi::LOG_LEVEL_WARNING,
-               QString::fromUtf8("Skipping obsolete file cleanup: cannot open instance lock %1")
-                   .arg(instanceLockPath));
-        return;
-    }
-
-    constexpr int lockAttempts = 10;
-    bool lockAcquired = false;
-    for (int attempt = 0; attempt < lockAttempts && !lockAcquired; attempt++)
-    {
-        if (attempt > 0)
-        {
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
-        lockAcquired = instanceProbe.lock(QtLockedFile::WriteLock, false);
-    }
-    if (!lockAcquired)
-    {
-        logger(MegaApi::LOG_LEVEL_WARNING,
-               QString::fromUtf8("Skipping obsolete file cleanup: another instance is running"));
-        return;
-    }
-
     QStringList lines;
-    if (pendingFile.open(QFile::ReadOnly | QFile::Text))
+    const bool readOk = pendingFile.open(QFile::ReadOnly | QFile::Text);
+    if (readOk)
     {
         lines =
             QString::fromUtf8(pendingFile.readAll()).split(QLatin1Char('\n'), Qt::SkipEmptyParts);
         pendingFile.close();
     }
+
     // Consume the request up front: the sweep is best effort and must not be retried
     // (and potentially keep failing) on every start; the next update reschedules it.
-    pendingFile.remove();
+    // Conversely, never sweep without having consumed the request, so a request that
+    // cannot be consumed cannot be applied again on a later start either.
+    if (!pendingFile.remove())
+    {
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8("Skipping obsolete file cleanup: cannot remove pending cleanup "
+                                 "file %1")
+                   .arg(pendingPath));
+        return;
+    }
+    if (!readOk)
+    {
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8("Skipping obsolete file cleanup: cannot read pending cleanup "
+                                 "file %1")
+                   .arg(pendingPath));
+        return;
+    }
 
-    if (lines.size() < 2)
+    // Format: format version, scheduling update version, install folder, application
+    // binary marker, then the keep-list (at least one entry).
+    if (lines.size() < 5)
     {
         logger(MegaApi::LOG_LEVEL_WARNING,
                QString::fromUtf8("Skipping obsolete file cleanup: invalid pending cleanup file"));
         return;
     }
 
+    bool formatVersionOk = false;
+    const int formatVersion = lines.takeFirst().toInt(&formatVersionOk);
+    if (!formatVersionOk || formatVersion != PENDING_CLEANUP_FORMAT_VERSION)
+    {
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8("Skipping obsolete file cleanup: unsupported pending cleanup "
+                                 "file format"));
+        return;
+    }
+
+    bool scheduledVersionOk = false;
+    const int scheduledVersion = lines.takeFirst().toInt(&scheduledVersionOk);
+    if (!scheduledVersionOk || scheduledVersion != Preferences::VERSION_CODE)
+    {
+        // Not the binary this sweep was scheduled for: the installation was refreshed by
+        // other means in the meantime (full installer, emergency updater, downgrade), so
+        // the keep-list does not describe it. Discard the request.
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8("Skipping obsolete file cleanup: scheduled by version %1 but "
+                                 "version %2 is running")
+                   .arg(scheduledVersion)
+                   .arg(Preferences::VERSION_CODE));
+        return;
+    }
+
     const QDir appFolder(lines.takeFirst());
 
     // Safety guard: the folder to sweep is read from a file, so before moving anything
-    // out of it make sure it really is a MEGAsync installation folder.
-#ifdef _WIN32
-    const QString appMarker = QString::fromLatin1("MEGAsync.exe");
-#else
-    const QString appMarker = QString::fromLatin1("Contents/MacOS/MEGAsync");
-#endif
-    if (!QFile::exists(appFolder.filePath(appMarker)))
+    // out of it make sure it really contains the application binary recorded at schedule
+    // time, and that the recorded marker is a sane manifest-relative path that the sweep
+    // itself will keep.
+    const QString appMarker = normalizedManifestPath(lines.takeFirst());
+    const QString markerKey = manifestPathKey(appMarker);
+    const bool markerValid = !appMarker.isEmpty() && !QDir::isAbsolutePath(appMarker) &&
+                             !appMarker.startsWith(QLatin1String("..")) &&
+                             std::any_of(lines.cbegin(),
+                                         lines.cend(),
+                                         [&markerKey](const QString& manifestPath)
+                                         {
+                                             return manifestPathKey(manifestPath) == markerKey;
+                                         });
+    if (!markerValid || !QFile::exists(appFolder.filePath(appMarker)))
     {
         logger(MegaApi::LOG_LEVEL_WARNING,
                QString::fromUtf8("Skipping obsolete file cleanup: unexpected installation path %1")
@@ -658,7 +700,6 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath,
     sweepObsoleteFiles(appFolder, backupFolder, lines, logger);
 #else
     Q_UNUSED(dataPath)
-    Q_UNUSED(instanceLockPath)
     Q_UNUSED(logger)
 #endif
 }
