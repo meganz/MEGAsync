@@ -11,6 +11,7 @@
 #include "UpdateTask.h"
 
 #include <QFontDatabase>
+#include <QSaveFile>
 
 #include <cassert>
 #include <iostream>
@@ -304,11 +305,18 @@ static QString runningExecutablePath()
 
 static void writeAppVersionFile(const QDir& dataDir)
 {
-    QFile appVersionFile(dataDir.filePath(QString::fromUtf8("megasync.version")));
+    // QSaveFile only renames the finished file into place on commit, so a failure or
+    // crash cannot leave a truncated version behind (which would corrupt external-update
+    // and previous-version detection).
+    QSaveFile appVersionFile(dataDir.filePath(QString::fromUtf8("megasync.version")));
     if (appVersionFile.open(QIODevice::WriteOnly))
     {
         appVersionFile.write(QString::number(Preferences::VERSION_CODE).toUtf8());
-        appVersionFile.close();
+    }
+    if (!appVersionFile.commit())
+    {
+        std::cerr << "Error writing app version file "
+                  << appVersionFile.fileName().toUtf8().constData() << std::endl;
     }
 }
 
@@ -426,8 +434,16 @@ int main(int argc, char *argv[])
                 }
             }
         }
-        singleInstanceChecker.open(QtLockedFile::ReadWrite);
-        if (singleInstanceChecker.lock(QtLockedFile::WriteLock, false))
+        const bool lockFileOpen =
+            singleInstanceChecker.isOpen() || singleInstanceChecker.open(QtLockedFile::ReadWrite);
+        if (!lockFileOpen && i == 0)
+        {
+            // An I/O or permission failure is not another running instance: report it
+            // distinctly (the loop still retries, then gives up as "already started").
+            std::cerr << "Cannot open single-instance lock file "
+                      << appLockPath.toUtf8().constData() << std::endl;
+        }
+        if (lockFileOpen && singleInstanceChecker.lock(QtLockedFile::WriteLock, false))
         {
             alreadyStarted = false;
             break;
