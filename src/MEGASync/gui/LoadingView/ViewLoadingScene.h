@@ -726,8 +726,10 @@ public:
         // model is only detached/reattached (not reset) during loading, its selection survives
         // the swap, so no manual save/restore of selected indexes is needed.
 
+        // Auto-expand-all views re-expand everything on restore, so recording the per-node
+        // expanded state here would be pure overhead (overwritten by the following expandAll()).
         mSavedExpanded.clear();
-        if (proxy)
+        if (proxy && !mAutoExpandAll)
         {
             collectExpandedSource(this->rootIndex(), proxy, mSavedExpanded);
         }
@@ -799,8 +801,9 @@ public:
             this->setRootIndex(root);
 
             // A pending "expand all" requested while detached: now that the model is back
-            // (with the freshly loaded rows) apply it here.
-            if (mExpandAllOnRestore)
+            // (with the freshly loaded rows) apply it here. Auto-expand-all views (search)
+            // always take this batched path instead of the per-node loop.
+            if (mExpandAllOnRestore || mAutoExpandAll)
             {
                 this->expandAll();
             }
@@ -875,6 +878,16 @@ public:
         mViewPortEventsBlocked = newViewPortEventsBlocked;
     }
 
+    // Views that always re-expand everything after a load (e.g. search results) don't benefit
+    // from preserving the per-node expanded state across the model detach/reattach: the state
+    // is fully overwritten by the expandAll() that follows. Marking the view here skips the
+    // O(N) collectExpandedSource() on save and replaces the O(N^2) per-node setExpanded() loop
+    // on restore with a single batched expandAll().
+    void setAutoExpandAll(bool autoExpandAll)
+    {
+        mAutoExpandAll = autoExpandAll;
+    }
+
     // When the post-load selection pass scrolls the view to a navigated/selected node (e.g. a
     // searched node deep in the tree), it calls this so applyLoadingViewScroll() keeps that
     // position instead of restoring the pre-load scroll captured in saveLoadingViewState(). Reset
@@ -942,6 +955,7 @@ private:
     QPointer<QItemSelectionModel> mPreservedSelectionModel;
     QList<QPersistentModelIndex> mSavedExpanded;
     bool mExpandAllOnRestore = false;
+    bool mAutoExpandAll = false;
     QPersistentModelIndex mSavedRootIndex;
     bool mSwappingModel = false;
     QByteArray mSavedHeaderState;

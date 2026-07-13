@@ -341,6 +341,11 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
             });
 
     ui->tMegaFolders->loadingView().setDelayTimeToShowInMs(0);
+
+    // Search results are always fully expanded (expandSearchResults), so skip the per-node
+    // expanded-state save/restore across the loading-scene model detach and use a single
+    // batched expandAll() instead. Avoids O(N) collect + O(N^2) setExpanded on every chip switch.
+    ui->tMegaFolders->setAutoExpandAll(true);
 }
 
 void NodeSelectorTreeViewWidgetSearch::prepareForInitialDisplay()

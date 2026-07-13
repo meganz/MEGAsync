@@ -15,6 +15,8 @@
 #include "Utilities.h"
 
 #include <QApplication>
+#include <QCoreApplication>
+#include <QEventLoop>
 #include <QFont>
 #include <QPainter>
 #include <QToolTip>
@@ -914,8 +916,21 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
 
 NodeSelectorModel::~NodeSelectorModel()
 {
+    // Cancel any in-flight request so the worker stops issuing new blocking
+    // calls back to this (GUI) thread.
+    mNodeRequesterWorker->abort();
+
     mNodeRequesterThread->quit();
-    mNodeRequesterThread->wait();
+
+    // The worker may currently be parked on a BlockingQueuedConnection (e.g.
+    // beginChildRowsInsertion) waiting for THIS thread to service its posted
+    // event. A plain wait() would deadlock: the worker cannot finish until we
+    // process that event, and we would never return to the event loop. Keep
+    // pumping our event loop until the worker thread has actually finished.
+    while (!mNodeRequesterThread->wait(50))
+    {
+        QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+    }
 }
 
 void NodeSelectorModel::setIsModelBeingModified(bool state)

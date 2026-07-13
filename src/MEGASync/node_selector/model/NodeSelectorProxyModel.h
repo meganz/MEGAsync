@@ -49,6 +49,10 @@ public:
 
     NodeSelectorModel* getMegaModel() const;
     bool isWorking() const override;
+
+    // Stop the async sort and prevent it from re-triggering, before the source model is destroyed.
+    void prepareForDeletion();
+
     void onSortIndicatorChanged(int column, Qt::SortOrder order);
 
     virtual bool canBeDeleted() const;

@@ -311,6 +311,23 @@ bool NodeSelectorProxyModel::isWorking() const
     return mFilterWatcher.isRunning();
 }
 
+void NodeSelectorProxyModel::prepareForDeletion()
+{
+    // Called during teardown while the source model is still alive. The sort runs on a
+    // QtConcurrent thread and dereferences NodeSelectorModelItem objects owned by the source
+    // model; if it outlives the model it is a use-after-free (crash in getParent()).
+    // First stop the finished handler so it cannot re-launch a sort or reattach the view
+    // (levelLoaded -> onLevelLoaded -> setModel), then block until the running task returns.
+    disconnect(&mFilterWatcher,
+               &QFutureWatcher<void>::finished,
+               this,
+               &NodeSelectorProxyModel::onModelSortedFiltered);
+    if (mFilterWatcher.isRunning())
+    {
+        mFilterWatcher.waitForFinished();
+    }
+}
+
 bool NodeSelectorProxyModel::canBeDeleted() const
 {
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();

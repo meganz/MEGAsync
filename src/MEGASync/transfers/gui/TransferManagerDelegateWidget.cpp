@@ -4,11 +4,13 @@
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
 #include "ThemeManager.h"
+#include "tokenizer/TokenizableItems/TokenizableButtons.h"
 #include "TransferWidgetColumnsManager.h"
 #include "ui_TransferManagerDelegateWidget.h"
 #include "Utilities.h"
 #include <TokenParserWidgetManager.h>
 
+#include <QLayout>
 #include <QMouseEvent>
 #include <QPainterPath>
 
@@ -215,6 +217,23 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->tItemRetry->setVisible(getData()->canBeRetried());
                 mUi->tItemRetry->setText(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->tItemRetry->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
+
+                // The retry button width depends on its (translated) text. On a
+                // language change the row is not resized, so the layout is not
+                // activated automatically. Besides, checkMinWidth() —which sets the
+                // QSS "short"/min-width property that drives the button size hint—
+                // normally runs one paint later (inside the button paintEvent), so
+                // the size hint would still reflect the previous language here.
+                // Update it now, pin the minimum width to the fresh size hint and
+                // re-activate the layout so the button always fits the text before
+                // the item is rendered.
+                ButtonUtilities::checkMinWidth(mUi->tItemRetry);
+                mUi->tItemRetry->setMinimumWidth(mUi->tItemRetry->sizeHint().width());
+                if (auto* failedLayout = mUi->cFailed->layout())
+                {
+                    failedLayout->activate();
+                }
+
                 mUi->wProgressBar->setVisible(false);
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->lItemFailed->setText(

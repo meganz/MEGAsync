@@ -130,14 +130,11 @@ void FileManagerNodeSelector::refreshSearchResultCount()
         return;
     }
 
-    // While a search/load is in progress, show a "searching" indicator instead of the count: the
-    // model is being repopulated and any intermediate value (including "0 result") is misleading.
-    // The final count is shown once it finishes.
-    // UI blocks coming from the moving-nodes accounting (deleting/moving items from the results)
-    // are not searches: keep showing the count, which updates as the rows are removed.
-    const auto searchMegaModel = mSearchWidget->getProxyModel()->getMegaModel();
-    const bool blockedByNodeMoves = searchMegaModel && searchMegaModel->isMovingNodes();
-    if (isSearchInProgress() || (isUiBlocked() && !blockedByNodeMoves))
+    // Show the "Searching…" indicator only while a genuine search is running: that is the only
+    // moment there is no valid count yet. Any other UI block (sorting, moving/removing rows,
+    // fetching more) happens on an already populated result set, so keep the real count instead
+    // of briefly flashing "Searching…" (which the moving-nodes/sort block timing used to cause).
+    if (isSearchInProgress())
     {
         showSearchingIndicator();
         return;

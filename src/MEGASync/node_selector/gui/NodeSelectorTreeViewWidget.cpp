@@ -123,6 +123,18 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode,
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
 {
+    // Ensure no background sort keeps touching the model/items once teardown begins.
+    // The source model (mModel) is destroyed before mProxyModel, so stop the async
+    // sort here, while both are still alive.
+    if (mProxyModel)
+    {
+        mProxyModel->prepareForDeletion();
+    }
+
+    disconnect(mModel.get(),
+               &NodeSelectorModel::blockUi,
+               this,
+               &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
     delete ui;
 }
 
