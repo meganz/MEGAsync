@@ -598,7 +598,9 @@ void UpdateTask::schedulePendingObsoleteCleanup()
                  "Obsolete file cleanup scheduled for the next application start");
 }
 
-void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath, const CleanupLogger& logger)
+void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath,
+                                           const QString& runningExecutablePath,
+                                           const CleanupLogger& logger)
 {
 #if defined(_WIN32) || defined(__APPLE__)
     const QString pendingPath =
@@ -697,12 +699,29 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath, const Cleanu
         return;
     }
 
+    // The recorded folder must be the installation this process is running from: a
+    // stale or corrupted request naming another (same-version) installation must not
+    // sweep it. Canonicalization resolves symlinks and relative components on both
+    // sides; an empty runningExecutablePath (platform lookup failed) skips the sweep.
+    const QString recordedExecutable = QFileInfo(appFolder.filePath(appMarker)).canonicalFilePath();
+    const QString runningExecutable = QFileInfo(runningExecutablePath).canonicalFilePath();
+    if (recordedExecutable.isEmpty() || runningExecutable.isEmpty() ||
+        QString::compare(recordedExecutable, runningExecutable, Qt::CaseInsensitive) != 0)
+    {
+        logger(MegaApi::LOG_LEVEL_WARNING,
+               QString::fromUtf8("Skipping obsolete file cleanup: the request does not target "
+                                 "the running installation (%1)")
+                   .arg(appFolder.absolutePath()));
+        return;
+    }
+
     const QDir backupFolder(QDir(dataPath).absoluteFilePath(
         timestampedFolderName(Preferences::OBSOLETE_BACKUP_FOLDER_NAME)));
 
     sweepObsoleteFiles(appFolder, backupFolder, lines, logger);
 #else
     Q_UNUSED(dataPath)
+    Q_UNUSED(runningExecutablePath)
     Q_UNUSED(logger)
 #endif
 }

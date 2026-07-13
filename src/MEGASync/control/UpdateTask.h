@@ -36,9 +36,12 @@ public:
     // the app bundle symlinks are recreated (the sweep removes any symlink that is not
     // part of the update manifest), and only while holding the single-instance lock, so
     // files are never pulled from under a still-running previous version. The request is
-    // only honored when the running binary is the exact version that scheduled it; an
-    // installation refreshed by other means in the meantime is left untouched.
-    static void runPendingObsoleteCleanup(const QString& dataPath, const CleanupLogger& logger);
+    // only honored when the running binary (runningExecutablePath) is the exact version
+    // and installation that scheduled it; an installation refreshed by other means in
+    // the meantime, or a request naming another installation, is left untouched.
+    static void runPendingObsoleteCleanup(const QString& dataPath,
+                                          const QString& runningExecutablePath,
+                                          const CleanupLogger& logger);
 
 protected:
    void initialCleanup();

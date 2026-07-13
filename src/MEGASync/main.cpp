@@ -31,6 +31,12 @@
 #include <winrt/base.h>
 #endif
 
+#ifdef Q_OS_MACOS
+#include <mach-o/dyld.h>
+
+#include <climits>
+#endif
+
 #if defined(WIN32) || defined(Q_OS_LINUX)
 #include "ScaleFactorManager.h"
 
@@ -279,6 +285,23 @@ void uninstall()
 // it only after MegaApplication has been constructed; a secondary instance refreshes it
 // just before exiting, so installing a newer version over a running one is detected as
 // an external update.
+// The path of the running executable. QCoreApplication::applicationFilePath() needs an
+// application instance, and this is used before one exists.
+static QString runningExecutablePath()
+{
+#ifdef WIN32
+    wchar_t buffer[MAX_PATH];
+    const DWORD length = GetModuleFileNameW(NULL, buffer, MAX_PATH);
+    return (length > 0 && length < MAX_PATH) ? QString::fromWCharArray(buffer, length) : QString();
+#elif defined(Q_OS_MACOS)
+    char buffer[PATH_MAX];
+    uint32_t size = sizeof(buffer);
+    return (_NSGetExecutablePath(buffer, &size) == 0) ? QString::fromUtf8(buffer) : QString();
+#else
+    return QString();
+#endif
+}
+
 static void writeAppVersionFile(const QDir& dataDir)
 {
     QFile appVersionFile(dataDir.filePath(QString::fromUtf8("megasync.version")));
@@ -457,6 +480,7 @@ int main(int argc, char *argv[])
     // not part of the update manifest. The MegaApi logger is not available yet, so
     // messages are buffered and flushed after the application is created.
     UpdateTask::runPendingObsoleteCleanup(dataPath,
+                                          runningExecutablePath(),
                                           [](int logLevel, const QString& message)
                                           {
                                               logMessages.emplace_back(logLevel, message);
