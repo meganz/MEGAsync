@@ -9,7 +9,6 @@ depends=(
 'qt4'
 'openssl'
 'sqlite'
-'c-ares'
 'crypto++'
 'ca-certificates'
 )

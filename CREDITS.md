@@ -168,17 +168,6 @@ https://github.com/meganz/sdk/blob/master/LICENSE
 Due to the usage of the MEGA C++ SDK, MEGAsync requires some additional 
 libraries. Here is a brief description of all of them:
 
-#### c-ares:
-Copyright 1998 by the Massachusetts Institute of Technology.
-
-c-ares is a C library for asynchronous DNS requests (including name resolves)
-
-http://c-ares.haxx.se/
-
-License: MIT license
-
-http://c-ares.haxx.se/license.html
-
 #### sodium:
 Copyright (c) 2013-2023, Frank Denis <j at pureftpd dot org>
 
