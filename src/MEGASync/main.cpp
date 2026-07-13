@@ -316,6 +316,64 @@ int main(int argc, char *argv[])
     }
 #endif
 
+#ifdef Q_OS_LINUX
+
+    // Ensure interesting signals are unblocked.
+    sigset_t signalstounblock;
+    sigemptyset(&signalstounblock);
+    sigaddset(&signalstounblock, SIGUSR1);
+    sigaddset(&signalstounblock, SIGUSR2);
+    sigprocmask(SIG_UNBLOCK, &signalstounblock, NULL);
+
+    if (signal(SIGUSR1, LinuxSignalHandler))
+    {
+        cerr << " Failed to register signal SIGUSR1 " << endl;
+    }
+
+    // Get app parameters
+    for (int i = 0; i < argc; ++i)
+    {
+        appArgs << QString::fromUtf8(argv[i]);
+    }
+    appExecPath = appArgs.takeFirst();
+
+    // Process "waitforsignal" if passed. This must happen before the single-instance
+    // lock below: the helper is deliberately spawned while the running instance still
+    // owns the lock, and it must wait for the restart signal instead of exiting through
+    // the "already started" path (which would also make the primary show its dialog).
+    if (appArgs.contains(waitForSignalArg))
+    {
+        std::unique_lock<std::mutex> lock(mtxcondvar);
+        if (signal(SIGUSR2, LinuxSignalHandler))
+        {
+            cerr << " Failed to register signal SIGUSR2 " << endl;
+        }
+
+        cout << "Waiting for signal to restart MEGAsync ... " << endl;
+        if (condVarRestart.wait_for(lock, std::chrono::minutes(30)) == std::cv_status::no_timeout)
+        {
+            appArgs.removeAll(waitForSignalArg);
+            bool success = QProcess::startDetached(appExecPath, appArgs);
+            cout << "Restarting MEGAsync: " << appExecPath.toUtf8().constData() << " "
+                 << appArgs.join(QLatin1Char(' ')).toUtf8().constData() << " "
+                 << (success ? "OK" : "FAILED!") << endl;
+            freeStaticResources();
+            exit(!success);
+        }
+
+        cout << "Timed out waiting for restart signal" << endl;
+        freeStaticResources();
+        exit(2);
+    }
+
+    // Block SIGUSR2 for normal execution: we don't want it to kill the process, in case there's a
+    // rogue update going on.
+    sigset_t signalstoblock;
+    sigemptyset(&signalstoblock);
+    sigaddset(&signalstoblock, SIGUSR2);
+    sigprocmask(SIG_BLOCK, &signalstoblock, NULL);
+#endif
+
     // Acquire the single-instance lock before anything that may mutate the install dir:
     // the obsolete-file sweep and the symlink recreation below must only run in the
     // process that owns the instance. On the very first start the data dir (which holds
@@ -408,60 +466,6 @@ int main(int argc, char *argv[])
     // it applies. The auto-update removes them (they are not part of the update manifest),
     // so any missing link is recreated on every start.
     Platform::getInstance()->processSymLinks();
-
-#ifdef Q_OS_LINUX
-
-    // Ensure interesting signals are unblocked.
-    sigset_t signalstounblock;
-    sigemptyset (&signalstounblock);
-    sigaddset(&signalstounblock, SIGUSR1);
-    sigaddset(&signalstounblock, SIGUSR2);
-    sigprocmask(SIG_UNBLOCK, &signalstounblock, NULL);
-
-    if (signal(SIGUSR1, LinuxSignalHandler))
-    {
-        cerr << " Failed to register signal SIGUSR1 " << endl;
-    }
-
-    // Get app parameters
-    for (int i = 0; i < argc; ++i)
-    {
-        appArgs << QString::fromUtf8(argv[i]);
-    }
-    appExecPath = appArgs.takeFirst();
-
-    // Process "waitforsignal" if passed
-    if (appArgs.contains(waitForSignalArg))
-    {
-        std::unique_lock<std::mutex> lock(mtxcondvar);
-        if (signal(SIGUSR2, LinuxSignalHandler))
-        {
-            cerr << " Failed to register signal SIGUSR2 " << endl;
-        }
-
-        cout << "Waiting for signal to restart MEGAsync ... " << endl;
-        if (condVarRestart.wait_for(lock, std::chrono::minutes(30)) == std::cv_status::no_timeout)
-        {
-            appArgs.removeAll(waitForSignalArg);
-            bool success = QProcess::startDetached(appExecPath, appArgs);
-            cout << "Restarting MEGAsync: " << appExecPath.toUtf8().constData() << " "
-                 << appArgs.join(QLatin1Char(' ')).toUtf8().constData() << " "
-                 << (success ? "OK" : "FAILED!") << endl;
-            freeStaticResources();
-            exit(!success);
-        }
-
-        cout << "Timed out waiting for restart signal" << endl;
-        freeStaticResources();
-        exit(2);
-    }
-
-    // Block SIGUSR2 for normal execution: we don't want it to kill the process, in case there's a rogue update going on.
-    sigset_t signalstoblock;
-    sigemptyset (&signalstoblock);
-    sigaddset(&signalstoblock, SIGUSR2);
-    sigprocmask(SIG_BLOCK, &signalstoblock, NULL);
-#endif
 
     // adds thread-safety to OpenSSL
     QSslSocket::supportsSsl();
