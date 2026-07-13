@@ -2054,8 +2054,10 @@ void MegaApplication::tryExitApplication(bool force)
 
     // User exit intent wins over the forced post-update restart. Disarmed before the
     // confirmation dialog too, so the timer cannot fire and restart the app under the
-    // open dialog. If the user then stays, the update still applies on the
-    // transfers-idle path or the next manual restart.
+    // open dialog. If the user stays, the deadline is re-armed in the dialog handler:
+    // paused transfers keep the transfers-idle path from ever applying the update, so
+    // the postponement must stay bounded.
+    const bool rebootWasArmed = mForcedRebootTimer.isActive();
     mForcedRebootTimer.stop();
 
     if (mStatsEventHandler)
@@ -2082,15 +2084,22 @@ void MegaApplication::tryExitApplication(bool force)
         textsByButton.insert(QMessageBox::Yes, tr("Exit app"));
         textsByButton.insert(QMessageBox::No, tr("Stay in app"));
         msgInfo.buttonsText = textsByButton;
-        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
+        msgInfo.finishFunc = [this, rebootWasArmed](QPointer<MessageDialogResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {
                 exitApplication();
             }
-            else if (gCrashableForTesting)
+            else
             {
-                *testCrashPtr = 0;
+                if (rebootWasArmed)
+                {
+                    mForcedRebootTimer.start(MAX_UPDATE_REBOOT_DELAY_MS);
+                }
+                if (gCrashableForTesting)
+                {
+                    *testCrashPtr = 0;
+                }
             }
         };
         MessageDialogOpener::question(msgInfo);
