@@ -1065,6 +1065,18 @@ void NodeSelectorTreeViewWidget::onLevelLoaded()
         mViewInitialized = true;
     }
 
+    // The Backups top root (the Vault "Backups" folder) is created asynchronously, so the initial
+    // setRootIndex above ran while getTopRootIndex() was still invalid and left the view rooted at
+    // the true root: the Vault folder shows up as a row instead of only its device-folder children.
+    // Once the top root exists, anchor the view to it (the top root is never shown as a row, only
+    // its children are). This never fires once inside a folder (the current root is valid then),
+    // and tabs whose top root is intentionally invalid (Incoming Shares) keep their root items.
+    if (mModel->hasTopRootIndex() && mProxyModel->getTopRootIndex().isValid() &&
+        !getCurrentRootIndex().isValid())
+    {
+        setRootIndex(mProxyModel->getTopRootIndex());
+    }
+
     emit viewReady(this);
 }
 
