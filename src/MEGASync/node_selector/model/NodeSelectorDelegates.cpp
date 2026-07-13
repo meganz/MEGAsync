@@ -201,7 +201,12 @@ QPixmap NodeRowDelegate::paintForDrag(const QModelIndex& index, QAbstractItemVie
     rect.setWidth(std::max(1, std::min(rect.width(), 400)));
     rect.setHeight(std::max(1, rect.height()));
 
-    QPixmap pixmap(rect.size());
+    // Allocate at physical resolution and tag the pixmap with the view's device
+    // pixel ratio, so the drag image stays sharp on HiDPI displays. The painter
+    // then works in logical coordinates, so the rect math below is unaffected.
+    const qreal dpr = view->devicePixelRatioF();
+    QPixmap pixmap(rect.size() * dpr);
+    pixmap.setDevicePixelRatio(dpr);
     pixmap.fill(Qt::transparent);
     if (pixmap.isNull())
     {
@@ -272,8 +277,11 @@ QPixmap NodeRowDelegate::paintForDrag(const QModelIndexList& rows, QAbstractItem
             continue;
         }
 
-        width = qMax(width, rowPixmap.width());
-        height += rowPixmap.height();
+        // width()/height() return physical pixels; the stacking below positions in
+        // logical coordinates, so accumulate device-independent sizes.
+        const qreal rowDpr = rowPixmap.devicePixelRatio();
+        width = qMax(width, qRound(rowPixmap.width() / rowDpr));
+        height += qRound(rowPixmap.height() / rowDpr);
         rowPixmaps.append(rowPixmap);
     }
 
@@ -282,7 +290,9 @@ QPixmap NodeRowDelegate::paintForDrag(const QModelIndexList& rows, QAbstractItem
         return {};
     }
 
-    QPixmap pixmap(width, height);
+    const qreal dpr = view->devicePixelRatioF();
+    QPixmap pixmap(QSize(width, height) * dpr);
+    pixmap.setDevicePixelRatio(dpr);
     pixmap.fill(Qt::transparent);
 
     QPainter painter(&pixmap);
@@ -290,13 +300,15 @@ QPixmap NodeRowDelegate::paintForDrag(const QModelIndexList& rows, QAbstractItem
     for (const auto& rowPixmap: rowPixmaps)
     {
         painter.drawPixmap(0, y, rowPixmap);
-        y += rowPixmap.height();
+        y += qRound(rowPixmap.height() / rowPixmap.devicePixelRatio());
     }
 
     const int hiddenRows = static_cast<int>(rows.size()) - rowsToPaint;
     if (hiddenRows > 0)
     {
-        paintDragOverflowBadge(painter, pixmap.rect(), hiddenRows);
+        // pixmap.rect() is in physical pixels while the painter positions in
+        // logical coordinates, so anchor the badge to the logical bounds.
+        paintDragOverflowBadge(painter, QRect(0, 0, width, height), hiddenRows);
     }
 
     painter.end();
