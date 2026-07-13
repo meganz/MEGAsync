@@ -571,6 +571,10 @@ public:
     static const QString UPDATE_CHECK_URL;
     static const QString UPDATE_FOLDER_NAME;
     static const QString UPDATE_BACKUP_FOLDER_NAME;
+    // Must not start with UPDATE_BACKUP_FOLDER_NAME: those folders are deleted on every
+    // update check, while the obsolete-file sweep backups are retained for a while as a
+    // recovery path (see UpdateTask::initialCleanup).
+    static const QString OBSOLETE_BACKUP_FOLDER_NAME;
     static const QString PROXY_TEST_SUBSTRING;
     static const char UPDATE_PUBLIC_KEY[];
 

@@ -40,6 +40,14 @@ QString manifestPathKey(const QString& path)
     return normalized;
 #endif
 }
+
+// Single owner of the backup-folder naming scheme: initialCleanup() prunes these
+// folders by prefix, so the creation sites must never drift from the constants.
+QString timestampedFolderName(const QString& prefix)
+{
+    return prefix +
+           QDateTime::currentDateTimeUtc().toString(QString::fromLatin1("_dd_MM_yy__hh_mm_ss"));
+}
 } // namespace
 
 UpdateTask::UpdateTask(MegaApi *megaApi, QString appFolder, bool isPublic, QObject *parent) :
@@ -164,6 +172,24 @@ void UpdateTask::initialCleanup()
         if (subdirs[i].startsWith(Preferences::UPDATE_BACKUP_FOLDER_NAME))
         {
             Utilities::removeRecursively(basePathDir.absoluteFilePath(subdirs[i]));
+        }
+    }
+
+    // The startup obsolete-file sweep backups deliberately escape the purge above
+    // (their prefix does not start with "backup"): they are the only recovery path if
+    // the sweep ever moves a needed file, so they are kept for a while instead of being
+    // deleted on the first update check ~60 s after the sweep created them.
+    constexpr int OBSOLETE_BACKUP_RETENTION_DAYS = 30;
+    const QDateTime retentionLimit =
+        QDateTime::currentDateTimeUtc().addDays(-OBSOLETE_BACKUP_RETENTION_DAYS);
+    const QFileInfoList obsoleteBackups = basePathDir.entryInfoList(
+        QStringList() << Preferences::OBSOLETE_BACKUP_FOLDER_NAME + QString::fromLatin1("_*"),
+        QDir::Dirs | QDir::NoDotAndDotDot);
+    for (const QFileInfo& obsoleteBackup: obsoleteBackups)
+    {
+        if (obsoleteBackup.lastModified().toUTC() <= retentionLimit)
+        {
+            Utilities::removeRecursively(obsoleteBackup.absoluteFilePath());
         }
     }
 
@@ -434,8 +460,7 @@ bool UpdateTask::performUpdate()
     //Create backup folder
     QDir basePathDir(basePath);
     backupFolder.setPath(basePathDir.absoluteFilePath(
-        Preferences::UPDATE_BACKUP_FOLDER_NAME +
-        QDateTime::currentDateTime().toString(QString::fromLatin1("_dd_MM_yy__hh_mm_ss"))));
+        timestampedFolderName(Preferences::UPDATE_BACKUP_FOLDER_NAME)));
     backupFolder.mkdir(QString::fromLatin1("."));
 
     for (int i = 0; i < localPaths.size(); i++)
@@ -628,8 +653,7 @@ void UpdateTask::runPendingObsoleteCleanup(const QString& dataPath,
     }
 
     const QDir backupFolder(QDir(dataPath).absoluteFilePath(
-        Preferences::UPDATE_BACKUP_FOLDER_NAME +
-        QDateTime::currentDateTime().toString(QString::fromLatin1("_dd_MM_yy__hh_mm_ss"))));
+        timestampedFolderName(Preferences::OBSOLETE_BACKUP_FOLDER_NAME)));
 
     sweepObsoleteFiles(appFolder, backupFolder, lines, logger);
 #else
