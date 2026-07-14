@@ -131,10 +131,14 @@ NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
         mProxyModel->prepareForDeletion();
     }
 
-    disconnect(mModel.get(),
-               &NodeSelectorModel::blockUi,
-               this,
-               &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
+    // Sever every model->widget connection: the members declared
+    // after mModel (timers, coordinators) and ui are destroyed before the model, so
+    // any model signal delivered while the model tears down would reach slots that
+    // touch already-freed objects (onModelRowsChanged, onModelModified...).
+    if (mModel)
+    {
+        disconnect(mModel.get(), nullptr, this, nullptr);
+    }
     delete ui;
 }
 

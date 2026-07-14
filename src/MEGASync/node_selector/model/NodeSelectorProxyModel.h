@@ -76,6 +76,7 @@ private:
     bool mExpandMapped;
     bool mForceInvalidate;
     bool mPendingSortIsLevelLoad;
+    bool mTearingDown = false;
 
 private slots:
     void invalidateModel(const QList<QPair<mega::MegaHandle, QModelIndex> >& parents,
