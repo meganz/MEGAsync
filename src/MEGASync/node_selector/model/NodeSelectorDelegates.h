@@ -47,6 +47,8 @@ public:
                const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
     QPixmap paintForDrag(const QModelIndex& index, QAbstractItemView* view) const;
+    // Composite drag pixmap: stacks the selected rows (capped) with a "+N" badge.
+    QPixmap paintForDrag(const QModelIndexList& rows, QAbstractItemView* view) const;
 
     bool helpEvent(QHelpEvent* event,
                    QAbstractItemView* view,
@@ -57,6 +59,9 @@ public:
 
 protected:
     void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) const override;
+
+private:
+    void paintDragOverflowBadge(QPainter& painter, const QRect& pixmapRect, int hiddenRows) const;
 };
 
 class NodeLabelDelegate: public NodeSelectorDelegate

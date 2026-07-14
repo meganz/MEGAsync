@@ -201,7 +201,12 @@ QPixmap NodeRowDelegate::paintForDrag(const QModelIndex& index, QAbstractItemVie
     rect.setWidth(std::max(1, std::min(rect.width(), 400)));
     rect.setHeight(std::max(1, rect.height()));
 
-    QPixmap pixmap(rect.size());
+    // Allocate at physical resolution and tag the pixmap with the view's device
+    // pixel ratio, so the drag image stays sharp on HiDPI displays. The painter
+    // then works in logical coordinates, so the rect math below is unaffected.
+    const qreal dpr = view->devicePixelRatioF();
+    QPixmap pixmap(rect.size() * dpr);
+    pixmap.setDevicePixelRatio(dpr);
     pixmap.fill(Qt::transparent);
     if (pixmap.isNull())
     {
@@ -235,10 +240,109 @@ QPixmap NodeRowDelegate::paintForDrag(const QModelIndex& index, QAbstractItemVie
     painter.fillPath(path,
                      TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2")));
 
+    // Keep the file name inside the rounded background with right padding, so it elides
+    // with margin instead of being clipped against the edge of the drag pixmap.
+    constexpr int textRightPadding = 12;
+    option.rect.setRight(backgroundRect.right() - textRightPadding);
+
     paint(&painter, option, index);
     painter.end();
 
     return pixmap;
+}
+
+QPixmap NodeRowDelegate::paintForDrag(const QModelIndexList& rows, QAbstractItemView* view) const
+{
+    if (!view)
+    {
+        return {};
+    }
+
+    // Stack up to a few rows so the drag pixmap stays a reasonable size; any extra
+    // rows are represented with a "+N" badge on the bottom-right corner.
+    constexpr int maxStackedRows = 5;
+    const int rowsToPaint = qMin(static_cast<int>(rows.size()), maxStackedRows);
+
+    QList<QPixmap> rowPixmaps;
+    rowPixmaps.reserve(rowsToPaint);
+    int width = 0;
+    int height = 0;
+
+    for (int i = 0; i < rowsToPaint; ++i)
+    {
+        const QModelIndex index = rows.at(i).sibling(rows.at(i).row(), 0);
+        QPixmap rowPixmap = paintForDrag(index, view);
+        if (rowPixmap.isNull())
+        {
+            continue;
+        }
+
+        // width()/height() return physical pixels; the stacking below positions in
+        // logical coordinates, so accumulate device-independent sizes.
+        const qreal rowDpr = rowPixmap.devicePixelRatio();
+        width = qMax(width, qRound(rowPixmap.width() / rowDpr));
+        height += qRound(rowPixmap.height() / rowDpr);
+        rowPixmaps.append(rowPixmap);
+    }
+
+    if (rowPixmaps.isEmpty())
+    {
+        return {};
+    }
+
+    const qreal dpr = view->devicePixelRatioF();
+    QPixmap pixmap(QSize(width, height) * dpr);
+    pixmap.setDevicePixelRatio(dpr);
+    pixmap.fill(Qt::transparent);
+
+    QPainter painter(&pixmap);
+    int y = 0;
+    for (const auto& rowPixmap: rowPixmaps)
+    {
+        painter.drawPixmap(0, y, rowPixmap);
+        y += qRound(rowPixmap.height() / rowPixmap.devicePixelRatio());
+    }
+
+    const int hiddenRows = static_cast<int>(rows.size()) - rowsToPaint;
+    if (hiddenRows > 0)
+    {
+        // pixmap.rect() is in physical pixels while the painter positions in
+        // logical coordinates, so anchor the badge to the logical bounds.
+        paintDragOverflowBadge(painter, QRect(0, 0, width, height), hiddenRows);
+    }
+
+    painter.end();
+
+    return pixmap;
+}
+
+void NodeRowDelegate::paintDragOverflowBadge(QPainter& painter,
+                                             const QRect& pixmapRect,
+                                             int hiddenRows) const
+{
+    const QString text = QLatin1String("+") + QString::number(hiddenRows);
+
+    QFont font(painter.font());
+    font.setBold(true);
+    painter.setFont(font);
+
+    const QFontMetrics metrics(font);
+    constexpr int paddingX = 8;
+    constexpr int paddingY = 2;
+    const QRect textRect = metrics.boundingRect(text);
+    QRect badgeRect(0, 0, textRect.width() + paddingX * 2, textRect.height() + paddingY * 2);
+    badgeRect.moveBottomRight(pixmapRect.bottomRight() - QPoint(12, 6));
+
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPainterPath path;
+    path.addRoundedRect(badgeRect, badgeRect.height() / 2.0, badgeRect.height() / 2.0);
+    painter.fillPath(path,
+                     TokenParserWidgetManager::instance()->getColor(QLatin1String("surface-2")));
+    painter.setPen(TokenParserWidgetManager::instance()->getColor(QLatin1String("border-subtle")));
+    painter.drawPath(path);
+
+    painter.setPen(TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary")));
+    painter.drawText(badgeRect, Qt::AlignCenter, text);
 }
 
 bool NodeRowDelegate::helpEvent(QHelpEvent* event,

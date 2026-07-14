@@ -129,6 +129,7 @@ public:
     void dropEvent(QDropEvent* event) override;
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dragMoveEvent(QDragMoveEvent* event) override;
+    void dragLeaveEvent(QDragLeaveEvent* event) override;
 
     enum ActionsOrder
     {
@@ -230,6 +231,8 @@ private:
     static const qreal ROW_RADIUS;
 
     void selectFromMouseEvent(const QModelIndex& index, Qt::KeyboardModifiers modifiers);
+    // Sets the row highlighted as the current drop target and repaints only on change.
+    void setDropHoverIndex(const QModelIndex& index);
 
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     NodeSelectorProxyModel* proxyModel() const;
@@ -306,6 +309,7 @@ private:
     // QToolTip. The whole-row access role takes priority over the per-cell ToolTipRole.
     NodeSelectorStyledTooltip mTooltip;
     QPersistentModelIndex mTooltipIndex; // Row the styled tooltip is currently anchored to.
+    QPersistentModelIndex mDropHoverIndex; // Row highlighted as the current drop target.
 };
 
 #endif // NODESELECTORTREEVIEW_H
