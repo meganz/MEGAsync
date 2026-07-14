@@ -577,6 +577,10 @@ private:
 
     void processUploads(const QStringList& uploads, PiTagTrigger piTagTrigger);
 
+    void processUploadsToTarget();
+
+    void confirmAndProcessExternalUploads();
+
     void updateMetadata(TransferMetaData* data, const QString& filePath);
 
     template<class Func>

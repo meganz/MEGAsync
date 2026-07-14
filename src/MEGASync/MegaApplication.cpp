@@ -4827,6 +4827,30 @@ void MegaApplication::processUploads()
         return;
     }
 
+    // Uploads that arrived through an external file-manager integration - the macOS
+    // Services "MEGA: Upload" entry or the Finder-extension socket - are not backed by a
+    // trusted in-app user gesture. Any same-user process can drive those IPC entry points
+    // (NSPerformService / the local socket), so require an explicit confirmation before we
+    // read and upload the files, and never take the silent default-upload-folder path.
+    const bool externallyRequested =
+        std::any_of(mUploadQueue.cbegin(),
+                    mUploadQueue.cend(),
+                    [](const QPair<QString, PiTagTrigger>& item)
+                    {
+                        return item.second == MegaApi::PITAG_TRIGGER_EXPLORER_EXTENSION;
+                    });
+
+    if (externallyRequested)
+    {
+        confirmAndProcessExternalUploads();
+        return;
+    }
+
+    processUploadsToTarget();
+}
+
+void MegaApplication::processUploadsToTarget()
+{
     //If there is a default upload folder in the preferences
     std::shared_ptr<MegaNode> node(megaApi->getNodeByHandle(preferences->uploadFolder()));
     if (node)
@@ -4869,6 +4893,44 @@ void MegaApplication::processUploads()
             mUploadQueue.clear();
         }
     });
+}
+
+void MegaApplication::confirmAndProcessExternalUploads()
+{
+    QStringList files;
+    for (const auto& item: mUploadQueue)
+    {
+        files << QDir::toNativeSeparators(item.first);
+    }
+
+    MessageDialogInfo msgInfo;
+    msgInfo.titleText = tr("Upload to MEGA");
+    msgInfo.descriptionText = (files.size() == 1) ?
+                                  tr("Do you want to upload \"%1\" to MEGA?").arg(files.first()) :
+                                  tr("Do you want to upload %n file to MEGA?", "", files.size());
+    msgInfo.textFormat = Qt::PlainText;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+
+    QMap<QMessageBox::StandardButton, QString> buttonsText;
+    buttonsText.insert(QMessageBox::Yes, tr("Upload"));
+    buttonsText.insert(QMessageBox::No, tr("Cancel"));
+    msgInfo.buttonsText = buttonsText;
+
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
+    {
+        if (msg->result() == QMessageBox::Yes)
+        {
+            processUploadsToTarget();
+        }
+        else
+        {
+            // Declined: nothing is read or uploaded.
+            mUploadQueue.clear();
+        }
+    };
+
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaApplication::processDownloads()
