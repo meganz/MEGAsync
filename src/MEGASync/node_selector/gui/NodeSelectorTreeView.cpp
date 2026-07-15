@@ -363,6 +363,9 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent* event)
 
     if (indexes.isEmpty())
     {
+        // No selection: skip the selection-dependent custom keys, but still let the base view
+        // handle its own shortcuts (e.g. Ctrl+A to select all, arrow navigation).
+        QTreeView::keyPressEvent(event);
         return;
     }
 

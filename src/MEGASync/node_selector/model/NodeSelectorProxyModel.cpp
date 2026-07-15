@@ -26,10 +26,61 @@ NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent):
             &NodeSelectorProxyModel::onModelSortedFiltered);
 }
 
-NodeSelectorProxyModel::~NodeSelectorProxyModel() {}
+NodeSelectorProxyModel::~NodeSelectorProxyModel()
+{
+    // Defense in depth: ~QFutureWatcher does not wait for its future, so a still
+    // running concurrent sort would outlive this proxy if no owner called
+    // prepareForDeletion() first (it is idempotent).
+    prepareForDeletion();
+}
+
+void NodeSelectorProxyModel::prepareForDeletion()
+{
+    // Already called (e.g. by NodeSelectorTreeViewWidget before our own destructor
+    // runs): nothing left to stop.
+    if (mTearingDown)
+    {
+        return;
+    }
+
+    // Called during teardown while the source model is still alive. The sort runs on a
+    // QtConcurrent thread and dereferences NodeSelectorModelItem objects owned by the source
+    // model; if it outlives the model it is a use-after-free (crash in getParent()).
+    // Make any later sort() a no-op, stop both re-launch triggers — the finished handler
+    // (which could also reattach the view: levelLoaded -> onLevelLoaded -> setModel) and
+    // the source model level loads — then block until the running task returns.
+    mTearingDown = true;
+
+    disconnect(&mFilterWatcher,
+               &QFutureWatcher<void>::finished,
+               this,
+               &NodeSelectorProxyModel::onModelSortedFiltered);
+
+    // getMegaModel() is null when called from our own destructor after the source
+    // model died (QSortFilterProxyModel resets to an empty source model).
+    if (auto megaModel = getMegaModel())
+    {
+        disconnect(megaModel,
+                   &NodeSelectorModel::levelsAdded,
+                   this,
+                   &NodeSelectorProxyModel::invalidateModel);
+    }
+
+    if (mFilterWatcher.isRunning())
+    {
+        mFilterWatcher.waitForFinished();
+    }
+}
 
 void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
 {
+    // Teardown barrier: after prepareForDeletion() a new concurrent sort would
+    // dereference a source model that is being (or has been) destroyed.
+    if (mTearingDown)
+    {
+        return;
+    }
+
     mOrder = order;
     mSortColumn = column;
 

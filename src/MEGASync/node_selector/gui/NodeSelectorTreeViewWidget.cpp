@@ -123,6 +123,22 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode,
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
 {
+    // Ensure no background sort keeps touching the model/items once teardown begins.
+    // The source model (mModel) is destroyed before mProxyModel, so stop the async
+    // sort here, while both are still alive.
+    if (mProxyModel)
+    {
+        mProxyModel->prepareForDeletion();
+    }
+
+    // Sever every model->widget connection: the members declared
+    // after mModel (timers, coordinators) and ui are destroyed before the model, so
+    // any model signal delivered while the model tears down would reach slots that
+    // touch already-freed objects (onModelRowsChanged, onModelModified...).
+    if (mModel)
+    {
+        disconnect(mModel.get(), nullptr, this, nullptr);
+    }
     delete ui;
 }
 
@@ -1051,6 +1067,18 @@ void NodeSelectorTreeViewWidget::onLevelLoaded()
 
         // View ready to work with it > View init and model loaded
         mViewInitialized = true;
+    }
+
+    // The Backups top root (the Vault "Backups" folder) is created asynchronously, so the initial
+    // setRootIndex above ran while getTopRootIndex() was still invalid and left the view rooted at
+    // the true root: the Vault folder shows up as a row instead of only its device-folder children.
+    // Once the top root exists, anchor the view to it (the top root is never shown as a row, only
+    // its children are). This never fires once inside a folder (the current root is valid then),
+    // and tabs whose top root is intentionally invalid (Incoming Shares) keep their root items.
+    if (mModel->hasTopRootIndex() && mProxyModel->getTopRootIndex().isValid() &&
+        !getCurrentRootIndex().isValid())
+    {
+        setRootIndex(mProxyModel->getTopRootIndex());
     }
 
     emit viewReady(this);

@@ -15,6 +15,8 @@
 #include "Utilities.h"
 
 #include <QApplication>
+#include <QCoreApplication>
+#include <QEvent>
 #include <QFont>
 #include <QPainter>
 #include <QToolTip>
@@ -914,8 +916,34 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
 
 NodeSelectorModel::~NodeSelectorModel()
 {
+    // Cancel any in-flight request so the worker stops issuing new blocking
+    // calls back to this (GUI) thread.
+    mNodeRequesterWorker->abort();
+
+    // Stop any further worker signal from being queued to this model: its slots
+    // (onChildNodesReady, onNodesAdded...) must not run on an object whose derived
+    // part is already destroyed, nor re-emit signals into the half-destroyed
+    // widget/proxy graph.
+    disconnect(mNodeRequesterWorker, nullptr, this, nullptr);
+
     mNodeRequesterThread->quit();
-    mNodeRequesterThread->wait();
+
+    // The worker may currently be parked on a BlockingQueuedConnection (e.g.
+    // beginChildRowsInsertion) waiting for THIS thread to service its posted
+    // event. A plain wait() would deadlock: the worker cannot finish until we
+    // process that event, and we would never return to the event loop. Instead of
+    // pumping the whole event loop (which would deliver unrelated queued events
+    // into this half-destroyed object graph), discard the metacalls posted to this
+    // model: destroying a blocking metacall event releases its semaphore (see
+    // ~QAbstractMetaCallEvent), so the worker resumes without the slot running —
+    // the same mechanism ~QObject itself relies on. Repeat until the thread has
+    // finished, in case the worker issues one last blocking call after the first
+    // discard.
+    do
+    {
+        QCoreApplication::removePostedEvents(this, QEvent::MetaCall);
+    }
+    while (!mNodeRequesterThread->wait(50));
 }
 
 void NodeSelectorModel::setIsModelBeingModified(bool state)

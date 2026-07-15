@@ -30,7 +30,9 @@ protected:
     virtual void adjustContentRect(QStyleOptionViewItem* option, const QModelIndex& index) const {}
 
 private:
-    QModelIndex mLastHoverRow;
+    // Persistent so it is invalidated by the proxy when it rebuilds its mappings
+    // (invalidateFilter). A plain QModelIndex would dangle and crash if painted afterwards.
+    QPersistentModelIndex mLastHoverRow;
 };
 
 class NodeRowDelegate: public NodeSelectorDelegate
