@@ -1359,6 +1359,19 @@
     </message>
 </context>
 <context>
+    <name>DestinationBreadcrumb</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Checkbox label in the node selector destination breadcrumb to set the current folder as the default upload destination. SNC-6420</translatorcomment>
+        <translation>始终上传到此位置</translation>
+    </message>
+    <message>
+        <source>Destination</source>
+        <translatorcomment>Label/title of the destination breadcrumb in the node selector, showing the folder files will be uploaded to. SNC-6420</translatorcomment>
+        <translation>目标位置</translation>
+    </message>
+</context>
+<context>
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Always download to this destination</source>
@@ -1528,6 +1541,11 @@
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
         <translation>将保留此位置的文件夹。</translation>
+    </message>
+    <message>
+        <source>The folder will be renamed as:</source>
+        <translatorcomment>Text explaining the result of the folder rename action. SNC-6420</translatorcomment>
+        <translation>该文件夹将被重命名为：</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -2019,13 +2037,30 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message numerus="yes">
+    <message>
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation>
-            <numerusform>%n result</numerusform>
-            <numerusform>%n results</numerusform>
-        </translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
+        <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>所有项目将被永久删除。此操作 [B]无法[/B] 被撤销。</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Messagebox cancel button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Empty</source>
+        <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>清空</translation>
+    </message>
+    <message>
+        <source>Empty Rubbish bin?</source>
+        <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>是否清空回收站？</translation>
     </message>
 </context>
 <context>
@@ -4692,6 +4727,11 @@ Enter a different name</source>
         <translation>搜索</translation>
     </message>
     <message>
+        <source>Searching…</source>
+        <translatorcomment>Loading text shown in the node selector while a search for nodes is in progress. SNC-6420</translatorcomment>
+        <translation>正在搜索…</translation>
+    </message>
+    <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
         <translation>选择一个MEGA文件夹</translation>
@@ -4700,6 +4740,44 @@ Enter a different name</source>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
         <translation>您选择的项目已被移除。要重新选择，请关闭此窗口，然后重试。</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorLabelColors</name>
+    <message>
+        <source>Blue</source>
+        <translatorcomment>Color name for the &quot;Blue&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>蓝色</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translatorcomment>Color name for the &quot;Green&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>绿色</translation>
+    </message>
+    <message>
+        <source>Grey</source>
+        <translatorcomment>Color name for the &quot;Grey&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>灰色</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translatorcomment>Color name for the &quot;Orange&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>橙色</translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translatorcomment>Color name for the &quot;Purple&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>紫色</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translatorcomment>Color name for the &quot;Red&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>红色</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translatorcomment>Color name for the &quot;Yellow&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>黄色</translation>
     </message>
 </context>
 <context>
@@ -4830,6 +4908,11 @@ Enter a different name</source>
         <translation>文件夹内容已同步。</translation>
     </message>
     <message>
+        <source>Label</source>
+        <translatorcomment>Column header for the node label in the node selector. SNC-6420</translatorcomment>
+        <translation>标签</translation>
+    </message>
+    <message>
         <source>Last modified</source>
         <translatorcomment>Table header title for node last modified date info. SNC.5804</translatorcomment>
         <translation>上次修改</translation>
@@ -4853,6 +4936,11 @@ Enter a different name</source>
         <source>Sort by date added</source>
         <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
         <translation>按添加日期排序</translation>
+    </message>
+    <message>
+        <source>Sort by label</source>
+        <translatorcomment>Sort option to order nodes by their label in the node selector. SNC-6420</translatorcomment>
+        <translation>按标签排序</translation>
     </message>
     <message>
         <source>Sort by last modified date</source>
@@ -5056,6 +5144,11 @@ Enter a different name</source>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
     <message>
+        <source>Add backup</source>
+        <translatorcomment>Empty-state button in the node selector to start adding a backup. SNC-6420</translatorcomment>
+        <translation>添加备份</translation>
+    </message>
+    <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
         <translation>与您共享的人将无法再访问任何共享的文件或文件夹。您仍然可以在回收站中访问这些项目，并恢复和共享它们。</translation>
@@ -5064,6 +5157,11 @@ Enter a different name</source>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>取消</translation>
+    </message>
+    <message>
+        <source>Create a folder to move your content here</source>
+        <translatorcomment>Empty-state hint in the node selector inviting the user to create a folder. SNC-6420</translatorcomment>
+        <translation>创建一个文件夹，将您的内容移到这里</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5081,9 +5179,24 @@ Enter a different name</source>
         <translation>不移动</translation>
     </message>
     <message>
+        <source>Download</source>
+        <translatorcomment>Action button in the node selector to download the selected folder. SNC-6420</translatorcomment>
+        <translation>下载</translation>
+    </message>
+    <message>
+        <source>Drag and drop your files here</source>
+        <translatorcomment>Empty-state hint in the node selector inviting the user to drag and drop files. SNC-6420</translatorcomment>
+        <translation>将您的文件拖放到此处</translation>
+    </message>
+    <message>
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation>清空回收站</translation>
+    </message>
+    <message>
+        <source>Empty folder</source>
+        <translatorcomment>Empty state label shown in the node selector view when the selected folder has no items. SNC-6420</translatorcomment>
+        <translation>空文件夹</translation>
     </message>
     <message>
         <source>Folder is empty</source>
@@ -5132,9 +5245,19 @@ Enter a different name</source>
         <translation>新建文件夹</translation>
     </message>
     <message>
+        <source>No folders in Cloud drive</source>
+        <translatorcomment>Empty-state message shown in the node selector when the Cloud drive has no folders. SNC-6420</translatorcomment>
+        <translation>云盘中无文件夹</translation>
+    </message>
+    <message>
         <source>No folders to select</source>
         <translatorcomment>Title on the view when there are no syncable folders in a folder. SNC-6358</translatorcomment>
         <translation>没有可选的文件夹</translation>
+    </message>
+    <message>
+        <source>Nothing in your private vault yet</source>
+        <translatorcomment>Empty-state message shown in the node selector when the private vault has no items yet. SNC-6420</translatorcomment>
+        <translation>您的私密保管库里还什么都没有</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5145,6 +5268,31 @@ Enter a different name</source>
         <source>Only folders can be synced</source>
         <translatorcomment>Message on the view when there are no syncable folders in a folder. SNC-6358</translatorcomment>
         <translation>仅文件夹可同步</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Action button in the node selector to sync the selected folder. SNC-6420</translatorcomment>
+        <translation>同步</translation>
+    </message>
+    <message>
+        <source>This folder is empty. Keep something safe with zero-knowledge encryption.</source>
+        <translatorcomment>Empty-state message shown in the node selector when the current folder has no items. SNC-6420</translatorcomment>
+        <translation>此文件夹为空。使用零知识加密来保护文件安全。</translation>
+    </message>
+    <message>
+        <source>This folder is read and write. Ask for full access to sync</source>
+        <translatorcomment>Informational message in the node selector shown for a read-and-write shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
+        <translation>此文件夹具有读写权限。请申请完全访问权限以同步</translation>
+    </message>
+    <message>
+        <source>This folder is read-only. Ask for full access to sync</source>
+        <translatorcomment>Informational message in the node selector shown for a read-only shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
+        <translation>此文件夹为只读。请申请完整的访问权限以进行同步</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Action button in the node selector to upload to the selected folder. SNC-6420</translatorcomment>
+        <translation>上传</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
@@ -5192,6 +5340,11 @@ Enter a different name</source>
 <context>
     <name>NodeSelectorTreeViewWidgetIncomingShares</name>
     <message>
+        <source>Folders shared with you will appear here</source>
+        <translatorcomment>Empty-state message in the node selector incoming shares view, shown when there are no shared folders. SNC-6420</translatorcomment>
+        <translation>已共享给您的文件夹将显示在此处</translation>
+    </message>
+    <message>
         <source>No incoming shares</source>
         <translatorcomment>Title message on the view when there are no items in the normal view. SNC-5804</translatorcomment>
         <translation>无传入的共享</translation>
@@ -5210,6 +5363,11 @@ Enter a different name</source>
 <context>
     <name>NodeSelectorTreeViewWidgetRubbish</name>
     <message>
+        <source>Rubbish bin is empty</source>
+        <translatorcomment>Empty-state message in the node selector rubbish bin view, shown when the rubbish bin has no items. SNC-6420</translatorcomment>
+        <translation>回收站为空</translation>
+    </message>
+    <message>
         <source>The Rubbish bin is empty</source>
         <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
         <translation>回收站为空</translation>
@@ -5225,9 +5383,19 @@ Enter a different name</source>
         </translation>
     </message>
     <message>
+        <source>No results found</source>
+        <translatorcomment>Empty-state title in the node selector search view, shown when the search returns no matches. SNC-6420</translatorcomment>
+        <translation>无结果</translation>
+    </message>
+    <message>
         <source>No search results</source>
         <translatorcomment>Message on the view when the search did not find any coincidence. SNC-5804</translatorcomment>
         <translation>无搜索结果</translation>
+    </message>
+    <message>
+        <source>Try a different name or check the spelling</source>
+        <translatorcomment>Empty-state hint in the node selector search view, suggesting the user refine their search. SNC-6420</translatorcomment>
+        <translation>尝试一个不同的名字，或检查拼写错误</translation>
     </message>
 </context>
 <context>
@@ -6260,6 +6428,18 @@ Enter a different name</source>
         <translation>- 重复的文件夹名称冲突现在已自动解决。
 - 云盘、同步、备份和设置对话框更加清晰且更一致。
 - 错误修复和性能提升。</translation>
+    </message>
+    <message>
+        <source>- Revamped and improved File Manager.
+- Revamped Syncs and Backups tabs in the Settings dialog.
+- Improved Wayland support.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.5.0. SNC-6656</translatorcomment>
+        <translation>- 重新设计并改进的文件管理器。
+- 在设置对话框中重新设计了同步和备份选项卡。
+- Wayland 支持得到提升。
+- 错误修复及性能提升。</translation>
     </message>
 </context>
 <context>
@@ -8428,6 +8608,11 @@ Please, refresh the list.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>您无法串流文件夹。请选择一个文件进行串流。</translation>
     </message>
+    <message>
+        <source>Select a file to stream</source>
+        <translatorcomment>Guidance message in the streaming node selector prompting the user to pick a file to stream. SNC-6420</translatorcomment>
+        <translation>选择要流式传输的文件</translation>
+    </message>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
@@ -9044,10 +9229,35 @@ Please move it to a location that is less than 64 folders deep.</source>
 <context>
     <name>SyncNodeSelector</name>
     <message>
+        <source>Choose a different folder. This folder is already synced</source>
+        <translatorcomment>Validation message in the sync node selector shown when the selected folder is already synced. SNC-6420</translatorcomment>
+        <translation>请选择一个不同的文件夹。此文件夹已同步。</translation>
+    </message>
+    <message>
+        <source>Choose a different folder. This location contains a folder that&apos;s already synced</source>
+        <translatorcomment>Validation message in the sync node selector shown when the selected location contains a folder that is already synced. SNC-6420</translatorcomment>
+        <translation>请选择其他文件夹。此位置包含一个已同步的文件夹。</translation>
+    </message>
+    <message>
+        <source>Folder to sync</source>
+        <translatorcomment>Label in the sync node selector for the folder that will be synced. SNC-6420</translatorcomment>
+        <translation>待同步的文件夹</translation>
+    </message>
+    <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
         <translation>无法同步文件夹。请确保文件夹名称中未使用“\”，“/”或“:”字符。</translation>
+    </message>
+    <message>
+        <source>Only shared folders with full access can be synced</source>
+        <translatorcomment>Informational message in the sync node selector indicating only full-access shared folders can be synced. SNC-6420</translatorcomment>
+        <translation>只有具有完全访问权限的共享文件夹才能同步</translation>
+    </message>
+    <message>
+        <source>Select a full access shared folder to sync</source>
+        <translatorcomment>Guidance message in the sync node selector prompting the user to choose a full-access shared folder to sync. SNC-6420</translatorcomment>
+        <translation>选择一个具有完全访问权限的共享文件夹以进行同步</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -9860,7 +10070,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>取消下载中的所有传输</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel all failed</source>
@@ -10162,6 +10372,11 @@ Please delete the folder sync from settings to cancel them.</source>
 </context>
 <context>
     <name>UploadNodeSelector</name>
+    <message>
+        <source>Select a shared folder to upload your items to</source>
+        <translatorcomment>Guidance banner in the upload node selector, shown in Incoming Shares when no folder is selected, prompting the user to pick a shared folder as the upload destination. SNC-6420</translatorcomment>
+        <translation>选择要上传到的共享文件夹</translation>
+    </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>

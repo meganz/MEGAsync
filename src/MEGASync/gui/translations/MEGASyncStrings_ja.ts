@@ -2037,13 +2037,10 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message numerus="yes">
+    <message>
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation>
-            <numerusform>%n result</numerusform>
-            <numerusform>%n results</numerusform>
-        </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
@@ -3218,6 +3215,11 @@ Please wait for the upload to complete.</source>
         <translation>最新版は、次回のアプリケーションの再起動時に適用されます</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. SNC-6678</translatorcomment>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
         <translation>最新版を確認中…</translation>
@@ -3241,6 +3243,13 @@ Please wait for the upload to complete.</source>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>却下</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you want to upload %n file to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>
+            <numerusform>MEGAに%n個のファイルをアップロードしますか？</numerusform>
+        </translation>
     </message>
     <message>
         <source>Don’t show me again</source>
@@ -3576,6 +3585,11 @@ https://mega.co.nz/#sync</source>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>アップロード</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translatorcomment>Title shown at dialog when the user is trying to upload a file to MEGA from Finder explorer context menu option.SNC-6678.</translatorcomment>
+        <translation>MEGAにアップロード</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -10072,7 +10086,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>ダウンロードの転送をすべてキャンセル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel all failed</source>

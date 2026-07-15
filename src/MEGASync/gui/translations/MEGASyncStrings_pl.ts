@@ -2081,8 +2081,9 @@
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>%n result</numerusform>
-            <numerusform>%n results</numerusform>
+            <numerusform>%n wynik</numerusform>
+            <numerusform>%n wyniki</numerusform>
+            <numerusform>%n wyniki</numerusform>
         </translation>
     </message>
     <message>
@@ -3274,6 +3275,11 @@ Poczekaj na zakończenie przesyłania.</translation>
         <translation>Aktualizacja będzie udostępniona przy kolejnym uruchomieniu aplikacji</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. SNC-6678</translatorcomment>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
         <translation>Sprawdzam aktualizacje…</translation>
@@ -3297,6 +3303,15 @@ Poczekaj na zakończenie przesyłania.</translation>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>Anuluj</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you want to upload %n file to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>
+            <numerusform>Czy chcesz przesłać %n plik do MEGA?</numerusform>
+            <numerusform>Czy chcesz przesłać %n pliki do MEGA?</numerusform>
+            <numerusform>Czy chcesz przesłać %n pliki do MEGA?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Don’t show me again</source>
@@ -3636,6 +3651,11 @@ https://mega.co.nz/#sync</source>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Wgrywane</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translatorcomment>Title shown at dialog when the user is trying to upload a file to MEGA from Finder explorer context menu option.SNC-6678.</translatorcomment>
+        <translation>Wgraj na MEGA</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -10238,7 +10258,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Anuluj wszystkie transfery w Pobrane </translation>
+        <translation>Anuluj wszystkie transfery w Pobrane</translation>
     </message>
     <message>
         <source>Cancel all failed</source>

@@ -2037,14 +2037,6 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message numerus="yes">
-        <source>%n result</source>
-        <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation>
-            <numerusform>%n result</numerusform>
-            <numerusform>%n results</numerusform>
-        </translation>
-    </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
@@ -10070,7 +10062,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอนทั้งหมดในประเภทดาวน์โหลด</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel all failed</source>
