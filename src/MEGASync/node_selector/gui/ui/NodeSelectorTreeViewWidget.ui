@@ -434,7 +434,7 @@ background-color: #F6F6F7; /*colorToken.border-subtle*/
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string notr="true">Upload</string>
+                   <string>Upload</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../../gui/Resources_common.qrc">
@@ -469,7 +469,7 @@ background-color: #F6F6F7; /*colorToken.border-subtle*/
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string notr="true">New folder</string>
+                   <string>New folder</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../../gui/Resources_common.qrc">
@@ -504,7 +504,7 @@ background-color: #F6F6F7; /*colorToken.border-subtle*/
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string notr="true">Add backup</string>
+                   <string>Add backup</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../../gui/Resources_common.qrc">
