@@ -125,7 +125,12 @@ void DuplicatedMoveFile::fillUi(DuplicatedNodeDialog *dialog, std::shared_ptr<Du
         dialog->setHeader(
             getHeader(conflict), QString::fromUtf8(conflict->getConflictNode()->getName()));
 
-        if(!conflict->haveDifferentType())
+        // When copying a node into its own parent folder, the node conflicts with itself.
+        // Replacing a file with itself is meaningless, so only offer rename/skip.
+        const bool conflictsWithItself =
+            moveNodeInfo->getSourceItemHandle() == conflict->getConflictNode()->getHandle();
+
+        if (!conflict->haveDifferentType() && !conflictsWithItself)
         {
             DuplicatedRemoteItem* uploadItem = new DuplicatedRemoteItem(dialog);
 

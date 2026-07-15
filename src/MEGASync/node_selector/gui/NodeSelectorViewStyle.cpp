@@ -1,5 +1,6 @@
 #include "NodeSelectorViewStyle.h"
 
+#include <QIcon>
 #include <QPainter>
 #include <QStyleOptionViewItem>
 
@@ -39,10 +40,25 @@ void NodeSelectorViewStyle::drawControl(ControlElement element,
         if (const auto* viewItem = qstyleoption_cast<const QStyleOptionViewItem*>(option);
             viewItem && !viewItem->icon.isNull() && !viewItem->text.isEmpty())
         {
-            QStyleOptionViewItem iconOnly(*viewItem);
-            iconOnly.text.clear();
-            iconOnly.features &= ~QStyleOptionViewItem::HasDisplay;
-            MegaProxyStyle::drawControl(element, &iconOnly, painter, widget);
+            QStyleOptionViewItem background(*viewItem);
+            background.text.clear();
+            background.features &= ~QStyleOptionViewItem::HasDisplay;
+            background.icon = QIcon();
+            background.features &= ~QStyleOptionViewItem::HasDecoration;
+            MegaProxyStyle::drawControl(element, &background, painter, widget);
+
+            // Paint the icon ourselves, left-aligned and vertically centred, so it is not clipped.
+            const QSize decorationSize = viewItem->decorationSize;
+            const QRect iconRect(viewItem->rect.left(),
+                                 viewItem->rect.top() +
+                                     (viewItem->rect.height() - decorationSize.height()) / 2,
+                                 decorationSize.width(),
+                                 decorationSize.height());
+            viewItem->icon.paint(painter,
+                                 iconRect,
+                                 Qt::AlignVCenter | Qt::AlignLeft,
+                                 QIcon::Normal,
+                                 QIcon::On);
 
             const int iconRight = viewItem->rect.left() + viewItem->decorationSize.width();
             QRect textRect = viewItem->rect;

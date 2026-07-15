@@ -1743,6 +1743,18 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
             {
                 auto decision = resolvedMoveConflict->getSolution();
 
+                // Copying a node into its own parent folder makes it conflict with itself.
+                // Replacing a file with itself is a no-op, and going ahead would remove the
+                // "conflicting" node before copying it, deleting the file we are copying from.
+                // The dialog does not offer replace in this case, but "apply to all" can still
+                // propagate that solution here.
+                if (decision == NodeItemType::FILE_UPLOAD_AND_REPLACE &&
+                    resolvedMoveConflict->getConflictNode() &&
+                    resolvedMoveConflict->getConflictNode()->getHandle() == nodeToMove->getHandle())
+                {
+                    continue;
+                }
+
                 if (decision == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
                 {
                     std::shared_ptr<NodeSelectorMergeInfo> info(
