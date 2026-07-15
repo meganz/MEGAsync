@@ -529,12 +529,12 @@ bool SettingsDialog::event(QEvent* event)
     {
         mUi->retranslateUi(this);
 
+        mUi->lCacheTitle->setText(
+            mUi->lCacheTitle->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
+
 #ifdef Q_OS_MACOS
         mUi->cStartOnStartup->setText(tr("Launch at login"));
         this->setWindowTitle(tr("Settings"));
-#else
-        mUi->lCacheTitle->setText(
-            mUi->lCacheTitle->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 #endif
 
         onCacheSizeAvailable();
