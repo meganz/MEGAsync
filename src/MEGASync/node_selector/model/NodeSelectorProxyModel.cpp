@@ -7,6 +7,7 @@
 
 #include <QCoreApplication>
 #include <QDebug>
+#include <QScopeGuard>
 
 NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent):
     QSortFilterProxyModel(parent),
@@ -105,6 +106,17 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                     itemModel->lockDataMutex(true);
                     blockSignals(true);
                     sourceModel()->blockSignals(true);
+                    // Release the mutex and restore signals on every exit path, including an
+                    // exception (e.g. std::bad_alloc while rebuilding the mapping): otherwise the
+                    // recursive mutex would stay locked forever and deadlock the worker and GUI
+                    // threads on their next access, and the source model would stay silent.
+                    auto restore = qScopeGuard(
+                        [this, itemModel]()
+                        {
+                            blockSignals(false);
+                            sourceModel()->blockSignals(false);
+                            itemModel->lockDataMutex(false);
+                        });
                     invalidateFilter();
                     QSortFilterProxyModel::sort(column, order);
                     for (auto it = mItemsToMap.crbegin(); it != mItemsToMap.crend(); ++it)
@@ -117,9 +129,6 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                     {
                         invalidate();
                     }
-                    blockSignals(false);
-                    sourceModel()->blockSignals(false);
-                    itemModel->lockDataMutex(false);
                 }
             });
         mFilterWatcher.setFuture(filtered);
