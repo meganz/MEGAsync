@@ -2037,13 +2037,10 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message numerus="yes">
+    <message>
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation>
-            <numerusform>%n result</numerusform>
-            <numerusform>%n results</numerusform>
-        </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
@@ -7550,7 +7547,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>만약 어떤 문제에 부딪혔다면 우리에게 알려주세요. 가능한 자세한 정보를 제공하여 저희를 도와주세요.</translation>
+        <translation>만약 어떤 문제에 부딪혔다면 저희에게 알려주세요. 가능한 자세한 정보를 제공하여 저희를 도와주세요.</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -10073,7 +10070,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>모든 다운로드 전송 취소 </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel all failed</source>

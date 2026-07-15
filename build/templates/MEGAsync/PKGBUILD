@@ -33,6 +33,7 @@ depends=('glibc>=2.33' 'gcc-libs>=10.2.0' 'qt5-base>=5.15' qt5-svg qt5-x11extras
 makedepends=(unzip zip tar cmake python3 autoconf-archive nasm qt5-tools qt5-declarative qt5-graphicaleffects 'qt5-base>=5.15')
 checkdepends=()
 optdepends=(
+  'qt5-wayland: Wayland support'
   'xdg-desktop-portal: follow the desktop color scheme (using dbus)'
   'glib2: follow the desktop color scheme (using gsettings)'
   'nautilus-megasync: integration with nautilus'

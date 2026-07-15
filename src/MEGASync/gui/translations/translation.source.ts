@@ -3016,6 +3016,11 @@ Wait for the upload to complete.</translation>
         <translation>An update will be applied during the next application restart</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. SNC-6678</translatorcomment>
+        <translation>Cancel</translation>
+    </message>
+    <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
         <translation>Checking for updates…</translation>
@@ -3039,6 +3044,19 @@ Wait for the upload to complete.</translation>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>Dismiss</translation>
+    </message>
+    <message>
+        <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>Do you want to upload &quot;%1&quot; to MEGA?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you want to upload %n file to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>
+            <numerusform>Do you want to upload %n file to MEGA?</numerusform>
+            <numerusform>Do you want to upload %n files to MEGA?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Don’t show me again</source>
@@ -3378,6 +3396,11 @@ https://mega.co.nz/#sync</source>
         <translation>Upload</translation>
     </message>
     <message>
+        <source>Upload to MEGA</source>
+        <translatorcomment>Title shown at dialog when the user is trying to upload a file to MEGA from Finder explorer context menu option.SNC-6678.</translatorcomment>
+        <translation>Upload to MEGA</translation>
+    </message>
+    <message>
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Waiting</translation>
@@ -3424,29 +3447,6 @@ https://mega.co.nz/#sync</source>
         <source>contact</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation>contact</translation>
-    </message>
-    <message>
-        <source>Upload to MEGA</source>
-        <translatorcomment>Title shown at dialog when the user is trying to upload a file to MEGA from Finder explorer context menu option.SNC-6678.</translatorcomment>
-        <translation>Upload to MEGA</translation>
-    </message>
-    <message>
-        <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
-        <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
-        <translation>Do you want to upload &quot;%1&quot; to MEGA?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you want to upload %n file to MEGA?</source>
-        <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account. SNC-6678</translatorcomment>
-        <translation>
-            <numerusform>Do you want to upload %n file to MEGA?</numerusform>
-            <numerusform>Do you want to upload %n files to MEGA?</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button. SNC-6678</translatorcomment>
-        <translation>Cancel</translation>
     </message>
 </context>
 <context>

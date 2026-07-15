@@ -218,7 +218,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Não recebemos o pagamento do plano [A]</translation>
+        <translation>Não recebemos o pagamento do plano [A].</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
@@ -1454,8 +1454,8 @@
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation>
-            <numerusform>%1 item selecionado</numerusform>
-            <numerusform>%1 itens selecionados</numerusform>
+            <numerusform>%1 item selecionado.</numerusform>
+            <numerusform>%1 itens selecionados.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -2057,13 +2057,10 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message numerus="yes">
+    <message>
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation>
-            <numerusform>%n result</numerusform>
-            <numerusform>%n results</numerusform>
-        </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
@@ -2589,16 +2586,16 @@ Acesse o seu email para saber como desbloquear a sua conta e obter informações
         <source>You have %n day left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. %n- number of days left to upgrade.</translatorcomment>
         <translation>
-            <numerusform>Você tem %n dia para fazer o upgrade ou seus arquivos serão deletados.</numerusform>
-            <numerusform>Você tem %n dias para fazer o upgrade ou seus arquivos serão deletados.</numerusform>
+            <numerusform>Você tem %n dia para fazer o upgrade ou seus arquivos serão deletados</numerusform>
+            <numerusform>Você tem %n dias para fazer o upgrade ou seus arquivos serão deletados</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>You have %n hour left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: %n- number of hours left to upgrade.</translatorcomment>
         <translation>
-            <numerusform>Você tem %n hora para fazer o upgrade ou seus arquivos serão deletados.</numerusform>
-            <numerusform>Você tem %n horas para fazer o upgrade ou seus arquivos serão deletados.</numerusform>
+            <numerusform>Você tem %n hora para fazer o upgrade ou seus arquivos serão deletados</numerusform>
+            <numerusform>Você tem %n horas para fazer o upgrade ou seus arquivos serão deletados</numerusform>
         </translation>
     </message>
     <message>
@@ -3177,7 +3174,7 @@ Espere que o upload seja finalizado.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>Você foi desconectado. Se o problema persistir, entre em contato com o Suporte em https://mega.nz/support</translation>
+        <translation>Você foi desconectado. Se o problema persistir, entre em contato com o Suporte em [A]https://mega.nz/support[/A].</translation>
     </message>
 </context>
 <context>
@@ -3246,6 +3243,11 @@ Espere que o upload seja finalizado.</translation>
         <translation>Uma atualização será aplicada na próxima reinicialização</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. SNC-6678</translatorcomment>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
         <translation>Procurando atualizações…</translation>
@@ -3269,6 +3271,14 @@ Espere que o upload seja finalizado.</translation>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>Fechar</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you want to upload %n file to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>
+            <numerusform>Você quer fazer upload de %n arquivo para o MEGA?</numerusform>
+            <numerusform>Você quer fazer upload de %n arquivos para o MEGA?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Don’t show me again</source>
@@ -3606,6 +3616,11 @@ https://mega.co.nz/#sync</source>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Fazer upload</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translatorcomment>Title shown at dialog when the user is trying to upload a file to MEGA from Finder explorer context menu option.SNC-6678.</translatorcomment>
+        <translation>Fazer upload no MEGA</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -4269,7 +4284,7 @@ Você não poderá recuperar o acesso aos seus dados armazenados, nem estará au
     <message>
         <source>All your selected transfers will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
-        <translation>As transferências selecionadas serão canceladas.</translation>
+        <translation>As transferências selecionadas serão canceladas</translation>
     </message>
     <message>
         <source>All your transfers in this category will be cancelled and cleared.</source>
@@ -4654,19 +4669,19 @@ Atualize a visualização.</translation>
         <source>These files contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Há vários itens com o mesmo nome em um lado da sincronização que se converteriam no mesmo item no outro lado da sincronização.</translation>
+        <translation>Há vários itens com o mesmo nome em um lado da sincronização que se converteriam no mesmo item no outro lado da sincronização</translation>
     </message>
     <message>
         <source>These folders contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Há vários itens com o mesmo nome em um lado da sincronização que se converteriam no mesmo item no outro lado da sincronização.</translation>
+        <translation>Há vários itens com o mesmo nome em um lado da sincronização que se converteriam no mesmo item no outro lado da sincronização</translation>
     </message>
     <message>
         <source>These items contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Há vários itens com o mesmo nome em um lado da sincronização que se converteriam no mesmo item no outro lado da sincronização.</translation>
+        <translation>Há vários itens com o mesmo nome em um lado da sincronização que se converteriam no mesmo item no outro lado da sincronização</translation>
     </message>
     <message>
         <source>This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
@@ -4735,8 +4750,7 @@ Digite um nome diferente.</translation>
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
         <translation>Já existe uma pasta com este nome neste local.
-Digite um nome diferente.
-&#xa0;</translation>
+Digite um nome diferente.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4940,12 +4954,12 @@ Digite um nome diferente.
     <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>Esta pasta já está sincronizada.</translation>
+        <translation>Esta pasta já está sincronizada</translation>
     </message>
     <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>O conteúdo desta pasta já está sincronizado.</translation>
+        <translation>O conteúdo desta pasta já está sincronizado</translation>
     </message>
     <message>
         <source>Label</source>
@@ -5728,7 +5742,7 @@ Digite um nome diferente.
     <message>
         <source>Backup to:</source>
         <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
-        <translation>Salvar backup em:</translation>
+        <translation>Salvar o backup em:</translation>
     </message>
     <message>
         <source>Backup: Confirm</source>
@@ -6023,7 +6037,7 @@ Digite um nome diferente.
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>O backup das pastas selecionadas será feito automaticamente no MEGA com permissão de somente leitura quando o aplicativo para desktop estiver em execução. As alterações só podem ser feitas nos backups no seu dispositivo local.</translation>
+        <translation>O backup das pastas selecionadas será feito automaticamente no MEGA com permissão de somente leitura quando o aplicativo para desktop estiver em execução. As alterações só podem ser feitas nos backups no seu dispositivo local. </translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -6887,7 +6901,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Mostrar</translation>
+        <translation>Mostrar </translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
@@ -9643,7 +9657,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>Tentando novamente</translation>
+        <translation>Tentando novamente…</translation>
     </message>
     <message>
         <source>Starting…</source>
@@ -9933,8 +9947,8 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
         <translation>
-            <numerusform>%n item já não existe. </numerusform>
-            <numerusform>%n itens já não existem. </numerusform>
+            <numerusform>%n item já não existe.</numerusform>
+            <numerusform>%n itens já não existem.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -10157,7 +10171,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Cancelar todas as transferências em Downloads</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel all failed</source>
@@ -10287,7 +10301,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pause all documents</source>
         <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
-        <translation>Pausar os  documentos</translation>
+        <translation>Pausar todos os documentos</translation>
     </message>
     <message>
         <source>Pause all downloads</source>
@@ -10297,7 +10311,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation>Pausar as imagens </translation>
+        <translation>Pausar todas as imagens</translation>
     </message>
     <message>
         <source>Pause all search results</source>
@@ -10332,7 +10346,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Resume all documents</source>
         <translatorcomment>Tooltip for Resume button when the user is in the documents category</translatorcomment>
-        <translation>Retomar os  documentos</translation>
+        <translation>Retomar todos os documentos</translation>
     </message>
     <message>
         <source>Resume all downloads</source>
@@ -10342,7 +10356,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Resume all images</source>
         <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
-        <translation>Retomar as imagens </translation>
+        <translation>Retomar todas as imagens</translation>
     </message>
     <message>
         <source>Resume all search results</source>
@@ -10648,8 +10662,8 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
         <translation>
-            <numerusform>%1 (%2%) usado de %3 </numerusform>
-            <numerusform>%1 (%2%) usados de %3 </numerusform>
+            <numerusform>%1 (%2%) usado de %3</numerusform>
+            <numerusform>%1 (%2%) usados de %3</numerusform>
         </translation>
     </message>
     <message>

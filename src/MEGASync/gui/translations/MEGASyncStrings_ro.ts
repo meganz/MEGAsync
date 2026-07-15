@@ -1379,6 +1379,14 @@
     </message>
 </context>
 <context>
+    <name>DestinationBreadcrumb</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Checkbox label in the node selector destination breadcrumb to set the current folder as the default upload destination. SNC-6420</translatorcomment>
+        <translation>Încarcă mereu în această destinație</translation>
+    </message>
+</context>
+<context>
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Always download to this destination</source>
@@ -2049,13 +2057,25 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
-    <message numerus="yes">
+    <message>
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
-        <translation>
-            <numerusform>%n result</numerusform>
-            <numerusform>%n results</numerusform>
-        </translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Messagebox cancel button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Anulează</translation>
+    </message>
+    <message>
+        <source>Empty</source>
+        <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Golește</translation>
+    </message>
+    <message>
+        <source>Empty Rubbish bin?</source>
+        <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Goliți coșul de gunoi?</translation>
     </message>
 </context>
 <context>
@@ -4760,6 +4780,44 @@ Introdu un alt nume.</translation>
     </message>
 </context>
 <context>
+    <name>NodeSelectorLabelColors</name>
+    <message>
+        <source>Blue</source>
+        <translatorcomment>Color name for the &quot;Blue&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>Albastru</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translatorcomment>Color name for the &quot;Green&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>Verde</translation>
+    </message>
+    <message>
+        <source>Grey</source>
+        <translatorcomment>Color name for the &quot;Grey&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>Gri</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translatorcomment>Color name for the &quot;Orange&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>Portocaliu</translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translatorcomment>Color name for the &quot;Purple&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>Violet</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translatorcomment>Color name for the &quot;Red&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>Roșu</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translatorcomment>Color name for the &quot;Yellow&quot; node label option in the node selector. SNC-6420</translatorcomment>
+        <translation>Galben</translation>
+    </message>
+</context>
+<context>
     <name>NodeSelectorModel</name>
     <message>
         <source>Access</source>
@@ -4885,6 +4943,11 @@ Introdu un alt nume.</translation>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
         <translation>Conținutul folderului deja sincronizat</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translatorcomment>Column header for the node label in the node selector. SNC-6420</translatorcomment>
+        <translation>Etichetă</translation>
     </message>
     <message>
         <source>Last modified</source>
@@ -5113,6 +5176,11 @@ Introdu un alt nume.</translation>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
     <message>
+        <source>Add backup</source>
+        <translatorcomment>Empty-state button in the node selector to start adding a backup. SNC-6420</translatorcomment>
+        <translation>Adaugă backup</translation>
+    </message>
+    <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
         <translation>Fișierele sau folderele partajate nu vor mai fi accesibile persoanelor cu care le-ați partajat. Puteți accesa în continuare aceste elemente în Coșul de gunoi, le puteți restaura și partaja.</translation>
@@ -5121,6 +5189,11 @@ Introdu un alt nume.</translation>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Anulează</translation>
+    </message>
+    <message>
+        <source>Create a folder to move your content here</source>
+        <translatorcomment>Empty-state hint in the node selector inviting the user to create a folder. SNC-6420</translatorcomment>
+        <translation>Creați un folder pentru a muta conținutul aici</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5138,9 +5211,24 @@ Introdu un alt nume.</translation>
         <translation>Nu muta</translation>
     </message>
     <message>
+        <source>Download</source>
+        <translatorcomment>Action button in the node selector to download the selected folder. SNC-6420</translatorcomment>
+        <translation>Descarcă</translation>
+    </message>
+    <message>
+        <source>Drag and drop your files here</source>
+        <translatorcomment>Empty-state hint in the node selector inviting the user to drag and drop files. SNC-6420</translatorcomment>
+        <translation>Glisați și fixați fișierele aici</translation>
+    </message>
+    <message>
         <source>Empty Rubbish bin</source>
         <translatorcomment>Button text to empty the rubbish bin. SAT-426</translatorcomment>
         <translation>Goliți Coșul de gunoi</translation>
+    </message>
+    <message>
+        <source>Empty folder</source>
+        <translatorcomment>Empty state label shown in the node selector view when the selected folder has no items. SNC-6420</translatorcomment>
+        <translation>Folder gol</translation>
     </message>
     <message>
         <source>Folder is empty</source>
@@ -5195,9 +5283,19 @@ Introdu un alt nume.</translation>
         <translation>Folder nou</translation>
     </message>
     <message>
+        <source>No folders in Cloud drive</source>
+        <translatorcomment>Empty-state message shown in the node selector when the Cloud drive has no folders. SNC-6420</translatorcomment>
+        <translation>Niciun folder în Unitatea cloud</translation>
+    </message>
+    <message>
         <source>No folders to select</source>
         <translatorcomment>Title on the view when there are no syncable folders in a folder. SNC-6358</translatorcomment>
         <translation>Nu există foldere de selectat</translation>
+    </message>
+    <message>
+        <source>Nothing in your private vault yet</source>
+        <translatorcomment>Empty-state message shown in the node selector when the private vault has no items yet. SNC-6420</translatorcomment>
+        <translation>Nimic în seiful tău privat încă</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5208,6 +5306,16 @@ Introdu un alt nume.</translation>
         <source>Only folders can be synced</source>
         <translatorcomment>Message on the view when there are no syncable folders in a folder. SNC-6358</translatorcomment>
         <translation>Doar folderele pot fi sincronizate</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Action button in the node selector to sync the selected folder. SNC-6420</translatorcomment>
+        <translation>Sincronizează</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Action button in the node selector to upload to the selected folder. SNC-6420</translatorcomment>
+        <translation>Încarcă</translation>
     </message>
     <message numerus="yes">
         <source>You are about to permanently delete %n file. Would you like to proceed?</source>
@@ -5261,6 +5369,11 @@ Introdu un alt nume.</translation>
 <context>
     <name>NodeSelectorTreeViewWidgetIncomingShares</name>
     <message>
+        <source>Folders shared with you will appear here</source>
+        <translatorcomment>Empty-state message in the node selector incoming shares view, shown when there are no shared folders. SNC-6420</translatorcomment>
+        <translation>Folderele partajate cu dvs. vor apărea aici</translation>
+    </message>
+    <message>
         <source>No incoming shares</source>
         <translatorcomment>Title message on the view when there are no items in the normal view. SNC-5804</translatorcomment>
         <translation>Nicio partajare primită</translation>
@@ -5279,6 +5392,11 @@ Introdu un alt nume.</translation>
 <context>
     <name>NodeSelectorTreeViewWidgetRubbish</name>
     <message>
+        <source>Rubbish bin is empty</source>
+        <translatorcomment>Empty-state message in the node selector rubbish bin view, shown when the rubbish bin has no items. SNC-6420</translatorcomment>
+        <translation>Coșul de gunoi este gol</translation>
+    </message>
+    <message>
         <source>The Rubbish bin is empty</source>
         <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
         <translation>Coșul de gunoi este gol</translation>
@@ -5294,6 +5412,11 @@ Introdu un alt nume.</translation>
             <numerusform>%n rezultate găsite</numerusform>
             <numerusform>%n de rezultate găsite</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>No results found</source>
+        <translatorcomment>Empty-state title in the node selector search view, shown when the search returns no matches. SNC-6420</translatorcomment>
+        <translation>Niciun rezultat găsit</translation>
     </message>
     <message>
         <source>No search results</source>
@@ -10005,7 +10128,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Anulează toate transferurile în Descărcări</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel all failed</source>
@@ -10307,6 +10430,11 @@ Please delete the folder sync from settings to cancel them.</source>
 </context>
 <context>
     <name>UploadNodeSelector</name>
+    <message>
+        <source>Select a shared folder to upload your items to</source>
+        <translatorcomment>Guidance banner in the upload node selector, shown in Incoming Shares when no folder is selected, prompting the user to pick a shared folder as the upload destination. SNC-6420</translatorcomment>
+        <translation>Selectați un folder partajat în care să încărcați elementele.</translation>
+    </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
