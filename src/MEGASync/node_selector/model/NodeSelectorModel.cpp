@@ -2133,6 +2133,9 @@ QModelIndex NodeSelectorModel::parent(const QModelIndex& index) const
         NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
         if (item)
         {
+            // parent->row() walks the grandparent's mChildItems, which the worker can append to
+            // (and reallocate) concurrently; guard it like the other structural readers.
+            mNodeRequesterWorker->lockDataMutex(true);
             NodeSelectorModelItem* parent = item->getParent();
             if (parent)
             {
@@ -2146,6 +2149,7 @@ QModelIndex NodeSelectorModel::parent(const QModelIndex& index) const
                     parentIndex = createIndex(parent->row(), 0, parent);
                 }
             }
+            mNodeRequesterWorker->lockDataMutex(false);
         }
     }
 
@@ -2550,7 +2554,11 @@ bool NodeSelectorModel::deleteNodeFromModel(const QModelIndex& index)
         static_cast<NodeSelectorModelItem*>(index.parent().internalPointer());
     if (parent)
     {
+        // indexOf() reads parent->mChildItems, which the worker can mutate/reallocate; guard the
+        // lookup before opening the removal (begin/endRemoveRows stay outside the lock as before).
+        mNodeRequesterWorker->lockDataMutex(true);
         int row = parent->indexOf(item);
+        mNodeRequesterWorker->lockDataMutex(false);
         if (row < 0)
         {
             return false;

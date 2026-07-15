@@ -13,8 +13,10 @@
 #include <QHash>
 #include <QIcon>
 #include <QList>
+#include <QMutex>
 #include <QPointer>
 #include <QQueue>
+#include <QRecursiveMutex>
 
 #include <atomic>
 #include <functional>
@@ -176,7 +178,9 @@ private:
     std::atomic<bool> mNodesRequested{false};
     NodeSelectorModel* mModel;
     QList<NodeSelectorModelItem*> mRootItems;
-    mutable QMutex mDataMutex;
+    // Recursive so a single caller (e.g. the proxy's async sort) can hold it across an
+    // operation that itself calls the per-access readers below, which re-lock it.
+    mutable QRecursiveMutex mDataMutex;
     mutable QMutex mSearchMutex;
     std::shared_ptr<mega::MegaCancelToken> mCancelToken;
     TabTypes mSearchedTypes;
@@ -373,6 +377,16 @@ public:
     QModelIndex findIndexByNodeHandle(const mega::MegaHandle& handle, const QModelIndex& parent);
 
     static NodeSelectorModelItem* getItemByIndex(const QModelIndex& index);
+
+    // Hold the worker's data mutex across a whole operation. The proxy uses this to keep the
+    // source item tree stable while its async sort rebuilds the source-to-proxy mapping, so the
+    // NodeRequester worker cannot structurally mutate mChildItems/mRootItems mid-build (which
+    // would desync the mapping and later fault in proxy_to_source() during paint).
+    void lockDataMutex(bool lock) const
+    {
+        mNodeRequesterWorker->lockDataMutex(lock);
+    }
+
     void updateItemNode(const QModelIndex& indexToUpdate, std::shared_ptr<mega::MegaNode> node);
     void updateRow(const QModelIndex& indexToUpdate);
 
