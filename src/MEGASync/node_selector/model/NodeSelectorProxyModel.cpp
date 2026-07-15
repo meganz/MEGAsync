@@ -96,6 +96,13 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                 auto itemModel = dynamic_cast<NodeSelectorModel*>(sourceModel());
                 if (itemModel)
                 {
+                    // This job runs on a QtConcurrent pool thread and reads the source model
+                    // (rowCount/index/parent/data) across many calls to build the mapping. Hold
+                    // the source data mutex for the whole job so the NodeRequester worker cannot
+                    // insert/remove/reallocate items between those reads: without cross-call
+                    // consistency the mapping ends up referencing source rows that no longer
+                    // match, and a later QTreeView::drawTree faults in proxy_to_source().
+                    itemModel->lockDataMutex(true);
                     blockSignals(true);
                     sourceModel()->blockSignals(true);
                     invalidateFilter();
@@ -112,6 +119,7 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                     }
                     blockSignals(false);
                     sourceModel()->blockSignals(false);
+                    itemModel->lockDataMutex(false);
                 }
             });
         mFilterWatcher.setFuture(filtered);
