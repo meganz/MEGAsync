@@ -58,7 +58,6 @@ protected:
                                   const QDir& backupFolder,
                                   const QStringList& manifestPaths,
                                   const CleanupLogger& logger);
-   static void removeEmptyInstallFolders(const QDir& appFolder);
    void addToSignature(QString value);
    void addToSignature(QByteArray bytes);
    void initSignature();

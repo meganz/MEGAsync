@@ -40,6 +40,17 @@ QString manifestPathKey(const QString& path)
 #endif
 }
 
+// True for entries whose content lives outside the installation: real symbolic links
+// everywhere, and NTFS junctions / volume mount points on Windows. The obsolete-file
+// sweep must treat them as opaque entries and never descend into them — their targets
+// typically hold user data. QFileInfo::isSymLink() is deliberately not used: it is
+// false for junctions (QDirIterator descends into them for the same reason) and true
+// for .lnk shortcuts, which are plain files that must be swept normally.
+bool isLinkEntry(const QFileInfo& info)
+{
+    return info.isSymbolicLink() || info.isJunction();
+}
+
 // Single owner of the backup-folder naming scheme: initialCleanup() prunes these
 // folders by prefix, so the creation sites must never drift from the constants.
 QString timestampedFolderName(const QString& prefix)
@@ -757,85 +768,103 @@ void UpdateTask::sweepObsoleteFiles(const QDir& appFolder,
 
     int removedCount = 0;
     int skippedCount = 0;
-    QDirIterator it(appFolder.absolutePath(),
-                    QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot,
-                    QDirIterator::Subdirectories);
-    while (it.hasNext())
+
+    // Explicit walk instead of QDirIterator(Subdirectories): the iterator refuses to
+    // descend only into symlinks, so it walks straight through NTFS junctions and volume
+    // mount points into content that merely *appears* under the install folder but is
+    // user data living elsewhere. Link entries are never pushed, which also makes a
+    // self-referencing junction harmless instead of a near-endless recursion.
+    QStringList pendingFolders{appFolder.absolutePath()};
+    QStringList visitedFolders;
+    while (!pendingFolders.isEmpty())
     {
-        it.next();
-
-        const QFileInfo info = it.fileInfo();
-        if (info.isDir() && !info.isSymLink())
+        const QFileInfoList entries = QDir(pendingFolders.takeLast())
+                                          .entryInfoList(QDir::AllEntries | QDir::Hidden |
+                                                         QDir::System | QDir::NoDotAndDotDot);
+        for (const QFileInfo& info: entries)
         {
-            continue;
-        }
+            const bool linkEntry = isLinkEntry(info);
+            if (info.isDir() && !linkEntry)
+            {
+                pendingFolders.append(info.absoluteFilePath());
+                visitedFolders.append(info.absoluteFilePath());
+                continue;
+            }
 
-        const QString relativePath =
-            normalizedManifestPath(appFolder.relativeFilePath(info.absoluteFilePath()));
-        if (expectedPaths.contains(manifestPathKey(relativePath)))
-        {
-            continue;
-        }
+            const QString relativePath =
+                normalizedManifestPath(appFolder.relativeFilePath(info.absoluteFilePath()));
+            if (expectedPaths.contains(manifestPathKey(relativePath)))
+            {
+                continue;
+            }
 
-        const QFileInfo backupInfo(backupFolder.absoluteFilePath(relativePath));
-        if (!backupInfo.dir().mkpath(QString::fromUtf8(".")))
-        {
-            logger(MegaApi::LOG_LEVEL_WARNING,
-                   QString::fromUtf8("Error creating obsolete file backup folder: %1")
-                       .arg(backupInfo.dir().absolutePath()));
-            skippedCount++;
-            continue;
-        }
+#ifdef _WIN32
+            if (linkEntry)
+            {
+                // A junction or symlink the user added: its target is their data, so
+                // removing the link would destroy their configuration, and moving it
+                // into the backup would keep the backup from ever being purged (the
+                // SDK's emptydirlocal never deletes reparse points on Windows). On
+                // macOS, link entries fall through to the move below on purpose: the
+                // app bundle symlinks are never part of the manifest, and the ones the
+                // app needs are recreated at startup (processSymLinks).
+                logger(MegaApi::LOG_LEVEL_WARNING,
+                       QString::fromUtf8("Leaving non-installation link in place: %1")
+                           .arg(relativePath));
+                skippedCount++;
+                continue;
+            }
+#endif
 
-        // QFile::rename (unlike QDir::rename) falls back to copy + delete when the source
-        // and destination are on different filesystems, which the install and backup
-        // folders may well be.
-        if (!QFile::rename(info.absoluteFilePath(), backupInfo.absoluteFilePath()))
-        {
-            logger(MegaApi::LOG_LEVEL_WARNING,
-                   QString::fromUtf8("Error moving obsolete file %1 to backup %2")
-                       .arg(info.absoluteFilePath(), backupInfo.absoluteFilePath()));
-            skippedCount++;
-            continue;
-        }
+            const QFileInfo backupInfo(backupFolder.absoluteFilePath(relativePath));
+            if (!backupInfo.dir().mkpath(QString::fromUtf8(".")))
+            {
+                logger(MegaApi::LOG_LEVEL_WARNING,
+                       QString::fromUtf8("Error creating obsolete file backup folder: %1")
+                           .arg(backupInfo.dir().absolutePath()));
+                skippedCount++;
+                continue;
+            }
 
-        removedCount++;
-        logger(
-            MegaApi::LOG_LEVEL_INFO,
-            QString::fromUtf8("Obsolete file removed from install folder: %1").arg(relativePath));
+            // QFile::rename (unlike QDir::rename) falls back to copy + delete when the
+            // source and destination are on different filesystems, which the install and
+            // backup folders may well be.
+            if (!QFile::rename(info.absoluteFilePath(), backupInfo.absoluteFilePath()))
+            {
+                logger(MegaApi::LOG_LEVEL_WARNING,
+                       QString::fromUtf8("Error moving obsolete file %1 to backup %2")
+                           .arg(info.absoluteFilePath(), backupInfo.absoluteFilePath()));
+                skippedCount++;
+                continue;
+            }
+
+            removedCount++;
+            logger(MegaApi::LOG_LEVEL_INFO,
+                   QString::fromUtf8("Obsolete file removed from install folder: %1")
+                       .arg(relativePath));
+        }
     }
 
-    removeEmptyInstallFolders(appFolder);
+    // Prune the folders the sweep emptied, children before parents (longer paths first).
+    // Only folders the walk above visited qualify — never a link entry: RemoveDirectory
+    // on a junction deletes the link even while its target still has content, so a
+    // junction must not be offered to rmdir at all.
+    std::sort(visitedFolders.begin(),
+              visitedFolders.end(),
+              [](const QString& lhs, const QString& rhs)
+              {
+                  return lhs.size() > rhs.size();
+              });
+    for (const QString& folder: visitedFolders)
+    {
+        QDir().rmdir(folder);
+    }
+
     logger(
         MegaApi::LOG_LEVEL_INFO,
         QString::fromUtf8("Obsolete install file cleanup completed. Files removed: %1, skipped: %2")
             .arg(removedCount)
             .arg(skippedCount));
-}
-
-void UpdateTask::removeEmptyInstallFolders(const QDir& appFolder)
-{
-    QStringList folders;
-    QDirIterator it(appFolder.absolutePath(),
-                    QDir::Dirs | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot |
-                        QDir::NoSymLinks,
-                    QDirIterator::Subdirectories);
-    while (it.hasNext())
-    {
-        folders.append(it.next());
-    }
-
-    std::sort(folders.begin(),
-              folders.end(),
-              [](const QString& lhs, const QString& rhs)
-              {
-                  return lhs.size() > rhs.size();
-              });
-
-    for (const QString& folder: folders)
-    {
-        QDir().rmdir(folder);
-    }
 }
 
 void UpdateTask::addToSignature(QString value)
