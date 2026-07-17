@@ -1428,7 +1428,7 @@ bool NodeSelectorModel::startProcessingNodes(const QMimeData* data,
                 std::unique_ptr<mega::MegaNode> moveNode(
                     MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
 
-                if (type != MoveActionType::COPY)
+                if (type != MoveActionType::COPY_PASTE)
                 {
                     if (moveNode->getParentHandle() == targetFolder ||
                         moveNode->getHandle() == targetFolder)
@@ -1658,8 +1658,8 @@ void NodeSelectorModel::processMergeQueue(MoveActionType type)
                     MergeMEGAFolders::ActionForDuplicates::Rename,
                     // Remote is always case sensitive
                     Qt::CaseSensitive,
-                    info->type == MoveActionType::COPY ? MergeMEGAFolders::Strategy::Copy :
-                                                         MergeMEGAFolders::Strategy::Move));
+                    info->type == MoveActionType::COPY_PASTE ? MergeMEGAFolders::Strategy::Copy :
+                                                               MergeMEGAFolders::Strategy::Move));
 
                 auto e = foldersMerger->merge(info->nodeTarget.get(), info->nodeToMerge.get());
 
@@ -1778,7 +1778,7 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                         emit itemAboutToBeReplaced(
                             resolvedMoveConflict->getConflictNode()->getHandle());
 
-                        if (type == MoveActionType::COPY)
+                        if (type == MoveActionType::COPY_PASTE)
                         {
                             plannedActions.append(
                                 [this, nodeToMove, resolvedMoveConflict]()
@@ -1801,7 +1801,7 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                     }
                     else if (decision == NodeItemType::UPLOAD_AND_RENAME)
                     {
-                        if (type == MoveActionType::COPY)
+                        if (type == MoveActionType::COPY_PASTE)
                         {
                             plannedActions.append(
                                 [this, nodeToMove, resolvedMoveConflict]()
@@ -1824,7 +1824,7 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                     }
                     else if (decision == NodeItemType::UPLOAD)
                     {
-                        if (type == MoveActionType::COPY)
+                        if (type == MoveActionType::COPY_PASTE)
                         {
                             plannedActions.append(
                                 [this, nodeToMove, resolvedMoveConflict]()
@@ -1875,7 +1875,7 @@ bool NodeSelectorModel::processNodesAndCheckConflicts(
 
     auto conflicts = CheckDuplicatedNodes::checkMoves(handleAndTarget, sourceNode);
 
-    if (type == MoveActionType::COPY)
+    if (type == MoveActionType::COPY_PASTE)
     {
         DuplicatedNodeConflictAutoResolution::resolveFolderConflictsForCopy(conflicts);
     }
@@ -2027,7 +2027,7 @@ bool NodeSelectorModel::pasteNodes(const QList<mega::MegaHandle>& nodesToCopy,
         }
     }
 
-    if (startProcessingNodes(data, finalTargetIndex, MoveActionType::COPY))
+    if (startProcessingNodes(data, finalTargetIndex, MoveActionType::COPY_PASTE))
     {
         return true;
     }
@@ -2747,37 +2747,37 @@ MessageDialogInfo NodeSelectorModel::buildFailedRequestMessage(
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
     }
-    else if (requestType == MoveActionType::COPY)
+    else if (requestType == MoveActionType::COPY_PASTE)
     {
         if (multipleRequest || !failedNode)
         {
             if (movedItemsType.testFlag(MovedItemsType::NONE) ||
                 movedItemsType.testFlag(MovedItemsType::BOTH))
             {
-                msgInfo.titleText = tr("Error copying items");
-                msgInfo.descriptionText = tr("The items couldn’t be copied. Try again later");
+                msgInfo.titleText = tr("Error pasting items");
+                msgInfo.descriptionText = tr("The items couldn’t be pasted. Try again later");
             }
             else if (movedItemsType.testFlag(MovedItemsType::FILES))
             {
-                msgInfo.titleText = tr("Error copying files");
-                msgInfo.descriptionText = tr("The files couldn’t be copied. Try again later");
+                msgInfo.titleText = tr("Error pasting files");
+                msgInfo.descriptionText = tr("The files couldn’t be pasted. Try again later");
             }
             else if (movedItemsType.testFlag(MovedItemsType::FOLDERS))
             {
-                msgInfo.titleText = tr("Error copying folders");
-                msgInfo.descriptionText = tr("The folders couldn’t be copied. Try again later");
+                msgInfo.titleText = tr("Error pasting folders");
+                msgInfo.descriptionText = tr("The folders couldn’t be pasted. Try again later");
             }
         }
         else if (failedNode->isFile())
         {
-            msgInfo.titleText = tr("Error copying file");
-            msgInfo.descriptionText = tr("The file %1 couldn’t be copied. Try again later")
+            msgInfo.titleText = tr("Error pasting file");
+            msgInfo.descriptionText = tr("The file %1 couldn’t be pasted. Try again later")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
         else
         {
-            msgInfo.titleText = tr("Error copying folder");
-            msgInfo.descriptionText = tr("The folder %1 couldn’t be copied. Try again later")
+            msgInfo.titleText = tr("Error pasting folder");
+            msgInfo.descriptionText = tr("The folder %1 couldn’t be pasted. Try again later")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
     }
@@ -2875,9 +2875,19 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
     if (!finishedRequestGroup.failedHandles.isEmpty())
     {
-        emit showMessageBox(buildFailedRequestMessage(finishedRequestGroup.type,
-                                                      finishedRequestGroup.failedHandles,
-                                                      finishedRequestGroup));
+        // If the paste failed while the account is over storage quota, show the
+        // over quota dialog instead of a generic error message box
+        if (finishedRequestGroup.type == MoveActionType::COPY_PASTE &&
+            MegaSyncApp->isAppliedStorageOverquota())
+        {
+            emit showUpsellDialog();
+        }
+        else
+        {
+            emit showMessageBox(buildFailedRequestMessage(finishedRequestGroup.type,
+                                                          finishedRequestGroup.failedHandles,
+                                                          finishedRequestGroup));
+        }
 
         auto failedHandles = finishedRequestGroup.failedHandles;
         if (failedHandles.size() != mFailedMerges.size())
