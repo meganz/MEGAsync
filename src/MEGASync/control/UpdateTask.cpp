@@ -533,6 +533,18 @@ void UpdateTask::schedulePendingObsoleteCleanup()
         return;
     }
 
+    // No files were swapped in by this run: the manifest matched an installation that
+    // was refreshed by other means (externally applied update / full installer). The
+    // auto-updater did not produce that installation, so its manifest must not be used
+    // to sweep it — the version guard at sweep time only covers refreshes that happen
+    // AFTER scheduling, not before.
+    if (localPaths.isEmpty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     "Skipping obsolete file cleanup: update was applied externally");
+        return;
+    }
+
     // The sweep validates the install folder against this marker (the manifest-relative
     // path of the application binary). It is recorded here rather than hardcoded at
     // sweep time, so a binary rename cannot silently disable the guard.
