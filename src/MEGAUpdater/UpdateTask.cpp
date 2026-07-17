@@ -266,7 +266,11 @@ string UpdateTask::getAppDataDir()
     if (home)
     {
         path.append(home);
-        path.append("/Library/Application\\ Support/Mega\\ Limited/MEGAsync/");
+        // Plain spaces: this is a C++ string handed straight to the filesystem,
+        // not a shell command line — a backslash here becomes part of the
+        // directory name and breaks every path derived from appDataFolder
+        // (broken between 1e30f9f040 and this fix).
+        path.append("/Library/Application Support/Mega Limited/MEGAsync/");
     }
     return path;
 }
@@ -386,6 +390,30 @@ void UpdateTask::checkForUpdates()
 {
     LOG(LOG_LEVEL_INFO, "Starting update check");
 
+    // Captured BEFORE this run installs anything: performUpdate() lays down the
+    // application binary itself, so an existence check at sweep time would pass
+    // even in a folder that was never a MEGAsync installation (e.g. a copied
+    // MEGAupdater.exe run from a personal folder — on Windows appFolder is just
+    // the directory this executable runs from).
+    appFolderWasInstallation = fileExist((appFolder + APP_BINARY_RELATIVE_PATH).c_str());
+
+#ifndef _WIN32
+    // Bundle symlinks are not manifest entries: the obsolete-file sweep removes
+    // them and performUpdate() recreates them from mega.links. If the process
+    // dies in that window (or symlink() partially fails), the update is already
+    // sealed and no later run would repair the bundle ("All files are up to
+    // date" short-circuits before performUpdate). Mirror the application's own
+    // safety net (unconditional recreation at every start): restore any missing
+    // symlink on every updater run — symlink() is a cheap EEXIST no-op for
+    // links that already exist. Placed before the download and the
+    // version/manifest early-outs, so it heals even offline.
+    const string installedSymlinksPath = appFolder + SYMLINKS_FILE_RELATIVE_PATH;
+    if (fileExist(installedSymlinksPath.c_str()))
+    {
+        processSymLinks(installedSymlinksPath);
+    }
+#endif
+
     // Create random sequence for http request
     string randomSec("?");
     for (int i = 0; i < 10; i++)
@@ -441,13 +469,19 @@ void UpdateTask::checkForUpdates()
             return;
         }
 
-        initialCleanup();
         if (!processUpdateFile(pFile))
         {
             fclose(pFile);
             mega_remove(updateFile.c_str());
             return;
         }
+        // Only after the manifest is validated (signed and strictly newer):
+        // initialCleanup() deletes the backup folder — which now also holds the
+        // obsolete-file recovery copies from the last applied update — and the
+        // updater is relaunched every ~2h by the scheduler, so running it for
+        // up-to-date checks or invalid manifests would cap the recovery window
+        // at one check interval (see 82e84fad7e for the original invariant).
+        initialCleanup();
         fclose(pFile);
         mega_remove(updateFile.c_str());
 
@@ -544,6 +578,15 @@ bool UpdateTask::downloadFile(string url, string dstPath)
 bool UpdateTask::processUpdateFile(FILE *fd)
 {
     LOG(LOG_LEVEL_DEBUG, "Reading update info");
+
+    // Reset any state a previous check left behind before the parse loop
+    // repopulates it. Deliberately not initialCleanup(): that also deletes the
+    // backup folder on disk, which must only happen for a validated update.
+    downloadURLs.clear();
+    localPaths.clear();
+    fileSignatures.clear();
+    manifestLocalPaths.clear();
+
     string version = readNextLine(fd);
     if (version.empty())
     {
@@ -778,13 +821,29 @@ void UpdateTask::cleanupObsoleteFiles()
         return;
     }
 
-    LOG(LOG_LEVEL_INFO, "Cleaning obsolete install files...");
-
     std::set<string> expectedPaths;
     for (const string& manifestPath: manifestLocalPaths)
     {
         expectedPaths.insert(manifestPathKey(manifestPath));
     }
+
+    // Installation anchor (mirrors the MEGAsync twin's marker guard): only sweep
+    // when (a) appFolder already contained the application binary before this run
+    // installed anything — otherwise a mislocated updater would relocate unrelated
+    // personal files — and (b) the manifest itself lists the binary, so an
+    // incomplete manifest can never arm the sweep against a real installation.
+    // The update itself is unaffected; the sweep is best effort and will run on
+    // the next update once the anchor holds.
+    if (!appFolderWasInstallation ||
+        expectedPaths.find(manifestPathKey(APP_BINARY_RELATIVE_PATH)) == expectedPaths.end())
+    {
+        LOG(LOG_LEVEL_WARNING,
+            "Skipping obsolete file cleanup: %s is not the target installation",
+            appFolder.c_str());
+        return;
+    }
+
+    LOG(LOG_LEVEL_INFO, "Cleaning obsolete install files...");
 
     const fs::path appRoot = pathFromUtf8(appFolder);
     const fs::path backupRoot = pathFromUtf8(backupFolder);
@@ -916,10 +975,6 @@ void UpdateTask::removeEmptyInstallFolders()
 void UpdateTask::initialCleanup()
 {
     removeRecursively(backupFolder);
-    downloadURLs.clear();
-    localPaths.clear();
-    fileSignatures.clear();
-    manifestLocalPaths.clear();
 }
 
 void UpdateTask::finalCleanup()

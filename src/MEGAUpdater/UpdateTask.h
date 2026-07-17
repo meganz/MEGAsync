@@ -102,6 +102,10 @@ protected:
     std::vector<std::string> localPaths;
     std::vector<std::string> fileSignatures;
     std::vector<std::string> manifestLocalPaths;
+    // Whether appFolder already contained the application binary when the check
+    // started — i.e. before performUpdate() could have installed it. See
+    // cleanupObsoleteFiles().
+    bool appFolderWasInstallation = false;
 };
 
 #endif // UPDATETASK_H
