@@ -491,6 +491,7 @@ QmlDialog {
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             text: ExclusionsStrings.restoreDefaults
+            visible: !syncExclusionsAccess.isDefault
             onClicked: {
                 syncExclusionsAccess.restoreDefaults();
                 root.accepted();

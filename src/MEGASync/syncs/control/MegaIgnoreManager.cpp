@@ -450,13 +450,72 @@ void MegaIgnoreManager::removeRule(std::shared_ptr<MegaIgnoreRule> rule)
     rule->setDeleted(true);
 }
 
+QString MegaIgnoreManager::getDefaultFilePath()
+{
+    return Preferences::instance()->getDataPath() + QDir::separator() +
+           QString::fromUtf8(MEGA_IGNORE_DEFAULT_FILE_NAME);
+}
+
+QStringList MegaIgnoreManager::readTrimmedLines(const QString& filePath)
+{
+    QStringList lines;
+    QFile file(filePath);
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QTextStream in(&file);
+        in.setCodec("UTF-8");
+        while (!in.atEnd())
+        {
+            const QString line = in.readLine().trimmed();
+            if (!line.isEmpty())
+            {
+                lines.append(line);
+            }
+        }
+    }
+    return lines;
+}
+
+bool MegaIgnoreManager::isDefault() const
+{
+    // Compare the in-memory rules (including pending, not yet applied changes)
+    // against the default file, so the check reacts to edits before they are saved
+    QStringList currentRules;
+    foreach(const auto& rule, mRules)
+    {
+        if (rule->isDeleted())
+        {
+            continue;
+        }
+        const auto ruleAsText(rule->getModifiedRule().trimmed());
+        if (!ruleAsText.isEmpty())
+        {
+            currentRules.append(ruleAsText);
+        }
+    }
+    if (mIgnoreSymLinkRule)
+    {
+        const auto symLinkRuleAsText(mIgnoreSymLinkRule->getModifiedRule().trimmed());
+        if (!symLinkRuleAsText.isEmpty())
+        {
+            currentRules.append(symLinkRuleAsText);
+        }
+    }
+
+    auto defaultRules = readTrimmedLines(getDefaultFilePath());
+
+    // Sorted comparison: parsing extracts the symlink rule from its original
+    // position, so the reconstructed order may not match the file order
+    currentRules.sort();
+    defaultRules.sort();
+    return currentRules == defaultRules;
+}
+
 void MegaIgnoreManager::restoreDefaults()
 {
-    const auto defaultFilePath = Preferences::instance()->getDataPath() + QDir::separator()
-        + QString::fromUtf8(MEGA_IGNORE_DEFAULT_FILE_NAME);
     if (QFile::exists(mOutputMegaIgnoreFile))
     {
         QFile::remove(mOutputMegaIgnoreFile);
     }
-    QFile::copy(defaultFilePath, mOutputMegaIgnoreFile);
+    QFile::copy(getDefaultFilePath(), mOutputMegaIgnoreFile);
 }

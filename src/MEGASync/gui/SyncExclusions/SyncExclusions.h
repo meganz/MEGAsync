@@ -18,6 +18,7 @@ class SyncExclusions : public QMLComponent
     Q_PROPERTY(QString folderName READ getFolderName NOTIFY folderNameChanged)
     Q_PROPERTY(QString folderPath MEMBER mFolderFullPath)
     Q_PROPERTY(bool askOnExclusionRemove READ isAskOnExclusionRemove WRITE setAskOnExclusionRemove NOTIFY askOnExclusionRemoveChanged)
+    Q_PROPERTY(bool isDefault READ isDefault NOTIFY isDefaultChanged)
 
 public:
     SyncExclusions(QWidget *parent = 0, const QString &path = QString::fromUtf8(""));
@@ -43,6 +44,7 @@ public:
     void setSizeExclusionStatus(SizeExclusionStatus);
     QString getFolderName() const { return mFolderName; }
     void setFolder(const QString& folderName);
+    bool isDefault() const;
 
     Q_INVOKABLE void restoreDefaults();
     Q_INVOKABLE void showRemoveRuleConfirmationMessageDialog(const QString& descriptionText);
@@ -66,6 +68,7 @@ signals:
     void sizeExclusionStatusChanged(SizeExclusionStatus);
     void folderNameChanged(QString);
     void askOnExclusionRemoveChanged(bool);
+    void isDefaultChanged();
     void acceptedClicked();
 
 private:
