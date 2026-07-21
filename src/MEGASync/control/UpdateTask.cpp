@@ -40,6 +40,18 @@ QString manifestPathKey(const QString& path)
 #endif
 }
 
+// The key the update manifest and the per-file signatures are verified against. The
+// MEGA_UPDATE_PUBLIC_KEY override must be honored by every verification site: checking
+// installed files against a different key than the manifest makes alreadyInstalled()
+// fail for every file, so identical files are downloaded again instead of being reused
+// (the MEGAUpdater variant of alreadyExists resolves the override the same way).
+std::string resolvedUpdatePublicKey()
+{
+    const QString envKey = qEnvironmentVariable("MEGA_UPDATE_PUBLIC_KEY");
+    return envKey.isEmpty() ? std::string(Preferences::UPDATE_PUBLIC_KEY) :
+                              std::string(envKey.toUtf8().constData());
+}
+
 // True for entries whose content lives outside the installation: real symbolic links
 // everywhere, and NTFS junctions / volume mount points on Windows. The obsolete-file
 // sweep must treat them as opaque entries and never descend into them — their targets
@@ -123,14 +135,7 @@ void UpdateTask::startUpdateThread()
     connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
     connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
-    string updatePublicKey = Preferences::UPDATE_PUBLIC_KEY;
-    QString updatePubKeyEnv = qEnvironmentVariable("MEGA_UPDATE_PUBLIC_KEY");
-    if (!updatePubKeyEnv.isEmpty())
-    {
-        updatePublicKey = updatePubKeyEnv.toUtf8().constData();
-    }
-
-    signatureChecker = new MegaHashSignature(updatePublicKey.c_str());
+    signatureChecker = new MegaHashSignature(resolvedUpdatePublicKey().c_str());
 
     updateTimer->start(Preferences::UPDATE_RETRY_INTERVAL_SECS*1000);
     QTimer::singleShot(Preferences::UPDATE_INITIAL_DELAY_SECS*1000, this, SLOT(tryUpdate()));
@@ -906,7 +911,7 @@ bool UpdateTask::alreadyDownloaded(QString relativePath, QString fileSignature)
 
 bool UpdateTask::alreadyExists(QString absolutePath, QString fileSignature)
 {
-    MegaHashSignature tmpHash((const char *)Preferences::UPDATE_PUBLIC_KEY);
+    MegaHashSignature tmpHash(resolvedUpdatePublicKey().c_str());
     QFile file(absolutePath);
     if (!file.open(QIODevice::ReadOnly))
     {
