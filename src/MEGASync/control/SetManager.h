@@ -98,6 +98,7 @@ private:
     void handleCopyNodeResponse(mega::MegaRequest* request, mega::MegaError* error);
 
     bool createDirectory(const QString& path);
+    QString escapeSetName(const QString& setName) const;
     bool getPreviewSetData();
     bool getPreviewElementNodes();
     AlbumCollection filterSet(const AlbumCollection& srcSet, const QList<mega::MegaHandle>& elementHandleList);
