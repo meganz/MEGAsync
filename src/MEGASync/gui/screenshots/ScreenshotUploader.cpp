@@ -1,6 +1,6 @@
 #include "ScreenshotUploader.h"
 
-#include "mega/types.h"
+#include "MegaApplication.h"
 #include "RequestListenerManager.h"
 
 #include <QCoreApplication>
@@ -12,7 +12,9 @@ ScreenshotUploader::ScreenshotUploader(MegaApi* megaApi, QObject* parent):
     QObject(parent),
     mMegaApi(megaApi),
     mDelegateListener(std::make_unique<QTMegaTransferListener>(megaApi, this))
-{}
+{
+    MegaSyncApp->getMegaApi()->addTransferListener(mDelegateListener.get());
+}
 
 void ScreenshotUploader::upload(const QString& localPath)
 {
@@ -96,36 +98,30 @@ void ScreenshotUploader::startUpload(MegaHandle parentHandle)
         return;
     }
 
-    MegaUploadOptions options;
-    options.fileName = QFileInfo(mLocalPath).fileName().toStdString();
-    options.startFirst = true; // screenshots are small and interactive: jump the queue
-    options.pitagTrigger = static_cast<char>(PitagTrigger::CameraCapture);
-
-    mMegaApi->startUpload(mLocalPath.toStdString(),
-                          parent.get(),
-                          nullptr /*cancelToken*/,
-                          &options,
-                          mDelegateListener.get());
+    static_cast<MegaApplication*>(qApp)->uploadScreenshot(mLocalPath, parentHandle);
 }
 
 void ScreenshotUploader::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaError* error)
 {
-    if (error->getErrorCode() == MegaError::API_OK)
+    if (mBusy && mLocalPath == QString::fromUtf8(transfer->getPath()))
     {
-        mBusy = false;
-        emit uploadFinished(transfer->getNodeHandle());
-        return;
-    }
+        if (error->getErrorCode() == MegaError::API_OK)
+        {
+            mBusy = false;
+            emit uploadFinished(transfer->getNodeHandle());
+            return;
+        }
 
-    if (isAuthError(error->getErrorCode()))
-    {
-        fail(Error::AuthExpired,
-             QCoreApplication::translate("ScreenshotUploader",
-                                         "Your session has expired. Please log in again"));
-        return;
-    }
+        if (isAuthError(error->getErrorCode()))
+        {
+            fail(Error::AuthExpired,
+                 QCoreApplication::translate("ScreenshotUploader",
+                                             "Your session has expired. Please log in again"));
+            return;
+        }
 
-    fail(Error::TransferFailed, QString::fromUtf8(error->getErrorString()));
+        fail(Error::TransferFailed, QString::fromUtf8(error->getErrorString()));
+    }
 }
 
 void ScreenshotUploader::onTransferUpdate(MegaApi*, MegaTransfer* transfer)

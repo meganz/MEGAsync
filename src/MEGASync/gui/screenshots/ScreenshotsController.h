@@ -28,8 +28,6 @@ private slots:
     void onUploadFailed(ScreenshotUploader::Error error, const QString& message);
     void onUploadFinished(mega::MegaHandle nodeHandle);
     void onLinkFailed(const QString& message, bool authExpired);
-    void onLinkReady(const QString& link);
-    void onUploadProgress(QString filename, long long currentProgress, long long totalSize);
 
 private:
     explicit ScreenshotsController(QObject* parent = nullptr);
@@ -39,7 +37,6 @@ private:
     ScreenshotLinkGenerator mLinkGenerator;
     MegaApplication* mMegaApplication;
     bool mClipboardScreenshotLinkCopyEnabled = false;
-    QString mFile;
 };
 
 #endif // SCREENSHOTS_CONTROLLER_H

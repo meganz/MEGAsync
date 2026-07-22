@@ -1627,7 +1627,9 @@ void MegaApplication::onLoginFinished()
     Platform::getInstance()->unHideTrayIcon();
 
     mScreenshotsController = ScreenshotsController::instance();
-    enableScreenshotUploader(Preferences::instance()->uploadScreenshotsEnabled());
+    enableScreenshotUploader(
+        Preferences::instance()->uploadScreenshotsEnabled() ||
+        !preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER));
     enableClipboardCopyScreenshotLink(
         Preferences::instance()->clipboardCopyScreenshotLinkEnabled());
 }
@@ -4614,6 +4616,42 @@ void MegaApplication::uploadActionClicked(AppStatsEvents::EventType event)
     }
 
     uploadActionFromWindowAfterOverQuotaCheck();
+}
+
+void MegaApplication::uploadScreenshot(const QString& fileName,
+                                       ::mega::MegaHandle targetFolderHandle)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    auto uploadFile = [this, fileName, targetFolderHandle]()
+    {
+        mUploadQueue.enqueue({fileName, MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE});
+        processUploadQueue(targetFolderHandle);
+    };
+
+    const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED ||
+                                  storageState == MegaApi::STORAGE_STATE_PAYWALL);
+    if (storageIsOverQuota)
+    {
+        auto overQuotaDialog =
+            OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_UPLOAD);
+        if (overQuotaDialog)
+        {
+            DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog,
+                                                                       false,
+                                                                       [uploadFile]()
+                                                                       {
+                                                                           uploadFile();
+                                                                       });
+
+            return;
+        }
+    }
+
+    uploadFile();
 }
 
 void MegaApplication::uploadActionFromWindowAfterOverQuotaCheck()

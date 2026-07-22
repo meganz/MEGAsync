@@ -1,0 +1,3 @@
+module screenshots
+singleton ScreenshotStrings 1.0 ScreenshotStrings.qml
+Screenshot 1.0 Screenshot.qml

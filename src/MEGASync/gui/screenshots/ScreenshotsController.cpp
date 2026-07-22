@@ -33,20 +33,10 @@ ScreenshotsController::ScreenshotsController(QObject* parent):
             this,
             &ScreenshotsController::onUploadFinished);
 
-    connect(&mUploader,
-            &ScreenshotUploader::uploadProgress,
-            this,
-            &ScreenshotsController::onUploadProgress);
-
     connect(&mLinkGenerator,
             &ScreenshotLinkGenerator::linkFailed,
             this,
             &ScreenshotsController::onLinkFailed);
-
-    connect(&mLinkGenerator,
-            &ScreenshotLinkGenerator::linkReady,
-            this,
-            &ScreenshotsController::onLinkReady);
 }
 
 void ScreenshotsController::start()
@@ -71,22 +61,34 @@ void ScreenshotsController::enableClipboardCopyScreenshotLink(bool enabled)
 
 void ScreenshotsController::onCaptureDetected(const QString& filePath)
 {
-    mFile = QFileInfo(filePath).fileName();
-    mUploader.upload(filePath);
+    if (!Preferences::instance()->uploadScreenshotsEnabled() &&
+        !Preferences::instance()->isOneTimeActionDone(
+            Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER))
+    {
+        // show advertise.
 
-    MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SCREENSHOT_UPLOADED);
+        Preferences::instance()->setOneTimeActionUserDone(
+            Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER,
+            true);
+
+        return;
+    }
+
+    if (Preferences::instance()->uploadScreenshotsEnabled())
+    {
+        mUploader.upload(filePath);
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::SCREENSHOT_UPLOADED);
+    }
 }
 
 void ScreenshotsController::onUploadFailed(ScreenshotUploader::Error error, const QString& message)
 {
     mMegaApplication->showErrorMessage(message);
-    mFile.clear();
 }
 
 void ScreenshotsController::onUploadFinished(mega::MegaHandle nodeHandle)
 {
-    mMegaApplication->showInfoMessage(tr("The screenshot \"%1\" has been uploaded.").arg(mFile));
-
     if (mClipboardScreenshotLinkCopyEnabled)
     {
         mLinkGenerator.generateLink(nodeHandle);
@@ -94,24 +96,9 @@ void ScreenshotsController::onUploadFinished(mega::MegaHandle nodeHandle)
         MegaSyncApp->getStatsEventHandler()->sendEvent(
             AppStatsEvents::EventType::SCREENSHOT_LINK_CREATED);
     }
-
-    mFile.clear();
 }
 
 void ScreenshotsController::onLinkFailed(const QString& message, bool authExpired)
 {
     mMegaApplication->showErrorMessage(message);
-}
-
-void ScreenshotsController::onLinkReady(const QString& link)
-{
-    // no need to do anything, will be handled at MegaApplication::onRequestFinish.
-}
-
-void ScreenshotsController::onUploadProgress(QString filename,
-                                             long long currentProgress,
-                                             long long totalSize)
-{
-    qDebug()
-        << QString::fromUtf8("{%0}:{%1}/{%2}").arg(filename).arg(currentProgress).arg(totalSize);
 }

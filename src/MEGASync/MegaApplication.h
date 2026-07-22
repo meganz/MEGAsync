@@ -249,6 +249,7 @@ public slots:
     void goToFiles();
     void pauseTransfers();
     void showChangeLog();
+    void uploadScreenshot(const QString& fileName, mega::MegaHandle targetFolderHandle);
     void uploadActionClicked(AppStatsEvents::EventType event);
     void uploadActionFromWindowAfterOverQuotaCheck();
     void runUploadActionWithTargetHandle(const mega::MegaHandle& targetFolder,
