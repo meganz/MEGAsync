@@ -1674,7 +1674,10 @@ void MegaApplication::onLogout()
     mStatusController->reset();
     EmailRequester::instance()->reset();
 
-    mScreenshotsController->stop();
+    if (mScreenshotsController)
+    {
+        mScreenshotsController->stop();
+    }
 
     // Queue processing of logout cleanup to avoid race conditions
     // due to threadifing processing.
@@ -2603,7 +2606,10 @@ void MegaApplication::cleanAll()
 
     logger.reset();
 
-    mScreenshotsController->stop();
+    if (mScreenshotsController)
+    {
+        mScreenshotsController->stop();
+    }
 
     if (reboot)
     {
