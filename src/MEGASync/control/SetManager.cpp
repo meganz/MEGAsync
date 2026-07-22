@@ -480,8 +480,9 @@ bool SetManager::handleFetchPublicSetResponseToDownloadFromLink()
     // Set is now in Preview: Get Set and its Elements
     if (!getPreviewSetData()) { return false; }
 
-    // All Elements will be downloaded in a folder with the name of the Set
-    mCurrentDownloadPath = mCurrentDownloadPath + QDir::separator() + mCurrentSet.name;
+    // All Elements will be downloaded in a folder with the name of the Set.
+    mCurrentDownloadPath =
+        mCurrentDownloadPath + QDir::separator() + escapeSetName(mCurrentSet.name);
     createDirectory(mCurrentDownloadPath);
 
     // Request the nodes of Set Elements
@@ -661,6 +662,16 @@ bool SetManager::createDirectory(const QString& path)
 
     QDir directory(path);
     return directory.mkpath(QString::fromUtf8("."));
+}
+
+QString SetManager::escapeSetName(const QString& setName) const
+{
+    // escapeFsIncompatible allocates the returned string; it must be released with delete[].
+    char* escapedName = mMegaApi->escapeFsIncompatible(setName.toUtf8().constData(),
+                                                       mCurrentDownloadPath.toUtf8().constData());
+    QString safeName = QString::fromUtf8(escapedName);
+    delete[] escapedName;
+    return safeName;
 }
 
 //!
