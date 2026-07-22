@@ -444,6 +444,7 @@ protected:
     QTimer *periodicTasksTimer;
     QTimer *networkCheckTimer;
     QTimer *infoDialogTimer;
+    QTimer mForcedRebootTimer;
     std::unique_ptr<std::thread> mMutexStealerThread;
 
     QTranslator translator;

@@ -157,8 +157,6 @@ if [ ${build_cmake} -eq 1 ]; then
 
     mv ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAupdater
 
-    touch ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
-
     # Delete unused debug libs
     find ${MSYNC_PREFIX}MEGAsync.app/Contents -type d -name "*.dSYM" -exec rm -r {} +
     # need to remove .prl leftovers from frameworks after macdeployqt

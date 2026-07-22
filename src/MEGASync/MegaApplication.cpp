@@ -105,6 +105,15 @@ constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
 static const QString SCHEME_LOCAL_URL = QString::fromUtf8("local");
 static const QString KEEP_LOGS_ON_LOGOUT_FILE_NAME = QString::fromLatin1("megasync.keeplogs");
 
+// Cap for postponing the post-update restart. The update payload is installed in
+// place, so from the moment it lands the running (old) binary executes over the new
+// version's files; on an incompatible update (e.g. a Qt major upgrade) every lazily
+// loaded asset (QML modules, plugins) no longer matches the running binary and its
+// dialogs break until restart. Waiting for the app to become fully idle can take
+// arbitrarily long (paused transfers also count as pending), so the postponement is
+// bounded. Transfers resume automatically after the restart.
+static constexpr int MAX_UPDATE_REBOOT_DELAY_MS = 10 * 60 * 1000;
+
 void MegaApplication::loadDataPath()
 {
 #ifdef Q_OS_LINUX
@@ -340,8 +349,25 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     connect(&transferProgressController, &BlockingStageProgressController::updateUi,
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
-    // TODO Qt6: In Qt6 this is the default, so we can remove the following line
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // In Qt6 this is the default; the attribute itself was removed in Qt 6.8.
     setAttribute(Qt::AA_DisableWindowContextHelpButton);
+#endif
+
+    // Cap on postponing the forced post-update reboot (see rebootApplication). A member
+    // timer rather than an anonymous singleShot so an explicit user exit can disarm it:
+    // an uncancellable timer could fire between exitApplication() and the deferred
+    // QApplication::exit(), re-set the reboot flag, and relaunch the app the user just
+    // quit (or restart it under the open exit-confirmation dialog).
+    mForcedRebootTimer.setSingleShot(true);
+    mForcedRebootTimer.setTimerType(Qt::VeryCoarseTimer);
+    connect(&mForcedRebootTimer,
+            &QTimer::timeout,
+            this,
+            [this]()
+            {
+                rebootApplication(false);
+            });
 
     // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
     // eg. queueing a folder with 1k items for upload/download
@@ -2000,7 +2026,9 @@ void MegaApplication::rebootApplication(bool update)
         if (!updateBlocked)
         {
             updateBlocked = true;
-            showInfoMessage(tr("An update will be applied during the next application restart"));
+            showInfoMessage(tr("An update has been installed. The MEGA Desktop App will restart "
+                               "automatically in a few minutes to finish applying it"));
+            mForcedRebootTimer.start(MAX_UPDATE_REBOOT_DELAY_MS);
         }
         return;
     }
@@ -2023,6 +2051,14 @@ void MegaApplication::tryExitApplication(bool force)
     {
         return;
     }
+
+    // User exit intent wins over the forced post-update restart. Disarmed before the
+    // confirmation dialog too, so the timer cannot fire and restart the app under the
+    // open dialog. If the user stays, the deadline is re-armed in the dialog handler:
+    // paused transfers keep the transfers-idle path from ever applying the update, so
+    // the postponement must stay bounded.
+    const bool rebootWasArmed = mForcedRebootTimer.isActive();
+    mForcedRebootTimer.stop();
 
     if (mStatsEventHandler)
     {
@@ -2048,15 +2084,22 @@ void MegaApplication::tryExitApplication(bool force)
         textsByButton.insert(QMessageBox::Yes, tr("Exit app"));
         textsByButton.insert(QMessageBox::No, tr("Stay in app"));
         msgInfo.buttonsText = textsByButton;
-        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
+        msgInfo.finishFunc = [this, rebootWasArmed](QPointer<MessageDialogResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {
                 exitApplication();
             }
-            else if (gCrashableForTesting)
+            else
             {
-                *testCrashPtr = 0;
+                if (rebootWasArmed)
+                {
+                    mForcedRebootTimer.start(MAX_UPDATE_REBOOT_DELAY_MS);
+                }
+                if (gCrashableForTesting)
+                {
+                    *testCrashPtr = 0;
+                }
             }
         };
         MessageDialogOpener::question(msgInfo);
@@ -3233,6 +3276,9 @@ bool MegaApplication::dontAskForExitConfirmation(bool force)
 
 void MegaApplication::exitApplication()
 {
+    // Covers direct callers that bypass tryExitApplication: the timer must not fire in
+    // the window before the deferred QApplication::exit() and undo reboot = false.
+    mForcedRebootTimer.stop();
     reboot = false;
     mTrayIconManager->hide();
     // Qt6: QCoreApplication::exit() emits aboutToQuit synchronously, and

@@ -131,6 +131,7 @@ const char Preferences::UPDATE_PUBLIC_KEY[] =
     "EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
 const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromLatin1("update");
 const QString Preferences::UPDATE_BACKUP_FOLDER_NAME = QString::fromLatin1("backup");
+const QString Preferences::OBSOLETE_BACKUP_FOLDER_NAME = QString::fromLatin1("obsolete");
 const QString Preferences::PROXY_TEST_SUBSTRING = QString::fromUtf8("-2");
 const QString Preferences::syncsGroupByTagKey       = QString::fromLatin1("SyncsByTag");
 const QString Preferences::currentAccountKey        = QString::fromLatin1("currentAccount");
