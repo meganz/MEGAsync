@@ -22,7 +22,7 @@ public:
     void notify(const QString &path) override;
 
 private:
-    static void findFoldersRecursively(const QString& path, QStringList& folders);
+    static void findFoldersRecursively(const QString& path, QStringList& folders, int depth = 0);
 };
 
 #endif // RECURSIVESHELLNOTIFIER_H
