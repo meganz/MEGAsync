@@ -45,6 +45,9 @@ private slots:
 
 private:
     void scanDirectory(const QString& path);
+    void watchCaptureDirectory(const QString& directory, bool baselineExistingFiles);
+    void watchParentOf(const QString& directory);
+    void promotePendingDirectories();
 
     struct PendingFile
     {
@@ -56,6 +59,11 @@ private:
     QTimer mStabilityTimer;
     QHash<QString, PendingFile> mPendingFiles;
     QSet<QString> mKnownFiles;
+    // Directories actively scanned for captures. mWatcher may also hold
+    // parents of mPendingDirectories (capture folders the OS has not created
+    // yet); those are watched only to catch the folder's creation.
+    QSet<QString> mCaptureDirectories;
+    QSet<QString> mPendingDirectories;
     QDateTime mStartTime;
     bool mRunning = false;
 };

@@ -40,20 +40,23 @@ void ScreenCaptureDetector::start()
     mStartTime = QDateTime::currentDateTime();
     mKnownFiles.clear();
     mPendingFiles.clear();
+    mCaptureDirectories.clear();
+    mPendingDirectories.clear();
 
     const QStringList directories = platformCaptureDirectories();
     for (const QString& directory: directories)
     {
         if (QDir(directory).exists())
         {
-            mWatcher.addPath(directory);
-
-            // Baseline: everything already present is not a new capture.
-            const QFileInfoList entries = QDir(directory).entryInfoList(QDir::Files | QDir::Hidden);
-            for (const QFileInfo& info: entries)
-            {
-                mKnownFiles.insert(info.absoluteFilePath());
-            }
+            watchCaptureDirectory(directory, true);
+        }
+        else
+        {
+            // The OS creates the capture folder on first use (e.g. Windows
+            // creates Pictures/Screenshots with the first Win+PrtScn). Watch
+            // the parent and attach the folder when it appears.
+            mPendingDirectories.insert(directory);
+            watchParentOf(directory);
         }
     }
 
@@ -75,7 +78,52 @@ void ScreenCaptureDetector::stop()
     mStabilityTimer.stop();
     mPendingFiles.clear();
     mKnownFiles.clear();
+    mCaptureDirectories.clear();
+    mPendingDirectories.clear();
     mRunning = false;
+}
+
+void ScreenCaptureDetector::watchCaptureDirectory(const QString& directory,
+                                                  bool baselineExistingFiles)
+{
+    mWatcher.addPath(directory);
+    mCaptureDirectories.insert(directory);
+
+    // Baseline: everything already present is not a new capture. Skipped for
+    // folders that appear while running (they are created by the OS together
+    // with the first capture, which must not be swallowed); scanDirectory's
+    // timestamp check decides there.
+    if (baselineExistingFiles)
+    {
+        const QFileInfoList entries = QDir(directory).entryInfoList(QDir::Files | QDir::Hidden);
+        for (const QFileInfo& info: entries)
+        {
+            mKnownFiles.insert(QDir::toNativeSeparators(info.absoluteFilePath()));
+        }
+    }
+}
+
+void ScreenCaptureDetector::watchParentOf(const QString& directory)
+{
+    const QString parent = QFileInfo(directory).absolutePath();
+    if (QDir(parent).exists())
+    {
+        mWatcher.addPath(parent);
+    }
+}
+
+void ScreenCaptureDetector::promotePendingDirectories()
+{
+    const auto pending = mPendingDirectories; // copy: mutated while iterating
+    for (const QString& directory: pending)
+    {
+        if (QDir(directory).exists())
+        {
+            mPendingDirectories.remove(directory);
+            watchCaptureDirectory(directory, false);
+            scanDirectory(directory);
+        }
+    }
 }
 
 bool ScreenCaptureDetector::isRunning() const
@@ -105,6 +153,24 @@ bool ScreenCaptureDetector::looksLikeScreenshot(const QString& fileName)
 
 void ScreenCaptureDetector::onDirectoryChanged(const QString& path)
 {
+    promotePendingDirectories();
+
+    if (!mCaptureDirectories.contains(path))
+    {
+        // A watched parent changed but the pending folder is still missing.
+        return;
+    }
+
+    if (!QDir(path).exists())
+    {
+        // Deleted mid-session: QFileSystemWatcher drops the path silently.
+        // Demote it so it re-attaches when the OS recreates it.
+        mCaptureDirectories.remove(path);
+        mPendingDirectories.insert(path);
+        watchParentOf(path);
+        return;
+    }
+
     scanDirectory(path);
 }
 
