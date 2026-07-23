@@ -880,10 +880,8 @@ void SettingsDialog::on_enableScreenshotUpload_toggled(bool checked)
     if (mLoadingSettings)
         return;
 
-    if (!checked)
-    {
-        mUi->enableScreenshotLinkGeneration->setChecked(checked);
-    }
+    // Only gate the dependent checkbox visually; its stored preference is
+    // the user's choice and survives toggling the feature off and on.
     mUi->enableScreenshotLinkGeneration->setEnabled(checked);
 
     mPreferences->setUploadScreenshotsEnabled(checked);
