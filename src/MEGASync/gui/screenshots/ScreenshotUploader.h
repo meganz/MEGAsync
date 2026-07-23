@@ -5,6 +5,7 @@
 #include "QTMegaTransferListener.h"
 
 #include <QObject>
+#include <QQueue>
 #include <QString>
 
 #include <memory>
@@ -37,10 +38,14 @@ public:
     explicit ScreenshotUploader(mega::MegaApi* megaApi, QObject* parent = nullptr);
     ~ScreenshotUploader() override = default;
 
-    // Asynchronous; one upload at a time. Result arrives via uploadFinished()
+    // Asynchronous; one transfer in flight at a time, further captures are
+    // queued and uploaded in order. Each one reports via uploadFinished()
     // or uploadFailed().
     void upload(const QString& localPath);
     bool isBusy() const;
+    // Drops queued (not yet started) uploads; used on logout/stop. The
+    // in-flight transfer, if any, is not touched.
+    void clearPending();
 
     static inline const char* REMOTE_FOLDER_NAME = "Screenshots";
 
@@ -62,6 +67,8 @@ private:
                                   mega::MegaTransfer* transfer,
                                   mega::MegaError* error) override;
 
+    void startUploadFor(const QString& localPath);
+    void processNextInQueue();
     void ensureRemoteFolderAndUpload();
     void startUpload(mega::MegaHandle parentHandle);
     void fail(Error error, const QString& message);
@@ -70,6 +77,7 @@ private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaTransferListener> mDelegateListener;
     QString mLocalPath;
+    QQueue<QString> mQueue;
     bool mBusy = false;
 };
 

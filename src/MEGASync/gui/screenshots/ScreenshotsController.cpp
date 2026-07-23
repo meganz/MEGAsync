@@ -47,6 +47,7 @@ void ScreenshotsController::start()
 void ScreenshotsController::stop()
 {
     mDetector.stop();
+    mUploader.clearPending();
 }
 
 bool ScreenshotsController::isRunning() const

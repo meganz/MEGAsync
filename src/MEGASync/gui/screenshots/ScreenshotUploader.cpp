@@ -8,6 +8,12 @@
 
 using namespace mega;
 
+namespace
+{
+// Captures come in small bursts; anything beyond this is dropped (logged).
+constexpr int MAX_QUEUED_UPLOADS = 16;
+}
+
 ScreenshotUploader::ScreenshotUploader(MegaApi* megaApi, QObject* parent):
     QObject(parent),
     mMegaApi(megaApi),
@@ -18,11 +24,29 @@ ScreenshotUploader::ScreenshotUploader(MegaApi* megaApi, QObject* parent):
 
 void ScreenshotUploader::upload(const QString& localPath)
 {
+    if ((mBusy && mLocalPath == localPath) || mQueue.contains(localPath))
+    {
+        return; // already uploading or queued
+    }
+
     if (mBusy)
     {
+        if (mQueue.size() >= MAX_QUEUED_UPLOADS)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                         "Screenshot upload queue full, dropping capture");
+            return;
+        }
+
+        mQueue.enqueue(localPath);
         return;
     }
 
+    startUploadFor(localPath);
+}
+
+void ScreenshotUploader::startUploadFor(const QString& localPath)
+{
     if (!mMegaApi->isLoggedIn())
     {
         fail(Error::NotLoggedIn,
@@ -46,6 +70,19 @@ void ScreenshotUploader::upload(const QString& localPath)
 bool ScreenshotUploader::isBusy() const
 {
     return mBusy;
+}
+
+void ScreenshotUploader::clearPending()
+{
+    mQueue.clear();
+}
+
+void ScreenshotUploader::processNextInQueue()
+{
+    if (!mQueue.isEmpty())
+    {
+        startUploadFor(mQueue.dequeue());
+    }
 }
 
 void ScreenshotUploader::ensureRemoteFolderAndUpload()
@@ -109,6 +146,7 @@ void ScreenshotUploader::onTransferFinish(MegaApi*, MegaTransfer* transfer, Mega
         {
             mBusy = false;
             emit uploadFinished(transfer->getNodeHandle());
+            processNextInQueue();
             return;
         }
 
@@ -146,6 +184,7 @@ void ScreenshotUploader::fail(Error error, const QString& message)
 {
     mBusy = false;
     emit uploadFailed(error, message);
+    processNextInQueue();
 }
 
 bool ScreenshotUploader::isAuthError(int errorCode)
