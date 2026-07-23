@@ -1628,9 +1628,7 @@ void MegaApplication::onLoginFinished()
     Platform::getInstance()->unHideTrayIcon();
 
     mScreenshotsController = ScreenshotsController::instance();
-    enableScreenshotUploader(
-        Preferences::instance()->uploadScreenshotsEnabled() ||
-        !preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER));
+    refreshScreenshotUploader();
     enableClipboardCopyScreenshotLink(
         Preferences::instance()->clipboardCopyScreenshotLinkEnabled());
 }
@@ -2949,15 +2947,11 @@ void MegaApplication::updateUsedStorage(const bool sendEvent)
     }
 }
 
-void MegaApplication::enableScreenshotUploader(bool enabled)
+void MegaApplication::refreshScreenshotUploader()
 {
-    if (enabled && !mScreenshotsController->isRunning())
+    if (mScreenshotsController)
     {
-        mScreenshotsController->start();
-    }
-    else if (!enabled && mScreenshotsController->isRunning())
-    {
-        mScreenshotsController->stop();
+        mScreenshotsController->refresh();
     }
 }
 

@@ -210,7 +210,7 @@ public:
     bool isOnboarding();
 
     // screenshots upload.
-    void enableScreenshotUploader(bool enabled);
+    void refreshScreenshotUploader();
     void enableClipboardCopyScreenshotLink(bool enabled);
 
 signals:

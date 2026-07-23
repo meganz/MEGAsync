@@ -21,6 +21,10 @@ public:
     void start();
     void stop();
     bool isRunning() const;
+    // Recomputes whether the detector should run from Preferences (feature
+    // enabled, or the one-time enable offer still pending) and starts/stops
+    // it accordingly. Single source of truth for that decision.
+    void refresh();
     void enableClipboardCopyScreenshotLink(bool enabled);
     // Called by MegaApplication when the queued capture was discarded before
     // a transfer was created; unblocks the uploader.

@@ -474,7 +474,7 @@ void SettingsDialog::loadSettings()
     mUi->enableScreenshotLinkGeneration->setEnabled(mPreferences->uploadScreenshotsEnabled());
     mUi->enableScreenshotLinkGeneration->setChecked(
         mPreferences->clipboardCopyScreenshotLinkEnabled());
-    mApp->enableScreenshotUploader(mPreferences->uploadScreenshotsEnabled());
+    mApp->refreshScreenshotUploader();
     mApp->enableClipboardCopyScreenshotLink(mPreferences->clipboardCopyScreenshotLinkEnabled());
 
     updateUploadFolder();
@@ -887,7 +887,11 @@ void SettingsDialog::on_enableScreenshotUpload_toggled(bool checked)
     mUi->enableScreenshotLinkGeneration->setEnabled(checked);
 
     mPreferences->setUploadScreenshotsEnabled(checked);
-    mApp->enableScreenshotUploader(checked);
+    // The user has now interacted with the setting, so the first-capture
+    // discovery offer has served its purpose.
+    mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER,
+                                           true);
+    mApp->refreshScreenshotUploader();
 }
 
 void SettingsDialog::on_enableScreenshotLinkGeneration_toggled(bool checked)

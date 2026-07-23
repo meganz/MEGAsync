@@ -58,6 +58,22 @@ bool ScreenshotsController::isRunning() const
     return mDetector.isRunning();
 }
 
+void ScreenshotsController::refresh()
+{
+    const bool shouldRun = Preferences::instance()->uploadScreenshotsEnabled() ||
+                           !Preferences::instance()->isOneTimeActionDone(
+                               Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER);
+
+    if (shouldRun && !mDetector.isRunning())
+    {
+        mDetector.start();
+    }
+    else if (!shouldRun && mDetector.isRunning())
+    {
+        mDetector.stop();
+    }
+}
+
 void ScreenshotsController::enableClipboardCopyScreenshotLink(bool enabled)
 {
     mClipboardScreenshotLinkCopyEnabled = enabled;
@@ -86,8 +102,6 @@ void ScreenshotsController::onCaptureDetected(const QString& filePath)
     if (Preferences::instance()->uploadScreenshotsEnabled())
     {
         mUploader.upload(filePath);
-        MegaSyncApp->getStatsEventHandler()->sendEvent(
-            AppStatsEvents::EventType::SCREENSHOT_UPLOADED);
     }
 }
 
@@ -98,6 +112,8 @@ void ScreenshotsController::onUploadFailed(ScreenshotUploader::Error error, cons
 
 void ScreenshotsController::onUploadFinished(mega::MegaHandle nodeHandle)
 {
+    MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SCREENSHOT_UPLOADED);
+
     if (mClipboardScreenshotLinkCopyEnabled)
     {
         mLinkGenerator.generateLink(nodeHandle);
