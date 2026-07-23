@@ -36,6 +36,12 @@ public:
     // unrelated images dropped into a watched folder, e.g. the Desktop).
     static bool looksLikeScreenshot(const QString& fileName);
 
+    // Shared directories (Desktop, Pictures root) hold user files of all
+    // kinds, so new images must also pass the name filter. Dedicated capture
+    // folders (e.g. Pictures/Screenshots) only receive captures — any new
+    // image counts, which also covers localized capture names.
+    static bool isSharedDirectory(const QString& path);
+
 signals:
     void captureDetected(const QString& filePath);
 

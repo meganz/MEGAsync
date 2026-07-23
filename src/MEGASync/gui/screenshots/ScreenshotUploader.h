@@ -77,6 +77,9 @@ private:
     void ensureRemoteFolderAndUpload();
     void startUpload(mega::MegaHandle parentHandle);
     void fail(Error error, const QString& message);
+    // True if the transfer belongs to the capture currently being uploaded;
+    // the listener is global, so callbacks arrive for every app transfer.
+    bool isCurrentTransfer(mega::MegaTransfer* transfer) const;
     static bool isAuthError(int errorCode);
 
     mega::MegaApi* mMegaApi;

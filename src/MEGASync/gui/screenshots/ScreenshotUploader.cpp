@@ -149,9 +149,14 @@ void ScreenshotUploader::startUpload(MegaHandle parentHandle)
     static_cast<MegaApplication*>(qApp)->uploadScreenshot(mLocalPath, parentHandle);
 }
 
+bool ScreenshotUploader::isCurrentTransfer(MegaTransfer* transfer) const
+{
+    return mBusy && mLocalPath == QString::fromUtf8(transfer->getPath());
+}
+
 void ScreenshotUploader::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaError* error)
 {
-    if (mBusy && mLocalPath == QString::fromUtf8(transfer->getPath()))
+    if (isCurrentTransfer(transfer))
     {
         if (error->getErrorCode() == MegaError::API_OK)
         {
@@ -175,6 +180,11 @@ void ScreenshotUploader::onTransferFinish(MegaApi*, MegaTransfer* transfer, Mega
 
 void ScreenshotUploader::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
+    if (!isCurrentTransfer(transfer))
+    {
+        return;
+    }
+
     const auto total = transfer->getTotalBytes();
     if (total > 0)
     {
@@ -182,12 +192,20 @@ void ScreenshotUploader::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     }
 }
 
-void ScreenshotUploader::onTransferTemporaryError(MegaApi*, MegaTransfer*, MegaError* error)
+void ScreenshotUploader::onTransferTemporaryError(MegaApi*,
+                                                  MegaTransfer* transfer,
+                                                  MegaError* error)
 {
     // Connectivity drops surface here (the SDK keeps retrying with backoff
     // and resumes the transfer when the network returns). Let the UI show a
     // "waiting for connection" state instead of failing.
     Q_UNUSED(error)
+
+    if (!isCurrentTransfer(transfer))
+    {
+        return;
+    }
+
     emit waitingForConnection();
 }
 

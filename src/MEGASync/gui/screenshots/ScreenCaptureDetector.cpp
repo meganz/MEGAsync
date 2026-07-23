@@ -144,11 +144,22 @@ bool ScreenCaptureDetector::looksLikeScreenshot(const QString& fileName)
 {
     // macOS: "Screenshot 2026-06-10 at 14.05.33.png" (localized variants keep
     // the timestamp); Windows: "Screenshot (12).png"; GNOME: "Screenshot from
-    // 2026-06-10 14-05-33.png". Match either a known prefix or a timestamp.
+    // 2026-06-10 14-05-33.png". Match a known prefix ("captur" also covers
+    // captura/capture d'écran) or a date followed by a time — a bare date
+    // matches too many ordinary photo names.
     static const QRegularExpression pattern(
-        QString::fromUtf8("(screen\\s?shot|capture|\\d{4}-\\d{2}-\\d{2})"),
+        QString::fromUtf8(
+            "(screen\\s?shot|captur|\\d{4}-\\d{2}-\\d{2}\\D{0,10}\\d{1,2}[.:h\\-]\\d{2})"),
         QRegularExpression::CaseInsensitiveOption);
     return pattern.match(fileName).hasMatch();
+}
+
+bool ScreenCaptureDetector::isSharedDirectory(const QString& path)
+{
+    static const QStringList sharedRoots{
+        QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
+        QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)};
+    return sharedRoots.contains(path);
 }
 
 void ScreenCaptureDetector::onDirectoryChanged(const QString& path)
@@ -194,7 +205,7 @@ void ScreenCaptureDetector::scanDirectory(const QString& path)
         }
 
         if (!IMAGE_EXTENSIONS.contains(info.suffix().toLower()) ||
-            !looksLikeScreenshot(info.fileName()))
+            (isSharedDirectory(path) && !looksLikeScreenshot(info.fileName())))
         {
             mKnownFiles.insert(filePath);
             continue;
