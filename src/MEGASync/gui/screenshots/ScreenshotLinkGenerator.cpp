@@ -19,8 +19,7 @@ void ScreenshotLinkGenerator::generateLink(MegaHandle nodeHandle)
     if (!node)
     {
         emit linkFailed(QCoreApplication::translate("ScreenshotLinkGenerator",
-                                                    "The uploaded file could not be found"),
-                        false);
+                                                    "The uploaded file could not be found"));
         return;
     }
 
@@ -30,9 +29,13 @@ void ScreenshotLinkGenerator::generateLink(MegaHandle nodeHandle)
         {
             if (error->getErrorCode() != MegaError::API_OK)
             {
-                const bool authExpired = error->getErrorCode() == MegaError::API_ESID ||
-                                         error->getErrorCode() == MegaError::API_EBLOCKED;
-                emit linkFailed(QString::fromUtf8(error->getErrorString()), authExpired);
+                // The app's global TYPE_EXPORT handler already reports this
+                // to the user ("Error getting link: %1"); just log it.
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                             QString::fromUtf8("Screenshot link export failed: %1")
+                                 .arg(QString::fromUtf8(error->getErrorString()))
+                                 .toUtf8()
+                                 .constData());
                 return;
             }
 

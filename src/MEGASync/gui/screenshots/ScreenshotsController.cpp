@@ -4,8 +4,6 @@
 #include "StatsEventHandler.h"
 #include "Utilities.h"
 
-#include <qclipboard.h>
-
 ScreenshotsController* ScreenshotsController::instance()
 {
     static ScreenshotsController controller;
@@ -32,6 +30,11 @@ ScreenshotsController::ScreenshotsController(QObject* parent):
             &ScreenshotUploader::uploadFinished,
             this,
             &ScreenshotsController::onUploadFinished);
+
+    connect(&mLinkGenerator,
+            &ScreenshotLinkGenerator::linkReady,
+            this,
+            &ScreenshotsController::onLinkReady);
 
     connect(&mLinkGenerator,
             &ScreenshotLinkGenerator::linkFailed,
@@ -98,13 +101,23 @@ void ScreenshotsController::onUploadFinished(mega::MegaHandle nodeHandle)
     if (mClipboardScreenshotLinkCopyEnabled)
     {
         mLinkGenerator.generateLink(nodeHandle);
-
-        MegaSyncApp->getStatsEventHandler()->sendEvent(
-            AppStatsEvents::EventType::SCREENSHOT_LINK_CREATED);
     }
 }
 
-void ScreenshotsController::onLinkFailed(const QString& message, bool authExpired)
+void ScreenshotsController::onLinkReady(const QString& link)
 {
+    // The clipboard copy and the "link copied" notification are handled by
+    // the app's standard TYPE_EXPORT flow (MegaApplication::onRequestFinish),
+    // like any other exported link. Here we only account for it.
+    Q_UNUSED(link)
+
+    MegaSyncApp->getStatsEventHandler()->sendEvent(
+        AppStatsEvents::EventType::SCREENSHOT_LINK_CREATED);
+}
+
+void ScreenshotsController::onLinkFailed(const QString& message)
+{
+    // Only reached when no export request was made (node not found); SDK-side
+    // export errors are reported by the app's global TYPE_EXPORT handler.
     mMegaApplication->showErrorMessage(message);
 }

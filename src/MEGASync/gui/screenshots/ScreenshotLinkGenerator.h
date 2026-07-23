@@ -6,9 +6,11 @@
 #include <QObject>
 #include <QString>
 
-// Exports an uploaded node as a MEGA public link. Produces the link only;
-// clipboard/notification side effects are the caller's responsibility so this
-// stays a thin, reusable wrapper over MegaApi::exportNode.
+// Exports an uploaded node as a MEGA public link. The clipboard copy, the
+// "link copied" notification and SDK error reporting are owned by the app's
+// standard TYPE_EXPORT handling (MegaApplication::onRequestFinish), like any
+// other export; linkFailed only covers the local case where no export
+// request was made.
 class ScreenshotLinkGenerator: public QObject
 {
     Q_OBJECT
@@ -20,7 +22,7 @@ public:
 
 signals:
     void linkReady(const QString& link);
-    void linkFailed(const QString& message, bool authExpired);
+    void linkFailed(const QString& message);
 
 private:
     mega::MegaApi* mMegaApi;

@@ -30,7 +30,8 @@ private slots:
     void onCaptureDetected(const QString& filePath);
     void onUploadFailed(ScreenshotUploader::Error error, const QString& message);
     void onUploadFinished(mega::MegaHandle nodeHandle);
-    void onLinkFailed(const QString& message, bool authExpired);
+    void onLinkReady(const QString& link);
+    void onLinkFailed(const QString& message);
 
 private:
     explicit ScreenshotsController(QObject* parent = nullptr);
