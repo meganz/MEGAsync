@@ -2172,6 +2172,11 @@ std::string PlatformImplementation::findPathNearOffset(const std::vector<BYTE>& 
     const wchar_t SPACE = 0x20;
     const wchar_t TILDE = 0x7E;
 
+    if (buf.size() < 4)
+    {
+        return {}; // too small to hold a drive-letter path; avoids size_t wrap below
+    }
+
     size_t limit = std::min(start + window, buf.size() - 4);
     for (size_t j = start; j < limit; j++)
     {
@@ -2213,7 +2218,8 @@ std::string PlatformImplementation::findPathNearOffset(const std::vector<BYTE>& 
 }
 
 // Resolve a UWP StorageFolder token (GUID) to a real path via UserClasses.dat.
-// resolvedPaths accumulates matched paths so a second call can exclude them.
+// Scans the raw hive bytes for the token GUID and returns the first
+// drive-letter path found within 4KB after each occurrence.
 std::string PlatformImplementation::resolveToken(const std::wstring& userClassesDat,
                                                  const std::string& guid)
 {
