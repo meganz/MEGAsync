@@ -77,6 +77,17 @@ void ScreenshotUploader::clearPending()
     mQueue.clear();
 }
 
+void ScreenshotUploader::abortCurrent()
+{
+    if (!mBusy)
+    {
+        return;
+    }
+
+    fail(Error::TransferFailed,
+         QCoreApplication::translate("ScreenshotUploader", "The screenshot upload was cancelled"));
+}
+
 void ScreenshotUploader::processNextInQueue()
 {
     if (!mQueue.isEmpty())

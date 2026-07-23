@@ -72,6 +72,7 @@
 #include <QSettings>
 #include <QTranslator>
 
+#include <algorithm>
 #include <cassert>
 
 #ifdef Q_OS_LINUX
@@ -1890,11 +1891,26 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle, QWidget* caller)
         return;
     }
 
+    // The automatic screenshot flow keeps its uploader "busy" until this
+    // pass creates a transfer for the capture; every path that drops the
+    // queue without doing so must notify it or the flow stays blocked.
+    const bool queueHasCaptures =
+        std::any_of(mUploadQueue.cbegin(),
+                    mUploadQueue.cend(),
+                    [](const QPair<QString, PiTagTrigger>& item)
+                    {
+                        return item.second == MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE;
+                    });
+
     std::shared_ptr<MegaNode> node(megaApi->getNodeByHandle(nodeHandle));
 
     //If the destination node doesn't exist in the current filesystem, clear the queue and show an error message
     if (!node || node->isFile())
     {
+        if (queueHasCaptures)
+        {
+            notifyCaptureUploadsDiscarded();
+        }
         mUploadQueue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The upload has been cancelled"));
         return;
@@ -1914,13 +1930,39 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle, QWidget* caller)
         checkUploadNameDialog->setConflicts(std::move(uploads));
         DialogOpener::showDialog<DuplicatedNodeDialog>(
             checkUploadNameDialog,
-            [this, checkUploadNameDialog]()
+            [this, checkUploadNameDialog, queueHasCaptures]()
             {
+                bool captureUploaded = false;
                 if (checkUploadNameDialog && checkUploadNameDialog->result() == QDialog::Accepted)
                 {
+                    // mResolvedConflicts holds exactly what gets uploaded
+                    // ("don't upload" items are excluded by the dialog).
+                    const auto& resolved = checkUploadNameDialog->getResolvedConflicts();
+                    captureUploaded = std::any_of(
+                        resolved.cbegin(),
+                        resolved.cend(),
+                        [](const std::shared_ptr<DuplicatedNodeInfo>& info)
+                        {
+                            return info->getPiTagTrigger() == MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE;
+                        });
                     onUploadsCheckedAndReady(checkUploadNameDialog->conflicts());
                 }
+
+                // Dialog cancelled, or accepted with the capture resolved as
+                // "don't upload": no transfer will ever be created for it.
+                if (queueHasCaptures && !captureUploaded)
+                {
+                    notifyCaptureUploadsDiscarded();
+                }
             });
+    }
+}
+
+void MegaApplication::notifyCaptureUploadsDiscarded()
+{
+    if (mScreenshotsController)
+    {
+        mScreenshotsController->onCaptureUploadDiscarded();
     }
 }
 

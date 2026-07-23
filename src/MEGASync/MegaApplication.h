@@ -353,6 +353,11 @@ protected:
     bool showTrayIconAlwaysNEW();
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle, QWidget* caller = nullptr);
+    // Tells the screenshot flow that a capture queued for upload was
+    // discarded before a transfer was created (conflict dialog cancelled or
+    // resolved as "don't upload", or invalid destination), so its uploader
+    // can free the in-flight slot.
+    void notifyCaptureUploadsDiscarded();
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();

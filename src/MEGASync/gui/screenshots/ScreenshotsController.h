@@ -22,6 +22,9 @@ public:
     void stop();
     bool isRunning() const;
     void enableClipboardCopyScreenshotLink(bool enabled);
+    // Called by MegaApplication when the queued capture was discarded before
+    // a transfer was created; unblocks the uploader.
+    void onCaptureUploadDiscarded();
 
 private slots:
     void onCaptureDetected(const QString& filePath);

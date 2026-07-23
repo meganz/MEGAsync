@@ -60,6 +60,11 @@ void ScreenshotsController::enableClipboardCopyScreenshotLink(bool enabled)
     mClipboardScreenshotLinkCopyEnabled = enabled;
 }
 
+void ScreenshotsController::onCaptureUploadDiscarded()
+{
+    mUploader.abortCurrent();
+}
+
 void ScreenshotsController::onCaptureDetected(const QString& filePath)
 {
     if (!Preferences::instance()->uploadScreenshotsEnabled() &&

@@ -46,6 +46,11 @@ public:
     // Drops queued (not yet started) uploads; used on logout/stop. The
     // in-flight transfer, if any, is not touched.
     void clearPending();
+    // The pending upload was discarded before a transfer was created
+    // (conflict dialog cancelled / "don't upload" chosen, or the destination
+    // vanished). Reported through the same error path as any other upload
+    // failure, then the queue moves on.
+    void abortCurrent();
 
     static inline const char* REMOTE_FOLDER_NAME = "Screenshots";
 
