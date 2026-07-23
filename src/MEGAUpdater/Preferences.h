@@ -33,5 +33,21 @@ const char APP_DIR_BUNDLE[] = "/Applications/MEGAsync.app/";
         const char UPDATE_FOLDER_NAME[] = "eupdate";
         const char BACKUP_FOLDER_NAME[] = "ebackup";
         const char VERSION_FILE_NAME[] = "megasync.version";
+        // Manifest-relative path of the application binary. Used as the
+        // installation anchor: the obsolete-file sweep only trusts appFolder
+        // when this file was already present before the run started, and only
+        // trusts a manifest that lists it.
+#ifdef _WIN32
+        const char APP_BINARY_RELATIVE_PATH[] = "MEGAsync.exe";
+#else
+        const char APP_BINARY_RELATIVE_PATH[] = "Contents/MacOS/MEGAsync";
+#endif
+#ifndef _WIN32
+        // Bundle-relative location of the symlink recipe delivered by the update
+        // manifest. Used by the every-run symlink restoration in checkForUpdates();
+        // performUpdate() additionally resolves it from the manifest itself, which
+        // covers a future relocation.
+        const char SYMLINKS_FILE_RELATIVE_PATH[] = "Contents/Resources/mega.links";
+#endif
 
 #endif // PREFERENCES_H

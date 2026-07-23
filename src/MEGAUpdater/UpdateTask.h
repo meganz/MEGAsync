@@ -77,6 +77,8 @@ protected:
     bool alreadyExists(std::string absolutePath, std::string fileSignature);
     bool performUpdate();
     void rollbackUpdate(int fileNum);
+    void cleanupObsoleteFiles();
+    void removeEmptyInstallFolders();
     void initialCleanup();
     void finalCleanup();
     bool setPermissions(const char *path);
@@ -99,6 +101,11 @@ protected:
     std::vector<std::string> downloadURLs;
     std::vector<std::string> localPaths;
     std::vector<std::string> fileSignatures;
+    std::vector<std::string> manifestLocalPaths;
+    // Whether appFolder already contained the application binary when the check
+    // started — i.e. before performUpdate() could have installed it. See
+    // cleanupObsoleteFiles().
+    bool appFolderWasInstallation = false;
 };
 
 #endif // UPDATETASK_H
