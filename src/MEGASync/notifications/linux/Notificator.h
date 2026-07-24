@@ -7,6 +7,7 @@
 #include "NotificatorBase.h"
 
 #ifdef USE_DBUS
+#include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusMessage>
 #include <QHash>
@@ -51,13 +52,26 @@ public:
     void notify(DesktopAppNotification *notification);
 
 #ifdef USE_DBUS
+private slots:
+    void onDBusNotificationSignal(QDBusMessage dbusMessage);
+
 private:
+    // Dedicated session-bus connection used for both sending Notify and receiving the
+    // ActionInvoked/NotificationClosed signals. A named connection (unlike sessionBus()) is
+    // created with delivery enabled, so incoming signals are dispatched immediately instead of
+    // being queued behind sessionBus()'s suspended-delivery re-enable, which never fires on some
+    // desktops (e.g. dbus-broker on Arch). Both must share the connection so the daemon's
+    // reply/signals reach the same bus name that issued Notify.
+    QDBusConnection mNotificationBus;
     QPointer<QDBusInterface> interface;
     bool dbussSupportsActions;
     QHash<const QObject*, quint32> mNotificationIds;
+    QHash<quint32, QPointer<DesktopAppNotification>> mNotificationsById;
 
     void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, const QStringList &actions = QStringList(), DesktopAppNotification *notification = nullptr);
     void onNotificationDestroyed(QObject* notification);
+    void subscribeToDBusSignals();
+    void forgetNotification(const QObject* notification);
 #endif
 };
 

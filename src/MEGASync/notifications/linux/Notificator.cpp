@@ -33,12 +33,21 @@ using namespace mega;
 const int FREEDESKTOP_NOTIFICATION_ICON_SIZE = 128;
 const QString& DesktopAppNotificationBase::defaultImage = QString::fromUtf8("://images/app_128.png");
 
+#ifdef USE_DBUS
+namespace
+{
+const QString NOTIFICATION_BUS_NAME = QString::fromUtf8("megasync_notifications");
+}
+#endif
 
-Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
+Notificator::Notificator(const QString& programName, QSystemTrayIcon* trayicon, QObject* parent):
     NotificatorBase(programName, trayicon, parent)
 #ifdef USE_DBUS
-    ,interface(0)
-    ,dbussSupportsActions(false)
+    ,
+    mNotificationBus(
+        QDBusConnection::connectToBus(QDBusConnection::BusType::SessionBus, NOTIFICATION_BUS_NAME)),
+    interface(0),
+    dbussSupportsActions(false)
 #endif
 {
     if (trayicon && trayicon->supportsMessages())
@@ -50,7 +59,7 @@ Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, 
     interface = new QDBusInterface(QString::fromUtf8("org.freedesktop.Notifications"),
                                    QString::fromUtf8("/org/freedesktop/Notifications"),
                                    QString::fromUtf8("org.freedesktop.Notifications"),
-                                   QDBusConnection::sessionBus(),
+                                   mNotificationBus,
                                    this);
     if (interface->isValid())
     {
@@ -71,6 +80,11 @@ Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, 
 
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
             dbussSupportsActions = false;
+        }
+
+        if (dbussSupportsActions)
+        {
+            subscribeToDBusSignals();
         }
     }
 #endif
@@ -229,14 +243,14 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
                 this,
                 [this, notification](DesktopAppNotificationBase::CloseReason)
                 {
-                    mNotificationIds.remove(notification);
+                    forgetNotification(notification);
                 });
         connect(notification,
                 &DesktopAppNotificationBase::failed,
                 this,
                 [this, notification]()
                 {
-                    mNotificationIds.remove(notification);
+                    forgetNotification(notification);
                 });
 
         auto* watcher = new QDBusPendingCallWatcher(
@@ -268,6 +282,7 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
                     if (notificationId != 0U)
                     {
                         mNotificationIds.insert(guardedNotification.data(), notificationId);
+                        mNotificationsById.insert(notificationId, guardedNotification);
                     }
                 });
     }
@@ -307,68 +322,18 @@ void Notificator::notify(DesktopAppNotification *notification)
             actions.append(a);
             actions.append(a);
         }
-        auto sessionbus = QDBusConnection::sessionBus();
-        const QString service = QString::fromUtf8("org.freedesktop.Notifications");
-        const QString path = QString::fromUtf8("/org/freedesktop/Notifications");
-        const QString actionInvokedSignal = QString::fromUtf8("ActionInvoked");
-        const QString notificationClosedSignal = QString::fromUtf8("NotificationClosed");
-        const char* callbackSlot = SLOT(dBusNotificationCallback(QDBusMessage));
 
-        const bool connected = sessionbus.connect(service,
-                                                  path,
-                                                  service,
-                                                  actionInvokedSignal,
-                                                  notification,
-                                                  callbackSlot) &&
-                               sessionbus.connect(service,
-                                                  path,
-                                                  service,
-                                                  notificationClosedSignal,
-                                                  notification,
-                                                  callbackSlot);
-        if (connected)
-        {
-            // Remove the bus subscriptions while the notification object is still alive, so
-            // no queued D-Bus delivery can target it once its deletion has been scheduled.
-            auto disconnectFromBus = [sessionbus,
-                                      service,
-                                      path,
-                                      actionInvokedSignal,
-                                      notificationClosedSignal,
-                                      callbackSlot,
-                                      notification]() mutable
-            {
-                sessionbus.disconnect(service,
-                                      path,
-                                      service,
-                                      actionInvokedSignal,
-                                      notification,
-                                      callbackSlot);
-                sessionbus.disconnect(service,
-                                      path,
-                                      service,
-                                      notificationClosedSignal,
-                                      notification,
-                                      callbackSlot);
-            };
-            connect(notification, &DesktopAppNotificationBase::closed, this, disconnectFromBus);
-            connect(notification, &DesktopAppNotificationBase::activated, this, disconnectFromBus);
-            connect(notification, &DesktopAppNotificationBase::failed, this, disconnectFromBus);
-
-            notifyDBus((Class)notification->getType(),
-                       notification->getTitle(),
-                       notification->getText(),
-                       notification->getImage(),
-                       notification->getExpirationTime(),
-                       actions,
-                       notification);
-        }
-        else
-        {
-            MegaApi::log(
-                MegaApi::LOG_LEVEL_ERROR,
-                QString::fromUtf8("Couldn't connect to session DBus.").toUtf8().constData());
-        }
+        // The session bus signals (ActionInvoked/NotificationClosed) are subscribed once, in the
+        // constructor, with this long-lived Notificator as the receiver. Deliveries are routed to
+        // the matching notification by id in onDBusNotificationSignal(), so no queued D-Bus
+        // delivery can ever target a short-lived notification object that is being destroyed.
+        notifyDBus((Class)notification->getType(),
+                   notification->getTitle(),
+                   notification->getText(),
+                   notification->getImage(),
+                   notification->getExpirationTime(),
+                   actions,
+                   notification);
     }
     else
 #endif
@@ -415,7 +380,13 @@ void DesktopAppNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
 {
     if (dbusMssage.arguments().size() && mId != dbusMssage.arguments().at(0).toUInt())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Received notification corresponding to another notification. current = %1. Received = %1").arg(mId).arg(dbusMssage.member()).toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
+                     QString::fromUtf8("Received notification corresponding to another "
+                                       "notification. current = %1. Received = %2")
+                         .arg(mId)
+                         .arg(dbusMssage.member())
+                         .toUtf8()
+                         .constData());
         return;
     }
     else if (!dbusMssage.arguments().size())
@@ -452,10 +423,63 @@ void DesktopAppNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
 void Notificator::onNotificationDestroyed(QObject* notification)
 {
     const auto notificationId = mNotificationIds.take(notification);
+    mNotificationsById.remove(notificationId);
     if (notificationId != 0U && mMode == Freedesktop && dbussSupportsActions && interface)
     {
         interface->call(QDBus::NoBlock, QString::fromUtf8("CloseNotification"), notificationId);
     }
+}
+
+void Notificator::subscribeToDBusSignals()
+{
+    auto sessionbus = mNotificationBus;
+    const QString service = QString::fromUtf8("org.freedesktop.Notifications");
+    const QString path = QString::fromUtf8("/org/freedesktop/Notifications");
+    const char* slot = SLOT(onDBusNotificationSignal(QDBusMessage));
+
+    // Match any sender: on GNOME the ActionInvoked/NotificationClosed signals are emitted by
+    // helper connections that are NOT the owner of the org.freedesktop.Notifications well-known
+    // name, so pinning the sender makes Qt reject every delivery. Only the notification daemon
+    // emits these signals on this path/interface, and deliveries are filtered by id anyway.
+    const bool actionInvoked = sessionbus.connect(QString(),
+                                                  path,
+                                                  service,
+                                                  QString::fromUtf8("ActionInvoked"),
+                                                  this,
+                                                  slot);
+    const bool notificationClosed = sessionbus.connect(QString(),
+                                                       path,
+                                                       service,
+                                                       QString::fromUtf8("NotificationClosed"),
+                                                       this,
+                                                       slot);
+    if (!actionInvoked || !notificationClosed)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromUtf8("Couldn't subscribe to DBus notification signals.")
+                         .toUtf8()
+                         .constData());
+    }
+}
+
+void Notificator::onDBusNotificationSignal(QDBusMessage dbusMessage)
+{
+    if (dbusMessage.arguments().isEmpty())
+    {
+        return;
+    }
+
+    const auto notificationId = dbusMessage.arguments().at(0).toUInt();
+    if (auto* notification = mNotificationsById.value(notificationId).data())
+    {
+        notification->dBusNotificationCallback(dbusMessage);
+    }
+}
+
+void Notificator::forgetNotification(const QObject* notification)
+{
+    const auto notificationId = mNotificationIds.take(notification);
+    mNotificationsById.remove(notificationId);
 }
 #endif
 
