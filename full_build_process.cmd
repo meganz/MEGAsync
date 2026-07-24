@@ -48,6 +48,22 @@ IF [%MEGA_WIN_KITVER%]==[] (
 	SET MEGA_WIN_KITVER=10.0.22621.0
 )
 
+IF [%MEGA_VS_YEAR%]==[] (
+	SET MEGA_VS_YEAR=2022
+)
+
+IF [%MEGA_VS_EDITION%]==[] (
+	SET MEGA_VS_EDITION=Professional
+)
+
+IF [%MEGA_VC_REDIST_VER%]==[] (
+	SET MEGA_VC_REDIST_VER=14.44.35112
+)
+
+IF [%MEGA_VS_TOOLSET%]==[] (
+	SET MEGA_VS_TOOLSET=VC143
+)
+
 :: CHECK ARCHITECTURE
 IF "%MEGA_ARCH%" EQU "64" (
 	echo "Info: Building x64 only"
@@ -122,4 +138,8 @@ echo 	- Suffix for installer: The installer will add this suffix to the version.
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
 echo MEGA_QTPATH environment variable should be set to the Qt install dir. Defaults to C:\Qt\5.15.17\x64
 echo MEGA_WIN_KITVER environment variable can be used to set the Windows sdk to use. Value defaults to "10.0.19041.0". Set to "." to use the Universal Kit
+echo MEGA_VS_YEAR environment variable can be used to set the Visual Studio year to use. Value defaults to "2022"
+echo MEGA_VS_EDITION environment variable can be used to set the Visual Studio edition to use. Value defaults to "Professional"
+echo MEGA_VC_REDIST_VER environment variable can be used to set the Visual Studio MSVC redist version to use. Value defaults to "14.44.35112"
+echo MEGA_VS_TOOLSET environment variable can be used to set the Visual Studio toolset to use. Value defaults to "VC143"
 exit /B
