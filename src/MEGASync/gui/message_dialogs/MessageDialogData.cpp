@@ -154,7 +154,8 @@ MessageDialogData::MessageDialogData(Type type, MessageDialogInfo info, QObject*
     // Initial text values are set below after updateWidgetsByType()/
     // buildButtons() (some types swap title <-> description).
     mTitleTextInfo(new MessageDialogTextInfo(this)),
-    mDescriptionTextInfo(new MessageDialogTextInfo(this))
+    mDescriptionTextInfo(new MessageDialogTextInfo(this)),
+    mFooterTextInfo(new MessageDialogTextInfo(this))
 {
     updateWidgetsByType();
     buildButtons();
@@ -177,6 +178,9 @@ MessageDialogData::MessageDialogData(Type type, MessageDialogInfo info, QObject*
         mDescriptionTextInfo->setText(mInfo.descriptionText);
         mDescriptionTextInfo->setFormat(textFormat);
     }
+
+    mFooterTextInfo->setText(mInfo.footerText);
+    mFooterTextInfo->setFormat(textFormat);
 }
 
 MessageDialogData::Type MessageDialogData::getType() const
@@ -227,6 +231,11 @@ MessageDialogTextInfo* MessageDialogData::getTitleTextInfo() const
 MessageDialogTextInfo* MessageDialogData::getDescriptionTextInfo() const
 {
     return mDescriptionTextInfo;
+}
+
+MessageDialogTextInfo* MessageDialogData::getFooterTextInfo() const
+{
+    return mFooterTextInfo;
 }
 
 bool MessageDialogData::enqueue() const

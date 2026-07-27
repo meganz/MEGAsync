@@ -603,11 +603,13 @@ void SettingsDialog::on_bClearCache_clicked()
         tr("Backups of the previous versions of your synced files in your computer"
            " will be permanently deleted. Please, check your backup folders to see"
            " if you need to rescue something before continuing:") +
-        QString::fromUtf8("<br/>") + syncs + QString::fromUtf8("<br/><br/>") +
-        tr("Do you want to delete your local backup now?");
+        QString::fromUtf8("<br/>") + syncs;
+    msgInfo.footerText = tr("Do you want to delete your local backup now?");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.buttonsText[QMessageBox::Yes] = tr("Delete");
+    msgInfo.buttonsText[QMessageBox::No] = tr("Cancel");
     msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)

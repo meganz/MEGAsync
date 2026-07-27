@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQuick.Controls 2.15 as Qml
 import QtQuick.Layouts 1.15
 
 import common 1.0
@@ -44,6 +45,26 @@ QmlDialog {
     // totalHeight" QML warnings on every RichText dialog. Symmetrical with
     // the existing Math.min clamp on totalWidth.
     property real totalHeight: Math.min(sizes.defaultMaximumHeight, Math.max(sizes.defaultMinimumHeight, contentColum.implicitHeight + sizes.topContentMargin + sizes.bottomContentMargin))
+
+    // Height the description is allowed to occupy before it starts scrolling.
+    // It is the room left inside defaultMaximumHeight once the fixed pieces
+    // (margins, title, footer, checkbox and the buttons row) are subtracted, so a
+    // long description (e.g. the list of syncs in the "clear local cache" warning)
+    // scrolls instead of overflowing the height-capped window and pushing the
+    // buttons row out of view.
+    //
+    // These reference the siblings' implicitHeight (a layout INPUT derived from
+    // their content), never their laid-out height (a layout OUTPUT): this value
+    // feeds descriptionFlickable.Layout.preferredHeight, so reading the outputs
+    // of the same layout pass would form the "Binding loop detected for property
+    // totalHeight" cycle. implicitHeight is not rewritten by the vertical layout,
+    // so the cycle is broken.
+    property real maxDescriptionHeight: sizes.defaultMaximumHeight
+                                        - sizes.topContentMargin - sizes.bottomContentMargin
+                                        - (title.visible ? title.implicitHeight + sizes.textColumnSpacing : 0)
+                                        - (footer.visible ? footer.implicitHeight + sizes.textColumnSpacing : 0)
+                                        - sizes.defaultSpacing - bottomButtonsRow.implicitHeight
+                                        - (checkBoxItem.visible ? checkBoxItem.implicitHeight + sizes.defaultSpacing : 0)
 
     width: window.totalWidth
     height: window.totalHeight
@@ -128,7 +149,7 @@ QmlDialog {
                 height: sizes.iconSize
                 Layout.preferredHeight: height
                 Layout.preferredWidth: width
-                Layout.alignment: Qt.AlignVCenter
+                Layout.alignment: Qt.AlignTop
                 sourceSize: Qt.size(sizes.iconSize, sizes.iconSize)
                 visible: imageItem.source !== ""
             }
@@ -148,21 +169,57 @@ QmlDialog {
                     textWeight: Font.DemiBold
                 }
 
-                TextLoader {
-                    id: description
+                Flickable {
+                    id: descriptionFlickable
 
-                    textInfo: messageDialogDataAccess ? messageDialogDataAccess.descriptionTextInfo : null
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: Math.min(description.implicitHeight, window.maxDescriptionHeight)
+                    Layout.alignment: title.visible ? Qt.AlignBottom : Qt.AlignVCenter
+
+                    contentWidth: width
+                    contentHeight: description.implicitHeight
+                    flickableDirection: Flickable.VerticalFlick
+                    boundsBehavior: Flickable.StopAtBounds
+                    clip: true
+
+                    Qml.ScrollBar.vertical: Qml.ScrollBar {
+                        id: descriptionScrollBar
+
+                        policy: descriptionFlickable.contentHeight > descriptionFlickable.height
+                                ? Qml.ScrollBar.AlwaysOn
+                                : Qml.ScrollBar.AsNeeded
+                    }
+
+                    TextLoader {
+                        id: description
+
+                        // Leave a gutter on the right so the wrapped text does
+                        // not run underneath the vertical scroll bar.
+                        width: descriptionFlickable.width - descriptionScrollBar.width
+                        textInfo: messageDialogDataAccess ? messageDialogDataAccess.descriptionTextInfo : null
+                        textLineHeight: sizes.descriptionTextLineHeight
+                        textPixelSize: Texts.Text.Size.NORMAL
+                        textWeight: Font.Normal
+                    }
+                }
+
+                TextLoader {
+                    id: footer
+
+                    textInfo: messageDialogDataAccess ? messageDialogDataAccess.footerTextInfo : null
                     textLineHeight: sizes.descriptionTextLineHeight
                     textPixelSize: Texts.Text.Size.NORMAL
                     textWeight: Font.Normal
-                    Layout.alignment: title.visible ? Qt.AlignBottom : Qt.AlignVCenter
                 }
             }
         }
 
         Row {
+            id: checkBoxRow
+
             Layout.fillWidth: true
             spacing: sizes.topContentRowSpacing
+            visible: checkBoxItem.visible
 
             Item {
                 id: spacer

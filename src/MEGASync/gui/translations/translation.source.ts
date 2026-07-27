@@ -7364,6 +7364,16 @@ Do you want to delete it anyway?</translation>
             <numerusform>days</numerusform>
         </translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button that confirms permanently deleting the local cache (debris) of synced folders, in the clear local cache warning dialog.SNC-6743</translatorcomment>
+        <translation>Delete</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button that dismisses the clear local cache warning dialog without deleting anything.SNC-6743</translatorcomment>
+        <translation>Cancel</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog_Proxies</name>
