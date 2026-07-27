@@ -366,6 +366,14 @@ QUrl ServiceUrls::getSessionTransferBaseUrl()
     return {QLatin1String("mega:")};
 }
 
+QUrl ServiceUrls::getMigrationToolUrl()
+{
+    // Logical page handled by the webclient to open the cloud migration tool
+    auto url = getSessionTransferBaseUrl();
+    url.setPath(QLatin1String("mtool"));
+    return url;
+}
+
 QUrl ServiceUrls::getDeviceCenterUrl()
 {
     auto url = getFmUrl();

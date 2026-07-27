@@ -7,8 +7,11 @@
 #include "MessageDialogOpener.h"
 #include "OnboardingQmlDialog.h"
 #include "PasswordStrengthChecker.h"
+#include "ServiceUrls.h"
 #include "SettingsDialog.h"
+#include "StatsEventHandler.h"
 #include "SyncsComponent.h"
+#include "Utilities.h"
 
 #include <QQmlEngine>
 
@@ -41,6 +44,14 @@ QUrl Onboarding::getQmlUrl()
 void Onboarding::openPreferences(int tabIndex) const
 {
     MegaSyncApp->openSettings(tabIndex);
+}
+
+void Onboarding::openMigrationTool() const
+{
+    Utilities::openUrl(ServiceUrls::getMigrationToolUrl());
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_ONBOARDING);
 }
 
 void Onboarding::showClosingButLoggingInWarningDialog() const

@@ -3448,6 +3448,11 @@ https://mega.co.nz/#sync</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation>contact</translation>
     </message>
+    <message>
+        <source>Import from another cloud</source>
+        <translatorcomment>Menu action to open the cloud-to-MEGA migration tool. SNC-6703</translatorcomment>
+        <translation>Import from another cloud</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -5893,6 +5898,16 @@ Enter a different name.</translation>
         <source>[B]Select all[/B]</source>
         <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
         <translation>[B]Select all[/B]</translation>
+    </message>
+    <message>
+        <source>Import from another cloud</source>
+        <translatorcomment>Onboarding button title to open the cloud migration tool. SNC-6703</translatorcomment>
+        <translation>Import from another cloud</translation>
+    </message>
+    <message>
+        <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
+        <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
+        <translation>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</translation>
     </message>
 </context>
 <context>

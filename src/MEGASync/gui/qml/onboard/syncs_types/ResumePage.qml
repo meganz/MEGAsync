@@ -37,6 +37,9 @@ ResumePageForm {
             case Constants.SyncType.BACKUP:
                 root.resumePageMoveToBackup();
                 break;
+            case Constants.SyncType.MIGRATE:
+                onboardingAccess.openMigrationTool();
+                break;
             default:
                 console.error("Button type does not exist -> " + button.type);
                 break;
@@ -60,7 +63,20 @@ ResumePageForm {
             PropertyChanges { target: titleItem; restoreEntryValues: true; text: SyncsStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; visible: true; }
             PropertyChanges { target: descriptionItem2; visible: false; }
-            PropertyChanges { target: syncButton; visible: false; }
+            PropertyChanges {
+                target: syncButton;
+                type: Constants.SyncType.BACKUP;
+                title: OnboardingStrings.backup;
+                description: OnboardingStrings.finalPageButtonBackup;
+                imageSource: Images.installationTypeBackups;
+            }
+            PropertyChanges {
+                target: backupButton;
+                type: Constants.SyncType.MIGRATE;
+                title: OnboardingStrings.importFromAnotherCloud;
+                description: OnboardingStrings.finalPageButtonImportFromCloud;
+                imageSource: Images.importFromCloud;
+            }
             PropertyChanges {
                 target: stepPanelRef;
                 state: stepPanelRef.stepAllDone;
@@ -72,12 +88,6 @@ ResumePageForm {
         State {
             name: root.stateSelectiveSync
             extend: root.stateFullSync
-
-            PropertyChanges {
-                target: syncButton;
-                type: Constants.SyncType.SELECTIVE_SYNC;
-                visible: true;
-            }
         },
 
         State {
@@ -100,6 +110,13 @@ ResumePageForm {
                 description: !fullSyncDone && !selectiveSyncDone
                              ? OnboardingStrings.finalPageButtonSync
                              : OnboardingStrings.finalPageButtonSelectiveSync;
+            }
+            PropertyChanges {
+                target: backupButton;
+                type: Constants.SyncType.MIGRATE;
+                title: OnboardingStrings.importFromAnotherCloud;
+                description: OnboardingStrings.finalPageButtonImportFromCloud;
+                imageSource: Images.importFromCloud;
             }
             PropertyChanges {
                 target: stepPanelRef;

@@ -194,7 +194,9 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::TARGETED_DISCOUNT_DIALOG_DISMISSED, 600088},
     {AppStatsEvents::EventType::TARGETED_DISCOUNT_DIALOG_DEAL_GRABBED, 600089},
     {AppStatsEvents::EventType::TARGETED_DISCOUNT_INFODIALOG_BUTTON_CLICKED, 600090},
-    {AppStatsEvents::EventType::MACOS_ARM64_UPDATE_URL_ADJUSTED_FOR_INTEL_BINARY, 600091}};
+    {AppStatsEvents::EventType::MACOS_ARM64_UPDATE_URL_ADJUSTED_FOR_INTEL_BINARY, 600091},
+    {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_ONBOARDING, 600094},
+    {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU, 600095}};
 
 // Deprecated are not displayed
 QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
@@ -440,7 +442,11 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::TARGETED_DISCOUNT_INFODIALOG_BUTTON_CLICKED,
      "Targeted discount infodialog button clicked"},
     {AppStatsEvents::EventType::MACOS_ARM64_UPDATE_URL_ADJUSTED_FOR_INTEL_BINARY,
-     "macOS arm64 update URL adjusted for Intel binary on Apple Silicon"}};
+     "macOS arm64 update URL adjusted for Intel binary on Apple Silicon"},
+    {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_ONBOARDING,
+     "Migration tool opened (from onboarding)"},
+    {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU,
+     "Migration tool opened (from menu)"}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

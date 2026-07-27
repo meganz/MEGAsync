@@ -253,6 +253,7 @@ public slots:
     void downloadActionClicked(bool skipEventSending = false);
     void downloadACtionClickedWithHandles(const QList<mega::MegaHandle>& handles);
     void streamActionClicked();
+    void importFromCloudActionClicked();
     void transferManagerActionClicked(int tab = 0);
     void logoutActionClicked();
     void processDownloads();
@@ -386,6 +387,7 @@ protected:
     MegaMenuItemAction* exitAction;
     MegaMenuItemAction* settingsAction;
     MegaMenuItemAction* importLinksAction;
+    MegaMenuItemAction* importFromCloudAction;
     MegaMenuItemAction* uploadAction;
     MegaMenuItemAction* downloadAction;
     MegaMenuItemAction* streamAction;
