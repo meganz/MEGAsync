@@ -24,6 +24,7 @@ bool registerUpdateDaemon();
 bool userActive();
 double uptime();
 QString appBundlePath();
+bool revealInFinder(const QString& path);
 QString fromNSString(const NSString *str);
 void selectorsImpl(QString uploadTitle, QString defaultDir, bool multiSelection, bool showFiles, bool showFolders, bool createDirectories, QWidget* parent, std::function<void (QStringList)> func);
 void raiseFileSelectionPanels();
