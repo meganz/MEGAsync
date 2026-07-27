@@ -70,7 +70,7 @@ private:
 
     void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, const QStringList &actions = QStringList(), DesktopAppNotification *notification = nullptr);
     void onNotificationDestroyed(QObject* notification);
-    void subscribeToDBusSignals();
+    bool subscribeToDBusSignals();
     void forgetNotification(const QObject* notification);
 #endif
 };

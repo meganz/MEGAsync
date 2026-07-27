@@ -84,7 +84,9 @@ Notificator::Notificator(const QString& programName, QSystemTrayIcon* trayicon, 
 
         if (dbussSupportsActions)
         {
-            subscribeToDBusSignals();
+            // Without the signal subscriptions, action buttons would render but never deliver,
+            // and the tracked notifications would never receive closed/activated -> leak.
+            dbussSupportsActions = subscribeToDBusSignals();
         }
     }
 #endif
@@ -430,7 +432,7 @@ void Notificator::onNotificationDestroyed(QObject* notification)
     }
 }
 
-void Notificator::subscribeToDBusSignals()
+bool Notificator::subscribeToDBusSignals()
 {
     auto sessionbus = mNotificationBus;
     const QString service = QString::fromUtf8("org.freedesktop.Notifications");
@@ -456,10 +458,16 @@ void Notificator::subscribeToDBusSignals()
     if (!actionInvoked || !notificationClosed)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Couldn't subscribe to DBus notification signals.")
+                     QString::fromUtf8("Couldn't subscribe to DBus notification signals "
+                                       "(ActionInvoked=%1, NotificationClosed=%2): %3")
+                         .arg(actionInvoked)
+                         .arg(notificationClosed)
+                         .arg(mNotificationBus.lastError().message())
                          .toUtf8()
                          .constData());
     }
+
+    return actionInvoked && notificationClosed;
 }
 
 void Notificator::onDBusNotificationSignal(QDBusMessage dbusMessage)
