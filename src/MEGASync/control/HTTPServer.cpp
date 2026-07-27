@@ -473,7 +473,7 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
             auto end = 0;
             bool firstnode = true;
 
-            while (request.data[start] == QChar::fromLatin1('{'))
+            while (start < request.data.size() && request.data[start] == QChar::fromLatin1('{'))
             {
                 end = request.data.indexOf(QChar::fromLatin1('}'), start);
                 if (end < 0)
