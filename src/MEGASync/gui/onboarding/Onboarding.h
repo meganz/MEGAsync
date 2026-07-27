@@ -19,6 +19,7 @@ public:
     QUrl getQmlUrl() override;
 
     Q_INVOKABLE void openPreferences(int tabIndex) const;
+    Q_INVOKABLE void openMigrationTool() const;
     Q_INVOKABLE void showClosingButLoggingInWarningDialog() const;
     Q_INVOKABLE void showClosingButCreatingAccount() const;
 

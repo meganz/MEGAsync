@@ -79,6 +79,7 @@ QtObject {
     readonly property url database: imagesOnboardingPath + "database.svg"
     readonly property url edit: imagesOnboardingPath + "edit.svg"
     readonly property url folder: imagesOnboardingPath + "folder.svg"
+    readonly property url importFromCloud: imagesOnboardingPath + "cloud.svg"
     readonly property url installationTypeBackups: imagesOnboardingPath + "backup.png"
     readonly property url key: imagesOnboardingPath + "key.svg"
     readonly property url login: imagesOnboardingPath + "login.png"

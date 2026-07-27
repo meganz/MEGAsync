@@ -258,6 +258,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     settingsAction = nullptr;
     settingsActionGuest = nullptr;
     importLinksAction = nullptr;
+    importFromCloudAction = nullptr;
     initialTrayMenu = nullptr;
     isPublic = false;
     prevVersion = 0;
@@ -3222,6 +3223,7 @@ void MegaApplication::enableTransferActions(bool enable)
         guestSettingsAction->setEnabled(enable);
     }
     importLinksAction->setEnabled(enable);
+    importFromCloudAction->setEnabled(enable);
     uploadAction->setEnabled(enable);
     downloadAction->setEnabled(enable);
     streamAction->setEnabled(enable);
@@ -4727,6 +4729,21 @@ void MegaApplication::streamActionClicked()
             DialogOpener::showDialog<StreamingFromMegaDialog>(streamSelector);
         }
     });
+}
+
+void MegaApplication::importFromCloudActionClicked()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    Utilities::openUrl(ServiceUrls::getMigrationToolUrl());
+
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU,
+                                         sender(),
+                                         importFromCloudAction,
+                                         true);
 }
 
 void MegaApplication::transferManagerActionClicked(int tab)
@@ -6437,6 +6454,17 @@ void MegaApplication::createInfoDialogMenus()
                            {
                                importLinks();
                            });
+    recreateMegaMenuAction(&importFromCloudAction,
+                           infoDialogMenu,
+                           tr("Import from another cloud"),
+                           Utilities::getPixmapName(QLatin1String("cloud"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::importFromCloudActionClicked);
     recreateMegaMenuAction(&uploadAction,
                            infoDialogMenu,
                            tr("Upload"),
@@ -6503,6 +6531,7 @@ void MegaApplication::createInfoDialogMenus()
 
     infoDialogMenu->addAction(MEGAWebAction);
     infoDialogMenu->addAction(filesAction);
+    infoDialogMenu->addAction(importFromCloudAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu)
         infoDialogMenu->addAction(mSyncs2waysMenu->getAction());

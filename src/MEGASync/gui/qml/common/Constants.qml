@@ -16,7 +16,8 @@ QtObject {
         SYNC,
         SELECTIVE_SYNC,
         FULL_SYNC,
-        BACKUP
+        BACKUP,
+        MIGRATE
     }
 
     readonly property string mega: "MEGA"

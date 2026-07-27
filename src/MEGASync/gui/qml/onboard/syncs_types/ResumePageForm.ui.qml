@@ -23,6 +23,7 @@ FooterButtonsPage {
 
     property alias buttonGroup: buttonGroupItem
     property alias syncButton: syncButtonItem
+    property alias backupButton: backupsButton
     property alias titleItem: titleItem
     property alias descriptionItem: descriptionItem
     property alias descriptionItem2: descriptionItem2
