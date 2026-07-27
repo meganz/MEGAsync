@@ -22,6 +22,8 @@ public:
         TransfersManagerSortFilterProxyModel(QObject *parent = nullptr);
         ~TransfersManagerSortFilterProxyModel();
 
+        void prepareForDeletion();
+
         void initProxyModel(SortCriterion sortCriterion, Qt::SortOrder order);
 
         bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
@@ -113,6 +115,7 @@ protected:
 private:
         ThreadPool* mThreadPool;
         QFutureWatcher<void> mFilterWatcher;
+        bool mTearingDown = false;
         QString mFilterText;
         mutable QPointer<QMimeData> mInternalMoveMimeData;
         QPointer<TransferWidgetColumnsManager> mColumnManager;
