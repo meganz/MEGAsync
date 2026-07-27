@@ -50,6 +50,8 @@ TransfersWidget::TransfersWidget(QWidget* parent):
 
 TransfersWidget::~TransfersWidget()
 {
+    if (mProxyModel)
+        mProxyModel->prepareForDeletion();
     delete ui;
     if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;
