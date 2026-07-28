@@ -312,18 +312,8 @@ QString PlatformImplementation::getArchUpdateString() const
 
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
-
-    //Escape possible double quotes from osascript command to avoid syntax errors and stop parsing arguments
-    pathIn.replace(QString::fromLatin1("\""), QString::fromLatin1("\\\""));
-
-    QStringList scriptArgs;
-    scriptArgs << QString::fromLatin1("-e")
-               << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"").arg(pathIn);
-    QProcess::startDetached(QString::fromLatin1("osascript"), scriptArgs);
-    scriptArgs.clear();
-    scriptArgs << QString::fromLatin1("-e")
-               << QString::fromLatin1("tell application \"Finder\" to activate");
-    return QProcess::startDetached(QString::fromLatin1("osascript"), scriptArgs);
+    // Reveals and brings Finder to the front in a single call.
+    return revealInFinder(pathIn);
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
