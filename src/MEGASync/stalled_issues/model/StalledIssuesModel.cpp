@@ -16,6 +16,9 @@
 #include "StatsEventHandler.h"
 #include "SyncController.h"
 
+#include <algorithm>
+#include <memory>
+
 StalledIssuesReceiver::StalledIssuesReceiver(QObject* parent) : QObject(parent), mega::MegaRequestListener()
 {
     connect(&mIssueCreator, &StalledIssuesCreator::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
@@ -1454,7 +1457,10 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
 {
     auto ignoredItemsBySync = new QMap<mega::MegaHandle, QList<IgnoredStalledIssue::IgnoredPath>>();
 
-    auto resolveIssue = [this, ignoredItemsBySync](int row) -> bool
+    // Set while deciding each issue, read once every issue has been decided.
+    auto unsupportedPattern = std::make_shared<bool>(false);
+
+    auto resolveIssue = [this, ignoredItemsBySync, unsupportedPattern](int row) -> bool
     {
         auto item(getStalledIssueByRow(row));
         if(auto ignorableItem = StalledIssue::convert<IgnoredStalledIssue>(item.getData()))
@@ -1471,6 +1477,21 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
                     {
                         auto& items = (*ignoredItemsBySync)[item.getData()->firstSyncId()];
                         auto ignoredItems = ignorableItem->getIgnoredFiles();
+
+                        // A path that cannot be written as a single-line pattern cannot be
+                        // ignored at all. Decide it here, before the issue is counted as fixed,
+                        // so the summary and the model do not report a resolution that did not
+                        // happen.
+                        auto isUnwritable = [](const IgnoredStalledIssue::IgnoredPath& check)
+                        {
+                            return !MegaIgnoreRule::isPatternWritable(check.path);
+                        };
+                        if (std::any_of(ignoredItems.cbegin(), ignoredItems.cend(), isUnwritable))
+                        {
+                            *unsupportedPattern = true;
+                            return false;
+                        }
+
                         foreach(auto& ignoredItem, ignoredItems)
                         {
                             auto findRepeatedPath =
@@ -1499,7 +1520,9 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
 
     auto issuesToFix(list.size());
 
-    auto finishFunc = [this, ignoredItemsBySync, issuesToFix](int issuesFixed, bool externallyModified)
+    auto finishFunc =
+        [this, ignoredItemsBySync, issuesToFix, unsupportedPattern](int issuesFixed,
+                                                                    bool externallyModified)
     {
         foreach(auto syncId,  ignoredItemsBySync->keys())
         {
@@ -1526,18 +1549,22 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
                         dir.relativeFilePath(ignoredPath.path), ignoredPath.target);
                 }
 
-                manager.applyChanges();
+                // Backstop: the writer refused a rule that got past the per-issue check above.
+                if (manager.applyChanges() ==
+                    MegaIgnoreManager::ApplyChangesError::UNSUPPORTED_PATTERN)
+                {
+                    *unsupportedPattern = true;
+                }
             }
         }
 
         if(!externallyModified && issuesFixed < issuesToFix)
         {
-            showIgnoreItemsError(issuesFixed == 0);
+            showIgnoreItemsError(issuesFixed == 0, *unsupportedPattern);
         }
 
         delete ignoredItemsBySync;
     };
-
 
     SolveListInfo info(list, resolveIssue);
     info.finishFunc = finishFunc;
@@ -1552,9 +1579,9 @@ void StalledIssuesModel::ignoreAllSimilarIssues()
     for(int row = 0; row < totalRows; ++row)
     {
         auto item = getStalledIssueByRow(row);
-        if(item.convert<IgnoredStalledIssue>())
+        if (auto ignorableIssue = item.convert<IgnoredStalledIssue>())
         {
-            if(!item.getData()->isSolved())
+            if (!item.getData()->isSolved() && ignorableIssue->canBeIgnored())
             {
                 list.append(index(row, 0));
             }
@@ -1660,16 +1687,28 @@ void StalledIssuesModel::ignoreSymLinks()
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
+void StalledIssuesModel::showIgnoreItemsError(bool allFailed, bool unsupportedPattern)
 {
     MessageDialogInfo msgInfo;
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
-    msgInfo.descriptionText = allFailed ?
-                                  tr("Some issues can't be fixed.\nVerify the permissions of the "
-                                     ".megaignore file on your local sync folder locations.") :
-                                  tr("Issues can't be fixed.\nVerify the permissions of the "
-                                     ".megaignore on file your local sync folder locations.");
+
+    if (unsupportedPattern)
+    {
+        // Backstop copy: the action is not offered for these items, so this is only reachable if a
+        // selection is built without going through IgnoredStalledIssue::canBeIgnored().
+        msgInfo.descriptionText = tr("Some items can't be ignored: their names contain characters "
+                                     "that can't be used in an exclusion. Rename or delete them to "
+                                     "resolve these issues.");
+    }
+    else
+    {
+        msgInfo.descriptionText =
+            allFailed ? tr("Some issues can't be fixed.\nVerify the permissions of the "
+                           ".megaignore file on your local sync folder locations.") :
+                        tr("Issues can't be fixed.\nVerify the permissions of the "
+                           ".megaignore on file your local sync folder locations.");
+    }
 
     runMessageBox(std::move(msgInfo));
 }

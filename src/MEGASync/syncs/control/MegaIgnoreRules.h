@@ -54,6 +54,12 @@ public:
     void markAsDirty();
     bool isDirty() const;
 
+    // A rule occupies exactly one line and the format has no escape syntax, so a pattern
+    // carrying a line terminator is written out as extra rules. The SDK splits lines on both
+    // CR and LF (readLines) and matches patterns verbatim against the unescaped name, so no
+    // encoding keeps such a pattern on one line and still matches it: it cannot be written.
+    static bool isPatternWritable(const QString& pattern);
+
 protected:
     RuleType mRuleType;
     QString mRule;

@@ -82,8 +82,10 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
-    auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
-        return StalledIssue::convert<IgnoredStalledIssue>(issue) != nullptr;
+    auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue)
+    {
+        auto ignorableIssue = StalledIssue::convert<IgnoredStalledIssue>(issue);
+        return ignorableIssue != nullptr && ignorableIssue->canBeIgnored();
     };
 
     MessageDialogInfo msgInfo;
@@ -359,9 +361,12 @@ void StalledIssueHeader::updateIssueState()
         case StalledIssue::ResolutionState::UNSOLVED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QString());
-            if(getData().convert<IgnoredStalledIssue>())
+            if (auto ignorableIssue = getData().convert<IgnoredStalledIssue>())
             {
-                showIgnoreFile();
+                if (ignorableIssue->canBeIgnored())
+                {
+                    showIgnoreFile();
+                }
             }
             break;
         }
@@ -432,6 +437,22 @@ void StalledIssueHeader::refreshCaseTitles()
         setTitleDescriptionText(QString());
 
         mHeaderCase->refreshCaseTitles(this);
+
+        // No resolution is offered when the name cannot be written as an exclusion, so the row has
+        // to say why by itself. Set after the case so it replaces the generic description.
+        auto issueData(getData().consultData());
+        if (issueData && !issueData->isSolved())
+        {
+            if (auto ignorableIssue = getData().convert<IgnoredStalledIssue>())
+            {
+                if (!ignorableIssue->canBeIgnored())
+                {
+                    setTitleDescriptionText(
+                        tr("This item can't be ignored: its name contains characters that can't be "
+                           "used in an exclusion. Rename or delete it to resolve this issue."));
+                }
+            }
+        }
     }
 }
 

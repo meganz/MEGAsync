@@ -354,6 +354,12 @@ void ExclusionRulesModel::addNewRule(int targetType, int wildCard, QString ruleV
         {
            continue;
         }
+        // The manager refuses a pattern it cannot write as a single line, so skip it before
+        // announcing a row insertion the model would not back.
+        if (!MegaIgnoreRule::isPatternWritable(value))
+        {
+            continue;
+        }
         int currentRuleIndex = ruleExist(targetType, wildCard, value);
         if (currentRuleIndex != -1)
         {

@@ -211,7 +211,7 @@ public:
     void ignoreItems(const QModelIndexList& list);
     void ignoreAllSimilarIssues();
     void ignoreSymLinks();
-    void showIgnoreItemsError(bool allFailed);
+    void showIgnoreItemsError(bool allFailed, bool unsupportedPattern = false);
 
     //Fingerprint missing
     void fixFingerprint(const QModelIndexList& list);

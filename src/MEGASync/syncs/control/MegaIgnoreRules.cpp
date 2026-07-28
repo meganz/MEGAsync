@@ -6,6 +6,8 @@
 
 #include <QRegularExpression>
 
+#include <algorithm>
+
 const char MegaIgnoreRule::SIZE_RULE_LEFT_SIDE_REG_EX[] = "^#*(exclude-(larger|smaller))$";
 const char MegaIgnoreRule::SIZE_RULE_RIGHT_SIDE_REG_EX[] = "^[0-9]+[kmg]?$";
 const char MegaIgnoreRule::LARGE_SIZE_LEFT_SIDE_REG_EX[] = "#*(exclude-larger):*";
@@ -17,6 +19,16 @@ const char MegaIgnoreRule::CAPTURE_EXTENSION_REG_EX[] = "\\.(.*)";
 
 const auto asterisk = QString::fromUtf8("*");
 ////////////////MEGA IGNORE RULE
+bool MegaIgnoreRule::isPatternWritable(const QString& pattern)
+{
+    return std::none_of(pattern.cbegin(),
+                        pattern.cend(),
+                        [](QChar chr)
+                        {
+                            return chr.category() == QChar::Other_Control;
+                        });
+}
+
 bool MegaIgnoreRule::isEqual(const QString& ruleAsStringToCompare) const
 {
     QString ruleAsString(getModifiedRule());
@@ -211,7 +223,7 @@ void MegaIgnoreNameRule::setWildCardType(WildCardType wildCard)
 
 void MegaIgnoreNameRule::setPattern(const QString &pattern)
 {
-    if(pattern == mPattern)
+    if (pattern == mPattern || !isPatternWritable(pattern))
     {
         return;
     }
@@ -303,7 +315,7 @@ const QString& MegaIgnoreExtensionRule::extension() const
 
 void MegaIgnoreExtensionRule::setPattern(const QString &pattern)
 {
-    if(mPattern == pattern)
+    if (mPattern == pattern || !isPatternWritable(pattern))
     {
         return;
     }

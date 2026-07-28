@@ -22,6 +22,10 @@ public:
     bool isSpecialLink() const;
     bool isHardLink() const;
 
+    // False when ignoring the issue could not possibly work, so the resolution is not offered
+    // instead of being offered and then failing.
+    bool canBeIgnored() const;
+
     bool isExpandable() const override;
     bool checkForExternalChanges(QObject* context) override;
 
