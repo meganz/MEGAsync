@@ -21,6 +21,13 @@ QmlDialog{
     readonly property int dialogHeight: 370
     readonly property int dialogMargin: 24
 
+    // The error hint makes the text field taller, which pushes the separator line down onto the
+    // button row. Give the dialog that much more room instead, so the buttons keep their distance.
+    readonly property int currentHeight: dialogHeight
+        + (valueTextField.error
+            ? valueTextField.hint.height + valueTextField.hint.anchors.topMargin
+            : 0)
+
     property alias ruleValue: valueTextField.text
     property alias targetType: targetComboBox.currentIndex
     property alias valueType: valueTypeCombo.currentIndex
@@ -100,11 +107,11 @@ QmlDialog{
         }
     }
     width: root.dialogWidth
-    height: root.dialogHeight
+    height: root.currentHeight
     minimumWidth: root.dialogWidth
-    minimumHeight: root.dialogHeight
+    minimumHeight: root.currentHeight
     maximumWidth: root.dialogWidth
-    maximumHeight: root.dialogHeight
+    maximumHeight: root.currentHeight
     modality: Qt.WindowModal
     flags: Qt.Dialog
     color: ColorTheme.surface1
@@ -227,11 +234,22 @@ QmlDialog{
                     topMargin: 24
                 }
                 rightIconVisible: valueTypeCombo.currentText === ExclusionsStrings.equalTo && targetComboBox.currentText !== ExclusionsStrings.extensions && targetComboBox.currentText !== ExclusionsStrings.filesOrFolders
+                // The shared default is 2px, too tight for a two-line message under a focused field.
+                hint.anchors.topMargin: 8
                 title: ExclusionsStrings.filesBeginningWith
                 placeholderText: ExclusionsStrings.rulePlaceholder
                 rightIconSource: Images.plus
                 onTextChanged: {
                     root.ruleValue = text;
+
+                    // An exclusion is a single line, so a pasted value carrying a line break (or any
+                    // other control character) cannot be written. Say so here: the field does not
+                    // render such characters, so without this the user sees an empty-looking field.
+                    error = root.hasControlChars(text);
+                    hint.visible = error;
+                    if (error) {
+                        hint.text = ExclusionsStrings.errorControlCharacters;
+                    }
                 }
                 rightIconMouseArea.onClicked: {
                     if(targetComboBox.currentText === ExclusionsStrings.files) {
@@ -293,7 +311,7 @@ QmlDialog{
 
                 text: ExclusionsStrings.addExclusion
                 icons.source: Images.plus
-                enabled: valueTextField.text.trim().length !== 0
+                enabled: valueTextField.text.trim().length !== 0 && !valueTextField.error
                 icons.position: Icon.Position.LEFT
                 onClicked: {
                     if(typeof addExclusionRuleAccess !== "undefined" && addExclusionRuleAccess !== null) {
@@ -305,6 +323,11 @@ QmlDialog{
             }
         } //RowLayou: buttonsLayout
     } // Column: mainColumn
+
+    // Matches the C0 and C1 control ranges, the same set MegaIgnoreRule::isPatternWritable() refuses.
+    function hasControlChars(text) {
+        return /[\x00-\x1f\x7f-\x9f]/.test(text);
+    }
 
     function appendPickedPath(pickedPath) {
         const current = root.ruleValue.trim();

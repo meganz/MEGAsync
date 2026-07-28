@@ -1853,6 +1853,10 @@
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.CON-1188</translatorcomment>
         <translation>Wildcard</translation>
     </message>
+    <message>
+        <source>This can&apos;t be used as an exclusion. Remove the line breaks and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FastLoginController</name>
@@ -8231,6 +8235,10 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
         <translation>This action will ignore this issue and the item won’t be synced until the issue has been resolved.</translation>
     </message>
+    <message>
+        <source>This item can&apos;t be ignored: its name contains characters that can&apos;t be used in an exclusion. Rename or delete it to resolve this issue.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StalledIssueTab</name>
@@ -8392,6 +8400,10 @@ Please, refresh the list.</source>
         <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
         <translation>The issue may have been resolved externally.
 Refresh the list.</translation>
+    </message>
+    <message>
+        <source>Some items can&apos;t be ignored: their names contain characters that can&apos;t be used in an exclusion. Rename or delete them to resolve these issues.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

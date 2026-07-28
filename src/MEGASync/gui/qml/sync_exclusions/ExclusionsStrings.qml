@@ -43,6 +43,7 @@ QtObject {
     readonly property string filesOrFoldersMatchingWildCard: qsTr("Files or folders matching wildcard:")
     readonly property string filesWithExtension: qsTr("Files with extension:")
     readonly property string rulePlaceholder: qsTr("Use comma (“,”) to separate multiple items")
+    readonly property string errorControlCharacters: qsTr("This can't be used as an exclusion. Remove the line breaks and try again.")
     readonly property string byteUnit: QT_TRANSLATE_NOOP("Sizes", "B")
     readonly property string kiloByte: QT_TRANSLATE_NOOP("Sizes", "KB")
     readonly property string megaByte: QT_TRANSLATE_NOOP("Sizes", "MB")
