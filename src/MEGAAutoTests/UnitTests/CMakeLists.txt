@@ -48,6 +48,7 @@ set(UNIT_TEST_FILES
     gui/user_messages/UserMessageModelTests.cpp
     gui/ScreenCaptureDetectorTests.cpp
     gui/ScreenCaptureStabilityTests.cpp
+    syncs/MegaIgnoreRulesTests.cpp
 )
 
 if(USE_BREAKPAD)
