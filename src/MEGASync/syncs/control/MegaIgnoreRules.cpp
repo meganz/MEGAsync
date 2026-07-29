@@ -226,14 +226,21 @@ void MegaIgnoreNameRule::setWildCardType(WildCardType wildCard)
     markAsDirty();
 }
 
-void MegaIgnoreNameRule::setPattern(const QString &pattern)
+bool MegaIgnoreNameRule::setPattern(const QString& pattern)
 {
-    if (pattern == mPattern || !isPatternWritable(pattern))
+    if (!isPatternWritable(pattern))
     {
-        return;
+        return false;
     }
+
+    if (pattern == mPattern)
+    {
+        return true;
+    }
+
     mPattern = pattern;
     markAsDirty();
+    return true;
 }
 
 void MegaIgnoreNameRule::fillWildCardType(const QString& rightSidePart)
@@ -318,12 +325,18 @@ const QString& MegaIgnoreExtensionRule::extension() const
     return mExtension;
 }
 
-void MegaIgnoreExtensionRule::setPattern(const QString &pattern)
+bool MegaIgnoreExtensionRule::setPattern(const QString& pattern)
 {
-    if (mPattern == pattern || !isPatternWritable(pattern))
+    if (!isPatternWritable(pattern))
     {
-        return;
+        return false;
     }
+
+    if (mPattern == pattern)
+    {
+        return true;
+    }
+
     if(pattern.startsWith(QLatin1String(".")))
     {
         mPattern = pattern;
@@ -336,6 +349,7 @@ void MegaIgnoreExtensionRule::setPattern(const QString &pattern)
         mPattern = QLatin1String(".") + pattern;
     }
     markAsDirty();
+    return true;
 }
 
 ////////////////MEGA IGNORE SIZE RULE

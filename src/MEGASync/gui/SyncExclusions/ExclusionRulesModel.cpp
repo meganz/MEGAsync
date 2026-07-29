@@ -302,11 +302,26 @@ void ExclusionRulesModel::editRule(int targetType, int wildCard, QString ruleVal
     // Switching from name rule to extension rule
     if(rule->ruleType() != MegaIgnoreRule::RuleType::EXTENSIONRULE && targetType == TargetType::EXTENSION)
     {
+        // addNewRule() skips a value it cannot write, which after the removal would leave the rule
+        // deleted and nothing in its place.
+        if (!MegaIgnoreRule::isPatternWritable(splitted[0].trimmed()))
+        {
+            return;
+        }
+
         removeRow(index);
         addNewRule(targetType, wildCard, splitted[0]);
     }
     else
     {
+        // The pattern decides whether the edit can happen at all, so it goes first: a refused one
+        // leaves the rule exactly as it was found, rather than with a target and a wildcard the
+        // user only asked for as part of an edit that did not happen.
+        if (!rule->setPattern(splitted[0]))
+        {
+            return;
+        }
+
         // We should not change target of rules targeted to soft links, as we are not supporting this target on UI
         if (rule->getTarget() != MegaIgnoreNameRule::Target::s)
         {
@@ -326,7 +341,6 @@ void ExclusionRulesModel::editRule(int targetType, int wildCard, QString ruleVal
             }
         }
         rule->setWildCardType(static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
-        rule->setPattern(splitted[0]);
         mMegaIgnoreManager->updateNameRuleStrategyAcordingToCaseSensitive(rule);
     }
     emit dataChanged(createIndex(index, 0), createIndex(index, 0));

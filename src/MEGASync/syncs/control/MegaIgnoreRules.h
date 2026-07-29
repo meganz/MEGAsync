@@ -140,7 +140,9 @@ public:
     void setTarget(Target target);
     WildCardType getWildCardType();
     void setWildCardType(WildCardType wildCard);
-    virtual void setPattern(const QString &pattern);
+    // False when the pattern is refused, so a caller editing a rule can tell that the rule still
+    // holds the one it had. An unchanged pattern is not a refusal.
+    virtual bool setPattern(const QString& pattern);
     void setStrategy(Strategy newStrategy);
     Strategy getStrategy() const;
 
@@ -186,8 +188,12 @@ public:
     MegaIgnoreExtensionRule(const QString& rule, bool isCommented);
     explicit MegaIgnoreExtensionRule(Class classType, const QString& extension);
 
-    RuleType ruleType() const override { return RuleType::EXTENSIONRULE; }
-    void setPattern(const QString &pattern) override;
+    RuleType ruleType() const override
+    {
+        return RuleType::EXTENSIONRULE;
+    }
+
+    bool setPattern(const QString& pattern) override;
 
     const QString& extension() const;
     QString getDisplayText() const override { return mExtension; }
