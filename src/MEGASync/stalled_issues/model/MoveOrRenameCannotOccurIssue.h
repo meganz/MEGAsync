@@ -63,6 +63,9 @@ private:
     void onUndoFinished(std::shared_ptr<SyncSettings> syncSettings);
 
     bool mSolvingStarted;
+    // Guards against onSyncPausedEnds() being re-entered by the nested event loop that the
+    // synchronous SDK requests spin while the undo is running.
+    bool mUndoInProgress;
 
     bool solveIssueByPathProblem(StalledIssueSPtr issue);
     bool solveSourceWasMovedToElsewhere(StalledIssueSPtr issue);

@@ -234,7 +234,10 @@ struct DownloadTransferInfo;
 
 class MultiStepIssueSolverBase;
 
-class StalledIssue : public QObject
+// enable_shared_from_this lets a solving routine hold a reference to itself while it blocks
+// (see MoveOrRenameCannotOccurIssue::onSyncPausedEnds). All issues are created with
+// std::make_shared, so shared_from_this() is always valid.
+class StalledIssue: public QObject, public std::enable_shared_from_this<StalledIssue>
 {
     Q_OBJECT
     class FileSystemSignalHandler : public QObject

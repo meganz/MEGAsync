@@ -21,6 +21,7 @@ MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncS
     StalledIssue(stall),
     mega::MegaRequestListener(),
     mSolvingStarted(false),
+    mUndoInProgress(false),
     mChosenSide(MoveOrRenameIssueChosenSide::NONE),
     mCombinedNumberOfIssues(1),
     mUndoSuccessful(0),
@@ -101,40 +102,52 @@ void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
 //Now the sync is paused, so we continue solving the issue
 void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings> syncSettings)
 {
-    // If we select KEEP REMOTE, we undo the local changes, so we take the local issues to fix
-    StalledIssuesList issuesToFix =
-        remoteSideWasChosen() ? mDetectedLocalSideIssuesToFix : mDetectedCloudSideIssuesToFix;
-
     if (!mSolvingStarted)
     {
         return;
     }
 
+    // SyncInfo::syncStateChanged is emitted for every sync, so ignore the syncs we are not
+    // solving. This has to be checked before touching any state: it used to be done inside the
+    // loop below, where it also skipped onUndoFinished() and left the sync paused for good.
+    if (!syncSettings || syncSettings->backupId() != firstSyncId())
+    {
+        return;
+    }
+
+    // Solving an issue below blocks on the SDK through MegaApiSynchronizedRequest, which spins a
+    // nested QEventLoop. That loop keeps delivering queued calls to this thread, so both a
+    // re-entrant syncStateChanged and StalledIssuesModel::reset() can arrive while we are still
+    // on the stack. mUndoInProgress stops the re-entrancy, and keeping a reference to ourselves
+    // stops reset() from destroying this issue in the middle of the undo.
+    if (mUndoInProgress)
+    {
+        return;
+    }
+
+    const auto keepAlive(shared_from_this());
+    mUndoInProgress = true;
+
+    // If we select KEEP REMOTE, we undo the local changes, so we take the local issues to fix
+    StalledIssuesList issuesToFix =
+        remoteSideWasChosen() ? mDetectedLocalSideIssuesToFix : mDetectedCloudSideIssuesToFix;
+
     mUndoSuccessful = issuesToFix.size();
 
-    auto syncId(firstSyncId());
     foreach(auto& issueToFix, issuesToFix)
     {
-        if (syncSettings->backupId() != syncId)
+        if (syncSettings->getRunState() != mega::MegaSync::RUNSTATE_SUSPENDED)
         {
-            return;
+            continue;
         }
 
-        const auto syncState = syncSettings->getRunState();
-        if (syncState == mega::MegaSync::RUNSTATE_SUSPENDED)
+        if (!solveIssueByPathProblem(issueToFix))
         {
-            bool stopSolvingIssue(false);
-
-            stopSolvingIssue = solveIssueByPathProblem(issueToFix);
-
-            if (!stopSolvingIssue)
-            {
-                remoteSideWasChosen() ? solveRemoteGenericIssues(issueToFix) :
-                                        solveLocalGenericIssues(issueToFix);
-            }
-
-            MegaSyncApp->getMegaApi()->clearStalledPath(issueToFix->getOriginalStall().get());
+            remoteSideWasChosen() ? solveRemoteGenericIssues(issueToFix) :
+                                    solveLocalGenericIssues(issueToFix);
         }
+
+        MegaSyncApp->getMegaApi()->clearStalledPath(issueToFix->getOriginalStall().get());
     }
 
     onUndoFinished(syncSettings);
@@ -149,6 +162,7 @@ void MoveOrRenameCannotOccurIssue::onUndoFinished(std::shared_ptr<SyncSettings> 
         &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
 
     mSolvingStarted = false;
+    mUndoInProgress = false;
 
     mDetectedCloudSideIssuesToFix.clear();
     mDetectedLocalSideIssuesToFix.clear();
