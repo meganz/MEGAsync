@@ -3,6 +3,8 @@
 #include "MegaApplication.h"
 #include "MegaIgnoreManager.h"
 
+#include <QDir>
+
 #include <algorithm>
 
 QMap<mega::MegaHandle, bool> IgnoredStalledIssue::mSymLinksIgnoredInSyncs = QMap<mega::MegaHandle, bool>();
@@ -24,6 +26,15 @@ mega::MegaSyncStall::SyncPathProblem IgnoredStalledIssue::linkType() const
     return mLinkType;
 }
 
+QString IgnoredStalledIssue::ignoreRulePattern(const IgnoredPath& ignoredPath,
+                                               const mega::MegaSync& sync)
+{
+    QDir dir(ignoredPath.pathSide == IgnoredPath::IgnorePathSide::REMOTE ?
+                 QString::fromUtf8(sync.getLastKnownMegaFolder()) :
+                 QDir::toNativeSeparators(QString::fromUtf8(sync.getLocalFolder())));
+    return dir.relativeFilePath(ignoredPath.path);
+}
+
 bool IgnoredStalledIssue::canBeIgnored() const
 {
     // Symlinks are ignored with a fixed "-s:*" rule that carries no path, so they are always
@@ -34,13 +45,38 @@ bool IgnoredStalledIssue::canBeIgnored() const
         return true;
     }
 
-    return !mIgnoredPaths.isEmpty() &&
-           std::all_of(mIgnoredPaths.cbegin(),
-                       mIgnoredPaths.cend(),
-                       [](const IgnoredPath& ignoredPath)
-                       {
-                           return MegaIgnoreRule::isPatternWritable(ignoredPath.path);
-                       });
+    if (mCanBeIgnored.has_value())
+    {
+        return mCanBeIgnored.value();
+    }
+
+    if (mIgnoredPaths.isEmpty())
+    {
+        return false;
+    }
+
+    if (syncIds().isEmpty())
+    {
+        return true;
+    }
+
+    std::shared_ptr<mega::MegaSync> sync(
+        MegaSyncApp->getMegaApi()->getSyncByBackupId(firstSyncId()));
+    if (!sync)
+    {
+        return true;
+    }
+
+    // Only the part below the sync root is written, so that is what has to be writable: a control
+    // character in the root itself, or in a cloud folder above it, says nothing about this item.
+    mCanBeIgnored = std::all_of(mIgnoredPaths.cbegin(),
+                                mIgnoredPaths.cend(),
+                                [&sync](const IgnoredPath& ignoredPath)
+                                {
+                                    return MegaIgnoreRule::isPatternWritable(
+                                        ignoreRulePattern(ignoredPath, *sync));
+                                });
+    return mCanBeIgnored.value();
 }
 
 bool IgnoredStalledIssue::isAutoSolvable() const
@@ -54,6 +90,8 @@ bool IgnoredStalledIssue::isAutoSolvable() const
 
 void IgnoredStalledIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
+    mCanBeIgnored.reset();
+
     StalledIssue::fillIssue(stall);
     if(getReason() == mega::MegaSyncStall::FileIssue && consultLocalData())
     {
@@ -167,23 +205,13 @@ StalledIssue::ResolutionState IgnoredStalledIssue::autoSolveIssue()
                 }
                 else
                 {
-                    QDir dir;
                     foreach(auto ignoredPath, mIgnoredPaths)
                     {
-                        if(ignoredPath.pathSide == IgnoredPath::IgnorePathSide::REMOTE)
-                        {
-                            dir.setPath(QString::fromUtf8(sync->getLastKnownMegaFolder()));
-                        }
-                        else
-                        {
-                            dir.setPath(folderPath);
-                        }
-
                         // The writer refuses a pattern it cannot put on a single line. Without
                         // this check the issue would be reported as solved while nothing was
                         // written.
                         if (!ignoreManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
-                                                       dir.relativeFilePath(ignoredPath.path),
+                                                       ignoreRulePattern(ignoredPath, *sync),
                                                        MegaIgnoreNameRule::Target::NONE,
                                                        MegaIgnoreNameRule::Type::p))
                         {

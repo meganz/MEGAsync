@@ -1475,22 +1475,17 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
                         QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
                     if(MegaIgnoreManager::isValid(folderPath))
                     {
-                        auto& items = (*ignoredItemsBySync)[item.getData()->firstSyncId()];
-                        auto ignoredItems = ignorableItem->getIgnoredFiles();
-
-                        // A path that cannot be written as a single-line pattern cannot be
-                        // ignored at all. Decide it here, before the issue is counted as fixed,
-                        // so the summary and the model do not report a resolution that did not
-                        // happen.
-                        auto isUnwritable = [](const IgnoredStalledIssue::IgnoredPath& check)
-                        {
-                            return !MegaIgnoreRule::isPatternWritable(check.path);
-                        };
-                        if (std::any_of(ignoredItems.cbegin(), ignoredItems.cend(), isUnwritable))
+                        // A name that cannot be written as a single-line pattern cannot be ignored
+                        // at all. Decide it here, before the issue is counted as fixed, so the
+                        // summary and the model do not report a resolution that did not happen.
+                        if (!ignorableItem->canBeIgnored())
                         {
                             *unsupportedPattern = true;
                             return false;
                         }
+
+                        auto& items = (*ignoredItemsBySync)[item.getData()->firstSyncId()];
+                        auto ignoredItems = ignorableItem->getIgnoredFiles();
 
                         foreach(auto& ignoredItem, ignoredItems)
                         {
@@ -1535,21 +1530,18 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
                 auto ignoredFiles(ignoredItemsBySync->value(syncId));
                 foreach(auto ignoredPath, ignoredFiles)
                 {
-                    QDir dir;
-                    if(ignoredPath.pathSide == IgnoredStalledIssue::IgnoredPath::IgnorePathSide::REMOTE)
+                    // Backstop: a pattern that got past the per-issue check above. The rule is not
+                    // written, so the issue it belongs to is not resolved even though it was
+                    // already counted as fixed - say so rather than write nothing in silence.
+                    if (!manager.addNameRule(
+                            MegaIgnoreNameRule::Class::EXCLUDE,
+                            IgnoredStalledIssue::ignoreRulePattern(ignoredPath, *sync),
+                            ignoredPath.target))
                     {
-                        dir.setPath(QString::fromUtf8(sync->getLastKnownMegaFolder()));
+                        *unsupportedPattern = true;
                     }
-                    else
-                    {
-                        dir.setPath(folderPath);
-
-                    }
-                    manager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
-                        dir.relativeFilePath(ignoredPath.path), ignoredPath.target);
                 }
 
-                // Backstop: the writer refused a rule that got past the per-issue check above.
                 if (manager.applyChanges() ==
                     MegaIgnoreManager::ApplyChangesError::UNSUPPORTED_PATTERN)
                 {
