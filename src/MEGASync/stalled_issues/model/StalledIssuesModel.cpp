@@ -1457,10 +1457,13 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
 {
     auto ignoredItemsBySync = new QMap<mega::MegaHandle, QList<IgnoredStalledIssue::IgnoredPath>>();
 
-    // Set while deciding each issue, read once every issue has been decided.
+    // Set while deciding each issue, read once every issue has been decided. Both are tracked
+    // because a selection can hold one of each, and the error has to name every reason it saw.
     auto unsupportedPattern = std::make_shared<bool>(false);
+    auto otherFailure = std::make_shared<bool>(false);
 
-    auto resolveIssue = [this, ignoredItemsBySync, unsupportedPattern](int row) -> bool
+    auto resolveIssue =
+        [this, ignoredItemsBySync, unsupportedPattern, otherFailure](int row) -> bool
     {
         auto item(getStalledIssueByRow(row));
         if(auto ignorableItem = StalledIssue::convert<IgnoredStalledIssue>(item.getData()))
@@ -1510,14 +1513,17 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
             }
         }
 
+        // The item is gone, its sync is gone, or its .megaignore cannot be written: nothing to do
+        // with the name, so the error talks about permissions instead.
+        *otherFailure = true;
         return false;
     };
 
     auto issuesToFix(list.size());
 
-    auto finishFunc =
-        [this, ignoredItemsBySync, issuesToFix, unsupportedPattern](int issuesFixed,
-                                                                    bool externallyModified)
+    auto finishFunc = [this, ignoredItemsBySync, issuesToFix, unsupportedPattern, otherFailure](
+                          int issuesFixed,
+                          bool externallyModified)
     {
         foreach(auto syncId,  ignoredItemsBySync->keys())
         {
@@ -1554,7 +1560,7 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
         // issue was counted as fixed: the rule it stands for is not in the file.
         if (!externallyModified && (issuesFixed < issuesToFix || *unsupportedPattern))
         {
-            showIgnoreItemsError(issuesFixed == 0, *unsupportedPattern);
+            showIgnoreItemsError(issuesFixed == 0, *unsupportedPattern, *otherFailure);
         }
 
         delete ignoredItemsBySync;
@@ -1681,29 +1687,38 @@ void StalledIssuesModel::ignoreSymLinks()
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::showIgnoreItemsError(bool allFailed, bool unsupportedPattern)
+void StalledIssuesModel::showIgnoreItemsError(bool allFailed,
+                                              bool unsupportedPattern,
+                                              bool otherFailure)
 {
     MessageDialogInfo msgInfo;
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok;
+
+    // A selection can fail for both reasons at once, and each one asks something different of the
+    // user, so neither replaces the other.
+    QStringList descriptions;
 
     if (unsupportedPattern)
     {
         // Backstop copy: the action is not offered for these items, so this is only reachable if a
         // selection is built without going through IgnoredStalledIssue::canBeIgnored(), or if the
         // writer refuses a pattern that check let through.
-        msgInfo.descriptionText = tr("Some items can't be ignored: their names contain characters "
-                                     "that can't be used in an exclusion. Rename or delete them to "
-                                     "resolve these issues.");
+        descriptions << tr("Some items can't be ignored: their names contain characters "
+                           "that can't be used in an exclusion. Rename or delete them to "
+                           "resolve these issues.");
     }
-    else
+
+    if (otherFailure || !unsupportedPattern)
     {
-        msgInfo.descriptionText =
-            allFailed ? tr("Some issues can't be fixed.\nVerify the permissions of the "
-                           ".megaignore file on your local sync folder locations.") :
-                        tr("Issues can't be fixed.\nVerify the permissions of the "
-                           ".megaignore on file your local sync folder locations.");
+        descriptions << (allFailed ?
+                             tr("Issues can't be fixed.\nVerify the permissions of the "
+                                ".megaignore on file your local sync folder locations.") :
+                             tr("Some issues can't be fixed.\nVerify the permissions of the "
+                                ".megaignore file on your local sync folder locations."));
     }
+
+    msgInfo.descriptionText = descriptions.join(QLatin1String("<br><br>"));
 
     runMessageBox(std::move(msgInfo));
 }

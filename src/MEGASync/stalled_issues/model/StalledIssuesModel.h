@@ -211,7 +211,11 @@ public:
     void ignoreItems(const QModelIndexList& list);
     void ignoreAllSimilarIssues();
     void ignoreSymLinks();
-    void showIgnoreItemsError(bool allFailed, bool unsupportedPattern = false);
+    // otherFailure covers everything that is not the item's name: a sync or an item that went
+    // away, or a .megaignore that cannot be written.
+    void showIgnoreItemsError(bool allFailed,
+                              bool unsupportedPattern = false,
+                              bool otherFailure = false);
 
     //Fingerprint missing
     void fixFingerprint(const QModelIndexList& list);
