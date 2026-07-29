@@ -66,8 +66,8 @@ public:
         //
         // QQuickWidget doesn't allow injecting a custom child QQmlContext, so
         // properties go on the engine's root context. This is per-process
-        // global pollution — acceptable here because widgets like SurveyItem
-        // are typically instantiated one at a time. Multi-instance scenarios
+        // global pollution — acceptable here because these widgets are
+        // typically instantiated one at a time. Multi-instance scenarios
         // would require switching from QQuickWidget to a manual QQmlComponent
         // setup, which is out of scope for this phase.
         //

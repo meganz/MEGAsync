@@ -203,7 +203,6 @@
         <file alias="images/ic_sync_warning.png">images/ic_sync_warning.png</file>
         <file alias="images/ic_sync_warning@2x.png">images/ic_sync_warning@2x.png</file>
         <file alias="images/ic_sync_warning@3x.png">images/ic_sync_warning@3x.png</file>
-        <file alias="images/ico-device-centre.svg">images/ico-device-centre.svg</file>
         <file alias="images/ico_Delete.png">images/ico_Delete.png</file>
         <file alias="images/ico_Delete@2x.png">images/ico_Delete@2x.png</file>
         <file alias="images/ico_Delete@3x.png">images/ico_Delete@3x.png</file>

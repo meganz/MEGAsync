@@ -80,10 +80,6 @@
         <file>components/steps/Step.qml</file>
         <file>components/steps/SubStep.qml</file>
         <file>components/steps/StepPanel.qml</file>
-        <file>components/textAreas/qmldir</file>
-        <file>components/textAreas/TextArea.qml</file>
-        <file>components/textAreas/MediumSizes.qml</file>
-        <file>components/textAreas/Colors.qml</file>
         <file>components/textFields/qmldir</file>
         <file>components/textFields/EmailTextField.qml</file>
         <file>components/textFields/IconTextField.qml</file>
@@ -205,30 +201,9 @@
         <file>backups/ResumePageForm.ui.qml</file>
         <file>backups/ResumePage.qml</file>
         <file>backups/BackupsPage.qml</file>
-        <file>surveys/qmldir</file>
-        <file>surveys/SurveyStrings.qml</file>
-        <file>surveys/SurveyItem.qml</file>
-        <file>surveys/RateScaleItem.qml</file>
-        <file>deviceCentre/DeviceCentreDialog.qml</file>
-        <file>deviceCentre/DeviceCentreStrings.qml</file>
-        <file>deviceCentre/qmldir</file>
-        <file>deviceCentre/LeftSidebar.qml</file>
-        <file>deviceCentre/Toolbar.qml</file>
-        <file>deviceCentre/ToolbarButton.qml</file>
-        <file>deviceCentre/DevicePage.qml</file>
-        <file>deviceCentre/DevicePageHeader.qml</file>
-        <file>deviceCentre/DevicePageContent.qml</file>
-        <file>deviceCentre/NoInternetPage.qml</file>
-        <file>deviceCentre/NoConnectionsPage.qml</file>
-        <file>deviceCentre/SyncTablePage.qml</file>
-        <file>deviceCentre/DeviceWidgetProperty.qml</file>
-        <file>deviceCentre/TroubleshootDialog.qml</file>
-        <file>deviceCentre/IssueResolutionOption.qml</file>
-        <file>deviceCentre/TroubleshootButton.qml</file>
         <file>messageDialogs/MessageDialog.qml</file>
         <file>messageDialogs/MessageDialogMediumSizes.qml</file>
         <file>messageDialogs/TextLoader.qml</file>
-        <file>deviceCentre/RenameDeviceDialog.qml</file>
         <file>common/DeviceName.qml</file>
         <file>syncs/ChooseSyncFolder.qml</file>
         <file>quick_widget/TransfersSummaryItem.qml</file>
