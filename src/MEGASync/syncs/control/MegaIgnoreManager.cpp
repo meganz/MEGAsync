@@ -343,6 +343,19 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
                 trimmedExtension.remove(0,1);
             }
 
+            // These rules are built here rather than through addExtensionRule(), so they need the
+            // same check: the extension is what the rule is written from, in either branch below.
+            if (!MegaIgnoreRule::isPatternWritable(trimmedExtension))
+            {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                                   QString::fromUtf8("Dropped a .megaignore extension rule that "
+                                                     "cannot be written on a single line")
+                                       .toUtf8()
+                                       .constData());
+                droppedUnwritableRule = true;
+                continue;
+            }
+
             if (mExtensionRules.contains(trimmedExtension))
             {
                 rules.append(mExtensionRules.value(trimmedExtension)->getModifiedRule());
@@ -400,13 +413,6 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinksRule()
     }
 
     return mIgnoreSymLinkRule;
-}
-
-std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinkRule(const QString& pattern)
-{
-    auto rule = std::make_shared<MegaIgnoreNameRule>(pattern, MegaIgnoreNameRule::Class::EXCLUDE, MegaIgnoreNameRule::Target::s);
-    addRule(rule);
-    return rule;
 }
 
 std::shared_ptr<MegaIgnoreNameRule>
