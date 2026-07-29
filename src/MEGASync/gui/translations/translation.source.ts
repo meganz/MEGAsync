@@ -1854,8 +1854,9 @@
         <translation>Wildcard</translation>
     </message>
     <message>
-        <source>This can&apos;t be used as an exclusion. Remove the line breaks and try again.</source>
-        <translation type="unfinished"></translation>
+        <source>This can&apos;t be used as an exclusion. Remove the line breaks or hidden characters and try again.</source>
+        <translatorcomment>Error hint under the value field of the add exclusion dialog, shown when the typed or pasted value contains a control character (a line break, a tab, an escape) that cannot be written as an exclusion rule.SNC-6769</translatorcomment>
+        <translation>This can&apos;t be used as an exclusion. Remove the line breaks or hidden characters and try again.</translation>
     </message>
 </context>
 <context>
@@ -8237,7 +8238,8 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>This item can&apos;t be ignored: its name contains characters that can&apos;t be used in an exclusion. Rename or delete it to resolve this issue.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Description of a stalled issue row, replacing the usual one when the Ignore resolution cannot be offered because the item&apos;s name contains a control character.SNC-6769</translatorcomment>
+        <translation>This item can&apos;t be ignored: its name contains characters that can&apos;t be used in an exclusion. Rename or delete it to resolve this issue.</translation>
     </message>
 </context>
 <context>
@@ -8403,7 +8405,8 @@ Refresh the list.</translation>
     </message>
     <message>
         <source>Some items can&apos;t be ignored: their names contain characters that can&apos;t be used in an exclusion. Rename or delete them to resolve these issues.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative text in the message box shown after ignoring several stalled issues, when some of them could not be ignored because their names contain a control character.SNC-6769</translatorcomment>
+        <translation>Some items can&apos;t be ignored: their names contain characters that can&apos;t be used in an exclusion. Rename or delete them to resolve these issues.</translation>
     </message>
 </context>
 <context>
