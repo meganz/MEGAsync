@@ -439,9 +439,12 @@ void StalledIssueHeader::refreshCaseTitles()
         mHeaderCase->refreshCaseTitles(this);
 
         // No resolution is offered when the name cannot be written as an exclusion, so the row has
-        // to say why by itself. Set after the case so it replaces the generic description.
+        // to say why by itself. Set after the case so it replaces the generic description - but
+        // only when Ignore was the only resolution this row had: when the case still offers an
+        // action, its own description is the one that explains what to do with it.
+        // refreshCaseActions() runs before this, so the button already reflects this row.
         auto issueData(getData().consultData());
-        if (issueData && !issueData->isSolved())
+        if (issueData && !issueData->isSolved() && ui->multipleActionButton->isHidden())
         {
             if (auto ignorableIssue = getData().convert<IgnoredStalledIssue>())
             {
@@ -450,6 +453,10 @@ void StalledIssueHeader::refreshCaseTitles()
                     setTitleDescriptionText(
                         tr("This item can't be ignored: its name contains characters that can't be "
                            "used in an exclusion. Rename or delete it to resolve this issue."));
+
+                    // The description is two lines wide in most languages, and the case's layout
+                    // was measured without it.
+                    updateHeaderSizes();
                 }
             }
         }
