@@ -1550,7 +1550,9 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
             }
         }
 
-        if(!externallyModified && issuesFixed < issuesToFix)
+        // A pattern refused while the rules were being written is reported even though every
+        // issue was counted as fixed: the rule it stands for is not in the file.
+        if (!externallyModified && (issuesFixed < issuesToFix || *unsupportedPattern))
         {
             showIgnoreItemsError(issuesFixed == 0, *unsupportedPattern);
         }
@@ -1688,7 +1690,8 @@ void StalledIssuesModel::showIgnoreItemsError(bool allFailed, bool unsupportedPa
     if (unsupportedPattern)
     {
         // Backstop copy: the action is not offered for these items, so this is only reachable if a
-        // selection is built without going through IgnoredStalledIssue::canBeIgnored().
+        // selection is built without going through IgnoredStalledIssue::canBeIgnored(), or if the
+        // writer refuses a pattern that check let through.
         msgInfo.descriptionText = tr("Some items can't be ignored: their names contain characters "
                                      "that can't be used in an exclusion. Rename or delete them to "
                                      "resolve these issues.");
