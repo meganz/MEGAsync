@@ -29,6 +29,11 @@ bool MegaIgnoreRule::isPatternWritable(const QString& pattern)
                         });
 }
 
+bool MegaIgnoreRule::spansMultipleLines(const QString& ruleAsText)
+{
+    return ruleAsText.contains(QLatin1Char('\n')) || ruleAsText.contains(QLatin1Char('\r'));
+}
+
 bool MegaIgnoreRule::isEqual(const QString& ruleAsStringToCompare) const
 {
     QString ruleAsString(getModifiedRule());

@@ -58,7 +58,14 @@ public:
     // carrying a line terminator is written out as extra rules. The SDK splits lines on both
     // CR and LF (readLines) and matches patterns verbatim against the unescaped name, so no
     // encoding keeps such a pattern on one line and still matches it: it cannot be written.
+    // Control characters that are not line terminators cannot split a rule, but they have no
+    // legitimate use in a pattern either, so a new pattern carrying any of them is refused.
     static bool isPatternWritable(const QString& pattern);
+
+    // True when writing this text out would produce more than the one rule it stands for. This
+    // is the subset of isPatternWritable() that actually breaks the file, so it is what a line
+    // already present in the user's .megaignore is held to.
+    static bool spansMultipleLines(const QString& ruleAsText);
 
 protected:
     RuleType mRuleType;

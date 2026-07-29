@@ -15,7 +15,6 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 
-#include <cassert>
 #include <utility>
 
 MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder, bool createDefaultIfNotExist)
@@ -275,11 +274,39 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
             if (!ruleAsText.isEmpty())
             {
                 // The rules are joined with "\n", so a rule spanning more than one line would
-                // become several. addNameRule()/addExtensionRule() already reject those; this
-                // keeps the invariant a property of the writer rather than of its callers.
-                if (!MegaIgnoreRule::isPatternWritable(ruleAsText))
+                // become several. addNameRule()/addExtensionRule() already reject those patterns;
+                // this keeps the invariant a property of the writer rather than of its callers.
+                //
+                // A rule read from the file (the only ones with an original text) is held to the
+                // narrower test: a line that arrived with a terminator inside it is not written
+                // back, so the file loses it as soon as it is rewritten, while a line carrying
+                // any other control character is preserved instead of silently disappearing.
+                // That drop is also not an error for the caller: the line is not the rule it
+                // asked to write, and reporting it would turn one corrupt line into a failed
+                // resolution for every issue in the sync.
+                //
+                // Neither drop logs the rule: it carries control characters, and the log is read
+                // in terminals.
+                const auto readFromFile(!rule->originalRule().isEmpty());
+                if (readFromFile)
                 {
-                    assert(false);
+                    if (MegaIgnoreRule::spansMultipleLines(ruleAsText))
+                    {
+                        mega::MegaApi::log(
+                            mega::MegaApi::LOG_LEVEL_WARNING,
+                            QString::fromUtf8("Dropped a .megaignore line spanning several lines")
+                                .toUtf8()
+                                .constData());
+                        continue;
+                    }
+                }
+                else if (!MegaIgnoreRule::isPatternWritable(ruleAsText))
+                {
+                    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                                       QString::fromUtf8("Dropped a .megaignore rule that cannot "
+                                                         "be written on a single line")
+                                           .toUtf8()
+                                           .constData());
                     droppedUnwritableRule = true;
                     continue;
                 }
