@@ -1,0 +1,38 @@
+# ThreadSanitizer suppressions for MEGAsync desktop.
+#
+# Usage (macOS/Linux, TSan-instrumented build):
+#   TSAN_OPTIONS="suppressions=<repo>/tests/tsan.supp log_path=<dir>/tsan-run" ./MEGAsync
+#
+# Build recipe for the instrumented binary: configure a dedicated build dir with
+# ENABLE_TSAN=ON plus global "-fsanitize=thread -fno-omit-frame-pointer" in
+# CMAKE_{C,CXX,OBJC,OBJCXX}_FLAGS and "-fsanitize=thread" in the linker flags.
+#
+# POLICY: keep this file MINIMAL. Every entry must carry a justification for
+# why the report is a false positive. Suppressions match by symbol, so a real
+# race inside a suppressed class would be hidden too — do not add entries to
+# silence reports that have not been root-caused.
+
+# ---------------------------------------------------------------------------
+# SDK -> Qt event handoff via QCoreApplication::postEvent (false positive).
+#
+# QTMegaListener / QTMega*Listener copy the SDK event/request on an SDK worker
+# thread (MegaEventPrivate / MegaRequestPrivate copies wrapped in QTMegaEvent)
+# and hand it to the GUI thread with QCoreApplication::postEvent(); the GUI
+# thread reads and deletes it in customEvent(). Qt guarantees the
+# happens-before ordering through its event-queue mutex, but Qt itself is not
+# TSan-instrumented and QBasicMutex's fast path is a bare atomic the TSan
+# runtime cannot observe, so TSan sees ctor (thread A) vs read/dtor (thread B)
+# with no synchronization edge. Verified against a full churn session on
+# 2026-07-29: 165 reports, ~95% were this exact family; the remaining real
+# races (AccountDetailsManager::mFlags, MegaSyncLogger flags) were fixed in
+# code, NOT suppressed.
+race:mega::QTMegaEvent
+race:mega::MegaEventPrivate
+race:mega::MegaRequestPrivate
+race:mega::QTMegaListener::customEvent
+race:mega::QTMegaRequestListener::customEvent
+race:mega::QTMegaTransferListener::customEvent
+race:mega::QTMegaGlobalListener::customEvent
+# vptr subfamily of the same handoff (ctor/dtor vs virtual call reports whose
+# racing frame is the abstract MegaEvent base constructed on the SDK thread).
+race:mega::MegaEvent::MegaEvent

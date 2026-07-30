@@ -13,6 +13,7 @@
 #include <QUrl>
 
 #include <iterator>
+#include <memory>
 
 namespace
 {
@@ -92,7 +93,10 @@ void UpsellController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
             const bool requestSucceeded = error->getErrorCode() == mega::MegaError::API_OK;
             if (requestSucceeded)
             {
-                processGetPricingRequest(request->getPricing(), request->getCurrency());
+                // The request getters return copies owned by the caller.
+                std::unique_ptr<mega::MegaPricing> pricing(request->getPricing());
+                std::unique_ptr<mega::MegaCurrency> currency(request->getCurrency());
+                processGetPricingRequest(pricing.get(), currency.get());
                 emit dataReady();
             }
             emit pricingRequestFinished(requestSucceeded);
