@@ -2707,6 +2707,7 @@ MessageDialogInfo NodeSelectorModel::buildFailedRequestMessage(
     }
 
     const auto multipleRequest = failedHandles.size() > 1;
+    const auto nbFailedItems = failedHandles.size();
 
     auto failedNode = failedHandles.isEmpty() ?
                           std::unique_ptr<mega::MegaNode>() :
@@ -2720,30 +2721,33 @@ MessageDialogInfo NodeSelectorModel::buildFailedRequestMessage(
             if (movedItemsType.testFlag(MovedItemsType::NONE) ||
                 movedItemsType.testFlag(MovedItemsType::BOTH))
             {
-                msgInfo.titleText = tr("Error moving items");
-                msgInfo.descriptionText = tr("The items couldn’t be moved. Try again later");
+                msgInfo.titleText = tr("Error moving item", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The item couldn’t be moved. Try again later.", "", nbFailedItems);
             }
             else if (movedItemsType.testFlag(MovedItemsType::FILES))
             {
-                msgInfo.titleText = tr("Error moving files");
-                msgInfo.descriptionText = tr("The files couldn’t be moved. Try again later");
+                msgInfo.titleText = tr("Error moving file", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The file couldn’t be moved. Try again later.", "", nbFailedItems);
             }
             else if (movedItemsType.testFlag(MovedItemsType::FOLDERS))
             {
-                msgInfo.titleText = tr("Error moving folders");
-                msgInfo.descriptionText = tr("The folders couldn’t be moved. Try again later");
+                msgInfo.titleText = tr("Error moving folder", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The folder couldn’t be moved. Try again later.", "", nbFailedItems);
             }
         }
         else if (failedNode->isFile())
         {
-            msgInfo.titleText = tr("Error moving file");
-            msgInfo.descriptionText = tr("The file %1 couldn’t be moved. Try again later")
+            msgInfo.titleText = tr("Error moving file", "", nbFailedItems);
+            msgInfo.descriptionText = tr("The file %1 couldn’t be moved. Try again later.")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
         else
         {
-            msgInfo.titleText = tr("Error moving folder");
-            msgInfo.descriptionText = tr("The folder %1 couldn’t be moved. Try again later")
+            msgInfo.titleText = tr("Error moving folder", "", nbFailedItems);
+            msgInfo.descriptionText = tr("The folder %1 couldn’t be moved. Try again later.")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
     }
@@ -2754,30 +2758,33 @@ MessageDialogInfo NodeSelectorModel::buildFailedRequestMessage(
             if (movedItemsType.testFlag(MovedItemsType::NONE) ||
                 movedItemsType.testFlag(MovedItemsType::BOTH))
             {
-                msgInfo.titleText = tr("Error pasting items");
-                msgInfo.descriptionText = tr("The items couldn’t be pasted. Try again later");
+                msgInfo.titleText = tr("Error pasting item", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The item couldn’t be pasted. Try again later.", "", nbFailedItems);
             }
             else if (movedItemsType.testFlag(MovedItemsType::FILES))
             {
-                msgInfo.titleText = tr("Error pasting files");
-                msgInfo.descriptionText = tr("The files couldn’t be pasted. Try again later");
+                msgInfo.titleText = tr("Error pasting file", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The file couldn’t be pasted. Try again later.", "", nbFailedItems);
             }
             else if (movedItemsType.testFlag(MovedItemsType::FOLDERS))
             {
-                msgInfo.titleText = tr("Error pasting folders");
-                msgInfo.descriptionText = tr("The folders couldn’t be pasted. Try again later");
+                msgInfo.titleText = tr("Error pasting folder", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The folder couldn’t be pasted. Try again later.", "", nbFailedItems);
             }
         }
         else if (failedNode->isFile())
         {
-            msgInfo.titleText = tr("Error pasting file");
-            msgInfo.descriptionText = tr("The file %1 couldn’t be pasted. Try again later")
+            msgInfo.titleText = tr("Error pasting file", "", nbFailedItems);
+            msgInfo.descriptionText = tr("The file %1 couldn’t be pasted. Try again later.")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
         else
         {
-            msgInfo.titleText = tr("Error pasting folder");
-            msgInfo.descriptionText = tr("The folder %1 couldn’t be pasted. Try again later")
+            msgInfo.titleText = tr("Error pasting folder", "", nbFailedItems);
+            msgInfo.descriptionText = tr("The folder %1 couldn’t be pasted. Try again later.")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
     }
@@ -2788,30 +2795,33 @@ MessageDialogInfo NodeSelectorModel::buildFailedRequestMessage(
             if (movedItemsType.testFlag(MovedItemsType::NONE) ||
                 movedItemsType.testFlag(MovedItemsType::BOTH))
             {
-                msgInfo.titleText = tr("Error restoring items");
-                msgInfo.descriptionText = tr("The items couldn’t be restored. Try again later");
+                msgInfo.titleText = tr("Error restoring item", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The item couldn’t be restored. Try again later.", "", nbFailedItems);
             }
             else if (movedItemsType.testFlag(MovedItemsType::FILES))
             {
-                msgInfo.titleText = tr("Error restoring files");
-                msgInfo.descriptionText = tr("The files couldn’t be restored. Try again later");
+                msgInfo.titleText = tr("Error restoring file", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The file couldn’t be restored. Try again later.", "", nbFailedItems);
             }
             else if (movedItemsType.testFlag(MovedItemsType::FOLDERS))
             {
-                msgInfo.titleText = tr("Error restoring folders");
-                msgInfo.descriptionText = tr("The folders couldn’t be restored. Try again later");
+                msgInfo.titleText = tr("Error restoring folder", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The folder couldn’t be restored. Try again later.", "", nbFailedItems);
             }
         }
         else if (failedNode->isFile())
         {
-            msgInfo.titleText = tr("Error restoring file");
-            msgInfo.descriptionText = tr("The file %1 couldn’t be restored. Try again later")
+            msgInfo.titleText = tr("Error restoring file", "", nbFailedItems);
+            msgInfo.descriptionText = tr("The file %1 couldn’t be restored. Try again later.")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
         else
         {
-            msgInfo.titleText = tr("Error restoring folder");
-            msgInfo.descriptionText = tr("The folder %1 couldn’t be restored. Try again later")
+            msgInfo.titleText = tr("Error restoring folder", "", nbFailedItems);
+            msgInfo.descriptionText = tr("The folder %1 couldn’t be restored. Try again later.")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
     }
@@ -2822,30 +2832,33 @@ MessageDialogInfo NodeSelectorModel::buildFailedRequestMessage(
             if (movedItemsType.testFlag(MovedItemsType::NONE) ||
                 movedItemsType.testFlag(MovedItemsType::BOTH))
             {
-                msgInfo.titleText = tr("Error deleting items");
-                msgInfo.descriptionText = tr("The items couldn’t be deleted. Try again later");
+                msgInfo.titleText = tr("Error deleting item", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The item couldn’t be deleted. Try again later.", "", nbFailedItems);
             }
             else if (movedItemsType.testFlag(MovedItemsType::FILES))
             {
-                msgInfo.titleText = tr("Error deleting files");
-                msgInfo.descriptionText = tr("The files couldn’t be deleted. Try again later");
+                msgInfo.titleText = tr("Error deleting file", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The file couldn’t be deleted. Try again later.", "", nbFailedItems);
             }
             else if (movedItemsType.testFlag(MovedItemsType::FOLDERS))
             {
-                msgInfo.titleText = tr("Error deleting folders");
-                msgInfo.descriptionText = tr("The folders couldn’t be deleted. Try again later");
+                msgInfo.titleText = tr("Error deleting folder", "", nbFailedItems);
+                msgInfo.descriptionText =
+                    tr("The folder couldn’t be deleted. Try again later.", "", nbFailedItems);
             }
         }
         else if (failedNode->isFile())
         {
-            msgInfo.titleText = tr("Error deleting file");
-            msgInfo.descriptionText = tr("The file %1 couldn’t be deleted. Try again later")
+            msgInfo.titleText = tr("Error deleting file", "", nbFailedItems);
+            msgInfo.descriptionText = tr("The file %1 couldn’t be deleted. Try again later.")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
         else
         {
-            msgInfo.titleText = tr("Error deleting folder");
-            msgInfo.descriptionText = tr("The folder %1 couldn’t be deleted. Try again later")
+            msgInfo.titleText = tr("Error deleting folder", "", nbFailedItems);
+            msgInfo.descriptionText = tr("The folder %1 couldn’t be deleted. Try again later.")
                                           .arg(MegaNodeNames::getNodeName(failedNode.get()));
         }
     }
