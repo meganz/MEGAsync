@@ -131,3 +131,94 @@ TEST_CASE("MegaIgnoreExtensionRule keeps the extension it had when a new one is 
         CHECK(rule.getModifiedRule().toStdString() == std::string("-:*.jpg"));
     }
 }
+
+TEST_CASE("MegaIgnoreRule::isPatternWritable() refuses exactly the C0 and C1 ranges")
+{
+    // The Add exclusion dialog mirrors this classification with the regex /[\x00-\x1f\x7f-\x9f]/,
+    // so the two have to agree on every code point, not only the ones a test happens to name.
+    int disagreements(0);
+    int firstDisagreement(-1);
+
+    for (int code = 0; code <= 0xFFFF; ++code)
+    {
+        const bool isC0OrC1((code <= 0x1F) || (code >= 0x7F && code <= 0x9F));
+        const bool refused(
+            !MegaIgnoreRule::isPatternWritable(QString(QChar(static_cast<ushort>(code)))));
+
+        if (refused != isC0OrC1)
+        {
+            ++disagreements;
+            if (firstDisagreement < 0)
+            {
+                firstDisagreement = code;
+            }
+        }
+    }
+
+    CAPTURE(firstDisagreement);
+    CHECK(disagreements == 0);
+}
+
+TEST_CASE("A rule carries its original text only when it was read from the file")
+{
+    // MegaIgnoreManager::applyChanges() tells a line it parsed from the user's .megaignore apart
+    // from a rule built during this session by whether originalRule() is empty, and holds each to
+    // a different test. These are that distinction.
+    SECTION("a parsed rule keeps the line it came from and writes it back verbatim")
+    {
+        MegaIgnoreNameRule rule(pattern("-fG:holiday.jpg"), false);
+
+        CHECK(rule.originalRule().toStdString() == std::string("-fG:holiday.jpg"));
+        CHECK_FALSE(rule.isDirty());
+        CHECK(rule.getModifiedRule().toStdString() == std::string("-fG:holiday.jpg"));
+    }
+
+    SECTION("a rule built here has no original text and is dirty")
+    {
+        MegaIgnoreNameRule rule(pattern("holiday.jpg"),
+                                MegaIgnoreNameRule::Class::EXCLUDE,
+                                MegaIgnoreNameRule::Target::f);
+
+        CHECK(rule.originalRule().isEmpty());
+        CHECK(rule.isDirty());
+    }
+
+    SECTION("an unparsable line is kept as an invalid rule, original text and all")
+    {
+        // Comments reach the writer this way, which is why a control character in one used to be
+        // enough to abort a debug build.
+        MegaIgnoreInvalidRule rule(pattern("# holiday\tphotos"), false);
+
+        CHECK(rule.originalRule().toStdString() == std::string("# holiday\tphotos"));
+        CHECK(rule.getModifiedRule().toStdString() == std::string("# holiday\tphotos"));
+        // Refused as a new pattern, but it cannot split the file, so the writer keeps it.
+        CHECK_FALSE(MegaIgnoreRule::isPatternWritable(rule.getModifiedRule()));
+        CHECK_FALSE(MegaIgnoreRule::spansMultipleLines(rule.getModifiedRule()));
+    }
+}
+
+TEST_CASE("Every wildcard decoration writes the rule on one line")
+{
+    // getModifiedRule() wraps the pattern in asterisks according to the wildcard type. Whatever it
+    // adds, the result has to stay the single line the file format allows.
+    const auto wildCards = {MegaIgnoreNameRule::WildCardType::EQUAL,
+                            MegaIgnoreNameRule::WildCardType::STARTSWITH,
+                            MegaIgnoreNameRule::WildCardType::ENDSWITH,
+                            MegaIgnoreNameRule::WildCardType::CONTAINS,
+                            MegaIgnoreNameRule::WildCardType::WILDCARD};
+
+    for (const auto wildCard: wildCards)
+    {
+        MegaIgnoreNameRule rule(pattern("holiday.jpg"),
+                                MegaIgnoreNameRule::Class::EXCLUDE,
+                                MegaIgnoreNameRule::Target::f,
+                                MegaIgnoreNameRule::Type::NONE,
+                                MegaIgnoreNameRule::Strategy::NONE,
+                                wildCard);
+
+        const auto ruleAsText(rule.getModifiedRule());
+        CAPTURE(static_cast<int>(wildCard), ruleAsText.toStdString());
+        CHECK_FALSE(MegaIgnoreRule::spansMultipleLines(ruleAsText));
+        CHECK(ruleAsText.contains(pattern("holiday.jpg")));
+    }
+}
