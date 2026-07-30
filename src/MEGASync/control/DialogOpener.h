@@ -679,6 +679,25 @@ private:
             QRect geometry;
             QByteArray siblingGeometryState;
 
+            // A registered QML sibling whose inner window was already destroyed
+            // (wrapper "zombie", see the connect to mWindow's destroyed in
+            // QmlDialogWrapper) must not be reused: reading its flags/geometry
+            // would act on the dead window. Drop it and register this dialog
+            // through the fresh path instead.
+            if (info && isQML)
+            {
+                auto sibling = info->getDialog();
+                if (!sibling || !QmlDialogWrapperUtilities::isQML(sibling->windowHandle()))
+                {
+                    if (sibling && sibling != dialog)
+                    {
+                        removeDialog(sibling);
+                    }
+                    mOpenedDialogs.removeOne(info);
+                    info = nullptr;
+                }
+            }
+
             if(info)
             {
                 if(removeSiblings && info->getDialog() != dialog)
