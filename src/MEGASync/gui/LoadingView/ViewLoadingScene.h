@@ -648,7 +648,7 @@ private:
     QLayout* mViewLayout;
     qint64 mStartTime;
 
-    bool mWasFocused;
+    bool mWasFocused = false;
 };
 
 template<class DelegateWidget, class ViewType>

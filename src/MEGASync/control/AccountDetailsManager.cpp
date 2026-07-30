@@ -229,21 +229,25 @@ void AccountDetailsManager::handleAccountDetailsReply(mega::MegaRequest* request
     //Account details retrieved, update the preferences and the information dialog
     std::shared_ptr<mega::MegaAccountDetails> details(request->getMegaAccountDetails());
 
-    MegaSyncApp->pushToThreadPool([=]()
-    {
-        std::shared_ptr<mega::MegaNodeList> inShares(mFlags.testFlag(Flag::STORAGE)
-                                                         ? mMegaApi->getInShares()
-                                                         : nullptr);
-
-        Utilities::queueFunctionInAppThread([=]()
+    // Capture the flags by value: the pool thread must not read mFlags (data race
+    // with the next reply) and this lambda belongs to the current reply anyway.
+    const Flags flags = mFlags;
+    MegaSyncApp->pushToThreadPool(
+        [=]()
         {
-            processProFlag(details);
-            processStorageFlag(details, inShares);
-            processTransferFlag(details);
+            std::shared_ptr<mega::MegaNodeList> inShares(
+                flags.testFlag(Flag::STORAGE) ? mMegaApi->getInShares() : nullptr);
 
-            emit accountDetailsUpdated();
+            Utilities::queueFunctionInAppThread(
+                [=]()
+                {
+                    processProFlag(details);
+                    processStorageFlag(details, inShares);
+                    processTransferFlag(details);
+
+                    emit accountDetailsUpdated();
+                });
         });
-    });
 }
 
 void AccountDetailsManager::processProFlag(const std::shared_ptr<mega::MegaAccountDetails>& details)
