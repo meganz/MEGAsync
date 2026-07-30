@@ -16,8 +16,6 @@ QtObject {
     readonly property url imagesSyncsPath: Qt.resolvedUrl(imagesQmlPath + "syncs/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
     readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "sync_exclusions/")
-    readonly property url imagesDeviceCentrePath: Qt.resolvedUrl(imagesQmlPath + "device_center/")
-    readonly property url imagesSurveysPath: Qt.resolvedUrl(imagesQmlPath + "surveys/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
@@ -51,7 +49,6 @@ QtObject {
     readonly property url twofa: imagesQmlPath + "lock.png"
     readonly property url eye: imagesQmlPath + "eye.svg"
     readonly property url eyeOff: imagesQmlPath + "eye-off.svg"
-    readonly property url deviceCentreUpdate: imagesQmlPath + "device-centre-update.png"
     readonly property url megaDevices: imagesQmlPath + "mega_3d_devices.png"
     readonly property url backupDevices: imagesQmlPath + "backup_3d_devices.png"
     readonly property url threeDots: imagesQmlPath + "three_dots.svg"
@@ -105,23 +102,8 @@ QtObject {
     readonly property url chevronDown: imagesExclusionsPath + "chevron-down.svg"
     readonly property url info: imagesExclusionsPath + "info.svg"
 
-    readonly property url addBackup: imagesDeviceCentrePath + "addbackup.svg"
-    readonly property url addSync: imagesDeviceCentrePath + "addsync.svg"
-    readonly property url syncFolder: imagesDeviceCentrePath + "sync_folder.svg"
-    readonly property url backupFolder: imagesDeviceCentrePath + "backup_folder.svg"
 
-    readonly property url pcWindows: imagesDeviceCentrePath + "pc-windows.svg"
-    readonly property url pcMac: imagesDeviceCentrePath + "pc-mac.svg"
-    readonly property url pcLinux: imagesDeviceCentrePath + "pc-linux.svg"
-    readonly property url statusPaused: imagesDeviceCentrePath + "status-paused.svg"
-    readonly property url statusStopped: imagesDeviceCentrePath + "status-stopped.svg"
-    readonly property url statusUpdating: imagesDeviceCentrePath + "status-updating.svg"
-    readonly property url statusUpToDate: imagesDeviceCentrePath + "status-uptodate.svg"
-    readonly property url devices: imagesDeviceCentrePath + "devices.svg"
-    readonly property url tool: imagesDeviceCentrePath + "tool.svg"
 
-    readonly property url starFilled: imagesSurveysPath + "star_filled.svg"
-    readonly property url starEmpty: imagesSurveysPath + "star_empty.svg"
 
     readonly property url plus: imagesPath + "icon_plus.svg"
     readonly property url pause_circle_medium_thin_outline: "qrc:/pause-circle_medium_thin_outline.svg"

@@ -8456,44 +8456,6 @@ Refresh the list.</translation>
     </message>
 </context>
 <context>
-    <name>SurveyStrings</name>
-    <message>
-        <source>Excellent</source>
-        <translatorcomment>Label to indicate the highest score of the survey. CON-942</translatorcomment>
-        <translation>Excellent</translation>
-    </message>
-    <message>
-        <source>OK, got it</source>
-        <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
-        <translation>OK, got it</translation>
-    </message>
-    <message>
-        <source>Poor</source>
-        <translatorcomment>Label to indicate the lowest score of the survey. CON-942</translatorcomment>
-        <translation>Poor</translation>
-    </message>
-    <message>
-        <source>Submit</source>
-        <translatorcomment>Label for the button to submit the answers to the survey. CON-942</translatorcomment>
-        <translation>Submit</translation>
-    </message>
-    <message>
-        <source>Tell us more</source>
-        <translatorcomment>Placeholder text to request comments to the user. CON-942</translatorcomment>
-        <translation>Tell us more</translation>
-    </message>
-    <message>
-        <source>Thank you for your feedback</source>
-        <translatorcomment>Title text of the final view after sending the survey responses thanking the user for his/her participation. CON-942</translatorcomment>
-        <translation>Thank you for your feedback</translation>
-    </message>
-    <message>
-        <source>You’re helping to improve MEGA for you and everyone who uses it</source>
-        <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
-        <translation>You’re helping to improve MEGA for yourself and everyone who uses it</translation>
-    </message>
-</context>
-<context>
     <name>SwitchButton</name>
     <message>
         <source>Off</source>
@@ -8894,17 +8856,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Underline link label to open a help.mega.io sync help article. SNC-6199.</translatorcomment>
         <translation>[A]Learn more[/A]</translation>
-    </message>
-</context>
-<context>
-    <name>TextArea</name>
-    <message numerus="yes">
-        <source>Maximum length is %n characters.</source>
-        <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
-        <translation>
-            <numerusform>Maximum length is %n character</numerusform>
-            <numerusform>Maximum length is %n characters</numerusform>
-        </translation>
     </message>
 </context>
 <context>

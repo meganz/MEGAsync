@@ -11,7 +11,6 @@
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DateTimeFormatter.h"
-#include "DeviceCentre.h"
 #include "DialogOpener.h"
 #include "EmailRequester.h"
 #include "EventUpdater.h"
@@ -311,7 +310,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     streamAction = nullptr;
     filesAction = nullptr;
     MEGAWebAction = nullptr;
-    deviceCentreAction = nullptr;
     mWaiting = false;
     updated = false;
     mSyncing = false;
@@ -4386,26 +4384,6 @@ void MegaApplication::goToFiles()
                                              filesAction,
                                              true);
     }
-}
-
-void MegaApplication::openDeviceCentre()
-{
-    if (appfinished)
-    {
-        return;
-    }
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_DEVICE_CENTRE_CLICKED,
-                                         sender(),
-                                         deviceCentreAction,
-                                         true);
-#ifdef Q_OS_MACOS
-    if (infoDialog)
-    {
-        infoDialog->hide();
-    }
-#endif
-
-    QMLComponent::showDialog<DeviceCentre>(nullptr);
 }
 
 void MegaApplication::importLinks(AppStatsEvents::EventType event)

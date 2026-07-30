@@ -242,7 +242,6 @@ public slots:
     void officialWeb();
     void goToMyCloud();
     void goToFiles();
-    void openDeviceCentre();
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked(AppStatsEvents::EventType event);
@@ -393,7 +392,6 @@ protected:
     MegaMenuItemAction* streamAction;
     MegaMenuItemAction* filesAction;
     MegaMenuItemAction* MEGAWebAction;
-    MenuItemAction* deviceCentreAction;
     MegaMenuItemAction* updateAction = nullptr;
     QAction *showStatusAction;
     QPointer<SyncsMenu> mSyncs2waysMenu;

@@ -114,10 +114,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncSettingsModel.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/BackupSettingsQuickWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/syncs/BackupSettingsModel.h
-    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.h
-    ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.h
-    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.h
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogData.h
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogOpener.h
@@ -139,12 +135,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserNotification.h
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/NotificationExpirationTimer.h
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceCentre.h
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceModel.h
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceData.h
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/SyncModel.h
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/QmlSyncData.h
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/SyncStatus.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordDialog.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordController.h
@@ -256,10 +246,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncSettingsModelBase.cpp
     ${CMAKE_CURRENT_LIST_DIR}/syncs/SyncSettingsQuickWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/syncs/BackupSettingsQuickWidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyWidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyComponent.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/surveys/Surveys.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/surveys/SurveyController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogData.cpp
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs/MessageDialogOpener.cpp
@@ -279,10 +265,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserMessageProxyModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/UserNotification.cpp
     ${CMAKE_CURRENT_LIST_DIR}/user_messages/NotificationExpirationTimer.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceCentre.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/DeviceModel.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/SyncModel.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre/QmlSyncData.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordController.cpp
@@ -486,12 +468,10 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
     ${CMAKE_CURRENT_LIST_DIR}/backups
     ${CMAKE_CURRENT_LIST_DIR}/upsell
-    ${CMAKE_CURRENT_LIST_DIR}/surveys
     ${CMAKE_CURRENT_LIST_DIR}/message_dialogs
     ${CMAKE_CURRENT_LIST_DIR}/syncs
     ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
-    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
     ${CMAKE_CURRENT_LIST_DIR}/tokenizer
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui
