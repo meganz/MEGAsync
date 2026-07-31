@@ -353,6 +353,10 @@ protected:
     bool showTrayIconAlwaysNEW();
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle, QWidget* caller = nullptr);
+
+    void processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>>& queue,
+                                mega::MegaHandle nodeHandle,
+                                QWidget* caller = nullptr);
     // Tells the screenshot flow that a capture queued for upload was
     // discarded before a transfer was created (conflict dialog cancelled or
     // resolved as "don't upload", or invalid destination), so its uploader
@@ -431,6 +435,9 @@ protected:
     mega::MegaHandle mFolderUploadTarget;
 
     QQueue<QPair<QString, PiTagTrigger>> mUploadQueue;
+    // Automatic screenshot captures upload through this dedicated queue, never
+    // through mUploadQueue - see processUploadQueueImpl().
+    QQueue<QPair<QString, PiTagTrigger>> mScreenshotUploadQueue;
     QQueue<WrappedNode> downloadQueue;
     BlockingBatch mBlockingBatch;
 

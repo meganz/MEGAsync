@@ -1884,6 +1884,13 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 // to the Mega node that is passed as parameter
 void MegaApplication::processUploadQueue(MegaHandle nodeHandle, QWidget* caller)
 {
+    processUploadQueueImpl(mUploadQueue, nodeHandle, caller);
+}
+
+void MegaApplication::processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>>& queue,
+                                             MegaHandle nodeHandle,
+                                             QWidget* caller)
+{
     if (appfinished)
     {
         return;
@@ -1891,10 +1898,11 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle, QWidget* caller)
 
     // The automatic screenshot flow keeps its uploader "busy" until this
     // pass creates a transfer for the capture; every path that drops the
-    // queue without doing so must notify it or the flow stays blocked.
+    // queue without doing so must notify it or the flow stays blocked. Only
+    // the screenshot queue ever carries captures.
     const bool queueHasCaptures =
-        std::any_of(mUploadQueue.cbegin(),
-                    mUploadQueue.cend(),
+        std::any_of(queue.cbegin(),
+                    queue.cend(),
                     [](const QPair<QString, PiTagTrigger>& item)
                     {
                         return item.second == MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE;
@@ -1909,14 +1917,14 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle, QWidget* caller)
         {
             notifyCaptureUploadsDiscarded();
         }
-        mUploadQueue.clear();
+        queue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The upload has been cancelled"));
         return;
     }
 
     noUploadedStarted = true;
 
-    auto uploads = CheckDuplicatedNodes::checkUploads(mUploadQueue, node);
+    auto uploads = CheckDuplicatedNodes::checkUploads(queue, node);
 
     if (uploads->isConflictFree())
     {
@@ -4670,8 +4678,10 @@ void MegaApplication::uploadScreenshot(const QString& fileName,
 
     auto uploadFile = [this, fileName, targetFolderHandle]()
     {
-        mUploadQueue.enqueue({fileName, MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE});
-        processUploadQueue(targetFolderHandle);
+        // Dedicated queue, never the shared mUploadQueue: keeps automatic
+        // captures from colliding with a user's in-flight manual upload.
+        mScreenshotUploadQueue.enqueue({fileName, MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE});
+        processUploadQueueImpl(mScreenshotUploadQueue, targetFolderHandle);
     };
 
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED ||
