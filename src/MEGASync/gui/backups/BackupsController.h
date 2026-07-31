@@ -41,8 +41,6 @@ private:
     BackupInfoList mBackupsToDoList;
 
     bool existsName(const QString& name) const;
-    bool hasBackupsWithErrors() const;
-    void showErrorMessage() const;
     QString getSyncAPIErrorMsg(int megaError) const override;
 
 private slots:
