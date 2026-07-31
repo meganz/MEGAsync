@@ -65,6 +65,7 @@ QmlDialog {
                                         - (footer.visible ? footer.implicitHeight + sizes.textColumnSpacing : 0)
                                         - sizes.defaultSpacing - bottomButtonsRow.implicitHeight
                                         - (checkBoxItem.visible ? checkBoxItem.implicitHeight + sizes.defaultSpacing : 0)
+                                        - (bannerItem.visible ? bannerContentRow.implicitHeight + 2 * bannerItem.bannerPadding + sizes.defaultSpacing : 0)
 
     width: window.totalWidth
     height: window.totalHeight
@@ -210,6 +211,47 @@ QmlDialog {
                     textLineHeight: sizes.descriptionTextLineHeight
                     textPixelSize: Texts.Text.Size.NORMAL
                     textWeight: Font.Normal
+                }
+            }
+        }
+
+        Rectangle {
+            id: bannerItem
+
+            readonly property int bannerPadding: 12
+
+            visible: bannerTextItem.textInfo && bannerTextItem.textInfo.text !== ""
+            Layout.fillWidth: true
+            Layout.preferredHeight: bannerContentRow.implicitHeight + 2 * bannerPadding
+            radius: 8
+            color: ColorTheme.notificationInfo
+
+            RowLayout {
+                id: bannerContentRow
+
+                anchors {
+                    fill: parent
+                    margins: bannerItem.bannerPadding
+                }
+                spacing: 8
+
+                SvgImage {
+                    Layout.preferredWidth: sizes.bannerIconSize
+                    Layout.preferredHeight: sizes.bannerIconSize
+                    Layout.alignment: Qt.AlignTop
+                    source: Images.info
+                    sourceSize: Qt.size(sizes.bannerIconSize, sizes.bannerIconSize)
+                    color: ColorTheme.textInfo
+                }
+
+                TextLoader {
+                    id: bannerTextItem
+
+                    Layout.fillWidth: true
+                    textInfo: messageDialogDataAccess ? messageDialogDataAccess.bannerTextInfo : null
+                    textLineHeight: sizes.descriptionTextLineHeight
+                    textPixelSize: Texts.Text.Size.NORMAL
+                    textWeight: Font.DemiBold
                 }
             }
         }

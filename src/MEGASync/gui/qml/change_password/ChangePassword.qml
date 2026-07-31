@@ -10,9 +10,58 @@ import ChangePasswordComponents 1.0
 ChangePasswordDialog {
     id: window
 
-    readonly property int twoFAPageHeigh: 500
-    readonly property int passwordChangePageHeigh: 344
-    readonly property int passwordChangePageWidth: 496
+    // Locked while the SDK request is in flight: Cancel disabled, Esc and the
+    // close button ignored until the change resolves (SNC-2109). The close
+    // guard lives in ChangePasswordDialog::event (QEvent::Close) because the
+    // `closing` signal is revisioned and not exposed by this registered type.
+    property bool busy: false
+
+    // 2FA dialog geometry from the Figma frames (SNC-2109, node 3744:1486):
+    // 611x482 card, plus ~4px of extra room for the inline error line.
+    readonly property int twoFAPageHeigh: 486
+    readonly property int twoFAPageWidth: 611
+    readonly property int passwordChangePageHeigh: 420
+    readonly property int passwordChangePageWidth: 448
+
+    // The dialog height follows the page content (SNC-2109 auto-layout):
+    // the page exposes windowHeightHint (content + 48px gap + footer) and the
+    // window resizes to it, keeping the fixed-size min/max constraints.
+    property real pageHeightHint: (stackView.currentItem
+                                   && stackView.currentItem.windowHeightHint !== undefined)
+                                  ? stackView.currentItem.windowHeightHint
+                                  : 0
+
+    onPageHeightHintChanged: {
+        applyPageHeight();
+    }
+
+    // Apply the initial page height before the dialog is shown, so the first
+    // visible frame already has the footer at its final position.
+    Component.onCompleted: {
+        applyPageHeight();
+    }
+
+    function applyPageHeight() {
+        if (pageHeightHint <= 0
+                || changePasswordContentItem.state === changePasswordContentItem.two_fa) {
+            return;
+        }
+
+        var newHeight = Math.round(pageHeightHint);
+        // Same clamping order trick as the two_fa state below: raise the
+        // maximum before the height when growing, and lower the minimum
+        // before the height when shrinking.
+        if (newHeight > window.height) {
+            window.maximumHeight = newHeight;
+            window.height = newHeight;
+            window.minimumHeight = newHeight;
+        }
+        else {
+            window.minimumHeight = newHeight;
+            window.height = newHeight;
+            window.maximumHeight = newHeight;
+        }
+    }
 
     title: ChangePasswordStrings.title
     visible: false
@@ -45,14 +94,17 @@ ChangePasswordDialog {
                 name: changePasswordContentItem.two_fa
                 StateChangeScript {
                     script: {
-                        // Grow the window before switching page. maximumHeight is
-                        // raised before height so setHeight is not clamped by the
-                        // stale passwordChangePageHeigh maximum, which would otherwise
-                        // leave the window at 344 until a geometry event (e.g. moving
-                        // the dialog) re-applied the constraints.
+                        // Grow the window before switching page. The maximums are
+                        // raised before the sizes so the resize is not clamped by the
+                        // stale change-password constraints, which would otherwise
+                        // leave the window at the old size until a geometry event
+                        // (e.g. moving the dialog) re-applied the constraints.
                         window.maximumHeight = twoFAPageHeigh;
+                        window.maximumWidth = twoFAPageWidth;
                         window.height = twoFAPageHeigh;
+                        window.width = twoFAPageWidth;
                         window.minimumHeight = twoFAPageHeigh;
+                        window.minimumWidth = twoFAPageWidth;
                         stackView.replace(twoFAPage);
                     }
                 }
@@ -64,7 +116,8 @@ ChangePasswordDialog {
 
             anchors {
                 fill: parent
-                margins: Constants.bigWindowMargin
+                // 24px dialog padding (SNC-2109)
+                margins: Constants.defaultComponentSpacing
             }
 
             initialItem: changePasswordPage
@@ -92,6 +145,7 @@ ChangePasswordDialog {
             target: changePasswordComponentAccess
 
             function onShow2FA() {
+                window.busy = false;
                 changePasswordContentItem.state = changePasswordContentItem.two_fa;
             }
 

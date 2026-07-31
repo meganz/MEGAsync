@@ -127,6 +127,7 @@ struct MessageDialogInfo
     QString titleText;
     QString descriptionText;
     QString footerText;
+    QString bannerText;
     QMessageBox::StandardButtons buttons;
     QMessageBox::StandardButton defaultButton;
     QMap<QMessageBox::StandardButton, QString> buttonsText;
@@ -163,6 +164,7 @@ class MessageDialogData: public QObject
     Q_PROPERTY(MessageDialogTextInfo* titleTextInfo READ getTitleTextInfo CONSTANT)
     Q_PROPERTY(MessageDialogTextInfo* descriptionTextInfo READ getDescriptionTextInfo CONSTANT)
     Q_PROPERTY(MessageDialogTextInfo* footerTextInfo READ getFooterTextInfo CONSTANT)
+    Q_PROPERTY(MessageDialogTextInfo* bannerTextInfo READ getBannerTextInfo CONSTANT)
     Q_PROPERTY(QVariantList buttons READ getButtons NOTIFY buttonsChanged)
     Q_PROPERTY(MessageDialogCheckboxInfo checkbox READ getCheckbox NOTIFY checkboxChanged)
 
@@ -186,6 +188,7 @@ public:
     MessageDialogTextInfo* getTitleTextInfo() const;
     MessageDialogTextInfo* getDescriptionTextInfo() const;
     MessageDialogTextInfo* getFooterTextInfo() const;
+    MessageDialogTextInfo* getBannerTextInfo() const;
     QVariantList getButtons() const;
     std::function<void(QPointer<MessageDialogResult>)> getFinishFunction() const;
     bool enqueue() const;
@@ -211,6 +214,7 @@ private:
     MessageDialogTextInfo* mTitleTextInfo;
     MessageDialogTextInfo* mDescriptionTextInfo;
     MessageDialogTextInfo* mFooterTextInfo;
+    MessageDialogTextInfo* mBannerTextInfo;
 
     friend class MessageDialogComponent;
 

@@ -31,6 +31,10 @@ FocusScope {
     property string rightIconSource: ""
     property string leftIconSource: ""
 
+    // Opt-in clear ("x") button rendered left of the right icon while the
+    // field has content (SNC-2109).
+    property bool clearEnabled: false
+
     property Sizes sizes: Sizes {}
     property Colors colors: Colors {}
 
@@ -103,6 +107,7 @@ FocusScope {
         height: sizes.height + 2 * sizes.focusBorderWidth
         leftPadding: calculatePaddingWithIcon(leftIconSource != "")
         rightPadding: calculatePaddingWithIcon(rightIconSource != "")
+                        + (clearIcon.visible ? sizes.iconWidth + sizes.iconTextSeparation : 0)
         topPadding: sizes.padding
         bottomPadding: sizes.padding
         placeholderTextColor: colors.placeholder
@@ -211,6 +216,34 @@ FocusScope {
                     anchors.fill: parent
                     enabled: rightIcon.visible
                     cursorShape: rightIcon.visible ? Qt.PointingHandCursor : Qt.ArrowCursor
+                }
+            }
+
+            SvgImage {
+                id: clearIcon
+
+                anchors {
+                    top: focusBorder.top
+                    right: rightIcon.visible ? rightIcon.left : focusBorder.right
+                    topMargin: sizes.iconMargin
+                    rightMargin: rightIcon.visible ? sizes.iconTextSeparation : sizes.iconMargin
+                }
+                source: Images.cross
+                sourceSize: sizes.iconSize
+                color: enabled ? colors.icon : colors.iconDisabled
+                visible: root.clearEnabled && textField.text.length > 0
+                z: 2
+
+                MouseArea {
+                    id: clearIconMouseArea
+
+                    anchors.fill: parent
+                    enabled: clearIcon.visible
+                    cursorShape: clearIcon.visible ? Qt.PointingHandCursor : Qt.ArrowCursor
+                    onClicked: {
+                        textField.clear();
+                        textField.forceActiveFocus();
+                    }
                 }
             }
 

@@ -14,11 +14,21 @@ import ServiceUrls 1.0
 FocusScope {
     id: root
 
+    // Propagate the content size: without this the FocusScope reports a zero
+    // implicit height, and any sibling laid out after TwoFA overlaps it.
+    implicitWidth: columnLayout.implicitWidth
+    implicitHeight: columnLayout.implicitHeight
+
     property string key: digit1.text + digit2.text + digit3.text
                             + digit4.text + digit5.text + digit6.text
     property bool hasError: false
     property bool hasAllDigitsFilled: (key.length === 6)
     property bool waitingForRecoveryUrl: false
+
+    property bool inlineError: false
+    property alias inlineErrorText: inlineErrorItem.text
+    property alias digitsSpacing: mainLayout.spacing
+    property alias helpButton: helpButtonItem
 
     signal allDigitsFilled
 
@@ -46,6 +56,10 @@ FocusScope {
     Layout.leftMargin: Constants.focusAdjustment
 
     onKeyChanged: {
+        if (inlineError) {
+            hasError = false;
+        }
+
         if(key.length === 6) {
             allDigitsFilled();
         }
@@ -143,7 +157,7 @@ FocusScope {
             type: Constants.MessageType.ERROR
             icon: Images.lock
             time: 2000
-            visible: hasError
+            visible: hasError && !inlineError
 
             onVisibilityTimerFinished: {
                 hasError = false;
@@ -155,6 +169,16 @@ FocusScope {
                 digit6.textField.text = "";
                 root.forceActiveFocus();
             }
+        }
+
+        Texts.HintText {
+            id: inlineErrorItem
+
+            Layout.leftMargin: Constants.focusBorderWidth
+            Layout.preferredWidth: mainLayout.width + 2 * Constants.focusAdjustment
+            type: Constants.MessageType.ERROR
+            icon: Images.alertTriangle
+            visible: hasError && inlineError
         }
 
         LinkButton {
@@ -173,7 +197,9 @@ FocusScope {
                 source: Images.helpCircle
                 position: Icon.Position.LEFT
             }
-            visible: !root.hasError
+            // With the inline error the design keeps the help link visible
+            // below the error message.
+            visible: !root.hasError || root.inlineError
             sizes: SmallSizes { borderLess: true }
         }
 

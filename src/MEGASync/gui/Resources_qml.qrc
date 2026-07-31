@@ -10,6 +10,10 @@
         <file alias="images/qml/lock.svg">images/qml/lock.svg</file>
         <file alias="images/qml/trash.svg">images/qml/trash.svg</file>
         <file alias="images/qml/x_circle.svg">images/qml/x_circle.svg</file>
+        <file alias="images/qml/x.svg">images/qml/x.svg</file>
+        <file alias="images/qml/two_fa_keypad.png">images/qml/two_fa_keypad.png</file>
+        <file alias="images/qml/two_fa_keypad@2x.png">images/qml/two_fa_keypad@2x.png</file>
+        <file alias="images/qml/two_fa_keypad@3x.png">images/qml/two_fa_keypad@3x.png</file>
         <file alias="images/qml/tip.svg">images/qml/tip.svg</file>
         <file alias="images/qml/small_circle.svg">images/qml/small_circle.svg</file>
         <file alias="images/qml/onboarding/database.svg">images/qml/onboarding/database.svg</file>

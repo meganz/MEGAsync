@@ -45,7 +45,9 @@ ChangePasswordComponent::ChangePasswordComponent(QObject* parent):
             &ChangePasswordComponent::passwordCheckFailed);
 }
 
-void ChangePasswordComponent::onPasswordChangeSucceed(QString title, QString description)
+void ChangePasswordComponent::onPasswordChangeSucceed(QString title,
+                                                      QString description,
+                                                      QString bannerText)
 {
     emit passwordChangeSucceed();
 
@@ -55,6 +57,8 @@ void ChangePasswordComponent::onPasswordChangeSucceed(QString title, QString des
     info.parent = dialog ? dialog->getDialog() : nullptr;
     info.titleText = title;
     info.descriptionText = description;
+    info.bannerText = bannerText;
+    info.buttonsText.insert(QMessageBox::Ok, tr("Done"));
 
     MessageDialogOpener::success(info);
 }
@@ -83,9 +87,9 @@ void ChangePasswordComponent::registerQmlModules()
     }
 }
 
-void ChangePasswordComponent::changePassword(QString password, QString confirmationPassword)
+void ChangePasswordComponent::changePassword(QString password, bool signOutOtherDevices)
 {
-    mChangePasswordController->changePassword(password, confirmationPassword);
+    mChangePasswordController->changePassword(password, signOutOtherDevices);
 }
 
 void ChangePasswordComponent::check2FA(QString pin)
