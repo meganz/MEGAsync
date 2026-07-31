@@ -576,6 +576,13 @@
     </message>
 </context>
 <context>
+    <name>ChangePasswordComponent</name>
+    <message>
+        <source>Done</source>
+        <translation type="unfinished">Done</translation>
+    </message>
+</context>
+<context>
     <name>ChangePasswordController</name>
     <message>
         <source>Password changed</source>
@@ -593,9 +600,16 @@
         <translation>You have entered your current password, enter a new password</translation>
     </message>
     <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed. SNC-5799</translatorcomment>
-        <translation>Your password has been changed</translation>
+        <source>This includes browsers, phones and other computers — signed out even if they were offline. This app stays signed in and your syncs keep running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing else was signed out — any other session keeps access with your new password. To end them, sign in to mega.nz in a browser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your password has been changed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -614,6 +628,66 @@
         <source>New password</source>
         <translatorcomment>Label displayed next to control where the user can enter the new password. SNC-5799</translatorcomment>
         <translation>New password</translation>
+    </message>
+    <message>
+        <source>Enter a new password</source>
+        <translatorcomment>Label hint displayed on input text control where the user can enter the new password. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re-enter your password</source>
+        <translatorcomment>Label hint displayed on input text control where the user can re-enter the new password. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translatorcomment>Label displayed next to the control to indicate that the password is weak while its strength is being evaluated. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moderate password</source>
+        <translatorcomment>Label displayed next to the control to indicate that the password is moderate while its strength is being evaluated. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strong password</source>
+        <translatorcomment>Label displayed next to the control to indicate that the password is strong while its strength is being evaluated. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use at least 8 characters</source>
+        <translatorcomment>Label displayed next to control to indicate the the password should have a minimum 8 characters. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sign out of all other devices</source>
+        <translatorcomment>Label displayed next to check box to manage closing sessions. If the check box is enable all other sessions will be closed, except currrent one. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This MEGA Desktop App session will stay signed in. Your syncs won&apos;t be affected.</source>
+        <translatorcomment>Label displayed next to check box to indicate that current session won't be closed. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any other signed-in sessions will keep access with the new password.</source>
+        <translatorcomment>Label displayed next to check box to manage closing sessions. If the check box is enable all other sessions will be closed, except currrent one. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter your 2FA code</source>
+        <translatorcomment>Label displayed next to input component to enter the 2FA code. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lost your authenticator device?</source>
+        <translatorcomment>Link url label to forward to help article related with authenticator device. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incorrect code, check your authenticator app and try again.</source>
+        <translatorcomment>Error Label displayed when the user enters and incorrect 2FA code. SNC-2109</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
