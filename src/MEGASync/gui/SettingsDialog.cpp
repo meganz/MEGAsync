@@ -654,10 +654,13 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     {
         if (msg->result() == QMessageBox::Yes)
         {
-            auto deleteRemoteCache = [this]()
+            // The pool task can outlive this closable dialog, so capture the
+            // MegaApi pointer by value instead of a raw `this` (SNC-6779).
+            auto* megaApi = mMegaApi;
+            auto deleteRemoteCache = [megaApi]()
             {
-                std::unique_ptr<MegaNode> n(mMegaApi->getNodeByPath("//bin/SyncDebris"));
-                mMegaApi->remove(n.get());
+                std::unique_ptr<MegaNode> n(megaApi->getNodeByPath("//bin/SyncDebris"));
+                megaApi->remove(n.get());
             };
             QThreadPool::globalInstance()->start(deleteRemoteCache);
             mRemoteCacheSize = 0;
@@ -769,11 +772,14 @@ void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
         mApp->changeLanguage(selectedLanguage);
         updateCacheSchedulerDaysLabel();
         QString currentLanguage = mApp->getCurrentLanguageCode();
+        // The pool task can outlive this closable dialog, so capture the
+        // MegaApi pointer by value instead of an implicit `this` (SNC-6779).
+        auto* megaApi = mMegaApi;
         mThreadPool->push(
-            [=]()
+            [megaApi, currentLanguage]()
             {
-                mMegaApi->setLanguage(currentLanguage.toUtf8().constData());
-                mMegaApi->setLanguagePreference(currentLanguage.toUtf8().constData());
+                megaApi->setLanguage(currentLanguage.toUtf8().constData());
+                megaApi->setLanguagePreference(currentLanguage.toUtf8().constData());
             });
     }
 }
