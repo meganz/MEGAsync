@@ -81,6 +81,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mPreferences(Preferences::instance()),
     mModel(SyncInfo::instance()),
     mMegaApi(app->getMegaApi()),
+    mUpdateAvailable(false),
     mLoadingSettings(0),
     mThreadPool(ThreadPoolSingleton::getInstance()),
     mCacheSize(-1),
@@ -491,6 +492,7 @@ void deleteCache()
 
 void SettingsDialog::setUpdateAvailable(bool updateAvailable)
 {
+    mUpdateAvailable = updateAvailable;
     if (updateAvailable)
     {
         mUi->bUpdate->setText(tr("Install Update"));
@@ -529,6 +531,11 @@ bool SettingsDialog::event(QEvent* event)
     {
         mUi->retranslateUi(this);
 
+        // retranslateUi() resets bUpdate to its .ui default ("Check for Updates"),
+        // so re-apply the current update state to keep the correct label.
+        setUpdateAvailable(mUpdateAvailable);
+
+        updateCacheSchedulerDaysLabel();
         mUi->lCacheTitle->setText(
             mUi->lCacheTitle->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 
@@ -917,13 +924,13 @@ void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
 
 void SettingsDialog::on_bUpdate_clicked()
 {
-    if (mUi->bUpdate->text() == tr("Check for Updates"))
+    if (mUpdateAvailable)
     {
-        mApp->checkForUpdates();
+        mApp->triggerInstallUpdate();
     }
     else
     {
-        mApp->triggerInstallUpdate();
+        mApp->checkForUpdates();
     }
 }
 

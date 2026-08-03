@@ -171,6 +171,7 @@ private:
     SyncInfo* mModel;
     mega::MegaApi* mMegaApi;
     bool mProxyOnly;
+    bool mUpdateAvailable;
     int mLoadingSettings;
     ThreadPool* mThreadPool;
     QStringList mLanguageCodes;
