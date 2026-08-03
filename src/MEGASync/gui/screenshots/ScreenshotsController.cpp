@@ -1,6 +1,9 @@
 #include "ScreenshotsController.h"
 
+#include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "ScreenshotComponent.h"
+#include "SettingsDialog.h"
 #include "StatsEventHandler.h"
 #include "Utilities.h"
 
@@ -61,7 +64,7 @@ bool ScreenshotsController::isRunning() const
 void ScreenshotsController::refresh()
 {
     const bool shouldRun = Preferences::instance()->uploadScreenshotsEnabled() ||
-                           !Preferences::instance()->isOneTimeActionDone(
+                           !Preferences::instance()->isOneTimeActionUserDone(
                                Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER);
 
     if (shouldRun && !mDetector.isRunning())
@@ -87,14 +90,15 @@ void ScreenshotsController::onCaptureUploadDiscarded()
 void ScreenshotsController::onCaptureDetected(const QString& filePath)
 {
     if (!Preferences::instance()->uploadScreenshotsEnabled() &&
-        !Preferences::instance()->isOneTimeActionDone(
+        !Preferences::instance()->isOneTimeActionUserDone(
             Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER))
     {
-        // show advertise.
-
         Preferences::instance()->setOneTimeActionUserDone(
             Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER,
             true);
+
+        mPendingOfferCapturePath = filePath;
+        showEnableOfferDialog();
 
         return;
     }
@@ -103,6 +107,40 @@ void ScreenshotsController::onCaptureDetected(const QString& filePath)
     {
         mUploader.upload(filePath);
     }
+}
+
+void ScreenshotsController::onEnableOfferAccepted()
+{
+    Preferences::instance()->setUploadScreenshotsEnabled(true);
+
+    // Reflect the change if the settings dialog is currently open.
+    if (auto dialogInfo = DialogOpener::findDialog<SettingsDialog>())
+    {
+        dialogInfo->getDialog()->refreshScreenshotUploadSettings();
+    }
+
+    if (!mPendingOfferCapturePath.isEmpty())
+    {
+        mUploader.upload(mPendingOfferCapturePath);
+        mPendingOfferCapturePath.clear();
+    }
+
+    mMegaApplication->showInfoDialog();
+}
+
+void ScreenshotsController::showEnableOfferDialog()
+{
+    QPointer<QmlDialogWrapper<ScreenshotComponent>> dialog(
+        new QmlDialogWrapper<ScreenshotComponent>());
+    DialogOpener::showDialog(dialog,
+                             [this]()
+                             {
+                                 // Declined or accepted alike: the accepted
+                                 // path has already consumed the pending
+                                 // capture at this point.
+                                 mPendingOfferCapturePath.clear();
+                                 refresh();
+                             });
 }
 
 void ScreenshotsController::onUploadFailed(ScreenshotUploader::Error error, const QString& message)

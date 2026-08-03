@@ -13,6 +13,9 @@ public:
 
     QUrl getQmlUrl() override;
 
+    // Called from QML when the user accepts the one-time enable offer.
+    Q_INVOKABLE void enableScreenshotUploads();
+
     static void registerQmlModules();
 
 private:

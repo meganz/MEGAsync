@@ -875,6 +875,16 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
     }
 }
 
+void SettingsDialog::refreshScreenshotUploadSettings()
+{
+    mLoadingSettings++;
+    mUi->enableScreenshotUpload->setChecked(mPreferences->uploadScreenshotsEnabled());
+    mUi->enableScreenshotLinkGeneration->setEnabled(mPreferences->uploadScreenshotsEnabled());
+    mUi->enableScreenshotLinkGeneration->setChecked(
+        mPreferences->clipboardCopyScreenshotLinkEnabled());
+    mLoadingSettings--;
+}
+
 void SettingsDialog::on_enableScreenshotUpload_toggled(bool checked)
 {
     if (mLoadingSettings)

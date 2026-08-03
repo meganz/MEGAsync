@@ -489,6 +489,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password
     ${CMAKE_CURRENT_LIST_DIR}/screenshots
+    ${CMAKE_CURRENT_LIST_DIR}/qml/screenshots
 )
 target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 

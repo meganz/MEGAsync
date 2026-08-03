@@ -29,6 +29,10 @@ public:
     // Called by MegaApplication when the queued capture was discarded before
     // a transfer was created; unblocks the uploader.
     void onCaptureUploadDiscarded();
+    // Called by ScreenshotComponent when the user accepts the one-time enable
+    // offer: turns the setting on, uploads the capture that triggered the
+    // offer and brings up the info dialog.
+    void onEnableOfferAccepted();
 
 private slots:
     void onCaptureDetected(const QString& filePath);
@@ -40,11 +44,18 @@ private slots:
 private:
     explicit ScreenshotsController(QObject* parent = nullptr);
 
+    // Shows the one-time "enable screenshot uploads" offer dialog. The
+    // detector is refreshed when the dialog closes, whatever the choice.
+    void showEnableOfferDialog();
+
     ScreenCaptureDetector mDetector;
     ScreenshotUploader mUploader;
     ScreenshotLinkGenerator mLinkGenerator;
     MegaApplication* mMegaApplication;
     bool mClipboardScreenshotLinkCopyEnabled = false;
+    // Capture that triggered the enable offer; uploaded if the user accepts,
+    // dropped otherwise.
+    QString mPendingOfferCapturePath;
 };
 
 #endif // SCREENSHOTS_CONTROLLER_H

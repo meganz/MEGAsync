@@ -46,6 +46,9 @@ public:
     // General
     void setUpdateAvailable(bool updateAvailable);
     void storageChanged();
+    // Re-reads the screenshot upload preferences and updates the checkboxes,
+    // for when the preferences are changed from outside this dialog.
+    void refreshScreenshotUploadSettings();
 
     // Account
     void updateStorageElements() override;
