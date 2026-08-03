@@ -41,6 +41,8 @@ QmlDialog {
 
         visible: false
 
+        Component.onCompleted: attachToParentWindow(root)
+
         onAccepted: {
             if(rulesTable.editIndex === -1){
                 syncExclusionsAccess.rulesModel.addNewRule( addExclusionRule.targetType, addExclusionRule.valueType,  addExclusionRule.ruleValue);

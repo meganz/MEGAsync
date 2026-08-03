@@ -651,6 +651,13 @@ private:
                 continue;
             }
 
+            // A child with no native window has nothing to orphan; detaching it only
+            // breaks the parenting of QML-declared windows shown later (Add/Edit exclusion).
+            if (!window->handle())
+            {
+                continue;
+            }
+
             window->setVisible(false);
             window->setTransientParent(nullptr);
         }
