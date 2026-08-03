@@ -218,17 +218,17 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->tItemRetry->setText(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->tItemRetry->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
 
-                // The retry button width depends on its (translated) text. On a
+                // The retry button width depends on its (translated) text, and on a
                 // language change the row is not resized, so the layout is not
                 // activated automatically. Besides, checkMinWidth() —which sets the
                 // QSS "short"/min-width property that drives the button size hint—
                 // normally runs one paint later (inside the button paintEvent), so
                 // the size hint would still reflect the previous language here.
-                // Update it now, pin the minimum width to the fresh size hint and
-                // re-activate the layout so the button always fits the text before
-                // the item is rendered.
+                // Update it now and re-activate the layout so the button is sized for
+                // the current text before the item is rendered. Its width is bounded by
+                // the maximum set in the .ui, which leaves room for the reason next to
+                // it; adjustRetryText() elides the text into whatever it gets.
                 ButtonUtilities::checkMinWidth(mUi->tItemRetry);
-                mUi->tItemRetry->setMinimumWidth(mUi->tItemRetry->sizeHint().width());
                 if (auto* failedLayout = mUi->cFailed->layout())
                 {
                     failedLayout->activate();
@@ -405,6 +405,23 @@ void TransferManagerDelegateWidget::adjustFileName()
                                            getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
     mUi->lTransferName->adjustSize();
     mUi->lTransferName->parentWidget()->layout()->activate();
+}
+
+void TransferManagerDelegateWidget::adjustRetryText()
+{
+    // QPushButton does not elide: CE_PushButtonLabel draws the text with drawItemText(),
+    // so a text wider than the button is clipped mid-glyph. Elide it ourselves, always
+    // from the full string so it is restored when the button gets its full width again.
+    const QString retryText(getState(TRANSFER_STATES::STATE_RETRY));
+    const QFontMetrics metrics(mUi->tItemRetry->fontMetrics());
+    // Whatever the hint is not spending on the text: QSS padding plus border. Measured
+    // against the text currently shown, so it stays right when that text is elided.
+    const int chrome = qMax(0,
+                            mUi->tItemRetry->sizeHint().width() -
+                                metrics.horizontalAdvance(mUi->tItemRetry->text()));
+
+    mUi->tItemRetry->setText(
+        metrics.elidedText(retryText, Qt::ElideRight, mUi->tItemRetry->width() - chrome));
 }
 
 void TransferManagerDelegateWidget::setColumnManager(
@@ -613,6 +630,10 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
                 mUi->lItemFailed->fontMetrics().elidedText(mUi->lItemFailed->text(),
                                                            Qt::ElideMiddle,
                                                            mUi->lItemFailed->width()));
+        }
+        else if (watched == mUi->tItemRetry)
+        {
+            adjustRetryText();
         }
         // Adapt manually stack page (just failed as, for the moment, is the only one bigger than
         // its original size)

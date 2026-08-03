@@ -49,6 +49,7 @@ private:
     void setType() override;
     void setFileType(const QString& fileName);
     void adjustFileName();
+    void adjustRetryText();
 
     bool setCancelClearTransferIcon(const QString &name);
     bool setPauseResumeTransferIcon(const QString &name);
