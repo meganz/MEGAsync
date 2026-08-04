@@ -220,8 +220,12 @@ QmlDialog {
 
             readonly property int bannerPadding: 12
 
-            visible: bannerTextItem.textInfo && bannerTextItem.textInfo.text !== ""
+            visible: bannerTextItem.text !== ""
             Layout.fillWidth: true
+            // The content column reserves only 21px on the right (button
+            // alignment); the banner must sit 24px from both dialog edges,
+            // mirroring the left content margin.
+            Layout.rightMargin: sizes.leftContentMargin - sizes.rightContentMargin
             Layout.preferredHeight: bannerContentRow.implicitHeight + 2 * bannerPadding
             radius: 8
             color: ColorTheme.notificationInfo
@@ -244,14 +248,23 @@ QmlDialog {
                     color: ColorTheme.textInfo
                 }
 
-                TextLoader {
+                // Plain Texts.Text instead of TextLoader: the banner is the only
+                // wrapped text managed by a layout, and the extra Loader
+                // indirection (item.implicitHeight -> Layout.preferredHeight)
+                // left the text unrendered on Windows (SNC-2109). Same pattern
+                // as the SettingsLinearProgress banner (SNC-6431).
+                Texts.Text {
                     id: bannerTextItem
 
                     Layout.fillWidth: true
-                    textInfo: messageDialogDataAccess ? messageDialogDataAccess.bannerTextInfo : null
-                    textLineHeight: sizes.descriptionTextLineHeight
-                    textPixelSize: Texts.Text.Size.NORMAL
-                    textWeight: Font.DemiBold
+                    text: messageDialogDataAccess ? messageDialogDataAccess.bannerTextInfo.text : ""
+                    wrapMode: Text.Wrap
+                    lineHeightMode: Text.FixedHeight
+                    lineHeight: sizes.descriptionTextLineHeight
+                    font {
+                        pixelSize: Texts.Text.Size.NORMAL
+                        weight: Font.DemiBold
+                    }
                 }
             }
         }

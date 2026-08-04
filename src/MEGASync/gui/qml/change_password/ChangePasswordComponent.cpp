@@ -58,7 +58,7 @@ void ChangePasswordComponent::onPasswordChangeSucceed(QString title,
     info.titleText = title;
     info.descriptionText = description;
     info.bannerText = bannerText;
-    info.buttonsText.insert(QMessageBox::Ok, tr("Done"));
+    info.buttonsText.insert(QMessageBox::Close, tr("Done"));
 
     MessageDialogOpener::success(info);
 }
