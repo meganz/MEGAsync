@@ -2126,7 +2126,27 @@ QStringList PlatformImplementation::getScreenshotsLocation()
                 auto snippingToolConfiguredPath = resolveToken(userClassesDat, screenshotsToken);
                 if (!snippingToolConfiguredPath.empty())
                 {
-                    picturesPath = QString::fromStdString(snippingToolConfiguredPath);
+                    // Normalize to Qt separators: ScreenCaptureDetector
+                    // compares against QStandardPaths forward-slash values.
+                    const QString resolved = QDir::cleanPath(QDir::fromNativeSeparators(
+                        QString::fromStdString(snippingToolConfiguredPath)));
+                    if (!resolved.isEmpty())
+                    {
+                        if (!QDir(resolved).exists())
+                        {
+                            // Kept anyway: the detector watches the parent and
+                            // attaches the folder when it appears.
+                            MegaApi::log(
+                                MegaApi::LOG_LEVEL_WARNING,
+                                QString::fromUtf8(
+                                    "Configured Snipping Tool screenshots folder not found: %1")
+                                    .arg(resolved)
+                                    .toUtf8()
+                                    .constData());
+                        }
+
+                        picturesPath = resolved;
+                    }
                 }
             }
         }
@@ -2209,7 +2229,7 @@ std::string PlatformImplementation::findPathNearOffset(const std::vector<BYTE>& 
 
             if (n >= 3)
             {
-                return QString::fromWCharArray(p).toUtf8().toStdString();
+                return QString::fromWCharArray(p, static_cast<int>(n)).toUtf8().toStdString();
             }
         }
     }

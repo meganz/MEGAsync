@@ -196,7 +196,9 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::TARGETED_DISCOUNT_INFODIALOG_BUTTON_CLICKED, 600090},
     {AppStatsEvents::EventType::MACOS_ARM64_UPDATE_URL_ADJUSTED_FOR_INTEL_BINARY, 600091},
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_ONBOARDING, 600094},
-    {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU, 600095}};
+    {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU, 600095},
+    {AppStatsEvents::EventType::SCREENSHOT_UPLOADED, 600092},
+    {AppStatsEvents::EventType::SCREENSHOT_LINK_CREATED, 600093}};
 
 // Deprecated are not displayed
 QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
@@ -446,7 +448,9 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_ONBOARDING,
      "Migration tool opened (from onboarding)"},
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU,
-     "Migration tool opened (from menu)"}};
+     "Migration tool opened (from menu)"},
+    {AppStatsEvents::EventType::SCREENSHOT_UPLOADED, "Screenshot is being uploaded to mega"},
+    {AppStatsEvents::EventType::SCREENSHOT_LINK_CREATED, "Screenshot link is generated"}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

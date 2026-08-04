@@ -1934,10 +1934,31 @@ void MegaApplication::processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>
     {
         auto checkUploadNameDialog(new DuplicatedNodeDialog(caller));
         checkUploadNameDialog->setConflicts(std::move(uploads));
+
+        // DialogOpener replaces an already-open dialog of the same class by
+        // deleting it without emitting finished(), which skips the callback
+        // below. Fall back to destroyed() so a replaced dialog still frees
+        // the capture slot instead of wedging the uploader.
+        auto captureOutcomeSettled = std::make_shared<bool>(false);
+        if (queueHasCaptures)
+        {
+            connect(checkUploadNameDialog,
+                    &QObject::destroyed,
+                    this,
+                    [this, captureOutcomeSettled]()
+                    {
+                        if (!*captureOutcomeSettled)
+                        {
+                            notifyCaptureUploadsDiscarded();
+                        }
+                    });
+        }
+
         DialogOpener::showDialog<DuplicatedNodeDialog>(
             checkUploadNameDialog,
-            [this, checkUploadNameDialog, queueHasCaptures]()
+            [this, checkUploadNameDialog, queueHasCaptures, captureOutcomeSettled]()
             {
+                *captureOutcomeSettled = true;
                 bool captureUploaded = false;
                 if (checkUploadNameDialog && checkUploadNameDialog->result() == QDialog::Accepted)
                 {
@@ -2965,7 +2986,10 @@ void MegaApplication::refreshScreenshotUploader()
 
 void MegaApplication::enableClipboardCopyScreenshotLink(bool enabled)
 {
-    mScreenshotsController->enableClipboardCopyScreenshotLink(enabled);
+    if (mScreenshotsController)
+    {
+        mScreenshotsController->enableClipboardCopyScreenshotLink(enabled);
+    }
 }
 
 std::shared_ptr<TransferQuota> MegaApplication::getTransferQuota() const
@@ -4692,12 +4716,30 @@ void MegaApplication::uploadScreenshot(const QString& fileName,
             OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_UPLOAD);
         if (overQuotaDialog)
         {
-            DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog,
-                                                                       false,
-                                                                       [uploadFile]()
-                                                                       {
-                                                                           uploadFile();
-                                                                       });
+            // Same DialogOpener caveat as in processUploadQueueImpl: a
+            // same-class sibling dialog deletes this one without emitting
+            // finished(), dropping the continuation. Fall back to destroyed()
+            // so the uploader's in-flight slot is released either way.
+            auto continuationRan = std::make_shared<bool>(false);
+            connect(overQuotaDialog.data(),
+                    &QObject::destroyed,
+                    this,
+                    [this, continuationRan]()
+                    {
+                        if (!*continuationRan)
+                        {
+                            notifyCaptureUploadsDiscarded();
+                        }
+                    });
+
+            DialogOpener::showDialog<OverQuotaDialog, TransferManager>(
+                overQuotaDialog,
+                false,
+                [uploadFile, continuationRan]()
+                {
+                    *continuationRan = true;
+                    uploadFile();
+                });
 
             return;
         }

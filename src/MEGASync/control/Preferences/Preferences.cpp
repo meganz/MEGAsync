@@ -314,7 +314,7 @@ const bool Preferences::defaultAwakeIfActive = false;
 // screen shot settings.
 const QString Preferences::uploadScreenshotsKey =
     QString::fromLatin1("uploadScreenshotsEnabledKey");
-const QString Preferences::clipboardCopyScreenshotsLinkKey =
+const QString Preferences::clipboardCopyScreenshotLinkKey =
     QString::fromLatin1("clipboardCopyScreenshotLink");
 
 const bool Preferences::defaultStartOnStartup = true;
@@ -2559,14 +2559,14 @@ bool Preferences::clipboardCopyScreenshotLinkEnabled()
 {
     mutex.lock();
     assert(logged());
-    bool result = getValue(clipboardCopyScreenshotsLinkKey, false);
+    bool result = getValue(clipboardCopyScreenshotLinkKey, false);
     mutex.unlock();
     return result;
 }
 
-void Preferences::setClipboardCopyScreenshotsLinkEnabled(bool value)
+void Preferences::setClipboardCopyScreenshotLinkEnabled(bool value)
 {
-    setValueConcurrently(clipboardCopyScreenshotsLinkKey, value);
+    setValueConcurrently(clipboardCopyScreenshotLinkKey, value);
 }
 
 bool Preferences::fileVersioningDisabled()

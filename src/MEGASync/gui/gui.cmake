@@ -143,7 +143,6 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotsController.h
     ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotUploader.h
     ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenCaptureDetector.h
-    ${CMAKE_CURRENT_LIST_DIR}/qml/screenshots/ScreenshotAccessController.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/screenshots/ScreenshotComponent.h
 )
 
@@ -279,7 +278,6 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotsController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotUploader.cpp
     ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenCaptureDetector.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/qml/screenshots/ScreenshotAccessController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/screenshots/ScreenshotComponent.cpp
 )
 

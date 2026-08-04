@@ -5,8 +5,7 @@
 static bool qmlRegistrationDone = false;
 
 ScreenshotComponent::ScreenshotComponent(QObject* parent):
-    QMLComponent(parent),
-    mScreenshotController(std::make_unique<ScreenshotAccessController>())
+    QMLComponent(parent)
 {
     registerQmlModules();
 

@@ -413,7 +413,7 @@ public:
     bool uploadScreenshotsEnabled();
     void setUploadScreenshotsEnabled(bool value);
     bool clipboardCopyScreenshotLinkEnabled();
-    void setClipboardCopyScreenshotsLinkEnabled(bool value);
+    void setClipboardCopyScreenshotLinkEnabled(bool value);
 
     enum class ThemeType
     {
@@ -869,7 +869,7 @@ protected:
     static const QString reclaimThresholdBytes;
 
     static const QString uploadScreenshotsKey;
-    static const QString clipboardCopyScreenshotsLinkKey;
+    static const QString clipboardCopyScreenshotLinkKey;
 
 private:
     void updateFullName();

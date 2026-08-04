@@ -2,7 +2,6 @@
 #define SCREENSHOT_COMPONENT_H
 
 #include "QmlDialogWrapper.h"
-#include "ScreenshotAccessController.h"
 
 class ScreenshotComponent: public QMLComponent
 {
@@ -17,9 +16,6 @@ public:
     Q_INVOKABLE void enableScreenshotUploads();
 
     static void registerQmlModules();
-
-private:
-    std::unique_ptr<ScreenshotAccessController> mScreenshotController;
 };
 
 #endif
