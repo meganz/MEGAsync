@@ -150,6 +150,12 @@ ChangePasswordDialog {
             }
 
             function onPasswordChangeSucceed() {
+                // Release the lock before closing: ChangePasswordDialog::event
+                // ignores QEvent::Close while `busy`, and QWindow::close()
+                // dispatches through event() just like the title bar button,
+                // so closing here without clearing it leaves the dialog open
+                // and inert (SNC-2109).
+                window.busy = false;
                 window.close();
             }
         }

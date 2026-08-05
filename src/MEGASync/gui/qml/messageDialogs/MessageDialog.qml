@@ -65,7 +65,7 @@ QmlDialog {
                                         - (footer.visible ? footer.implicitHeight + sizes.textColumnSpacing : 0)
                                         - sizes.defaultSpacing - bottomButtonsRow.implicitHeight
                                         - (checkBoxItem.visible ? checkBoxItem.implicitHeight + sizes.defaultSpacing : 0)
-                                        - (bannerItem.visible ? bannerContentRow.implicitHeight + 2 * bannerItem.bannerPadding + sizes.defaultSpacing : 0)
+                                        - (bannerItem.visible ? bannerItem.implicitHeight + sizes.defaultSpacing : 0)
 
     width: window.totalWidth
     height: window.totalHeight
@@ -219,14 +219,25 @@ QmlDialog {
             id: bannerItem
 
             readonly property int bannerPadding: 12
+            readonly property string bannerText: messageDialogDataAccess
+                                                 ? messageDialogDataAccess.bannerTextInfo.text
+                                                 : ""
 
-            visible: bannerTextItem.text !== ""
+            visible: bannerText !== ""
             Layout.fillWidth: true
             // The content column reserves only 21px on the right (button
             // alignment); the banner must sit 24px from both dialog edges,
             // mirroring the left content margin.
             Layout.rightMargin: sizes.leftContentMargin - sizes.rightContentMargin
-            Layout.preferredHeight: bannerContentRow.implicitHeight + 2 * bannerPadding
+            // implicitHeight, NOT Layout.preferredHeight: bannerContentRow is
+            // anchored to this rectangle, so the rectangle has to size itself
+            // from the row's content rather than have its height negotiated by
+            // contentColum. As a Layout.preferredHeight binding, the outer
+            // layout consumed the row's first-pass implicitHeight - the
+            // unwrapped, single-line estimate - and never grew back, leaving
+            // the wrapped text laid out inside a box too small to show it
+            // (SNC-2109). Mirrors the SettingsLinearProgress banner (SNC-6431).
+            implicitHeight: bannerContentRow.implicitHeight + 2 * bannerPadding
             radius: 8
             color: ColorTheme.notificationInfo
 
@@ -248,22 +259,28 @@ QmlDialog {
                     color: ColorTheme.textInfo
                 }
 
-                // Plain Texts.Text instead of TextLoader: the banner is the only
-                // wrapped text managed by a layout, and the extra Loader
-                // indirection (item.implicitHeight -> Layout.preferredHeight)
-                // left the text unrendered on Windows (SNC-2109). Same pattern
-                // as the SettingsLinearProgress banner (SNC-6431).
-                Texts.Text {
-                    id: bannerTextItem
+                // The wrapped text sits in its own ColumnLayout rather than
+                // directly in the row, so the row negotiates width with a
+                // layout (which reports the wrapped height) instead of with a
+                // Text (whose implicitWidth is the full unwrapped line).
+                ColumnLayout {
+                    id: bannerTextLayout
 
                     Layout.fillWidth: true
-                    text: messageDialogDataAccess ? messageDialogDataAccess.bannerTextInfo.text : ""
-                    wrapMode: Text.Wrap
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: sizes.descriptionTextLineHeight
-                    font {
-                        pixelSize: Texts.Text.Size.NORMAL
-                        weight: Font.DemiBold
+                    spacing: 0
+
+                    Texts.Text {
+                        id: bannerTextItem
+
+                        Layout.fillWidth: true
+                        text: bannerItem.bannerText
+                        wrapMode: Text.WordWrap
+                        lineHeightMode: Text.FixedHeight
+                        lineHeight: sizes.descriptionTextLineHeight
+                        font {
+                            pixelSize: Texts.Text.Size.NORMAL
+                            weight: Font.DemiBold
+                        }
                     }
                 }
             }
