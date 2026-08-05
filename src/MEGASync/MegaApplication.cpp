@@ -1703,12 +1703,17 @@ void MegaApplication::onLogout()
                                 .toUtf8()
                                 .constData());
 
+                        // The account context is being torn down in every path that reaches
+                        // this point. Clear cached user attributes unconditionally: on forced
+                        // logouts (e.g. ESID) unlink() has already healed Preferences, so
+                        // logged() is false here and cannot be used to decide (SNC-6809).
+                        clearUserAttributes();
+
                         if (preferences->logged())
                         {
                             MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                                          "Logout diagnostics: deferred cleanup branch -> "
                                          "preferences->unlink().");
-                            clearUserAttributes();
                             preferences->unlink();
                             preferences->setFirstStartDone();
                         }
