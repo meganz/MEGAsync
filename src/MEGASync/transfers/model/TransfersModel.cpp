@@ -2217,6 +2217,14 @@ void TransfersModel::onUpdateTransfersFinished()
 
 void TransfersModel::onKeepPCAwake()
 {
+    // The PowerOptions constructor recreates the singleton that
+    // PowerOptions::appShutdown() destroys, so skip it during shutdown
+    // (~TransfersModel runs after appShutdown() in MegaApplication::cleanAll()).
+    if (MegaSyncApp->finished())
+    {
+        return;
+    }
+
     PowerOptions options;
     options.keepAwake(hasActiveTransfers());
 }

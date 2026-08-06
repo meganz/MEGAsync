@@ -2556,14 +2556,22 @@ void MegaApplication::cleanAll()
     mTransfersModel->deleteLater();
     mTransfersModel = nullptr;
 
-    // Ensure that there aren't objects deleted with deleteLater()
-    // that may try to access megaApi after
-    // their deletion
+    // Deliver pending events first (queued QTMegaEvents must run while megaApi is alive),
+    // then explicitly flush the DeferredDelete events queued above. processEvents() alone
+    // does NOT deliver deleteLater() requests posted at the current event-loop level (they
+    // are re-posted for a loop level that is only reached at ~QCoreApplication, see
+    // QCoreApplicationPrivate::sendPostedEvents), so without the explicit flush the models
+    // outlive removeMegaApis() below: their worker threads (TransferThread,
+    // StalledIssuesReceiver) keep consuming the SDK callbacks fired while the MegaApi
+    // instances are destroyed - which crashes on exit with ongoing transfers. Flushing here
+    // runs the destructors now: they join their threads and unregister their SDK listeners
+    // while megaApi is still valid.
     // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
+    QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
 
     // Delete the shared QML engine only after every QQuickWidget created from it has been
-    // destroyed by the deleteLater()/processEvents() above (e.g. InfoDialog's
+    // destroyed by the deleteLater() flush above (e.g. InfoDialog's
     // TransfersSummaryQuickWidget and SettingsDialog's AccountStateQuickWidget, which are
     // closed via DialogOpener::closeAllDialogs()). Deleting the engine while one of those
     // widgets is still alive tears down a live QML scene mid-binding - reproducible during an
