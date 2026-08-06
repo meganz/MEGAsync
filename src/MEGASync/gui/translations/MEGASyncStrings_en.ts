@@ -6300,8 +6300,7 @@ Enter a different name.</translation>
         <translation>- Clearer handling of stalled issues and name conflicts.
 - Installs and updates now remove files left over from previous versions.
 - UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</translation>
+- Bug fixes and performance improvements.</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

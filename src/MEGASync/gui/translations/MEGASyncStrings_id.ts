@@ -5902,11 +5902,7 @@ Masukkan nama yang berbeda.</translation>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

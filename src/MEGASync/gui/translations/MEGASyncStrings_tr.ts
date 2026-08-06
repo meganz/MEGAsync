@@ -3034,7 +3034,7 @@ Yüklemenin tamamlanmasını bekleyin.</translation>
     <message>
         <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
         <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>“%1″ dosyasını MEGA’ya yüklemek istiyor musunuz?</translation>
     </message>
     <message numerus="yes">
         <source>Do you want to upload %n file to MEGA?</source>
@@ -6051,11 +6051,10 @@ Farklı bir ad girin.</translation>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</translation>
+        <translation>- Askıda kalan sorunlar ve ad çakışmalar daha net bir şekilde ele alınıyor.
+- Kurulumlar ve güncellemeler artık önceki sürümlerden kalan dosyaları kaldırıyor.
+- Senkronizasyon, yedekleme ve aktarım diyaloglarındaki arayüz düzeltmeleri ve ayarlamaları.
+- Hata düzeltmeleri ve performans iyileştirmeleri.</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

@@ -4,11 +4,11 @@
 // These numbers are used in different build project scripts. Keep this in
 // mind if you want to change the format.
 #define VER_MAJOR 6
-#define VER_MINOR 5
+#define VER_MINOR 6
 #define VER_MICRO 0
 #define VER_RC 0
 // Format: "VER_MAJOR.VER_MINOR.VER_MICRO.VER_RC\0"
-#define VER_PRODUCTVERSION_STR "6.5.0.0\0"
+#define VER_PRODUCTVERSION_STR "6.6.0.0\0"
 #define VER_PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION VER_MAJOR, VER_MINOR, VER_MICRO, VER_RC
 #define VER_FILEVERSION_CODE (VER_MAJOR * 10000 + VER_MINOR * 100 + VER_MICRO)
@@ -26,7 +26,7 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "e5b41a0" // v10.16.0
+#define VER_SDK_ID "1d14c3b" // v10.19.0
 
 // clang-format off
 // Update scrips relying on this value if you move it
@@ -38,9 +38,9 @@
 //"- item n\n"
 //)
 #define VER_CHANGES_NOTES QT_TRANSLATE_NOOP("Preferences",                                         \
-"- Revamped and improved File Manager.\n"                                                          \
-"- Revamped Syncs and Backups tabs in the Settings dialog.\n"                                      \
-"- Improved Wayland support.\n"                                                                    \
+"- Clearer handling of stalled issues and name conflicts.\n"                                       \
+"- Installs and updates now remove files left over from previous versions.\n"                      \
+"- UI fixes and adjustments across sync, backup, and transfer dialogs.\n"                          \
 "- Bug fixes and performance improvements.\n"                                                      \
 )
 // clang-format on

@@ -3019,6 +3019,11 @@ Please wait for the upload to complete.</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>忽略</translation>
     </message>
+    <message>
+        <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>您確定要將「%1」上傳到MEGA嗎？</translation>
+    </message>
     <message numerus="yes">
         <source>Do you want to upload %n file to MEGA?</source>
         <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account. SNC-6678</translatorcomment>
@@ -5974,11 +5979,7 @@ Enter a different name</source>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

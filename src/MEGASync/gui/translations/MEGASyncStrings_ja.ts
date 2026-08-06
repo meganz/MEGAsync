@@ -6218,11 +6218,10 @@ Enter a different name</source>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</translation>
+        <translation>- 進行が停止した処理やファイル名の競合に関する表示・対応を明確化しました。
+- インストール・更新時に旧バージョンの残存ファイルを自動削除する機能を追加を行いました。
+- 同期・バックアップ・転送ダイアログにおけるUIの不具合修正および画面調整を行いました
+- バグ修正およびパフォーマンスの改善を行いました。</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

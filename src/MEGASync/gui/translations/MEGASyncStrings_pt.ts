@@ -5770,6 +5770,11 @@ Digite um nome diferente.</translation>
         <translation>Fazendo login…</translation>
     </message>
     <message>
+        <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
+        <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
+        <translation>Transfira os seus arquivos do Google Drive diretamente para o MEGA, totalmente criptografados. Bastam apenas alguns cliques.</translation>
+    </message>
+    <message>
         <source>Names longer than 32 characters are not supported</source>
         <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
         <translation>Nomes com mais de 32 caracteres não são aceitos</translation>
@@ -6292,11 +6297,10 @@ Digite um nome diferente.</translation>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</translation>
+        <translation>- Tratamento mais claro de interrupções e conflitos de nomes.
+- Instalações e atualizações agora eliminam os arquivos remanescentes de versões anteriores.
+- Correção da interface do usuário e ajustes nos diálogos de sincronização, backup e transferência.
+- Correção de bugs e melhorias de desempenho.</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.
@@ -7185,6 +7189,11 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Largura de banda</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Button that dismisses the clear local cache warning dialog without deleting anything.SNC-6743</translatorcomment>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
         <translation>Alterar senha</translation>
@@ -7233,6 +7242,11 @@ Você quer deletá-lo mesmo assim?</translation>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
         <translation>Pastas predeterminadas</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button that confirms permanently deleting the local cache (debris) of synced folders, in the clear local cache warning dialog.SNC-6743</translatorcomment>
+        <translation>Deletar</translation>
     </message>
     <message>
         <source>Details</source>
@@ -9705,6 +9719,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Os uploads foram desativados, e as sincronizações e os backups foram interrompidos</translation>
     </message>
     <message>
+        <source>You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
+        <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [A][/A] used for the link placeholder. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
+        <translation>Não é possível continuar fazendo download porque você não tem cota de transferência suficiente neste IP. Para obter mais cota de transferência, faça o upgrade da sua conta ou espere %1 até mais cota de transferência estar disponível para o seu IP. [A]Mais informações[/A] sobre a cota de transferência.</translation>
+    </message>
+    <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
         <translation>[B]A cota de transferência foi excedida[/B][BR]O download foi interrompido porque já não há cota de transferência disponível para este IP. Para obter mais cota, faça o upgrade da sua conta ou espere %1 até mais cota gratuita estar disponível para o seu IP. [A]Mais informações[/A] sobre a cota de transferência.</translation>
@@ -9995,6 +10014,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
         <translation>Cancelar todas as transferências em Documentos</translation>
+    </message>
+    <message>
+        <source>Cancel all downloads</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
+        <translation>Cancelar todas as transferências em Downloads</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
