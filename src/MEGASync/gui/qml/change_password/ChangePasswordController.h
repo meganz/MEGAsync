@@ -11,19 +11,22 @@ class ChangePasswordController: public QObject
 
 public:
     explicit ChangePasswordController(QObject* parent = 0);
-    void changePassword(QString password, QString confirmPassword);
+    void changePassword(QString password, bool signOutOtherDevices);
     void check2FA(QString pin);
     void onRequestFinish(mega::MegaRequest* req, mega::MegaError* e);
 
 signals:
     void show2FA();
     void passwordChangeFailed(QString message);
-    void passwordChangeSucceed(QString title, QString description);
+    void passwordChangeSucceed(QString title, QString description, QString bannerText);
     void twoFAVerificationFailed();
     void passwordCheckFailed(QString error);
 
 private:
+    void emitPasswordChangeSucceed(bool signedOutOtherDevices);
+
     QString mPassword;
+    bool mSignOutOtherDevices = false;
     mega::MegaApi* mMegaApi;
 };
 

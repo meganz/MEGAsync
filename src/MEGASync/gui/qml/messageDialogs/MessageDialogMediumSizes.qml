@@ -20,5 +20,6 @@ QtObject {
     readonly property real titleTextLineHeight: 24.0
     readonly property real descriptionTextLineHeight: 18.0
     readonly property real bottomButtonsRowSpacing: 12.0
+    readonly property real bannerIconSize: 16.0
 
 }
