@@ -1831,8 +1831,7 @@
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>%n result</numerusform>
-            <numerusform>%n results</numerusform>
+            <numerusform>%n件の結果</numerusform>
         </translation>
     </message>
     <message>
@@ -3000,7 +2999,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>An update has been installed. The MEGA Desktop App will restart automatically in a few minutes to finish applying it</source>
         <translatorcomment>Desktop notification shown after instaling an auto-update if there are transfers running. SNC-6717</translatorcomment>
-        <translation>An update has been installed. The MEGA Desktop App will restart automatically in a few minutes to finish applying it</translation>
+        <translation>アップデートがインストールされました。適用を完了するため、MEGAデスクトップアプリは数分後に自動的に再起動します。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3035,7 +3034,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
         <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
-        <translation>Do you want to upload ”%1″ to MEGA?</translation>
+        <translation>「%1」を MEGA にアップロードしますか？</translation>
     </message>
     <message numerus="yes">
         <source>Do you want to upload %n file to MEGA?</source>
@@ -3102,7 +3101,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Import from another cloud</source>
         <translatorcomment>Menu action to open the cloud-to-MEGA migration tool. SNC-6703</translatorcomment>
-        <translation>Import from another cloud</translation>
+        <translation>別のクラウドからインポート</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -4600,96 +4599,84 @@ Enter a different name</source>
         <source>Error deleting file</source>
         <translatorcomment>Secondary text of a messagebox when deleting files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error deleting file</numerusform>
-            <numerusform>Error deleting files</numerusform>
+            <numerusform>ファイルの削除エラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error deleting folder</source>
         <translatorcomment>Secondary text of a messagebox when deleting folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error deleting folder</numerusform>
-            <numerusform>Error deleting folders</numerusform>
+            <numerusform>フォルダの削除エラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error deleting item</source>
         <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error deleting item</numerusform>
-            <numerusform>Error deleting items</numerusform>
+            <numerusform>項目の削除エラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error moving file</source>
         <translatorcomment>Main text of a messagebox when moving files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error moving file</numerusform>
-            <numerusform>Error moving files</numerusform>
+            <numerusform>ファイルの移動エラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error moving folder</source>
         <translatorcomment>Main text of a messagebox when moving folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error moving folder</numerusform>
-            <numerusform>Error moving folders</numerusform>
+            <numerusform>フォルダの移動エラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error moving item</source>
         <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error moving item</numerusform>
-            <numerusform>Error moving items</numerusform>
+            <numerusform>項目の移動エラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error pasting file</source>
         <translatorcomment>Main text of a messagebox when pasting files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>Error pasting file</numerusform>
-            <numerusform>Error pasting files</numerusform>
+            <numerusform>ファイルの貼り付けエラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error pasting folder</source>
         <translatorcomment>Main text of a messagebox when pasting folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>Error pasting folder</numerusform>
-            <numerusform>Error pasting folders</numerusform>
+            <numerusform>フォルダの貼り付けエラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error pasting item</source>
         <translatorcomment>Main text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>Error pasting item</numerusform>
-            <numerusform>Error pasting items</numerusform>
+            <numerusform>項目の貼り付けエラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error restoring file</source>
         <translatorcomment>Secondary text of a messagebox when restoring files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error restoring file</numerusform>
-            <numerusform>Error restoring files</numerusform>
+            <numerusform>ファイルの復元エラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error restoring folder</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error restoring folder</numerusform>
-            <numerusform>Error restoring folders</numerusform>
+            <numerusform>フォルダの復元エラー</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error restoring item</source>
         <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error restoring item</numerusform>
-            <numerusform>Error restoring items</numerusform>
+            <numerusform>項目の復元エラー</numerusform>
         </translation>
     </message>
     <message>
@@ -4755,142 +4742,130 @@ Enter a different name</source>
     <message>
         <source>The file %1 couldn’t be deleted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
-        <translation>The file %1 couldn’t be deleted. Try again later.</translation>
+        <translation>ファイル「%1」を削除できませんでした。後でもう一度お試しください。</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
-        <translation>The file %1 couldn’t be moved. Try again later.</translation>
+        <translation>ファイル「%1」を移動できませんでした。後でもう一度お試しください。</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6713</translatorcomment>
-        <translation>The file %1 couldn’t be pasted. Try again later.</translation>
+        <translation>ファイル「%1」を貼り付けできませんでした。後でもう一度お試しください。</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
-        <translation>The file %1 couldn’t be restored. Try again later.</translation>
+        <translation>ファイル「%1」を復元できませんでした。後でもう一度お試しください。</translation>
     </message>
     <message numerus="yes">
         <source>The file couldn’t be deleted. Try again later.</source>
         <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The file couldn’t be deleted. Try again later.</numerusform>
-            <numerusform>The files couldn’t be deleted. Try again later.</numerusform>
+            <numerusform>ファイルを削除できませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The file couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The file couldn’t be moved. Try again later.</numerusform>
-            <numerusform>The files couldn’t be moved. Try again later.</numerusform>
+            <numerusform>ファイルを移動できませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The file couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting some files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>The file couldn’t be pasted. Try again later.</numerusform>
-            <numerusform>The files couldn’t be pasted. Try again later.</numerusform>
+            <numerusform>ファイルを貼り付けできませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The file couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The file couldn’t be restored. Try again later.</numerusform>
-            <numerusform>The files couldn’t be restored. Try again later.</numerusform>
+            <numerusform>ファイルを復元できませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be deleted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
-        <translation>The folder %1 couldn’t be deleted. Try again later.</translation>
+        <translation>フォルダ「%1」を削除できませんでした。後でもう一度お試しください。</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
-        <translation>The folder %1 couldn’t be moved. Try again later.</translation>
+        <translation>フォルダ「%1」を移動できませんでした。後でもう一度お試しください。</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be pasted. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
-        <translation>The folder %1 couldn’t be pasted. Try again later</translation>
+        <translation>フォルダ「%1」を貼り付けできませんでした。後でもう一度お試しください。</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
-        <translation>The folder %1 couldn’t be pasted. Try again later.</translation>
+        <translation>フォルダ「%1」を貼り付けできませんでした。後でもう一度お試しください。</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
-        <translation>The folder %1 couldn’t be restored. Try again later.</translation>
+        <translation>フォルダ「%1」を復元できませんでした。後でもう一度お試しください。</translation>
     </message>
     <message numerus="yes">
         <source>The folder couldn’t be deleted. Try again later.</source>
         <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The folder couldn’t be deleted. Try again later.</numerusform>
-            <numerusform>The folders couldn’t be deleted. Try again later.</numerusform>
+            <numerusform>フォルダを削除できませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The folder couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The folder couldn’t be moved. Try again later.</numerusform>
-            <numerusform>The folders couldn’t be moved. Try again later.</numerusform>
+            <numerusform>フォルダを移動できませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The folder couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting some folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>The folder couldn’t be pasted. Try again later.</numerusform>
-            <numerusform>The folders couldn’t be pasted. Try again later.</numerusform>
+            <numerusform>フォルダを貼り付けできませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The folder couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The folder couldn’t be restored. Try again later.</numerusform>
-            <numerusform>The folders couldn’t be restored. Try again later.</numerusform>
+            <numerusform>フォルダを復元できませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The item couldn’t be deleted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The item couldn’t be deleted. Try again later.</numerusform>
-            <numerusform>The items couldn’t be deleted. Try again later.</numerusform>
+            <numerusform>項目を削除できませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The item couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The item couldn’t be moved. Try again later.</numerusform>
-            <numerusform>The items couldn’t be moved. Try again later.</numerusform>
+            <numerusform>項目を移動できませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The item couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>The item couldn’t be pasted. Try again later.</numerusform>
-            <numerusform>The items couldn’t be pasted. Try again later.</numerusform>
+            <numerusform>項目を貼り付けできませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The item couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The item couldn’t be restored. Try again later.</numerusform>
-            <numerusform>The items couldn’t be restored. Try again later.</numerusform>
+            <numerusform>項目を復元できませんでした。後でもう一度お試しください。</numerusform>
         </translation>
     </message>
     <message>
@@ -5679,7 +5654,7 @@ Enter a different name</source>
     <message>
         <source>Import from another cloud</source>
         <translatorcomment>Onboarding button title to open the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>Import from another cloud</translation>
+        <translation>別のクラウドからインポート</translation>
     </message>
     <message>
         <source>Incorrect 2FA code</source>
@@ -5719,7 +5694,7 @@ Enter a different name</source>
     <message>
         <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
         <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</translation>
+        <translation>Google DriveのファイルをMEGAへ直接移行。完全に暗号化された状態で、数クリックで開始できます。</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -6236,6 +6211,19 @@ Enter a different name</source>
 </context>
 <context>
     <name>Preferences</name>
+    <message>
+        <source>- Clearer handling of stalled issues and name conflicts.
+- Installs and updates now remove files left over from previous versions.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
+        <translation>- Clearer handling of stalled issues and name conflicts.
+- Installs and updates now remove files left over from previous versions.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.
+</translation>
+    </message>
     <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
@@ -7123,7 +7111,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button that dismisses the clear local cache warning dialog without deleting anything.SNC-6743</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Change Password</source>
@@ -7178,7 +7166,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Delete</source>
         <translatorcomment>Button that confirms permanently deleting the local cache (debris) of synced folders, in the clear local cache warning dialog.SNC-6743</translatorcomment>
-        <translation>Delete</translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Details</source>
@@ -9637,7 +9625,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [A][/A] used for the link placeholder. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation>You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade your account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</translation>
+        <translation>このIPアドレスの転送容量（クォータ）が不足しているため、ダウンロードを継続できません。容量を増やすには、Proアカウントにアップグレードしていただくか、無料枠の容量が追加されるまであと%1お待ちください。転送容量についての詳細は[A]こちら[/A]をご覧ください。</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
@@ -9921,7 +9909,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Cancel all transfers in Downloads</translation>
+        <translation>「ダウンロード」のすべての転送をキャンセル</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
