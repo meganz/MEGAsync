@@ -1871,8 +1871,9 @@
         <source>%n result</source>
         <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>%n result</numerusform>
-            <numerusform>%n results</numerusform>
+            <numerusform>%n wynik</numerusform>
+            <numerusform>%n wyniki</numerusform>
+            <numerusform>%n wyników</numerusform>
         </translation>
     </message>
     <message>
@@ -3056,7 +3057,7 @@ Poczekaj na zakończenie przesyłania.</translation>
     <message>
         <source>An update has been installed. The MEGA Desktop App will restart automatically in a few minutes to finish applying it</source>
         <translatorcomment>Desktop notification shown after instaling an auto-update if there are transfers running. SNC-6717</translatorcomment>
-        <translation>An update has been installed. The MEGA Desktop App will restart automatically in a few minutes to finish applying it</translation>
+        <translation>Zainstalowano aktualizację. Aplikacja MEGA Desktop zostanie automatycznie ponownie uruchomiona za kilka minut, aby dokończyć instalację</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3091,7 +3092,7 @@ Poczekaj na zakończenie przesyłania.</translation>
     <message>
         <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
         <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
-        <translation>Do you want to upload ”%1″ to MEGA?</translation>
+        <translation>Czy chcesz przesłać „%1” do MEGA?</translation>
     </message>
     <message numerus="yes">
         <source>Do you want to upload %n file to MEGA?</source>
@@ -3160,7 +3161,7 @@ Poczekaj na zakończenie przesyłania.</translation>
     <message>
         <source>Import from another cloud</source>
         <translatorcomment>Menu action to open the cloud-to-MEGA migration tool. SNC-6703</translatorcomment>
-        <translation>Import from another cloud</translation>
+        <translation>Importuj z innej chmury</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -4675,96 +4676,108 @@ Wprowadź inną nazwę.</translation>
         <source>Error deleting file</source>
         <translatorcomment>Secondary text of a messagebox when deleting files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error deleting file</numerusform>
-            <numerusform>Error deleting files</numerusform>
+            <numerusform>Błąd usuwania pliku</numerusform>
+            <numerusform>Błąd usuwania plików</numerusform>
+            <numerusform>Błąd usuwania plików</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error deleting folder</source>
         <translatorcomment>Secondary text of a messagebox when deleting folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error deleting folder</numerusform>
-            <numerusform>Error deleting folders</numerusform>
+            <numerusform>Błąd usuwania folderu</numerusform>
+            <numerusform>Błąd usuwania folderów</numerusform>
+            <numerusform>Błąd usuwania folderów</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error deleting item</source>
         <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error deleting item</numerusform>
-            <numerusform>Error deleting items</numerusform>
+            <numerusform>Błąd podczas usuwania elementu</numerusform>
+            <numerusform>Błąd podczas usuwania elementów</numerusform>
+            <numerusform>Błąd podczas usuwania elementów</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error moving file</source>
         <translatorcomment>Main text of a messagebox when moving files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error moving file</numerusform>
-            <numerusform>Error moving files</numerusform>
+            <numerusform>Błąd przenoszenia pliku</numerusform>
+            <numerusform>Błąd przenoszenia plików</numerusform>
+            <numerusform>Błąd przenoszenia plików</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error moving folder</source>
         <translatorcomment>Main text of a messagebox when moving folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error moving folder</numerusform>
-            <numerusform>Error moving folders</numerusform>
+            <numerusform>Błąd przenoszenia folderu</numerusform>
+            <numerusform>Błąd przenoszenia folderów</numerusform>
+            <numerusform>Błąd przenoszenia folderów</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error moving item</source>
         <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error moving item</numerusform>
-            <numerusform>Error moving items</numerusform>
+            <numerusform>Błąd podczas przenoszenia elementu</numerusform>
+            <numerusform>Błąd podczas przenoszenia elementów</numerusform>
+            <numerusform>Błąd podczas przenoszenia elementów</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error pasting file</source>
         <translatorcomment>Main text of a messagebox when pasting files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>Error pasting file</numerusform>
-            <numerusform>Error pasting files</numerusform>
+            <numerusform>Błąd wklejania pliku</numerusform>
+            <numerusform>Błąd wklejania plików</numerusform>
+            <numerusform>Błąd wklejania plików</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error pasting folder</source>
         <translatorcomment>Main text of a messagebox when pasting folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>Error pasting folder</numerusform>
-            <numerusform>Error pasting folders</numerusform>
+            <numerusform>Błąd wklejania folderu</numerusform>
+            <numerusform>Błąd wklejania folderów</numerusform>
+            <numerusform>Błąd wklejania folderów</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error pasting item</source>
         <translatorcomment>Main text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>Error pasting item</numerusform>
-            <numerusform>Error pasting items</numerusform>
+            <numerusform>Błąd wklejania elementu</numerusform>
+            <numerusform>Błąd wklejania elementów</numerusform>
+            <numerusform>Błąd wklejania elementów</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error restoring file</source>
         <translatorcomment>Secondary text of a messagebox when restoring files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error restoring file</numerusform>
-            <numerusform>Error restoring files</numerusform>
+            <numerusform>Błąd przywracania pliku</numerusform>
+            <numerusform>Błąd przywracania plików</numerusform>
+            <numerusform>Błąd przywracania plików</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error restoring folder</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error restoring folder</numerusform>
-            <numerusform>Error restoring folders</numerusform>
+            <numerusform>Błąd przywracania folderu</numerusform>
+            <numerusform>Błąd przywracania folderów</numerusform>
+            <numerusform>Błąd przywracania folderów</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Error restoring item</source>
         <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>Error restoring item</numerusform>
-            <numerusform>Error restoring items</numerusform>
+            <numerusform>Błąd przywracania elementu</numerusform>
+            <numerusform>Błąd przywracania elementów</numerusform>
+            <numerusform>Błąd przywracania elementów</numerusform>
         </translation>
     </message>
     <message>
@@ -4830,142 +4843,154 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>The file %1 couldn’t be deleted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
-        <translation>The file %1 couldn’t be deleted. Try again later.</translation>
+        <translation>Nie udało się usunąć pliku %1. Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
-        <translation>The file %1 couldn’t be moved. Try again later.</translation>
+        <translation>Nie udało się przenieść pliku %1. Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6713</translatorcomment>
-        <translation>The file %1 couldn’t be pasted. Try again later.</translation>
+        <translation>Plik %1 nie mógł zostać wklejony. Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
-        <translation>The file %1 couldn’t be restored. Try again later.</translation>
+        <translation>Nie udało się przywrócić pliku %1. Spróbuj ponownie później.</translation>
     </message>
     <message numerus="yes">
         <source>The file couldn’t be deleted. Try again later.</source>
         <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The file couldn’t be deleted. Try again later.</numerusform>
-            <numerusform>The files couldn’t be deleted. Try again later.</numerusform>
+            <numerusform>Nie udało się usunąć pliku. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się usunąć plików. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się usunąć plików. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The file couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The file couldn’t be moved. Try again later.</numerusform>
-            <numerusform>The files couldn’t be moved. Try again later.</numerusform>
+            <numerusform>Plik nie mógł zostać przeniesiony. Spróbuj ponownie później.</numerusform>
+            <numerusform>Pliki nie mogły zostać przeniesione. Spróbuj ponownie później.</numerusform>
+            <numerusform>Pliki nie mogły zostać przeniesione. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The file couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting some files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>The file couldn’t be pasted. Try again later.</numerusform>
-            <numerusform>The files couldn’t be pasted. Try again later.</numerusform>
+            <numerusform>Nie udało się wkleić pliku. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się wkleić plików. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się wkleić plików. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The file couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The file couldn’t be restored. Try again later.</numerusform>
-            <numerusform>The files couldn’t be restored. Try again later.</numerusform>
+            <numerusform>Nie można przywrócić pliku. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie można przywrócić plików. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie można przywrócić plików. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be deleted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
-        <translation>The folder %1 couldn’t be deleted. Try again later.</translation>
+        <translation>Nie można usunąć folderu %1. Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
-        <translation>The folder %1 couldn’t be moved. Try again later.</translation>
+        <translation>Folder %1 nie mógł zostać przeniesiony. Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be pasted. Try again later</source>
         <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
-        <translation>The folder %1 couldn’t be pasted. Try again later</translation>
+        <translation>Nie udało się wkleić folderu %1. Spróbuj ponownie później</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
-        <translation>The folder %1 couldn’t be pasted. Try again later.</translation>
+        <translation>Nie można wkleić folderu %1. Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
-        <translation>The folder %1 couldn’t be restored. Try again later.</translation>
+        <translation>Folder %1 nie mógł zostać przywrócony. Spróbuj ponownie później.</translation>
     </message>
     <message numerus="yes">
         <source>The folder couldn’t be deleted. Try again later.</source>
         <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The folder couldn’t be deleted. Try again later.</numerusform>
-            <numerusform>The folders couldn’t be deleted. Try again later.</numerusform>
+            <numerusform>Nie udało się usunąć folderu. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się usunąć folderów. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się usunąć folderów. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The folder couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The folder couldn’t be moved. Try again later.</numerusform>
-            <numerusform>The folders couldn’t be moved. Try again later.</numerusform>
+            <numerusform>Folder nie mógł zostać przeniesiony. Spróbuj ponownie później.</numerusform>
+            <numerusform>Foldery nie mogły zostać przeniesione. Spróbuj ponownie później.</numerusform>
+            <numerusform>Foldery nie mogły zostać przeniesione. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The folder couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting some folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>The folder couldn’t be pasted. Try again later.</numerusform>
-            <numerusform>The folders couldn’t be pasted. Try again later.</numerusform>
+            <numerusform>Nie udało się wkleić folderu. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się wkleić folderów. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się wkleić folderów. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The folder couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The folder couldn’t be restored. Try again later.</numerusform>
-            <numerusform>The folders couldn’t be restored. Try again later.</numerusform>
+            <numerusform>Folder nie mógł zostać przywrócony. Spróbuj ponownie później.</numerusform>
+            <numerusform>Foldery nie mogły zostać przywrócone. Spróbuj ponownie później.</numerusform>
+            <numerusform>Foldery nie mogły zostać przywrócone. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The item couldn’t be deleted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The item couldn’t be deleted. Try again later.</numerusform>
-            <numerusform>The items couldn’t be deleted. Try again later.</numerusform>
+            <numerusform>Nie udało się usunąć elementu. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się usunąć elementów. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się usunąć elementów. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The item couldn’t be moved. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The item couldn’t be moved. Try again later.</numerusform>
-            <numerusform>The items couldn’t be moved. Try again later.</numerusform>
+            <numerusform>Element nie mógł zostać przeniesiony. Spróbuj ponownie później.</numerusform>
+            <numerusform>Elementy nie mogły zostać przeniesione. Spróbuj ponownie później.</numerusform>
+            <numerusform>Elementy nie mogły zostać przeniesione. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The item couldn’t be pasted. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
         <translation>
-            <numerusform>The item couldn’t be pasted. Try again later.</numerusform>
-            <numerusform>The items couldn’t be pasted. Try again later.</numerusform>
+            <numerusform>Nie udało się wkleić elementu. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się wkleić elementów. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się wkleić elementów. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>The item couldn’t be restored. Try again later.</source>
         <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
         <translation>
-            <numerusform>The item couldn’t be restored. Try again later.</numerusform>
-            <numerusform>The items couldn’t be restored. Try again later.</numerusform>
+            <numerusform>Nie udało się przywrócić elementu. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się przywrócić elementów. Spróbuj ponownie później.</numerusform>
+            <numerusform>Nie udało się przywrócić elementów. Spróbuj ponownie później.</numerusform>
         </translation>
     </message>
     <message>
@@ -5784,7 +5809,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Import from another cloud</source>
         <translatorcomment>Onboarding button title to open the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>Import from another cloud</translation>
+        <translation>Importuj z innej chmury</translation>
     </message>
     <message>
         <source>Incorrect 2FA code</source>
@@ -5824,7 +5849,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
         <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</translation>
+        <translation>Przenieś swoje pliki z Google Drive prosto do MEGA, z pełnym szyfrowaniem. Rozpocznij w kilku kliknięciach.</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -6343,6 +6368,18 @@ Wprowadź inną nazwę.</translation>
 </context>
 <context>
     <name>Preferences</name>
+    <message>
+        <source>- Clearer handling of stalled issues and name conflicts.
+- Installs and updates now remove files left over from previous versions.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
+        <translation>- Bardziej przejrzyste zarządzanie zaległymi problemami i konfliktami nazw.
+- Instalacje i aktualizacje teraz usuwają pliki pozostawione przez poprzednie wersje.
+- Poprawki interfejsu użytkownika i dostosowania w oknach synchronizacji, kopii zapasowej i transferu.
+- Poprawki błędów i ulepszenia wydajności.</translation>
+    </message>
     <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
@@ -7234,7 +7271,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button that dismisses the clear local cache warning dialog without deleting anything.SNC-6743</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Change Password</source>
@@ -7289,7 +7326,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Delete</source>
         <translatorcomment>Button that confirms permanently deleting the local cache (debris) of synced folders, in the clear local cache warning dialog.SNC-6743</translatorcomment>
-        <translation>Delete</translation>
+        <translation>Usuń</translation>
     </message>
     <message>
         <source>Details</source>
@@ -9779,7 +9816,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [A][/A] used for the link placeholder. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation>You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade your account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</translation>
+        <translation>Nie możesz kontynuować pobierania, ponieważ dla tego adresu IP nie masz wystarczającego limitu transferu. Aby uzyskać więcej limitu, zaktualizuj swoje konto lub poczekaj do %1, aż więcej darmowego limitu transferu będzie dostępny dla twojego adresu IP. [A]Dowiedz się więcej[/A] o limicie transferu.</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
@@ -10089,7 +10126,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Cancel all transfers in Downloads</translation>
+        <translation>Anuluj wszystkie transfery w Pobrane</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
