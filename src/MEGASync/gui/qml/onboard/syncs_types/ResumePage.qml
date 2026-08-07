@@ -102,14 +102,18 @@ ResumePageForm {
             }
             PropertyChanges {
                 target: syncButton;
-                type: !fullSyncDone && !selectiveSyncDone
-                      ? Constants.SyncType.SYNC
-                      : Constants.SyncType.SELECTIVE_SYNC;
-                visible: !fullSyncDone;
-                title: SyncsStrings.sync
-                description: !fullSyncDone && !selectiveSyncDone
-                             ? OnboardingStrings.finalPageButtonSync
-                             : OnboardingStrings.finalPageButtonSelectiveSync;
+                type: fullSyncDone
+                      ? Constants.SyncType.BACKUP
+                      : (selectiveSyncDone
+                         ? Constants.SyncType.SELECTIVE_SYNC
+                         : Constants.SyncType.SYNC);
+                title: fullSyncDone ? OnboardingStrings.backup : SyncsStrings.sync;
+                description: fullSyncDone
+                             ? OnboardingStrings.finalPageButtonBackup
+                             : (selectiveSyncDone
+                                ? OnboardingStrings.finalPageButtonSelectiveSync
+                                : OnboardingStrings.finalPageButtonSync);
+                imageSource: fullSyncDone ? Images.installationTypeBackups : Images.sync;
             }
             PropertyChanges {
                 target: backupButton;
