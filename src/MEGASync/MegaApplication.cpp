@@ -5369,7 +5369,18 @@ void MegaApplication::uploadWithPiTagTrigger(const QStringList& newUploadQueue,
 // Called when the user wants to upload a list of files and/or folders from the shell
 void MegaApplication::shellUpload(const QQueue<QString>& newUploadQueue)
 {
-    uploadWithPiTagTrigger(newUploadQueue, MegaApi::PITAG_TRIGGER_EXPLORER_EXTENSION);
+    if (appfinished)
+    {
+        return;
+    }
+    if (megaApi && megaApi->isLoggedIn())
+    {
+        uploadWithPiTagTrigger(newUploadQueue, MegaApi::PITAG_TRIGGER_EXPLORER_EXTENSION);
+    }
+    else
+    {
+        QmlDialogManager::instance()->openOnboardingDialog();
+    }
 }
 
 void MegaApplication::shellBackup(QStringList newBackupList)
