@@ -13,17 +13,37 @@ Text {
     property bool manageHover: false
     property bool manageClick: false
     property bool visited: false
+    property var visitedLinks: ({})
     property bool underlineLink: false
-    property color urlColor: {
-        if (!enabled)
-            return ColorTheme.notificationInfo
-        if (visited)
-            return ColorTheme.linkVisited
-        return ColorTheme.linkPrimary
-    }
+    property color urlColor: linkColorFor(url.toString())
     property string rawText: ""
 
     signal linkClicked
+
+    function isVisited(href) {
+        return visited || (href !== undefined && visitedLinks[href.toString()] === true);
+    }
+
+    function linkColorFor(href) {
+        if (!enabled)
+            return ColorTheme.notificationInfo
+        if (isVisited(href))
+            return ColorTheme.linkVisited
+        return ColorTheme.linkPrimary
+    }
+
+    function markVisited(href) {
+        if (href === undefined || href === "")
+            return;
+
+        // Reassign a fresh object so the visitedLinks change is observed and the
+        // text binding re-renders with the updated per-link colour. The sentinel
+        // defaultUrl is marked too, so a single manageClick link (which carries no
+        // real href) still turns visited after a click, as it did before.
+        let updated = Object.assign({}, visitedLinks);
+        updated[href.toString()] = true;
+        visitedLinks = updated;
+    }
 
     function renderText() {
         if (rawText.indexOf("[") === -1 && rawText.indexOf("<a") === -1)
@@ -38,7 +58,7 @@ Text {
             {
                 pattern: /\[A\]/g,
                 replacement: "<a style=\"text-decoration:" + decoration
-                             + "; color:" + urlColor
+                             + "; color:" + linkColorFor(url.toString())
                              + ";\" href=\"" + url + "\">"
             },
             { pattern: /\[\/A\]/g, replacement: "</a>" },
@@ -50,10 +70,16 @@ Text {
             copyText = copyText.replace(replacement.pattern, replacement.replacement);
         });
 
+        // Colour each bare <a href> by its own visited state, so clicking one
+        // link in a multi-link literal does not recolour the others.
         copyText = copyText.replace(
             RegexExpressions.linkWithHrefWithoutStyle,
-            "<a $1$2 style=\"text-decoration:" + decoration
-            + "; color:" + urlColor + ";\">"
+            (match, hrefGroup, tailGroup) => {
+                const hrefMatch = hrefGroup.match(/href="([^"]+)"/);
+                const href = hrefMatch ? hrefMatch[1] : "";
+                return "<a " + hrefGroup + tailGroup + " style=\"text-decoration:"
+                       + decoration + "; color:" + linkColorFor(href) + ";\">";
+            }
         );
 
         return copyText;
@@ -164,7 +190,9 @@ Text {
             else {
                 linkClicked();
             }
-            visited = true;
+            let target = (clickedUrl !== "" && clickedUrl !== root.defaultUrl)
+                         ? clickedUrl : root.url;
+            markVisited(target);
         }
     }
 
