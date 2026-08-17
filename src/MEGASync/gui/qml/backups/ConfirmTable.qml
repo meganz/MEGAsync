@@ -46,7 +46,24 @@ Rectangle {
         clip: true
         delegate: folderComponent
         header: headerComponent
-        ScrollBar.vertical: ScrollBar {}
+
+        // Re-parenting the attached ScrollBar disables Qt's automatic
+        // full-height geometry management, so we can confine it to the table
+        // body below the overlay header instead of letting it overflow into
+        // it (SNC-5541).
+        ScrollBar.vertical: ScrollBar {
+            id: verticalScrollBar
+
+            parent: listView.parent
+            anchors {
+                top: listView.top
+                topMargin: root.headerHeight
+                right: listView.right
+                rightMargin: borderRectangle.border.width
+                bottom: listView.bottom
+                bottomMargin: borderRectangle.border.width
+            }
+        }
     }
 
     Component {
