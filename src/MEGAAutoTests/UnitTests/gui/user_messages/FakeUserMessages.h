@@ -7,6 +7,8 @@
 #include <QDateTime>
 
 #include <memory>
+#include <utility>
+#include <vector>
 
 // Minimal notification, to build a UserNotification without the SDK.
 class FakeMegaNotification: public mega::MegaNotification
@@ -107,6 +109,34 @@ inline std::unique_ptr<UserNotification> createNotificationEndingIn(int64_t secs
     return std::make_unique<UserNotification>(
         new FakeMegaNotification(id, now - 24 * 3600, now + secs));
 }
+
+// Minimal notification list, to feed UserMessageModel without the SDK. It does not
+// own the notifications it is given.
+class FakeMegaNotificationList: public mega::MegaNotificationList
+{
+public:
+    explicit FakeMegaNotificationList(std::vector<const mega::MegaNotification*> notifications):
+        mNotifications(std::move(notifications))
+    {}
+
+    const mega::MegaNotification* get(unsigned i) const override
+    {
+        return i < size() ? mNotifications[i] : nullptr;
+    }
+
+    unsigned size() const override
+    {
+        return static_cast<unsigned>(mNotifications.size());
+    }
+
+    MegaNotificationList* copy() const override
+    {
+        return new FakeMegaNotificationList(mNotifications);
+    }
+
+private:
+    std::vector<const mega::MegaNotification*> mNotifications;
+};
 
 // A user message of the alert type which is not a UserAlert: AlertItem ignores its
 // data, which is all that is needed to have an alert widget built for a row.

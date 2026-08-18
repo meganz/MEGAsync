@@ -45,6 +45,7 @@ set(UNIT_TEST_FILES
     gui/user_messages/NotificationExpirationTimerTests.cpp
     gui/user_messages/NotificationItemTests.cpp
     gui/user_messages/UserMessageCacheManagerTests.cpp
+    gui/user_messages/UserMessageModelTests.cpp
 )
 
 if(USE_BREAKPAD)

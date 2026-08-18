@@ -385,10 +385,16 @@ void UserMessageModel::onExpired(unsigned id)
     if (it != mUserMessages.end())
     {
         int row = static_cast<int>(std::distance(mUserMessages.begin(), it));
+        UserMessage* expiredMessage = *it;
+
         beginRemoveRows(QModelIndex(), row, row);
-        delete mUserMessages[row];
         mUserMessages.erase(it);
         endRemoveRows();
+
+        // This is called from the expired() signal of the message itself, which is
+        // still emitting it, and whoever asked for the removal is still running.
+        // So the message is destroyed once the current event has been handled.
+        expiredMessage->deleteLater();
     }
 }
 
