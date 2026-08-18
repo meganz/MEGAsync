@@ -41,6 +41,8 @@ set(UNIT_TEST_FILES
     platform/PlatformTests.cpp
     syncs/control/MegaIgnoreManagerTests.cpp
     syncs/control/SyncControllerTests.cpp
+    gui/user_messages/NotificationExpirationTimerTests.cpp
+    gui/user_messages/NotificationItemTests.cpp
 )
 
 if(USE_BREAKPAD)
