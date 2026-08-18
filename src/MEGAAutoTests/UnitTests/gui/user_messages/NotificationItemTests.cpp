@@ -1,7 +1,6 @@
 #include "ApiImageLabel.h"
-#include "megaapi.h"
+#include "FakeUserMessages.h"
 #include "NotificationItem.h"
-#include "UserNotification.h"
 #include <catch.hpp>
 
 #include <QDateTime>
@@ -11,8 +10,6 @@
 #include <QThread>
 #include <QTimer>
 
-#include <memory>
-
 /**
  * Tests for the widget that renders a notification with an end timestamp
  * (i.e. a discount offer) in the InfoDialog notifications tab.
@@ -20,99 +17,6 @@
 
 namespace
 {
-constexpr const char* KEY_CALL_TO_ACTION_TEXT = "text";
-constexpr const char* KEY_CALL_TO_ACTION_LINK = "link";
-constexpr int64_t NOTIFICATION_ID = 4321;
-
-class FakeMegaNotification: public mega::MegaNotification
-{
-public:
-    FakeMegaNotification(int64_t start, int64_t end):
-        mStart(start),
-        mEnd(end),
-        mCallToAction(mega::MegaStringMap::createInstance())
-    {
-        mCallToAction->set(KEY_CALL_TO_ACTION_TEXT, "Get the offer");
-        mCallToAction->set(KEY_CALL_TO_ACTION_LINK, "https://mega.nz/pro");
-    }
-
-    int64_t getID() const override
-    {
-        return NOTIFICATION_ID;
-    }
-
-    const char* getTitle() const override
-    {
-        return "Limited time discount";
-    }
-
-    const char* getDescription() const override
-    {
-        return "Get 30% off any Pro plan";
-    }
-
-    // No image and no icon: nothing is downloaded while testing.
-    const char* getImageName() const override
-    {
-        return "";
-    }
-
-    const char* getIconName() const override
-    {
-        return "";
-    }
-
-    const char* getImagePath() const override
-    {
-        return "";
-    }
-
-    int64_t getStart() const override
-    {
-        return mStart;
-    }
-
-    int64_t getEnd() const override
-    {
-        return mEnd;
-    }
-
-    bool showBanner() const override
-    {
-        return false;
-    }
-
-    const mega::MegaStringMap* getCallToAction1() const override
-    {
-        return mCallToAction.get();
-    }
-
-    const mega::MegaStringMap* getCallToAction2() const override
-    {
-        return mCallToAction.get();
-    }
-
-    mega::MegaStringList* getRenderModes() const override
-    {
-        return nullptr;
-    }
-
-    mega::MegaStringMap* getRenderModeFields(const char*) const override
-    {
-        return nullptr;
-    }
-
-    MegaNotification* copy() const override
-    {
-        return new FakeMegaNotification(mStart, mEnd);
-    }
-
-private:
-    int64_t mStart;
-    int64_t mEnd;
-    std::unique_ptr<mega::MegaStringMap> mCallToAction;
-};
-
 // The countdown reads the wall clock on its own, so an end timestamp computed
 // here as "now + X" is off by one second if the current second changes in
 // between. Waiting for the beginning of a second leaves ~800 ms of margin.
@@ -122,14 +26,6 @@ void alignToSecondStart()
     {
         QThread::msleep(10);
     }
-}
-
-// UserNotification takes ownership of the MegaNotification.
-std::unique_ptr<UserNotification> createNotificationEndingIn(int64_t secs)
-{
-    const int64_t now = QDateTime::currentSecsSinceEpoch();
-    return std::make_unique<UserNotification>(
-        new FakeMegaNotification(now - 24 * 3600, now + secs));
 }
 
 class NotificationItemTests

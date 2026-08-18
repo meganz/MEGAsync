@@ -11,8 +11,9 @@ constexpr int MAX_COST = 16;
 
 using namespace mega;
 
-UserMessageCacheManager::UserMessageCacheManager()
-    : mUserMessageItems(MAX_COST)
+UserMessageCacheManager::UserMessageCacheManager():
+    mAlertItems(MAX_COST),
+    mNotificationItems(MAX_COST)
 {
 }
 
@@ -26,18 +27,17 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(qsizetype row,
     }
 
     UserMessageWidget* widget(nullptr);
-    qsizetype cacheIndex(row % mUserMessageItems.maxCost());
 
     switch (data->getType())
     {
         case UserMessage::Type::ALERT:
         {
-            widget = createOrGetWidget<AlertItem>(cacheIndex, data, parent);
+            widget = createOrGetWidget<AlertItem>(mAlertItems, row, data, parent);
             break;
         }
         case UserMessage::Type::NOTIFICATION:
         {
-            widget = createOrGetWidget<NotificationItem>(cacheIndex, data, parent);
+            widget = createOrGetWidget<NotificationItem>(mNotificationItems, row, data, parent);
             break;
         }
         default:
@@ -50,15 +50,25 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(qsizetype row,
 }
 
 template<class Item>
-UserMessageWidget* UserMessageCacheManager::createOrGetWidget(qsizetype cacheIndex,
+UserMessageWidget* UserMessageCacheManager::createOrGetWidget(WidgetCache& cache,
+                                                              qsizetype row,
                                                               UserMessage* data,
                                                               QWidget* parent)
 {
+    const qsizetype cacheIndex(row % cache.maxCost());
+
     bool newDataInWidget(false);
 
-    UserMessageWidget* widget = getWidgetFromCache(cacheIndex);
-    if(dynamic_cast<Item*>(widget))
+    // QCache::object() returns null when nothing is stored for the key. The key
+    // must not be compared against QCache::size(), which is the number of stored
+    // objects and not the size of the key space.
+    UserMessageWidget* widget = cache.object(cacheIndex);
+    if (widget)
     {
+        // Each cache only ever stores one type of widget, so an entry always fits
+        // the data it is asked to display.
+        Q_ASSERT(dynamic_cast<Item*>(widget) != nullptr);
+
         if(!widget->getData() || !data->hasSameId(widget->getData()->id()))
         {
             data->clearSizeHint();
@@ -70,7 +80,7 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(qsizetype cacheInd
     {
         widget = new Item(parent);
         widget->setData(data);
-        mUserMessageItems.insert(cacheIndex, widget);
+        cache.insert(cacheIndex, widget);
         newDataInWidget = true;
     }
 
@@ -82,12 +92,4 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(qsizetype cacheInd
     }
 
     return widget;
-}
-
-UserMessageWidget* UserMessageCacheManager::getWidgetFromCache(qsizetype cacheIndex)
-{
-    // QCache::size() is the number of stored objects, not the size of the key
-    // space, so comparing the index against it discards valid entries. No guard
-    // is needed: QCache::object() already returns null for a key not stored.
-    return mUserMessageItems.object(cacheIndex);
 }
