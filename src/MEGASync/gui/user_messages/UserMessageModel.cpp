@@ -277,7 +277,14 @@ void UserMessageModel::insertNotifications(const QList<mega::MegaNotification*>&
             item->markAsSeen();
         }
 
-        connect(item, &UserMessage::expired, this, &UserMessageModel::onExpired);
+        // A notification reports its expiration from the widget that displays it,
+        // which UserMessageDelegate builds while painting or measuring its row.
+        // Removing the row has to wait for the view to be done with it.
+        connect(item,
+                &UserMessage::expired,
+                this,
+                &UserMessageModel::onExpired,
+                Qt::QueuedConnection);
     }
     endInsertRows();
 }

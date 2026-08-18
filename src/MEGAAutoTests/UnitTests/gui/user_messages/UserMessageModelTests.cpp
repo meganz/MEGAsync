@@ -36,6 +36,19 @@ protected:
         return notification;
     }
 
+    // The model is told about an expiration through a queued connection, so the
+    // removal only happens once the posted call has been delivered.
+    void deliverQueuedCalls()
+    {
+        QCoreApplication::sendPostedEvents(&mModel);
+    }
+
+    // Deferred deletes are only sent when they are explicitly asked for.
+    void deliverDeferredDeletes()
+    {
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    }
+
     UserMessageModel mModel;
 
 private:
@@ -52,6 +65,11 @@ TEST_CASE_METHOD(UserMessageModelTests,
 
     notification->markAsExpired();
 
+    // The widget reports the expiration while the view may be painting or measuring
+    // its row, so the row cannot be removed from under it right away.
+    CHECK(mModel.rowCount() == 1);
+
+    deliverQueuedCalls();
     CHECK(mModel.rowCount() == 0);
 }
 
@@ -62,12 +80,14 @@ TEST_CASE_METHOD(UserMessageModelTests,
     QPointer<UserNotification> notification(givenANotification());
 
     notification->markAsExpired();
+    deliverQueuedCalls();
+    REQUIRE(mModel.rowCount() == 0);
 
-    // Removing it must not destroy it while it is emitting the signal that asked
-    // for the removal, nor while the caller of markAsExpired() is still running.
+    // Removing the row must not destroy the notification, as the widget that
+    // reported the expiration still displays it.
     REQUIRE(!notification.isNull());
 
-    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    deliverDeferredDeletes();
     CHECK(notification.isNull());
 }
 
@@ -100,6 +120,7 @@ TEST_CASE_METHOD(UserMessageModelTests,
     // of an invalid row.
     QPointer<UserNotification> notification(givenANotification());
     notification->markAsExpired();
+    deliverQueuedCalls();
     REQUIRE(mModel.rowCount() == 0);
     REQUIRE(!notification.isNull());
 
