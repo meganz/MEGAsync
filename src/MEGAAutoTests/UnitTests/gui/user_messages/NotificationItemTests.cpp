@@ -129,6 +129,38 @@ TEST_CASE_METHOD(NotificationItemTests,
 }
 
 TEST_CASE_METHOD(NotificationItemTests,
+                 "An offer reaching its end stays displayed as expired before being dropped",
+                 "[notification-item]")
+{
+    // NUM_SECS_TO_WAIT_BEFORE_REMOVE keeps the expired offer in the list, so the
+    // user reads "Offer expired" instead of watching a row vanish.
+    auto notification = createNotificationEndingIn(2);
+
+    int expiredCount = 0;
+    QObject::connect(notification.get(),
+                     &UserMessage::expired,
+                     &mItem,
+                     [&expiredCount](unsigned)
+                     {
+                         ++expiredCount;
+                     });
+
+    mItem.setData(notification.get());
+    REQUIRE(timeText() == QLatin1String("Offer expires in 1 second"));
+
+    // One second later the offer is displayed as expired, and still listed.
+    waitFor(1500);
+    CHECK(timeText() == QLatin1String("Offer expired"));
+    CHECK_FALSE(isCallToActionEnabled());
+    CHECK(expiredCount == 0);
+
+    // It is only dropped once it has been displayed as expired for a while.
+    waitFor(2000);
+    CHECK(timeText() == QLatin1String("Offer expired"));
+    CHECK(expiredCount == 1);
+}
+
+TEST_CASE_METHOD(NotificationItemTests,
                  "A running countdown asks the model to refresh the row",
                  "[notification-item]")
 {
