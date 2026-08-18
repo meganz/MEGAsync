@@ -86,12 +86,8 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(qsizetype cacheInd
 
 UserMessageWidget* UserMessageCacheManager::getWidgetFromCache(qsizetype cacheIndex)
 {
-    UserMessageWidget* item(nullptr);
-
-    if(cacheIndex < mUserMessageItems.size())
-    {
-        item = mUserMessageItems.object(cacheIndex);
-    }
-
-    return item;
+    // QCache::size() is the number of stored objects, not the size of the key
+    // space, so comparing the index against it discards valid entries. No guard
+    // is needed: QCache::object() already returns null for a key not stored.
+    return mUserMessageItems.object(cacheIndex);
 }

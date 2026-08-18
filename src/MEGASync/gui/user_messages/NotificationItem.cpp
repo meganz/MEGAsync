@@ -38,6 +38,15 @@ void NotificationItem::setData(UserMessage* data)
     UserNotification* notification = dynamic_cast<UserNotification*>(data);
     if (notification)
     {
+        // This widget is recycled by UserMessageCacheManager, so the connections
+        // to the previously displayed notification must be dropped before
+        // connecting to the new one. Otherwise they pile up and
+        // updateNotificationData runs once per accumulated connection.
+        if (mNotificationData)
+        {
+            QObject::disconnect(mNotificationData, nullptr, this, nullptr);
+        }
+
         setNotificationData(notification);
         connect(notification,
                 &UserMessage::dataReset,
