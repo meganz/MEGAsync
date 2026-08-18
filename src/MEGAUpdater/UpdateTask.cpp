@@ -25,16 +25,19 @@
 #include <algorithm>
 #include <Shlobj.h>
 #else
-#include <unistd.h>
 #include <sys/types.h>
+#include <sys/utsname.h>
+
 #include <dirent.h>
+#include <unistd.h>
 #endif
 
-#include <cstdlib>
-
-#include "UpdateTask.h"
-#include "Preferences.h"
+#include "../MEGASync/control/Version.h"
 #include "MacUtils.h"
+#include "Preferences.h"
+#include "UpdateTask.h"
+
+#include <cstdlib>
 
 using std::string;
 using CryptoPP::Integer;
@@ -540,11 +543,165 @@ void UpdateTask::checkForUpdates()
     }
 }
 
+namespace
+{
+
+// "Windows 10.0.19045" / "Darwin 25.6.0 arm64", empty when the running system
+// cannot be identified. Same values the SDK puts in the application user agent
+// (WinFileSystemAccess::osversion, PosixFileSystemAccess::osversion), so the
+// update server sees one single shape from the application and from the updater.
+string osVersion()
+{
+    char buffer[128];
+
+#ifdef _WIN32
+    // GetVersionEx is capped by the compatibility shim: a binary without a
+    // supportedOS manifest is told 6.2, which makes Windows 8, 8.1, 10 and 11
+    // indistinguishable. RtlGetVersion is not shimmed.
+    typedef LONG MEGANTSTATUS;
+
+    typedef struct _MEGAOSVERSIONINFOW
+    {
+        DWORD dwOSVersionInfoSize;
+        DWORD dwMajorVersion;
+        DWORD dwMinorVersion;
+        DWORD dwBuildNumber;
+        DWORD dwPlatformId;
+        WCHAR szCSDVersion[128];
+    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
+
+    typedef MEGANTSTATUS(WINAPI * RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
+
+    MEGARTL_OSVERSIONINFOW version = {};
+    version.dwOSVersionInfoSize = sizeof(version);
+
+    HMODULE ntdll = GetModuleHandleW(L"ntdll.dll");
+    RtlGetVersionPtr rtlGetVersion =
+        ntdll ? (RtlGetVersionPtr)(void*)GetProcAddress(ntdll, "RtlGetVersion") : NULL;
+    if (!rtlGetVersion || rtlGetVersion(&version) != 0 || !version.dwMajorVersion)
+    {
+        return string();
+    }
+
+    // No WOW64 "/64" marker, unlike the SDK user agent: the architecture is
+    // already part of the update URL (wsync vs wsync64).
+    snprintf(buffer,
+             sizeof(buffer),
+             "Windows %lu.%lu.%lu",
+             version.dwMajorVersion,
+             version.dwMinorVersion,
+             version.dwBuildNumber);
+#else
+    utsname uts;
+    if (uname(&uts) || !uts.release[0])
+    {
+        return string();
+    }
+
+    snprintf(buffer, sizeof(buffer), "%s %s %s", uts.sysname, uts.release, uts.machine);
+#endif
+
+    return buffer;
+}
+
+//
+// Empty when the system could not be identified, and then no user agent is sent
+// at all rather than a partial one: "Darwin 0.0.0" is *blocked* by that rule and
+// would cost the machine its emergency updates. Sending none leaves the
+// behaviour we have today, which is served.
+//
+// Composed at runtime on purpose: the VER_* literals carry a trailing NUL that a
+// compile time concatenation would bury in the middle of the string.
+const string& userAgent()
+{
+    static const string agent = []() -> string
+    {
+        const string version = osVersion();
+        if (version.empty())
+        {
+            return string();
+        }
+
+        char buffer[160];
+        snprintf(buffer,
+                 sizeof(buffer),
+                 "%s/%s MEGAupdater (%s)",
+                 VER_FILEDESCRIPTION_STR,
+                 VER_PRODUCTVERSION_STR,
+                 version.c_str());
+        return buffer;
+    }();
+
+    return agent;
+}
+
+// Logged once per run: without this there is no way to tell a version cut-off
+// rule that fired from a user agent that was never applied.
+void logUserAgentOnce()
+{
+    static bool logged = false;
+    if (logged)
+    {
+        return;
+    }
+    logged = true;
+
+    if (userAgent().empty())
+    {
+        LOG(LOG_LEVEL_WARNING, "Unable to identify the system, sending no user agent");
+    }
+    else
+    {
+        LOG(LOG_LEVEL_INFO, "User agent: %s", userAgent().c_str());
+    }
+}
+
+#ifdef _WIN32
+// urlmon caches the session user agent on first use, hence the refresh first.
+// The buffer is ANSI and the length is in bytes, without the terminator. The
+// option is process wide, which is fine here: MEGAupdater is a short lived
+// single purpose process.
+bool applySessionUserAgent()
+{
+    const string& agent = userAgent();
+    if (agent.empty())
+    {
+        return false;
+    }
+
+    HRESULT res = UrlMkSetSessionOption(URLMON_OPTION_USERAGENT_REFRESH, NULL, 0, 0);
+    if (SUCCEEDED(res))
+    {
+        res = UrlMkSetSessionOption(URLMON_OPTION_USERAGENT,
+                                    (LPVOID)agent.c_str(),
+                                    (DWORD)agent.size(),
+                                    0);
+    }
+
+    if (FAILED(res))
+    {
+        LOG(LOG_LEVEL_ERROR, "Unable to set the user agent. Error code: %ld", res);
+        return false;
+    }
+
+    return true;
+}
+#endif
+
+} // namespace
+
 bool UpdateTask::downloadFile(string url, string dstPath)
 {
     LOG(LOG_LEVEL_INFO, "Downloading updated file from: %s",  url.c_str());
 
+    logUserAgentOnce();
+
 #ifdef _WIN32
+    // Applied once per process and before the first transaction: urlmon would
+    // otherwise keep its IE inherited user agent for the whole session, and that
+    // one reports every system from Windows 8 on as NT 6.2.
+    [[maybe_unused]] static const bool userAgentApplied = applySessionUserAgent();
+
     string wurl;
     string wdstPath;
 
@@ -563,7 +720,7 @@ bool UpdateTask::downloadFile(string url, string dstPath)
         return false;
     }
 #else
-    bool success = downloadFileSynchronously(url, dstPath);
+    bool success = downloadFileSynchronously(url, dstPath, userAgent());
     if (!success)
     {
         LOG(LOG_LEVEL_ERROR, "Unable to download file.");
