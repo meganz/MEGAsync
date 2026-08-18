@@ -185,9 +185,21 @@ QmlDialog {
                     Qml.ScrollBar.vertical: Qml.ScrollBar {
                         id: descriptionScrollBar
 
-                        policy: descriptionFlickable.contentHeight > descriptionFlickable.height
+                        // AlwaysOff (not AsNeeded) when the description fits.
+                        // On the first layout pass the description is measured
+                        // at zero width, so its implicitHeight transiently
+                        // explodes and this binding starts as AlwaysOn; with
+                        // AsNeeded the style then hides the bar with a
+                        // 450ms-pause + 200ms fade-out, painting a scroll bar
+                        // on EVERY dialog for the first ~1s even for short
+                        // text. AlwaysOff unsets visible instead, hiding the
+                        // bar instantly. The 1px tolerance absorbs fractional
+                        // text metrics (HiDPI scaling, rich text), which can
+                        // leave contentHeight above height by a sub-pixel and
+                        // would otherwise pin a full-size bar permanently.
+                        policy: descriptionFlickable.contentHeight > descriptionFlickable.height + 1
                                 ? Qml.ScrollBar.AlwaysOn
-                                : Qml.ScrollBar.AsNeeded
+                                : Qml.ScrollBar.AlwaysOff
                     }
 
                     TextLoader {
