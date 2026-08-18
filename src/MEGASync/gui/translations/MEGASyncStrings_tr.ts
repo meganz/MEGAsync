@@ -5457,7 +5457,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>First name</source>
         <translatorcomment>First name text input title CON-466</translatorcomment>
-        <translation>Adı</translation>
+        <translation>Ad</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -5502,7 +5502,7 @@ Farklı bir ad girin.</translation>
     <message>
         <source>Last name</source>
         <translatorcomment>Last name text input title CON-466</translatorcomment>
-        <translation>Soyadı</translation>
+        <translation>Soyad</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
@@ -6046,15 +6046,15 @@ Farklı bir ad girin.</translation>
     <name>Preferences</name>
     <message>
         <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
+- Improved the install and update process with better cleanup of outdated components.
 - UI fixes and adjustments across sync, backup, and transfer dialogs.
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Askıda kalan sorunlar ve ad çakışmalar daha net bir şekilde ele alınıyor.
-- Kurulumlar ve güncellemeler artık önceki sürümlerden kalan dosyaları kaldırıyor.
-- Senkronizasyon, yedekleme ve aktarım diyaloglarındaki arayüz düzeltmeleri ve ayarlamaları.
-- Hata düzeltmeleri ve performans iyileştirmeleri.</translation>
+        <translation>- Clearer handling of stalled issues and name conflicts.
+- Improved the install and update process with better cleanup of outdated components.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

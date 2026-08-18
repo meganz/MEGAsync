@@ -6370,15 +6370,15 @@ Wprowadź inną nazwę.</translation>
     <name>Preferences</name>
     <message>
         <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
+- Improved the install and update process with better cleanup of outdated components.
 - UI fixes and adjustments across sync, backup, and transfer dialogs.
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Bardziej przejrzyste zarządzanie zaległymi problemami i konfliktami nazw.
-- Instalacje i aktualizacje teraz usuwają pliki pozostawione przez poprzednie wersje.
-- Poprawki interfejsu użytkownika i dostosowania w oknach synchronizacji, kopii zapasowej i transferu.
-- Poprawki błędów i ulepszenia wydajności.</translation>
+        <translation>- Clearer handling of stalled issues and name conflicts.
+- Improved the install and update process with better cleanup of outdated components.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

@@ -5974,12 +5974,15 @@ Enter a different name</source>
     <name>Preferences</name>
     <message>
         <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
+- Improved the install and update process with better cleanup of outdated components.
 - UI fixes and adjustments across sync, backup, and transfer dialogs.
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Clearer handling of stalled issues and name conflicts.
+- Improved the install and update process with better cleanup of outdated components.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.
@@ -10002,7 +10005,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 after tax</source>
         <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
-        <translation>含稅%1</translation>
+        <translation>%1含稅</translation>
     </message>
     <message>
         <source>%1 storage</source>

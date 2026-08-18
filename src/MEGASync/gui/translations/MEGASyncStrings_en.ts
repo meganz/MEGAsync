@@ -3063,7 +3063,7 @@ Wait for the upload to complete.</translation>
     <message>
         <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
         <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Do you want to upload “%1″ to MEGA?</translation>
     </message>
     <message numerus="yes">
         <source>Do you want to upload %n file to MEGA?</source>
@@ -6292,13 +6292,13 @@ Enter a different name.</translation>
     <name>Preferences</name>
     <message>
         <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
+- Improved the install and update process with better cleanup of outdated components.
 - UI fixes and adjustments across sync, backup, and transfer dialogs.
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
         <translation>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
+- Improved the install and update process with better cleanup of outdated components.
 - UI fixes and adjustments across sync, backup, and transfer dialogs.
 - Bug fixes and performance improvements.</translation>
     </message>
