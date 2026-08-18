@@ -27,7 +27,6 @@ private slots:
     void onTimeout();
 
 private:
-    TimeInterval mLastTimeInterval;
     int64_t mExpirationTimeSecs;
     bool mStopped;
 

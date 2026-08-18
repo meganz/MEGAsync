@@ -279,25 +279,27 @@ void NotificationItem::updateExpirationText()
 
 bool NotificationItem::updateExpiredTimeAndClicks(int64_t remainingTimeSecs)
 {
-    bool updated = false;
-    if (remainingTimeSecs <= 1)
+    if (remainingTimeSecs > 1)
     {
-        if (remainingTimeSecs == 1)
-        {
-            mUi->lTime->setText(tr("Offer expired"));
-            mUi->bCTA->setEnabled(false);
-            this->setCursor(Qt::ArrowCursor);
-            this->setAttribute(Qt::WA_TransparentForMouseEvents);
-        }
-        else if (remainingTimeSecs == -NUM_SECS_TO_WAIT_BEFORE_REMOVE)
-        {
-            mExpirationTimer.stopExpirationTime();
-            if (mNotificationData)
-            {
-                mNotificationData->markAsExpired();
-            }
-        }
-        updated = true;
+        return false;
     }
-    return updated;
+
+    // The clock can jump over the exact expiration second (system time change,
+    // resume from sleep), so the expired state is applied for any past instant
+    // instead of only for the exact one.
+    mUi->lTime->setText(tr("Offer expired"));
+    mUi->bCTA->setEnabled(false);
+    this->setCursor(Qt::ArrowCursor);
+    this->setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    if (remainingTimeSecs <= -NUM_SECS_TO_WAIT_BEFORE_REMOVE)
+    {
+        mExpirationTimer.stopExpirationTime();
+        if (mNotificationData)
+        {
+            mNotificationData->markAsExpired();
+        }
+    }
+
+    return true;
 }
