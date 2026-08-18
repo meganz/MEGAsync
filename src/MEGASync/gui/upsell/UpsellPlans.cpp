@@ -356,9 +356,8 @@ long UpsellPlans::Data::calculateYearlyDiscount() const
             const auto priceFor12Months = mMonthlyData.priceBeforeTax() * NUM_MONTHS_PER_PLAN;
             if (yearlyPrice < priceFor12Months)
             {
-                yearlyDiscountP = std::lround(
-                    PERCENTAGE -
-                    Utilities::softCeil((yearlyPriceWithInstDisc * PERCENTAGE) / priceFor12Months));
+                yearlyDiscountP = std::lround(PERCENTAGE - (yearlyPriceWithInstDisc * PERCENTAGE) /
+                                                               priceFor12Months);
             }
         }
     }
