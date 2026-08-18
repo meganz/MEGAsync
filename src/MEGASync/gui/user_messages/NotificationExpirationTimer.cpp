@@ -29,7 +29,11 @@ void NotificationExpirationTimer::startExpirationTime(int64_t expirationTimeSecs
     stop();
     mExpirationTimeSecs = expirationTimeSecs;
     mStopped = false;
-    onTimeout();
+
+    // Only schedule the next update. The current remaining time is not reported
+    // here because the caller displays it itself when it arms the countdown, and
+    // reporting it would repeat the expiration handling on every re-arm.
+    singleShot(getRemainingTime());
 }
 
 void NotificationExpirationTimer::stopExpirationTime()
@@ -81,5 +85,14 @@ void NotificationExpirationTimer::onTimeout()
 
     int64_t remainingTimeSecs = getRemainingTime();
     emit expired(static_cast<int>(remainingTimeSecs));
+
+    // A receiver may have stopped the countdown while handling the expiration, in
+    // which case the timer must not be armed again: it repeats, so it would keep
+    // waking up every second only to return here.
+    if (mStopped)
+    {
+        return;
+    }
+
     singleShot(remainingTimeSecs);
 }

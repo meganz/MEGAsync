@@ -52,6 +52,7 @@ private:
     void setImage();
     void setIcon();
     void updateExpirationText();
+    void updateExpirationText(int64_t remainingTimeSecs);
     bool updateExpiredTimeAndClicks(int64_t remainingTimeSecs);
 
 };

@@ -398,7 +398,13 @@ void UserMessageModel::onUiUpdated()
     if (userMessage)
     {
         const auto row = static_cast<int>(mUserMessages.indexOf(userMessage));
-        emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+
+        // A user message can ask for a refresh after being removed from the model,
+        // i.e. an expired notification that is still displayed by its widget.
+        if (row >= 0)
+        {
+            emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+        }
     }
 }
 

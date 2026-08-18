@@ -125,6 +125,22 @@ void NotificationItem::onCTAClicked()
 
 void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
 {
+    updateExpirationText(remainingTimeSecs);
+
+    // UserMessageDelegate renders this widget off screen to paint the row, so
+    // repainting the label is not enough: the model has to invalidate the row for
+    // the new remaining time to reach the notifications tab. Without this, the
+    // countdown only moves while the row is hovered, as a hovered row is turned
+    // into an editor and an editor widget does paint itself.
+    // The notification is gone when it has just been removed for being expired.
+    if (mNotificationData)
+    {
+        mNotificationData->updated();
+    }
+}
+
+void NotificationItem::updateExpirationText(int64_t remainingTimeSecs)
+{
     // It is required to display this text and disable clicks
     // after the expiration time.
     if(updateExpiredTimeAndClicks(remainingTimeSecs))
@@ -219,10 +235,6 @@ void NotificationItem::updateNotificationData(UserNotification* newNotificationD
             &NotificationItem::onUserNotificationDestroyed);
 
     updateNotificationData(imageHasChanged, iconHasChanged);
-
-    // Since the notifications can be reused,
-    // we need to reset the expiration time color
-    updateExpirationText();
 }
 
 void NotificationItem::updateNotificationData(bool downloadImage, bool downloadIcon)
@@ -253,6 +265,9 @@ void NotificationItem::updateNotificationData(bool downloadImage, bool downloadI
         setIcon();
     }
 
+    // Arming the countdown only schedules the next update, so the remaining time
+    // has to be displayed here. Since notifications can be reused, this also
+    // resets the expiration text and the clickable state of a recycled widget.
     mExpirationTimer.startExpirationTime(mNotificationData->getEnd());
     updateExpirationText();
 }
@@ -283,7 +298,7 @@ void NotificationItem::setIcon()
 
 void NotificationItem::updateExpirationText()
 {
-    onTimerExpirated(mExpirationTimer.getRemainingTime());
+    updateExpirationText(mExpirationTimer.getRemainingTime());
 }
 
 bool NotificationItem::updateExpiredTimeAndClicks(int64_t remainingTimeSecs)

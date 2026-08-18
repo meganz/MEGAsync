@@ -15,10 +15,6 @@
 /**
  * Tests for the widget that renders a notification with an end timestamp
  * (i.e. a discount offer) in the InfoDialog notifications tab.
- *
- * Test cases tagged [!shouldfail] describe the expected behaviour of a bug that
- * is not fixed yet: Catch2 reports them as passing while they fail, and as
- * failing once the behaviour is correct (i.e. remove the tag with the fix).
  */
 
 namespace
@@ -211,14 +207,11 @@ TEST_CASE_METHOD(NotificationItemTests,
 
 TEST_CASE_METHOD(NotificationItemTests,
                  "An offer that ended a while ago shows it is expired and is dropped",
-                 "[notification-item][!shouldfail]")
+                 "[notification-item]")
 {
-    // Still failing: setData() evaluates the expiration three times in a row
-    // (startExpirationTime() ticks once, then updateExpirationText() is called by
-    // both updateNotificationData() overloads), so the removal is requested three
-    // times. It goes unnoticed in the app only because UserMessageModel::onExpired()
-    // deletes the notification during the first emission, which leaves the widget
-    // with a null QPointer that swallows the other two.
+    // The removal has to be requested exactly once: UserMessageModel::onExpired()
+    // deletes the notification, so asking twice means deleting an already deleted
+    // notification if anything ever keeps it alive between both requests.
     auto notification = createNotificationEndingIn(-30);
 
     // UserMessageModel removes the notification when it reports itself expired.
@@ -240,14 +233,14 @@ TEST_CASE_METHOD(NotificationItemTests,
 
 TEST_CASE_METHOD(NotificationItemTests,
                  "A running countdown asks the model to refresh the row",
-                 "[notification-item][!shouldfail]")
+                 "[notification-item]")
 {
-    // Still failing: the delegate renders this widget off screen into the view, so
-    // repainting a label is not enough to update the notifications tab, the row has
-    // to be invalidated. UserMessage::updated() is the hook for that, it ends up in
-    // UserMessageModel::onUiUpdated() which emits dataChanged() for the row, but
-    // nothing calls it. That is why the countdown only moves under the mouse: a
-    // hovered row is edited, and an editor widget does paint itself.
+    // The delegate renders this widget off screen into the view, so repainting a
+    // label is not enough to update the notifications tab, the row has to be
+    // invalidated. UserMessage::updated() is the hook for that, it ends up in
+    // UserMessageModel::onUiUpdated() which emits dataChanged() for the row.
+    // Without it the countdown would only move under the mouse, as a hovered row
+    // is turned into an editor and an editor widget does paint itself.
     auto notification = createNotificationEndingIn(90);
 
     int uiUpdatedCount = 0;
