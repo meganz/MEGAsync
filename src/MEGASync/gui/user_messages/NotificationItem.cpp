@@ -1,5 +1,6 @@
 #include "NotificationItem.h"
 
+#include "ApiImageLabel.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "StatsEventHandler.h"
@@ -26,6 +27,18 @@ NotificationItem::NotificationItem(QWidget* parent):
     TokenParserWidgetManager::instance()->applyCurrentTheme(this);
     this->style()->unpolish(this);
     this->style()->polish(this);
+
+    // The images are downloaded, so they are not available yet when the row is
+    // first painted. They reach the notifications tab only once the row is
+    // invalidated, just like the remaining time of an offer.
+    connect(mUi->lImageLarge,
+            &ApiImageLabel::imageReady,
+            this,
+            &NotificationItem::requestRowRefresh);
+    connect(mUi->lImageSmall,
+            &ApiImageLabel::imageReady,
+            this,
+            &NotificationItem::requestRowRefresh);
 }
 
 NotificationItem::~NotificationItem()
@@ -126,12 +139,16 @@ void NotificationItem::onCTAClicked()
 void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
 {
     updateExpirationText(remainingTimeSecs);
+    requestRowRefresh();
+}
 
+void NotificationItem::requestRowRefresh()
+{
     // UserMessageDelegate renders this widget off screen to paint the row, so
-    // repainting the label is not enough: the model has to invalidate the row for
-    // the new remaining time to reach the notifications tab. Without this, the
-    // countdown only moves while the row is hovered, as a hovered row is turned
-    // into an editor and an editor widget does paint itself.
+    // repainting a child is not enough: the model has to invalidate the row for the
+    // change to reach the notifications tab. Without this, the countdown only moves
+    // while the row is hovered, as a hovered row is turned into an editor and an
+    // editor widget does paint itself.
     // The notification is gone when it has just been removed for being expired.
     if (mNotificationData)
     {

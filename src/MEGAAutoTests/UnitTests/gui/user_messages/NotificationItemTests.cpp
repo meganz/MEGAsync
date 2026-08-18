@@ -1,3 +1,4 @@
+#include "ApiImageLabel.h"
 #include "megaapi.h"
 #include "NotificationItem.h"
 #include "UserNotification.h"
@@ -261,4 +262,34 @@ TEST_CASE_METHOD(NotificationItemTests,
 
     CHECK(timeText() != textOnArming);
     CHECK(uiUpdatedCount >= 1);
+}
+
+TEST_CASE_METHOD(NotificationItemTests,
+                 "A downloaded image asks the model to refresh the row",
+                 "[notification-item]")
+{
+    // Images are downloaded, so they are not there yet when the row is first
+    // painted and the row has to be invalidated once they arrive.
+    auto notification = createNotificationEndingIn(90);
+
+    int uiUpdatedCount = 0;
+    QObject::connect(notification.get(),
+                     &UserMessage::uiUpdated,
+                     &mItem,
+                     [&uiUpdatedCount]()
+                     {
+                         ++uiUpdatedCount;
+                     });
+
+    mItem.setData(notification.get());
+
+    // Displaying the data must not ask for a refresh: setData() runs while the
+    // delegate is painting the row, so the model must not be touched from there.
+    REQUIRE(uiUpdatedCount == 0);
+
+    auto* image = mItem.findChild<ApiImageLabel*>(QLatin1String("lImageLarge"));
+    REQUIRE(image != nullptr);
+    emit image->imageReady(true);
+
+    CHECK(uiUpdatedCount == 1);
 }
