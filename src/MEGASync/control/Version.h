@@ -39,7 +39,7 @@
 //)
 #define VER_CHANGES_NOTES QT_TRANSLATE_NOOP("Preferences",                                         \
 "- Clearer handling of stalled issues and name conflicts.\n"                                       \
-"- Installs and updates now remove files left over from previous versions.\n"                      \
+"- Improved the install and update process with better cleanup of outdated components.\n"          \
 "- UI fixes and adjustments across sync, backup, and transfer dialogs.\n"                          \
 "- Bug fixes and performance improvements.\n"                                                      \
 )
