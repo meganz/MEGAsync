@@ -19,10 +19,6 @@
  *
  * Arming is synchronous (startExpirationTime() calls onTimeout() itself), so
  * these tests read interval()/isActive() straight away and need no event loop.
- *
- * Test cases tagged [!shouldfail] describe the expected behaviour of a bug that
- * is not fixed yet: Catch2 reports them as passing while they fail, and as
- * failing once the behaviour is correct (i.e. remove the tag with the fix).
  */
 
 namespace
@@ -50,8 +46,8 @@ int64_t deadlineIn(int64_t secs)
 
 void checkIntervalIs(const NotificationExpirationTimer& timer, int64_t expectedSecs)
 {
-    // An inactive timer means the countdown has been dropped and will never
-    // update again, which is the failure mode of several cases below.
+    // An inactive timer means the countdown has been dropped and the displayed
+    // text will never be updated again.
     REQUIRE(timer.isActive());
 
     const int64_t expectedMSecs = expectedSecs * MSEC_IN_1_SEC;
@@ -141,8 +137,7 @@ TEST_CASE("Stopping the countdown deactivates the timer", "[notification-timer]"
     CHECK(timer.isActive());
 }
 
-TEST_CASE("Re-arming the same expiration timestamp keeps the same schedule",
-          "[notification-timer][!shouldfail]")
+TEST_CASE("Re-arming the same expiration timestamp keeps the same schedule", "[notification-timer]")
 {
     // NotificationItem re-arms the countdown from updateNotificationData(), which
     // runs every time the delegate hands the widget its data again (navigating to
@@ -164,15 +159,15 @@ TEST_CASE("Re-arming the same expiration timestamp keeps the same schedule",
 }
 
 TEST_CASE("After a change of day, the countdown wakes up at the next change of day",
-          "[notification-timer][!shouldfail]")
+          "[notification-timer]")
 {
     alignToSecondStart();
 
     NotificationExpirationTimer timer;
 
-    // Arm with 5 days 3 hours left, so the timer remembers that interval...
+    // Arm with 5 days 3 hours left...
     timer.startExpirationTime(deadlineIn(5 * SECS_IN_1_DAY + 3 * SECS_IN_1_HOUR));
-    // ... then re-arm just after the change of day, as the running timer does.
+    // ... then re-arm just after the change of day, as the running countdown does.
     timer.startExpirationTime(
         deadlineIn(4 * SECS_IN_1_DAY + 23 * SECS_IN_1_HOUR + 59 * SECS_IN_1_MIN + 30));
 
@@ -181,7 +176,7 @@ TEST_CASE("After a change of day, the countdown wakes up at the next change of d
 }
 
 TEST_CASE("The countdown stays armed when the remaining time is an exact number of hours",
-          "[notification-timer][!shouldfail]")
+          "[notification-timer]")
 {
     alignToSecondStart();
 
@@ -193,7 +188,7 @@ TEST_CASE("The countdown stays armed when the remaining time is an exact number 
 }
 
 TEST_CASE("The countdown stays armed when the remaining time is an exact number of days",
-          "[notification-timer][!shouldfail]")
+          "[notification-timer]")
 {
     alignToSecondStart();
 
@@ -205,10 +200,10 @@ TEST_CASE("The countdown stays armed when the remaining time is an exact number 
 }
 
 TEST_CASE("A countdown longer than 24 days is scheduled with a sane interval",
-          "[notification-timer][!shouldfail]")
+          "[notification-timer]")
 {
-    // The interval is computed in seconds and multiplied by 1000 as an int, so
-    // anything above ~24.8 days does not fit.
+    // QTimer takes its interval in milliseconds as an int, which caps it at
+    // ~24.8 days: a long offer must never be scheduled beyond that.
     alignToSecondStart();
 
     NotificationExpirationTimer timer;
