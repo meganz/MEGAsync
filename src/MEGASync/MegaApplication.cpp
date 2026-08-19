@@ -5159,7 +5159,7 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
         mDiscountStateMachine->isInCooldownState())
     {
         auto dialogInfo(DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>());
-        if (dialogInfo)
+        if (dialogInfo && dialogInfo->getDialog() && dialogInfo->getDialog()->wrapper())
         {
             dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
         }
