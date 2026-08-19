@@ -1324,7 +1324,9 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     {
         int64_t ts = list->get(it);
         QDateTime date = QDateTime::fromMSecsSinceEpoch(ts * 1000l);
-        readableTimes.append(QLocale().toString(date.date(), QLocale::LongFormat));
+        // Use the in-app language, not the system locale (SNC-6853)
+        const QLocale locale(MegaSyncApp->getCurrentLanguageCode());
+        readableTimes.append(locale.toString(date.date(), QLocale::LongFormat));
 
         if (it != list->size() - 1)
         {
