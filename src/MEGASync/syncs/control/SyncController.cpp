@@ -6,7 +6,9 @@
 #include "MyBackupsHandle.h"
 #include "Platform.h"
 #include "RequestListenerManager.h"
+#include "SyncControllerInternal.h"
 
+#include <QScopeGuard>
 #include <QStorageInfo>
 #include <QTemporaryFile>
 
@@ -531,6 +533,156 @@ void SyncController::resetSync(std::shared_ptr<SyncSettings> syncSetting,
         },
         syncSetting->backupId(),
         initialState);
+}
+
+namespace SyncControllerInternal
+{
+
+ScopedBackupIdGuard::ScopedBackupIdGuard(QSet<mega::MegaHandle>& set, mega::MegaHandle id):
+    mSet(set),
+    mId(id)
+{
+    mSet.insert(mId);
+}
+
+ScopedBackupIdGuard::~ScopedBackupIdGuard()
+{
+    mSet.remove(mId);
+}
+
+bool isAlreadyStoppedState(mega::MegaSync::SyncRunningState runState)
+{
+    return runState == mega::MegaSync::RUNSTATE_SUSPENDED ||
+           runState == mega::MegaSync::RUNSTATE_DISABLED;
+}
+
+PauseRunAndResumeOutcome pauseRunAndResumeCore(const std::shared_ptr<SyncSettings>& syncSetting,
+                                               const std::function<void()>& duringPause,
+                                               QSet<mega::MegaHandle>& inProgress,
+                                               const SetSyncRunStateRequest& request)
+{
+    if (!syncSetting)
+    {
+        return PauseRunAndResumeOutcome::NullSync;
+    }
+
+    if (inProgress.contains(syncSetting->backupId()))
+    {
+        // A previous call for this same sync is still waiting on the SDK (this call is a
+        // nested QEventLoop away, so a reentrant click can reach here). Running the
+        // mutation again now would race the one already in flight.
+        return PauseRunAndResumeOutcome::Reentrant;
+    }
+    ScopedBackupIdGuard inProgressGuard(inProgress, syncSetting->backupId());
+
+    if (isAlreadyStoppedState(
+            static_cast<mega::MegaSync::SyncRunningState>(syncSetting->getRunState())))
+    {
+        // Already stopped by the user: nothing can be actively scanning the folder, so
+        // there's no need to force a state change - just run the mutation directly. The
+        // SDK will regenerate .megaignore whenever this sync is next resumed. PENDING and
+        // LOADING are deliberately not included here: both are on their way to RUNNING on
+        // their own, so they need the same protection as an already-running sync.
+        if (duringPause)
+        {
+            duringPause();
+        }
+        return PauseRunAndResumeOutcome::AlreadyStopped;
+    }
+
+    // Both calls block (via a nested QEventLoop, inside the real request implementation)
+    // until the sync has actually finished transitioning, so duringPause() is guaranteed
+    // to run only while it is suspended.
+    const auto suspendError = request(syncSetting->backupId(), mega::MegaSync::RUNSTATE_SUSPENDED);
+    if (suspendError && suspendError->getErrorCode() != mega::MegaError::API_OK)
+    {
+        return PauseRunAndResumeOutcome::SuspendFailed;
+    }
+
+    if (duringPause)
+    {
+        duringPause();
+    }
+
+    const auto resumeError = request(syncSetting->backupId(), mega::MegaSync::RUNSTATE_RUNNING);
+    if (resumeError && resumeError->getErrorCode() != mega::MegaError::API_OK)
+    {
+        return PauseRunAndResumeOutcome::ResumeFailed;
+    }
+
+    return PauseRunAndResumeOutcome::Completed;
+}
+
+} // namespace SyncControllerInternal
+
+void SyncController::pauseRunAndResume(std::shared_ptr<SyncSettings> syncSetting,
+                                       std::function<void()> duringPause)
+{
+    using namespace SyncControllerInternal;
+
+    const SetSyncRunStateRequest request =
+        [](mega::MegaHandle backupId, MegaSync::SyncRunningState state)
+    {
+        return MegaApiSynchronizedRequest::runRequestWithResult(&mega::MegaApi::setSyncRunState,
+                                                                MegaSyncApp->getMegaApi(),
+                                                                nullptr,
+                                                                backupId,
+                                                                state);
+    };
+
+    syncOperationBegins();
+    // Runs even if pauseRunAndResumeCore() (specifically duringPause(), which runs
+    // arbitrary caller-supplied code) throws, so the operation accounting stays
+    // balanced either way.
+    const auto endOperationOnExit = qScopeGuard(
+        [this]()
+        {
+            syncOperationEnds();
+        });
+
+    const auto outcome =
+        pauseRunAndResumeCore(syncSetting, duringPause, mPauseRunAndResumeInProgress, request);
+
+    switch (outcome)
+    {
+        case PauseRunAndResumeOutcome::NullSync:
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_ERROR,
+                QString::fromUtf8("Trying to pause and resume a null sync").toUtf8().constData());
+            break;
+
+        case PauseRunAndResumeOutcome::Reentrant:
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                         QString::fromUtf8("Ignoring reentrant pause/resume for sync (%1) \"%2\"")
+                             .arg(getSyncTypeString(syncSetting->getType()), syncSetting->name())
+                             .toUtf8()
+                             .constData());
+            break;
+
+        case PauseRunAndResumeOutcome::AlreadyStopped:
+        case PauseRunAndResumeOutcome::Completed:
+            break;
+
+        case PauseRunAndResumeOutcome::SuspendFailed:
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_ERROR,
+                QString::fromUtf8("Failed to pause sync (%1) \"%2\" for a local-only change")
+                    .arg(getSyncTypeString(syncSetting->getType()), syncSetting->name())
+                    .toUtf8()
+                    .constData());
+            emit signalSyncOperationError(syncSetting);
+            break;
+
+        case PauseRunAndResumeOutcome::ResumeFailed:
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_ERROR,
+                QString::fromUtf8("Failed to resume sync (%1) \"%2\" after a local-only change")
+                    .arg(getSyncTypeString(syncSetting->getType()), syncSetting->name())
+                    .toUtf8()
+                    .constData());
+            emit signalSyncOperationError(syncSetting);
+            break;
+    }
 }
 
 void SyncController::updateSyncSettings(const MegaError& e, std::shared_ptr<SyncSettings> syncSetting)
