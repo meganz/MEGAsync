@@ -40,6 +40,7 @@ set(UNIT_TEST_FILES
     control/UtilitiesTests.cpp
     platform/PlatformTests.cpp
     syncs/control/MegaIgnoreManagerTests.cpp
+    syncs/control/SyncControllerTests.cpp
 )
 
 if(USE_BREAKPAD)

@@ -2,10 +2,13 @@
 
 #include "MessageDialogOpener.h"
 #include "Preferences.h"
+#include "SyncController.h"
 
+#include <QPointer>
 #include <QQmlEngine>
 
 #include <cmath>
+#include <utility>
 
 using namespace mega;
 
@@ -13,12 +16,15 @@ bool isEqual(double a, double b, double epsilon = 1e-2) {
     return fabs(a - b) < epsilon;
 }
 
-SyncExclusions::SyncExclusions(QWidget *parent, const QString& path)
-    : QMLComponent(parent)
-    , mMinimumAllowedSize(0)
-    , mMaximumAllowedSize(0)
-    , mMegaIgnoreManager(std::make_shared<MegaIgnoreManager>())
-    , mRulesModel(new ExclusionRulesModel(this, mMegaIgnoreManager))
+SyncExclusions::SyncExclusions(QWidget* parent,
+                               const QString& path,
+                               std::shared_ptr<SyncSettings> syncSetting):
+    QMLComponent(parent),
+    mMinimumAllowedSize(0),
+    mMaximumAllowedSize(0),
+    mMegaIgnoreManager(std::make_shared<MegaIgnoreManager>()),
+    mRulesModel(new ExclusionRulesModel(this, mMegaIgnoreManager)),
+    mSyncSetting(std::move(syncSetting))
 {
     qmlRegisterModule("SyncExclusions", 1, 0);
 
@@ -246,7 +252,27 @@ void SyncExclusions::setFolder(const QString& folderName)
 
 void SyncExclusions::restoreDefaults()
 {
-    mMegaIgnoreManager->restoreDefaults();
+    // Captured by value (not [this]) because pauseRunAndResume() blocks on a nested event
+    // loop, during which this dialog could be closed and destroyed.
+    auto megaIgnoreManager = mMegaIgnoreManager;
+
+    if (!megaIgnoreManager->hasDefaultFile() && mSyncSetting)
+    {
+        // There's no .megaignore.default to copy from, so restoreDefaults() below will
+        // remove .megaignore instead and rely on the SDK to regenerate it. Pause the sync
+        // first so it can't see the folder with .megaignore momentarily missing and start
+        // syncing files that should stay excluded; resume afterwards so the SDK's
+        // transition into RUNSTATE_RUNNING actually regenerates the file.
+        SyncController::instance().pauseRunAndResume(mSyncSetting,
+                                                     [megaIgnoreManager]()
+                                                     {
+                                                         megaIgnoreManager->restoreDefaults();
+                                                     });
+    }
+    else
+    {
+        megaIgnoreManager->restoreDefaults();
+    }
 }
 
 bool SyncExclusions::isDefault() const
