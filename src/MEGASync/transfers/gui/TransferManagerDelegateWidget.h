@@ -49,13 +49,17 @@ private:
     void setType() override;
     void setFileType(const QString& fileName);
     void adjustFileName();
-    void adjustRetryText();
+    int failedContentWidth() const;
+    void adjustFailedStatus();
+    void adjustFailedReason(int available);
 
     bool setCancelClearTransferIcon(const QString &name);
     bool setPauseResumeTransferIcon(const QString &name);
 
     Ui::TransferManagerDelegateWidget *mUi;
     QString mPauseResumeTransferDefaultIconName;
+    // Unelided failure reason, so a resize never elides an already elided text
+    QString mFailedReason;
     QPointer<TransferWidgetColumnsManager> mColumnManager;
 };
 
