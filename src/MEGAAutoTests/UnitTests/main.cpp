@@ -32,6 +32,12 @@ int main(int argc, char* argv[])
 {
     qInstallMessageHandler(qtSilencedHandler);
 
+    // ScaleFactorManager (and other production code exercised by the tests)
+    // dereferences Platform::getInstance(), which asserts unless the singleton
+    // has been created. The real app does this in its own main(); mirror it
+    // here so tests don't abort.
+    Platform::create();
+
     MegaApplication app(argc, argv);
 
     trompeloeil::set_reporter(
@@ -56,5 +62,9 @@ int main(int argc, char* argv[])
     // What makes Test Results tab active in Qt Creator / Linux
     // is a QTest::exec() call. And only its results are considered..
 
-    return std::min(Catch::Session().run(argc, argv), 0xff);
+    const int result = std::min(Catch::Session().run(argc, argv), 0xff);
+
+    Platform::destroy();
+
+    return result;
 }

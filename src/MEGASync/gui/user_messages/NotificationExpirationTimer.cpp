@@ -14,6 +14,13 @@ NotificationExpirationTimer::NotificationExpirationTimer(QObject* parent):
     mExpirationTimeSecs(0),
     mStopped(false)
 {
+    // A coarse timer may wake up to 5% early. As the interval is a whole number
+    // of seconds, an early tick can land in the same wall-clock second it was
+    // armed in, so getRemainingTime() returns the same value and the countdown
+    // re-arms for another full second instead of advancing: it drifts one second
+    // behind and never reaches expiration on time. A precise timer never fires
+    // early, so each tick lands in the intended second.
+    setTimerType(Qt::PreciseTimer);
     connect(this, &QTimer::timeout, this, &NotificationExpirationTimer::onTimeout);
 }
 

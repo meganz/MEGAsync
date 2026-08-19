@@ -5,6 +5,8 @@
 #include <QDateTime>
 #include <QThread>
 
+#include <ctime>
+
 /**
  * Tests for the countdown shown by a notification with an end timestamp
  * (i.e. a discount offer) in the InfoDialog notifications tab.
@@ -43,6 +45,53 @@ int64_t deadlineIn(int64_t secs)
 {
     return QDateTime::currentSecsSinceEpoch() + secs;
 }
+
+// Changes the timezone of the process and puts the previous one back on
+// destruction, so a failing check cannot leak it into the rest of the suite.
+class ScopedTimeZone
+{
+public:
+    explicit ScopedTimeZone(const char* zone):
+        mHadTimeZone(qEnvironmentVariableIsSet("TZ")),
+        mPreviousTimeZone(qgetenv("TZ"))
+    {
+        set(zone);
+    }
+
+    ~ScopedTimeZone()
+    {
+        if (mHadTimeZone)
+        {
+            qputenv("TZ", mPreviousTimeZone);
+        }
+        else
+        {
+            qunsetenv("TZ");
+        }
+
+        apply();
+    }
+
+    void set(const char* zone)
+    {
+        qputenv("TZ", zone);
+        apply();
+    }
+
+private:
+    // The C library caches the zone, and local time is read through it.
+    static void apply()
+    {
+#ifdef Q_OS_WIN
+        _tzset();
+#else
+        tzset();
+#endif
+    }
+
+    bool mHadTimeZone;
+    QByteArray mPreviousTimeZone;
+};
 
 void checkIntervalIs(const NotificationExpirationTimer& timer, int64_t expectedSecs)
 {
@@ -85,6 +134,38 @@ TEST_CASE("The remaining time is derived from the absolute expiration timestamp"
     // target is absolute, so only its scheduling can be wrong.
     timer.startExpirationTime(end);
     CHECK(timer.getRemainingTime() == 90);
+}
+
+TEST_CASE("The remaining time does not depend on the system timezone", "[notification-timer]")
+{
+    // The countdown is the distance between two absolute instants, so a timezone
+    // only decides how each of them would be written down, never how far apart
+    // they are: two users looking at the same offer at the same moment have the
+    // same time left. Any attempt to "adjust" this with local time (toLocalTime(),
+    // offsetFromUtc(), QTimeZone) shifts one end of the subtraction and breaks it.
+    alignToSecondStart();
+
+    ScopedTimeZone timeZone("UTC");
+
+    NotificationExpirationTimer timer;
+    const int64_t end = deadlineIn(5 * SECS_IN_1_HOUR + 30 * SECS_IN_1_MIN);
+
+    timer.startExpirationTime(end);
+    const int64_t remainingInUtc = timer.getRemainingTime();
+    const int intervalInUtc = timer.interval();
+
+    // Whole hours either side, an offset that is not a whole number of hours, and
+    // one that puts the deadline on another calendar day.
+    for (const char* otherZone:
+         {"Europe/Madrid", "America/Los_Angeles", "Asia/Kathmandu", "Pacific/Auckland"})
+    {
+        timeZone.set(otherZone);
+        timer.startExpirationTime(end);
+
+        CAPTURE(otherZone);
+        CHECK(timer.getRemainingTime() == remainingInUtc);
+        CHECK(timer.interval() == intervalInUtc);
+    }
 }
 
 TEST_CASE("Under one hour left, the countdown updates every second", "[notification-timer]")
