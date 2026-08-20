@@ -591,7 +591,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Chính Sách Quyền Riêng Tư</translation>
+        <translation>Chính&#xa0;Sách Quyền Riêng&#xa0;Tư</translation>
     </message>
     <message>
         <source>Terms of Service</source>
@@ -1827,6 +1827,13 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
+    <message numerus="yes">
+        <source>%n result</source>
+        <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>%n kết&#xa0;quả</numerusform>
+        </translation>
+    </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
@@ -2361,7 +2368,7 @@ Kiểm&#xa0;tra hộp thư email của bạn để xem hướng&#xa0;dẫn mở 
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation>Quý khách cần hành động ngay để lưu giữ dữ liệu của mình</translation>
+        <translation>Quý&#xa0;khách cần hành&#xa0;động ngay để lưu giữ dữ&#xa0;liệu của&#xa0;mình</translation>
     </message>
     <message>
         <source>You&apos;re running out of storage space.</source>
@@ -2990,6 +2997,16 @@ Hãy chờ cho phiên tải lên được hoàn&#xa0;tất.</translation>
         <translation>Tài khoản đã bị vô hiệu hóa</translation>
     </message>
     <message>
+        <source>An update has been installed. The MEGA Desktop App will restart automatically in a few minutes to finish applying it</source>
+        <translatorcomment>Desktop notification shown after instaling an auto-update if there are transfers running. SNC-6717</translatorcomment>
+        <translation>Bản cập&#xa0;nhật đã được cài&#xa0;đặt. Ứng&#xa0;dụng MEGA cho Máy&#xa0;Tính sẽ tự&#xa0;động khởi&#xa0;động lại sau vài phút để hoàn&#xa0;tất việc áp&#xa0;dụng bản cập&#xa0;nhật</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. SNC-6678</translatorcomment>
+        <translation>Hủy</translation>
+    </message>
+    <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
         <translation>Đang tìm bản cập nhật mới…</translation>
@@ -3013,6 +3030,18 @@ Hãy chờ cho phiên tải lên được hoàn&#xa0;tất.</translation>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>Đã đọc</translation>
+    </message>
+    <message>
+        <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>Bạn có muốn tải “%1” lên MEGA không?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you want to upload %n file to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>
+            <numerusform>Bạn có muốn tải %n tệp lên MEGA không?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Don’t show me again</source>
@@ -3068,6 +3097,11 @@ Hãy chờ cho phiên tải lên được hoàn&#xa0;tất.</translation>
         <source>Folder download error</source>
         <translatorcomment>Title of the error message when there is an error downloading a MEGA link. SNC-2549.</translatorcomment>
         <translation>Lỗi khi tải&#xa0;xuống thư&#xa0;mục</translation>
+    </message>
+    <message>
+        <source>Import from another cloud</source>
+        <translatorcomment>Menu action to open the cloud-to-MEGA migration tool. SNC-6703</translatorcomment>
+        <translation>Nhập từ một dịch&#xa0;vụ đám&#xa0;mây khác</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -3348,6 +3382,11 @@ https://mega.co.nz/#sync</source>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Tải lên</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translatorcomment>Title shown at dialog when the user is trying to upload a file to MEGA from Finder explorer context menu option.SNC-6678.</translatorcomment>
+        <translation>Tải lên MEGA</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -3659,7 +3698,7 @@ https://mega.co.nz/#sync</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
         <translation>Tài&#xa0;khoản MEGA của quý&#xa0;vị đã bị đình&#xa0;chỉ do đã nhiều lần bị cáo&#xa0;buộc vi&#xa0;phạm bản&#xa0;quyền. Điều này có nghĩa là quý&#xa0;vị không được phép truy&#xa0;cập tài&#xa0;khoản của mình hoặc bất cứ dữ&#xa0;liệu bên trong.
 
-Kiểm&#xa0;tra hộp&#xa0;thư email của quý&#xa0;vị để biết thêm thông&#xa0;tin và về cách gửi đơn phản&#xa0;cáo.</translation>
+Kiểm&#xa0;tra hộp&#xa0;thư email của quý&#xa0;vị để biết thêm thông&#xa0;tin và về cách gửi đơn phản&#xa0;đối.</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -4557,6 +4596,90 @@ Nhập một tên khác.</translation>
         <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
         <translation>Ngày đã thêm</translation>
     </message>
+    <message numerus="yes">
+        <source>Error deleting file</source>
+        <translatorcomment>Secondary text of a messagebox when deleting files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi xóa tệp</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error deleting folder</source>
+        <translatorcomment>Secondary text of a messagebox when deleting folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi xóa thư&#xa0;mục</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error deleting item</source>
+        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi xóa mục</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error moving file</source>
+        <translatorcomment>Main text of a messagebox when moving files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi di&#xa0;chuyển tệp</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error moving folder</source>
+        <translatorcomment>Main text of a messagebox when moving folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi di&#xa0;chuyển thư&#xa0;mục</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error moving item</source>
+        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi di&#xa0;chuyển mục</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error pasting file</source>
+        <translatorcomment>Main text of a messagebox when pasting files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi chèn tệp&#xa0;tin</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error pasting folder</source>
+        <translatorcomment>Main text of a messagebox when pasting folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi chèn thư&#xa0;mục</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error pasting item</source>
+        <translatorcomment>Main text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi chèn thêm mục</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error restoring file</source>
+        <translatorcomment>Secondary text of a messagebox when restoring files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi khôi&#xa0;phục tệp</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error restoring folder</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi khôi&#xa0;phục thư&#xa0;mục</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error restoring item</source>
+        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Lỗi khi khôi&#xa0;phục lại mục</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
@@ -4616,6 +4739,135 @@ Nhập một tên khác.</translation>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
         <translation>Xếp theo tên của chủ sở hữu</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
+        <translation>Tệp&#xa0;tin %1 đã không thể xóa được. Xin thử&#xa0;lại sau.</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
+        <translation>Tệp&#xa0;tin %1 đã không thể di&#xa0;chuyển được. Xin thử&#xa0;lại sau.</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6713</translatorcomment>
+        <translation>Không thể chèn vào tệp&#xa0;tin. Vui lòng thử lại sau.</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
+        <translation>Tệp&#xa0;tin %1 đã không thể khôi&#xa0;phục được. Xin thử&#xa0;lại sau.</translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Tệp&#xa0;tin đã không thể xóa được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Tệp&#xa0;tin đã không thể di&#xa0;chuyển được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Tệp&#xa0;tin đã không thể chèn vào được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Tệp&#xa0;tin đã không thể khôi&#xa0;phục được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
+        <translation>Thư&#xa0;mục %1 đã không thể xóa được. Xin thử lại sau.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
+        <translation>Thư&#xa0;mục %1 đã không di&#xa0;chuyển được. Thử lại sau.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be pasted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
+        <translation>Đã không thể dính thư&#xa0;mục %1. Vui lòng thử lại sau</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
+        <translation>Đã không thể dính thư&#xa0;mục %1. Vui lòng thử lại sau.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
+        <translation>Thư&#xa0;mục %1 đã không thể khôi&#xa0;phục được. Xin thử lại sau.</translation>
+    </message>
+    <message numerus="yes">
+        <source>The folder couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Thư&#xa0;mục đã không thể xóa được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The folder couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Thư&#xa0;mục đã không thể di&#xa0;chuyển được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The folder couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Thư&#xa0;mục đã không thể chèn vào được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The folder couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Thư&#xa0;mục đã không thể khôi&#xa0;phục được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The item couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Mục đã không thể xóa được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The item couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Mục đã không thể di&#xa0;chuyển được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The item couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Mục đã không thể chèn vào được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The item couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Mục đã không thể khôi&#xa0;phục được. Xin thử&#xa0;lại sau.</numerusform>
+        </translation>
     </message>
     <message>
         <source>This file has been the subject of a takedown notice</source>
@@ -5401,6 +5653,11 @@ Nhập một tên khác.</translation>
         <translation>Nếu bạn đã viết sai địa&#xa0;chỉ email của mình, [B][A]sửa đổi lại ở đây[/A][/B].</translation>
     </message>
     <message>
+        <source>Import from another cloud</source>
+        <translatorcomment>Onboarding button title to open the cloud migration tool. SNC-6703</translatorcomment>
+        <translation>Chuyển nhập từ đám&#xa0;mây khác</translation>
+    </message>
+    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Mã 2FA không đúng</translation>
@@ -5434,6 +5691,11 @@ Nhập một tên khác.</translation>
         <source>Logging in…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
         <translation>Đang đăng nhập…</translation>
+    </message>
+    <message>
+        <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
+        <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
+        <translation>Chuyển các tệp của bạn từ Google Drive trực&#xa0;tiếp vào MEGA, được mã&#xa0;hóa hoàn&#xa0;toàn. Bắt&#xa0;đầu chỉ với vài cú nhấp chuột.</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -5950,15 +6212,6 @@ Nhập một tên khác.</translation>
 </context>
 <context>
     <name>Preferences</name>
-    <message>
-        <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</source>
-        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
@@ -6844,6 +7097,11 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translation>Băng thông</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Button that dismisses the clear local cache warning dialog without deleting anything.SNC-6743</translatorcomment>
+        <translation>Hủy</translation>
+    </message>
+    <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
         <translation>Đổi mật khẩu</translation>
@@ -6892,6 +7150,11 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
         <translation>Thư mục mặc định</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button that confirms permanently deleting the local cache (debris) of synced folders, in the clear local cache warning dialog.SNC-6743</translatorcomment>
+        <translation>Xóa</translation>
     </message>
     <message>
         <source>Details</source>
@@ -8258,7 +8521,7 @@ Làm mới danh&#xa0;sách.</translation>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>Chọn phương tiện từ…</translation>
+        <translation>Chọn phương&#xa0;tiện từ…</translation>
     </message>
     <message>
         <source>Stream error: transfer overquota</source>
@@ -9348,6 +9611,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Các phiên tải&#xa0;lên đã bị vô&#xa0;hiệu, đồng&#xa0;bộ hóa và sao&#xa0;lưu bị tạm dừng</translation>
     </message>
     <message>
+        <source>You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
+        <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [A][/A] used for the link placeholder. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
+        <translation>Bạn không thể tiếp&#xa0;tục tải&#xa0;xuống vì không còn đủ hạn mức truyền&#xa0;tải cho địa&#xa0;chỉ IP này. Để có thêm lượng truyền, hãy nâng&#xa0;cấp tài&#xa0;khoản hoặc đợi %1 cho đến khi có thêm lượng miễn&#xa0;phí được nạp lại. [A]Tìm&#xa0;hiểu thêm[/A] về hạn&#xa0;mức băng&#xa0;thông truyền&#xa0;tải.</translation>
+    </message>
+    <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
         <translation>[B]Đã quá mức băng&#xa0;thông truyền&#xa0;tải[/B][BR]Quá&#xa0;trình tải&#xa0;xuống không thể tiếp&#xa0;tục vì bạn không còn lượng băng&#xa0;thông truyền&#xa0;tải nào cho địa&#xa0;chỉ IP này. Để có thêm băng&#xa0;thông, hãy nâng&#xa0;cấp lên gói Pro hoặc đợi %1 đến khi có thêm băng&#xa0;thông truyền&#xa0;tải miễn&#xa0;phí hồi&#xa0;phục lại cho địa&#xa0;chỉ IP của bạn. [A]Tìm&#xa0;hiểu thêm[/A] về băng&#xa0;thông truyền&#xa0;tải.</translation>
@@ -9625,6 +9893,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
         <translation>Hủy tất&#xa0;cả các truyền&#xa0;tải trong mục Tài&#xa0;Liệu</translation>
+    </message>
+    <message>
+        <source>Cancel all downloads</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
+        <translation>Hủy tất cả các truyền&#xa0;tải trong phiên Tải&#xa0;xuống</translation>
     </message>
     <message>
         <source>Cancel all failed</source>

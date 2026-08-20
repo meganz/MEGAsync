@@ -3063,7 +3063,7 @@ Wacht tot het uploaden is voltooid.</translation>
     <message>
         <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
         <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
-        <translation>Wilt u ″%1″ naar MEGA uploaden?</translation>
+        <translation>Wilt u“%1″ naar MEGA uploaden?</translation>
     </message>
     <message numerus="yes">
         <source>Do you want to upload %n file to MEGA?</source>
@@ -6292,12 +6292,15 @@ Voer een andere naam in.</translation>
     <name>Preferences</name>
     <message>
         <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
+- Improved the install and update process with better cleanup of outdated components.
 - UI fixes and adjustments across sync, backup, and transfer dialogs.
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Duidelijkere afhandeling van vastgelopen taken en naamconflicten.
+- Verbeterd installatie- en updateproces met betere opschoning van verouderde onderdelen.
+- UI-correcties en -aanpassingen in de dialoogvensters voor synchronisatie, back-up en overdracht.
+- Bugfixes en prestatieverbeteringen.</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

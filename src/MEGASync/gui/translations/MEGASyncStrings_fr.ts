@@ -3018,6 +3018,11 @@ Attendez la fin du téléversement.</translation>
         <translation>Votre compte est désactivé</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. SNC-6678</translatorcomment>
+        <translation>Annuler</translation>
+    </message>
+    <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
         <translation>Recherche de mises à jour…</translation>
@@ -3378,6 +3383,11 @@ https://mega.co.nz/#sync</source>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Téléverser</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translatorcomment>Title shown at dialog when the user is trying to upload a file to MEGA from Finder explorer context menu option.SNC-6678.</translatorcomment>
+        <translation>Téléverser vers MEGA</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -6003,15 +6013,6 @@ Saisissez un nom différent.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</source>
-        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
 - Bug fixes and performance improvements.
@@ -6898,6 +6899,11 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Bande passante</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Button that dismisses the clear local cache warning dialog without deleting anything.SNC-6743</translatorcomment>
+        <translation>Annuler</translation>
+    </message>
+    <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
         <translation>Changer le mot de passe</translation>
@@ -6946,6 +6952,11 @@ Voulez-vous le supprimer quand même ?</translation>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
         <translation>Dossiers par défaut</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button that confirms permanently deleting the local cache (debris) of synced folders, in the clear local cache warning dialog.SNC-6743</translatorcomment>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Details</source>

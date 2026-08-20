@@ -1827,6 +1827,13 @@
 </context>
 <context>
     <name>FileManagerNodeSelector</name>
+    <message numerus="yes">
+        <source>%n result</source>
+        <translatorcomment>Label showing the number of search results in the File Manager node selector. %n is the number of results. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>%n 条结果</numerusform>
+        </translation>
+    </message>
     <message>
         <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
@@ -2990,6 +2997,11 @@ Please wait for the upload to complete.</source>
         <translation>帐户已停用</translation>
     </message>
     <message>
+        <source>An update has been installed. The MEGA Desktop App will restart automatically in a few minutes to finish applying it</source>
+        <translatorcomment>Desktop notification shown after instaling an auto-update if there are transfers running. SNC-6717</translatorcomment>
+        <translation>已安装更新。MEGA 桌面应用程序将在几分钟内自动重新启动，以完成更新</translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. SNC-6678</translatorcomment>
         <translation>取消</translation>
@@ -3080,6 +3092,11 @@ Please wait for the upload to complete.</source>
         <source>Folder download error</source>
         <translatorcomment>Title of the error message when there is an error downloading a MEGA link. SNC-2549.</translatorcomment>
         <translation>文件夹下载错误</translation>
+    </message>
+    <message>
+        <source>Import from another cloud</source>
+        <translatorcomment>Menu action to open the cloud-to-MEGA migration tool. SNC-6703</translatorcomment>
+        <translation>从另一云服务导入</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -4574,6 +4591,90 @@ Enter a different name</source>
         <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
         <translation>添加日期</translation>
     </message>
+    <message numerus="yes">
+        <source>Error deleting file</source>
+        <translatorcomment>Secondary text of a messagebox when deleting files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>删除文件时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error deleting folder</source>
+        <translatorcomment>Secondary text of a messagebox when deleting folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>删除文件夹时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error deleting item</source>
+        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>删除项目时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error moving file</source>
+        <translatorcomment>Main text of a messagebox when moving files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>移动文件时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error moving folder</source>
+        <translatorcomment>Main text of a messagebox when moving folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>移动文件夹时发生错误</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error moving item</source>
+        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>移动项目时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error pasting file</source>
+        <translatorcomment>Main text of a messagebox when pasting files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>粘贴文件时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error pasting folder</source>
+        <translatorcomment>Main text of a messagebox when pasting folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>粘贴文件夹时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error pasting item</source>
+        <translatorcomment>Main text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>粘贴项目时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error restoring file</source>
+        <translatorcomment>Secondary text of a messagebox when restoring files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>恢复文件时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error restoring folder</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>恢复文件夹时出错</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error restoring item</source>
+        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>恢复项目时出错</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
@@ -4633,6 +4734,135 @@ Enter a different name</source>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
         <translation>按所有者名称排序</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
+        <translation>无法删除该文件 %1。请稍后再试。</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
+        <translation>无法移动文件 %1。请稍后再试。</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6713</translatorcomment>
+        <translation>无法粘贴文件 %1。请稍后再试。</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
+        <translation>无法恢复文件 %1。请稍后再试。</translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>文件无法删除。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>文件无法移动。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>文件无法粘贴。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>文件无法恢复。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
+        <translation>无法删除文件夹 %1。请稍后再试。</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
+        <translation>无法移动文件夹 %1。请稍后再试。</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be pasted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
+        <translation>无法粘贴文件夹 %1。请稍后再试。</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
+        <translation>无法粘贴文件夹 %1。请稍后再试。</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
+        <translation>无法恢复文件夹 %1。请稍后再试。</translation>
+    </message>
+    <message numerus="yes">
+        <source>The folder couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>文件夹无法删除。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The folder couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>文件夹无法移动。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The folder couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>文件夹无法粘贴。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The folder couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>文件夹无法恢复，请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The item couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>项目无法删除。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The item couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>项目无法移动。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The item couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>项目无法粘贴。请稍后再试。</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The item couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>无法恢复项目。请稍后再试。</numerusform>
+        </translation>
     </message>
     <message>
         <source>This file has been the subject of a takedown notice</source>
@@ -5418,6 +5648,11 @@ Enter a different name</source>
         <translation>如果您拼错了您的电子邮件地址，[B][A]请在此处修改[/A][/B]。</translation>
     </message>
     <message>
+        <source>Import from another cloud</source>
+        <translatorcomment>Onboarding button title to open the cloud migration tool. SNC-6703</translatorcomment>
+        <translation>从另一云服务导入</translation>
+    </message>
+    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>双重验证代码不正确</translation>
@@ -5451,6 +5686,11 @@ Enter a different name</source>
         <source>Logging in…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
         <translation>正在登录…</translation>
+    </message>
+    <message>
+        <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
+        <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
+        <translation>将您的文件从 Google Drive 直接导入到 MEGA，全部加密。只需几次点击即可开始。</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -5967,15 +6207,6 @@ Enter a different name</source>
 </context>
 <context>
     <name>Preferences</name>
-    <message>
-        <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</source>
-        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
@@ -6861,6 +7092,11 @@ Do you want to delete it anyway?</source>
         <translation>带宽</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Button that dismisses the clear local cache warning dialog without deleting anything.SNC-6743</translatorcomment>
+        <translation>取消</translation>
+    </message>
+    <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
         <translation>更改密码</translation>
@@ -6909,6 +7145,11 @@ Do you want to delete it anyway?</source>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
         <translation>默认文件夹</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button that confirms permanently deleting the local cache (debris) of synced folders, in the clear local cache warning dialog.SNC-6743</translatorcomment>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Details</source>
@@ -9365,6 +9606,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>上传已禁用，同步和备份已暂停</translation>
     </message>
     <message>
+        <source>You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
+        <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [A][/A] used for the link placeholder. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
+        <translation>您无法继续下载，因为此 IP 地址的传输配额不足。要获得更多配额，请升级您的账户，或等待 %1，直到您的 IP 地址上有更多免费配额可用。 [A]了解更多[/A]关于传输配额。</translation>
+    </message>
+    <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
         <translation>[B]已超过传输流量配额[/B][BR]您无法继续下载，因为您没有足够的传输流量供此IP地址使用。要获得更多配额，请升级您的帐户或等待%1，直到您的IP地址有更多免费配额可用。[A]了解更多[/A]关于传输流量。</translation>
@@ -9642,6 +9888,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
         <translation>取消文档中的所有传输</translation>
+    </message>
+    <message>
+        <source>Cancel all downloads</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
+        <translation>取消下载中的所有传输</translation>
     </message>
     <message>
         <source>Cancel all failed</source>

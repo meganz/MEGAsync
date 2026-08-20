@@ -6291,18 +6291,6 @@ Introduzca un nombre diferente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</source>
-        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Gestión más clara de incidencias y conflictos de nombres.
-- Las instalaciones y las actualizaciones ahora eliminan archivos sobrantes de versiones anteriores.
-- Correcciones y ajustes de la interfaz de usuario en los diálogos de sincronización, backup y transferencias.
-- Correcciones de errores y mejoras de rendimiento.</translation>
-    </message>
-    <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
 - Bug fixes and performance improvements.
