@@ -7,6 +7,7 @@ set(DESKTOP_APP_SYNCS_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/control/MegaIgnoreManager.h
     ${CMAKE_CURRENT_LIST_DIR}/control/MegaIgnoreRules.h
     ${CMAKE_CURRENT_LIST_DIR}/control/SyncController.h
+    ${CMAKE_CURRENT_LIST_DIR}/control/SyncControllerInternal.h
     ${CMAKE_CURRENT_LIST_DIR}/control/SyncInfo.h
     ${CMAKE_CURRENT_LIST_DIR}/control/SyncSettings.h
     ${CMAKE_CURRENT_LIST_DIR}/control/CreateRemoveSyncsManager.h

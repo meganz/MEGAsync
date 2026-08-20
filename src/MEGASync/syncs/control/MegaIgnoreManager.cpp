@@ -15,6 +15,8 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 
+#include <utility>
+
 MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder, bool createDefaultIfNotExist)
 {
     setInputDirPath(syncLocalFolder, createDefaultIfNotExist);
@@ -416,6 +418,25 @@ void MegaIgnoreManager::setDefaultIgnorePath(const QString& defaultPath)
     mDefaultMegaIgnoreFile = defaultPath;
 }
 
+void MegaIgnoreManager::setHiddenApplier(std::function<bool(const QString&)> applier)
+{
+    // restoreDefaults() calls mHiddenApplier unconditionally; an empty std::function
+    // would throw std::bad_function_call there instead of just reporting failure.
+    if (applier)
+    {
+        mHiddenApplier = std::move(applier);
+    }
+    else
+    {
+        mHiddenApplier = &MegaIgnoreManager::applyRealHiddenAttribute;
+    }
+}
+
+bool MegaIgnoreManager::applyRealHiddenAttribute(const QString& path)
+{
+    return Platform::getInstance()->setHidden(path);
+}
+
 void MegaIgnoreManager::setInputDirPath(const QString& inputDirPath, bool createDefaultIfNotExist)
 {
     const auto ignorePath(inputDirPath + QDir::separator() + QString::fromUtf8(MEGA_IGNORE_FILE_NAME));
@@ -538,9 +559,36 @@ bool MegaIgnoreManager::isDefault() const
     return currentRules == defaultRules;
 }
 
-void MegaIgnoreManager::restoreDefaults()
+bool MegaIgnoreManager::hasDefaultFile() const
+{
+    return QFile::exists(getDefaultFilePath());
+}
+
+MegaIgnoreManager::RestoreDefaultsResult MegaIgnoreManager::restoreDefaults()
 {
     QFile defaultFile(getDefaultFilePath());
+    if (!defaultFile.exists())
+    {
+        // There's no .megaignore.default to copy from (the SDK only writes it the first
+        // time a sync without a pre-existing .megaignore is enabled, see
+        // Syncs::confirmOrCreateDefaultMegaignore). Removing the current .megaignore makes
+        // the SDK treat this the same way, but only the next time it re-checks for one on a
+        // transition into RUNSTATE_RUNNING - the caller is responsible for forcing that.
+        // QFile::remove() returns false when there's nothing to remove, but that's already
+        // the desired end state, not a failure.
+        if (QFile::exists(mOutputMegaIgnoreFile) && !QFile::remove(mOutputMegaIgnoreFile))
+        {
+            mega::MegaApi::log(
+                mega::MegaApi::LOG_LEVEL_ERROR,
+                QString::fromUtf8("Failed to restore default exclusions, %1 could not be removed")
+                    .arg(mOutputMegaIgnoreFile)
+                    .toUtf8()
+                    .constData());
+            return RestoreDefaultsResult::Failed;
+        }
+        return RestoreDefaultsResult::RemovedPendingSdkRegeneration;
+    }
+
     QSaveFile outputFile(mOutputMegaIgnoreFile);
 
     if (!defaultFile.open(QIODevice::ReadOnly) || !outputFile.open(QIODevice::WriteOnly))
@@ -551,7 +599,7 @@ void MegaIgnoreManager::restoreDefaults()
                 .arg(mOutputMegaIgnoreFile)
                 .toUtf8()
                 .constData());
-        return;
+        return RestoreDefaultsResult::Failed;
     }
 
     const QByteArray defaultRules(defaultFile.readAll());
@@ -564,12 +612,12 @@ void MegaIgnoreManager::restoreDefaults()
                 .arg(mOutputMegaIgnoreFile)
                 .toUtf8()
                 .constData());
-        return;
+        return RestoreDefaultsResult::Failed;
     }
 
     // QSaveFile atomically replaces the previous file but does not preserve its
     // attributes, so reapply the Hidden attribute used by the SDK.
-    if (!Platform::getInstance()->setHidden(mOutputMegaIgnoreFile))
+    if (!mHiddenApplier(mOutputMegaIgnoreFile))
     {
         mega::MegaApi::log(
             mega::MegaApi::LOG_LEVEL_WARNING,
@@ -577,5 +625,8 @@ void MegaIgnoreManager::restoreDefaults()
                 .arg(mOutputMegaIgnoreFile)
                 .toUtf8()
                 .constData());
+        return RestoreDefaultsResult::RestoredButNotHidden;
     }
+
+    return RestoreDefaultsResult::Restored;
 }

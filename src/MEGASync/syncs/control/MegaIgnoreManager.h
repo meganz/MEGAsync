@@ -8,6 +8,7 @@
 #include <QMetaEnum>
 #include <QString>
 
+#include <functional>
 #include <memory>
 
 class MegaIgnoreManager
@@ -54,7 +55,27 @@ public:
     void updateNameRuleStrategyAcordingToCaseSensitive(std::shared_ptr<MegaIgnoreNameRule> rule);
     std::shared_ptr<MegaIgnoreExtensionRule> addExtensionRule(MegaIgnoreNameRule::Class classType, const QString& pattern);
 
-    void restoreDefaults();
+    enum class RestoreDefaultsResult
+    {
+        // Copied .megaignore.default over .megaignore and reapplied Hidden.
+        Restored,
+        // Copied .megaignore.default over .megaignore, but reapplying Hidden failed. The
+        // exclusions themselves were restored correctly; only the file's visibility wasn't.
+        RestoredButNotHidden,
+        // There's no .megaignore.default to copy from, so .megaignore was removed instead.
+        // The SDK only regenerates it on a sync's transition into RUNSTATE_RUNNING, so the
+        // caller needs to force that (e.g. suspend then resume the sync) for it to take
+        // effect while the sync keeps running.
+        RemovedPendingSdkRegeneration,
+        Failed,
+    };
+
+    RestoreDefaultsResult restoreDefaults();
+
+    // Lets a caller check, before calling restoreDefaults(), whether it is about to hit
+    // the RemovedPendingSdkRegeneration case - so it can pause the sync first and avoid a
+    // window where the folder is briefly unfiltered while a sync is running.
+    bool hasDefaultFile() const;
 
     bool isDefault() const;
 
@@ -70,6 +91,13 @@ public:
     void setOutputIgnorePath(const QString& outputPath);
 
     void setDefaultIgnorePath(const QString& defaultPath);
+
+    // Overrides how restoreDefaults() reapplies the Hidden attribute; defaults to
+    // Platform::getInstance()->setHidden(). Exists so tests can force that step to fail
+    // deterministically, the same way setDefaultIgnorePath()/setOutputIgnorePath() exist
+    // so tests can point at a temp-dir fixture instead of a real profile directory.
+    // Passing an empty function (including nullptr) resets it back to that default.
+    void setHiddenApplier(std::function<bool(const QString&)> applier);
 
     void setInputDirPath(const QString& inputDir, bool createIfNotExist = true);
 
@@ -98,6 +126,7 @@ public:
 private:
     QString getDefaultFilePath() const;
     static QStringList readTrimmedLines(const QString& filePath);
+    static bool applyRealHiddenAttribute(const QString& path);
 
     template<class Type>
     static const std::shared_ptr<Type> convert(const std::shared_ptr<MegaIgnoreRule> data)
@@ -120,6 +149,9 @@ private:
     QString mIgnoreCRC;
 
     Qt::CaseSensitivity mIsCaseSensitive;
+
+    std::function<bool(const QString&)> mHiddenApplier =
+        &MegaIgnoreManager::applyRealHiddenAttribute;
 };
 
 #endif // MEGAIGNOREMANAGER_H

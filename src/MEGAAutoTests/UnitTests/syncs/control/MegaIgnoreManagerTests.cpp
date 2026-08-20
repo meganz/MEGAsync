@@ -92,8 +92,9 @@ TEST_CASE_METHOD(MegaIgnoreManagerTests, "restoreDefaults() creates the file fro
     REQUIRE_FALSE(QFileInfo::exists(outputFilePath()));
 
     auto manager(makeManager());
-    manager.restoreDefaults();
+    const auto result = manager.restoreDefaults();
 
+    CHECK(result == MegaIgnoreManager::RestoreDefaultsResult::Restored);
     REQUIRE(QFileInfo::exists(outputFilePath()));
     CHECK(readFile(outputFilePath()) == QString::fromUtf8(DEFAULT_RULES));
 }
@@ -141,20 +142,66 @@ TEST_CASE_METHOD(MegaIgnoreManagerTests, "restoreDefaults() keeps an already hid
 #endif
 }
 
-TEST_CASE_METHOD(MegaIgnoreManagerTests, "restoreDefaults() without a default file")
+TEST_CASE_METHOD(MegaIgnoreManagerTests,
+                 "restoreDefaults() reports RestoredButNotHidden when hiding fails")
 {
-    REQUIRE_FALSE(QFileInfo::exists(defaultFilePath()));
-    const QString originalRules(QString::fromUtf8("-:my_own_rule\n"));
-    writeFile(outputFilePath(), originalRules);
+    writeDefaultFile();
 
     auto manager(makeManager());
+    manager.setHiddenApplier(
+        [](const QString&)
+        {
+            return false;
+        });
+    const auto result = manager.restoreDefaults();
 
-    // The copy cannot succeed, which must be reported without discarding the
-    // existing exclusions.
-    manager.restoreDefaults();
+    CHECK(result == MegaIgnoreManager::RestoreDefaultsResult::RestoredButNotHidden);
+    // The exclusions themselves must still be restored correctly - only hiding failed.
+    CHECK(readFile(outputFilePath()) == QString::fromUtf8(DEFAULT_RULES));
+}
 
-    REQUIRE(QFileInfo::exists(outputFilePath()));
-    CHECK(readFile(outputFilePath()) == originalRules);
+TEST_CASE_METHOD(MegaIgnoreManagerTests,
+                 "setHiddenApplier() with an empty function falls back to the real implementation")
+{
+    writeDefaultFile();
+
+    auto manager(makeManager());
+    manager.setHiddenApplier(nullptr);
+
+    // restoreDefaults() calls the applier unconditionally; an empty std::function left in
+    // place would throw std::bad_function_call instead of restoring anything.
+    const auto result = manager.restoreDefaults();
+    CHECK(result == MegaIgnoreManager::RestoreDefaultsResult::Restored);
+}
+
+TEST_CASE_METHOD(MegaIgnoreManagerTests,
+                 "restoreDefaults() removes .megaignore when there is no default file to copy from")
+{
+    REQUIRE_FALSE(QFileInfo::exists(defaultFilePath()));
+    writeFile(outputFilePath(), QString::fromUtf8("-:my_own_rule\n"));
+
+    auto manager(makeManager());
+    const auto result = manager.restoreDefaults();
+
+    // Deleting it is only half the story: it's the caller's job to force a sync
+    // restart, since the SDK only regenerates the file (hidden, from its own
+    // compiled-in defaults) on a transition into RUNSTATE_RUNNING.
+    CHECK(result == MegaIgnoreManager::RestoreDefaultsResult::RemovedPendingSdkRegeneration);
+    CHECK_FALSE(QFileInfo::exists(outputFilePath()));
+}
+
+TEST_CASE_METHOD(MegaIgnoreManagerTests,
+                 "restoreDefaults() reports success when .megaignore is already absent and there "
+                 "is no default file")
+{
+    REQUIRE_FALSE(QFileInfo::exists(defaultFilePath()));
+    REQUIRE_FALSE(QFileInfo::exists(outputFilePath()));
+
+    auto manager(makeManager());
+    const auto result = manager.restoreDefaults();
+
+    // There's nothing to remove, but that's already the desired end state, not a failure.
+    CHECK(result == MegaIgnoreManager::RestoreDefaultsResult::RemovedPendingSdkRegeneration);
 }
 
 #ifdef Q_OS_WINDOWS
@@ -169,11 +216,12 @@ TEST_CASE_METHOD(MegaIgnoreManagerTests,
     REQUIRE(outputFile.setPermissions(QFileDevice::ReadOwner));
 
     auto manager(makeManager());
-    manager.restoreDefaults();
+    const auto result = manager.restoreDefaults();
 
     const QString rulesAfterRestore(readFile(outputFilePath()));
     outputFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
 
+    CHECK(result == MegaIgnoreManager::RestoreDefaultsResult::Failed);
     CHECK(rulesAfterRestore == originalRules);
 }
 #endif
