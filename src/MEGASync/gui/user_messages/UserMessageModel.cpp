@@ -277,7 +277,14 @@ void UserMessageModel::insertNotifications(const QList<mega::MegaNotification*>&
             item->markAsSeen();
         }
 
-        connect(item, &UserMessage::expired, this, &UserMessageModel::onExpired);
+        // A notification reports its expiration from the widget that displays it,
+        // which UserMessageDelegate builds while painting or measuring its row.
+        // Removing the row has to wait for the view to be done with it.
+        connect(item,
+                &UserMessage::expired,
+                this,
+                &UserMessageModel::onExpired,
+                Qt::QueuedConnection);
     }
     endInsertRows();
 }
@@ -378,17 +385,33 @@ void UserMessageModel::setLastSeenNotification(uint32_t id)
     }
 }
 
-void UserMessageModel::onExpired(unsigned id)
+void UserMessageModel::onExpired(unsigned id, int64_t endWhenExpired)
 {
     // For now, only notifications can expire
     auto it = findById(id, UserMessage::Type::NOTIFICATION);
     if (it != mUserMessages.end())
     {
+        // The event was queued against the deadline the sender saw at the time, but
+        // processNotifications() may have reset this notification with a later
+        // deadline (an extended offer) before the event was delivered. A mismatch
+        // means the event is stale: trust the current data and keep the row.
+        auto notification = qobject_cast<UserNotification*>(*it);
+        if (notification && notification->getEnd() != endWhenExpired)
+        {
+            return;
+        }
+
         int row = static_cast<int>(std::distance(mUserMessages.begin(), it));
+        UserMessage* expiredMessage = *it;
+
         beginRemoveRows(QModelIndex(), row, row);
-        delete mUserMessages[row];
         mUserMessages.erase(it);
         endRemoveRows();
+
+        // This is called from the expired() signal of the message itself, which is
+        // still emitting it, and whoever asked for the removal is still running.
+        // So the message is destroyed once the current event has been handled.
+        expiredMessage->deleteLater();
     }
 }
 
@@ -398,7 +421,13 @@ void UserMessageModel::onUiUpdated()
     if (userMessage)
     {
         const auto row = static_cast<int>(mUserMessages.indexOf(userMessage));
-        emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+
+        // A user message can ask for a refresh after being removed from the model,
+        // i.e. an expired notification that is still displayed by its widget.
+        if (row >= 0)
+        {
+            emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+        }
     }
 }
 

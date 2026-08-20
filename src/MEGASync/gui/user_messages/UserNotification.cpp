@@ -9,6 +9,23 @@ namespace
 const QLatin1String DEFAULT_IMAGE_EXTENSION(".png");
 constexpr const char* KEY_CALL_TO_ACTION_TEXT = "text";
 constexpr const char* KEY_CALL_TO_ACTION_LINK = "link";
+
+// MegaStringMap::get() returns null when the key is not in the map, so its
+// result cannot be passed to strcmp directly.
+bool sameCallToActionValue(const mega::MegaNotification* first,
+                           const mega::MegaNotification* second,
+                           const char* key)
+{
+    const char* firstValue = first->getCallToAction1()->get(key);
+    const char* secondValue = second->getCallToAction1()->get(key);
+
+    if (!firstValue || !secondValue)
+    {
+        return firstValue == secondValue;
+    }
+
+    return strcmp(firstValue, secondValue) == 0;
+}
 }
 
 UserNotification::UserNotification(const mega::MegaNotification* notification, QObject* parent):
@@ -35,10 +52,8 @@ bool UserNotification::equals(const mega::MegaNotification* notification) const
         strcmp(mNotification->getIconName(), notification->getIconName()) != 0 ||
         mNotification->getStart() != notification->getStart() ||
         mNotification->getEnd() != notification->getEnd() ||
-        strcmp(mNotification->getCallToAction1()->get(KEY_CALL_TO_ACTION_TEXT),
-               notification->getCallToAction1()->get(KEY_CALL_TO_ACTION_TEXT)) != 0 ||
-        strcmp(mNotification->getCallToAction1()->get(KEY_CALL_TO_ACTION_LINK),
-               notification->getCallToAction1()->get(KEY_CALL_TO_ACTION_LINK)) != 0)
+        !sameCallToActionValue(mNotification.get(), notification, KEY_CALL_TO_ACTION_TEXT) ||
+        !sameCallToActionValue(mNotification.get(), notification, KEY_CALL_TO_ACTION_LINK))
     {
         return false;
     }
@@ -58,7 +73,7 @@ void UserNotification::markAsSeen()
 
 void UserNotification::markAsExpired()
 {
-    emit expired(mId);
+    emit expired(mId, mNotification->getEnd());
 }
 
 QString UserNotification::getTitle() const

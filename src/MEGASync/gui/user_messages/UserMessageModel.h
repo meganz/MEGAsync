@@ -37,7 +37,7 @@ public:
     void setLastSeenNotification(uint32_t id);
 
 private slots:
-    void onExpired(unsigned id);
+    void onExpired(unsigned id, int64_t endWhenExpired);
     void onUiUpdated();
 
 private:
