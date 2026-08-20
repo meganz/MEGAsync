@@ -1,4 +1,5 @@
 #include "AllMegaIncludes.h"
+#include "TestSingletons.h"
 
 #define CATCH_CONFIG_RUNNER
 #include "trompeloeil.hpp"
@@ -35,8 +36,10 @@ int main(int argc, char* argv[])
     // ScaleFactorManager (and other production code exercised by the tests)
     // dereferences Platform::getInstance(), which asserts unless the singleton
     // has been created. The real app does this in its own main(); mirror it
-    // here so tests don't abort.
-    Platform::create();
+    // here so tests don't abort. Go through ensurePlatformCreated() rather than
+    // Platform::create() directly, since individual test files also use it to
+    // create the singleton on demand and it must not be created twice.
+    ensurePlatformCreated();
 
     MegaApplication app(argc, argv);
 

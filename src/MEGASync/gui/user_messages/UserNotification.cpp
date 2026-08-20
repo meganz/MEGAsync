@@ -73,7 +73,7 @@ void UserNotification::markAsSeen()
 
 void UserNotification::markAsExpired()
 {
-    emit expired(mId);
+    emit expired(mId, mNotification->getEnd());
 }
 
 QString UserNotification::getTitle() const

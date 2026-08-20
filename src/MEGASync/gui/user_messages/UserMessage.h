@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QSize>
 
+#include <cstdint>
+
 class UserMessage : public QObject
 {
     Q_OBJECT
@@ -50,7 +52,10 @@ public:
     }
 
 signals:
-    void expired(unsigned id);
+    // endWhenExpired is the deadline the sender based its expiration decision on, so a
+    // receiver can tell a stale event (superseded by a refresh with a later deadline)
+    // from a genuine one by comparing it against the message's current deadline.
+    void expired(unsigned id, int64_t endWhenExpired);
     void dataReset();
     void uiUpdated();
 

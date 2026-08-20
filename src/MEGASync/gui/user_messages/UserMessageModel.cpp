@@ -385,12 +385,22 @@ void UserMessageModel::setLastSeenNotification(uint32_t id)
     }
 }
 
-void UserMessageModel::onExpired(unsigned id)
+void UserMessageModel::onExpired(unsigned id, int64_t endWhenExpired)
 {
     // For now, only notifications can expire
     auto it = findById(id, UserMessage::Type::NOTIFICATION);
     if (it != mUserMessages.end())
     {
+        // The event was queued against the deadline the sender saw at the time, but
+        // processNotifications() may have reset this notification with a later
+        // deadline (an extended offer) before the event was delivered. A mismatch
+        // means the event is stale: trust the current data and keep the row.
+        auto notification = qobject_cast<UserNotification*>(*it);
+        if (notification && notification->getEnd() != endWhenExpired)
+        {
+            return;
+        }
+
         int row = static_cast<int>(std::distance(mUserMessages.begin(), it));
         UserMessage* expiredMessage = *it;
 
