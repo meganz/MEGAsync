@@ -29,6 +29,7 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/win/wintoastlib.h
    ${CMAKE_CURRENT_LIST_DIR}/win/WintoastCompat.h
    ${CMAKE_CURRENT_LIST_DIR}/win/WinAPIShell.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/WindowsFileAttributePath.h
    ${CMAKE_CURRENT_LIST_DIR}/win/DesktopManager.h
    ${CMAKE_CURRENT_LIST_DIR}/win/PlatformImplementation.cpp
    ${CMAKE_CURRENT_LIST_DIR}/win/RecursiveShellNotifier.cpp

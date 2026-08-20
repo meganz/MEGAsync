@@ -5,6 +5,7 @@
 #include "ThemeManager.h"
 #include "ThreadedQueueShellNotifier.h"
 #include "WinAPIShell.h"
+#include "WindowsFileAttributePath.h"
 #include "WinShellDispatcherTask.h"
 #include "WinTrayReceiver.h"
 #include <AccCtrl.h>
@@ -830,6 +831,25 @@ bool PlatformImplementation::makePubliclyReadable(const QString& fileName)
     return result;
 }
 
+bool PlatformImplementation::setHidden(const QString& path)
+{
+    const QString nativePath(WindowsFileAttributePath::prepare(path));
+
+    const auto nativePathPtr(reinterpret_cast<LPCWSTR>(nativePath.utf16()));
+    const DWORD attributes(GetFileAttributesW(nativePathPtr));
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+    {
+        return false;
+    }
+
+    if (attributes & FILE_ATTRIBUTE_HIDDEN)
+    {
+        return true;
+    }
+
+    return SetFileAttributesW(nativePathPtr, attributes | FILE_ATTRIBUTE_HIDDEN) != FALSE;
+}
+
 void PlatformImplementation::updateDisplayVersionAfterAutoUpdate(int versionCode, bool isPublic)
 {
     const int major = versionCode / 10000;
@@ -1141,12 +1161,8 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName,
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 
     //Hide debris folder
-    QString debrisPath = QDir::toNativeSeparators(syncPath + QDir::separator() + QString::fromLatin1(MEGA_DEBRIS_FOLDER));
-    WIN32_FILE_ATTRIBUTE_DATA fad;
-    if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
-    {
-        SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
-    }
+    QString debrisPath = syncPath + QDir::separator() + QString::fromLatin1(MEGA_DEBRIS_FOLDER);
+    setHidden(debrisPath);
 }
 
 void PlatformImplementation::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
