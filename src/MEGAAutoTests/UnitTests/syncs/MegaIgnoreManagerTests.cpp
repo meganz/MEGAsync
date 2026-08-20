@@ -136,6 +136,43 @@ TEST_CASE("MegaIgnoreManager drops a rule that reached it without going through 
     CHECK_FALSE(MegaIgnoreRule::spansMultipleLines(contents));
 }
 
+TEST_CASE("MegaIgnoreManager reports NO_WRITE_PERMISSION when the file cannot be written")
+{
+    // Constructed from an empty directory, so parsing at construction time does not ask
+    // MegaApi for a CRC (see the file comment above); the write target is redirected below
+    // to the locked file actually under test.
+    QTemporaryDir syncDir;
+    REQUIRE(syncDir.isValid());
+    MegaIgnoreManager manager(syncDir.path(), false);
+
+    QTemporaryDir outputDir;
+    REQUIRE(outputDir.isValid());
+    const QString originalRules(QString::fromUtf8("-:my_own_rule\n"));
+    {
+        QFile file(ignoreFilePath(outputDir));
+        REQUIRE(file.open(QIODevice::WriteOnly));
+        file.write(originalRules.toUtf8());
+        file.close();
+    }
+    QFile outputFile(ignoreFilePath(outputDir));
+    REQUIRE(outputFile.setPermissions(QFileDevice::ReadOwner));
+
+    manager.setOutputIgnorePath(ignoreFilePath(outputDir));
+    REQUIRE(manager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
+                                QString::fromUtf8("beach.jpg"),
+                                MegaIgnoreNameRule::Target::f) != nullptr);
+
+    const auto result = manager.applyChanges();
+    const auto contentsAfter(readIgnoreFile(outputDir));
+
+    // Restore write access before the temporary directory tries to clean itself up.
+    outputFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+
+    CHECK(result == MegaIgnoreManager::ApplyChangesError::NO_WRITE_PERMISSION);
+    // The rule that could not be written did not overwrite what was already on disk.
+    CHECK(contentsAfter == originalRules);
+}
+
 TEST_CASE("MegaIgnoreManager::ApplyChangesError orders every failure after the success values")
 {
     // Callers test `result < NO_WRITE_PERMISSION` for success, so a new failure added before it
