@@ -1292,6 +1292,7 @@ bool InfoDialog::event(QEvent* event)
         ui->retranslateUi(this);
         updateUpgradeButtonText();
         updateCreateSyncButtonText();
+        updateDialogState();
     }
     else if (event->type() == ThemeManager::ThemeChanged && mPreferences->logged())
     {
