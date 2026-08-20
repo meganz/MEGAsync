@@ -6292,15 +6292,15 @@ Digite um nome diferente.</translation>
     <name>Preferences</name>
     <message>
         <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
+- Improved the install and update process with better cleanup of outdated components.
 - UI fixes and adjustments across sync, backup, and transfer dialogs.
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Tratamento mais claro de interrupções e conflitos de nomes.
-- Instalações e atualizações agora eliminam os arquivos remanescentes de versões anteriores.
-- Correção da interface do usuário e ajustes nos diálogos de sincronização, backup e transferência.
-- Correção de bugs e melhorias de desempenho.</translation>
+        <translation>- Melhor gerenciamento de problemas de pausas e conflitos de nomenclatura.
+- Processo de instalação e atualização aprimorado, com uma limpeza mais eficaz de componentes desatualizados.
+- Correções na interface do usuário e ajustes nos diálogos de sincronização, backup e transferência.
+- Correções de bugs e melhorias de desempenho.</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

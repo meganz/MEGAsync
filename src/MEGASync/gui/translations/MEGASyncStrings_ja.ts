@@ -3034,7 +3034,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
         <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
-        <translation>「%1」を MEGA にアップロードしますか？</translation>
+        <translation>「%1」をMEGAにアップロードしますか？</translation>
     </message>
     <message numerus="yes">
         <source>Do you want to upload %n file to MEGA?</source>
@@ -6213,15 +6213,15 @@ Enter a different name</source>
     <name>Preferences</name>
     <message>
         <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
+- Improved the install and update process with better cleanup of outdated components.
 - UI fixes and adjustments across sync, backup, and transfer dialogs.
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- 進行が停止した処理やファイル名の競合に関する表示・対応を明確化しました。
-- インストール・更新時に旧バージョンの残存ファイルを自動削除する機能を追加を行いました。
-- 同期・バックアップ・転送ダイアログにおけるUIの不具合修正および画面調整を行いました
-- バグ修正およびパフォーマンスの改善を行いました。</translation>
+        <translation>- 保留・停止した処理や名前の競合に対する処理方法を明確化しました。
+- 不要なコンポーネントの削除処理を改善し、インストールと更新をよりスムーズにしました。
+- 同期、バックアップ、データ転送ダイアログのUIを修正・調整しました。
+- その他の軽微なバグ修正とパフォーマンスの向上を行いました。</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.

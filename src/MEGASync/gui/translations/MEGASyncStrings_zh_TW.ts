@@ -5973,15 +5973,6 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Clearer handling of stalled issues and name conflicts.
-- Installs and updates now remove files left over from previous versions.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.
-</source>
-        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
 - Bug fixes and performance improvements.
@@ -6866,6 +6857,11 @@ Do you want to delete it anyway?</source>
         <translation>頻寬</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Button that dismisses the clear local cache warning dialog without deleting anything.SNC-6743</translatorcomment>
+        <translation>取消</translation>
+    </message>
+    <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
         <translation>更改密碼</translation>
@@ -6914,6 +6910,11 @@ Do you want to delete it anyway?</source>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
         <translation>預設資料夾</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button that confirms permanently deleting the local cache (debris) of synced folders, in the clear local cache warning dialog.SNC-6743</translatorcomment>
+        <translation>刪除</translation>
     </message>
     <message>
         <source>Details</source>
@@ -10002,7 +10003,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 after tax</source>
         <translatorcomment>Label showing the plan price including tax, Placeholder %1 is for the price. NC-.6228</translatorcomment>
-        <translation>含稅%1</translation>
+        <translation>%1含稅</translation>
     </message>
     <message>
         <source>%1 storage</source>
