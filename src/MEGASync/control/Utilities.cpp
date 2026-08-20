@@ -1688,17 +1688,8 @@ Qt::CaseSensitivity Utilities::isCaseSensitive(const QString& folder)
     {
         tempPath.cd(QLatin1String(CASE_SENSITIVE_FOLDER));
 
-#ifdef Q_OS_WINDOWS
-        // macOS and Linux are automatically hidden as the name starts with a dot
-        auto pathString(tempPath.absolutePath().toStdString());
-        std::wstring stemp = std::wstring(pathString.begin(), pathString.end());
-        LPCWSTR path = stemp.c_str();
-        int attr = GetFileAttributes(path);
-        if ((attr & FILE_ATTRIBUTE_HIDDEN) == 0)
-        {
-            SetFileAttributes(path, FILE_ATTRIBUTE_HIDDEN);
-        }
-#endif
+        Platform::getInstance()->setHidden(tempPath.absolutePath());
+
         // Create lower case file
         createFile(tempPath, QLatin1String("mega"));
         createFile(tempPath, QLatin1String("MEGA"));
