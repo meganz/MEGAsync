@@ -6297,10 +6297,10 @@ Digite um nome diferente.</translation>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
-        <translation>- Clearer handling of stalled issues and name conflicts.
-- Improved the install and update process with better cleanup of outdated components.
-- UI fixes and adjustments across sync, backup, and transfer dialogs.
-- Bug fixes and performance improvements.</translation>
+        <translation>- Melhor gerenciamento de problemas de pausas e conflitos de nomenclatura.
+- Processo de instalação e atualização aprimorado, com uma limpeza mais eficaz de componentes desatualizados.
+- Correções na interface do usuário e ajustes nos diálogos de sincronização, backup e transferência.
+- Correções de bugs e melhorias de desempenho.</translation>
     </message>
     <message>
         <source>- Improve conflict resolution.
