@@ -62,6 +62,7 @@ public:
     void disableContextMenu(bool isDisabled) override;
 
     bool makePubliclyReadable(const QString& fileName) override;
+    bool setHidden(const QString& path) override;
     void updateDisplayVersionAfterAutoUpdate(int versionCode, bool isPublic) override;
 
     void streamWithApp(const QString& app, const QString& url) override;

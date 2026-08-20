@@ -1,6 +1,7 @@
 #include "MegaIgnoreManager.h"
 
 #include "MegaApplication.h"
+#include "Platform.h"
 #include "Preferences.h"
 #include "SyncController.h"
 #include <Utilities.h>
@@ -10,6 +11,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QSaveFile>
 #include <QTemporaryFile>
 #include <QTextStream>
 
@@ -56,7 +58,12 @@ void MegaIgnoreManager::parseIgnoresFile()
         if (ignore.open(QIODevice::ReadOnly))
         {
             QTextStream in(&ignore);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            // TODO QT6
+            in.setEncoding(QStringConverter::Utf8);
+#else
             in.setCodec("UTF-8");
+#endif
             while (!in.atEnd())
             {
                 QString line = in.readLine();
@@ -314,7 +321,12 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
         if (ignore.open(QIODevice::WriteOnly))
         {
             QTextStream out(&ignore);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            // TODO QT6
+            out.setEncoding(QStringConverter::Utf8);
+#else
             out.setCodec("UTF-8");
+#endif
             out << rules.join(QLatin1String("\n"));
 
             ignore.close();
@@ -399,6 +411,11 @@ void MegaIgnoreManager::setOutputIgnorePath(const QString& outputPath)
     mOutputMegaIgnoreFile = outputPath;
 }
 
+void MegaIgnoreManager::setDefaultIgnorePath(const QString& defaultPath)
+{
+    mDefaultMegaIgnoreFile = defaultPath;
+}
+
 void MegaIgnoreManager::setInputDirPath(const QString& inputDirPath, bool createDefaultIfNotExist)
 {
     const auto ignorePath(inputDirPath + QDir::separator() + QString::fromUtf8(MEGA_IGNORE_FILE_NAME));
@@ -450,8 +467,13 @@ void MegaIgnoreManager::removeRule(std::shared_ptr<MegaIgnoreRule> rule)
     rule->setDeleted(true);
 }
 
-QString MegaIgnoreManager::getDefaultFilePath()
+QString MegaIgnoreManager::getDefaultFilePath() const
 {
+    if (!mDefaultMegaIgnoreFile.isEmpty())
+    {
+        return mDefaultMegaIgnoreFile;
+    }
+
     return Preferences::instance()->getDataPath() + QDir::separator() +
            QString::fromUtf8(MEGA_IGNORE_DEFAULT_FILE_NAME);
 }
@@ -463,7 +485,12 @@ QStringList MegaIgnoreManager::readTrimmedLines(const QString& filePath)
     if (file.open(QIODevice::ReadOnly))
     {
         QTextStream in(&file);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        // TODO QT6
+        in.setEncoding(QStringConverter::Utf8);
+#else
         in.setCodec("UTF-8");
+#endif
         while (!in.atEnd())
         {
             const QString line = in.readLine().trimmed();
@@ -513,9 +540,42 @@ bool MegaIgnoreManager::isDefault() const
 
 void MegaIgnoreManager::restoreDefaults()
 {
-    if (QFile::exists(mOutputMegaIgnoreFile))
+    QFile defaultFile(getDefaultFilePath());
+    QSaveFile outputFile(mOutputMegaIgnoreFile);
+
+    if (!defaultFile.open(QIODevice::ReadOnly) || !outputFile.open(QIODevice::WriteOnly))
     {
-        QFile::remove(mOutputMegaIgnoreFile);
+        mega::MegaApi::log(
+            mega::MegaApi::LOG_LEVEL_ERROR,
+            QString::fromUtf8("Failed to restore default exclusions, %1 could not be written")
+                .arg(mOutputMegaIgnoreFile)
+                .toUtf8()
+                .constData());
+        return;
     }
-    QFile::copy(getDefaultFilePath(), mOutputMegaIgnoreFile);
+
+    const QByteArray defaultRules(defaultFile.readAll());
+    if (defaultFile.error() != QFileDevice::NoError ||
+        outputFile.write(defaultRules) != defaultRules.size() || !outputFile.commit())
+    {
+        mega::MegaApi::log(
+            mega::MegaApi::LOG_LEVEL_ERROR,
+            QString::fromUtf8("Failed to restore default exclusions, %1 could not be written")
+                .arg(mOutputMegaIgnoreFile)
+                .toUtf8()
+                .constData());
+        return;
+    }
+
+    // QSaveFile atomically replaces the previous file but does not preserve its
+    // attributes, so reapply the Hidden attribute used by the SDK.
+    if (!Platform::getInstance()->setHidden(mOutputMegaIgnoreFile))
+    {
+        mega::MegaApi::log(
+            mega::MegaApi::LOG_LEVEL_WARNING,
+            QString::fromUtf8("Restored default exclusions but %1 could not be hidden")
+                .arg(mOutputMegaIgnoreFile)
+                .toUtf8()
+                .constData());
+    }
 }

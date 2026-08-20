@@ -103,6 +103,12 @@ public:
     virtual void disableContextMenu(bool isDisabled) {}
 
     virtual bool makePubliclyReadable(const QString& fileName);
+
+    // Hides a file or folder from the file manager, keeping its other attributes.
+    // On macOS and Linux a leading dot in the name is enough, so the base implementation is a
+    // no-op that reports success. Returns false when the item could not be hidden.
+    virtual bool setHidden(const QString& path);
+
     virtual void updateDisplayVersionAfterAutoUpdate(int versionCode, bool isPublic);
 
     virtual void addFileManagerExtensionToSystem() {}

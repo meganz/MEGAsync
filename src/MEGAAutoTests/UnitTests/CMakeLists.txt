@@ -33,10 +33,13 @@ set(UNIT_TEST_FILES
     MegaCatchReporterUtilities.cpp MegaCatchReporterUtilities.h
     ScaleFactorManagerTestFixture.cpp ScaleFactorManagerTestFixture.h
     StringConversions.h
+    TestSingletons.h
     ScaleFactorManagerTests.cpp
     control/TransferBatchTests.cpp
     control/TransferRemainingTimeTests.cpp
     control/UtilitiesTests.cpp
+    platform/PlatformTests.cpp
+    syncs/control/MegaIgnoreManagerTests.cpp
 )
 
 if(USE_BREAKPAD)
@@ -100,4 +103,4 @@ target_link_libraries(UnitTests
     Catch2::Catch2
     )
 
-target_include_directories(UnitTests PRIVATE ../3rdparty ${MegaSyncDir})
+target_include_directories(UnitTests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ../3rdparty ${MegaSyncDir})

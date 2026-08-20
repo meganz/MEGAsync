@@ -347,6 +347,12 @@ bool AbstractPlatform::makePubliclyReadable(const QString& /*fileName*/)
     return false;
 }
 
+bool AbstractPlatform::setHidden(const QString& /*path*/)
+{
+    // Items whose name starts with a dot are already hidden, nothing to do
+    return true;
+}
+
 void AbstractPlatform::updateDisplayVersionAfterAutoUpdate(int /*versionCode*/, bool /*isPublic*/)
 {}
 

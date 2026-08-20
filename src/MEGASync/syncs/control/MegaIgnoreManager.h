@@ -69,6 +69,8 @@ public:
 
     void setOutputIgnorePath(const QString& outputPath);
 
+    void setDefaultIgnorePath(const QString& defaultPath);
+
     void setInputDirPath(const QString& inputDir, bool createIfNotExist = true);
 
     bool hasChanged() const;
@@ -94,7 +96,7 @@ public:
     }
 
 private:
-    static QString getDefaultFilePath();
+    QString getDefaultFilePath() const;
     static QStringList readTrimmedLines(const QString& filePath);
 
     template<class Type>
@@ -105,6 +107,7 @@ private:
 
     QString mMegaIgnoreFile;
     QString mOutputMegaIgnoreFile;
+    QString mDefaultMegaIgnoreFile;
     QList<std::shared_ptr<MegaIgnoreRule>> mRules;
     QList<std::shared_ptr<MegaIgnoreRule>> mNameRules;
     QMap<QString, std::shared_ptr<MegaIgnoreRule> > mExtensionRules;
