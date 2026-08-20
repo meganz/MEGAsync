@@ -1455,7 +1455,13 @@ void StalledIssuesModel::chooseLastModifiedLocalRemoteIssues(const QModelIndexLi
 
 void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
 {
-    auto ignoredItemsBySync = new QMap<mega::MegaHandle, QList<IgnoredStalledIssue::IgnoredPath>>();
+    // One MegaIgnoreManager per sync, reused across every issue that belongs to it, so each
+    // issue's rule is written to disk - via applyChanges() below - before that issue can be
+    // counted as fixed rather than after the whole selection has already been decided.
+    auto managersBySync =
+        std::make_shared<QMap<mega::MegaHandle, std::shared_ptr<MegaIgnoreManager>>>();
+    auto addedPathsBySync =
+        std::make_shared<QMap<mega::MegaHandle, QList<IgnoredStalledIssue::IgnoredPath>>>();
 
     // Set while deciding each issue, read once every issue has been decided. Both are tracked
     // because a selection can hold one of each, and the error has to name every reason it saw.
@@ -1463,15 +1469,16 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
     auto otherFailure = std::make_shared<bool>(false);
 
     auto resolveIssue =
-        [this, ignoredItemsBySync, unsupportedPattern, otherFailure](int row) -> bool
+        [this, managersBySync, addedPathsBySync, unsupportedPattern, otherFailure](int row) -> bool
     {
         auto item(getStalledIssueByRow(row));
         if(auto ignorableItem = StalledIssue::convert<IgnoredStalledIssue>(item.getData()))
         {
             if(!item.getData()->syncIds().isEmpty())
             {
+                auto syncId(item.getData()->firstSyncId());
                 std::shared_ptr<mega::MegaSync> sync(
-                    MegaSyncApp->getMegaApi()->getSyncByBackupId(item.getData()->firstSyncId()));
+                    MegaSyncApp->getMegaApi()->getSyncByBackupId(syncId));
                 if(sync)
                 {
                     auto folderPath(
@@ -1487,9 +1494,16 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
                             return false;
                         }
 
-                        auto& items = (*ignoredItemsBySync)[item.getData()->firstSyncId()];
+                        auto& manager = (*managersBySync)[syncId];
+                        if (!manager)
+                        {
+                            manager = std::make_shared<MegaIgnoreManager>(folderPath, false);
+                        }
+
+                        auto& addedPaths = (*addedPathsBySync)[syncId];
                         auto ignoredItems = ignorableItem->getIgnoredFiles();
 
+                        QList<IgnoredStalledIssue::IgnoredPath> newlyAddedPaths;
                         foreach(auto& ignoredItem, ignoredItems)
                         {
                             auto findRepeatedPath =
@@ -1498,13 +1512,48 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
                                        ignoredItem.path == check.path;
                             };
 
-                            if(std::find_if(items.cbegin(), items.cend(), findRepeatedPath) ==
-                                items.cend())
+                            if (std::find_if(addedPaths.cbegin(),
+                                             addedPaths.cend(),
+                                             findRepeatedPath) == addedPaths.cend())
                             {
-                                items.append(ignoredItem);
-                                MegaSyncApp->getStatsEventHandler()->sendEvent(
-                                    AppStatsEvents::EventType::SI_IGNORE_SOLVED_MANUALLY);
+                                addedPaths.append(ignoredItem);
+
+                                // Backstop: a pattern that got past the per-issue check above.
+                                if (!manager->addNameRule(
+                                        MegaIgnoreNameRule::Class::EXCLUDE,
+                                        IgnoredStalledIssue::ignoreRulePattern(ignoredItem, *sync),
+                                        ignoredItem.target))
+                                {
+                                    *unsupportedPattern = true;
+                                    return false;
+                                }
+
+                                newlyAddedPaths.append(ignoredItem);
                             }
+                        }
+
+                        // Persist this sync's rules - including the ones just added for this
+                        // issue - before returning true, so a write failure is caught here
+                        // instead of after the issue has already been marked solved.
+                        auto applyResult(manager->applyChanges());
+                        if (applyResult ==
+                            MegaIgnoreManager::ApplyChangesError::UNSUPPORTED_PATTERN)
+                        {
+                            *unsupportedPattern = true;
+                            return false;
+                        }
+                        else if (applyResult ==
+                                 MegaIgnoreManager::ApplyChangesError::NO_WRITE_PERMISSION)
+                        {
+                            *otherFailure = true;
+                            return false;
+                        }
+
+                        for (int newPathIndex = 0; newPathIndex < newlyAddedPaths.size();
+                             ++newPathIndex)
+                        {
+                            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                                AppStatsEvents::EventType::SI_IGNORE_SOLVED_MANUALLY);
                         }
 
                         return true;
@@ -1521,49 +1570,17 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
 
     auto issuesToFix(list.size());
 
-    auto finishFunc = [this, ignoredItemsBySync, issuesToFix, unsupportedPattern, otherFailure](
-                          int issuesFixed,
-                          bool externallyModified)
+    auto finishFunc = [this, issuesToFix, unsupportedPattern, otherFailure](int issuesFixed,
+                                                                            bool externallyModified)
     {
-        foreach(auto syncId,  ignoredItemsBySync->keys())
-        {
-            std::shared_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(syncId));
-            if(sync)
-            {
-                auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
-                MegaIgnoreManager manager(folderPath, false);
-
-                auto ignoredFiles(ignoredItemsBySync->value(syncId));
-                foreach(auto ignoredPath, ignoredFiles)
-                {
-                    // Backstop: a pattern that got past the per-issue check above. The rule is not
-                    // written, so the issue it belongs to is not resolved even though it was
-                    // already counted as fixed - say so rather than write nothing in silence.
-                    if (!manager.addNameRule(
-                            MegaIgnoreNameRule::Class::EXCLUDE,
-                            IgnoredStalledIssue::ignoreRulePattern(ignoredPath, *sync),
-                            ignoredPath.target))
-                    {
-                        *unsupportedPattern = true;
-                    }
-                }
-
-                if (manager.applyChanges() ==
-                    MegaIgnoreManager::ApplyChangesError::UNSUPPORTED_PATTERN)
-                {
-                    *unsupportedPattern = true;
-                }
-            }
-        }
-
-        // A pattern refused while the rules were being written is reported even though every
-        // issue was counted as fixed: the rule it stands for is not in the file.
-        if (!externallyModified && (issuesFixed < issuesToFix || *unsupportedPattern))
+        // unsupportedPattern/otherFailure already imply issuesFixed < issuesToFix - resolveIssue
+        // only sets either after deciding the item failed - but checking them directly here keeps
+        // the guard correct even if a future resolveIssue path sets one without failing the item.
+        if (!externallyModified &&
+            (issuesFixed < issuesToFix || *unsupportedPattern || *otherFailure))
         {
             showIgnoreItemsError(issuesFixed == 0, *unsupportedPattern, *otherFailure);
         }
-
-        delete ignoredItemsBySync;
     };
 
     SolveListInfo info(list, resolveIssue);
