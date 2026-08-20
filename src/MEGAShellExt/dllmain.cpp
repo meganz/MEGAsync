@@ -188,6 +188,16 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
 // 
 STDAPI DllCanUnloadNow(void)
 {
+    // The modern context menu objects (winrt::implements) count on the WinRT
+    // module lock, not on g_cDllRef. In dllhost.exe only those objects exist,
+    // so ignoring the module lock unloads the DLL under live objects (SNC-6839).
+    if (winrt::get_module_lock())
+    {
+        return S_FALSE;
+    }
+
+    winrt::clear_factory_cache();
+
     return g_cDllRef > 0 ? S_FALSE : S_OK;
 }
 

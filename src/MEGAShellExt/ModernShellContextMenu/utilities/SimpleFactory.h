@@ -26,8 +26,19 @@ struct SimpleFactory: winrt::implements<SimpleFactory<T>, IClassFactory>
         return winrt::to_hresult();
     }
 
-    IFACEMETHODIMP LockServer(BOOL) noexcept override
+    IFACEMETHODIMP LockServer(BOOL fLock) noexcept override
     {
+        // COM pins/unpins the server through LockServer; count it on the WinRT
+        // module lock so DllCanUnloadNow honours the pin.
+        if (fLock)
+        {
+            ++winrt::get_module_lock();
+        }
+        else
+        {
+            --winrt::get_module_lock();
+        }
+
         return S_OK;
     }
 };
