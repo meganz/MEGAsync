@@ -3,8 +3,11 @@
 
 #include "ExclusionRulesModel.h"
 #include "QmlDialogWrapper.h"
+#include "SyncSettings.h"
 
 #include <QScreen>
+
+#include <memory>
 
 class SyncExclusions : public QMLComponent
 {
@@ -21,7 +24,9 @@ class SyncExclusions : public QMLComponent
     Q_PROPERTY(bool isDefault READ isDefault NOTIFY isDefaultChanged)
 
 public:
-    SyncExclusions(QWidget *parent = 0, const QString &path = QString::fromUtf8(""));
+    SyncExclusions(QWidget* parent = 0,
+                   const QString& path = QString::fromUtf8(""),
+                   std::shared_ptr<SyncSettings> syncSetting = nullptr);
     ~SyncExclusions();
 
     enum SizeExclusionStatus{
@@ -80,6 +85,7 @@ private:
     ExclusionRulesModel* mRulesModel;
     QString mFolderName;
     QString mFolderFullPath;
+    std::shared_ptr<SyncSettings> mSyncSetting;
 };
 
 #endif // SYNCEXCLUSIONS_H

@@ -7,8 +7,10 @@
 #include "SyncSettings.h"
 
 #include <QDir>
+#include <QSet>
 #include <QString>
 
+#include <functional>
 #include <optional>
 
 /**
@@ -66,6 +68,12 @@ public:
     void resetSync(std::shared_ptr<SyncSettings> syncSetting,
                    mega::MegaSync::SyncRunningState initialState);
 
+    // Suspends the sync, runs duringPause once it has actually stopped, then resumes it.
+    // Use this instead of resetSync() when the local folder is modified in a way that
+    // must not be seen by a still-running sync (e.g. removing .megaignore).
+    void pauseRunAndResume(std::shared_ptr<SyncSettings> syncSetting,
+                           std::function<void()> duringPause);
+
     // Local folder checks
     QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
     Syncability isLocalFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
@@ -119,6 +127,11 @@ private:
     void syncOperationBegins();
     void syncOperationEnds();
     uint mActiveOperations;
+
+    // backupIds currently inside a pauseRunAndResume() call, so a reentrant call for the
+    // same sync (e.g. a second click processed while the first is still blocked waiting
+    // on the SDK) can be rejected instead of racing it.
+    QSet<mega::MegaHandle> mPauseRunAndResumeInProgress;
 
     mega::MegaApi* mApi;
 

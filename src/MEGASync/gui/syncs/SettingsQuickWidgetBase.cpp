@@ -94,7 +94,7 @@ void SettingsQuickWidgetBase::openExclusionsDialog(int index) const
     if (syncDir.exists())
     {
         QPointer<QmlDialogWrapper<SyncExclusions>> exclusions =
-            new QmlDialogWrapper<SyncExclusions>(this->window(), sync->getLocalFolder());
+            new QmlDialogWrapper<SyncExclusions>(this->window(), sync->getLocalFolder(), sync);
 
         DialogOpener::showDialog(exclusions);
     }
