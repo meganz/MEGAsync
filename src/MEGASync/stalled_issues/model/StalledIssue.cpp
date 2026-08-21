@@ -238,6 +238,10 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
     if (missingFingerprint())
     {
         std::shared_ptr<DownloadTransferInfo> info(new DownloadTransferInfo());
+        // The fix download regenerates the fingerprint on completion (SDK side), but the
+        // stall is still reported until the new fingerprint reaches the cloud node, so a
+        // completed download must keep suppressing it too
+        info->state = TransferData::PENDING_STATES_MASK | TransferData::TRANSFER_COMPLETED;
         // Check if transfer already exists
         if (isBeingSolvedByDownload(info))
         {
