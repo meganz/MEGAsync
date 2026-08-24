@@ -436,6 +436,11 @@
         <translation>Atașează fișiere jurnal de diagnosticare pentru a ajuta la depanare</translation>
     </message>
     <message>
+        <source>Bug report can&apos;t be submitted due to some error. Please try again or contact [A]Support[/A].</source>
+        <translatorcomment>Warning message shown when some error occurs during uploading a bug report. [A][/A] is a hyperlink placeholder linking to the support form.</translatorcomment>
+        <translation>Problema ta nu a putut fi trimisă din cauza unei erori. Încearcă din nou mai târziu sau contactează [A]asistența[/A] dacă problema persistă.</translation>
+    </message>
+    <message>
         <source>Bug report is uploading, it may take a few minutes</source>
         <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
         <translation>Problema raportată se încarcă, poate dura câteva minute.</translation>
@@ -474,6 +479,11 @@
         <source>Please describe your issue in detail. Must be at least 30 characters.</source>
         <translatorcomment>Validation error shown when the reported issue description does not reach the minimum required length. SNC-6268</translatorcomment>
         <translation>Vă rugăm să descrieți problema în detaliu. Trebuie să aibă cel puțin 30 de caractere.</translation>
+    </message>
+    <message>
+        <source>Please try again later or contact [A]Support[/A] if the problem persists.</source>
+        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins. [A][/A] is a hyperlink placeholder linking to the support form. con-364</translatorcomment>
+        <translation>Încearcă din nou mai târziu sau contactează [A]asistența[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -1175,6 +1185,11 @@
         <translatorcomment>Checkbox label in the node selector destination breadcrumb to set the current folder as the default upload destination. SNC-6420</translatorcomment>
         <translation>Încarcă mereu în această destinație</translation>
     </message>
+    <message>
+        <source>Destination</source>
+        <translatorcomment>Label/title of the destination breadcrumb in the node selector, showing the folder files will be uploaded to. SNC-6420</translatorcomment>
+        <translation>Destinație</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -1356,6 +1371,11 @@
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
         <translation>Folderul de la această destinație va fi menținut.</translation>
+    </message>
+    <message>
+        <source>The folder will be renamed as:</source>
+        <translatorcomment>Text explaining the result of the folder rename action. SNC-6420</translatorcomment>
+        <translation>Folderul va fi redenumit în:</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -1855,6 +1875,11 @@
             <numerusform>%n rezultate</numerusform>
             <numerusform>%n rezultate</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
+        <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Toate elementele vor fi șterse definitiv. Această acțiune [B]nu poate[/B] fi anulată.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2963,6 +2988,11 @@ Așteptați finalizarea încărcării.</translation>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
         <translation>Ați fost deconectat de la acest aparat dintr-o altă locație</translation>
     </message>
+    <message>
+        <source>You have been logged out. Please contact [A]Support[/A] if this issue persists.</source>
+        <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. [A][/A] is a hyperlink placeholder linking to the support form. CON-541</translatorcomment>
+        <translation>Ai fost deconectat. Contactează [A]asistența[/A] dacă problema persistă.</translation>
+    </message>
 </context>
 <context>
     <name>LowDiskSpaceDialog</name>
@@ -3058,6 +3088,11 @@ Așteptați finalizarea încărcării.</translation>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>Înlătură</translation>
+    </message>
+    <message>
+        <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>Vrei să încarci „%1” în MEGA?</translation>
     </message>
     <message numerus="yes">
         <source>Do you want to upload %n file to MEGA?</source>
@@ -4572,6 +4607,11 @@ Introdu un alt nume.</translation>
         <translation>Fișiere</translation>
     </message>
     <message>
+        <source>Searching…</source>
+        <translatorcomment>Loading text shown in the node selector while a search for nodes is in progress. SNC-6420</translatorcomment>
+        <translation>Se caută…</translation>
+    </message>
+    <message>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
         <translation>Elementul pe care l-ai selectat a fost eliminat. Pentru a reselecta, închide această fereastră și încearcă din nou.</translation>
@@ -4779,6 +4819,11 @@ Introdu un alt nume.</translation>
         <source>Sort by date added</source>
         <translatorcomment>Table header tooltip for Date added column. SNC.5804</translatorcomment>
         <translation>Sortează după data adăugării</translation>
+    </message>
+    <message>
+        <source>Sort by label</source>
+        <translatorcomment>Sort option to order nodes by their label in the node selector. SNC-6420</translatorcomment>
+        <translation>Sortează după etichetă</translation>
     </message>
     <message>
         <source>Sort by last modified date</source>
@@ -5167,6 +5212,21 @@ Introdu un alt nume.</translation>
         <translation>Sincronizează</translation>
     </message>
     <message>
+        <source>This folder is empty. Keep something safe with zero-knowledge encryption.</source>
+        <translatorcomment>Empty-state message shown in the node selector when the current folder has no items. SNC-6420</translatorcomment>
+        <translation>Acest folder este gol. Păstrează fișierele în siguranță cu criptare zero-knowledge.</translation>
+    </message>
+    <message>
+        <source>This folder is read and write. Ask for full access to sync</source>
+        <translatorcomment>Informational message in the node selector shown for a read-and-write shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
+        <translation>Acest folder permite citire și scriere. Solicită acces complet pentru a sincroniza</translation>
+    </message>
+    <message>
+        <source>This folder is read-only. Ask for full access to sync</source>
+        <translatorcomment>Informational message in the node selector shown for a read-only shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
+        <translation>Acest folder este doar pentru citire. Solicită acces complet pentru a sincroniza</translation>
+    </message>
+    <message>
         <source>Upload</source>
         <translatorcomment>Action button in the node selector to upload to the selected folder. SNC-6420</translatorcomment>
         <translation>Încarcă</translation>
@@ -5271,6 +5331,11 @@ Introdu un alt nume.</translation>
         <source>No search results</source>
         <translatorcomment>Message on the view when the search did not find any coincidence. SNC-5804</translatorcomment>
         <translation>Niciun rezultat al căutării</translation>
+    </message>
+    <message>
+        <source>Try a different name or check the spelling</source>
+        <translatorcomment>Empty-state hint in the node selector search view, suggesting the user refine their search. SNC-6420</translatorcomment>
+        <translation>Încearcă un alt nume sau verifică ortografia</translation>
     </message>
 </context>
 <context>
@@ -6304,6 +6369,18 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
+        <source>- Clearer handling of stalled issues and name conflicts.
+- Improved the install and update process with better cleanup of outdated components.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
+        <translation>- Gestionare mai clară a problemelor blocate și a conflictelor de denumire.
+- Procesul de instalare și actualizare îmbunătățit, cu o curățare mai bună a componentelor vechi.
+- Corectări și ajustări ale interfeței în ferestrele de sincronizare, backup și transfer.
+- Corectări de erori și îmbunătățiri de performanță.</translation>
+    </message>
+    <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
 - Bug fixes and performance improvements.
@@ -6331,6 +6408,18 @@ Introdu un alt nume.</translation>
         <translation>- Conflictele provocate de numele duplicate ale folderelor sunt acum rezolvate automat.
 - Dialogurile pentru cloud drive, sincronizare, backup și setări sunt mai clare și mai coerente.
 - Remedieri de erori și îmbunătiri ale performanței.</translation>
+    </message>
+    <message>
+        <source>- Revamped and improved File Manager.
+- Revamped Syncs and Backups tabs in the Settings dialog.
+- Improved Wayland support.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.5.0. SNC-6656</translatorcomment>
+        <translation>- Manager de fișiere reconceput și îmbunătățit.
+- Filele Sincronizare și Backup reconcepute în fereastra Setări.
+- Suport Wayland îmbunătățit.
+- Corectări de erori și îmbunătățiri de performanță.</translation>
     </message>
 </context>
 <context>
@@ -7815,6 +7904,11 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Elimină folderul sincronizat</translation>
     </message>
     <message>
+        <source>Removing</source>
+        <translatorcomment>Status description for the removal of a sync or backup state. SNC-6404</translatorcomment>
+        <translation>Se elimină</translation>
+    </message>
+    <message>
         <source>Rescan</source>
         <translatorcomment>Sync menu command to rescan the sync. SNC-6404</translatorcomment>
         <translation>Rescanați</translation>
@@ -8536,6 +8630,11 @@ Actualizați lista.</translation>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Nu poți reda în flux foldere. Selectează un fișier pentru a reda în flux.</translation>
     </message>
+    <message>
+        <source>Select a file to stream</source>
+        <translatorcomment>Guidance message in the streaming node selector prompting the user to pick a file to stream. SNC-6420</translatorcomment>
+        <translation>Selectează un fișier pentru streaming</translation>
+    </message>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
@@ -9151,10 +9250,35 @@ Please move it to a location that is less than 64 folders deep.</source>
 <context>
     <name>SyncNodeSelector</name>
     <message>
+        <source>Choose a different folder. This folder is already synced</source>
+        <translatorcomment>Validation message in the sync node selector shown when the selected folder is already synced. SNC-6420</translatorcomment>
+        <translation>Alege un alt folder. Acest folder este deja sincronizat.</translation>
+    </message>
+    <message>
+        <source>Choose a different folder. This location contains a folder that&apos;s already synced</source>
+        <translatorcomment>Validation message in the sync node selector shown when the selected location contains a folder that is already synced. SNC-6420</translatorcomment>
+        <translation>Alege un alt folder. Această locație conține un folder deja sincronizat.</translation>
+    </message>
+    <message>
+        <source>Folder to sync</source>
+        <translatorcomment>Label in the sync node selector for the folder that will be synced. SNC-6420</translatorcomment>
+        <translation>Folder de sincronizat</translation>
+    </message>
+    <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
         <translation>Imposibil de sincronizat folderul.. Asigurați-vă că nu folosiți „\”, „/” sau „:” în numele folderelor.</translation>
+    </message>
+    <message>
+        <source>Only shared folders with full access can be synced</source>
+        <translatorcomment>Informational message in the sync node selector indicating only full-access shared folders can be synced. SNC-6420</translatorcomment>
+        <translation>Doar folderele partajate cu acces complet pot fi sincronizate</translation>
+    </message>
+    <message>
+        <source>Select a full access shared folder to sync</source>
+        <translatorcomment>Guidance message in the sync node selector prompting the user to choose a full-access shared folder to sync. SNC-6420</translatorcomment>
+        <translation>Selectează un folder partajat cu acces complet pentru sincronizare</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>

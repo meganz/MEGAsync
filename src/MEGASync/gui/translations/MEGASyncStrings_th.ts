@@ -6210,6 +6210,18 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
+        <source>- Clearer handling of stalled issues and name conflicts.
+- Improved the install and update process with better cleanup of outdated components.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
+        <translation>- ปรับปรุงการจัดการปัญหาการซิงค์ข้อมูลหยุดชะงักและชื่อไฟล์ที่ซ้ำกันให้ชัดเจนยิ่งขึ้น
+- ปรับปรุงกระบวนการติดตั้งและอัปเดต พร้อมเพิ่มประสิทธิภาพในการล้างไฟล์ส่วนประกอบเก่าที่ไม่ได้ใช้งาน
+- ปรับปรุงและแก้ไขหน้าต่างเมนูการซิงค์ การสำรองข้อมูล และการถ่ายโอนข้อมูล
+- แก้ไขข้อผิดพลาดและปรับปรุงประสิทธิภาพการทำงานทั่วไป</translation>
+    </message>
+    <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
 - Bug fixes and performance improvements.

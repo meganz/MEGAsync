@@ -3031,6 +3031,11 @@ Please wait for the upload to complete.</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>忽略</translation>
     </message>
+    <message>
+        <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>您想将“%1”上传到 MEGA 吗？</translation>
+    </message>
     <message numerus="yes">
         <source>Do you want to upload %n file to MEGA?</source>
         <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account. SNC-6678</translatorcomment>
@@ -6207,6 +6212,18 @@ Enter a different name</source>
 </context>
 <context>
     <name>Preferences</name>
+    <message>
+        <source>- Clearer handling of stalled issues and name conflicts.
+- Improved the install and update process with better cleanup of outdated components.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
+        <translation>- 对停滞问题及名称冲突的处理更加清晰。
+- 安装与更新过程得到改进，更彻底地清理过时组件。
+- 在同步、备份和传输对话框中的界面修复与调整。
+- 错误修复与性能提升。</translation>
+    </message>
     <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
