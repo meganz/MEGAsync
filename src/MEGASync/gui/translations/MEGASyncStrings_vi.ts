@@ -6213,6 +6213,18 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
+        <source>- Clearer handling of stalled issues and name conflicts.
+- Improved the install and update process with better cleanup of outdated components.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
+        <translation>- Xử lý rõ ràng hơn các vấn đề bị treo và xung đột tên.
+- Cải thiện quy trình cài đặt và cập nhật với việc dọn dẹp các thành phần lỗi thời tốt hơn.
+- Sửa lỗi và điều chỉnh giao diện trong các hộp thoại đồng bộ, sao lưu và truyền tệp.
+- Sửa lỗi và cải thiện hiệu suất.</translation>
+    </message>
+    <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
 - Bug fixes and performance improvements.
