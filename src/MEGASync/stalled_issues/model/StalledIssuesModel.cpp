@@ -290,7 +290,15 @@ void StalledIssuesModel::onProcessStalledIssues(ReceivedStalledIssues issuesRece
         mHashDiscardTracker->keepTrackIssues(trackedFailedIssues);
         trackedFailedIssuesChanged = trackedFailedIssues != trackedFailedIssuesSnapshot;
         mHashDiscardTracker->purgeExpired();
-        issuesReceived.failedAutoSolvedStalledIssues().append(trackedFailedIssues);
+
+        // Only re-insert when the model is about to be reset (same condition used in
+        // the receiver lambda below); on non-reset updates the failed issues are
+        // still in the model, and re-appending them duplicates the list on every
+        // update tick
+        if (updateType == UpdateType::UI || trackedFailedIssuesChanged)
+        {
+            issuesReceived.failedAutoSolvedStalledIssues().append(trackedFailedIssues);
+        }
     }
 
     if (!issuesReceived.isEmpty())
