@@ -645,6 +645,19 @@ public:
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
 
+    // Receives mega::MegaApi::LOG_LEVEL_* messages. Taken as a callback because folder
+    // permissions are enforced at startup, before the MegaApi logger is available.
+    using PermissionsLogger = std::function<void(int logLevel, const QString& message)>;
+
+    // Restricts `folder` so that only its owner can access it, protecting every file
+    // inside from other users even though they are created with the default umask.
+    // Applied on every call, so a folder left behind by a previous version, or loosened
+    // afterwards, is tightened as well. How the folder is restricted, and whether it
+    // needs to be at all, is platform specific: see AbstractPlatform::restrictToOwner().
+    // Logs only when the permissions had to be changed, or when that failed. Callers own
+    // the decision of whether the folder is theirs to restrict.
+    static void restrictFolderToOwner(const QString& folder, const PermissionsLogger& logger);
+
     static void queueFunctionInAppThread(std::function<void()> fun);
     static void queueFunctionInObjectThread(QObject* object, std::function<void()> fun);
 

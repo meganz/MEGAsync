@@ -338,6 +338,17 @@ int main(int argc, char *argv[])
     const QString dataPath = MegaApplication::applicationDataPath();
     QDir dataDir(dataPath);
 
+    // Keep the configuration unreadable to other users, before anything writes into the
+    // data directory. The folder is already created restricted, so this mostly catches
+    // folders left behind by previous versions, or loosened afterwards. The MegaApi logger
+    // is not available yet, so messages are buffered and flushed after the application is
+    // created.
+    MegaApplication::restrictDataPathPermissions(
+        [](int logLevel, const QString& message)
+        {
+            logMessages.emplace_back(logLevel, message);
+        });
+
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         uninstall();

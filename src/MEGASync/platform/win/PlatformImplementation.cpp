@@ -850,6 +850,20 @@ bool PlatformImplementation::setHidden(const QString& path)
     return SetFileAttributesW(nativePathPtr, attributes | FILE_ATTRIBUTE_HIDDEN) != FALSE;
 }
 
+bool PlatformImplementation::isRestrictedToOwner(const QString& /*path*/)
+{
+    // The per-user data location (%LOCALAPPDATA%) already denies access to other users
+    // through the ACLs it inherits, so there is nothing to check.
+    return true;
+}
+
+bool PlatformImplementation::restrictToOwner(const QString& /*path*/)
+{
+    // Nothing to do, see isRestrictedToOwner(). Overridden so the POSIX owner-only
+    // permissions of the base implementation are never applied to an ACL-governed path.
+    return true;
+}
+
 void PlatformImplementation::updateDisplayVersionAfterAutoUpdate(int versionCode, bool isPublic)
 {
     const int major = versionCode / 10000;

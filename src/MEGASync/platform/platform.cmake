@@ -45,6 +45,18 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/win/WinThemeWatcher.cpp
 )
 
+# Shared by the POSIX platform implementations, so it is built for both macOS and Linux.
+# It must be declared once: target_sources_conditional() marks the files it is given
+# HEADER_FILE_ONLY when its flag is false, and listing them in the macOS and the Linux
+# blocks would let the block whose flag is false exclude them from the build.
+target_sources_conditional(${ExecutableTarget}
+   FLAG UNIX
+   QT_AWARE
+   PRIVATE
+   ${CMAKE_CURRENT_LIST_DIR}/posix/PosixFileSystem.h
+   ${CMAKE_CURRENT_LIST_DIR}/posix/PosixFileSystem.cpp
+)
+
 target_sources_conditional(${ExecutableTarget}
    FLAG APPLE
    QT_AWARE
