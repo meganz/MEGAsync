@@ -1997,7 +1997,12 @@ void MegaApplication::processDownloadQueue(QString path)
 void MegaApplication::createTransferManagerDialog()
 {
     mTransferManager = new TransferManager(megaApi);
-    infoDialog->setTransferManager(mTransferManager);
+    // infoDialog is reset on logout and not yet created before onboarding
+    // finishes; the tray action can still fire in both states.
+    if (infoDialog)
+    {
+        infoDialog->setTransferManager(mTransferManager);
+    }
 
     // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If
     // Completed tab is active, tracking is disabled
