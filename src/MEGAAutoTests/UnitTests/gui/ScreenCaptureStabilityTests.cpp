@@ -278,3 +278,220 @@ TEST_CASE_METHOD(StabilityFixture, "a capture removed before settling is dropped
     detector.tick(6);
     REQUIRE(recorder.countOf(healthy) == 1);
 }
+
+TEST_CASE_METHOD(StabilityFixture, "files present before start() are baselined, never uploaded")
+{
+    // Everything already in the folder when the detector starts belongs to the
+    // user's past, not to this session. Reporting it would bulk-upload (and,
+    // with link copying on, publicly export) the folder's history.
+    const QString preexisting = write(QString::fromUtf8("Screenshot_old.png"), 512);
+
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    detector.rescan(mWatched);
+    detector.tick(6);
+    CHECK(recorder.countOf(preexisting) == 0);
+
+    // A capture taken after start is what the detector exists for.
+    const QString fresh = write(QString::fromUtf8("Screenshot_new.png"), 512);
+    detector.rescan(mWatched);
+    detector.tick(6);
+    REQUIRE(recorder.countOf(fresh) == 1);
+    CHECK(recorder.count() == 1);
+}
+
+TEST_CASE_METHOD(StabilityFixture, "a file still being written is not reported until it settles")
+{
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    // A capture tool streaming the PNG out: the size keeps moving.
+    const QString growing = write(QString::fromUtf8("Screenshot_grow.png"), 100);
+    detector.rescan(mWatched);
+    detector.tick(2);
+    CHECK(recorder.count() == 0); // one stable tick is not enough
+
+    QFile file(QDir(mWatched).filePath(QString::fromUtf8("Screenshot_grow.png")));
+    REQUIRE(file.open(QIODevice::Append));
+    file.write(QByteArray(200, 'y'));
+    file.close();
+
+    // The growth resets the stability count; only after the size holds for two
+    // consecutive ticks is the capture reported -- and exactly once.
+    detector.tick();
+    CHECK(recorder.count() == 0);
+    detector.tick(6);
+    REQUIRE(recorder.countOf(growing) == 1);
+    CHECK(recorder.count() == 1);
+}
+
+TEST_CASE_METHOD(StabilityFixture, "macOS dot-file temporaries are ignored until renamed")
+{
+    // macOS writes ".Screenshot ….png" first and renames it to the visible
+    // name when the capture is complete. The dot-file must not be reported;
+    // the renamed file must.
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    const QString hiddenName = QString::fromUtf8(".Screenshot 2026-06-10.png");
+    write(hiddenName, 512);
+    detector.rescan(mWatched);
+    detector.tick(6);
+    CHECK(recorder.count() == 0);
+
+    const QString finalPath =
+        QDir(mWatched).filePath(QString::fromUtf8("Screenshot 2026-06-10.png"));
+    REQUIRE(QFile::rename(QDir(mWatched).filePath(hiddenName), finalPath));
+    detector.rescan(mWatched);
+    detector.tick(6);
+    REQUIRE(recorder.countOf(QDir::toNativeSeparators(finalPath)) == 1);
+    CHECK(recorder.count() == 1);
+}
+
+TEST_CASE_METHOD(StabilityFixture, "only image extensions count, even in a dedicated folder")
+{
+    // A dedicated capture folder accepts any *image*, whatever its name -- but
+    // never other file types. Screen recordings land next to screenshots on
+    // every OS and must not be uploaded by this feature.
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    write(QString::fromUtf8("Screen Recording 2026-06-10.mov"), 512);
+    write(QString::fromUtf8("Screenshot notes.txt"), 512);
+    write(QString::fromUtf8("Screenshot animation.gif"), 512);
+    detector.rescan(mWatched);
+    detector.tick(6);
+    CHECK(recorder.count() == 0);
+
+    // Dedicated folder: an image with a non-capture name still counts, and the
+    // extension check is case-insensitive.
+    const QString localized = write(QString::fromUtf8("cualquier imagen.jpeg"), 512);
+    const QString upper = write(QString::fromUtf8("Screenshot_upper.PNG"), 512);
+    detector.rescan(mWatched);
+    detector.tick(6);
+    CHECK(recorder.countOf(localized) == 1);
+    CHECK(recorder.countOf(upper) == 1);
+    CHECK(recorder.count() == 2);
+}
+
+TEST_CASE_METHOD(StabilityFixture, "shared folders apply the name filter end to end")
+{
+    // The statics have their own tests; this exercises the scanDirectory path
+    // that combines them: in a folder not named "Screenshots" a new image is
+    // only a capture if its NAME says so.
+    const QString shared = QDir(mTempDir.path()).filePath(QString::fromUtf8("Pictures"));
+    REQUIRE(QDir().mkpath(shared));
+
+    TestableDetector detector(shared);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    const auto writeShared = [&shared](const QString& name, int bytes)
+    {
+        const QString path = QDir(shared).filePath(name);
+        QFile file(path);
+        REQUIRE(file.open(QIODevice::WriteOnly));
+        REQUIRE(file.write(QByteArray(bytes, 'x')) == bytes);
+        file.close();
+        return QDir::toNativeSeparators(QFileInfo(path).absoluteFilePath());
+    };
+
+    const QString photo = writeShared(QString::fromUtf8("IMG_20260610_140533.png"), 512);
+    detector.rescan(shared);
+    detector.tick(6);
+    CHECK(recorder.countOf(photo) == 0);
+
+    const QString capture =
+        writeShared(QString::fromUtf8("Captura de pantalla 2026-06-10.png"), 512);
+    detector.rescan(shared);
+    detector.tick(6);
+    REQUIRE(recorder.countOf(capture) == 1);
+    CHECK(recorder.count() == 1);
+}
+
+TEST_CASE_METHOD(StabilityFixture, "stop() and start() rebuild the baseline")
+{
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    const QString sessionOne = write(QString::fromUtf8("Screenshot_s1.png"), 512);
+    detector.rescan(mWatched);
+    detector.tick(6);
+    REQUIRE(recorder.countOf(sessionOne) == 1);
+
+    // The feature was toggled off (or the user logged out); anything saved in
+    // the meantime was not captured under the detector's watch.
+    detector.stop();
+    REQUIRE_FALSE(detector.isRunning());
+    const QString whileStopped = write(QString::fromUtf8("Screenshot_off.png"), 512);
+
+    detector.start();
+    settleClockAfterStart();
+    detector.rescan(mWatched);
+    detector.tick(6);
+    CHECK(recorder.countOf(whileStopped) == 0);
+    CHECK(recorder.countOf(sessionOne) == 1); // not re-reported either
+
+    const QString sessionTwo = write(QString::fromUtf8("Screenshot_s2.png"), 512);
+    detector.rescan(mWatched);
+    detector.tick(6);
+    REQUIRE(recorder.countOf(sessionTwo) == 1);
+}
+
+TEST_CASE_METHOD(StabilityFixture, "a rescan of pending files does not duplicate the report")
+{
+    // The watcher fires directoryChanged several times while a capture is being
+    // written; every one triggers a scan of the same not-yet-settled file.
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    const QString capture = write(QString::fromUtf8("Screenshot_multi.png"), 512);
+    detector.rescan(mWatched);
+    detector.rescan(mWatched);
+    detector.tick();
+    detector.rescan(mWatched);
+    detector.tick(6);
+    detector.rescan(mWatched); // and after it was reported
+    detector.tick(6);
+
+    REQUIRE(recorder.countOf(capture) == 1);
+    CHECK(recorder.count() == 1);
+}
+
+TEST_CASE_METHOD(StabilityFixture, "a capture folder deleted and recreated is picked up again")
+{
+    // The OS (or the user) removes the capture folder mid-session and it comes
+    // back later together with a first capture. QFileSystemWatcher forgets
+    // deleted paths silently, so the detector demotes the folder, watches its
+    // parent, and must re-attach when it reappears -- without swallowing that
+    // first capture as "pre-existing".
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    REQUIRE(QDir(mWatched).removeRecursively());
+    detector.rescan(mWatched); // watcher reports the change; folder is gone
+
+    REQUIRE(QDir().mkpath(mWatched));
+    const QString firstCapture = write(QString::fromUtf8("Screenshot_back.png"), 512);
+    detector.rescan(mTempDir.path()); // the watched parent sees the folder return
+
+    detector.tick(6);
+    REQUIRE(recorder.countOf(firstCapture) == 1);
+    CHECK(recorder.count() == 1);
+}
