@@ -4,6 +4,7 @@
 
 using namespace std;
 
-bool downloadFileSynchronously(string url, string path);
+// An empty userAgent leaves the request with CFNetwork's default one.
+bool downloadFileSynchronously(string url, string path, string userAgent);
 
 #endif // MACUTILS_H
