@@ -70,6 +70,16 @@ bool ScreenshotsController::isRunning() const
 
 void ScreenshotsController::refresh()
 {
+    // The offer dialog's close callback lands here during logout too, after the
+    // deferred cleanup has already unlinked Preferences: the per-user reads
+    // below would fall back to the global scope and restart the detector with
+    // no session behind it. stop() has already run at that point, so there is
+    // nothing to refresh.
+    if (!Preferences::instance()->logged())
+    {
+        return;
+    }
+
     const bool shouldRun = Preferences::instance()->uploadScreenshotsEnabled() ||
                            !Preferences::instance()->isOneTimeActionUserDone(
                                Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER);
@@ -118,6 +128,15 @@ void ScreenshotsController::onCaptureDetected(const QString& filePath)
 
 void ScreenshotsController::onEnableOfferAccepted()
 {
+    // The offer dialog stays clickable during the short window between
+    // onLogout() and the deferred closeAllDialogs(). Accepting it then would
+    // write the preference into the global scope (no user is logged) and pop
+    // the info dialog in guest state, so treat it as a decline.
+    if (!Preferences::instance()->logged())
+    {
+        return;
+    }
+
     Preferences::instance()->setUploadScreenshotsEnabled(true);
 
     // Reflect the change if the settings dialog is currently open.
