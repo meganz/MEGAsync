@@ -8,8 +8,10 @@
 #include "ThemeManager.h"
 #include "Utilities.h"
 
+#include <QDir>
 #include <QHostInfo>
 #include <QScreen>
+#include <QStandardPaths>
 
 #include <cstdlib>
 #include <fstream>
@@ -622,6 +624,11 @@ QStringList PlatformImplementation::getScreenshotsLocation()
         {
             location.replace(0, 1, QDir::homePath());
         }
+
+        // The default is stored verbatim, so it commonly carries a trailing
+        // separator ("~/Desktop/") or redundant "." / ".." segments. Normalize
+        // it: callers compare capture directories by path.
+        location = QDir::cleanPath(location);
 
         if (!location.isEmpty() && QDir(location).exists())
         {

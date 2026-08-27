@@ -23,6 +23,7 @@
 #include <comdef.h>
 #include <dpapi.h>
 #include <dwmapi.h>
+#include <memory>
 #include <shellapi.h>
 #include <taskschd.h>
 #include <tchar.h>
@@ -2094,8 +2095,14 @@ QStringList PlatformImplementation::getScreenshotsLocation()
 {
     QStringList directories;
 
-    QString picturesPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) +
-                           QString::fromUtf8("/Screenshots");
+    // Where Win+PrtScn always auto-saves, whatever the Snipping Tool is
+    // configured to do.
+    const QString defaultScreenshotsPath =
+        QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) +
+        QString::fromUtf8("/Screenshots");
+
+    // The Snipping Tool's own auto-save folder, if the user relocated it.
+    QString snippingToolPath;
 
     WCHAR localAppData[MAX_PATH] = {};
     GetEnvironmentVariableW(L"LOCALAPPDATA", localAppData, MAX_PATH);
@@ -2145,7 +2152,7 @@ QStringList PlatformImplementation::getScreenshotsLocation()
                                     .constData());
                         }
 
-                        picturesPath = resolved;
+                        snippingToolPath = resolved;
                     }
                 }
             }
@@ -2154,7 +2161,17 @@ QStringList PlatformImplementation::getScreenshotsLocation()
         RegCloseKey(hSettings);
     }
 
-    directories << picturesPath;
+    // Both, not one or the other: relocating the Snipping Tool's auto-save
+    // folder does not move Win+PrtScn, which keeps writing to
+    // Pictures\Screenshots. Replacing the default here meant a user who had
+    // relocated it lost detection of every Win+PrtScn capture.
+    // ScreenCaptureDetector normalizes and de-duplicates the list, and watches
+    // the parent of a folder that does not exist yet, so listing both is free.
+    directories << defaultScreenshotsPath;
+    if (!snippingToolPath.isEmpty())
+    {
+        directories << snippingToolPath;
+    }
 
     return directories;
 }
@@ -2174,11 +2191,41 @@ std::vector<BYTE> PlatformImplementation::readFileLocked(const std::wstring& pat
     {
         return {};
     }
-    DWORD size = GetFileSize(h, nullptr);
-    std::vector<BYTE> buf(size);
+
+    // Closes on every exit, including the exception a failed allocation below
+    // would throw past the old CloseHandle() call.
+    const std::unique_ptr<void, decltype(&::CloseHandle)> handleGuard(h, &::CloseHandle);
+
+    // GetFileSizeEx, not GetFileSize: the latter reports failure by returning
+    // INVALID_FILE_SIZE (0xFFFFFFFF), which used to go straight into the
+    // vector's size and request a 4GiB allocation, throwing std::bad_alloc out
+    // of a call path with no handler. It also truncates sizes above 4GiB.
+    LARGE_INTEGER fileSize{};
+    if (!GetFileSizeEx(h, &fileSize))
+    {
+        return {};
+    }
+
+    // The only caller reads UserClasses.dat, a registry hive of at most a few
+    // MB. Anything larger is not the file we expect, so refuse it rather than
+    // pulling it into memory. An empty result is the failure signal the caller
+    // already handles.
+    constexpr LONGLONG MAX_READ_BYTES = 64LL * 1024 * 1024;
+    if (fileSize.QuadPart <= 0 || fileSize.QuadPart > MAX_READ_BYTES)
+    {
+        return {};
+    }
+
+    std::vector<BYTE> buf(static_cast<size_t>(fileSize.QuadPart));
     DWORD read = 0;
-    ReadFile(h, buf.data(), size, &read, nullptr);
-    CloseHandle(h);
+    if (!ReadFile(h, buf.data(), static_cast<DWORD>(buf.size()), &read, nullptr))
+    {
+        return {};
+    }
+
+    // A short read leaves the tail zero-filled, and the scanners downstream
+    // cannot distinguish that from real hive content. Keep only what arrived.
+    buf.resize(read);
 
     return buf;
 }

@@ -46,6 +46,8 @@ set(UNIT_TEST_FILES
     gui/user_messages/NotificationItemTests.cpp
     gui/user_messages/UserMessageCacheManagerTests.cpp
     gui/user_messages/UserMessageModelTests.cpp
+    gui/ScreenCaptureDetectorTests.cpp
+    gui/ScreenCaptureStabilityTests.cpp
 )
 
 if(USE_BREAKPAD)

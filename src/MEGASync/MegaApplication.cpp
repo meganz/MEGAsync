@@ -1626,11 +1626,6 @@ void MegaApplication::onLoginFinished()
     ThemeManager::instance()->init();
     Platform::getInstance()->disableContextMenu(Preferences::instance()->contextMenuDisabled());
     Platform::getInstance()->unHideTrayIcon();
-
-    mScreenshotsController = ScreenshotsController::instance();
-    refreshScreenshotUploader();
-    enableClipboardCopyScreenshotLink(
-        Preferences::instance()->clipboardCopyScreenshotLinkEnabled());
 }
 
 void MegaApplication::onFetchNodesFinished()
@@ -1642,6 +1637,19 @@ void MegaApplication::onFetchNodesFinished()
         mSettingsDialog->setProxyOnly(false);
     }
     requestUserData();
+
+    // Started here rather than in onLoginFinished(): both controllers reach
+    // that before fetch-nodes has completed (LoginController::onLogin kicks off
+    // fetchNodes() and then calls it; FastLoginController::onLogin calls it and
+    // fetches afterwards). A capture detected in that window reached the
+    // uploader with no root node available, raising a "not ready yet" error
+    // popup -- and because the detector had already recorded the file, it was
+    // never retried. Starting once the nodes are in place means the account is
+    // always usable while the detector is watching.
+    mScreenshotsController = ScreenshotsController::instance();
+    refreshScreenshotUploader();
+    enableClipboardCopyScreenshotLink(
+        Preferences::instance()->clipboardCopyScreenshotLinkEnabled());
 }
 
 void MegaApplication::onLogout()
@@ -1915,7 +1923,7 @@ void MegaApplication::processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>
     {
         if (queueHasCaptures)
         {
-            notifyCaptureUploadsDiscarded();
+            notifyCaptureUploadsSkipped();
         }
         queue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The upload has been cancelled"));
@@ -1932,6 +1940,25 @@ void MegaApplication::processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>
     }
     else
     {
+        // An automatic capture must never take a conflict dialog away from the
+        // user. DialogOpener replaces a same-class sibling by deleting it
+        // without emitting finished(), so opening a second DuplicatedNodeDialog
+        // here would destroy the one the user is filling in and silently
+        // discard their entire upload batch. Skip the capture instead: nothing
+        // has failed, the file is still on disk, and later captures are
+        // unaffected.
+        if (queueHasCaptures)
+        {
+            auto openConflictDialog = DialogOpener::findDialog<DuplicatedNodeDialog>();
+            if (openConflictDialog && openConflictDialog->getDialog())
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                             "Screenshot upload skipped: a name conflict dialog is already open");
+                notifyCaptureUploadsSkipped();
+                return;
+            }
+        }
+
         auto checkUploadNameDialog(new DuplicatedNodeDialog(caller));
         checkUploadNameDialog->setConflicts(std::move(uploads));
 
@@ -1949,7 +1976,7 @@ void MegaApplication::processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>
                     {
                         if (!*captureOutcomeSettled)
                         {
-                            notifyCaptureUploadsDiscarded();
+                            notifyCaptureUploadsSkipped();
                         }
                     });
         }
@@ -1979,17 +2006,17 @@ void MegaApplication::processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>
                 // "don't upload": no transfer will ever be created for it.
                 if (queueHasCaptures && !captureUploaded)
                 {
-                    notifyCaptureUploadsDiscarded();
+                    notifyCaptureUploadsSkipped();
                 }
             });
     }
 }
 
-void MegaApplication::notifyCaptureUploadsDiscarded()
+void MegaApplication::notifyCaptureUploadsSkipped()
 {
     if (mScreenshotsController)
     {
-        mScreenshotsController->onCaptureUploadDiscarded();
+        mScreenshotsController->onCaptureUploadSkipped();
     }
 }
 
@@ -4700,52 +4727,33 @@ void MegaApplication::uploadScreenshot(const QString& fileName,
         return;
     }
 
-    auto uploadFile = [this, fileName, targetFolderHandle]()
-    {
-        // Dedicated queue, never the shared mUploadQueue: keeps automatic
-        // captures from colliding with a user's in-flight manual upload.
-        mScreenshotUploadQueue.enqueue({fileName, MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE});
-        processUploadQueueImpl(mScreenshotUploadQueue, targetFolderHandle);
-    };
-
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED ||
                                   storageState == MegaApi::STORAGE_STATE_PAYWALL);
     if (storageIsOverQuota)
     {
-        auto overQuotaDialog =
-            OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_UPLOAD);
-        if (overQuotaDialog)
-        {
-            // Same DialogOpener caveat as in processUploadQueueImpl: a
-            // same-class sibling dialog deletes this one without emitting
-            // finished(), dropping the continuation. Fall back to destroyed()
-            // so the uploader's in-flight slot is released either way.
-            auto continuationRan = std::make_shared<bool>(false);
-            connect(overQuotaDialog.data(),
-                    &QObject::destroyed,
-                    this,
-                    [this, continuationRan]()
-                    {
-                        if (!*continuationRan)
-                        {
-                            notifyCaptureUploadsDiscarded();
-                        }
-                    });
-
-            DialogOpener::showDialog<OverQuotaDialog, TransferManager>(
-                overQuotaDialog,
-                false,
-                [uploadFile, continuationRan]()
-                {
-                    *continuationRan = true;
-                    uploadFile();
-                });
-
-            return;
-        }
+        // No upsell dialog from here. This path runs because the user pressed
+        // PrtScn, not because they asked to upload anything, and a modal over
+        // the screen they were capturing is the wrong response to a background
+        // event. It also cannot succeed: the upload would fail on quota.
+        //
+        // Nothing is hidden from the user by skipping -- applyStorageState()
+        // already raises the over-quota dialog on its own (rate-limited by
+        // OQ_DIALOG_INTERVAL_MS) and puts the info dialog into over-quota mode
+        // when the account enters RED or PAYWALL.
+        //
+        // Skipping also removes the reason the previous version needed a
+        // destroyed() fallback here: there is no continuation left to lose, and
+        // no dialog that DialogOpener could replace out from under one.
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     "Screenshot upload skipped: account is over storage quota");
+        notifyCaptureUploadsSkipped();
+        return;
     }
 
-    uploadFile();
+    // Dedicated queue, never the shared mUploadQueue: keeps automatic captures
+    // from colliding with a user's in-flight manual upload.
+    mScreenshotUploadQueue.enqueue({fileName, MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE});
+    processUploadQueueImpl(mScreenshotUploadQueue, targetFolderHandle);
 }
 
 void MegaApplication::uploadActionFromWindowAfterOverQuotaCheck()

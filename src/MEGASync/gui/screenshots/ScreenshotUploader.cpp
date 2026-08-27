@@ -19,7 +19,9 @@ ScreenshotUploader::ScreenshotUploader(MegaApi* megaApi, QObject* parent):
     mMegaApi(megaApi),
     mDelegateListener(std::make_unique<QTMegaTransferListener>(megaApi, this))
 {
-    MegaSyncApp->getMegaApi()->addTransferListener(mDelegateListener.get());
+    // Registered on the same MegaApi the delegate listener was constructed
+    // with, so the two can never end up bound to different instances.
+    mMegaApi->addTransferListener(mDelegateListener.get());
 }
 
 void ScreenshotUploader::upload(const QString& localPath)
@@ -64,6 +66,8 @@ void ScreenshotUploader::startUploadFor(const QString& localPath)
 
     mBusy = true;
     mLocalPath = localPath;
+    mCurrentTag.reset();
+    mTargetFolderHandle = INVALID_HANDLE;
     ensureRemoteFolderAndUpload();
 }
 
@@ -72,20 +76,27 @@ bool ScreenshotUploader::isBusy() const
     return mBusy;
 }
 
-void ScreenshotUploader::clearPending()
+void ScreenshotUploader::reset()
 {
     mQueue.clear();
+    mBusy = false;
+    mLocalPath.clear();
+    mCurrentTag.reset();
+    mTargetFolderHandle = INVALID_HANDLE;
 }
 
-void ScreenshotUploader::abortCurrent()
+void ScreenshotUploader::skipCurrent()
 {
     if (!mBusy)
     {
         return;
     }
 
-    fail(Error::TransferFailed,
-         QCoreApplication::translate("ScreenshotUploader", "The screenshot upload was cancelled"));
+    mBusy = false;
+    mLocalPath.clear();
+    mCurrentTag.reset();
+    mTargetFolderHandle = INVALID_HANDLE;
+    processNextInQueue();
 }
 
 void ScreenshotUploader::processNextInQueue()
@@ -98,21 +109,30 @@ void ScreenshotUploader::processNextInQueue()
 
 void ScreenshotUploader::ensureRemoteFolderAndUpload()
 {
-    const QString remotePath = QString::fromUtf8("/") + QString::fromUtf8(REMOTE_FOLDER_NAME);
-    std::unique_ptr<MegaNode> screenShotTarget(
-        mMegaApi->getNodeByPath(remotePath.toUtf8().constData()));
-    if (screenShotTarget && screenShotTarget->isFolder())
-    {
-        startUpload(screenShotTarget->getHandle());
-        return;
-    }
-
     std::unique_ptr<MegaNode> root(mMegaApi->getRootNode());
     if (!root)
     {
-        fail(Error::FolderCreationFailed,
-             QCoreApplication::translate("ScreenshotUploader",
-                                         "Your MEGA account is not ready yet"));
+        // The detector only runs once fetch-nodes has finished, so this is an
+        // internal timing problem rather than something the user can act on.
+        // Log it and drop the capture quietly instead of raising an error the
+        // user cannot do anything with.
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     "Screenshot upload skipped: no root node available yet");
+        skipCurrent();
+        return;
+    }
+
+    // Ask for a node of type FOLDER specifically. MEGA permits a file and a
+    // folder to share a name under one parent, and the previous
+    // getNodeByPath("/Screenshots") returned whichever of the two it found
+    // first. When that was a file, isFolder() was false and every capture fell
+    // through to createFolder() below -- re-running it for the life of the
+    // session, once per capture, with nothing to show for it.
+    std::unique_ptr<MegaNode> screenShotTarget(
+        mMegaApi->getChildNodeOfType(root.get(), REMOTE_FOLDER_NAME, MegaNode::TYPE_FOLDER));
+    if (screenShotTarget)
+    {
+        startUpload(screenShotTarget->getHandle());
         return;
     }
 
@@ -146,12 +166,60 @@ void ScreenshotUploader::startUpload(MegaHandle parentHandle)
         return;
     }
 
+    mTargetFolderHandle = parentHandle;
     static_cast<MegaApplication*>(qApp)->uploadScreenshot(mLocalPath, parentHandle);
+}
+
+bool ScreenshotUploader::matchesPendingCapture(MegaTransfer* transfer) const
+{
+    if (!mBusy || !transfer)
+    {
+        return false;
+    }
+
+    // A sync-engine upload is never the capture we started, even when it moves
+    // the very same file: the watched capture folder may sit inside a synced
+    // folder, in which case the sync uploads it too. Folder transfers are the
+    // parent bookkeeping entries of a recursive upload, never our single file.
+    if (transfer->getType() != MegaTransfer::TYPE_UPLOAD || transfer->isSyncTransfer() ||
+        transfer->isFolderTransfer())
+    {
+        return false;
+    }
+
+    // Same file, going into the folder we resolved for this capture.
+    return transfer->getParentHandle() == mTargetFolderHandle &&
+           mLocalPath == QString::fromUtf8(transfer->getPath());
+}
+
+void ScreenshotUploader::onTransferStart(MegaApi*, MegaTransfer* transfer)
+{
+    if (mCurrentTag.has_value() || !matchesPendingCapture(transfer))
+    {
+        return;
+    }
+
+    // Latch the tag: it is the transfer's stable identity for the rest of its
+    // life, which the local path is not (see isCurrentTransfer).
+    mCurrentTag = transfer->getTag();
 }
 
 bool ScreenshotUploader::isCurrentTransfer(MegaTransfer* transfer) const
 {
-    return mBusy && mLocalPath == QString::fromUtf8(transfer->getPath());
+    if (!mBusy || !transfer)
+    {
+        return false;
+    }
+
+    if (mCurrentTag.has_value())
+    {
+        return transfer->getTag() == *mCurrentTag;
+    }
+
+    // No tag latched (onTransferStart not seen for this transfer): fall back to
+    // the identity checks so the capture still completes instead of wedging the
+    // queue on a permanently busy slot.
+    return matchesPendingCapture(transfer);
 }
 
 void ScreenshotUploader::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaError* error)
@@ -160,8 +228,11 @@ void ScreenshotUploader::onTransferFinish(MegaApi*, MegaTransfer* transfer, Mega
     {
         if (error->getErrorCode() == MegaError::API_OK)
         {
+            const auto uploadedNode = transfer->getNodeHandle();
             mBusy = false;
-            emit uploadFinished(transfer->getNodeHandle());
+            mCurrentTag.reset();
+            mTargetFolderHandle = INVALID_HANDLE;
+            emit uploadFinished(uploadedNode);
             processNextInQueue();
             return;
         }
@@ -212,6 +283,8 @@ void ScreenshotUploader::onTransferTemporaryError(MegaApi*,
 void ScreenshotUploader::fail(Error error, const QString& message)
 {
     mBusy = false;
+    mCurrentTag.reset();
+    mTargetFolderHandle = INVALID_HANDLE;
     emit uploadFailed(error, message);
     processNextInQueue();
 }

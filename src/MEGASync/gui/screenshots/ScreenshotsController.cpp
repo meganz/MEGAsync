@@ -53,7 +53,14 @@ void ScreenshotsController::start()
 void ScreenshotsController::stop()
 {
     mDetector.stop();
-    mUploader.clearPending();
+    // Full reset, not just the queue: a capture waiting on the duplicate-name
+    // dialog or on createFolder holds the uploader's single in-flight slot
+    // without a transfer to release it, and that slot would stay taken across
+    // the next login.
+    mUploader.reset();
+    // The offer dialog may still be open; its capture belongs to the session
+    // that is going away.
+    mPendingOfferCapturePath.clear();
 }
 
 bool ScreenshotsController::isRunning() const
@@ -82,9 +89,9 @@ void ScreenshotsController::enableClipboardCopyScreenshotLink(bool enabled)
     mClipboardScreenshotLinkCopyEnabled = enabled;
 }
 
-void ScreenshotsController::onCaptureUploadDiscarded()
+void ScreenshotsController::onCaptureUploadSkipped()
 {
-    mUploader.abortCurrent();
+    mUploader.skipCurrent();
 }
 
 void ScreenshotsController::onCaptureDetected(const QString& filePath)
@@ -145,6 +152,40 @@ void ScreenshotsController::showEnableOfferDialog()
 
 void ScreenshotsController::onUploadFailed(ScreenshotUploader::Error error, const QString& message)
 {
+    // Nothing here was asked for by the user: the capture happened because they
+    // pressed a key on their own desktop. Only notify about outcomes they can
+    // actually act on, and log the rest.
+    switch (error)
+    {
+        // The capture was moved, renamed or deleted between being detected and
+        // the transfer starting. Routine, and there is nothing to fix.
+        case ScreenshotUploader::Error::LocalFileMissing:
+        // The user logged out; uploads stopping is the expected consequence.
+        case ScreenshotUploader::Error::NotLoggedIn:
+        // Session expiry has its own app-wide handling, which already tells the
+        // user and takes them to the login flow. A second notification from
+        // here would only duplicate it.
+        case ScreenshotUploader::Error::AuthExpired:
+        case ScreenshotUploader::Error::None:
+        {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                               QString::fromUtf8("Screenshot upload failed silently (%1): %2")
+                                   .arg(static_cast<int>(error))
+                                   .arg(message)
+                                   .toUtf8()
+                                   .constData());
+            return;
+        }
+
+        // Genuine problems that leave the feature broken until they clear, so
+        // the user should know. showErrorMessage() is an OS notification with
+        // its own repeat-suppression, not a modal, so it is safe from a
+        // background flow.
+        case ScreenshotUploader::Error::FolderCreationFailed:
+        case ScreenshotUploader::Error::TransferFailed:
+            break;
+    }
+
     mMegaApplication->showErrorMessage(message);
 }
 

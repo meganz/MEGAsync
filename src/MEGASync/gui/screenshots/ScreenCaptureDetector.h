@@ -36,14 +36,29 @@ public:
     // unrelated images dropped into a watched folder, e.g. the Desktop).
     static bool looksLikeScreenshot(const QString& fileName);
 
-    // Shared directories (Desktop, Pictures root) hold user files of all
-    // kinds, so new images must also pass the name filter. Dedicated capture
-    // folders (e.g. Pictures/Screenshots) only receive captures — any new
-    // image counts, which also covers localized capture names.
+    // Shared directories (Desktop, Pictures root, a capture location the user
+    // relocated onto a folder of their own files) hold user files of all kinds,
+    // so new images must also pass the name filter. Only a dedicated capture
+    // folder (leaf name "Screenshots") accepts any new image, which is what
+    // covers localized capture names. Anything unrecognized counts as shared:
+    // uploading a user's unrelated files is far worse than missing a capture.
     static bool isSharedDirectory(const QString& path);
+
+    // True if the directory is far wider than a capture folder (the home
+    // directory itself, or a filesystem root) and must not be watched. The
+    // capture location comes from user-controlled settings, so it can resolve
+    // to either.
+    static bool isTooBroadToWatch(const QString& directory);
 
 signals:
     void captureDetected(const QString& filePath);
+
+protected:
+    // The directories start() will watch. Production always answers with
+    // platformCaptureDirectories(); this exists so tests can point the detector
+    // at a temporary folder instead of the user's real capture locations, which
+    // they must never create files in.
+    virtual QStringList captureDirectories() const;
 
 private slots:
     void onDirectoryChanged(const QString& path);
@@ -59,6 +74,11 @@ private:
     {
         qint64 lastSize = -1;
         int stableTicks = 0;
+        // Ticks spent waiting for the file to settle. Bounds the lifetime of an
+        // entry that never does (e.g. a capture tool that created the file and
+        // died before writing it), which would otherwise keep the stability
+        // timer running for the rest of the session.
+        int ticksWaited = 0;
     };
 
     QFileSystemWatcher mWatcher;
@@ -72,6 +92,10 @@ private:
     QSet<QString> mPendingDirectories;
     QDateTime mStartTime;
     bool mRunning = false;
+    // Guards onStabilityTimerTimeout() against re-entering itself: emitting
+    // captureDetected() runs arbitrary code that can spin a nested event loop,
+    // which dispatches this same timer.
+    bool mInStabilityTick = false;
 };
 
 #endif // SCREEN_CAPTURE_DETECTOR_H

@@ -1,19 +1,27 @@
 #include "ScreenCaptureDetector.h"
 
+#include "megaapi.h"
 #include "Platform.h"
 
 #include <QDir>
 #include <QFileInfo>
 #include <QRegularExpression>
-#include <QStandardPaths>
+#include <QScopedValueRollback>
 
 namespace
 {
 constexpr int STABILITY_INTERVAL_MS = 150;
 constexpr int STABLE_TICKS_REQUIRED = 2; // size unchanged for ~300ms => fully written
+// ~30s at STABILITY_INTERVAL_MS. Far longer than any real capture takes to
+// write, and bounds how long a file that never settles keeps the timer alive.
+constexpr int MAX_PENDING_TICKS = 200;
 const QStringList IMAGE_EXTENSIONS{QString::fromUtf8("png"),
                                    QString::fromUtf8("jpg"),
                                    QString::fromUtf8("jpeg")};
+// Leaf name of the OS-dedicated capture folders the platform layers point at
+// (Pictures/Screenshots on Windows and Linux). Keep in sync with
+// PlatformImplementation::getScreenshotsLocation().
+const QString CAPTURE_FOLDER_NAME{QString::fromUtf8("Screenshots")};
 }
 
 ScreenCaptureDetector::ScreenCaptureDetector(QObject* parent):
@@ -43,9 +51,21 @@ void ScreenCaptureDetector::start()
     mCaptureDirectories.clear();
     mPendingDirectories.clear();
 
-    const QStringList directories = platformCaptureDirectories();
+    const QStringList directories = captureDirectories();
     for (const QString& directory: directories)
     {
+        if (isTooBroadToWatch(directory))
+        {
+            mega::MegaApi::log(
+                mega::MegaApi::LOG_LEVEL_WARNING,
+                QString::fromUtf8("Screenshot detector: refusing to watch '%1', it is "
+                                  "too broad to treat as a capture folder")
+                    .arg(directory)
+                    .toUtf8()
+                    .constData());
+            continue;
+        }
+
         if (QDir(directory).exists())
         {
             watchCaptureDirectory(directory, true);
@@ -131,10 +151,28 @@ bool ScreenCaptureDetector::isRunning() const
     return mRunning;
 }
 
+QStringList ScreenCaptureDetector::captureDirectories() const
+{
+    return platformCaptureDirectories();
+}
+
 QStringList ScreenCaptureDetector::platformCaptureDirectories()
 {
     QStringList directories;
-    directories << Platform::getInstance()->getScreenshotsLocation();
+
+    // Platforms read these from user-controlled settings (the macOS
+    // `com.apple.screencapture location` default, the Snipping Tool's registry
+    // value), so they can carry trailing separators or mixed separators.
+    // Normalize before anything compares them: isSharedDirectory() and
+    // mCaptureDirectories both key off the exact string.
+    const QStringList platformDirectories = Platform::getInstance()->getScreenshotsLocation();
+    for (const QString& directory: platformDirectories)
+    {
+        if (!directory.isEmpty())
+        {
+            directories << QDir::cleanPath(directory);
+        }
+    }
     directories.removeDuplicates();
 
     return directories;
@@ -142,24 +180,89 @@ QStringList ScreenCaptureDetector::platformCaptureDirectories()
 
 bool ScreenCaptureDetector::looksLikeScreenshot(const QString& fileName)
 {
-    // macOS: "Screenshot 2026-06-10 at 14.05.33.png" (localized variants keep
-    // the timestamp); Windows: "Screenshot (12).png"; GNOME: "Screenshot from
-    // 2026-06-10 14-05-33.png". Match a known prefix ("captur" also covers
-    // captura/capture d'écran) or a date followed by a time — a bare date
-    // matches too many ordinary photo names.
+    // Every OS capture tool puts its own word at the START of the file name:
+    // "Screenshot 2026-06-10 at 14.05.33.png" (macOS), "Screenshot (12).png"
+    // (Windows), "Screenshot from 2026-06-10 14-05-33.png" (GNOME),
+    // "Screenshot_20260610_140533.png" (Spectacle), "Captura de pantalla
+    // 2026-06-10 a las 14.05.33.png" (localized). So the pattern is anchored
+    // and prefix-based.
+    //
+    // It deliberately no longer accepts an unanchored "captur", nor a bare
+    // date-plus-time anywhere in the name. Those also matched ordinary photo,
+    // camera-export and scan names ("IMG 2026-06-10 14.05.jpg",
+    // "family_capture.jpg"), and in a shared folder such as the Pictures root
+    // a match means the file is uploaded and, with link copying enabled,
+    // publicly exported. Missing a capture is recoverable; publishing a file
+    // the user never captured is not, so this errs towards rejecting.
+    //
+    // Files landing in a dedicated capture folder skip this check entirely
+    // (see isSharedDirectory), so it only gates the shared-folder case.
+    //
+    // Non-Latin prefixes use PCRE "\x{...}" escapes rather than literal UTF-8
+    // bytes: the build does not force a UTF-8 source charset on MSVC, so a
+    // non-ASCII string literal would not survive every compiler. Add a locale
+    // by adding one alternative.
     static const QRegularExpression pattern(
-        QString::fromUtf8(
-            "(screen\\s?shot|captur|\\d{4}-\\d{2}-\\d{2}\\D{0,10}\\d{1,2}[.:h\\-]\\d{2})"),
-        QRegularExpression::CaseInsensitiveOption);
+        QString::fromUtf8("^\\s*("
+                          "screen[ _-]?shot" // en (older macOS "Screen Shot")
+                          "|screen[ _-]?capture" // en variants
+                          "|screenclip" // Windows
+                          "|capture" // en, fr "Capture d'ecran"
+                          "|captura" // es, pt "Captura de pantalla"
+                          "|cattura" // it
+                          "|schermata" // it
+                          "|bildschirmfoto" // de
+                          "|schermafbeelding" // nl
+                          "|zrzut[ _-]?ekranu" // pl
+                          "|snimek[ _-]?obrazovky" // cs
+                          "|sk.rmbild" // sv "skarmbild"
+                          "|skjermbilde" // nb
+                          "|sk.rmbillede" // da
+                          "|n.ytt.kuva" // fi
+                          "|ekran[ _-]?g.r.nt.s." // tr
+                          "|k.perny.k.p" // hu
+                          // ru "Снимок экрана"
+                          "|\\x{0421}\\x{043d}\\x{0438}\\x{043c}\\x{043e}\\x{043a}"
+                          "[ _-]?\\x{044d}\\x{043a}\\x{0440}\\x{0430}\\x{043d}\\x{0430}"
+                          // uk "Знімок екрана"
+                          "|\\x{0417}\\x{043d}\\x{0456}\\x{043c}\\x{043e}\\x{043a}"
+                          "[ _-]?\\x{0435}\\x{043a}\\x{0440}\\x{0430}\\x{043d}\\x{0430}"
+                          // zh-Hans "屏幕截图", zh-Hant "螢幕截圖"
+                          "|\\x{5c4f}\\x{5e55}\\x{622a}\\x{56fe}"
+                          "|\\x{87a2}\\x{5e55}\\x{622a}\\x{5716}"
+                          // ja "スクリーンショット"
+                          "|\\x{30b9}\\x{30af}\\x{30ea}\\x{30fc}\\x{30f3}"
+                          "\\x{30b7}\\x{30e7}\\x{30c3}\\x{30c8}"
+                          // ko "스크린샷"
+                          "|\\x{c2a4}\\x{d06c}\\x{b9b0}\\x{c0f7}"
+                          ")"),
+        QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
     return pattern.match(fileName).hasMatch();
+}
+
+bool ScreenCaptureDetector::isTooBroadToWatch(const QString& directory)
+{
+    // XDG_PICTURES_DIR="$HOME/" makes PicturesLocation the home directory
+    // itself, which would put every new image the user saves anywhere in their
+    // home under automatic upload and, with link copying enabled, automatic
+    // public export. The name filter is a heuristic, not a permission check,
+    // so it is not enough on its own at that breadth. A dedicated capture
+    // subfolder underneath is still watched, so captures saved there are
+    // picked up as normal.
+    const QString cleanDirectory = QDir::cleanPath(directory);
+    return cleanDirectory == QDir::cleanPath(QDir::homePath()) || QDir(cleanDirectory).isRoot();
 }
 
 bool ScreenCaptureDetector::isSharedDirectory(const QString& path)
 {
-    static const QStringList sharedRoots{
-        QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
-        QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)};
-    return sharedRoots.contains(path);
+    // Fail closed: a directory is exempt from the name filter only when it is
+    // positively recognized as capture-only. Testing membership in a list of
+    // shared roots instead failed open -- any path that did not match a root
+    // string exactly was treated as a dedicated capture folder, so every new
+    // image in it was uploaded. That included the Desktop whenever the OS
+    // reported it un-normalized ("~/Desktop/"), and any relocated capture
+    // folder the user had pointed at a directory of their own files.
+    return QDir(path).dirName().compare(CAPTURE_FOLDER_NAME, Qt::CaseInsensitive) != 0;
 }
 
 void ScreenCaptureDetector::onDirectoryChanged(const QString& path)
@@ -229,31 +332,77 @@ void ScreenCaptureDetector::scanDirectory(const QString& path)
 
 void ScreenCaptureDetector::onStabilityTimerTimeout()
 {
+    // captureDetected() below is emitted synchronously, and its handler runs
+    // arbitrary code: QmlDialogWrapper's constructor spins a QEventLoop while
+    // the QML loads, and EventUpdater calls QApplication::processEvents() on
+    // the ordinary upload path. Either dispatches this same timer again. A
+    // nested tick would settle and remove a file whose key the outer pass is
+    // still holding in its snapshot, and the outer pass would then resurrect
+    // the entry and report the capture a second time.
+    if (mInStabilityTick)
+    {
+        return;
+    }
+    const QScopedValueRollback<bool> tickGuard(mInStabilityTick, true);
+
     const QStringList pending = mPendingFiles.keys();
     for (const QString& filePath: pending)
     {
-        const QFileInfo info(filePath);
-        if (!info.exists())
+        // find(), never operator[]: the latter default-inserts a missing key,
+        // which is what resurrected an already-reported capture. The entry can
+        // legitimately be gone by now -- a re-scan or a nested pass may have
+        // settled it while this pass was running.
+        auto stateIt = mPendingFiles.find(filePath);
+        if (stateIt == mPendingFiles.end())
         {
-            mPendingFiles.remove(filePath);
             continue;
         }
 
-        PendingFile& state = mPendingFiles[filePath];
+        if (mKnownFiles.contains(filePath))
+        {
+            // Already reported; never report it twice.
+            mPendingFiles.erase(stateIt);
+            continue;
+        }
+
+        const QFileInfo info(filePath);
+        if (!info.exists())
+        {
+            mPendingFiles.erase(stateIt);
+            continue;
+        }
+
+        PendingFile& state = *stateIt;
         const qint64 size = info.size();
         if (size > 0 && size == state.lastSize)
         {
             if (++state.stableTicks >= STABLE_TICKS_REQUIRED)
             {
-                mPendingFiles.remove(filePath);
+                // Erase and mark known *before* emitting: the handler can spin
+                // a nested event loop, and this entry must not be visible to
+                // anything that runs inside it.
+                mPendingFiles.erase(stateIt);
                 mKnownFiles.insert(filePath);
                 emit captureDetected(filePath);
             }
+            continue;
         }
-        else
+
+        state.lastSize = size;
+        state.stableTicks = 0;
+
+        // Never settled in time: a file stuck at zero bytes would otherwise
+        // satisfy neither branch and keep the timer polling forever.
+        if (++state.ticksWaited >= MAX_PENDING_TICKS)
         {
-            state.lastSize = size;
-            state.stableTicks = 0;
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                               QString::fromUtf8("Screenshot detector: '%1' never settled, "
+                                                 "giving up on it")
+                                   .arg(filePath)
+                                   .toUtf8()
+                                   .constData());
+            mPendingFiles.erase(stateIt);
+            mKnownFiles.insert(filePath);
         }
     }
 

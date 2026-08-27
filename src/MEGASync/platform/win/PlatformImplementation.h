@@ -16,6 +16,7 @@
 #include <QThread>
 
 #include <string>
+#include <vector>
 
 class WinShellDispatcherTask;
 

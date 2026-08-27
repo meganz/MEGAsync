@@ -357,11 +357,13 @@ protected:
     void processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>>& queue,
                                 mega::MegaHandle nodeHandle,
                                 QWidget* caller = nullptr);
-    // Tells the screenshot flow that a capture queued for upload was
-    // discarded before a transfer was created (conflict dialog cancelled or
-    // resolved as "don't upload", or invalid destination), so its uploader
-    // can free the in-flight slot.
-    void notifyCaptureUploadsDiscarded();
+    // Tells the screenshot flow that a capture queued for upload will not get a
+    // transfer after all -- the conflict dialog was cancelled or resolved as
+    // "don't upload", the destination was invalid, a dialog was replaced out
+    // from under it, or the account is over quota -- so its uploader can free
+    // the in-flight slot. Always silent: every caller either acted on the
+    // user's own choice or has already reported the problem itself.
+    void notifyCaptureUploadsSkipped();
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();

@@ -26,9 +26,11 @@ public:
     // it accordingly. Single source of truth for that decision.
     void refresh();
     void enableClipboardCopyScreenshotLink(bool enabled);
-    // Called by MegaApplication when the queued capture was discarded before
-    // a transfer was created; unblocks the uploader.
-    void onCaptureUploadDiscarded();
+    // Called by MegaApplication when a queued capture will not get a transfer
+    // after all: the user declined it, the destination was unusable, or the
+    // account is over quota. Unblocks the uploader without reporting an error --
+    // nothing failed, and the capture is still on disk.
+    void onCaptureUploadSkipped();
     // Called by ScreenshotComponent when the user accepts the one-time enable
     // offer: turns the setting on, uploads the capture that triggered the
     // offer and brings up the info dialog.
