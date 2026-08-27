@@ -6603,6 +6603,18 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
+        <source>- Clearer handling of stalled issues and name conflicts.
+- Improved the install and update process with better cleanup of outdated components.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
+        <translation>- معالجة أكثر وضوحاً للمشاكل العالقة وتعارضات الأسماء.
+- تحسين عملية التثبيت والتحديث مع تنظيف أفضل للمكوّنات القديمة.
+- تصحيحات وتعديلات في واجهة المستخدم عبر مربعات الحوار المزامنة والنسخ الاحتياطي والتراسل.
+- إصلاح أخطاء وتحسينات على الأداء.</translation>
+    </message>
+    <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
 - Bug fixes and performance improvements.

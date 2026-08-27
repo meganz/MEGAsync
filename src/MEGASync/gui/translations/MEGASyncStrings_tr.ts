@@ -8616,7 +8616,7 @@ Listeyi yenileyin.</translation>
     <message>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
-        <translation>Tekrar deneyin</translation>
+        <translation>Tekrar dene</translation>
     </message>
 </context>
 <context>
