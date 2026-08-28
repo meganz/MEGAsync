@@ -61,6 +61,8 @@ public:
     Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
     void applyCurrentThemeOnCurrentDialogFrame(QWindow* window) override;
 
+    QStringList getScreenshotsLocation() override;
+
 private:
     void disableSignalHandler();
     bool isFileManagerExtensionEnabled();

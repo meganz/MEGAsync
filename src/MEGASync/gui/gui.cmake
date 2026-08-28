@@ -139,6 +139,11 @@ set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.h
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordController.h
     ${CMAKE_CURRENT_LIST_DIR}/offer/OfferComponent.h
+    ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotLinkGenerator.h
+    ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotsController.h
+    ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotUploader.h
+    ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenCaptureDetector.h
+    ${CMAKE_CURRENT_LIST_DIR}/qml/screenshots/ScreenshotComponent.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -269,6 +274,11 @@ set(DESKTOP_APP_GUI_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password/ChangePasswordController.cpp
     ${CMAKE_CURRENT_LIST_DIR}/offer/OfferComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotLinkGenerator.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotsController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenshotUploader.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/screenshots/ScreenCaptureDetector.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/qml/screenshots/ScreenshotComponent.cpp
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -476,6 +486,8 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView
     ${CMAKE_CURRENT_LIST_DIR}/LoadingView/ui
     ${CMAKE_CURRENT_LIST_DIR}/qml/change_password
+    ${CMAKE_CURRENT_LIST_DIR}/screenshots
+    ${CMAKE_CURRENT_LIST_DIR}/qml/screenshots
 )
 target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 

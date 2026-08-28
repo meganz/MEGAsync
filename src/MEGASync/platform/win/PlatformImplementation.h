@@ -16,6 +16,7 @@
 #include <QThread>
 
 #include <string>
+#include <vector>
 
 class WinShellDispatcherTask;
 
@@ -96,6 +97,8 @@ public:
 
     void disconnectAccessibilityClients() override;
 
+    QStringList getScreenshotsLocation() override;
+
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
 
@@ -121,9 +124,14 @@ private:
     static QString getRegKeyValue(HKEY regKey, const int valueIndex);
     static bool openRegistry(HKEY baseKey, const QString& regKeyPath, HKEY& openedKey);
 
-    WinShellDispatcherTask *shellDispatcherTask = nullptr;
-    std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;
+    std::vector<BYTE> readFileLocked(const std::wstring& path);
+    std::string findPathNearOffset(const std::vector<BYTE>& buf, size_t start, size_t window);
+    std::string resolveToken(const std::wstring& userClassesDat, const std::string& guid);
+    std::string extractToken(const std::vector<BYTE>& data);
+    std::vector<BYTE> readValue(HKEY hKey, const wchar_t* name);
 
+    WinShellDispatcherTask* shellDispatcherTask = nullptr;
+    std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;
     QPointer<WinThemeWatcher> watcher;
 };
 

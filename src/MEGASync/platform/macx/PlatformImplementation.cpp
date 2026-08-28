@@ -8,8 +8,10 @@
 #include "ThemeManager.h"
 #include "Utilities.h"
 
+#include <QDir>
 #include <QHostInfo>
 #include <QScreen>
+#include <QStandardPaths>
 
 #include <cstdlib>
 #include <fstream>
@@ -602,4 +604,42 @@ void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* wind
                             ThemeManager::instance()->getCurrentColorScheme() ==
                                 Preferences::ThemeAppeareance::DARK,
                             true);
+}
+
+QStringList PlatformImplementation::getScreenshotsLocation()
+{
+    QStringList directories;
+
+    // Users can relocate macOS screenshots with
+    // `defaults write com.apple.screencapture location <dir>`.
+    QProcess defaults;
+    defaults.start(QString::fromUtf8("defaults"),
+                   {QString::fromUtf8("read"),
+                    QString::fromUtf8("com.apple.screencapture"),
+                    QString::fromUtf8("location")});
+    if (defaults.waitForFinished(1000) && defaults.exitCode() == 0)
+    {
+        QString location = QString::fromUtf8(defaults.readAllStandardOutput()).trimmed();
+        if (location.startsWith(QLatin1Char('~')))
+        {
+            location.replace(0, 1, QDir::homePath());
+        }
+
+        // The default is stored verbatim, so it commonly carries a trailing
+        // separator ("~/Desktop/") or redundant "." / ".." segments. Normalize
+        // it: callers compare capture directories by path.
+        location = QDir::cleanPath(location);
+
+        if (!location.isEmpty() && QDir(location).exists())
+        {
+            directories << location;
+        }
+    }
+
+    if (directories.empty())
+    {
+        directories << QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    }
+
+    return directories;
 }

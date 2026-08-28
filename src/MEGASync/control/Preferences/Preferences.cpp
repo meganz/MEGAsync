@@ -311,6 +311,12 @@ const QString Preferences::reclaimThresholdBytes = QString::fromLatin1("reclaimT
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
 const bool Preferences::defaultAwakeIfActive = false;
 
+// screen shot settings.
+const QString Preferences::uploadScreenshotsKey =
+    QString::fromLatin1("uploadScreenshotsEnabledKey");
+const QString Preferences::clipboardCopyScreenshotLinkKey =
+    QString::fromLatin1("clipboardCopyScreenshotLink");
+
 const bool Preferences::defaultStartOnStartup = true;
 const bool Preferences::defaultUpdateAutomatically = true;
 const bool Preferences::defaultCleanerDaysLimit     = true;
@@ -2533,6 +2539,34 @@ bool Preferences::awakeIfActiveEnabled()
 void Preferences::setAwakeIfActive(bool value)
 {
     setValueConcurrently(awakeIfActiveKey, value);
+}
+
+bool Preferences::uploadScreenshotsEnabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = getValue(uploadScreenshotsKey, false);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::setUploadScreenshotsEnabled(bool value)
+{
+    setValueConcurrently(uploadScreenshotsKey, value);
+}
+
+bool Preferences::clipboardCopyScreenshotLinkEnabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = getValue(clipboardCopyScreenshotLinkKey, false);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::setClipboardCopyScreenshotLinkEnabled(bool value)
+{
+    setValueConcurrently(clipboardCopyScreenshotLinkKey, value);
 }
 
 bool Preferences::fileVersioningDisabled()

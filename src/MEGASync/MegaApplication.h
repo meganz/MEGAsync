@@ -67,6 +67,7 @@ class AccountStatusController;
 class StatsEventHandler;
 class UserMessageController;
 class SyncReminderNotificationManager;
+class ScreenshotsController;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -208,6 +209,10 @@ public:
     static void showStalledIssuesDialog();
     bool isOnboarding();
 
+    // screenshots upload.
+    void refreshScreenshotUploader();
+    void enableClipboardCopyScreenshotLink(bool enabled);
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -244,6 +249,7 @@ public slots:
     void goToFiles();
     void pauseTransfers();
     void showChangeLog();
+    void uploadScreenshot(const QString& fileName, mega::MegaHandle targetFolderHandle);
     void uploadActionClicked(AppStatsEvents::EventType event);
     void uploadActionFromWindowAfterOverQuotaCheck();
     void runUploadActionWithTargetHandle(const mega::MegaHandle& targetFolder,
@@ -347,6 +353,17 @@ protected:
     bool showTrayIconAlwaysNEW();
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle, QWidget* caller = nullptr);
+
+    void processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>>& queue,
+                                mega::MegaHandle nodeHandle,
+                                QWidget* caller = nullptr);
+    // Tells the screenshot flow that a capture queued for upload will not get a
+    // transfer after all -- the conflict dialog was cancelled or resolved as
+    // "don't upload", the destination was invalid, a dialog was replaced out
+    // from under it, or the account is over quota -- so its uploader can free
+    // the in-flight slot. Always silent: every caller either acted on the
+    // user's own choice or has already reported the problem itself.
+    void notifyCaptureUploadsSkipped();
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();
@@ -420,6 +437,9 @@ protected:
     mega::MegaHandle mFolderUploadTarget;
 
     QQueue<QPair<QString, PiTagTrigger>> mUploadQueue;
+    // Automatic screenshot captures upload through this dedicated queue, never
+    // through mUploadQueue - see processUploadQueueImpl().
+    QQueue<QPair<QString, PiTagTrigger>> mScreenshotUploadQueue;
     QQueue<WrappedNode> downloadQueue;
     BlockingBatch mBlockingBatch;
 
@@ -523,6 +543,7 @@ protected:
     QPointer<DiscountStateMachine> mDiscountStateMachine;
 
     bool misSyncingStateWrongLogged;
+    ScreenshotsController* mScreenshotsController;
 
 private:
     QList<QNetworkInterface> findNewNetworkInterfaces();

@@ -69,6 +69,8 @@ public:
     Preferences::ThemeAppeareance getPanelTheme() const override;
     void setRenderingBackend() const override;
 
+    QStringList getScreenshotsLocation() override;
+
 private:
     static xcb_atom_t getAtom(xcb_connection_t* const connection, const char* name);
     bool isFedoraWithGnome();

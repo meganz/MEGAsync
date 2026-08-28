@@ -469,6 +469,9 @@ void SettingsDialog::loadSettings()
     SettingsDialog::updateStorageElements();
     SettingsDialog::updateBandwidthElements();
 
+    // screenshots upload settings.
+    refreshScreenshotUploadSettings();
+
     updateUploadFolder();
     updateDownloadFolder();
 
@@ -865,6 +868,42 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 
         MessageDialogOpener::critical(msgInfo);
     }
+}
+
+void SettingsDialog::refreshScreenshotUploadSettings()
+{
+    mLoadingSettings++;
+    mUi->enableScreenshotUpload->setChecked(mPreferences->uploadScreenshotsEnabled());
+    mUi->enableScreenshotLinkGeneration->setEnabled(mPreferences->uploadScreenshotsEnabled());
+    mUi->enableScreenshotLinkGeneration->setChecked(
+        mPreferences->clipboardCopyScreenshotLinkEnabled());
+    mLoadingSettings--;
+}
+
+void SettingsDialog::on_enableScreenshotUpload_toggled(bool checked)
+{
+    if (mLoadingSettings)
+        return;
+
+    // Only gate the dependent checkbox visually; its stored preference is
+    // the user's choice and survives toggling the feature off and on.
+    mUi->enableScreenshotLinkGeneration->setEnabled(checked);
+
+    mPreferences->setUploadScreenshotsEnabled(checked);
+    // The user has now interacted with the setting, so the first-capture
+    // discovery offer has served its purpose.
+    mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER,
+                                           true);
+    mApp->refreshScreenshotUploader();
+}
+
+void SettingsDialog::on_enableScreenshotLinkGeneration_toggled(bool checked)
+{
+    if (mLoadingSettings)
+        return;
+
+    mPreferences->setClipboardCopyScreenshotLinkEnabled(checked);
+    mApp->enableClipboardCopyScreenshotLink(checked);
 }
 
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)

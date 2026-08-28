@@ -1422,3 +1422,12 @@ Preferences::ThemeAppeareance PlatformImplementation::getPanelTheme() const
 
     return effectiveTheme();
 }
+
+QStringList PlatformImplementation::getScreenshotsLocation()
+{
+    QStringList directories;
+    const QString pictures = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    directories << pictures << pictures + QString::fromUtf8("/Screenshots");
+
+    return directories;
+}

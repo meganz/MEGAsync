@@ -217,5 +217,8 @@
         <file>offer/OfferDialog.qml</file>
         <file>offer/qmldir</file>
         <file>offer/OfferStrings.qml</file>
+        <file>screenshots/qmldir</file>
+        <file>screenshots/Screenshot.qml</file>
+        <file>screenshots/ScreenshotStrings.qml</file>
     </qresource>
 </RCC>

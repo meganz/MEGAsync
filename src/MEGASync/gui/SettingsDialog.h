@@ -46,6 +46,9 @@ public:
     // General
     void setUpdateAvailable(bool updateAvailable);
     void storageChanged();
+    // Re-reads the screenshot upload preferences and updates the checkboxes,
+    // for when the preferences are changed from outside this dialog.
+    void refreshScreenshotUploadSettings();
 
     // Account
     void updateStorageElements() override;
@@ -104,6 +107,8 @@ private slots:
     void on_cbTheme_currentIndexChanged(int index);
     void on_bUpdate_clicked();
     void on_bSendBug_clicked();
+    void on_enableScreenshotUpload_toggled(bool checked);
+    void on_enableScreenshotLinkGeneration_toggled(bool checked);
 
     // Account
     void on_bAccount_clicked();
