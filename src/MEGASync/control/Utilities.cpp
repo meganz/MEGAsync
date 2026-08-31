@@ -1987,13 +1987,16 @@ QString Utilities::getTranslatedError(const MegaError* error)
     return QCoreApplication::translate("MegaError", error->getErrorString());
 }
 
-std::shared_ptr<MegaError> Utilities::removeRemoteFile(const MegaNode* node)
+std::shared_ptr<MegaError> Utilities::removeRemoteFile(const MegaNode* node,
+                                                       const QString& preparedBinFolderPath)
 {
     std::shared_ptr<MegaError> error;
 
     if(node)
     {
-        error = MoveToMEGABin()(node->getHandle(), QLatin1String(""), true);
+        error = preparedBinFolderPath.isEmpty() ?
+                    MoveToMEGABin()(node->getHandle(), QLatin1String(""), true) :
+                    MoveToMEGABin()(node->getHandle(), preparedBinFolderPath);
     }
 
     return error;

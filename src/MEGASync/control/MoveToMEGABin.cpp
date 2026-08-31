@@ -15,12 +15,58 @@ std::shared_ptr<mega::MegaError> MoveToMEGABin::operator()(mega::MegaHandle hand
                                                            const QString& binFolderName,
                                                            bool addDateFolder)
 {
-    return moveToBin(handle, binFolderName, addDateFolder);
+    return moveToBin(handle, buildFolderPath(binFolderName, addDateFolder));
+}
+
+std::shared_ptr<mega::MegaError> MoveToMEGABin::operator()(mega::MegaHandle handle,
+                                                           const QString& binFolderPath)
+{
+    return moveToBin(handle, binFolderPath);
+}
+
+QString MoveToMEGABin::buildFolderPath(const QString& binFolderName, bool addDateFolder)
+{
+    QString folderPath(binFolderName);
+
+    if (addDateFolder)
+    {
+        const QString dateFolder(QDate::currentDate().toString(Qt::DateFormat::ISODate));
+
+        // Keep the path free of empty components: when there is no bin subfolder the date folder
+        // sits directly in the bin. The SDK skips empty components when resolving a path, so this
+        // is about keeping the path canonical in lookups and logs, not about a lookup failure.
+        folderPath = folderPath.isEmpty() ?
+                         dateFolder :
+                         QString::fromLatin1("%1/%2").arg(folderPath, dateFolder);
+    }
+
+    return folderPath;
+}
+
+QString MoveToMEGABin::createBinFolder(const QString& binFolderName, bool addDateFolder)
+{
+    std::shared_ptr<mega::MegaError> error;
+
+    const auto folderPath(buildFolderPath(binFolderName, addDateFolder));
+
+    if (!MEGAPathCreator::mkDir(QString::fromLatin1("//bin"), folderPath, error))
+    {
+        mega::MegaApi::log(
+            mega::MegaApi::LOG_LEVEL_ERROR,
+            QString::fromUtf8("Unable to prepare folder into MEGA bin: %1. Error: %2")
+                .arg(folderPath,
+                     error ? Utilities::getTranslatedError(error.get()) :
+                             QString::fromUtf8("no error reported"))
+                .toUtf8()
+                .constData());
+        return QString();
+    }
+
+    return folderPath;
 }
 
 std::shared_ptr<mega::MegaError> MoveToMEGABin::moveToBin(mega::MegaHandle handle,
-                                                          const QString& binFolderName,
-                                                          bool addDateFolder)
+                                                          const QString& folderPath)
 {
     std::shared_ptr<mega::MegaError> error;
 
@@ -57,13 +103,6 @@ std::shared_ptr<mega::MegaError> MoveToMEGABin::moveToBin(mega::MegaHandle handl
         }
     };
 
-    QString folderPath(binFolderName);
-    if (addDateFolder)
-    {
-        QString dateFolder(QDate::currentDate().toString(Qt::DateFormat::ISODate));
-        folderPath = QString::fromLatin1("%1/%2").arg(folderPath, dateFolder);
-    }
-
     auto folderNode = MEGAPathCreator::mkDir(QString::fromLatin1("//bin"), folderPath, error);
     if (!error && folderNode)
     {
@@ -71,9 +110,14 @@ std::shared_ptr<mega::MegaError> MoveToMEGABin::moveToBin(mega::MegaHandle handl
     }
     else
     {
+        // "no error reported" means mkDir() gave back no folder and no error either. The node is
+        // then left where it is while this returns success to the caller, so say so plainly: it is
+        // the only way to tell that case apart from a genuine API failure in a user's log.
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
-                           QString::fromUtf8("Unable to create %1 folder into MEGA bin: %1")
-                               .arg(folderPath)
+                           QString::fromUtf8("Unable to create folder into MEGA bin: %1. Error: %2")
+                               .arg(folderPath,
+                                    error ? Utilities::getTranslatedError(error.get()) :
+                                            QString::fromUtf8("no error reported"))
                                .toUtf8()
                                .constData());
     }
