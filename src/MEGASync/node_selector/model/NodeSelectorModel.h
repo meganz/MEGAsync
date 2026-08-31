@@ -339,10 +339,12 @@ public:
 
     void moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveFile,
                             std::shared_ptr<mega::MegaNode> conflictTargetFile,
-                            std::shared_ptr<mega::MegaNode> targetParentFolder);
+                            std::shared_ptr<mega::MegaNode> targetParentFolder,
+                            const QString& preparedBinFolderPath);
     void copyFileAndReplace(std::shared_ptr<mega::MegaNode> copyItem,
                             std::shared_ptr<mega::MegaNode> conflictTargetFile,
-                            std::shared_ptr<mega::MegaNode> targetParentFolder);
+                            std::shared_ptr<mega::MegaNode> targetParentFolder,
+                            const QString& preparedBinFolderPath);
     void moveNodeAndRename(std::shared_ptr<mega::MegaNode> moveNode,
                            const QString& newName,
                            std::shared_ptr<mega::MegaNode> targetParentFolder);

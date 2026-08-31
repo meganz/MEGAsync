@@ -534,7 +534,12 @@ public:
 
     static QString getTranslatedError(const mega::MegaError* error);
 
-    static std::shared_ptr<mega::MegaError> removeRemoteFile(const mega::MegaNode* node);
+    // preparedBinFolderPath: a path returned by MoveToMEGABin::createBinFolder(), so batched
+    // removals all land in the folder that was prepared. Empty means "resolve the default
+    // date folder here", which re-derives the date per call.
+    static std::shared_ptr<mega::MegaError>
+        removeRemoteFile(const mega::MegaNode* node,
+                         const QString& preparedBinFolderPath = QString());
     static std::shared_ptr<mega::MegaError> removeSyncRemoteFile(const mega::MegaNode* node);
     static std::shared_ptr<mega::MegaError> removeRemoteFile(const QString& path);
     static std::shared_ptr<mega::MegaError> removeSyncRemoteFile(const QString& path);

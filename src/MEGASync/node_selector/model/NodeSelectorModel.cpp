@@ -6,6 +6,7 @@
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
 #include "MergeMEGAFolders.h"
+#include "MoveToMEGABin.h"
 #include "MyBackupsHandle.h"
 #include "MyChatFilesFolder.h"
 #include "NodeSelectorLabelColors.h"
@@ -1727,6 +1728,11 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
     QList<mega::MegaHandle> requestHandles;
     QList<std::function<void()>> plannedActions;
 
+    // Replacements bin the node they replace, so they need the bin's date folder to exist first.
+    // Each action receives the pre-created folder path so every replacement targets that folder,
+    // even when the date changes between the preparation and the action running.
+    QList<std::function<void(const QString&)>> replaceActions;
+
     foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
     {
         if (resolvedConflict->getSolution() == NodeItemType::DONT_UPLOAD)
@@ -1780,22 +1786,26 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
 
                         if (type == MoveActionType::COPY_PASTE)
                         {
-                            plannedActions.append(
-                                [this, nodeToMove, resolvedMoveConflict]()
+                            replaceActions.append(
+                                [this, nodeToMove, resolvedMoveConflict](
+                                    const QString& preparedBinFolderPath)
                                 {
                                     copyFileAndReplace(nodeToMove,
                                                        resolvedMoveConflict->getConflictNode(),
-                                                       resolvedMoveConflict->getParentNode());
+                                                       resolvedMoveConflict->getParentNode(),
+                                                       preparedBinFolderPath);
                                 });
                         }
                         else
                         {
-                            plannedActions.append(
-                                [this, nodeToMove, resolvedMoveConflict]()
+                            replaceActions.append(
+                                [this, nodeToMove, resolvedMoveConflict](
+                                    const QString& preparedBinFolderPath)
                                 {
                                     moveFileAndReplace(nodeToMove,
                                                        resolvedMoveConflict->getConflictNode(),
-                                                       resolvedMoveConflict->getParentNode());
+                                                       resolvedMoveConflict->getParentNode(),
+                                                       preparedBinFolderPath);
                                 });
                         }
                     }
@@ -1851,6 +1861,52 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
     for (const auto& action: std::as_const(plannedActions))
     {
         action();
+    }
+
+    if (!replaceActions.isEmpty())
+    {
+        // Every replaced node goes into the same date folder of the bin, and mkDir() looks that
+        // folder up and then creates it as two separate steps. The replacements used to run at the
+        // same time, so each looked before any of them had created it and each created its own
+        // duplicate (SNC-6818). Creating it once first is enough: the replacements then find it,
+        // and they still run in parallel afterwards.
+        //
+        // The model can be destroyed while the pool task waits on the SDK (dialog closed, logout),
+        // so the actions, which call member functions, run back on the app thread behind a guard.
+        // The guard is only meaningful there: the model is destroyed on the app thread too, so on
+        // any other thread the check would race the destruction it protects against.
+        QPointer<NodeSelectorModel> guard(this);
+        QThreadPool::globalInstance()->start(
+            [guard, replaceActions]()
+            {
+                // Blocks, which is why it is not done on the thread that queued this.
+                //
+                // Without the folder the replacements fall back to their own racy mkDir calls —
+                // the duplication this pre-creation exists to avoid — and the risky failure is
+                // precisely a transient one that clears just as they fan out. So retry once, and
+                // then give up: the fallback still bins every node, it only risks duplicate date
+                // folders again.
+                QString binFolderPath;
+                constexpr auto attempts(2);
+                for (auto i = 0; i < attempts && binFolderPath.isEmpty(); ++i)
+                {
+                    binFolderPath = MoveToMEGABin::createBinFolder(QLatin1String(""), true);
+                }
+
+                Utilities::queueFunctionInAppThread(
+                    [guard, replaceActions, binFolderPath]()
+                    {
+                        if (!guard)
+                        {
+                            return;
+                        }
+
+                        for (const auto& action: std::as_const(replaceActions))
+                        {
+                            action(binFolderPath);
+                        }
+                    });
+            });
     }
 
     processMergeQueue(type);
@@ -2604,12 +2660,13 @@ int NodeSelectorModel::getNodeAccess(mega::MegaNode* node)
 
 void NodeSelectorModel::moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveFile,
                                            std::shared_ptr<mega::MegaNode> conflictTargetFile,
-                                           std::shared_ptr<mega::MegaNode> targetParentFolder)
+                                           std::shared_ptr<mega::MegaNode> targetParentFolder,
+                                           const QString& preparedBinFolderPath)
 {
     QThreadPool::globalInstance()->start(
-        [this, moveFile, targetParentFolder, conflictTargetFile]()
+        [this, moveFile, targetParentFolder, conflictTargetFile, preparedBinFolderPath]()
         {
-            auto e = Utilities::removeRemoteFile(conflictTargetFile.get());
+            auto e = Utilities::removeRemoteFile(conflictTargetFile.get(), preparedBinFolderPath);
             if (!e || e->getErrorCode() == mega::MegaError::API_OK)
             {
                 MegaSyncApp->getMegaApi()->moveNode(moveFile.get(),
@@ -2625,12 +2682,13 @@ void NodeSelectorModel::moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveF
 
 void NodeSelectorModel::copyFileAndReplace(std::shared_ptr<mega::MegaNode> copyItem,
                                            std::shared_ptr<mega::MegaNode> conflictTargetFile,
-                                           std::shared_ptr<mega::MegaNode> targetParentFolder)
+                                           std::shared_ptr<mega::MegaNode> targetParentFolder,
+                                           const QString& preparedBinFolderPath)
 {
     QThreadPool::globalInstance()->start(
-        [this, copyItem, targetParentFolder, conflictTargetFile]()
+        [this, copyItem, targetParentFolder, conflictTargetFile, preparedBinFolderPath]()
         {
-            auto e = Utilities::removeRemoteFile(conflictTargetFile.get());
+            auto e = Utilities::removeRemoteFile(conflictTargetFile.get(), preparedBinFolderPath);
             if (!e || e->getErrorCode() == mega::MegaError::API_OK)
             {
                 MegaSyncApp->getMegaApi()->copyNode(copyItem.get(),
