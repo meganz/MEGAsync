@@ -199,7 +199,8 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU, 600095},
     {AppStatsEvents::EventType::SCREENSHOT_UPLOADED, 600092},
     {AppStatsEvents::EventType::SCREENSHOT_LINK_CREATED, 600093},
-    // 600096-600100 are provisional: pending assignment by the stats registry owner
+    // 600096-600106: onboarding funnel and heartbeat-timeout instrumentation,
+    // registered in the stats events Confluence page (SNC-6881)
     {AppStatsEvents::EventType::ONBOARDING_LOGIN_OK, 600096},
     {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_COMPLETED, 600097},
     {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_20_60S, 600098},

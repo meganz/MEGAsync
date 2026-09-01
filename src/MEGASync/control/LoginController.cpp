@@ -11,6 +11,7 @@
 #include "ServiceUrls.h"
 #include "StatsEventHandler.h"
 #include "TextDecorator.h"
+#include "Utilities.h"
 
 #include <QQmlContext>
 
@@ -163,30 +164,35 @@ void LoginController::setState(State state)
                     mFetchNodesTimer.isValid() ? mFetchNodesTimer.elapsed() : -1;
                 if (elapsedMs >= 20000)
                 {
-                    statsHandler->sendEvent(
-                        elapsedMs < 60000 ?
-                            AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_20_60S :
-                        elapsedMs < 5 * 60000 ?
-                            AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_1_5MIN :
-                            AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_OVER_5MIN);
+                    AppStatsEvents::EventType slowTier =
+                        AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_OVER_5MIN;
+                    if (elapsedMs < 60000)
+                    {
+                        slowTier = AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_20_60S;
+                    }
+                    else if (elapsedMs < 5 * 60000)
+                    {
+                        slowTier = AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_1_5MIN;
+                    }
+                    statsHandler->sendEvent(slowTier);
                 }
 
                 // Heartbeat cuts observed while this fetchnodes ran, one chartable
                 // event per affected channel (cs = the "f" request, sc = the /wsc
                 // long-poll). Healthy baseline is ~0; deliverable now that the
                 // channel is free.
-                if (mCsTimeoutsDuringFetchNodes > 0)
+                const auto sendTimeoutsEvent =
+                    [&statsHandler](int count, AppStatsEvents::EventType type)
                 {
-                    statsHandler->sendEvent(
-                        AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_CS,
-                        QStringList() << QString::number(mCsTimeoutsDuringFetchNodes));
-                }
-                if (mScTimeoutsDuringFetchNodes > 0)
-                {
-                    statsHandler->sendEvent(
-                        AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_SC,
-                        QStringList() << QString::number(mScTimeoutsDuringFetchNodes));
-                }
+                    if (count > 0)
+                    {
+                        statsHandler->sendEvent(type, QStringList() << QString::number(count));
+                    }
+                };
+                sendTimeoutsEvent(mCsTimeoutsDuringFetchNodes,
+                                  AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_CS);
+                sendTimeoutsEvent(mScTimeoutsDuringFetchNodes,
+                                  AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_SC);
             }
         }
     }
@@ -464,21 +470,25 @@ void LoginController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
              (getState() == FETCHING_NODES || getState() == FETCHING_NODES_2FA))
     {
         // NETWORK_ACTIVITY also fires for REQUEST_SENT/RECEIVED on every request:
-        // keep this branch cheap and filter to heartbeat-timeout errors only.
-        if (event->getNumber("activity_type") == mega::MegaEvent::REQUEST_ERROR &&
-            event->getNumber("error_code") == mega::MegaError::LOCAL_ETIMEOUT)
+        // keep this branch cheap; the helper filters to heartbeat-timeout errors only.
+        bool isCsChannel = false;
+        if (Utilities::isHeartbeatTimeoutEvent(event, isCsChannel))
         {
-            const bool isCsChannel = event->getNumber("channel") == mega::MegaEvent::CS;
             (isCsChannel ? mCsTimeoutsDuringFetchNodes : mScTimeoutsDuringFetchNodes)++;
 
             // Postmortem marker for a stalled fetchnodes (>=3 timeouts, >60s): only
             // persisted, never sent from here — the /cs channel is blocked behind the
             // retrying "f", so this session cannot deliver events. It is reported by
-            // the next session (see fetchNodes()) and cleared on any completion
-            // (see onFetchNodes).
+            // the next session (see fetchNodes()) and cleared on any terminal outcome
+            // (see onFetchNodes). Only the onboarding population persists it:
+            // FastLogin resumes share the FETCHING_NODES state, and a veteran on a
+            // flaky connection must not produce ONBOARDING_* funnel events next start.
+            // Latched: one persist+sync per stall — the setter fsyncs, and re-persisting
+            // on every ~20s timeout would mean one fsync per retry cycle.
             const int totalTimeouts = mCsTimeoutsDuringFetchNodes + mScTimeoutsDuringFetchNodes;
             if (totalTimeouts >= 3 && mFetchNodesTimer.isValid() &&
-                mFetchNodesTimer.elapsed() > 60000)
+                mFetchNodesTimer.elapsed() > 60000 && !mStallMarkerPersisted &&
+                isOnboardingFunnelPopulation())
             {
                 mPreferences->setOnboardingStallTimeouts(totalTimeouts);
                 mStallMarkerPersisted = true;
@@ -631,6 +641,17 @@ void LoginController::onEmailChanged(mega::MegaRequest* request, mega::MegaError
 void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(request)
+
+    // The attempt concluded visibly (success or terminal error): a stall marker
+    // persisted during it is obsolete either way — the incident is already reported
+    // by ONBOARDING_FETCHNODES_TIMEOUTS_* (recovered) or _FAILED (error). Without
+    // this, a stall-then-fail session would double-count as a postmortem next start.
+    if (mStallMarkerPersisted)
+    {
+        mPreferences->clearOnboardingStallMarker();
+        mStallMarkerPersisted = false;
+    }
+
     if (e->getErrorCode() == mega::MegaError::API_OK)
     {
         //Update/set root node
@@ -640,15 +661,6 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
 
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
         mPreferences->setNeedsFetchNodesInGeneral(false);
-
-        // Fetchnodes completed (any population): a stall marker persisted during this
-        // attempt is obsolete — the in-session recovery is already reported by the
-        // ONBOARDING_FETCHNODES_TIMEOUTS_* events.
-        if (mStallMarkerPersisted)
-        {
-            mPreferences->clearOnboardingStallMarker();
-            mStallMarkerPersisted = false;
-        }
 
         mProgress = 0; //sets guestdialog progressbar as indeterminate
         emit progressChanged();
@@ -749,12 +761,21 @@ void LoginController::fetchNodes()
     // precedes the "f" command, so it gets delivered even if this session's
     // fetchnodes stalls again. Runs for both the wizard and FastLogin paths (a
     // stalled user's relaunch resumes the persisted session through FastLogin).
+    // mStallMarkerPersisted guards against same-process re-entry (FATAL_ERROR reload,
+    // logout+relogin): a marker written by THIS session must not be reported as a
+    // previous-session stall. Either way the marker is consumed here — on the re-entry
+    // path it is cleared silently (onRequestStart resets the flag, so leaving it would
+    // strand it as a false postmortem for the next process); if the new attempt stalls
+    // again, it re-persists on its own.
     const int stalledTimeouts = mPreferences->onboardingStallTimeouts();
     if (stalledTimeouts > 0)
     {
-        MegaSyncApp->getStatsEventHandler()->sendEvent(
-            AppStatsEvents::EventType::ONBOARDING_FETCHNODES_STALLED_PREVIOUS_SESSION,
-            QStringList() << QString::number(stalledTimeouts));
+        if (!mStallMarkerPersisted)
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::ONBOARDING_FETCHNODES_STALLED_PREVIOUS_SESSION,
+                QStringList() << QString::number(stalledTimeouts));
+        }
         mPreferences->clearOnboardingStallMarker();
     }
 
