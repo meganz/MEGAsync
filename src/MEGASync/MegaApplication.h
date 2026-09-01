@@ -486,6 +486,11 @@ protected:
     bool nodescurrent;
     int businessStatus = -2;
     bool whyamiblockedPeriodicPetition = false;
+    // First-heartbeat-timeout-per-channel latches (fleet incidence baseline for the
+    // SDK's 20s cs/wsc heartbeat timeout, which emits no telemetry of its own).
+    // Armed once per app run; a timeout retry loop bursts, hence the hard latch.
+    bool mCsHeartbeatTimeoutReported = false;
+    bool mScHeartbeatTimeoutReported = false;
     LoginController* mLoginController;
     friend class DeferPreferencesSyncForScope;
     std::shared_ptr<TransferQuota> mTransferQuota;

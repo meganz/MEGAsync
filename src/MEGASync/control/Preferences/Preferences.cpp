@@ -272,6 +272,8 @@ const QString Preferences::fatWarningShownKey       = QString::fromLatin1("fatWa
 const QString Preferences::installationTimeKey      = QString::fromLatin1("installationTime");
 const QString Preferences::accountCreationTimeKey   = QString::fromLatin1("accountCreationTime");
 const QString Preferences::hasLoggedInKey = QString::fromLatin1("hasLoggedIn");
+const QString Preferences::onboardingStallTimeoutsKey =
+    QString::fromLatin1("onboardingStallTimeouts");
 const QString Preferences::SSLcertificateExceptionKey  = QString::fromLatin1("SSLcertificateException");
 const QString Preferences::maxMemoryUsageKey        = QString::fromLatin1("maxMemoryUsage");
 const QString Preferences::maxMemoryReportTimeKey   = QString::fromLatin1("maxMemoryReportTime");
@@ -1836,6 +1838,21 @@ long long Preferences::hasLoggedIn()
 void Preferences::setHasLoggedIn(long long time)
 {
     setValueConcurrently(hasLoggedInKey, time);
+}
+
+int Preferences::onboardingStallTimeouts()
+{
+    return getValueConcurrent<int>(onboardingStallTimeoutsKey, 0);
+}
+
+void Preferences::setOnboardingStallTimeouts(int count)
+{
+    setValueConcurrently(onboardingStallTimeoutsKey, count);
+}
+
+void Preferences::clearOnboardingStallMarker()
+{
+    setValueConcurrently(onboardingStallTimeoutsKey, 0);
 }
 
 bool Preferences::isFirstStartDone()

@@ -6683,7 +6683,29 @@ void MegaApplication::manageBusinessStatus(int64_t event)
 
 void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
 {
-    if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
+    if (event->getType() == MegaEvent::EVENT_NETWORK_ACTIVITY)
+    {
+        // Highest-frequency event type reaching this handler (fires for
+        // REQUEST_SENT/RECEIVED on every request): handled first, filter kept
+        // trivial. Reports the first heartbeat timeout observed on each channel,
+        // once per app run — fleet incidence baseline for the SDK's 20s cs/wsc
+        // heartbeat timeout, which emits no telemetry of its own.
+        if (mStatsEventHandler && event->getNumber("activity_type") == MegaEvent::REQUEST_ERROR &&
+            event->getNumber("error_code") == MegaError::LOCAL_ETIMEOUT)
+        {
+            const bool isCsChannel = event->getNumber("channel") == MegaEvent::CS;
+            bool& alreadyReported =
+                isCsChannel ? mCsHeartbeatTimeoutReported : mScHeartbeatTimeoutReported;
+            if (!alreadyReported)
+            {
+                alreadyReported = true;
+                mStatsEventHandler->sendEvent(
+                    isCsChannel ? AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_CS_FIRST_IN_SESSION :
+                                  AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_SC_FIRST_IN_SESSION);
+            }
+        }
+    }
+    else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
     {
         nodescurrent = true;
     }
