@@ -5,6 +5,7 @@
 #include "mega/bindings/qt/QTMegaGlobalListener.h"
 #include "megaapi.h"
 
+#include <QElapsedTimer>
 #include <QObject>
 #include <QTimer>
 
@@ -120,11 +121,23 @@ private:
     QString getRepeatedEmailMsg();
     void setEmail(const QString& email);
 
+    // Whether this machine's user would be shown the onboarding setup wizard after
+    // fetchnodes. Same predicate setState() uses, evaluated eagerly so the funnel
+    // events (ONBOARDING_LOGIN_OK / ONBOARDING_FETCHNODES_*) count one population.
+    bool isOnboardingFunnelPopulation() const;
+
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     std::unique_ptr<mega::MegaEvent> eventPendingStorage;
 
     QTimer *mConnectivityTimer;
+    // Wall time of the fetchnodes in progress, for the onboarding funnel events.
+    QElapsedTimer mFetchNodesTimer;
+    // Heartbeat timeouts (LOCAL_ETIMEOUT network activity) observed per channel
+    // while a fetchnodes runs; reset per attempt in onRequestStart.
+    int mCsTimeoutsDuringFetchNodes = 0;
+    int mScTimeoutsDuringFetchNodes = 0;
+    bool mStallMarkerPersisted = false;
     bool mEmailError;
     QString mEmailErrorMsg;
     bool mPasswordError;

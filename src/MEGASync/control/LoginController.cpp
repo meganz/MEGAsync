@@ -126,9 +126,7 @@ void LoginController::setState(State state)
     {
         mOnboardingShown = false;
         // Should the onboarding be shown (without taking "force" into account)?
-        auto showOnboarding =
-            !mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN) &&
-            !(mPreferences->isFirstBackupDone() || mPreferences->isFirstSyncDone());
+        const bool showOnboarding = isOnboardingFunnelPopulation();
 
         if (mTriggerFatalErrorAfterFetchnodes)
         {
@@ -150,6 +148,46 @@ void LoginController::setState(State state)
             state = State::FETCH_NODES_FINISHED_ONBOARDING;
             mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN,
                                                    true);
+
+            // Onboarding funnel exit marker, congruent with ONBOARDING_LOGIN_OK: only
+            // the organic-onboarding population (not the forced re-onboarding flow),
+            // so the LOGIN_OK -> COMPLETED ratio measures losses in login/fetchnodes.
+            // The slow-tier events chart the >=20s tail (the SDK heartbeat timeout
+            // window) without inflating the healthy case.
+            if (showOnboarding)
+            {
+                auto statsHandler = MegaSyncApp->getStatsEventHandler();
+                statsHandler->sendEvent(AppStatsEvents::EventType::ONBOARDING_FETCHNODES_COMPLETED);
+
+                const qint64 elapsedMs =
+                    mFetchNodesTimer.isValid() ? mFetchNodesTimer.elapsed() : -1;
+                if (elapsedMs >= 20000)
+                {
+                    statsHandler->sendEvent(
+                        elapsedMs < 60000 ?
+                            AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_20_60S :
+                        elapsedMs < 5 * 60000 ?
+                            AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_1_5MIN :
+                            AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_OVER_5MIN);
+                }
+
+                // Heartbeat cuts observed while this fetchnodes ran, one chartable
+                // event per affected channel (cs = the "f" request, sc = the /wsc
+                // long-poll). Healthy baseline is ~0; deliverable now that the
+                // channel is free.
+                if (mCsTimeoutsDuringFetchNodes > 0)
+                {
+                    statsHandler->sendEvent(
+                        AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_CS,
+                        QStringList() << QString::number(mCsTimeoutsDuringFetchNodes));
+                }
+                if (mScTimeoutsDuringFetchNodes > 0)
+                {
+                    statsHandler->sendEvent(
+                        AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_SC,
+                        QStringList() << QString::number(mScTimeoutsDuringFetchNodes));
+                }
+            }
         }
     }
     if (getState() != state)
@@ -267,6 +305,12 @@ bool LoginController::isFetchNodesFinished() const
     return getState() >= LoginController::State::FETCH_NODES_FINISHED_ONBOARDING;
 }
 
+bool LoginController::isOnboardingFunnelPopulation() const
+{
+    return !mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN) &&
+           !(mPreferences->isFirstBackupDone() || mPreferences->isFirstSyncDone());
+}
+
 void LoginController::onRequestFinish(mega::MegaRequest* request, mega::MegaError* e)
 {
     switch(request->getType())
@@ -375,6 +419,13 @@ void LoginController::onRequestStart(mega::MegaRequest* request)
     }
     case mega::MegaRequest::TYPE_FETCH_NODES:
     {
+        // Wall time of this fetchnodes attempt, for the onboarding funnel events.
+        // Transport-level retries (e.g. the SDK heartbeat-timeout reconnects) happen
+        // within the same request, so they stay inside the measurement.
+        mFetchNodesTimer.start();
+        mCsTimeoutsDuringFetchNodes = 0;
+        mScTimeoutsDuringFetchNodes = 0;
+        mStallMarkerPersisted = false;
         if(mState == LOGGING_IN_2FA_VALIDATING)
         {
             setState(FETCHING_NODES_2FA);
@@ -409,6 +460,31 @@ void LoginController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
             eventPendingStorage.reset();
         }
     }
+    else if (event->getType() == mega::MegaEvent::EVENT_NETWORK_ACTIVITY &&
+             (getState() == FETCHING_NODES || getState() == FETCHING_NODES_2FA))
+    {
+        // NETWORK_ACTIVITY also fires for REQUEST_SENT/RECEIVED on every request:
+        // keep this branch cheap and filter to heartbeat-timeout errors only.
+        if (event->getNumber("activity_type") == mega::MegaEvent::REQUEST_ERROR &&
+            event->getNumber("error_code") == mega::MegaError::LOCAL_ETIMEOUT)
+        {
+            const bool isCsChannel = event->getNumber("channel") == mega::MegaEvent::CS;
+            (isCsChannel ? mCsTimeoutsDuringFetchNodes : mScTimeoutsDuringFetchNodes)++;
+
+            // Postmortem marker for a stalled fetchnodes (>=3 timeouts, >60s): only
+            // persisted, never sent from here — the /cs channel is blocked behind the
+            // retrying "f", so this session cannot deliver events. It is reported by
+            // the next session (see fetchNodes()) and cleared on any completion
+            // (see onFetchNodes).
+            const int totalTimeouts = mCsTimeoutsDuringFetchNodes + mScTimeoutsDuringFetchNodes;
+            if (totalTimeouts >= 3 && mFetchNodesTimer.isValid() &&
+                mFetchNodesTimer.elapsed() > 60000)
+            {
+                mPreferences->setOnboardingStallTimeouts(totalTimeouts);
+                mStallMarkerPersisted = true;
+            }
+        }
+    }
 }
 
 void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
@@ -418,6 +494,19 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
         mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(request->getEmail()));
 
         dumpSession();
+
+        // Onboarding funnel entry marker (only the population that will be shown the
+        // setup wizard after fetchnodes, so it is congruent with
+        // ONBOARDING_FETCHNODES_COMPLETED). Session resumes never reach this point:
+        // FastLoginController overrides onLogin without calling this base.
+        // Delivery note: this ships in the short /cs batch alongside the "ug" command
+        // (MegaClient::fetchnodes() only queues the "f" once "ug" completes), so it is
+        // delivered even for clients that later stall at the "f" download.
+        if (isOnboardingFunnelPopulation())
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::ONBOARDING_LOGIN_OK);
+        }
 
         fetchNodes();
         if (!mPreferences->hasLoggedIn())
@@ -552,6 +641,15 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
         mPreferences->setNeedsFetchNodesInGeneral(false);
 
+        // Fetchnodes completed (any population): a stall marker persisted during this
+        // attempt is obsolete — the in-session recovery is already reported by the
+        // ONBOARDING_FETCHNODES_TIMEOUTS_* events.
+        if (mStallMarkerPersisted)
+        {
+            mPreferences->clearOnboardingStallMarker();
+            mStallMarkerPersisted = false;
+        }
+
         mProgress = 0; //sets guestdialog progressbar as indeterminate
         emit progressChanged();
         MegaSyncApp->onFetchNodesFinished();
@@ -561,6 +659,18 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
         setState(LOGGED_OUT);
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
         mPreferences->setNeedsFetchNodesInGeneral(true);
+
+        // Onboarding funnel event, congruent with ONBOARDING_LOGIN_OK: visible
+        // fetchnodes failures of the onboarding population only, so that
+        // LOGIN_OK - COMPLETED - FAILED isolates silent stalls and app kills.
+        // FastLogin (background) fetchnodes failures are deliberately not counted.
+        if (isOnboardingFunnelPopulation())
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::ONBOARDING_FETCHNODES_FAILED,
+                QStringList() << QString::number(e->getErrorCode()));
+        }
+
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                                                                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
     }
@@ -633,6 +743,20 @@ void LoginController::onLogout(mega::MegaRequest* request, mega::MegaError* e)
 void LoginController::fetchNodes()
 {
     assert(mState != FETCHING_NODES);
+
+    // Postmortem beacon: if a previous session died stalled at fetchnodes, report it
+    // NOW, before the fetchnodes request is queued — the event rides a /cs batch that
+    // precedes the "f" command, so it gets delivered even if this session's
+    // fetchnodes stalls again. Runs for both the wizard and FastLogin paths (a
+    // stalled user's relaunch resumes the persisted session through FastLogin).
+    const int stalledTimeouts = mPreferences->onboardingStallTimeouts();
+    if (stalledTimeouts > 0)
+    {
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::ONBOARDING_FETCHNODES_STALLED_PREVIOUS_SESSION,
+            QStringList() << QString::number(stalledTimeouts));
+        mPreferences->clearOnboardingStallMarker();
+    }
 
     mMegaApi->fetchNodes();
 }
