@@ -196,7 +196,20 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::TARGETED_DISCOUNT_INFODIALOG_BUTTON_CLICKED, 600090},
     {AppStatsEvents::EventType::MACOS_ARM64_UPDATE_URL_ADJUSTED_FOR_INTEL_BINARY, 600091},
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_ONBOARDING, 600094},
-    {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU, 600095}};
+    {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU, 600095},
+    // 600096-600106: onboarding funnel and heartbeat-timeout instrumentation,
+    // registered in the stats events Confluence page (SNC-6881)
+    {AppStatsEvents::EventType::ONBOARDING_LOGIN_OK, 600096},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_COMPLETED, 600097},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_20_60S, 600098},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_1_5MIN, 600099},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_OVER_5MIN, 600100},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_FAILED, 600101},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_CS, 600102},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_SC, 600103},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_STALLED_PREVIOUS_SESSION, 600104},
+    {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_CS_FIRST_IN_SESSION, 600105},
+    {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_SC_FIRST_IN_SESSION, 600106}};
 
 // Deprecated are not displayed
 QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
@@ -446,7 +459,28 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_ONBOARDING,
      "Migration tool opened (from onboarding)"},
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU,
-     "Migration tool opened (from menu)"}};
+     "Migration tool opened (from menu)"},
+    {AppStatsEvents::EventType::ONBOARDING_LOGIN_OK, "Onboarding: login OK"},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_COMPLETED,
+     "Onboarding: fetchnodes completed"},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_20_60S,
+     "Onboarding: fetchnodes took 20-60 seconds"},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_1_5MIN,
+     "Onboarding: fetchnodes took 1-5 minutes"},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_SLOW_OVER_5MIN,
+     "Onboarding: fetchnodes took more than 5 minutes"},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_FAILED,
+     "Onboarding: fetchnodes failed (error %1)"},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_CS,
+     "Onboarding: fetchnodes suffered %1 heartbeat timeout(s) on the cs channel"},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_SC,
+     "Onboarding: fetchnodes suffered %1 heartbeat timeout(s) on the sc channel"},
+    {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_STALLED_PREVIOUS_SESSION,
+     "Onboarding: previous session stalled at fetchnodes (%1 heartbeat timeouts)"},
+    {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_CS_FIRST_IN_SESSION,
+     "First heartbeat timeout of this session on the cs channel"},
+    {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_SC_FIRST_IN_SESSION,
+     "First heartbeat timeout of this session on the sc channel"}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

@@ -1861,6 +1861,19 @@ bool Utilities::isIncommingShare(MegaNode *node)
     return false;
 }
 
+bool Utilities::isHeartbeatTimeoutEvent(const MegaEvent* event, bool& isCsChannel)
+{
+    if (event->getType() != MegaEvent::EVENT_NETWORK_ACTIVITY ||
+        event->getNumber("activity_type") != MegaEvent::REQUEST_ERROR ||
+        event->getNumber("error_code") != MegaError::LOCAL_ETIMEOUT)
+    {
+        return false;
+    }
+
+    isCsChannel = event->getNumber("channel") == MegaEvent::CS;
+    return true;
+}
+
 int Utilities::getNodeAccess(MegaHandle handle)
 {
     auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
