@@ -6690,10 +6690,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
         // trivial. Reports the first heartbeat timeout observed on each channel,
         // once per app run — fleet incidence baseline for the SDK's 20s cs/wsc
         // heartbeat timeout, which emits no telemetry of its own.
-        if (mStatsEventHandler && event->getNumber("activity_type") == MegaEvent::REQUEST_ERROR &&
-            event->getNumber("error_code") == MegaError::LOCAL_ETIMEOUT)
+        bool isCsChannel = false;
+        if ((!mCsHeartbeatTimeoutReported || !mScHeartbeatTimeoutReported) && mStatsEventHandler &&
+            Utilities::isHeartbeatTimeoutEvent(event, isCsChannel))
         {
-            const bool isCsChannel = event->getNumber("channel") == MegaEvent::CS;
             bool& alreadyReported =
                 isCsChannel ? mCsHeartbeatTimeoutReported : mScHeartbeatTimeoutReported;
             if (!alreadyReported)

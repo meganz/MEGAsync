@@ -1848,11 +1848,17 @@ int Preferences::onboardingStallTimeouts()
 void Preferences::setOnboardingStallTimeouts(int count)
 {
     setValueConcurrently(onboardingStallTimeoutsKey, count);
+    // Same pattern as setCrashed(): this marker exists to survive a crash or a
+    // force-quit during the stall, so it must hit disk immediately.
+    sync();
 }
 
 void Preferences::clearOnboardingStallMarker()
 {
     setValueConcurrently(onboardingStallTimeoutsKey, 0);
+    // Synced for the same reason as the setter: a crash right after clearing must
+    // not resurrect an already-reported (or obsolete) marker.
+    sync();
 }
 
 bool Preferences::isFirstStartDone()
