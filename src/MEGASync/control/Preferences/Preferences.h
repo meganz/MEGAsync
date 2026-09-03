@@ -275,6 +275,13 @@ public:
     void setAccountCreationTime(long long time);
     long long hasLoggedIn();
     void setHasLoggedIn(long long time);
+    // Onboarding-fetchnodes stall marker (per user): written while a fetchnodes is
+    // stalled on heartbeat timeouts, read+cleared at the start of the next fetchnodes
+    // to report the stall postmortem (the stalled session itself cannot deliver
+    // events — they queue behind the stuck "f" command). 0 = no marker.
+    int onboardingStallTimeouts();
+    void setOnboardingStallTimeouts(int count);
+    void clearOnboardingStallMarker();
     bool isFirstStartDone();
     void setFirstStartDone(bool value = true);
     bool isFirstSyncDone();
@@ -767,6 +774,7 @@ protected:
     static const QString installationTimeKey;
     static const QString accountCreationTimeKey;
     static const QString hasLoggedInKey;
+    static const QString onboardingStallTimeoutsKey;
     static const QString transferDownloadMethodKey;
     static const QString transferUploadMethodKey;
     static const QString lastCustomStreamingAppKey;

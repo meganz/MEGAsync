@@ -513,6 +513,16 @@ public:
     static const QString getPlatformProps(const QString sourceStyleSheet);
 
     static bool isIncommingShare(mega::MegaNode* node);
+
+    // True if the event is an SDK heartbeat-timeout notification (SDK-6336: the 20s
+    // cs/wsc heartbeat timeout, surfaced as EVENT_NETWORK_ACTIVITY REQUEST_ERROR with
+    // LOCAL_ETIMEOUT). Sets isCsChannel: true for the cs channel, false for sc.
+    // Note: the sc channel covers both the /wsc action-packet long-poll and the sc50
+    // useralerts catch-up — they are indistinguishable here, and both stall the user
+    // the same way, so the funnel metrics deliberately count either.
+    // Shared by the funnel counters (LoginController) and the fleet-incidence latches
+    // (MegaApplication) so the classification cannot drift between them.
+    static bool isHeartbeatTimeoutEvent(const mega::MegaEvent* event, bool& isCsChannel);
     static int getNodeAccess(mega::MegaHandle handle);
     static int getNodeAccess(mega::MegaNode* handle);
     static QString getNodeStringAccess(int access);
