@@ -273,10 +273,20 @@ if [ "$notarize" = "1" ]; then
 	echo "Sending dmg for notarization (1/3)"
 
 	xcrun notarytool submit ${MSYNC_PREFIX}$APP_NAME.dmg  --keychain-profile "AC_PASSWORD" --wait 2>&1 | tee notarylog.txt
+	# 'tee' masks notarytool's exit code, so a failed notarization would not stop
+	# this -e script and an un-notarized dmg would get packaged. Check explicitly.
+	if [ ${pipestatus[1]} -ne 0 ]; then
+		echo "Notarization submit FAILED (see notarylog.txt)"
+		exit 1
+	fi
     echo >> notarylog.txt
 
 	xcrun stapler staple -v ${MSYNC_PREFIX}$APP_NAME.dmg 2>&1 | tee -a notarylog.txt
-    
+	if [ ${pipestatus[1]} -ne 0 ]; then
+		echo "Stapling FAILED (see notarylog.txt)"
+		exit 1
+	fi
+
     echo "Stapling ok (2/3)"
 
     #Mount dmg volume to check if app bundle is notarized
