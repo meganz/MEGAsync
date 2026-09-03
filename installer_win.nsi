@@ -76,11 +76,11 @@ VIAddVersionKey "ProductName" "MEGAsync"
 !define MULTIUSER_EXECUTIONLEVEL_ALLUSERS
 !define MULTIUSER_INSTALLMODE_DEFAULT_CURRENTUSER
 
-!define VcRedistBasePath "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Redist\MSVC\14.42.34433"
+!define VcRedistBasePath "C:\Program Files\Microsoft Visual Studio\${VSYEAR}\${VSEDITION}\VC\Redist\MSVC\${VCREDISTVER}"
 !define VcRedist32BasePath "${VcRedistBasePath}\x86"
-!define VcRedist32Path "${VcRedist32BasePath}\Microsoft.VC143.CRT"
+!define VcRedist32Path "${VcRedist32BasePath}\Microsoft.${VSTOOLSET}.CRT"
 !define VcRedist64BasePath "${VcRedistBasePath}\x64"
-!define VcRedist64Path "${VcRedist64BasePath}\Microsoft.VC143.CRT"
+!define VcRedist64Path "${VcRedist64BasePath}\Microsoft.${VSTOOLSET}.CRT"
 
 !define WinRedistBasePath "C:\Program Files (x86)\Windows Kits\10\Redist\${WINKITVER}\ucrt\DLLs"
 !define WinRedist32BasePath "${winRedistBasePath}\x86"
@@ -324,7 +324,20 @@ Function InstallerAbort
   SetErrorLevel ${ERROR_INSTALL_CANCELLED}
 FunctionEnd
 
+; Set to "1" by CleanInstallDirectory when it schedules locked leftovers for deletion on
+; reboot. It survives the mid-section "SetRebootFlag false" so .onInstSuccess can restore
+; the reboot requirement that reset would otherwise discard.
+Var INSTALL_REBOOT_PENDING
+
 Function .onInstSuccess
+  ; Install-directory cleanup may schedule locked leftovers (or a whole ".obsolete"
+  ; directory) for removal on the next boot, which raises the reboot flag. A later
+  ; "SetRebootFlag false" in the install section discards that flag, so restore it here
+  ; from the recorded state before deciding the exit code, so the finish page and the
+  ; return value both reflect the genuine reboot requirement.
+  StrCmp $INSTALL_REBOOT_PENDING "1" 0 check_reboot_flag
+    SetRebootFlag true
+  check_reboot_flag:
   IfRebootFlag reboot_required install_success
 reboot_required:
   SetErrorLevel ${ERROR_REBOOT_REQUIRED}
@@ -568,8 +581,6 @@ Function showHiDpi
 
 FunctionEnd
 
-Var PREVIOUS_OUTPATH
-
 Function .onInit
   setRebootFlag false
 
@@ -619,15 +630,11 @@ Function .onInit
   !insertmacro CheckUserToRunElevated
   Call AcquireInstallerMutex
 
-  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
-  strCpy $BANNER_PATH $1
-  #${UAC.CallFunctionAsUser} GetPaths
-  StrCpy $BANNER_PATH "$BANNER_PATH\MEGAsync"
-
-  strCpy $PREVIOUS_OUTPATH GetOutPath
+  InitPluginsDir
+  StrCpy $BANNER_PATH "$PLUGINSDIR"
   SetOutPath "$BANNER_PATH\leftbanner"
   File "installer\leftbanner\*"
-  SetOutPath $PREVIOUS_OUTPATH
+  SetOutPath "$TEMP"
 
   ;MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "CAUTION: This is a private BETA version and will expire on Jan 20, 2014, 23:59. If you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Windows filenames are case insensitive. Do not place items a MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n$\r$\n1. No locking: Concurrent creation of identically named files and folders on different clients can result in server-side dupes and unexpected results.$\r$\n2. No in-place versioning: Deleted remote files can be found in the MEGA rubbish bin (SyncDebris folder), deleted local files in your computer's recycle bin.$\r$\n3. No delta writes: Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing: Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit!"
   ;!insertmacro MUI_UNGETLANGUAGE
@@ -670,6 +677,290 @@ FunctionEnd
     File "${source}"
     AccessControl::SetFileOwner ${target} "$USERNAME"
     AccessControl::GrantOnFile ${target} "$USERNAME" "GenericRead + GenericWrite"
+!macroend
+
+!ifndef BUILD_UNINSTALLER
+Var CLEAN_OBSOLETE_DIR
+Var CLEAN_LEFTOVERS
+Var CLEAN_LAST_LEFTOVER
+
+; Empty the directory passed in $R0: delete what is deletable, move locked-but-movable
+; files (e.g. loaded exes/dlls) into $CLEAN_OBSOLETE_DIR under a unique name, and count
+; in $CLEAN_LEFTOVERS the entries that can be neither deleted nor moved, including
+; directories that cannot be listed ($CLEAN_LAST_LEFTOVER keeps the last such path for
+; error reporting). Subdirectories are emptied recursively and removed once empty.
+; Reparse points (directory junctions/symlinks) are never recursed into: only the link
+; itself is removed, leaving its target untouched.
+Function EmptyObsoleteDirectory
+  Push $R1
+  Push $R2
+  Push $R3
+  Push $R4
+  ; Never enumerate through a reparse-point root: a junction/symlink passed as $R0
+  ; would otherwise be walked into and its target emptied. Treat it as a leftover link
+  ; (the caller removes the link itself; here we just avoid following it).
+  System::Call 'kernel32::GetFileAttributesW(w "$R0")i.R4'
+  IntCmp $R4 -1 empty_obsolete_rootok
+  IntOp $R4 $R4 & 0x400
+  IntCmp $R4 0 empty_obsolete_rootok empty_obsolete_rootok 0
+    IntOp $CLEAN_LEFTOVERS $CLEAN_LEFTOVERS + 1
+    StrCpy $CLEAN_LAST_LEFTOVER $R0
+    Goto empty_obsolete_exit
+  empty_obsolete_rootok:
+  ClearErrors
+  FindFirst $R1 $R2 "$R0\*"
+  IfErrors 0 empty_obsolete_loop
+    ; The directory cannot be listed (e.g. access denied): its content can be neither
+    ; cleaned nor counted, so count the directory itself as a leftover. A listable
+    ; directory always yields at least ".", so an error here means listing failed.
+    ; The find handle is invalid on failure: exit without FindClose.
+    IntOp $CLEAN_LEFTOVERS $CLEAN_LEFTOVERS + 1
+    StrCpy $CLEAN_LAST_LEFTOVER $R0
+    Goto empty_obsolete_exit
+  empty_obsolete_loop:
+    StrCmp $R2 "" empty_obsolete_done
+    StrCmp $R2 "." empty_obsolete_next
+    StrCmp $R2 ".." empty_obsolete_next
+    StrCpy $R3 "$R0\$R2"
+    System::Call 'kernel32::GetFileAttributesW(w "$R3")i.R4'
+    IntCmp $R4 -1 empty_obsolete_file
+    IntOp $R4 $R4 & 0x400
+    IntCmp $R4 0 empty_obsolete_direntry empty_obsolete_direntry empty_obsolete_reparse
+  empty_obsolete_direntry:
+    IfFileExists "$R3\*.*" 0 empty_obsolete_file
+      Push $R0
+      StrCpy $R0 $R3
+      Call EmptyObsoleteDirectory
+      Pop $R0
+      ; A failed removal is only reported, not counted: files still inside were already
+      ; counted (or the directory was counted as unlistable), and an empty-but-locked
+      ; directory is harmless to the new payload.
+      ClearErrors
+      RMDir "$R3"
+      IfErrors 0 empty_obsolete_next
+      DetailPrint "Could not remove directory: $R3"
+      Goto empty_obsolete_next
+  empty_obsolete_reparse:
+    ; Junctions/symlinks are removed as links, never recursed into.
+    ClearErrors
+    RMDir "$R3"
+    IfErrors 0 empty_obsolete_next
+    ClearErrors
+    Delete "$R3"
+    IfErrors 0 empty_obsolete_next
+    IntOp $CLEAN_LEFTOVERS $CLEAN_LEFTOVERS + 1
+    StrCpy $CLEAN_LAST_LEFTOVER $R3
+    Goto empty_obsolete_next
+  empty_obsolete_file:
+    ClearErrors
+    Delete $R3
+    IfErrors 0 empty_obsolete_next
+    ; The file is locked. A loaded exe/dll cannot be deleted but can still be renamed,
+    ; so move it out of the way into the obsolete directory.
+    GetTempFileName $R4 "$CLEAN_OBSOLETE_DIR"
+    Delete $R4
+    ClearErrors
+    Rename $R3 $R4
+    IfErrors 0 empty_obsolete_next
+    IntOp $CLEAN_LEFTOVERS $CLEAN_LEFTOVERS + 1
+    StrCpy $CLEAN_LAST_LEFTOVER $R3
+  empty_obsolete_next:
+    FindNext $R1 $R2
+    Goto empty_obsolete_loop
+  empty_obsolete_done:
+  FindClose $R1
+  empty_obsolete_exit:
+  Pop $R4
+  Pop $R3
+  Pop $R2
+  Pop $R1
+FunctionEnd
+
+!endif
+
+; Reparse-safe recursive delete of the tree in $R0: at every level a junction/symlink is
+; removed as a link only, its target left untouched; locked entries are scheduled for
+; deletion on reboot. Safe replacement for "RMDir /r /REBOOTOK" (NSIS RMDir /r recurses on
+; FILE_ATTRIBUTE_DIRECTORY without checking FILE_ATTRIBUTE_REPARSE_POINT, so it follows
+; junctions and deletes their target - dangerous for any tree under a user-writable parent
+; such as the "MEGAsync.obsolete.*" sweep under %ProgramData%). Defined via a macro so the
+; installer (RemoveTreeNoFollow) and the uninstaller (un.RemoveTreeNoFollow) share one
+; implementation; UN prefixes the function name, UNL the labels (kept distinct so both
+; instantiations can be compiled together without colliding).
+!macro DEF_RemoveTreeNoFollow UN UNL
+Function ${UN}RemoveTreeNoFollow
+  Push $R1
+  Push $R2
+  Push $R3
+  Push $R4
+
+  ; If the root itself is a junction/symlink, remove only the link and stop.
+  System::Call 'kernel32::GetFileAttributesW(w "$R0")i.R4'
+  IntCmp $R4 -1 ${UNL}rtnf_exit ; invalid/gone: nothing to do
+  IntOp $R4 $R4 & 0x400
+  IntCmp $R4 0 ${UNL}rtnf_scan ${UNL}rtnf_scan ${UNL}rtnf_root_reparse
+  ${UNL}rtnf_root_reparse:
+    RMDir /REBOOTOK "$R0"
+    Delete /REBOOTOK "$R0"
+    Goto ${UNL}rtnf_exit
+
+  ${UNL}rtnf_scan:
+  ClearErrors
+  FindFirst $R1 $R2 "$R0\*"
+  IfErrors ${UNL}rtnf_exit
+  ${UNL}rtnf_loop:
+    StrCmp $R2 "" ${UNL}rtnf_done
+    StrCmp $R2 "." ${UNL}rtnf_next
+    StrCmp $R2 ".." ${UNL}rtnf_next
+    StrCpy $R3 "$R0\$R2"
+    System::Call 'kernel32::GetFileAttributesW(w "$R3")i.R4'
+    IntCmp $R4 -1 ${UNL}rtnf_file
+    IntOp $R4 $R4 & 0x400
+    IntCmp $R4 0 ${UNL}rtnf_child_dir ${UNL}rtnf_child_dir ${UNL}rtnf_reparse
+  ${UNL}rtnf_child_dir:
+    IfFileExists "$R3\*.*" 0 ${UNL}rtnf_file
+      Push $R0
+      StrCpy $R0 $R3
+      Call ${UN}RemoveTreeNoFollow
+      Pop $R0
+      RMDir /REBOOTOK "$R3" ; remove the now-empty subdir
+      Goto ${UNL}rtnf_next
+  ${UNL}rtnf_reparse:
+    ; Junction/symlink: drop the link, never recurse into the target.
+    RMDir /REBOOTOK "$R3"
+    Delete /REBOOTOK "$R3"
+    Goto ${UNL}rtnf_next
+  ${UNL}rtnf_file:
+    Delete /REBOOTOK "$R3"
+  ${UNL}rtnf_next:
+    FindNext $R1 $R2
+    Goto ${UNL}rtnf_loop
+  ${UNL}rtnf_done:
+  FindClose $R1
+  RMDir /REBOOTOK "$R0" ; remove the emptied root dir
+  ${UNL}rtnf_exit:
+  Pop $R4
+  Pop $R3
+  Pop $R2
+  Pop $R1
+FunctionEnd
+!macroend
+
+!ifndef BUILD_UNINSTALLER
+!insertmacro DEF_RemoveTreeNoFollow "" ""
+!endif
+!insertmacro DEF_RemoveTreeNoFollow "un." "un_"
+
+!macro CleanInstallDirectory
+!ifndef BUILD_UNINSTALLER
+  DetailPrint "Removing files from previous installation"
+  StrCpy $INSTALL_REBOOT_PENDING "0"
+  ; Release any lock on the install dir so it can be renamed/removed. SetOutPath only
+  ; changes the working directory; every delete below stays rooted at the validated
+  ; "...\MEGAsync" path, so $TEMP itself is never a deletion target.
+  SetOutPath "$TEMP"
+
+  ; Safety guard: $INSTDIR is derived from a value read at runtime, so before doing any
+  ; recursive delete make sure it really points at our install folder (both the
+  ; per-user and machine-wide paths end in "\MEGAsync"). Refuse to wipe anything else.
+  StrCpy $R9 "$INSTDIR" "" -9
+  StrCmp $R9 "\MEGAsync" clean_install_directory_start 0
+    !insertmacro ExitWithError ${ERROR_PACKAGE_REJECTED} "Unexpected installation path. Aborting to avoid removing unrelated files."
+
+  clean_install_directory_start:
+  ; Sweep "MEGAsync.obsolete.*" directories left next to $INSTDIR by previous
+  ; installations (they remain when files were locked and could only be scheduled
+  ; for deletion after a reboot that never happened).
+  StrLen $R5 "$INSTDIR"
+  IntOp $R5 $R5 - 9
+  StrCpy $R4 "$INSTDIR" $R5 ; parent directory of $INSTDIR (trailing "\MEGAsync" stripped)
+  FindFirst $R3 $R2 "$R4\MEGAsync.obsolete.*"
+  clean_obsolete_loop:
+    StrCmp $R2 "" clean_obsolete_done
+    ; Only touch entries whose real name starts with "MEGAsync.obsolete." (the find
+    ; pattern can also match unrelated 8.3 short names).
+    StrCpy $R1 $R2 18
+    StrCmp $R1 "MEGAsync.obsolete." 0 clean_obsolete_next
+    DetailPrint "Removing obsolete directory: $R4\$R2"
+    ; Reparse-safe delete: $R4 is the (user-writable) parent of $INSTDIR, so an entry
+    ; here may be an attacker-planted junction. Never follow it with RMDir /r.
+    Push $R0
+    StrCpy $R0 "$R4\$R2"
+    Call RemoveTreeNoFollow
+    Pop $R0
+  clean_obsolete_next:
+    FindNext $R3 $R2
+    Goto clean_obsolete_loop
+  clean_obsolete_done:
+  FindClose $R3
+
+  ; Nothing else to clean on a fresh install.
+  IfFileExists "$INSTDIR\*.*" 0 clean_install_directory_done
+
+  ; Retry a few times: handles held by the just-terminated app or the shell extension
+  ; may take a moment to be released after taskkill. Move the old install directory
+  ; away first so the new payload is installed into a clean $INSTDIR even if some old
+  ; runtime DLLs can only be deleted after reboot. Use a sibling backup path so the
+  ; rename remains on the same volume. Keep $R7 rooted at $INSTDIR before passing it
+  ; to RMDir /r /REBOOTOK.
+  StrCpy $R6 5
+  clean_install_directory_retry:
+    System::Call 'kernel32::GetTickCount()i.R8'
+    StrCpy $R7 "$INSTDIR.obsolete.$R8.$R6"
+    ; The error flag may still be set by earlier steps (shell extension unregister,
+    ; temp file deletes), which would make a successful Rename look like a failure.
+    ClearErrors
+    Rename "$INSTDIR" "$R7"
+    IfErrors 0 clean_install_directory_moved
+    IntOp $R6 $R6 - 1
+    IntCmp $R6 0 clean_install_directory_fallback clean_install_directory_fallback 0
+    Sleep 1000
+    Goto clean_install_directory_retry
+
+  clean_install_directory_moved:
+    Push $R0
+    StrCpy $R0 "$R7"
+    Call RemoveTreeNoFollow
+    Pop $R0
+    Goto clean_install_directory_done
+
+  clean_install_directory_fallback:
+    ; The whole-directory rename keeps failing: some process holds a handle without
+    ; delete sharing below $INSTDIR (open console/Explorer handle, data file in use...).
+    ; Fall back to per-file cleanup: delete what we can and move locked files out of
+    ; the way so the new payload can still be installed into a clean directory.
+    DetailPrint "Install directory is in use, removing its content file by file"
+    StrCpy $CLEAN_OBSOLETE_DIR "$R7"
+    CreateDirectory "$CLEAN_OBSOLETE_DIR"
+    StrCpy $CLEAN_LEFTOVERS 0
+    StrCpy $CLEAN_LAST_LEFTOVER ""
+    Push $R0
+    StrCpy $R0 "$INSTDIR"
+    Call EmptyObsoleteDirectory
+    Pop $R0
+    Push $R0
+    StrCpy $R0 "$CLEAN_OBSOLETE_DIR"
+    Call RemoveTreeNoFollow
+    Pop $R0
+    IntCmp $CLEAN_LEFTOVERS 0 clean_install_directory_done clean_install_directory_done 0
+    ; Some files could be neither deleted nor moved. At this point the old installation
+    ; has already been partially removed, so aborting would leave the machine without a
+    ; working install and nothing to roll back to. Proceed instead: the new payload is
+    ; written with "SetOverwrite on", so each leftover is either overwritten by the
+    ; matching new file or, if it does not belong to the new payload, simply left behind.
+    DetailPrint "Warning: $CLEAN_LEFTOVERS item(s) from the previous installation are in use and could not be removed (last: $CLEAN_LAST_LEFTOVER). They will be overwritten by the new installation where needed."
+
+  clean_install_directory_done:
+  ClearErrors
+  ; A /REBOOTOK deletion above may have scheduled locked leftovers (or a whole
+  ; ".obsolete" directory) for removal on the next boot, raising the reboot flag. A
+  ; later "SetRebootFlag false" in this section would silently discard that, so latch
+  ; the requirement now; .onInstSuccess re-asserts it for the exit code and finish page.
+  IfRebootFlag 0 clean_install_no_reboot_pending
+    StrCpy $INSTALL_REBOOT_PENDING "1"
+  clean_install_no_reboot_pending:
+  SetOutPath "$INSTDIR"
+!endif
 !macroend
 
 Section "Principal" SEC01
@@ -741,6 +1032,8 @@ modeselected:
   Call CheckDiskSpace
   !insertmacro DEBUG_MSG "Closing MEGAsync"
   ExecDos::exec /DETAILED /DISABLEFSR "$WINDIR\System32\taskkill.exe /f /t /IM MEGAsync.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "$WINDIR\System32\taskkill.exe /f /t /IM MEGAupdater.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "$WINDIR\System32\taskkill.exe /f /t /IM mega-desktop-app-gfxworker.exe"
   Sleep 1000
 
   !insertmacro DEBUG_MSG "Installing files"
@@ -748,7 +1041,9 @@ modeselected:
   SetRebootFlag false
   SetOverwrite on
 
-  SetOutPath "$INSTDIR"
+  ; Keep NSIS helper executables and temporary files out of the install directory.
+  ; The cleanup below removes $INSTDIR recursively before the new payload is copied.
+  SetOutPath "$TEMP"
 
 ; UnRegister shell extensions first
   !define LIBRARY_COM
@@ -782,12 +1077,8 @@ modeselected:
   !undef LIBRARY_SHELL_EXTENSION
   !undef LIBRARY_IGNORE_VERSION
 
-  Delete "$INSTDIR\Resources_macx.rcc"
-  Delete "$INSTDIR\Resources_linux.rcc"
-  Delete "$INSTDIR\Resources_win.rcc"
+  !insertmacro CleanInstallDirectory
 
-  Delete $INSTDIR\ShellExtX32.msix
-  Delete $INSTDIR\ShellExtX64.msix  
 !ifdef BUILD_X64_VERSION
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140_1.dll" "$INSTDIR\vcruntime140_1.dll"
@@ -798,7 +1089,7 @@ modeselected:
     !insertmacro Install3264DLL "${VcRedist64Path}\msvcp140_codecvt_ids.dll" "$INSTDIR\msvcp140_codecvt_ids.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
-    !insertmacro Install3264DLL "${VcRedist64BasePath}\Microsoft.VC143.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
+    !insertmacro Install3264DLL "${VcRedist64BasePath}\Microsoft.${VSTOOLSET}.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
@@ -850,7 +1141,7 @@ modeselected:
     !insertmacro Install3264DLL "${VcRedist32Path}\msvcp140_codecvt_ids.dll" "$INSTDIR\msvcp140_codecvt_ids.dll"
     !insertmacro Install3264DLL "${VcRedist32Path}\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "${VcRedist32Path}\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
-    !insertmacro Install3264DLL "${VcRedist32BasePath}\Microsoft.VC143.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
+    !insertmacro Install3264DLL "${VcRedist32BasePath}\Microsoft.${VSTOOLSET}.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
@@ -967,30 +1258,7 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\swresample-5.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-5.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  ;remove old DLLs that we no longer use (some became static; some have later version number)
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avcodec-57.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avformat-57.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avutil-55.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swscale-4.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swresample-2.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libsodium.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\pdfium.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avcodec-58.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avformat-58.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avutil-56.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swscale-5.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swresample-3.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avcodec-59.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avformat-59.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avutil-57.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swscale-6.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swresample-4.dll"
 
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libcrypto-1_1-x64.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libssl-1_1-x64.dll"
-
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libcrypto-1_1.dll"
-  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libssl-1_1.dll"
 
   !insertmacro DEBUG_MSG "Registering DLLs"
 
@@ -1348,6 +1616,31 @@ currentuserRemoving:
 continueRemoving:
   ${UAC.CallFunctionAsUser} un.RemoveCommonCurrentUserReg
   
+  ; Sweep any "MEGAsync.obsolete.*" directories a previous install's cleanup left next to
+  ; $INSTDIR (they persist when a reboot-deferred deletion never happened). Reparse-safe so
+  ; a junction planted under the (possibly user-writable) parent is never followed.
+  StrCpy $R9 "$INSTDIR" "" -9
+  StrCmp $R9 "\MEGAsync" 0 un_obsolete_sweep_done
+    StrLen $R5 "$INSTDIR"
+    IntOp $R5 $R5 - 9
+    StrCpy $R4 "$INSTDIR" $R5 ; parent directory of $INSTDIR (trailing "\MEGAsync" stripped)
+    FindFirst $R3 $R2 "$R4\MEGAsync.obsolete.*"
+    un_obsolete_sweep_loop:
+      StrCmp $R2 "" un_obsolete_sweep_close
+      StrCpy $R1 $R2 18
+      StrCmp $R1 "MEGAsync.obsolete." 0 un_obsolete_sweep_next
+      DetailPrint "Removing obsolete directory: $R4\$R2"
+      Push $R0
+      StrCpy $R0 "$R4\$R2"
+      Call un.RemoveTreeNoFollow
+      Pop $R0
+    un_obsolete_sweep_next:
+      FindNext $R3 $R2
+      Goto un_obsolete_sweep_loop
+    un_obsolete_sweep_close:
+    FindClose $R3
+  un_obsolete_sweep_done:
+
   ; Try to remove what is possible from the main uninstaller process
   RMDir /r "$INSTDIR"
 

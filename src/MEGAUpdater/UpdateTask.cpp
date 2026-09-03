@@ -1,13 +1,18 @@
-#include <stdlib.h>
-#include <limits.h>
 #include <sys/stat.h>
-#include <errno.h>
-#include <ctime>
-#include <sstream>
-#include <iostream>
-#include <cstdio>
-#include <stdio.h>
+
+#include <algorithm>
 #include <assert.h>
+#include <cctype>
+#include <cstdio>
+#include <ctime>
+#include <errno.h>
+#include <filesystem>
+#include <iostream>
+#include <limits.h>
+#include <set>
+#include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -36,11 +41,71 @@ using CryptoPP::Integer;
 
 namespace
 {
+namespace fs = std::filesystem;
 
 const char* updateCheckUrlForTrack(const char* track)
 {
     return strcmp(track, "msyncarm64") == 0 ? "http://g.static.mega.co.nz/eupd/msyncarm64/v.txt" :
                                               "http://g.static.mega.co.nz/eupd/msyncv2/v.txt";
+}
+
+string normalizedManifestPath(string path)
+{
+    std::replace(path.begin(), path.end(), '\\', '/');
+
+    path = fs::u8path(path).lexically_normal().generic_u8string();
+
+    while (!path.empty() && path.front() == '/')
+    {
+        path.erase(path.begin());
+    }
+
+    return path == "." ? string() : path;
+}
+
+string manifestPathKey(string path)
+{
+    path = normalizedManifestPath(path);
+#if defined(_WIN32) || defined(__APPLE__)
+    std::transform(path.begin(),
+                   path.end(),
+                   path.begin(),
+                   [](unsigned char ch)
+                   {
+                       return static_cast<char>(std::tolower(ch));
+                   });
+#endif
+    return path;
+}
+
+fs::path pathFromUtf8(const string& path)
+{
+    return fs::u8path(path);
+}
+
+// Moves a file, falling back to copy + remove when the source and destination live on
+// different filesystems (std::filesystem::rename fails with EXDEV in that case). The
+// install folder and the backup folder may be on separate volumes/mounts, so a plain
+// rename cannot be relied on.
+bool moveFileAcrossFilesystems(const fs::path& from, const fs::path& to, std::error_code& ec)
+{
+    fs::rename(from, to, ec);
+    if (!ec)
+    {
+        return true;
+    }
+
+    // Cross-device (or otherwise unsupported) rename: copy the entry (preserving symlinks)
+    // and then remove the source.
+    ec.clear();
+    fs::copy(from, to, fs::copy_options::overwrite_existing | fs::copy_options::copy_symlinks, ec);
+    if (ec)
+    {
+        return false;
+    }
+
+    fs::remove(from, ec);
+    return !ec;
 }
 
 } // namespace
@@ -201,7 +266,11 @@ string UpdateTask::getAppDataDir()
     if (home)
     {
         path.append(home);
-        path.append("/Library/Application\\ Support/Mega\\ Limited/MEGAsync/");
+        // Plain spaces: this is a C++ string handed straight to the filesystem,
+        // not a shell command line — a backslash here becomes part of the
+        // directory name and breaks every path derived from appDataFolder
+        // (broken between 1e30f9f040 and this fix).
+        path.append("/Library/Application Support/Mega Limited/MEGAsync/");
     }
     return path;
 }
@@ -321,6 +390,30 @@ void UpdateTask::checkForUpdates()
 {
     LOG(LOG_LEVEL_INFO, "Starting update check");
 
+    // Captured BEFORE this run installs anything: performUpdate() lays down the
+    // application binary itself, so an existence check at sweep time would pass
+    // even in a folder that was never a MEGAsync installation (e.g. a copied
+    // MEGAupdater.exe run from a personal folder — on Windows appFolder is just
+    // the directory this executable runs from).
+    appFolderWasInstallation = fileExist((appFolder + APP_BINARY_RELATIVE_PATH).c_str());
+
+#ifndef _WIN32
+    // Bundle symlinks are not manifest entries: the obsolete-file sweep removes
+    // them and performUpdate() recreates them from mega.links. If the process
+    // dies in that window (or symlink() partially fails), the update is already
+    // sealed and no later run would repair the bundle ("All files are up to
+    // date" short-circuits before performUpdate). Mirror the application's own
+    // safety net (unconditional recreation at every start): restore any missing
+    // symlink on every updater run — symlink() is a cheap EEXIST no-op for
+    // links that already exist. Placed before the download and the
+    // version/manifest early-outs, so it heals even offline.
+    const string installedSymlinksPath = appFolder + SYMLINKS_FILE_RELATIVE_PATH;
+    if (fileExist(installedSymlinksPath.c_str()))
+    {
+        processSymLinks(installedSymlinksPath);
+    }
+#endif
+
     // Create random sequence for http request
     string randomSec("?");
     for (int i = 0; i < 10; i++)
@@ -382,6 +475,12 @@ void UpdateTask::checkForUpdates()
             mega_remove(updateFile.c_str());
             return;
         }
+        // Only after the manifest is validated (signed and strictly newer):
+        // initialCleanup() deletes the backup folder — which now also holds the
+        // obsolete-file recovery copies from the last applied update — and the
+        // updater is relaunched every ~2h by the scheduler, so running it for
+        // up-to-date checks or invalid manifests would cap the recovery window
+        // at one check interval (see 82e84fad7e for the original invariant).
         initialCleanup();
         fclose(pFile);
         mega_remove(updateFile.c_str());
@@ -479,6 +578,15 @@ bool UpdateTask::downloadFile(string url, string dstPath)
 bool UpdateTask::processUpdateFile(FILE *fd)
 {
     LOG(LOG_LEVEL_DEBUG, "Reading update info");
+
+    // Reset any state a previous check left behind before the parse loop
+    // repopulates it. Deliberately not initialCleanup(): that also deletes the
+    // backup folder on disk, which must only happen for a validated update.
+    downloadURLs.clear();
+    localPaths.clear();
+    fileSignatures.clear();
+    manifestLocalPaths.clear();
+
     string version = readNextLine(fd);
     if (version.empty())
     {
@@ -537,6 +645,7 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         addToSignature(localPath.data(), localPath.length());
         addToSignature(fileSignature.data(), fileSignature.length());
 
+        manifestLocalPaths.push_back(normalizedManifestPath(localPath));
         MEGA_TO_NATIVE_SEPARATORS(localPath);
         if (alreadyInstalled(localPath, fileSignature))
         {
@@ -549,15 +658,18 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         fileSignatures.push_back(fileSignature);
     }
 
-    if (!downloadURLs.size())
+    if (!checkSignature(updateSignature))
     {
-        LOG(LOG_LEVEL_WARNING, "All files are up to date");
+        LOG(LOG_LEVEL_ERROR, "Invalid update info (invalid signature)");
         return false;
     }
 
-    if (!checkSignature(updateSignature))
+    if (!downloadURLs.size())
     {
-        LOG(LOG_LEVEL_ERROR,"Invalid update info (invalid signature)");
+        // No files to install: nothing to do. Returning false avoids running
+        // performUpdate() on every up-to-date check. Obsolete-file cleanup still
+        // runs during real updates, when at least one file differs and is downloaded.
+        LOG(LOG_LEVEL_WARNING, "All files are up to date");
         return false;
     }
 
@@ -594,6 +706,13 @@ bool UpdateTask::performUpdate()
 {
     string symlinksPath;
     LOG(LOG_LEVEL_INFO, "Applying update...");
+
+    if (mkdir_p(backupFolder.c_str()) == -1)
+    {
+        LOG(LOG_LEVEL_ERROR, "Error creating backup folder: %s", backupFolder.c_str());
+        return false;
+    }
+
     for (vector<string>::size_type i = 0; i < localPaths.size(); i++)
     {
         string file = backupFolder + localPaths[i];
@@ -642,8 +761,35 @@ bool UpdateTask::performUpdate()
         LOG(LOG_LEVEL_INFO, "File correctly installed: %s",  localPaths[i].c_str());
     }
 
+    cleanupObsoleteFiles();
+
+#ifndef _WIN32
+    if (symlinksPath.empty())
+    {
+        for (const string& manifestPath: manifestLocalPaths)
+        {
+            string nativeManifestPath = manifestPath;
+            MEGA_TO_NATIVE_SEPARATORS(nativeManifestPath);
+
+            const size_t pos = nativeManifestPath.find_last_of("/\\");
+            if ((pos == string::npos ? nativeManifestPath : nativeManifestPath.substr(pos + 1)) ==
+                "mega.links")
+            {
+                const string installedSymlinksPath = appFolder + nativeManifestPath;
+                if (fileExist(installedSymlinksPath.c_str()))
+                {
+                    symlinksPath = installedSymlinksPath;
+                }
+                break;
+            }
+        }
+    }
+#endif
+
     if (!symlinksPath.empty())
+    {
         processSymLinks(symlinksPath);
+    }
 
     LOG(LOG_LEVEL_INFO, "Update successfully installed");
     return true;
@@ -660,6 +806,170 @@ void UpdateTask::rollbackUpdate(int fileNum)
         LOG(LOG_LEVEL_INFO, "File restored: %s",  localPaths[i].c_str());
     }
     LOG(LOG_LEVEL_INFO, "Update uninstalled");
+}
+
+// Best effort: a leftover obsolete file is strictly less harmful than failing (and rolling
+// back) an already fully installed update, so per-file failures are logged and skipped
+// instead of aborting. A file that cannot be moved now (e.g. locked by another process)
+// will be retried on the next update.
+void UpdateTask::cleanupObsoleteFiles()
+{
+    if (manifestLocalPaths.empty())
+    {
+        LOG(LOG_LEVEL_WARNING,
+            "Skipping obsolete file cleanup because the update manifest is empty");
+        return;
+    }
+
+    std::set<string> expectedPaths;
+    for (const string& manifestPath: manifestLocalPaths)
+    {
+        expectedPaths.insert(manifestPathKey(manifestPath));
+    }
+
+    // Installation anchor (mirrors the MEGAsync twin's marker guard): only sweep
+    // when (a) appFolder already contained the application binary before this run
+    // installed anything — otherwise a mislocated updater would relocate unrelated
+    // personal files — and (b) the manifest itself lists the binary, so an
+    // incomplete manifest can never arm the sweep against a real installation.
+    // The update itself is unaffected; the sweep is best effort and will run on
+    // the next update once the anchor holds.
+    if (!appFolderWasInstallation ||
+        expectedPaths.find(manifestPathKey(APP_BINARY_RELATIVE_PATH)) == expectedPaths.end())
+    {
+        LOG(LOG_LEVEL_WARNING,
+            "Skipping obsolete file cleanup: %s is not the target installation",
+            appFolder.c_str());
+        return;
+    }
+
+    LOG(LOG_LEVEL_INFO, "Cleaning obsolete install files...");
+
+    const fs::path appRoot = pathFromUtf8(appFolder);
+    const fs::path backupRoot = pathFromUtf8(backupFolder);
+    std::error_code ec;
+    fs::recursive_directory_iterator it(appRoot, ec);
+    const fs::recursive_directory_iterator end;
+    if (ec)
+    {
+        LOG(LOG_LEVEL_WARNING,
+            "Error opening install folder for cleanup: %s",
+            ec.message().c_str());
+        return;
+    }
+
+    int removedCount = 0;
+    int skippedCount = 0;
+    while (it != end)
+    {
+        const fs::path entryPath = it->path();
+        const fs::file_status status = it->symlink_status(ec);
+        if (ec)
+        {
+            LOG(LOG_LEVEL_WARNING,
+                "Error reading install file status for cleanup: %s",
+                entryPath.u8string().c_str());
+            skippedCount++;
+        }
+        else if (!fs::is_directory(status))
+        {
+            const string relativePath =
+                normalizedManifestPath(entryPath.lexically_relative(appRoot).generic_u8string());
+
+            if (expectedPaths.find(manifestPathKey(relativePath)) == expectedPaths.end())
+            {
+                const fs::path backupPath = backupRoot / pathFromUtf8(relativePath);
+                fs::create_directories(backupPath.parent_path(), ec);
+                if (ec)
+                {
+                    LOG(LOG_LEVEL_WARNING,
+                        "Error creating obsolete file backup folder: %s",
+                        backupPath.parent_path().u8string().c_str());
+                    skippedCount++;
+                }
+                else if (!moveFileAcrossFilesystems(entryPath, backupPath, ec))
+                {
+                    LOG(LOG_LEVEL_WARNING,
+                        "Error moving obsolete file %s to backup %s: %s",
+                        entryPath.u8string().c_str(),
+                        backupPath.u8string().c_str(),
+                        ec.message().c_str());
+                    skippedCount++;
+                }
+                else
+                {
+                    removedCount++;
+                    LOG(LOG_LEVEL_INFO,
+                        "Obsolete file removed from install folder: %s",
+                        relativePath.c_str());
+                }
+            }
+        }
+
+        it.increment(ec);
+        if (ec)
+        {
+            LOG(LOG_LEVEL_WARNING,
+                "Error iterating install folder during cleanup: %s",
+                ec.message().c_str());
+            break;
+        }
+    }
+
+    removeEmptyInstallFolders();
+    LOG(LOG_LEVEL_INFO,
+        "Obsolete install file cleanup completed. Files removed: %d, skipped: %d",
+        removedCount,
+        skippedCount);
+}
+
+void UpdateTask::removeEmptyInstallFolders()
+{
+    const fs::path appRoot = pathFromUtf8(appFolder);
+    std::error_code ec;
+    std::vector<fs::path> folders;
+
+    fs::recursive_directory_iterator it(appRoot, ec);
+    const fs::recursive_directory_iterator end;
+    if (ec)
+    {
+        LOG(LOG_LEVEL_WARNING,
+            "Error opening install folder to remove empty directories: %s",
+            ec.message().c_str());
+        return;
+    }
+
+    while (it != end)
+    {
+        const fs::path entryPath = it->path();
+        const fs::file_status status = it->symlink_status(ec);
+        if (!ec && fs::is_directory(status))
+        {
+            folders.push_back(entryPath);
+        }
+
+        it.increment(ec);
+        if (ec)
+        {
+            LOG(LOG_LEVEL_WARNING,
+                "Error iterating install folders for empty directory cleanup: %s",
+                ec.message().c_str());
+            return;
+        }
+    }
+
+    std::sort(folders.begin(),
+              folders.end(),
+              [](const fs::path& lhs, const fs::path& rhs)
+              {
+                  return lhs.native().size() > rhs.native().size();
+              });
+
+    for (const fs::path& folder: folders)
+    {
+        fs::remove(folder, ec);
+        ec.clear();
+    }
 }
 
 void UpdateTask::initialCleanup()

@@ -33,6 +33,35 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
 
 TransfersManagerSortFilterProxyModel::~TransfersManagerSortFilterProxyModel()
 {
+    prepareForDeletion();
+}
+
+void TransfersManagerSortFilterProxyModel::prepareForDeletion()
+{
+    // Already torn down (e.g. by ~TransfersWidget before our own destructor runs): nothing left
+    // to stop.
+    if (mTearingDown)
+    {
+        return;
+    }
+
+    // The sort/filter job runs on a QtConcurrent pool thread and, through
+    // blockMutexesAndSignals(), takes the application-global TransfersModel::mModelMutex and
+    // releases it via qobject_cast(sourceModel()) read out of this proxy. If it outlives us it
+    // both dereferences freed QObject state and unlocks (or never unlocks) that global mutex.
+    // Make any later sort()/invalidateModel() a no-op, stop the finished handler from touching a
+    // half-destroyed owner, then block until the running job returns.
+    mTearingDown = true;
+
+    disconnect(&mFilterWatcher,
+               &QFutureWatcher<void>::finished,
+               this,
+               &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
+
+    if (mFilterWatcher.isRunning())
+    {
+        mFilterWatcher.waitForFinished();
+    }
 }
 
 void TransfersManagerSortFilterProxyModel::initProxyModel(SortCriterion sortCriterion, Qt::SortOrder order)
@@ -43,6 +72,13 @@ void TransfersManagerSortFilterProxyModel::initProxyModel(SortCriterion sortCrit
 
 void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
 {
+    // Teardown barrier: after prepareForDeletion() a new concurrent sort would take the global
+    // transfers-model mutex and dereference this proxy after it is gone.
+    if (mTearingDown)
+    {
+        return;
+    }
+
     emit modelAboutToBeChanged();
     if (sortCriterion != static_cast<int>(mSortCriterion))
     {
@@ -111,6 +147,12 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
 
 void TransfersManagerSortFilterProxyModel::invalidateModel()
 {
+    // Teardown barrier: see sort(). No new concurrent filter job once teardown has begun.
+    if (mTearingDown)
+    {
+        return;
+    }
+
     if(!dynamicSortFilter())
     {
         setDynamicSortFilter(true);

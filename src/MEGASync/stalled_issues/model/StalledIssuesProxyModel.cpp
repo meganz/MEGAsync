@@ -12,6 +12,39 @@ StalledIssuesProxyModel::StalledIssuesProxyModel(QObject *parent) :QSortFilterPr
             this, &StalledIssuesProxyModel::onModelSortedFiltered);
 }
 
+StalledIssuesProxyModel::~StalledIssuesProxyModel()
+{
+    // Defense in depth: ~QFutureWatcher does not wait for its future, so a still running
+    // concurrent filter would outlive this proxy if no owner called prepareForDeletion() first
+    // (it is idempotent).
+    prepareForDeletion();
+}
+
+void StalledIssuesProxyModel::prepareForDeletion()
+{
+    // Already torn down (e.g. by the dialog before our own destructor runs): nothing left to stop.
+    if (mTearingDown)
+    {
+        return;
+    }
+
+    // The filter job runs a full invalidate()/sort() on this proxy and its source model on a
+    // QtConcurrent pool thread. The dialog that owns this proxy is WA_DeleteOnClose, so closing
+    // it while the (deliberately slow) filter runs would free this object under the job. Make any
+    // later filter() a no-op, stop the finished handler, then block until the job returns.
+    mTearingDown = true;
+
+    disconnect(&mFilterWatcher,
+               &QFutureWatcher<void>::finished,
+               this,
+               &StalledIssuesProxyModel::onModelSortedFiltered);
+
+    if (mFilterWatcher.isRunning())
+    {
+        mFilterWatcher.waitForFinished();
+    }
+}
+
 int StalledIssuesProxyModel::rowCount(const QModelIndex &parent) const
 {
     if(sourceModel()->rowCount() == 0)
@@ -24,6 +57,13 @@ int StalledIssuesProxyModel::rowCount(const QModelIndex &parent) const
 
 void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion)
 {
+    // Teardown barrier: after prepareForDeletion() a new concurrent filter would dereference a
+    // proxy/source model that is being destroyed.
+    if (mTearingDown)
+    {
+        return;
+    }
+
     mFilterCriterion = filterCriterion;
 
     auto sourceM = qobject_cast<StalledIssuesModel*>(sourceModel());

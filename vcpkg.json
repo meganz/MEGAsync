@@ -61,12 +61,6 @@
                 "pdfium"
             ]
         },
-        "use-cares": {
-            "description": "c-ares library",
-            "dependencies": [
-                "c-ares"
-            ]
-        },
         "use-readline": {
             "description": "Readline library",
             "dependencies": [

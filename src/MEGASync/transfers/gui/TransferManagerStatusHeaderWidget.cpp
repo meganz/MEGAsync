@@ -93,12 +93,13 @@ void TransferManagerStatusHeaderWidget::setFullStorageBannerText()
 
 void TransferManagerStatusHeaderWidget::setTransferQuotaBannerText()
 {
-    QString bannerText;
+    QString bannerTitle = tr("Transfer quota exceeded.");
+    QString bannerDescription;
 
     if (Preferences::instance()->accountType() == Preferences::ACCOUNT_TYPE_FREE)
     {
-        bannerText =
-            tr("[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have "
+        bannerDescription =
+            tr("You can’t continue downloading as you don’t have "
                "enough transfer quota left for this "
                "IP address. To get more quota, upgrade to a Pro account or wait for %1 until more "
                "free "
@@ -107,14 +108,11 @@ void TransferManagerStatusHeaderWidget::setTransferQuotaBannerText()
                 .arg(MegaSyncApp->getTransferQuota()->getRemainingTransferQuotaTime().toString(
                     TIME_FORMAT));
     }
-    else
-    {
-        bannerText = tr("Transfer quota exceeded.");
-    }
+    mUi->wTransferBanner->setTitle(bannerTitle);
 
     const auto link = ServiceUrls::getTransferQuotaHelpUrl().toString();
-    Text::RichText(link).process(bannerText);
-    mUi->wTransferBanner->setTitle(bannerText);
+    Text::RichText(link).process(bannerDescription);
+    mUi->wTransferBanner->setDescription(bannerDescription);
 }
 
 void TransferManagerStatusHeaderWidget::setAllPausedBannerText()

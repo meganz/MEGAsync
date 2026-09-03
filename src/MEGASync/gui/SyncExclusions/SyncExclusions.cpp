@@ -2,10 +2,13 @@
 
 #include "MessageDialogOpener.h"
 #include "Preferences.h"
+#include "SyncController.h"
 
+#include <QPointer>
 #include <QQmlEngine>
 
 #include <cmath>
+#include <utility>
 
 using namespace mega;
 
@@ -13,12 +16,15 @@ bool isEqual(double a, double b, double epsilon = 1e-2) {
     return fabs(a - b) < epsilon;
 }
 
-SyncExclusions::SyncExclusions(QWidget *parent, const QString& path)
-    : QMLComponent(parent)
-    , mMinimumAllowedSize(0)
-    , mMaximumAllowedSize(0)
-    , mMegaIgnoreManager(std::make_shared<MegaIgnoreManager>())
-    , mRulesModel(new ExclusionRulesModel(this, mMegaIgnoreManager))
+SyncExclusions::SyncExclusions(QWidget* parent,
+                               const QString& path,
+                               std::shared_ptr<SyncSettings> syncSetting):
+    QMLComponent(parent),
+    mMinimumAllowedSize(0),
+    mMaximumAllowedSize(0),
+    mMegaIgnoreManager(std::make_shared<MegaIgnoreManager>()),
+    mRulesModel(new ExclusionRulesModel(this, mMegaIgnoreManager)),
+    mSyncSetting(std::move(syncSetting))
 {
     qmlRegisterModule("SyncExclusions", 1, 0);
 
@@ -36,6 +42,15 @@ SyncExclusions::SyncExclusions(QWidget *parent, const QString& path)
         0,
         "ExclusionRulesModel",
         QString::fromUtf8("ExclusionRulesModel is not meant to be created"));
+
+    // Rule changes in the model can make the setup match or diverge from the defaults
+    connect(mRulesModel,
+            &QAbstractItemModel::rowsInserted,
+            this,
+            &SyncExclusions::isDefaultChanged);
+    connect(mRulesModel, &QAbstractItemModel::rowsRemoved, this, &SyncExclusions::isDefaultChanged);
+    connect(mRulesModel, &QAbstractItemModel::dataChanged, this, &SyncExclusions::isDefaultChanged);
+    connect(mRulesModel, &QAbstractItemModel::modelReset, this, &SyncExclusions::isDefaultChanged);
 
     setFolder(path);
 }
@@ -65,6 +80,7 @@ void SyncExclusions::setMaximumAllowedSize(double maximumSize)
         highLimit->setUnit(value.second);
     }
     emit maximumAllowedSizeChanged(mMaximumAllowedSize);
+    emit isDefaultChanged();
 }
 
 void SyncExclusions::setMinimumAllowedSize(double minimumSize)
@@ -78,6 +94,7 @@ void SyncExclusions::setMinimumAllowedSize(double minimumSize)
     mMegaIgnoreManager->getLowLimitRule()->setValue(value.first);
     mMegaIgnoreManager->getLowLimitRule()->setUnit(value.second);
     emit minimumAllowedSizeChanged(mMinimumAllowedSize);
+    emit isDefaultChanged();
 }
 
 void SyncExclusions::setMaximumAllowedUnit(int maximumUnit)
@@ -95,6 +112,7 @@ void SyncExclusions::setMaximumAllowedUnit(int maximumUnit)
         highLimit->setUnit(value.second);
     }
     emit maximumAllowedUnitChanged(mMaximumAllowedUnit);
+    emit isDefaultChanged();
 }
 
 void SyncExclusions::setMinimumAllowedUnit(int minimumUnit)
@@ -112,6 +130,7 @@ void SyncExclusions::setMinimumAllowedUnit(int minimumUnit)
         lowLimit->setUnit(value.second);
     }
     emit minimumAllowedUnitChanged(mMinimumAllowedUnit);
+    emit isDefaultChanged();
 }
 
 void SyncExclusions::applyChanges()
@@ -203,6 +222,7 @@ void SyncExclusions::setSizeExclusionStatus(SyncExclusions::SizeExclusionStatus 
     default:
         break;
     }
+    emit isDefaultChanged();
 }
 
 void SyncExclusions::setFolder(const QString& folderName)
@@ -214,6 +234,7 @@ void SyncExclusions::setFolder(const QString& folderName)
     auto highLimit = mMegaIgnoreManager->getHighLimitRule();
     emit sizeExclusionStatusChanged(getSizeExclusionStatus());
     emit folderNameChanged(mFolderName);
+    emit isDefaultChanged();
     if (highLimit)
     {
         auto displayValue = toDisplay(highLimit->value(), highLimit->unit());
@@ -231,7 +252,32 @@ void SyncExclusions::setFolder(const QString& folderName)
 
 void SyncExclusions::restoreDefaults()
 {
-    mMegaIgnoreManager->restreDefaults();
+    // Captured by value (not [this]) because pauseRunAndResume() blocks on a nested event
+    // loop, during which this dialog could be closed and destroyed.
+    auto megaIgnoreManager = mMegaIgnoreManager;
+
+    if (!megaIgnoreManager->hasDefaultFile() && mSyncSetting)
+    {
+        // There's no .megaignore.default to copy from, so restoreDefaults() below will
+        // remove .megaignore instead and rely on the SDK to regenerate it. Pause the sync
+        // first so it can't see the folder with .megaignore momentarily missing and start
+        // syncing files that should stay excluded; resume afterwards so the SDK's
+        // transition into RUNSTATE_RUNNING actually regenerates the file.
+        SyncController::instance().pauseRunAndResume(mSyncSetting,
+                                                     [megaIgnoreManager]()
+                                                     {
+                                                         megaIgnoreManager->restoreDefaults();
+                                                     });
+    }
+    else
+    {
+        megaIgnoreManager->restoreDefaults();
+    }
+}
+
+bool SyncExclusions::isDefault() const
+{
+    return mMegaIgnoreManager && mMegaIgnoreManager->isDefault();
 }
 
 void SyncExclusions::showRemoveRuleConfirmationMessageDialog(const QString& descriptionText)

@@ -320,94 +320,9 @@
 </context>
 <context>
     <name>BackupItemModel</name>
-    <message>
-        <source>Backup is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled).SNC-4208</translatorcomment>
-        <translation>Backupul este dezactivat</translation>
-    </message>
-    <message>
-        <source>Backup is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled).SNC-4208</translatorcomment>
-        <translation>Backupul este activat</translation>
-    </message>
-    <message>
-        <source>Local Folder</source>
-        <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-        <translation>Folder local</translation>
-    </message>
-    <message>
-        <source>Sort by backup state</source>
-        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by backup state.SNC-2565</translatorcomment>
-        <translation>Sortare după starea de backup</translation>
-    </message>
-    <message>
-        <source>Sort by name</source>
-        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
-        <translation>Sortează după nume</translation>
-    </message>
-    <message>
-        <source>State</source>
-        <translatorcomment>backup state column header name for backlups table in settings dialog.SNC-2565</translatorcomment>
-        <translation>Stare</translation>
-    </message>
 </context>
 <context>
     <name>BackupSettingsUI</name>
-    <message>
-        <source>Backup operation failed</source>
-        <translatorcomment>Title for error dialog shown when a  backup fails.SNC-3258</translatorcomment>
-        <translation>Operațiunea de backup a eșuat</translation>
-    </message>
-    <message>
-        <source>Backups</source>
-        <translatorcomment>Title for backups tab in the settings.SNC-2565</translatorcomment>
-        <translation>Backupuri</translation>
-    </message>
-    <message>
-        <source>Error adding backup</source>
-        <translatorcomment>Title of the error message displayed when there was en error while trying to add a backup. SNC-3258</translatorcomment>
-        <translation>Eroare la adăugarea backup-ului</translation>
-    </message>
-    <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
-        <translation>Eroare la adăugarea sincronizării</translation>
-    </message>
-    <message>
-        <source>Error removing backup</source>
-        <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
-        <translation>Eroare la oprirea backupului</translation>
-    </message>
-    <message>
-        <source>Operation on backup &apos;%1&apos; failed. Reason: %2</source>
-        <translatorcomment>text for error dialog shown when a  backup fails, folder path and reason are given during runtime in the placeholders.SNC-3258</translatorcomment>
-        <translation>Operațiunea asupra backup-ului ‘%1’ a eșuat. Motiv: %2</translation>
-    </message>
-    <message>
-        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
-        <translatorcomment>text for error dialog shown when a  sync fails, folder path and reason are given during runtime in the placeholders.SNC-2565</translatorcomment>
-        <translation>Folderul dvs. „%1” nu se poate sincroniza. Motivul: %2</translation>
-    </message>
-    <message>
-        <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
-        <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.SNC-2565</translatorcomment>
-        <translation>Unele foldere nu au fost salvate. Pentru mai multe informații, treceți cu mouse-ul peste pictograma roșie.</translation>
-    </message>
-    <message>
-        <source>Sync operation failed</source>
-        <translatorcomment>Title for error dialog shown when a  sync fails.SNC-2565</translatorcomment>
-        <translation>Imposibil de sincronizat</translation>
-    </message>
-    <message>
-        <source>Your backup can’t be removed. Reason: %1</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder.SNC-3258</translatorcomment>
-        <translation>Backup-ul tău nu poate fi șters. Motiv: %1</translation>
-    </message>
-    <message>
-        <source>Your sync can&apos;t be removed. Reason: %1</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder.SNC-4208</translatorcomment>
-        <translation>Sincronizarea nu poate fi eliminată. Motivul: %1</translation>
-    </message>
 </context>
 <context>
     <name>BackupSyncsMenu</name>
@@ -424,11 +339,6 @@
 </context>
 <context>
     <name>BackupTableView</name>
-    <message>
-        <source>Stop backup</source>
-        <translatorcomment>Menu action that stops the backup.SNC-2565</translatorcomment>
-        <translation>Oprește backupul</translation>
-    </message>
 </context>
 <context>
     <name>BackupsController</name>
@@ -512,81 +422,6 @@
 </context>
 <context>
     <name>BandwidthSettings</name>
-    <message>
-        <source>(Max. 90% of available bandwidth)</source>
-        <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>(Max. 90 % din lățimea de bandă disponibilă)</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button label for apply and confirm the bandwidth changes (Windows and Linux)</translatorcomment>
-        <translation>Aplică</translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translatorcomment>Radio button text to indicate automatic rate limit.</translatorcomment>
-        <translation>Automată</translation>
-    </message>
-    <message>
-        <source>Bandwidth</source>
-        <translatorcomment>Title of the dialog to manage Bandwidth settings.</translatorcomment>
-        <translation>Lățime de bandă</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label for cancel dialog.</translatorcomment>
-        <translation>Anulează</translation>
-    </message>
-    <message>
-        <source>Download rate limit</source>
-        <translatorcomment>Section title for download rate limit details.</translatorcomment>
-        <translation>Limita ratei de descărcare</translation>
-    </message>
-    <message>
-        <source>Downloads:</source>
-        <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
-        <translation>Descărcări:</translation>
-    </message>
-    <message>
-        <source>KB/s</source>
-        <translatorcomment>Rate unit of Kilo bytes per second.</translatorcomment>
-        <translation>KB/s</translation>
-    </message>
-    <message>
-        <source>Limit to:</source>
-        <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
-        <translation>Limitează la:</translation>
-    </message>
-    <message>
-        <source>No limit</source>
-        <translatorcomment>Radio button text to indicate no limit for transfer rate.</translatorcomment>
-        <translation>Nicio limită</translation>
-    </message>
-    <message>
-        <source>Number of connections per transfer</source>
-        <translatorcomment>Section title for number of connections per transfer details.</translatorcomment>
-        <translation>Număr de conexiuni per transfer</translation>
-    </message>
-    <message>
-        <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
-        <translation>Activează această opțiune numai dacă transferurile nu pornesc. În toate celelalte circumstanțe, folosirea HTTP este satisfăcătoare, deoarece MEGA criptează deja toate datele.</translation>
-    </message>
-    <message>
-        <source>Upload rate limit</source>
-        <translatorcomment>Section title for upload rate limit details.</translatorcomment>
-        <translation>Limita ratei de încărcare</translation>
-    </message>
-    <message>
-        <source>Uploads:</source>
-        <translatorcomment>Label to indicate the limit of upload connections per transfer.</translatorcomment>
-        <translation>Încărcări:</translation>
-    </message>
-    <message>
-        <source>Use HTTPS for transfers that don&apos;t start</source>
-        <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
-        <translation>Folosește HTTPS pentru transferurile care nu pornesc</translation>
-    </message>
 </context>
 <context>
     <name>BugReportDialog</name>
@@ -601,14 +436,9 @@
         <translation>Atașează fișiere jurnal de diagnosticare pentru a ajuta la depanare</translation>
     </message>
     <message>
-        <source>Bug report</source>
-        <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation>Raportează o problemă</translation>
-    </message>
-    <message>
-        <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
-        <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Bug report can&apos;t be submitted due to some error. Please try again or contact [A]Support[/A].</source>
+        <translatorcomment>Warning message shown when some error occurs during uploading a bug report. [A][/A] is a hyperlink placeholder linking to the support form.</translatorcomment>
+        <translation>Problema ta nu a putut fi trimisă din cauza unei erori. Încearcă din nou mai târziu sau contactează [A]asistența[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -631,11 +461,6 @@
         <translation>Continuă</translation>
     </message>
     <message>
-        <source>Describe the problem</source>
-        <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
-        <translation>Descrie problema</translation>
-    </message>
-    <message>
         <source>Describe the problem *</source>
         <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.  SNC-6268</translatorcomment>
         <translation>Descrieți problema *</translation>
@@ -644,11 +469,6 @@
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
         <translation>Eroare la încărcarea problemei raportate.</translation>
-    </message>
-    <message>
-        <source>Optional</source>
-        <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
-        <translation>Facultativ</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
@@ -661,9 +481,9 @@
         <translation>Vă rugăm să descrieți problema în detaliu. Trebuie să aibă cel puțin 30 de caractere.</translation>
     </message>
     <message>
-        <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
-        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Please try again later or contact [A]Support[/A] if the problem persists.</source>
+        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins. [A][/A] is a hyperlink placeholder linking to the support form. con-364</translatorcomment>
+        <translation>Încearcă din nou mai târziu sau contactează [A]asistența[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -857,26 +677,6 @@
 </context>
 <context>
     <name>CloudDriveNodeSelector</name>
-    <message>
-        <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
-        <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Toate elementele vor fi șterse definitiv. Această acțiune poate [B]nu[/B] să fie anulat.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Messagebox cancel button string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Anulați</translation>
-    </message>
-    <message>
-        <source>Empty</source>
-        <translatorcomment>Messagebox accept button string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Golește</translation>
-    </message>
-    <message>
-        <source>Empty Rubbish bin?</source>
-        <translatorcomment>Messagebox main string to empty the rubbish bin. SAT-426</translatorcomment>
-        <translation>Goliți coșul de gunoi?</translation>
-    </message>
 </context>
 <context>
     <name>CloudFingerprintMissingHeader</name>
@@ -1385,6 +1185,11 @@
         <translatorcomment>Checkbox label in the node selector destination breadcrumb to set the current folder as the default upload destination. SNC-6420</translatorcomment>
         <translation>Încarcă mereu în această destinație</translation>
     </message>
+    <message>
+        <source>Destination</source>
+        <translatorcomment>Label/title of the destination breadcrumb in the node selector, showing the folder files will be uploaded to. SNC-6420</translatorcomment>
+        <translation>Destinație</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -1566,6 +1371,11 @@
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
         <translation>Folderul de la această destinație va fi menținut.</translation>
+    </message>
+    <message>
+        <source>The folder will be renamed as:</source>
+        <translatorcomment>Text explaining the result of the folder rename action. SNC-6420</translatorcomment>
+        <translation>Folderul va fi redenumit în:</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -2063,8 +1873,13 @@
         <translation>
             <numerusform>%n rezultat</numerusform>
             <numerusform>%n rezultate</numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n rezultate</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
+        <translatorcomment>Messagebox secondary string to empty the rubbish bin. SAT-426</translatorcomment>
+        <translation>Toate elementele vor fi șterse definitiv. Această acțiune [B]nu poate[/B] fi anulată.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3174,9 +2989,9 @@ Așteptați finalizarea încărcării.</translation>
         <translation>Ați fost deconectat de la acest aparat dintr-o altă locație</translation>
     </message>
     <message>
-        <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
-        <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>You have been logged out. Please contact [A]Support[/A] if this issue persists.</source>
+        <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. [A][/A] is a hyperlink placeholder linking to the support form. CON-541</translatorcomment>
+        <translation>Ai fost deconectat. Contactează [A]asistența[/A] dacă problema persistă.</translation>
     </message>
 </context>
 <context>
@@ -3240,9 +3055,14 @@ Așteptați finalizarea încărcării.</translation>
         <translation>Cont dezactivat</translation>
     </message>
     <message>
-        <source>An update will be applied during the next application restart</source>
-        <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>Se va aplica o actualizare în timpul următoarei reporniri a aplicației</translation>
+        <source>An update has been installed. The MEGA Desktop App will restart automatically in a few minutes to finish applying it</source>
+        <translatorcomment>Desktop notification shown after instaling an auto-update if there are transfers running. SNC-6717</translatorcomment>
+        <translation>A fost instalată o actualizare. Aplicația MEGA Desktop se va reporni automat în câteva minute pentru a finaliza instalarea acesteia</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button. SNC-6678</translatorcomment>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
@@ -3268,6 +3088,20 @@ Așteptați finalizarea încărcării.</translation>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
         <translation>Înlătură</translation>
+    </message>
+    <message>
+        <source>Do you want to upload &quot;%1&quot; to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>Vrei să încarci „%1” în MEGA?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you want to upload %n file to MEGA?</source>
+        <translatorcomment>Label to ask for confirmation about a file(s) to be uploade to your account. SNC-6678</translatorcomment>
+        <translation>
+            <numerusform>Vrei să încarci %n fișier în MEGA?</numerusform>
+            <numerusform>Vrei să încarci %n fișiere în MEGA?</numerusform>
+            <numerusform>Vrei să încarci %n fișiere în MEGA?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Don’t show me again</source>
@@ -3323,6 +3157,11 @@ Așteptați finalizarea încărcării.</translation>
         <source>Folder download error</source>
         <translatorcomment>Title of the error message when there is an error downloading a MEGA link. SNC-2549.</translatorcomment>
         <translation>Eroare de descărcare a folderului</translation>
+    </message>
+    <message>
+        <source>Import from another cloud</source>
+        <translatorcomment>Menu action to open the cloud-to-MEGA migration tool. SNC-6703</translatorcomment>
+        <translation>Import din alt cloud</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -3607,6 +3446,11 @@ https://mega.co.nz/#sync</source>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Încarcă</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translatorcomment>Title shown at dialog when the user is trying to upload a file to MEGA from Finder explorer context menu option.SNC-6678.</translatorcomment>
+        <translation>Încarcă pe MEGA</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -4758,24 +4602,14 @@ Introdu un alt nume.</translation>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox. SNC-5804</translatorcomment>
-        <translation>Încarcă mereu în această destinație</translation>
-    </message>
-    <message>
         <source>Files</source>
         <translatorcomment>Sidebar title. SNC.5804</translatorcomment>
         <translation>Fișiere</translation>
     </message>
     <message>
-        <source>Search</source>
-        <translatorcomment>Search button header</translatorcomment>
-        <translation>Caută</translation>
-    </message>
-    <message>
-        <source>Select a MEGA folder</source>
-        <translatorcomment>Node selector dialog title</translatorcomment>
-        <translation>Selectează un folder MEGA</translation>
+        <source>Searching…</source>
+        <translatorcomment>Loading text shown in the node selector while a search for nodes is in progress. SNC-6420</translatorcomment>
+        <translation>Se caută…</translation>
     </message>
     <message>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -4838,105 +4672,113 @@ Introdu un alt nume.</translation>
         <translatorcomment>Table header title for node date added info. SNC.5804</translatorcomment>
         <translation>Data adăugării</translation>
     </message>
-    <message>
-        <source>Error copying file</source>
-        <translatorcomment>Main text of a messagebox when copying a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la copierea fișierului</translation>
-    </message>
-    <message>
-        <source>Error copying files</source>
-        <translatorcomment>Main text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la copierea fișierelor</translation>
-    </message>
-    <message>
-        <source>Error copying folder</source>
-        <translatorcomment>Main text of a messagebox when copying a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la copierea folderului</translation>
-    </message>
-    <message>
-        <source>Error copying folders</source>
-        <translatorcomment>Main text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la copierea folderelor</translation>
-    </message>
-    <message>
-        <source>Error copying items</source>
-        <translatorcomment>Main text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la copierea elementelor</translation>
-    </message>
-    <message>
+    <message numerus="yes">
         <source>Error deleting file</source>
-        <translatorcomment>Secondary text of a messagebox when deleting a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la ștergerea fișierului</translation>
+        <translatorcomment>Secondary text of a messagebox when deleting files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Eroare la ștergerea fișierului</numerusform>
+            <numerusform>Eroare la ștergerea fișierelor</numerusform>
+            <numerusform>Eroare la ștergerea fișierelor</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Error deleting files</source>
-        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la ștergerea fișierelor</translation>
-    </message>
-    <message>
+    <message numerus="yes">
         <source>Error deleting folder</source>
-        <translatorcomment>Secondary text of a messagebox when deleting a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la ștergerea folderului</translation>
+        <translatorcomment>Secondary text of a messagebox when deleting folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Eroare la ștergerea dosarului</numerusform>
+            <numerusform>Eroare la ștergerea dosarelor</numerusform>
+            <numerusform>Eroare la ștergerea dosarelor</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Error deleting folders</source>
-        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la ștergerea folderelor</translation>
+    <message numerus="yes">
+        <source>Error deleting item</source>
+        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Eroare la ștergerea elementului</numerusform>
+            <numerusform>Eroare la ștergerea elementelor</numerusform>
+            <numerusform>Eroare la ștergerea elementelor</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Error deleting items</source>
-        <translatorcomment>Main text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la ștergerea elementelor</translation>
-    </message>
-    <message>
+    <message numerus="yes">
         <source>Error moving file</source>
-        <translatorcomment>Main text of a messagebox when moving a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la mutarea fișierului</translation>
+        <translatorcomment>Main text of a messagebox when moving files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Eroare la mutarea fișierului</numerusform>
+            <numerusform>Eroare la mutarea fișierelor</numerusform>
+            <numerusform>Eroare la mutarea fișierelor</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Error moving files</source>
-        <translatorcomment>Main text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la mutarea fișierelor</translation>
-    </message>
-    <message>
+    <message numerus="yes">
         <source>Error moving folder</source>
-        <translatorcomment>Main text of a messagebox when moving a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la mutarea folderului</translation>
+        <translatorcomment>Main text of a messagebox when moving folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Eroare la mutarea dosarului</numerusform>
+            <numerusform>Eroare la mutarea dosarelor</numerusform>
+            <numerusform>Eroare la mutarea dosarelor</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Error moving folders</source>
-        <translatorcomment>Main text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la mutarea folderelor</translation>
+    <message numerus="yes">
+        <source>Error moving item</source>
+        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Eroare la mutarea elementului</numerusform>
+            <numerusform>Eroare la mutarea elementelor</numerusform>
+            <numerusform>Eroare la mutarea elementelor</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Error moving items</source>
-        <translatorcomment>Main text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la mutarea elementelor</translation>
+    <message numerus="yes">
+        <source>Error pasting file</source>
+        <translatorcomment>Main text of a messagebox when pasting files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Eroare la lipirea fișierului</numerusform>
+            <numerusform>Eroare la lipirea fișierelor</numerusform>
+            <numerusform>Eroare la lipirea fișierelor</numerusform>
+        </translation>
     </message>
-    <message>
+    <message numerus="yes">
+        <source>Error pasting folder</source>
+        <translatorcomment>Main text of a messagebox when pasting folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Eroare la lipirea dosarului</numerusform>
+            <numerusform>Eroare la lipirea dosarelor</numerusform>
+            <numerusform>Eroare la lipirea dosarelor</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Error pasting item</source>
+        <translatorcomment>Main text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Eroare la lipirea elementului</numerusform>
+            <numerusform>Eroare la lipirea elementelor</numerusform>
+            <numerusform>Eroare la lipirea elementelor</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
         <source>Error restoring file</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la restaurarea fișierului</translation>
+        <translatorcomment>Secondary text of a messagebox when restoring files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Eroare la restaurarea fișierului</numerusform>
+            <numerusform>Eroare la restaurarea fișierelor</numerusform>
+            <numerusform>Eroare la restaurarea fișierelor</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Error restoring files</source>
-        <translatorcomment>Main text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la restaurarea fișierelor</translation>
-    </message>
-    <message>
+    <message numerus="yes">
         <source>Error restoring folder</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la restaurarea folderului</translation>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Eroare la restaurarea dosarului</numerusform>
+            <numerusform>Eroare la restaurarea dosarelor</numerusform>
+            <numerusform>Eroare la restaurarea dosarelor</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Error restoring folders</source>
-        <translatorcomment>Main text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la restaurarea folderelor</translation>
-    </message>
-    <message>
-        <source>Error restoring items</source>
-        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Eroare la restaurarea elementelor</translation>
+    <message numerus="yes">
+        <source>Error restoring item</source>
+        <translatorcomment>Main text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Eroare la restaurarea elementului</numerusform>
+            <numerusform>Eroare la restaurarea elementelor</numerusform>
+            <numerusform>Eroare la restaurarea elementelor</numerusform>
+        </translation>
     </message>
     <message>
         <source>Folder already synced</source>
@@ -4979,6 +4821,11 @@ Introdu un alt nume.</translation>
         <translation>Sortează după data adăugării</translation>
     </message>
     <message>
+        <source>Sort by label</source>
+        <translatorcomment>Sort option to order nodes by their label in the node selector. SNC-6420</translatorcomment>
+        <translation>Sortează după etichetă</translation>
+    </message>
+    <message>
         <source>Sort by last modified date</source>
         <translatorcomment>Table header tooltip for last modified column. SNC.5804</translatorcomment>
         <translation>Sortează după ultima dată modificată</translation>
@@ -4994,104 +4841,157 @@ Introdu un alt nume.</translation>
         <translation>Sortează după numele proprietarului</translation>
     </message>
     <message>
-        <source>The file %1 couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation>Fișierul %1 nu a putut fi copiat. Încercați din nou mai târziu.</translation>
-    </message>
-    <message>
-        <source>The file %1 couldn’t be deleted. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
+        <source>The file %1 couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
         <translation>Fișierul %1 nu a putut fi șters. Încercați din nou mai târziu.</translation>
     </message>
     <message>
-        <source>The file %1 couldn’t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation>Fișierul %1 nu putea fi mutat. Încercați din nou mai târziu.</translation>
+        <source>The file %1 couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
+        <translation>Fișierul %1 nu a putut fi mutat. Încercați din nou mai târziu.</translation>
     </message>
     <message>
-        <source>The file %1 couldn’t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-426</translatorcomment>
-        <translation>Fișierului %1 nu a putut fi restaurat. Încercați din nou mai târziu.</translation>
+        <source>The file %1 couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6713</translatorcomment>
+        <translation>Fișierul %1 nu a putut fi lipit. Încercați din nou mai târziu.</translation>
     </message>
     <message>
-        <source>The files couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Fișierele nu au putut fi copiate. Încercați din nou mai târziu.</translation>
+        <source>The file %1 couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a file in the Cloud Drive dialog failed. %1 is the file name. SNC-6420</translatorcomment>
+        <translation>Fișierul %1 nu a putut fi restaurat. Încercați din nou mai târziu.</translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Fișierul nu a putut fi șters. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Fișierele nu au putut fi șterse. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Fișierele nu au putut fi șterse. Încercați din nou mai târziu.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Fișierul %1 nu a putut fi mutat. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Fișierele nu au putut fi mutate. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Fișierele nu au putut fi mutate. Încercați din nou mai târziu.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some files in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Fișierul %1 nu a putut fi lipit. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Fișierele nu au putut fi lipite. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Fișierele nu au putut fi lipite. Încercați din nou mai târziu.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The file couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Fișierul %1 nu a putut fi restaurat. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Fișierele nu au putut fi restaurate. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Fișierele nu au putut fi restaurate. Încercați din nou mai târziu.</numerusform>
+        </translation>
     </message>
     <message>
-        <source>The files couldn’t be deleted. Try again later</source>
-        <translatorcomment>Main text of a messagebox when deleting some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Fișierele nu au putut fi șterse. Încercați din nou mai târziu.</translation>
-    </message>
-    <message>
-        <source>The files couldn’t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Fișierele nu au putut fi mutate. Încercați din nou mai târziu.</translation>
-    </message>
-    <message>
-        <source>The files couldn’t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring some files in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Fișierele nu au putut fi restaurate. Încercați din nou mai târziu.</translation>
-    </message>
-    <message>
-        <source>The folder %1 couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
-        <translation>Folderul %1 nu a putut fi copiat. Încercați din nou mai târziu.</translation>
-    </message>
-    <message>
-        <source>The folder %1 couldn’t be deleted. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <source>The folder %1 couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
         <translation>Folderul %1 nu a putut fi șters. Încercați din nou mai târziu.</translation>
     </message>
     <message>
-        <source>The folder %1 couldn’t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
-        <translation>Folderul %1 nu putea fi mutat. Încercați din nou mai târziu.</translation>
+        <source>The folder %1 couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
+        <translation>Folderul %1 nu a putut fi mutat. Încercați din nou mai târziu.</translation>
     </message>
     <message>
-        <source>The folder %1 couldn’t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-426</translatorcomment>
+        <source>The folder %1 couldn’t be pasted. Try again later</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
+        <translation>Folderul %1 nu a putut fi lipit. Încercați din nou mai târziu.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6713</translatorcomment>
+        <translation>Folderul %1 nu a putut fi lipit. Încercați din nou mai târziu.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring a folder in the Cloud Drive dialog failed. %1 is the folder name. SNC-6420</translatorcomment>
         <translation>Folderul %1 nu a putut fi restaurat. Încercați din nou mai târziu.</translation>
     </message>
-    <message>
-        <source>The folders couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Folderele nu au putut fi copiate. Încercați din nou mai târziu.</translation>
+    <message numerus="yes">
+        <source>The folder couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Folderul nu a putut fi șters. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Folderele nu au putut fi șterse. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Folderele nu au putut fi șterse. Încercați din nou mai târziu.</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>The folders couldn’t be deleted. Try again later</source>
-        <translatorcomment>Main text of a messagebox when deleting some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Folderele nu au putut fi șterse. Încercați din nou mai târziu.</translation>
+    <message numerus="yes">
+        <source>The folder couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Folderul nu a putut fi mutat. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Folderele nu au putut fi mutate. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Folderele nu au putut fi mutate. Încercați din nou mai târziu.</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>The folders couldn’t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Folderele nu au putut fi mutate. Încercați din nou mai târziu.</translation>
+    <message numerus="yes">
+        <source>The folder couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some folders in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Folderul nu a putut fi lipit. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Folderele nu au putut fi lipite. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Folderele nu au putut fi lipite. Încercați din nou mai târziu.</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>The folders couldn’t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Folderele nu au putut fi restaurate. Încercați din nou mai târziu.</translation>
+    <message numerus="yes">
+        <source>The folder couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Folderul nu a putut fi restaurat. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Folderele nu au putut fi restaurate. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Folderele nu au putut fi restaurate. Încercați din nou mai târziu.</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>The items couldn’t be copied. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when copying some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Elementele nu au putut fi copiate. Încercați din nou mai târziu.</translation>
+    <message numerus="yes">
+        <source>The item couldn’t be deleted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Elementul nu a putut fi șters. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Elementele nu au putut fi șterse. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Elementele nu au putut fi șterse. Încercați din nou mai târziu.</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>The items couldn’t be deleted. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when deleting some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Elementele nu au putut fi șterse. Încercați din nou mai târziu.</translation>
+    <message numerus="yes">
+        <source>The item couldn’t be moved. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when moving some folders in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Elementul nu a putut fi mutat. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Elementele nu au putut fi mutate. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Elementele nu au putut fi mutate. Încercați din nou mai târziu.</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>The items couldn’t be moved. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when moving some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Elementele nu au putut fi mutate. Încercați din nou mai târziu.</translation>
+    <message numerus="yes">
+        <source>The item couldn’t be pasted. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when pasting some items (files and folders) in the Cloud Drive dialog failed. SNC-6713</translatorcomment>
+        <translation>
+            <numerusform>Elementul nu a putut fi lipit. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Elementele nu au putut fi lipite. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Elementele nu au putut fi lipite. Încercați din nou mai târziu.</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>The items couldn’t be restored. Try again later</source>
-        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-426</translatorcomment>
-        <translation>Elementele nu au putut fi restaurate. Încercați din nou mai târziu.</translation>
+    <message numerus="yes">
+        <source>The item couldn’t be restored. Try again later.</source>
+        <translatorcomment>Secondary text of a messagebox when restoring some items (files and folders) in the Cloud Drive dialog failed. SNC-6420</translatorcomment>
+        <translation>
+            <numerusform>Elementul nu a putut fi restaurat. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Elementele nu au putut fi restaurate. Încercați din nou mai târziu.</numerusform>
+            <numerusform>Elementele nu au putut fi restaurate. Încercați din nou mai târziu.</numerusform>
+        </translation>
     </message>
     <message>
         <source>This file has been the subject of a takedown notice</source>
@@ -5234,11 +5134,6 @@ Introdu un alt nume.</translation>
         <translatorcomment>Empty state label shown in the node selector view when the selected folder has no items. SNC-6420</translatorcomment>
         <translation>Folder gol</translation>
     </message>
-    <message>
-        <source>Folder is empty</source>
-        <translatorcomment>Message on the view when there are no items in a folder. SNC-5804</translatorcomment>
-        <translation>Folderul este gol</translation>
-    </message>
     <message numerus="yes">
         <source>If you leave the folder, you will not be able to see it again.</source>
         <translatorcomment>Body of the confirmation messagebox to leave an inshared folder. CON-1255</translatorcomment>
@@ -5317,6 +5212,21 @@ Introdu un alt nume.</translation>
         <translation>Sincronizează</translation>
     </message>
     <message>
+        <source>This folder is empty. Keep something safe with zero-knowledge encryption.</source>
+        <translatorcomment>Empty-state message shown in the node selector when the current folder has no items. SNC-6420</translatorcomment>
+        <translation>Acest folder este gol. Păstrează fișierele în siguranță cu criptare zero-knowledge.</translation>
+    </message>
+    <message>
+        <source>This folder is read and write. Ask for full access to sync</source>
+        <translatorcomment>Informational message in the node selector shown for a read-and-write shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
+        <translation>Acest folder permite citire și scriere. Solicită acces complet pentru a sincroniza</translation>
+    </message>
+    <message>
+        <source>This folder is read-only. Ask for full access to sync</source>
+        <translatorcomment>Informational message in the node selector shown for a read-only shared folder, indicating full access is needed to sync it. SNC-6420</translatorcomment>
+        <translation>Acest folder este doar pentru citire. Solicită acces complet pentru a sincroniza</translation>
+    </message>
+    <message>
         <source>Upload</source>
         <translatorcomment>Action button in the node selector to upload to the selected folder. SNC-6420</translatorcomment>
         <translation>Încarcă</translation>
@@ -5364,11 +5274,6 @@ Introdu un alt nume.</translation>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidgetCloudDrive</name>
-    <message>
-        <source>Cloud drive is empty</source>
-        <translatorcomment>Message on the view when there are no items. SNC-5804</translatorcomment>
-        <translation>Unitatea cloud este goală</translation>
-    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidgetIncomingShares</name>
@@ -5426,6 +5331,11 @@ Introdu un alt nume.</translation>
         <source>No search results</source>
         <translatorcomment>Message on the view when the search did not find any coincidence. SNC-5804</translatorcomment>
         <translation>Niciun rezultat al căutării</translation>
+    </message>
+    <message>
+        <source>Try a different name or check the spelling</source>
+        <translatorcomment>Empty-state hint in the node selector search view, suggesting the user refine their search. SNC-6420</translatorcomment>
+        <translation>Încearcă un alt nume sau verifică ortografia</translation>
     </message>
 </context>
 <context>
@@ -5897,6 +5807,11 @@ Introdu un alt nume.</translation>
         <translation>Dacă ați scris greșit adresa dvs. de e-mail, [B][A]schimbați-l aici[/A][/B].</translation>
     </message>
     <message>
+        <source>Import from another cloud</source>
+        <translatorcomment>Onboarding button title to open the cloud migration tool. SNC-6703</translatorcomment>
+        <translation>Import din alt cloud</translation>
+    </message>
+    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Cod 2FA incorect</translation>
@@ -5930,6 +5845,11 @@ Introdu un alt nume.</translation>
         <source>Logging in…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
         <translation>Autentificare…</translation>
+    </message>
+    <message>
+        <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
+        <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
+        <translation>Mută-ți fișierele din Google Drive direct în MEGA, complet criptate. Începe în doar câteva clicuri.</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -6449,6 +6369,18 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
+        <source>- Clearer handling of stalled issues and name conflicts.
+- Improved the install and update process with better cleanup of outdated components.
+- UI fixes and adjustments across sync, backup, and transfer dialogs.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.6.0. SNC-6785</translatorcomment>
+        <translation>- Gestionare mai clară a problemelor blocate și a conflictelor de denumire.
+- Procesul de instalare și actualizare îmbunătățit, cu o curățare mai bună a componentelor vechi.
+- Corectări și ajustări ale interfeței în ferestrele de sincronizare, backup și transfer.
+- Corectări de erori și îmbunătățiri de performanță.</translation>
+    </message>
+    <message>
         <source>- Improve conflict resolution.
 - Improve device name handling.
 - Bug fixes and performance improvements.
@@ -6476,6 +6408,18 @@ Introdu un alt nume.</translation>
         <translation>- Conflictele provocate de numele duplicate ale folderelor sunt acum rezolvate automat.
 - Dialogurile pentru cloud drive, sincronizare, backup și setări sunt mai clare și mai coerente.
 - Remedieri de erori și îmbunătiri ale performanței.</translation>
+    </message>
+    <message>
+        <source>- Revamped and improved File Manager.
+- Revamped Syncs and Backups tabs in the Settings dialog.
+- Improved Wayland support.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.5.0. SNC-6656</translatorcomment>
+        <translation>- Manager de fișiere reconceput și îmbunătățit.
+- Filele Sincronizare și Backup reconcepute în fereastra Setări.
+- Suport Wayland îmbunătățit.
+- Corectări de erori și îmbunătățiri de performanță.</translation>
     </message>
 </context>
 <context>
@@ -7325,6 +7269,11 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Lățime de bandă</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translatorcomment>Button that dismisses the clear local cache warning dialog without deleting anything.SNC-6743</translatorcomment>
+        <translation>Anulează</translation>
+    </message>
+    <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
         <translation>Modifică parola</translation>
@@ -7373,6 +7322,11 @@ Vrei să îl ștergi oricum?</translation>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
         <translation>Foldere implicite</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button that confirms permanently deleting the local cache (debris) of synced folders, in the clear local cache warning dialog.SNC-6743</translatorcomment>
+        <translation>Ștergeți</translation>
     </message>
     <message>
         <source>Details</source>
@@ -7948,6 +7902,11 @@ Vrei să îl ștergi oricum?</translation>
         <source>Remove synced folder</source>
         <translatorcomment>Solve issue button to open the remove sync dialog. SNC-6404</translatorcomment>
         <translation>Elimină folderul sincronizat</translation>
+    </message>
+    <message>
+        <source>Removing</source>
+        <translatorcomment>Status description for the removal of a sync or backup state. SNC-6404</translatorcomment>
+        <translation>Se elimină</translation>
     </message>
     <message>
         <source>Rescan</source>
@@ -8671,6 +8630,11 @@ Actualizați lista.</translation>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Nu poți reda în flux foldere. Selectează un fișier pentru a reda în flux.</translation>
     </message>
+    <message>
+        <source>Select a file to stream</source>
+        <translatorcomment>Guidance message in the streaming node selector prompting the user to pick a file to stream. SNC-6420</translatorcomment>
+        <translation>Selectează un fișier pentru streaming</translation>
+    </message>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
@@ -9286,10 +9250,35 @@ Please move it to a location that is less than 64 folders deep.</source>
 <context>
     <name>SyncNodeSelector</name>
     <message>
+        <source>Choose a different folder. This folder is already synced</source>
+        <translatorcomment>Validation message in the sync node selector shown when the selected folder is already synced. SNC-6420</translatorcomment>
+        <translation>Alege un alt folder. Acest folder este deja sincronizat.</translation>
+    </message>
+    <message>
+        <source>Choose a different folder. This location contains a folder that&apos;s already synced</source>
+        <translatorcomment>Validation message in the sync node selector shown when the selected location contains a folder that is already synced. SNC-6420</translatorcomment>
+        <translation>Alege un alt folder. Această locație conține un folder deja sincronizat.</translation>
+    </message>
+    <message>
+        <source>Folder to sync</source>
+        <translatorcomment>Label in the sync node selector for the folder that will be synced. SNC-6420</translatorcomment>
+        <translation>Folder de sincronizat</translation>
+    </message>
+    <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
         <translation>Imposibil de sincronizat folderul.. Asigurați-vă că nu folosiți „\”, „/” sau „:” în numele folderelor.</translation>
+    </message>
+    <message>
+        <source>Only shared folders with full access can be synced</source>
+        <translatorcomment>Informational message in the sync node selector indicating only full-access shared folders can be synced. SNC-6420</translatorcomment>
+        <translation>Doar folderele partajate cu acces complet pot fi sincronizate</translation>
+    </message>
+    <message>
+        <source>Select a full access shared folder to sync</source>
+        <translatorcomment>Guidance message in the sync node selector prompting the user to choose a full-access shared folder to sync. SNC-6420</translatorcomment>
+        <translation>Selectează un folder partajat cu acces complet pentru sincronizare</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -9825,6 +9814,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Încărcările sunt dezactivate, iar sincronizarea și backupurile sunt întrerupte</translation>
     </message>
     <message>
+        <source>You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
+        <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [A][/A] used for the link placeholder. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
+        <translation>Nu poți continua descărcarea deoarece nu ai suficientă cotă de transfer rămasă pentru această adresă IP. Pentru a obține mai multă cotă, actualizează-ți contul sau așteaptă până la %1 când va fi disponibilă o cotă gratuită pentru adresa ta IP. [A]Află mai multe[/A] despre cotă de transfer.</translation>
+    </message>
+    <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
         <translation>[B]Cota de transfer depășită[/B][BR]Nu puteți continua descărcarea, deoarece nu aveți suficientă cotă de transfer pentru această adresă IP. Pentru a obține mai multă cotă, actualizează-ți contul sau așteaptă %1 până când mai multă cotă gratuită devine disponibilă pe adresa dvs. IP. [A]Aflați mai multe[/A] despre cota de transfer.</translation>
@@ -10132,7 +10126,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Anulează toate transferurile în Descărcări</translation>
+        <translation>Anulează toate transferurile din Descărcări</translation>
     </message>
     <message>
         <source>Cancel all failed</source>

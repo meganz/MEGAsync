@@ -137,6 +137,10 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
 
 StalledIssuesDialog::~StalledIssuesDialog()
 {
+    // Cancel and wait for the proxy's concurrent filter before teardown, while the
+    // (application-global) source model it touches is still alive.
+    if (mProxyModel)
+        mProxyModel->prepareForDeletion();
     delete ui;
 }
 

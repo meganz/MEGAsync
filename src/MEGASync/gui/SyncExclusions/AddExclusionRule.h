@@ -13,6 +13,10 @@ public:
     QUrl getQmlUrl() override;
 
     Q_INVOKABLE void appendRuleToFolders(int targetType, int wildCard, QString ruleValue);
+    static void copyCurrentRulesTo(const QString& sourceFolder, const QString& targetFolder);
+
+signals:
+    void exclusionRuleAdded(QString folder);
 
 private:
     QStringList mFolders;

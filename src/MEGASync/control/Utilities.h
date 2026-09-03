@@ -482,7 +482,15 @@ public:
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
     static void getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
-    static QString getNonDuplicatedNodeName(mega::MegaNode* node, mega::MegaNode* parentNode, const QString& currentName, bool unescapeName, const QStringList &itemsBeingRenamed);
+    // localFolderToCheck (optional): when set, a candidate name is also rejected if an
+    // item with that name already exists in this local folder, so the chosen name does
+    // not clash once it syncs down to the local side.
+    static QString getNonDuplicatedNodeName(mega::MegaNode* node,
+                                            mega::MegaNode* parentNode,
+                                            const QString& currentName,
+                                            bool unescapeName,
+                                            const QStringList& itemsBeingRenamed,
+                                            const QString& localFolderToCheck = QString());
     static QString getNonDuplicatedLocalName(const QFileInfo& currentFile, bool unescapeName, const QStringList &itemsBeingRenamed);
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
 
@@ -673,7 +681,6 @@ public:
 
     static QString decodeUnicodeEscapes(const QString& input);
     static QString toPrice(double value, const QString& currencySymbol, bool showRemark = false);
-    static double softCeil(double value);
 
     // Human-friendly list of forbidden chars for New Remote Folder
     static const QLatin1String FORBIDDEN_CHARS;

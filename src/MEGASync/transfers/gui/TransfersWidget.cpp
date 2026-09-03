@@ -50,9 +50,13 @@ TransfersWidget::TransfersWidget(QWidget* parent):
 
 TransfersWidget::~TransfersWidget()
 {
-    delete ui;
+    if (mProxyModel)
+        mProxyModel->prepareForDeletion();
     if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;
+    // ui must outlive tDelegate: deleting the delegate destroys its cached row
+    // widgets, whose teardown re-enters eventFilter(), which dereferences ui.
+    delete ui;
 }
 
 void TransfersWidget::setupTransfers()

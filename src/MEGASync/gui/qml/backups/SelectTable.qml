@@ -46,7 +46,23 @@ Item {
         header: headerComponent
         footerPositioning: ListView.OverlayFooter
         footer: fakeFooterComponent
-        ScrollBar.vertical: ScrollBar {}
+
+        // Re-parenting the attached ScrollBar disables Qt's automatic
+        // full-height geometry management, so we can confine it to the table
+        // body between the overlay header and the "Add folder" footer instead
+        // of letting it overflow into them (SNC-5541).
+        ScrollBar.vertical: ScrollBar {
+            id: verticalScrollBar
+
+            parent: backupsListView.parent
+            anchors {
+                top: backupsListView.top
+                topMargin: root.headerFooterHeight
+                right: backupsListView.right
+                bottom: backupsListView.bottom
+                bottomMargin: root.headerFooterHeight
+            }
+        }
     }
 
     Connections {

@@ -95,7 +95,7 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
             {
                 ui->chooseTitle->setMessage(
                     QApplication::translate("NameConflict", "Renamed to \"%1\"")
-                        .arg(data->renamedFileName()),
+                        .arg(data->renamedFileName().toHtmlEscaped()),
                     Utilities::getPixmapName(QLatin1String("check"),
                                              Utilities::AttributeType::SMALL |
                                                  Utilities::AttributeType::THIN |

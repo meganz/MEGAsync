@@ -52,11 +52,27 @@ void StalledIssueHashDiscardTracker::keepTrackIssues(StalledIssuesVariantList& i
             continue;
         }
 
-        const auto entryIt = mEntries.find(originalStall->getHash());
         const auto rule = issue->hashDiscardRuleForState(issue->getIsSolved());
-        const auto shouldKeep =
-            entryIt != mEntries.end() && rule.has_value() && entryIt->second.recentlyReceived &&
-            (!entryIt->second.expireAt.has_value() || entryIt->second.expireAt.value() > now);
+
+        // Issues without a discard rule are not managed by the tracker; they must
+        // remain in the failed list (e.g. LocalOrRemote failures), so keep them
+        // instead of treating them as removed.
+        if (!rule.has_value())
+        {
+            ++it;
+            continue;
+        }
+
+        const auto entryIt = mEntries.find(originalStall->getHash());
+        const bool hasEntry = entryIt != mEntries.end();
+        const bool recentlyReceived = hasEntry && entryIt->second.recentlyReceived;
+        const bool hasExpire = hasEntry && entryIt->second.expireAt.has_value();
+        const bool expired = hasExpire && entryIt->second.expireAt.value() <= now;
+
+        // Windowed entries (failed/solved with a discard duration) are kept until the
+        // window expires, regardless of whether the SDK reported them this cycle.
+        // Entries without a window are kept only while the SDK still reports them.
+        const auto shouldKeep = hasEntry && (hasExpire ? !expired : recentlyReceived);
 
         if (shouldKeep)
         {
@@ -146,9 +162,12 @@ void StalledIssueHashDiscardTracker::purgeExpired()
 
     for (auto it = mEntries.begin(); it != mEntries.end();)
     {
-        const auto isExpired = it->second.expireAt.has_value() && *it->second.expireAt <= now;
+        // Windowed entries live until they expire; entries without a window are
+        // dropped once the SDK stops reporting them.
+        const bool shouldPurge = it->second.expireAt.has_value() ? *it->second.expireAt <= now :
+                                                                   !it->second.recentlyReceived;
 
-        if (!it->second.recentlyReceived || isExpired)
+        if (shouldPurge)
         {
             it = mEntries.erase(it);
         }

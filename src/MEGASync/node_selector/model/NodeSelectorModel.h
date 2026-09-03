@@ -67,7 +67,7 @@ enum class HeaderRoles
 enum MoveActionType
 {
     MOVE = 0,
-    COPY,
+    COPY_PASTE,
     RESTORE,
     EMPTY_MERGE,
     DELETE_RUBBISH,
@@ -482,6 +482,7 @@ signals:
     void deleteWorker();
     void blockUi(bool state, QPrivateSignal);
     void showMessageBox(MessageDialogInfo info) const;
+    void showUpsellDialog() const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, MoveActionType type);
     void modelIsBeingModifiedChanged(bool status);
     void modelModified();

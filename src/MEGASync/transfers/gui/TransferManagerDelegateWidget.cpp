@@ -15,6 +15,11 @@
 #include <QPainterPath>
 
 constexpr uint PB_PRECISION = 1000;
+// Kept for the reason before the Retry button may use the rest of the "Reason" column
+constexpr int REASON_RESERVE_WIDTH = 45;
+// Smallest small-dimension button in WidgetsComponentsStyleSheetsSizes.css:
+// min-width 44px + padding-left 8px + padding-right 8px
+constexpr int RETRY_MIN_WIDTH = 60;
 const char* ACTION_BUTTONS_VISIBILITY = "action_visible";
 const QString HOVER_TOKEN = QStringLiteral("surface-1");
 const QString SELECTED_TOKEN = QStringLiteral("surface-2");
@@ -36,8 +41,6 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
     mUi->lItemFailed->installEventFilter(this);
     mUi->lItemPaused->installEventFilter(this);
     mUi->lRetryMsg->installEventFilter(this);
-    mUi->lItemFailed->installEventFilter(this);
-    mUi->tItemRetry->installEventFilter(this);
     mUi->lItemStatus->installEventFilter(this);
     mUi->lDone->installEventFilter(this);
     mUi->lTotal->installEventFilter(this);
@@ -215,34 +218,27 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mPauseResumeTransferDefaultIconName.clear();
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
                 mUi->tItemRetry->setVisible(getData()->canBeRetried());
-                mUi->tItemRetry->setText(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->tItemRetry->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
-
-                // The retry button width depends on its (translated) text. On a
-                // language change the row is not resized, so the layout is not
-                // activated automatically. Besides, checkMinWidth() —which sets the
-                // QSS "short"/min-width property that drives the button size hint—
-                // normally runs one paint later (inside the button paintEvent), so
-                // the size hint would still reflect the previous language here.
-                // Update it now, pin the minimum width to the fresh size hint and
-                // re-activate the layout so the button always fits the text before
-                // the item is rendered.
-                ButtonUtilities::checkMinWidth(mUi->tItemRetry);
-                mUi->tItemRetry->setMinimumWidth(mUi->tItemRetry->sizeHint().width());
-                if (auto* failedLayout = mUi->cFailed->layout())
-                {
-                    failedLayout->activate();
-                }
-
                 mUi->wProgressBar->setVisible(false);
-                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
-                mUi->lItemFailed->setText(
-                    (mColumnManager &&
-                     mColumnManager->getCurrentTab() == TransfersWidget::TM_TAB::FAILED_TAB) ?
-                        getErrorText() :
-                        getState(TRANSFER_STATES::STATE_FAILED));
-                mUi->lItemFailed->setToolTip(getErrorText());
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); // Use singular form
                 showTPauseResume = false;
+            }
+
+            // Deliberately outside the state guard: switching tab changes both the width
+            // of the "Reason" column and which text the reason shows, while the transfer
+            // stays FAILED. Row widgets are pooled and reused, so anything skipped here
+            // keeps whatever the previous tab left on the widget - which is how the
+            // button ended up pinned to the Failed tab's width on a narrow tab.
+            mFailedReason = (mColumnManager && mColumnManager->getCurrentTab() ==
+                                                   TransfersWidget::TM_TAB::FAILED_TAB) ?
+                                getErrorText() :
+                                getState(TRANSFER_STATES::STATE_FAILED);
+            mUi->lItemFailed->setToolTip(getErrorText());
+
+            adjustFailedStatus();
+            if (auto* failedLayout = mUi->cFailed->layout())
+            {
+                failedLayout->activate();
             }
 
             const auto dateTime = getData()->getFinishedDateTime();
@@ -405,6 +401,79 @@ void TransferManagerDelegateWidget::adjustFileName()
                                            getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
     mUi->lTransferName->adjustSize();
     mUi->lTransferName->parentWidget()->layout()->activate();
+}
+
+int TransferManagerDelegateWidget::failedContentWidth() const
+{
+    auto* failedLayout = mUi->cFailed->layout();
+    if (!failedLayout)
+    {
+        return 0;
+    }
+
+    // Measured from the column itself, never from cFailed: on a tab change the column is
+    // resized first and cFailed only catches up on the next layout pass, so reading its
+    // width here would size the row for the tab we just left.
+    int available = mUi->sStatus->width();
+    if (auto* pageLayout = mUi->pFailed->layout())
+    {
+        const QMargins pageMargins(pageLayout->contentsMargins());
+        available -= pageMargins.left() + pageMargins.right();
+    }
+
+    const QMargins margins(failedLayout->contentsMargins());
+    // One spacing only: the trailing spacer is a QSpacerItem, and QBoxLayout adds no
+    // spacing next to items whose isEmpty() is true (QBoxLayoutPrivate::setupGeom).
+    return available - margins.left() - margins.right() - failedLayout->spacing();
+}
+
+void TransferManagerDelegateWidget::adjustFailedStatus()
+{
+    // Always start from the full text. The size hint of an elided text is smaller, so
+    // reading it back would hand the button a narrower width, which would elide further,
+    // shrinking it a little on every layout pass until only an ellipsis was left.
+    const QString retryText(getState(TRANSFER_STATES::STATE_RETRY));
+    mUi->tItemRetry->setText(retryText);
+
+    // Drives the QSS "short"/min-width property behind the size hint, and normally only
+    // runs one paint later, inside the button paintEvent. Called with the full text in
+    // place, so the flag never reflects an elided string.
+    ButtonUtilities::checkMinWidth(mUi->tItemRetry);
+
+    const int needed = mUi->tItemRetry->sizeHint().width();
+
+    // Cap the button at what the column can spare once the reason keeps its reserve, so a
+    // long translation elides instead of overflowing. On the Failed tab the column is
+    // expanded over the hidden Speed and Time ones, so the cap lands above what any
+    // translation needs and nothing elides there.
+    const int cap = qMax(RETRY_MIN_WIDTH, failedContentWidth() - REASON_RESERVE_WIDTH);
+    const int width = qMin(needed, cap);
+
+    // Pin it, so the elided text set below cannot feed back into the layout.
+    mUi->tItemRetry->setFixedWidth(width);
+
+    if (needed > width)
+    {
+        // QPushButton does not elide: CE_PushButtonLabel draws the text with
+        // drawItemText(), so anything wider than the button is clipped mid-glyph.
+        const QFontMetrics metrics(mUi->tItemRetry->fontMetrics());
+        // Exact QSS padding: in this branch "needed" is past the cap, hence past the QSS
+        // min-width, so the hint is the text plus the padding and nothing else.
+        const int chrome = needed - metrics.horizontalAdvance(retryText);
+        mUi->tItemRetry->setText(metrics.elidedText(retryText, Qt::ElideRight, width - chrome));
+    }
+
+    adjustFailedReason(failedContentWidth() - width);
+}
+
+void TransferManagerDelegateWidget::adjustFailedReason(int available)
+{
+    // Elide from the stored reason, never from the label text: re-eliding an already
+    // elided string keeps shortening it, and it would never come back when the column
+    // grows again on the Failed tab.
+    mUi->lItemFailed->setText(mUi->lItemFailed->fontMetrics().elidedText(mFailedReason,
+                                                                         Qt::ElideMiddle,
+                                                                         qMax(0, available)));
 }
 
 void TransferManagerDelegateWidget::setColumnManager(
@@ -609,16 +678,21 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
         }
         else if(watched == mUi->lItemFailed)
         {
-            mUi->lItemFailed->setText(
-                mUi->lItemFailed->fontMetrics().elidedText(mUi->lItemFailed->text(),
-                                                           Qt::ElideMiddle,
-                                                           mUi->lItemFailed->width()));
+            adjustFailedReason(mUi->lItemFailed->width());
         }
         // Adapt manually stack page (just failed as, for the moment, is the only one bigger than
         // its original size)
         else if (watched == mUi->sStatus)
         {
             mUi->pFailed->setFixedWidth(mUi->sStatus->width());
+
+            // The column changed width, so the room the reason and the button may take
+            // changed with it. Not watching the button itself: its width is set here, so
+            // reacting to that would just re-enter this on every pass.
+            if (mUi->sStatus->currentWidget() == mUi->pFailed)
+            {
+                adjustFailedStatus();
+            }
         }
         else if(auto label = dynamic_cast<QWidget*>(watched))
         {
@@ -636,6 +710,7 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
 void TransferManagerDelegateWidget::reset()
 {
     mPauseResumeTransferDefaultIconName.clear();
+    mFailedReason.clear();
     TransferBaseDelegateWidget::reset();
 }
 

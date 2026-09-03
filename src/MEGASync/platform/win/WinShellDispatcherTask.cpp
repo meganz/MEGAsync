@@ -540,7 +540,8 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 case MegaApi::STATE_IGNORED:
                 {
                     int runState = MegaSync::SyncRunningState::RUNSTATE_DISABLED;
-                    auto megaSync = MegaSyncApp->getMegaApi()->getSyncByPath(strPath.data());
+                    std::unique_ptr<MegaSync> megaSync(
+                        MegaSyncApp->getMegaApi()->getSyncByPath(strPath.data()));
                     if (megaSync != nullptr)
                     {
                         runState = megaSync->getRunState();

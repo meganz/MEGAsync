@@ -73,12 +73,17 @@ void QmlDialogWrapperBase::setWindowModality(Qt::WindowModality modality)
 
 Qt::WindowFlags QmlDialogWrapperBase::windowFlags()
 {
-    return mWindow->flags();
+    // mWindow is a QPointer and may already be null if the underlying QmlDialog
+    // window was torn down while the wrapper is still queued in DialogOpener.
+    return mWindow ? mWindow->flags() : Qt::WindowFlags();
 }
 
 void QmlDialogWrapperBase::setWindowFlags(Qt::WindowFlags flags)
 {
-    mWindow->setFlags(flags);
+    if (mWindow)
+    {
+        mWindow->setFlags(flags);
+    }
 }
 
 void QmlDialogWrapperBase::setWindowState(Qt::WindowState state)

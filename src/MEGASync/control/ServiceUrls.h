@@ -67,6 +67,7 @@ public:
     QStringList getHttpAllowedOrigins() const;
 
     static QUrl getSessionTransferBaseUrl();
+    static QUrl getMigrationToolUrl();
     static QUrl getDeviceCenterUrl();
     static QUrl getOpenInMegaUrl(const QString& deviceID, const QString& nodeHandle);
     static QUrl getNodeUrl(const QString& nodeHandle, bool versions = false);

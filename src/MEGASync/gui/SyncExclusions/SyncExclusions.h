@@ -3,8 +3,11 @@
 
 #include "ExclusionRulesModel.h"
 #include "QmlDialogWrapper.h"
+#include "SyncSettings.h"
 
 #include <QScreen>
+
+#include <memory>
 
 class SyncExclusions : public QMLComponent
 {
@@ -18,9 +21,12 @@ class SyncExclusions : public QMLComponent
     Q_PROPERTY(QString folderName READ getFolderName NOTIFY folderNameChanged)
     Q_PROPERTY(QString folderPath MEMBER mFolderFullPath)
     Q_PROPERTY(bool askOnExclusionRemove READ isAskOnExclusionRemove WRITE setAskOnExclusionRemove NOTIFY askOnExclusionRemoveChanged)
+    Q_PROPERTY(bool isDefault READ isDefault NOTIFY isDefaultChanged)
 
 public:
-    SyncExclusions(QWidget *parent = 0, const QString &path = QString::fromUtf8(""));
+    SyncExclusions(QWidget* parent = 0,
+                   const QString& path = QString::fromUtf8(""),
+                   std::shared_ptr<SyncSettings> syncSetting = nullptr);
     ~SyncExclusions();
 
     enum SizeExclusionStatus{
@@ -43,6 +49,7 @@ public:
     void setSizeExclusionStatus(SizeExclusionStatus);
     QString getFolderName() const { return mFolderName; }
     void setFolder(const QString& folderName);
+    bool isDefault() const;
 
     Q_INVOKABLE void restoreDefaults();
     Q_INVOKABLE void showRemoveRuleConfirmationMessageDialog(const QString& descriptionText);
@@ -66,6 +73,7 @@ signals:
     void sizeExclusionStatusChanged(SizeExclusionStatus);
     void folderNameChanged(QString);
     void askOnExclusionRemoveChanged(bool);
+    void isDefaultChanged();
     void acceptedClicked();
 
 private:
@@ -77,6 +85,7 @@ private:
     ExclusionRulesModel* mRulesModel;
     QString mFolderName;
     QString mFolderFullPath;
+    std::shared_ptr<SyncSettings> mSyncSetting;
 };
 
 #endif // SYNCEXCLUSIONS_H

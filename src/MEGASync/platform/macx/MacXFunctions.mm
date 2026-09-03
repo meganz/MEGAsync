@@ -436,6 +436,26 @@ QString appBundlePath()
     return fromNSString(appPath);
 }
 
+bool revealInFinder(const QString& path)
+{
+    if (path.isEmpty() || !QFileInfo::exists(path))
+    {
+        return false;
+    }
+
+    NSURL* url = [NSURL fileURLWithPath:path.toNSString()];
+    if (url == nil)
+    {
+        return false;
+    }
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[url]];
+    });
+
+    return true;
+}
+
 
 bool isStartAtLoginActive()
 {

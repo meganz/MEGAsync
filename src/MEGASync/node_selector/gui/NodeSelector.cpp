@@ -15,6 +15,7 @@
 #include "SearchLineEdit.h"
 #include "TabSelector.h"
 #include "ui_NodeSelector.h"
+#include "UpsellPlans.h"
 #include "Utilities.h"
 #include "ViewLoadingScene.h"
 
@@ -963,6 +964,14 @@ void NodeSelector::initSpecialisedWidgets(NodeSelectorTreeViewWidget* viewContai
                 {
                     info.parent = this;
                     MessageDialogOpener::warning(info);
+                });
+
+        connect(model,
+                &NodeSelectorModel::showUpsellDialog,
+                this,
+                []()
+                {
+                    MegaSyncApp->showUpsellDialog(UpsellPlans::ViewMode::STORAGE_FULL);
                 });
 
         connect(model,

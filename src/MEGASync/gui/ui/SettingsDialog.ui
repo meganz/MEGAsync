@@ -2941,6 +2941,9 @@ border: none
               <property name="text">
                <string>Learn more</string>
               </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
               <property name="type" stdset="0">
                <string notr="true">link</string>
               </property>
@@ -4146,6 +4149,9 @@ border: none
         <property name="text">
          <string>Help</string>
         </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
         <property name="icon">
          <iconset resource="../Resources_common.qrc">
           <normaloff>:/images/help-icon.svg</normaloff>:/images/help-icon.svg</iconset>
@@ -4273,6 +4279,9 @@ border: none
             <property name="text">
              <string>About MEGA</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
             <property name="type" stdset="0">
              <string notr="true">secondary</string>
             </property>
@@ -4397,6 +4406,9 @@ border: none
             </property>
             <property name="text">
              <string>Go to backup centre</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
             <property name="type" stdset="0">
              <string notr="true">primary</string>

@@ -17,6 +17,8 @@
 #include <QThread>
 #include <QTimer>
 
+#include <functional>
+
 class UpdateTask : public QObject
 {
     Q_OBJECT
@@ -24,6 +26,22 @@ class UpdateTask : public QObject
 public:
     explicit UpdateTask(mega::MegaApi *megaApi, QString appFolder, bool isPublic = false, QObject *parent = 0);
     ~UpdateTask();
+
+    // Receives mega::MegaApi::LOG_LEVEL_* messages from the startup sweep, which runs
+    // before the MegaApi logger is available.
+    using CleanupLogger = std::function<void(int logLevel, const QString& message)>;
+
+    // Applies the obsolete-file cleanup scheduled by the last applied update (see
+    // schedulePendingObsoleteCleanup). Must be called early at application start, before
+    // the app bundle symlinks are recreated (the sweep removes any symlink that is not
+    // part of the update manifest), and only while holding the single-instance lock, so
+    // files are never pulled from under a still-running previous version. The request is
+    // only honored when the running binary (runningExecutablePath) is the exact version
+    // and installation that scheduled it; an installation refreshed by other means in
+    // the meantime, or a request naming another installation, is left untouched.
+    static void runPendingObsoleteCleanup(const QString& dataPath,
+                                          const QString& runningExecutablePath,
+                                          const CleanupLogger& logger);
 
 protected:
    void initialCleanup();
@@ -35,6 +53,11 @@ protected:
    bool processFile(QNetworkReply *reply);
    bool performUpdate();
    void rollbackUpdate(int fileNum);
+   void schedulePendingObsoleteCleanup();
+   static void sweepObsoleteFiles(const QDir& appFolder,
+                                  const QDir& backupFolder,
+                                  const QStringList& manifestPaths,
+                                  const CleanupLogger& logger);
    void addToSignature(QString value);
    void addToSignature(QByteArray bytes);
    void initSignature();
@@ -47,6 +70,7 @@ protected:
    QStringList downloadURLs;
    QStringList localPaths;
    QStringList fileSignatures;
+   QStringList manifestLocalPaths;
    QNetworkAccessManager *m_WebCtrl;
    mega::MegaHashSignature *signatureChecker;
    char signature[512];

@@ -81,6 +81,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mPreferences(Preferences::instance()),
     mModel(SyncInfo::instance()),
     mMegaApi(app->getMegaApi()),
+    mUpdateAvailable(false),
     mLoadingSettings(0),
     mThreadPool(ThreadPoolSingleton::getInstance()),
     mCacheSize(-1),
@@ -491,6 +492,7 @@ void deleteCache()
 
 void SettingsDialog::setUpdateAvailable(bool updateAvailable)
 {
+    mUpdateAvailable = updateAvailable;
     if (updateAvailable)
     {
         mUi->bUpdate->setText(tr("Install Update"));
@@ -529,6 +531,11 @@ bool SettingsDialog::event(QEvent* event)
     {
         mUi->retranslateUi(this);
 
+        // retranslateUi() resets bUpdate to its .ui default ("Check for Updates"),
+        // so re-apply the current update state to keep the correct label.
+        setUpdateAvailable(mUpdateAvailable);
+
+        updateCacheSchedulerDaysLabel();
         mUi->lCacheTitle->setText(
             mUi->lCacheTitle->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 
@@ -603,11 +610,13 @@ void SettingsDialog::on_bClearCache_clicked()
         tr("Backups of the previous versions of your synced files in your computer"
            " will be permanently deleted. Please, check your backup folders to see"
            " if you need to rescue something before continuing:") +
-        QString::fromUtf8("<br/>") + syncs + QString::fromUtf8("<br/><br/>") +
-        tr("Do you want to delete your local backup now?");
+        QString::fromUtf8("<br/>") + syncs;
+    msgInfo.footerText = tr("Do you want to delete your local backup now?");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.buttonsText[QMessageBox::Yes] = tr("Delete");
+    msgInfo.buttonsText[QMessageBox::No] = tr("Cancel");
     msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
     {
         if (msg->result() == QMessageBox::Yes)
@@ -652,10 +661,13 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     {
         if (msg->result() == QMessageBox::Yes)
         {
-            auto deleteRemoteCache = [this]()
+            // The pool task can outlive this closable dialog, so capture the
+            // MegaApi pointer by value instead of a raw `this` (SNC-6779).
+            auto* megaApi = mMegaApi;
+            auto deleteRemoteCache = [megaApi]()
             {
-                std::unique_ptr<MegaNode> n(mMegaApi->getNodeByPath("//bin/SyncDebris"));
-                mMegaApi->remove(n.get());
+                std::unique_ptr<MegaNode> n(megaApi->getNodeByPath("//bin/SyncDebris"));
+                megaApi->remove(n.get());
             };
             QThreadPool::globalInstance()->start(deleteRemoteCache);
             mRemoteCacheSize = 0;
@@ -767,11 +779,14 @@ void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
         mApp->changeLanguage(selectedLanguage);
         updateCacheSchedulerDaysLabel();
         QString currentLanguage = mApp->getCurrentLanguageCode();
+        // The pool task can outlive this closable dialog, so capture the
+        // MegaApi pointer by value instead of an implicit `this` (SNC-6779).
+        auto* megaApi = mMegaApi;
         mThreadPool->push(
-            [=]()
+            [megaApi, currentLanguage]()
             {
-                mMegaApi->setLanguage(currentLanguage.toUtf8().constData());
-                mMegaApi->setLanguagePreference(currentLanguage.toUtf8().constData());
+                megaApi->setLanguage(currentLanguage.toUtf8().constData());
+                megaApi->setLanguagePreference(currentLanguage.toUtf8().constData());
             });
     }
 }
@@ -915,13 +930,13 @@ void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
 
 void SettingsDialog::on_bUpdate_clicked()
 {
-    if (mUi->bUpdate->text() == tr("Check for Updates"))
+    if (mUpdateAvailable)
     {
-        mApp->checkForUpdates();
+        mApp->triggerInstallUpdate();
     }
     else
     {
-        mApp->triggerInstallUpdate();
+        mApp->checkForUpdates();
     }
 }
 

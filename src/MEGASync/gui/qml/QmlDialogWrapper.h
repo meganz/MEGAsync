@@ -349,6 +349,20 @@ public:
                 QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
             });
 
+            connect(mWindow,
+                    &QObject::destroyed,
+                    this,
+                    [this]()
+                    {
+                        // If the inner QmlDialog dies through any path other than a
+                        // user-initiated close (QML engine/scene teardown, transient
+                        // parent teardown...), the wrapper would stay alive and still
+                        // registered in DialogOpener with a null mWindow, and the next
+                        // sibling lookup would reuse it and dereference the dead window.
+                        // Propagate the destruction so DialogOpener drops the entry.
+                        deleteLater();
+                    });
+
             mWindow->installEventFilter(MegaSyncApp->getStatsEventHandler());
 
             QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));

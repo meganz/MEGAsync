@@ -126,6 +126,7 @@ struct MessageDialogInfo
     QPointer<QmlDialog> parentQml;
     QString titleText;
     QString descriptionText;
+    QString footerText;
     QMessageBox::StandardButtons buttons;
     QMessageBox::StandardButton defaultButton;
     QMap<QMessageBox::StandardButton, QString> buttonsText;
@@ -138,7 +139,6 @@ struct MessageDialogInfo
 
     QString getDialogTitle() const;
     bool getIgnoreCloseAll() const;
-    void setIgnoreCloseAll(bool value);
 
 private:
     // Dialog title must always be the same for all message dialogs, in order to avoid unexpexted
@@ -162,6 +162,7 @@ class MessageDialogData: public QObject
     // bindings stay reactive to value changes.
     Q_PROPERTY(MessageDialogTextInfo* titleTextInfo READ getTitleTextInfo CONSTANT)
     Q_PROPERTY(MessageDialogTextInfo* descriptionTextInfo READ getDescriptionTextInfo CONSTANT)
+    Q_PROPERTY(MessageDialogTextInfo* footerTextInfo READ getFooterTextInfo CONSTANT)
     Q_PROPERTY(QVariantList buttons READ getButtons NOTIFY buttonsChanged)
     Q_PROPERTY(MessageDialogCheckboxInfo checkbox READ getCheckbox NOTIFY checkboxChanged)
 
@@ -184,6 +185,7 @@ public:
     QString getTitle() const;
     MessageDialogTextInfo* getTitleTextInfo() const;
     MessageDialogTextInfo* getDescriptionTextInfo() const;
+    MessageDialogTextInfo* getFooterTextInfo() const;
     QVariantList getButtons() const;
     std::function<void(QPointer<MessageDialogResult>)> getFinishFunction() const;
     bool enqueue() const;
@@ -208,6 +210,7 @@ private:
     // QML bindings auto-refreshing via the NOTIFY signals.
     MessageDialogTextInfo* mTitleTextInfo;
     MessageDialogTextInfo* mDescriptionTextInfo;
+    MessageDialogTextInfo* mFooterTextInfo;
 
     friend class MessageDialogComponent;
 

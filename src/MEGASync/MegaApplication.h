@@ -242,7 +242,6 @@ public slots:
     void officialWeb();
     void goToMyCloud();
     void goToFiles();
-    void openDeviceCentre();
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked(AppStatsEvents::EventType event);
@@ -253,6 +252,7 @@ public slots:
     void downloadActionClicked(bool skipEventSending = false);
     void downloadACtionClickedWithHandles(const QList<mega::MegaHandle>& handles);
     void streamActionClicked();
+    void importFromCloudActionClicked();
     void transferManagerActionClicked(int tab = 0);
     void logoutActionClicked();
     void processDownloads();
@@ -386,12 +386,12 @@ protected:
     MegaMenuItemAction* exitAction;
     MegaMenuItemAction* settingsAction;
     MegaMenuItemAction* importLinksAction;
+    MegaMenuItemAction* importFromCloudAction;
     MegaMenuItemAction* uploadAction;
     MegaMenuItemAction* downloadAction;
     MegaMenuItemAction* streamAction;
     MegaMenuItemAction* filesAction;
     MegaMenuItemAction* MEGAWebAction;
-    MenuItemAction* deviceCentreAction;
     MegaMenuItemAction* updateAction = nullptr;
     QAction *showStatusAction;
     QPointer<SyncsMenu> mSyncs2waysMenu;
@@ -444,6 +444,7 @@ protected:
     QTimer *periodicTasksTimer;
     QTimer *networkCheckTimer;
     QTimer *infoDialogTimer;
+    QTimer mForcedRebootTimer;
     std::unique_ptr<std::thread> mMutexStealerThread;
 
     QTranslator translator;
@@ -576,6 +577,10 @@ private:
     static NodeCount countFilesAndFolders(const QStringList& paths);
 
     void processUploads(const QStringList& uploads, PiTagTrigger piTagTrigger);
+
+    void processUploadsToTarget();
+
+    void confirmAndProcessExternalUploads();
 
     void updateMetadata(TransferMetaData* data, const QString& filePath);
 

@@ -167,6 +167,29 @@ LocalFileFolderAttributes::LocalFileFolderAttributes(const QString& path, QObjec
     }
 }
 
+LocalFileFolderAttributes::~LocalFileFolderAttributes()
+{
+    // Defense in depth: ~QFutureWatcher does not wait for its future, and calculateSize() /
+    // calculateModifiedTime() walk the tree on a QtConcurrent pool thread while reading mPath and
+    // mCancelled off this object. Owners hold this in a shared_ptr/QPointer, so dropping the last
+    // reference mid-walk would free it under the running job. Signal cancellation and block until
+    // both walks return so a job can never outlive us.
+    cancel();
+
+    disconnect(&mFolderSizeFuture, nullptr, this, nullptr);
+    disconnect(&mModifiedTimeWatcher, nullptr, this, nullptr);
+
+    if (mFolderSizeFuture.isRunning())
+    {
+        mFolderSizeFuture.waitForFinished();
+    }
+
+    if (mModifiedTimeWatcher.isRunning())
+    {
+        mModifiedTimeWatcher.waitForFinished();
+    }
+}
+
 void LocalFileFolderAttributes::requestSize(QObject* caller, std::function<void(qint64)> func)
 {
     if (requestValue<qint64>(caller, AttributeTypes::SIZE, func))
@@ -369,6 +392,11 @@ qint64 LocalFileFolderAttributes::calculateSize()
 
     while (filesIt.hasNext())
     {
+        if (mCancelled)
+        {
+            break;
+        }
+
         filesIt.next();
         newSize += filesIt.fileInfo().size();
     }

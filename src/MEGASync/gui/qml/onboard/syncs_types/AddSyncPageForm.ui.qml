@@ -43,7 +43,7 @@ FooterButtonsPage {
         HeaderTexts {
             id: header
 
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
             title: SyncsStrings.selectiveSyncTitle
             description: SyncsStrings.selectiveSyncDescription
         }
@@ -52,7 +52,7 @@ FooterButtonsPage {
             id: foldersColumn
 
             spacing: Constants.defaultComponentSpacing
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
 
             ChooseSyncFolder {
                 id: localFolder
@@ -60,6 +60,7 @@ FooterButtonsPage {
                 title: SyncsStrings.selectLocalFolder
                 leftIconSource: Images.pc
                 chosenPath: syncsDataAccess.defaultLocalFolder
+                Layout.fillWidth: true
             }
 
             ChooseSyncFolder {
@@ -68,6 +69,7 @@ FooterButtonsPage {
                 title: SyncsStrings.selectMEGAFolder
                 leftIconSource: Images.megaOutline
                 chosenPath: syncsDataAccess.defaultRemoteFolder
+                Layout.fillWidth: true
             }
         }
     }

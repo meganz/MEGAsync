@@ -15,6 +15,11 @@ class StalledIssuesProxyModel: public QSortFilterProxyModel, public ILoadingView
 
 public:
     StalledIssuesProxyModel(QObject *parent = nullptr);
+    ~StalledIssuesProxyModel() override;
+
+    // Cancels and waits for the concurrent filter job so it can never outlive this proxy.
+    // Idempotent; called from the owner before deletion and (defense in depth) the destructor.
+    void prepareForDeletion();
 
     int rowCount(const QModelIndex &parent) const override;
     void filter(StalledIssueFilterCriterion filterCriterion);
@@ -41,6 +46,7 @@ private slots:
 private:
     StalledIssueFilterCriterion mFilterCriterion;
     QFutureWatcher<void> mFilterWatcher;
+    bool mTearingDown = false;
 };
 
 #endif // STALLEDISSUESPROXYMODEL_H

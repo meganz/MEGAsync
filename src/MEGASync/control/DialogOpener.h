@@ -651,6 +651,13 @@ private:
                 continue;
             }
 
+            // A child with no native window has nothing to orphan; detaching it only
+            // breaks the parenting of QML-declared windows shown later (Add/Edit exclusion).
+            if (!window->handle())
+            {
+                continue;
+            }
+
             window->setVisible(false);
             window->setTransientParent(nullptr);
         }
@@ -678,6 +685,25 @@ private:
             bool ignoreGeometry(isQML && QmlDialogWrapperUtilities::isShowWhenCreated(dialog));
             QRect geometry;
             QByteArray siblingGeometryState;
+
+            // A registered QML sibling whose inner window was already destroyed
+            // (wrapper "zombie", see the connect to mWindow's destroyed in
+            // QmlDialogWrapper) must not be reused: reading its flags/geometry
+            // would act on the dead window. Drop it and register this dialog
+            // through the fresh path instead.
+            if (info && isQML)
+            {
+                auto sibling = info->getDialog();
+                if (!sibling || !QmlDialogWrapperUtilities::isQML(sibling->windowHandle()))
+                {
+                    if (sibling && sibling != dialog)
+                    {
+                        removeDialog(sibling);
+                    }
+                    mOpenedDialogs.removeOne(info);
+                    info = nullptr;
+                }
+            }
 
             if(info)
             {

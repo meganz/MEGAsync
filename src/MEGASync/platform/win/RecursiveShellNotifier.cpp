@@ -25,8 +25,18 @@ void RecursiveShellNotifier::notify(const QString& path)
     emit shellNotificationProcessed();
 }
 
-void RecursiveShellNotifier::findFoldersRecursively(const QString &path, QStringList &folders)
+void RecursiveShellNotifier::findFoldersRecursively(const QString& path,
+                                                    QStringList& folders,
+                                                    int depth)
 {
+    // Junctions/symlinks can form cycles (e.g. a junction pointing to an ancestor),
+    // which would make this recursion endless; the depth cap is a second line of defense.
+    constexpr int MAX_RECURSION_DEPTH = 64;
+    if (depth >= MAX_RECURSION_DEPTH)
+    {
+        return;
+    }
+
     QDir dir(path);
     QFileInfoList children = dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot);
     for (const auto& child: std::as_const(children))
@@ -34,6 +44,10 @@ void RecursiveShellNotifier::findFoldersRecursively(const QString &path, QString
         if (WindowsPlatform_exiting) return;
         QString childPath = QDir::toNativeSeparators(child.absoluteFilePath());
         folders.push_back(childPath);
-        findFoldersRecursively(childPath, folders);
+        if (child.isJunction() || child.isSymbolicLink())
+        {
+            continue;
+        }
+        findFoldersRecursively(childPath, folders, depth + 1);
     }
 }

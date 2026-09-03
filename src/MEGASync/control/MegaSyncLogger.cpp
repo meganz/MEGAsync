@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QString>
 
+#include <atomic>
 #include <cassert>
 #include <chrono>
 #include <condition_variable>
@@ -162,9 +163,11 @@ struct LoggingThread
     LogLinkedList logListFirst;
     LogLinkedList* logListLast = &logListFirst;
     bool logExit = false;
-    bool flushLog = false;
+    // Written by logging producers / the app thread and read-reset by the logging
+    // thread outside logMutex, so they must be atomic.
+    std::atomic<bool> flushLog{false};
     bool closeLog = false;
-    bool forceRotationForReporting = false;
+    std::atomic<bool> forceRotationForReporting{false};
     bool forceRenew = false; //to force removal of all logs and create an empty MEGAsync.log
     bool logToDesktop = false;
     bool logToDesktopChanged = false;

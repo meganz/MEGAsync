@@ -11,7 +11,6 @@
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DateTimeFormatter.h"
-#include "DeviceCentre.h"
 #include "DialogOpener.h"
 #include "EmailRequester.h"
 #include "EventUpdater.h"
@@ -104,6 +103,15 @@ constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
 
 static const QString SCHEME_LOCAL_URL = QString::fromUtf8("local");
 static const QString KEEP_LOGS_ON_LOGOUT_FILE_NAME = QString::fromLatin1("megasync.keeplogs");
+
+// Cap for postponing the post-update restart. The update payload is installed in
+// place, so from the moment it lands the running (old) binary executes over the new
+// version's files; on an incompatible update (e.g. a Qt major upgrade) every lazily
+// loaded asset (QML modules, plugins) no longer matches the running binary and its
+// dialogs break until restart. Waiting for the app to become fully idle can take
+// arbitrarily long (paused transfers also count as pending), so the postponement is
+// bounded. Transfers resume automatically after the restart.
+static constexpr int MAX_UPDATE_REBOOT_DELAY_MS = 10 * 60 * 1000;
 
 void MegaApplication::loadDataPath()
 {
@@ -249,6 +257,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     settingsAction = nullptr;
     settingsActionGuest = nullptr;
     importLinksAction = nullptr;
+    importFromCloudAction = nullptr;
     initialTrayMenu = nullptr;
     isPublic = false;
     prevVersion = 0;
@@ -301,7 +310,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     streamAction = nullptr;
     filesAction = nullptr;
     MEGAWebAction = nullptr;
-    deviceCentreAction = nullptr;
     mWaiting = false;
     updated = false;
     mSyncing = false;
@@ -340,8 +348,25 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     connect(&transferProgressController, &BlockingStageProgressController::updateUi,
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
-    // TODO Qt6: In Qt6 this is the default, so we can remove the following line
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // In Qt6 this is the default; the attribute itself was removed in Qt 6.8.
     setAttribute(Qt::AA_DisableWindowContextHelpButton);
+#endif
+
+    // Cap on postponing the forced post-update reboot (see rebootApplication). A member
+    // timer rather than an anonymous singleShot so an explicit user exit can disarm it:
+    // an uncancellable timer could fire between exitApplication() and the deferred
+    // QApplication::exit(), re-set the reboot flag, and relaunch the app the user just
+    // quit (or restart it under the open exit-confirmation dialog).
+    mForcedRebootTimer.setSingleShot(true);
+    mForcedRebootTimer.setTimerType(Qt::VeryCoarseTimer);
+    connect(&mForcedRebootTimer,
+            &QTimer::timeout,
+            this,
+            [this]()
+            {
+                rebootApplication(false);
+            });
 
     // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
     // eg. queueing a folder with 1k items for upload/download
@@ -1678,12 +1703,17 @@ void MegaApplication::onLogout()
                                 .toUtf8()
                                 .constData());
 
+                        // The account context is being torn down in every path that reaches
+                        // this point. Clear cached user attributes unconditionally: on forced
+                        // logouts (e.g. ESID) unlink() has already healed Preferences, so
+                        // logged() is false here and cannot be used to decide (SNC-6809).
+                        clearUserAttributes();
+
                         if (preferences->logged())
                         {
                             MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                                          "Logout diagnostics: deferred cleanup branch -> "
                                          "preferences->unlink().");
-                            clearUserAttributes();
                             preferences->unlink();
                             preferences->setFirstStartDone();
                         }
@@ -2000,7 +2030,9 @@ void MegaApplication::rebootApplication(bool update)
         if (!updateBlocked)
         {
             updateBlocked = true;
-            showInfoMessage(tr("An update will be applied during the next application restart"));
+            showInfoMessage(tr("An update has been installed. The MEGA Desktop App will restart "
+                               "automatically in a few minutes to finish applying it"));
+            mForcedRebootTimer.start(MAX_UPDATE_REBOOT_DELAY_MS);
         }
         return;
     }
@@ -2023,6 +2055,14 @@ void MegaApplication::tryExitApplication(bool force)
     {
         return;
     }
+
+    // User exit intent wins over the forced post-update restart. Disarmed before the
+    // confirmation dialog too, so the timer cannot fire and restart the app under the
+    // open dialog. If the user stays, the deadline is re-armed in the dialog handler:
+    // paused transfers keep the transfers-idle path from ever applying the update, so
+    // the postponement must stay bounded.
+    const bool rebootWasArmed = mForcedRebootTimer.isActive();
+    mForcedRebootTimer.stop();
 
     if (mStatsEventHandler)
     {
@@ -2048,15 +2088,22 @@ void MegaApplication::tryExitApplication(bool force)
         textsByButton.insert(QMessageBox::Yes, tr("Exit app"));
         textsByButton.insert(QMessageBox::No, tr("Stay in app"));
         msgInfo.buttonsText = textsByButton;
-        msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
+        msgInfo.finishFunc = [this, rebootWasArmed](QPointer<MessageDialogResult> msg)
         {
             if (msg->result() == QMessageBox::Yes)
             {
                 exitApplication();
             }
-            else if (gCrashableForTesting)
+            else
             {
-                *testCrashPtr = 0;
+                if (rebootWasArmed)
+                {
+                    mForcedRebootTimer.start(MAX_UPDATE_REBOOT_DELAY_MS);
+                }
+                if (gCrashableForTesting)
+                {
+                    *testCrashPtr = 0;
+                }
             }
         };
         MessageDialogOpener::question(msgInfo);
@@ -3173,8 +3220,13 @@ void MegaApplication::enableTransferActions(bool enable)
         updateAction->setEnabled(enable);
     }
 
-    guestSettingsAction->setEnabled(enable);
+    // guestSettingsAction is not created when the app starts flagged as crashed
+    if (guestSettingsAction)
+    {
+        guestSettingsAction->setEnabled(enable);
+    }
     importLinksAction->setEnabled(enable);
+    importFromCloudAction->setEnabled(enable);
     uploadAction->setEnabled(enable);
     downloadAction->setEnabled(enable);
     streamAction->setEnabled(enable);
@@ -3229,6 +3281,9 @@ bool MegaApplication::dontAskForExitConfirmation(bool force)
 
 void MegaApplication::exitApplication()
 {
+    // Covers direct callers that bypass tryExitApplication: the timer must not fire in
+    // the window before the deferred QApplication::exit() and undo reboot = false.
+    mForcedRebootTimer.stop();
     reboot = false;
     mTrayIconManager->hide();
     // Qt6: QCoreApplication::exit() emits aboutToQuit synchronously, and
@@ -4336,26 +4391,6 @@ void MegaApplication::goToFiles()
     }
 }
 
-void MegaApplication::openDeviceCentre()
-{
-    if (appfinished)
-    {
-        return;
-    }
-    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_DEVICE_CENTRE_CLICKED,
-                                         sender(),
-                                         deviceCentreAction,
-                                         true);
-#ifdef Q_OS_MACOS
-    if (infoDialog)
-    {
-        infoDialog->hide();
-    }
-#endif
-
-    QMLComponent::showDialog<DeviceCentre>(nullptr);
-}
-
 void MegaApplication::importLinks(AppStatsEvents::EventType event)
 {
     if (appfinished)
@@ -4679,6 +4714,21 @@ void MegaApplication::streamActionClicked()
     });
 }
 
+void MegaApplication::importFromCloudActionClicked()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    Utilities::openUrl(ServiceUrls::getMigrationToolUrl());
+
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU,
+                                         sender(),
+                                         importFromCloudAction,
+                                         true);
+}
+
 void MegaApplication::transferManagerActionClicked(int tab)
 {
     if (appfinished)
@@ -4823,6 +4873,30 @@ void MegaApplication::processUploads()
         return;
     }
 
+    // Uploads that arrived through an external file-manager integration - the macOS
+    // Services "MEGA: Upload" entry or the Finder-extension socket - are not backed by a
+    // trusted in-app user gesture. Any same-user process can drive those IPC entry points
+    // (NSPerformService / the local socket), so require an explicit confirmation before we
+    // read and upload the files, and never take the silent default-upload-folder path.
+    const bool externallyRequested =
+        std::any_of(mUploadQueue.cbegin(),
+                    mUploadQueue.cend(),
+                    [](const QPair<QString, PiTagTrigger>& item)
+                    {
+                        return item.second == MegaApi::PITAG_TRIGGER_EXPLORER_EXTENSION;
+                    });
+
+    if (externallyRequested)
+    {
+        confirmAndProcessExternalUploads();
+        return;
+    }
+
+    processUploadsToTarget();
+}
+
+void MegaApplication::processUploadsToTarget()
+{
     //If there is a default upload folder in the preferences
     std::shared_ptr<MegaNode> node(megaApi->getNodeByHandle(preferences->uploadFolder()));
     if (node)
@@ -4865,6 +4939,44 @@ void MegaApplication::processUploads()
             mUploadQueue.clear();
         }
     });
+}
+
+void MegaApplication::confirmAndProcessExternalUploads()
+{
+    QStringList files;
+    for (const auto& item: mUploadQueue)
+    {
+        files << QDir::toNativeSeparators(item.first);
+    }
+
+    MessageDialogInfo msgInfo;
+    msgInfo.titleText = tr("Upload to MEGA");
+    msgInfo.descriptionText = (files.size() == 1) ?
+                                  tr("Do you want to upload \"%1\" to MEGA?").arg(files.first()) :
+                                  tr("Do you want to upload %n file to MEGA?", "", files.size());
+    msgInfo.textFormat = Qt::PlainText;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+
+    QMap<QMessageBox::StandardButton, QString> buttonsText;
+    buttonsText.insert(QMessageBox::Yes, tr("Upload"));
+    buttonsText.insert(QMessageBox::No, tr("Cancel"));
+    msgInfo.buttonsText = buttonsText;
+
+    msgInfo.finishFunc = [this](QPointer<MessageDialogResult> msg)
+    {
+        if (msg->result() == QMessageBox::Yes)
+        {
+            processUploadsToTarget();
+        }
+        else
+        {
+            // Declined: nothing is read or uploaded.
+            mUploadQueue.clear();
+        }
+    };
+
+    MessageDialogOpener::warning(msgInfo);
 }
 
 void MegaApplication::processDownloads()
@@ -6034,6 +6146,10 @@ void MegaApplication::createTrayIconMenus()
     {
         const bool deleteActions(true);
         clearMenu(initialTrayMenu, deleteActions);
+        // clearMenu() deleted the actions; null the members because their re-creation
+        // below can be skipped (isCrashed case) and they must not stay dangling
+        guestSettingsAction = nullptr;
+        initialExitAction = nullptr;
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
@@ -6085,7 +6201,7 @@ void MegaApplication::createTrayIconMenus()
 #endif
     connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
-    if (AppState::instance()->getAppState() != AppState::INIT)
+    if (guestSettingsAction && AppState::instance()->getAppState() != AppState::INIT)
     {
         initialTrayMenu->addAction(guestSettingsAction);
     }
@@ -6321,6 +6437,17 @@ void MegaApplication::createInfoDialogMenus()
                            {
                                importLinks();
                            });
+    recreateMegaMenuAction(&importFromCloudAction,
+                           infoDialogMenu,
+                           tr("Import from another cloud"),
+                           Utilities::getPixmapName(QLatin1String("cloud"),
+                                                    Utilities::AttributeType::SMALL |
+                                                        Utilities::AttributeType::THIN |
+                                                        Utilities::AttributeType::OUTLINE,
+                                                    false)
+                               .toStdString()
+                               .c_str(),
+                           &MegaApplication::importFromCloudActionClicked);
     recreateMegaMenuAction(&uploadAction,
                            infoDialogMenu,
                            tr("Upload"),
@@ -6387,6 +6514,7 @@ void MegaApplication::createInfoDialogMenus()
 
     infoDialogMenu->addAction(MEGAWebAction);
     infoDialogMenu->addAction(filesAction);
+    infoDialogMenu->addAction(importFromCloudAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu)
         infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
