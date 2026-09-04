@@ -25,7 +25,8 @@ Architecture: any
 Depends: ${shlibs:Depends},
          qml-module-qtquick-dialogs,
          qml-module-qtquick-controls,
-         qml-module-qtquick-controls2
+         qml-module-qtquick-controls2,
+         qml-module-qtgraphicaleffects
 Recommends: xdg-desktop-portal | libglib2.0-bin
 Suggests: nautilus-megasync,
           dolphin-megasync,
