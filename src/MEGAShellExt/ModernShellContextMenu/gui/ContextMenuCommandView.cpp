@@ -25,6 +25,9 @@ IFACEMETHODIMP ContextMenuCommandView::Invoke(IShellItemArray* psiItemArray, IBi
 {
     UNREFERENCED_PARAMETER(pbc);
 
+    // GetState() may have cached a truncated selection; re-read the full one.
+    initializeContextMenuData(psiItemArray);
+
     mContextMenuData.viewOnMEGA();
 
     return S_OK;

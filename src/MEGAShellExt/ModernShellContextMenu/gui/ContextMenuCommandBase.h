@@ -27,6 +27,11 @@ public:
     }
 
 protected:
+    // Rebuilds mContextMenuData from psiItemArray. Invoke() implementations
+    // must call this with the array Explorer passes them: while building the
+    // menu, Explorer hands GetState() at most 16 items of a larger selection,
+    // so the data cached at that point can be a subset of what the user
+    // actually selected (SNC-6885). Only Invoke() receives the full selection.
     void initializeContextMenuData(IShellItemArray* psiItemArray);
     virtual EXPCMDSTATE GetState(IShellItemArray* psiItemArray) = 0;
     virtual std::wstring GetIcon() const = 0;

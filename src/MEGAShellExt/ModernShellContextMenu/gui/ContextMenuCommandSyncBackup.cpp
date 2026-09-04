@@ -30,6 +30,9 @@ IFACEMETHODIMP ContextMenuCommandSyncBackup::Invoke(IShellItemArray* psiItemArra
 {
     UNREFERENCED_PARAMETER(pbc);
 
+    // GetState() may have cached a truncated selection; re-read the full one.
+    initializeContextMenuData(psiItemArray);
+
     mContextMenuData.requestSync(mType);
 
     return S_OK;
