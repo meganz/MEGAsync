@@ -445,6 +445,22 @@ void LoginController::onRequestStart(mega::MegaRequest* request)
     }
 }
 
+bool LoginController::isWaitingForEmailConfirmation() const
+{
+    switch (getState())
+    {
+        case LOGGED_OUT:
+        case SIGN_UP:
+        case CHANGING_REGISTER_EMAIL:
+        case CREATING_ACCOUNT:
+        case CREATING_ACCOUNT_FAILED:
+        case WAITING_EMAIL_CONFIRMATION:
+            return true;
+        default:
+            return false;
+    }
+}
+
 void LoginController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
 {
     if(event->getType() == mega::MegaEvent::EVENT_CONFIRM_USER_EMAIL)
@@ -452,8 +468,18 @@ void LoginController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
         mNewAccount = true;
         setEmail(QString::fromLatin1(event->getText()));
         mPreferences->removeEphemeralCredentials();
-        setState(EMAIL_CONFIRMED);
-        emit emailConfirmed();
+
+        // The "user email confirmed" action packet is delivered again while fetching nodes,
+        // right after the login that follows the confirmation. Moving the state machine to
+        // EMAIL_CONFIRMED at that point overwrites FETCHING_NODES, so the
+        // FETCHING_NODES -> FETCH_NODES_FINISHED transition is lost and the onboarding
+        // dialog is never shown. Only react to the event while we are actually waiting for
+        // the email confirmation.
+        if (isWaitingForEmailConfirmation())
+        {
+            setState(EMAIL_CONFIRMED);
+            emit emailConfirmed();
+        }
     }
     else if (event->getType() == mega::MegaEvent::EVENT_STORAGE)
     {
