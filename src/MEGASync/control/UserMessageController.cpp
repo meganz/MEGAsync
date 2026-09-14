@@ -1,7 +1,10 @@
 #include "UserMessageController.h"
 
-#include "RequestListenerManager.h"
 #include "MegaApplication.h"
+#include "RequestListenerManager.h"
+
+#include <QPointer>
+#include <QTimer>
 
 const int USER_ALERT_PROCESS_DELAY_IN_SECONDS = 1;
 
@@ -88,38 +91,50 @@ void UserMessageController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUse
 
     if (list != nullptr)
     {
+        // Wait for the shared folders to be undecrypted before processing. This callback already
+        // runs on the app thread (QTMegaGlobalListener posts it), so a context-bound timer replaces
+        // the former ThreadPool sleep + queueFunctionInAppThread(qApp) chain: Qt drops the pending
+        // call if the controller is destroyed meanwhile (logout / session change), instead of
+        // running it on a freed object.
         std::shared_ptr<mega::MegaUserAlertList> auxList(list->copy());
-        ThreadPoolSingleton::getInstance()->push(
-            [this, auxList]()
-            {
-                // Sleep and wait for the shared folders to be undecrypted
-                QThread::sleep(USER_ALERT_PROCESS_DELAY_IN_SECONDS);
-
-                Utilities::queueFunctionInAppThread(
-                    [this, auxList]()
-                    {
-                        // Process synchronously if list is provided
-                        populateUserAlerts(auxList.get());
-                        auxList->clear();
-                    });
-            });
+        QTimer::singleShot(USER_ALERT_PROCESS_DELAY_IN_SECONDS * 1000,
+                           this,
+                           [this, auxList]()
+                           {
+                               // Process synchronously if list is provided
+                               populateUserAlerts(auxList.get());
+                               auxList->clear();
+                           });
     }
     else
     {
-        // Process asynchronously if list is not provided
-        ThreadPoolSingleton::getInstance()->push([this]()
-        {
-            // Retrieve the alerts in a separate thread
-            mega::MegaUserAlertList* alertList = mMegaApi->getUserAlerts();
-
-            // Queue the processing back to the main thread
-            Utilities::queueFunctionInAppThread([this, alertList]()
+        // Process asynchronously if list is not provided: getUserAlerts() blocks, so it stays on
+        // the pool. The controller may be destroyed (logout / session change) before the task
+        // runs, so the pool lambda must not read members of `this` (api pointer copied now) and
+        // the app-thread lambda only touches the controller behind a QPointer guard. The guard is
+        // checked on the app thread only: that is the thread that destroys the object, so checking
+        // it from the pool would race the very destruction it protects against.
+        QPointer<UserMessageController> guard(this);
+        mega::MegaApi* megaApi = mMegaApi;
+        ThreadPoolSingleton::getInstance()->push(
+            [guard, megaApi]()
             {
-                populateUserAlerts(alertList);
-                alertList->clear();
-                delete alertList;
+                // Retrieve the alerts in a separate thread
+                std::shared_ptr<mega::MegaUserAlertList> alertList(megaApi->getUserAlerts());
+
+                // Queue the processing back to the main thread
+                Utilities::queueFunctionInAppThread(
+                    [guard, alertList]()
+                    {
+                        if (!guard)
+                        {
+                            return;
+                        }
+
+                        guard->populateUserAlerts(alertList.get());
+                        alertList->clear();
+                    });
             });
-        });
     }
 }
 
