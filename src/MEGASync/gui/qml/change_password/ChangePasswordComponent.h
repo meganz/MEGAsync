@@ -15,7 +15,7 @@ public:
 
     static void registerQmlModules();
 
-    Q_INVOKABLE void changePassword(QString password, bool signOutOtherDevices);
+    Q_INVOKABLE void changePassword(QString password);
     Q_INVOKABLE void check2FA(QString pin);
 
 signals:

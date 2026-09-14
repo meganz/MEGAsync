@@ -604,10 +604,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nothing else was signed out — any other session keeps access with your new password. To end them, sign in to mega.nz in a browser.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Your password has been changed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -660,21 +656,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sign out of all other devices</source>
-        <translatorcomment>Label displayed next to check box to manage closing sessions. If the check box is enable all other sessions will be closed, except currrent one. SNC-2109</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This MEGA Desktop App session will stay signed in. Your syncs won&apos;t be affected.</source>
-        <translatorcomment>Label displayed next to check box to indicate that current session won't be closed. SNC-2109</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Any other signed-in sessions will keep access with the new password.</source>
-        <translatorcomment>Label displayed next to check box to manage closing sessions. If the check box is enable all other sessions will be closed, except currrent one. SNC-2109</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter your 2FA code</source>
         <translatorcomment>Label displayed next to input component to enter the 2FA code. SNC-2109</translatorcomment>
         <translation type="unfinished"></translation>
@@ -688,6 +669,11 @@
         <source>Incorrect code, check your authenticator app and try again.</source>
         <translatorcomment>Error Label displayed when the user enters and incorrect 2FA code. SNC-2109</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You&apos;ll be signed out of all other devices. This MEGA Desktop App session will stay signed in and your syncs won&apos;t be affected.</source>
+        <translatorcomment>Informative label displayed in the change password form to indicate that all other sessions will be closed, except the current one. SNC-6910</translatorcomment>
+        <translation>You&apos;ll be signed out of all other devices. This MEGA Desktop App session will stay signed in and your syncs won&apos;t be affected.</translation>
     </message>
 </context>
 <context>

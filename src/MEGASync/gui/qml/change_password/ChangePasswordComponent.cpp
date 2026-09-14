@@ -87,9 +87,9 @@ void ChangePasswordComponent::registerQmlModules()
     }
 }
 
-void ChangePasswordComponent::changePassword(QString password, bool signOutOtherDevices)
+void ChangePasswordComponent::changePassword(QString password)
 {
-    mChangePasswordController->changePassword(password, signOutOtherDevices);
+    mChangePasswordController->changePassword(password);
 }
 
 void ChangePasswordComponent::check2FA(QString pin)
