@@ -257,6 +257,7 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
 {
     ApplyChangesError result(ApplyChangesError::NO_UPDATE_NEEDED);
     QStringList rules;
+    bool droppedUnwritableRule(false);
     foreach(auto & rule, mRules)
     {
         if (!rule->isDeleted())
@@ -272,6 +273,43 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
             auto ruleAsText(rule->getModifiedRule());
             if (!ruleAsText.isEmpty())
             {
+                // The rules are joined with "\n", so a rule spanning more than one line would
+                // become several. addNameRule()/addExtensionRule() already reject those patterns;
+                // this keeps the invariant a property of the writer rather than of its callers.
+                //
+                // A rule read from the file (the only ones with an original text) is held to the
+                // narrower test: a line that arrived with a terminator inside it is not written
+                // back, so the file loses it as soon as it is rewritten, while a line carrying
+                // any other control character is preserved instead of silently disappearing.
+                // That drop is also not an error for the caller: the line is not the rule it
+                // asked to write, and reporting it would turn one corrupt line into a failed
+                // resolution for every issue in the sync.
+                //
+                // Neither drop logs the rule: it carries control characters, and the log is read
+                // in terminals.
+                const auto readFromFile(!rule->originalRule().isEmpty());
+                if (readFromFile)
+                {
+                    if (MegaIgnoreRule::spansMultipleLines(ruleAsText))
+                    {
+                        mega::MegaApi::log(
+                            mega::MegaApi::LOG_LEVEL_WARNING,
+                            QString::fromUtf8("Dropped a .megaignore line spanning several lines")
+                                .toUtf8()
+                                .constData());
+                        continue;
+                    }
+                }
+                else if (!MegaIgnoreRule::isPatternWritable(ruleAsText))
+                {
+                    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                                       QString::fromUtf8("Dropped a .megaignore rule that cannot "
+                                                         "be written on a single line")
+                                           .toUtf8()
+                                           .constData());
+                    droppedUnwritableRule = true;
+                    continue;
+                }
                 rules.append(ruleAsText);
             }
         }
@@ -303,6 +341,19 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
             while(trimmedExtension.startsWith(QLatin1String(".")))
             {
                 trimmedExtension.remove(0,1);
+            }
+
+            // These rules are built here rather than through addExtensionRule(), so they need the
+            // same check: the extension is what the rule is written from, in either branch below.
+            if (!MegaIgnoreRule::isPatternWritable(trimmedExtension))
+            {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                                   QString::fromUtf8("Dropped a .megaignore extension rule that "
+                                                     "cannot be written on a single line")
+                                       .toUtf8()
+                                       .constData());
+                droppedUnwritableRule = true;
+                continue;
             }
 
             if (mExtensionRules.contains(trimmedExtension))
@@ -339,6 +390,11 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
         }
     }
 
+    if (droppedUnwritableRule && result < ApplyChangesError::NO_WRITE_PERMISSION)
+    {
+        result = ApplyChangesError::UNSUPPORTED_PATTERN;
+    }
+
     return result;
 }
 
@@ -359,13 +415,6 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinksRule()
     return mIgnoreSymLinkRule;
 }
 
-std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinkRule(const QString& pattern)
-{
-    auto rule = std::make_shared<MegaIgnoreNameRule>(pattern, MegaIgnoreNameRule::Class::EXCLUDE, MegaIgnoreNameRule::Target::s);
-    addRule(rule);
-    return rule;
-}
-
 std::shared_ptr<MegaIgnoreNameRule>
     MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType,
                                    QString pattern,
@@ -373,6 +422,19 @@ std::shared_ptr<MegaIgnoreNameRule>
                                    MegaIgnoreNameRule::Type type,
                                    MegaIgnoreNameRule::WildCardType wildCard)
 {
+    if (!MegaIgnoreRule::isPatternWritable(pattern))
+    {
+        // The pattern itself is not logged: it carries control characters, and the log is read
+        // in terminals.
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                           QString::fromUtf8("Rejected .megaignore name rule: the pattern "
+                                             "contains control characters (%1 chars)")
+                               .arg(pattern.size())
+                               .toUtf8()
+                               .constData());
+        return nullptr;
+    }
+
     MegaIgnoreNameRule::Strategy strategy(mIsCaseSensitive ? MegaIgnoreNameRule::Strategy::G :
                                                              MegaIgnoreNameRule::Strategy::NONE);
     auto rule = std::make_shared<MegaIgnoreNameRule>(pattern,
@@ -403,6 +465,16 @@ void MegaIgnoreManager::updateNameRuleStrategyAcordingToCaseSensitive(
 
 std::shared_ptr<MegaIgnoreExtensionRule> MegaIgnoreManager::addExtensionRule(MegaIgnoreNameRule::Class classType, const QString& pattern)
 {
+    if (!MegaIgnoreRule::isPatternWritable(pattern))
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                           QString::fromUtf8("Rejected .megaignore extension rule: the pattern "
+                                             "contains control characters")
+                               .toUtf8()
+                               .constData());
+        return nullptr;
+    }
+
     auto rule = std::make_shared<MegaIgnoreExtensionRule>(classType, pattern);
     addRule(rule);
     return rule;

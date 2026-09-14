@@ -45,7 +45,6 @@ public:
     void parseIgnoresFile();
 
     std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinksRule();
-    std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinkRule(const QString& pattern);
     std::shared_ptr<MegaIgnoreNameRule> addNameRule(
         MegaIgnoreNameRule::Class classType,
         QString pattern,
@@ -83,7 +82,10 @@ public:
     {
         OK,
         NO_UPDATE_NEEDED,
-        NO_WRITE_PERMISSION
+        // Callers test `result < NO_WRITE_PERMISSION` for success, so every failure must be
+        // listed from here on.
+        NO_WRITE_PERMISSION,
+        UNSUPPORTED_PATTERN
     };
 
     MegaIgnoreManager::ApplyChangesError applyChanges(bool updateExtensions = false, const QStringList& updatedExtensions = {});
