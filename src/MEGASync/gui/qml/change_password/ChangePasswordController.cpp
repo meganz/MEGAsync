@@ -42,16 +42,16 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                if (mSignOutOtherDevices)
-                {
-                    auto listener =
-                        RequestListenerManager::instance().registerAndGetFinishListener(this, true);
-                    mMegaApi->killSession(mega::INVALID_HANDLE, listener.get());
-                }
-                else
-                {
-                    emitPasswordChangeSucceed(false);
-                }
+                // The API invalidates every other session as part of the
+                // password change itself (same server path as `usr`), so no
+                // explicit killSession is needed and the outcome is always the
+                // same: only this session survives. SNC-6910
+                emit passwordChangeSucceed(
+                    tr("Password changed"),
+                    tr("Your password has been changed"),
+                    tr("This includes browsers, phones and other computers — signed out even "
+                       "if they were offline. This app stays signed in and your syncs keep "
+                       "running."));
             }
             else if (e->getErrorCode() == MegaError::API_EFAILED ||
                      e->getErrorCode() == MegaError::API_EEXPIRED)
@@ -69,28 +69,7 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
             }
             break;
         }
-        case MegaRequest::TYPE_KILL_SESSION:
-        {
-            // The password is already changed at this point; the banner only
-            // reflects whether the other sessions were actually signed out.
-            emitPasswordChangeSucceed(e->getErrorCode() == MegaError::API_OK);
-            break;
-        }
     }
-}
-
-void ChangePasswordController::emitPasswordChangeSucceed(bool signedOutOtherDevices)
-{
-    const QString banner =
-        signedOutOtherDevices ?
-            tr("This includes browsers, phones and other computers — signed out even if "
-               "they were offline. This app stays signed in and your syncs keep running.") :
-            tr("Nothing else was signed out — any other session keeps access with your "
-               "new password. To end them, sign in to mega.nz in a browser.");
-
-    emit passwordChangeSucceed(tr("Password changed"),
-                               tr("Your password has been changed"),
-                               banner);
 }
 
 void ChangePasswordController::check2FA(QString pin)
@@ -102,10 +81,8 @@ void ChangePasswordController::check2FA(QString pin)
                                             listener.get());
 }
 
-void ChangePasswordController::changePassword(QString password, bool signOutOtherDevices)
+void ChangePasswordController::changePassword(QString password)
 {
-    mSignOutOtherDevices = signOutOtherDevices;
-
     if (mMegaApi->checkPassword(password.toUtf8()))
     {
         emit passwordCheckFailed(tr("You have entered your current password,"

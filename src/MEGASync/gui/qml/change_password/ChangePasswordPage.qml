@@ -6,7 +6,6 @@ import components.texts 1.0 as Texts
 import components.buttons 1.0
 import components.pages 1.0
 import components.textFields 1.0
-import components.checkBoxes 1.0
 
 import onboard 1.0
 import PasswordStrengthChecker 1.0
@@ -19,18 +18,13 @@ FooterButtonsPage {
 
     readonly property int actionsGapDesign: 48
     readonly property int footerButtonsDesignHeight: 36 + 2 * Constants.focusBorderWidth
-    readonly property real signOutRowHeight: Math.max(signOutCheckBox.height,
-                                                      signOutTexts.y
-                                                          + signOutLabel.height
-                                                          + signOutTexts.spacing
-                                                          + signOutHelper.height)
     readonly property real windowHeightHint: titleItem.height
                                              + passwordItem.height
                                              + (strengthStrip.visible
                                                 ? passwordGroup.spacing + strengthStrip.height
                                                 : 0)
                                              + confirmPasswordItem.height
-                                             + signOutRowHeight
+                                             + otherSessionsInfo.height
                                              + 3 * mainColumnDesignSpacing
                                              + actionsGapDesign
                                              + footerButtonsDesignHeight
@@ -94,8 +88,7 @@ FooterButtonsPage {
             onClicked: {
                 if (!window.busy && validate()) {
                     window.busy = true;
-                    changePasswordComponentAccess.changePassword(passwordItem.text,
-                                                                 signOutCheckBox.checked);
+                    changePasswordComponentAccess.changePassword(passwordItem.text);
                 }
             }
         }
@@ -231,60 +224,23 @@ FooterButtonsPage {
             }
         }
 
-        Row {
-            id: signOutRow
+        // The API signs out every other session as part of the password
+        // change; there is no opt-out yet (API-4286), so the former
+        // "Sign out of all other devices" checkbox is replaced by this
+        // informational line. SNC-6910
+        Texts.Text {
+            id: otherSessionsInfo
 
-            width: parent.width
-            spacing: 8
-
-            CheckBox {
-                id: signOutCheckBox
-
-                // The indicator is an anchored Rectangle with no implicitWidth,
-                // so a text-less CheckBox reports a near-zero width and the
-                // indicator paints over the sibling texts. Size it explicitly.
-                width: sizes.indicatorWidth + 2 * sizes.focusBorderWidth
-
-                checked: true
-            }
-
-            Column {
-                id: signOutTexts
-
-                // The checkbox draws its 16px box inside a 4px focus border,
-                // so the visual box sits focusBorderWidth below the row top;
-                // offset the texts the same amount to align the label with it.
-                y: Constants.focusBorderWidth
-
-                width: parent.width - signOutCheckBox.width - signOutRow.spacing
-                spacing: 8
-
-                Texts.Text {
-                    id: signOutLabel
-
-                    width: parent.width
-                    text: ChangePasswordStrings.signOutOtherDevices
-                    font.weight: Font.DemiBold
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            signOutCheckBox.toggleCheckboxState();
-                        }
-                    }
-                }
-
-                Texts.Text {
-                    id: signOutHelper
-
-                    width: parent.width
-                    color: ColorTheme.textSecondary
-                    text: signOutCheckBox.checked
-                          ? ChangePasswordStrings.signOutCheckedHelper
-                          : ChangePasswordStrings.signOutUncheckedHelper
-                }
-            }
+            // The text fields draw their title and box inside a
+            // focusBorderWidth inset; use the same inset so this line is
+            // flush with the field titles above it.
+            x: Constants.focusBorderWidth
+            width: parent.width - 2 * Constants.focusBorderWidth
+            // Follow the enabled state like the rest of the form: while the
+            // request is in flight the page is disabled and everything else
+            // dims, so a fixed colour here would make this line stand out.
+            color: enabled ? ColorTheme.textSecondary : ColorTheme.textDisabled
+            text: ChangePasswordStrings.otherSessionsInfo
         }
     }
 
