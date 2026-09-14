@@ -75,6 +75,14 @@ public:
 
         return QString();
     }
+
+    // Node names are chosen by whoever owns the node (a contact, for incoming shares). Use this
+    // variant whenever the name is inserted into a rich-text sink (Qt::RichText/AutoText labels,
+    // tooltips, HTML templates) so an embedded <img src="\\host\x"> can't trigger a resource load.
+    static QString getRichNodeName(mega::MegaNode* node)
+    {
+        return getNodeName(node).toHtmlEscaped();
+    }
 };
 
 #endif // MEGANODENAMES_H

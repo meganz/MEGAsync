@@ -71,7 +71,8 @@ protected:
 
         if (toolTip().isEmpty() && elided != text())
         {
-            setToolTip(text());
+            // The label paints plain text, but QToolTip always honours rich text.
+            setToolTip(text().toHtmlEscaped());
         }
         else if (!toolTip().isEmpty() && elided == text())
         {

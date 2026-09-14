@@ -440,6 +440,9 @@ border: none;
            <property name="text">
             <string/>
            </property>
+           <property name="textFormat">
+            <enum>Qt::PlainText</enum>
+           </property>
            <property name="type" stdset="0">
             <string notr="true">title</string>
            </property>

@@ -75,6 +75,8 @@ void NodeSelectorDestinationOverflowPopup::setSegments(const QStringList& segmen
             label = new QLabel(ui->scrollContent);
         }
 
+        // Ancestor names come from other users' nodes; never let QLabel auto-detect HTML.
+        label->setTextFormat(Qt::PlainText);
         label->setText(segments.at(i));
         label->setFixedHeight(ROW_HEIGHT);
         label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -115,7 +117,7 @@ void NodeSelectorDestinationOverflowPopup::setSegments(const QStringList& segmen
         if (elided != fullText)
         {
             label->setText(elided);
-            label->setToolTip(fullText);
+            label->setToolTip(fullText.toHtmlEscaped());
         }
 
         maxRowWidth = (std::max)(maxRowWidth, label->sizeHint().width());
