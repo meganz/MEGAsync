@@ -1,6 +1,7 @@
 #include "UserMessageController.h"
 
 #include "MegaApplication.h"
+#include "QTMegaApiManager.h"
 #include "RequestListenerManager.h"
 
 #include <QPointer>
@@ -101,9 +102,7 @@ void UserMessageController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUse
                            this,
                            [this, auxList]()
                            {
-                               // Process synchronously if list is provided
                                populateUserAlerts(auxList.get());
-                               auxList->clear();
                            });
     }
     else
@@ -119,6 +118,14 @@ void UserMessageController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUse
         ThreadPoolSingleton::getInstance()->push(
             [guard, megaApi]()
             {
+                // The pool is a static singleton torn down after main(), so this task can still
+                // be queued when QTMegaApiManager::removeMegaApis() deletes the MegaApi instances
+                // on exit. The QPointer above does not cover that: it only tracks the controller.
+                if (!mega::QTMegaApiManager::isMegaApiValid(megaApi))
+                {
+                    return;
+                }
+
                 // Retrieve the alerts in a separate thread
                 std::shared_ptr<mega::MegaUserAlertList> alertList(megaApi->getUserAlerts());
 
@@ -132,7 +139,6 @@ void UserMessageController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUse
                         }
 
                         guard->populateUserAlerts(alertList.get());
-                        alertList->clear();
                     });
             });
     }
