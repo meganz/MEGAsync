@@ -333,7 +333,8 @@ void AlertItem::setAlertHeading(UserAlert* alert)
                                     QString::fromLatin1(")"));
     }
 
-    setToolTip(mNotificationHeading);
+    // Tooltips always honour rich text; the heading carries a contact-chosen node name.
+    setToolTip(mNotificationHeading.toHtmlEscaped());
 }
 
 void AlertItem::setAlertContent(UserAlert *alert)
@@ -460,14 +461,22 @@ void AlertItem::setAlertContent(UserAlert *alert)
         // Payment notifications
         case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
         {
-            notificationContent = tr("Your payment for the [A] plan was received")
-                    .replace(QString::fromUtf8("[A]"), alert->getString(0) ? QString::fromUtf8(alert->getString(0)) : QString::fromUtf8(""));
+            notificationContent =
+                tr("Your payment for the [A] plan was received")
+                    .replace(QString::fromUtf8("[A]"),
+                             alert->getString(0) ?
+                                 QString::fromUtf8(alert->getString(0)).toHtmlEscaped() :
+                                 QString::fromUtf8(""));
             break;
         }
         case MegaUserAlert::TYPE_PAYMENT_FAILED:
         {
-            notificationContent = tr("Your payment for the [A] plan was unsuccessful")
-                    .replace(QString::fromUtf8("[A]"), alert->getString(0) ? QString::fromUtf8(alert->getString(0)) : QString::fromUtf8(""));
+            notificationContent =
+                tr("Your payment for the [A] plan was unsuccessful")
+                    .replace(QString::fromUtf8("[A]"),
+                             alert->getString(0) ?
+                                 QString::fromUtf8(alert->getString(0)).toHtmlEscaped() :
+                                 QString::fromUtf8(""));
             break;
         }
         case MegaUserAlert::TYPE_PAYMENTREMINDER:
@@ -485,15 +494,17 @@ void AlertItem::setAlertContent(UserAlert *alert)
                 {
                     notificationContent =
                         tr("Your publicly shared file ([A]) has been taken down")
-                            .replace(QString::fromUtf8("[A]"),
-                                     formatRichString(MegaNodeNames::getNodeName(alertNode.get())));
+                            .replace(
+                                QString::fromUtf8("[A]"),
+                                formatRichString(MegaNodeNames::getRichNodeName(alertNode.get())));
                 }
                 else if (alertNode->getType() == MegaNode::TYPE_FOLDER)
                 {
                     notificationContent =
                         tr("Your publicly shared folder ([A]) has been taken down")
-                            .replace(QString::fromUtf8("[A]"),
-                                     formatRichString(MegaNodeNames::getNodeName(alertNode.get())));
+                            .replace(
+                                QString::fromUtf8("[A]"),
+                                formatRichString(MegaNodeNames::getRichNodeName(alertNode.get())));
                 }
                 else
                 {
@@ -515,15 +526,17 @@ void AlertItem::setAlertContent(UserAlert *alert)
                 {
                     notificationContent =
                         tr("Your publicly shared file ([A]) has been reinstated")
-                            .replace(QString::fromUtf8("[A]"),
-                                     formatRichString(MegaNodeNames::getNodeName(alertNode.get())));
+                            .replace(
+                                QString::fromUtf8("[A]"),
+                                formatRichString(MegaNodeNames::getRichNodeName(alertNode.get())));
                 }
                 else if (alertNode->getType() == MegaNode::TYPE_FOLDER)
                 {
                     notificationContent =
                         tr("Your publicly shared folder ([A]) has been reinstated")
-                            .replace(QString::fromUtf8("[A]"),
-                                     formatRichString(MegaNodeNames::getNodeName(alertNode.get())));
+                            .replace(
+                                QString::fromUtf8("[A]"),
+                                formatRichString(MegaNodeNames::getRichNodeName(alertNode.get())));
                 }
                 else
                 {
@@ -538,7 +551,8 @@ void AlertItem::setAlertContent(UserAlert *alert)
         }
         default:
         {
-            notificationContent = QString::fromUtf8(alert->getTitle());
+            // lDesc is Qt::RichText; the raw alert payload must not be interpreted as HTML.
+            notificationContent = QString::fromUtf8(alert->getTitle()).toHtmlEscaped();
             break;
         }
     }

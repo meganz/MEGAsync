@@ -8,6 +8,9 @@
 BreadcrumbSegment::BreadcrumbSegment(QWidget* parent):
     ClickableLabel(parent)
 {
+    // Segments show node names chosen by other users. paintEvent draws plain text, but
+    // QLabel::sizeHint() still lays out the (AutoText) document, which would load <img> resources.
+    setTextFormat(Qt::PlainText);
     setProperty("font-size", QLatin1String("body-2"));
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
     setContentsMargins(8, 3, 8, 3);
@@ -72,8 +75,9 @@ void BreadcrumbSegment::paintEvent(QPaintEvent* /*event*/)
     const QRect cr = contentsRect();
     const QString elided = fontMetrics().elidedText(text(), Qt::ElideMiddle, cr.width());
 
-    // Only offer the full name on hover when it actually had to be shortened.
-    const QString tip = (elided != text()) ? text() : QString();
+    // Only offer the full name on hover when it actually had to be shortened. Tooltips are rich
+    // text.
+    const QString tip = (elided != text()) ? text().toHtmlEscaped() : QString();
     if (toolTip() != tip)
     {
         setToolTip(tip);
