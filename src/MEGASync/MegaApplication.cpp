@@ -46,6 +46,7 @@
 #include "RequestListenerManager.h"
 #include "ScreenshotsController.h"
 #include "ServiceUrls.h"
+#include "SettingsTabIds.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
@@ -1510,7 +1511,7 @@ if (!infoDialog)
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
-        auto settingsTabToOpen = SettingsDialog::SYNCS_TAB;
+        auto settingsTabToOpen = SettingsTabIds::SYNCS;
         QString message;
         QVector<MegaSync::SyncType> syncsTypesToDismiss;
 
@@ -6314,7 +6315,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
     }
     else
     {
-        openSettings(SettingsDialog::SYNCS_TAB);
+        openSettings(SettingsTabIds::SYNCS);
         if (megaFolderHandle == ::mega::INVALID_HANDLE)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,

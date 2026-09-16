@@ -17,6 +17,7 @@
 #include "qml/AccountStateQuickWidget.h"
 #include "RequestListenerManager.h"
 #include "ServiceUrls.h"
+#include "SettingsTabIds.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
 #include "ui_SettingsDialog.h"
@@ -242,35 +243,35 @@ void SettingsDialog::openSettingsTab(int tab)
 
     switch (tab)
     {
-        case GENERAL_TAB:
+        case SettingsTabIds::GENERAL:
             mUi->bGeneral->click();
             break;
 
-        case ACCOUNT_TAB:
+        case SettingsTabIds::ACCOUNT:
             mUi->bAccount->click();
             break;
 
-        case SYNCS_TAB:
+        case SettingsTabIds::SYNCS:
             mUi->bSyncs->click();
             break;
 
-        case BACKUP_TAB:
+        case SettingsTabIds::BACKUP:
             mUi->bBackup->click();
             break;
 
-        case SECURITY_TAB:
+        case SettingsTabIds::SECURITY:
             mUi->bSecurity->click();
             break;
 
-        case FOLDERS_TAB:
+        case SettingsTabIds::FILE_MANAGEMENT:
             mUi->bFolders->click();
             break;
 
-        case NETWORK_TAB:
+        case SettingsTabIds::NETWORK:
             mUi->bNetwork->click();
             break;
 
-        case NOTIFICATIONS_TAB:
+        case SettingsTabIds::NOTIFICATIONS:
             mUi->bNotifications->click();
             break;
 

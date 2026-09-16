@@ -10,7 +10,7 @@ import onboard 1.0
 import onboard.syncs_types.backups 1.0
 
 import LoginController 1.0
-import SettingsDialog 1.0
+import SettingsTabIds 1.0
 
 import ServiceUrls 1.0
 
@@ -98,11 +98,11 @@ Rectangle {
                             else {
                                 resumePageState = "stateSelectiveSync";
                             }
-                            toOpenTabIndex = SettingsDialog.SYNCS_TAB;
+                            toOpenTabIndex = SettingsTabIds.SYNCS;
                             break;
                         case Constants.SyncType.BACKUP:
                             resumePageState = "stateBackup";
-                            toOpenTabIndex = SettingsDialog.BACKUP_TAB;
+                            toOpenTabIndex = SettingsTabIds.BACKUP;
                             break;
                         default:
                             console.warn("ResumePage: typeSelected does not exist -> "

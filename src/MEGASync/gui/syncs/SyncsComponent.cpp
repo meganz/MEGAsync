@@ -2,6 +2,7 @@
 
 #include "AddExclusionRule.h"
 #include "DialogOpener.h"
+#include "SettingsTabIds.h"
 #include "Syncs.h"
 #include "SyncsQmlDialog.h"
 
@@ -92,7 +93,7 @@ void SyncsComponent::registerQmlModules()
 
 void SyncsComponent::viewSyncsInSettingsButtonClicked()
 {
-    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    MegaSyncApp->openSettings(SettingsTabIds::SYNCS);
 }
 
 void SyncsComponent::setSyncOrigin(SyncInfo::SyncOrigin origin)
