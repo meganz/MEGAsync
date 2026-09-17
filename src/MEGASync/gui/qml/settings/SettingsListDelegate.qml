@@ -32,8 +32,8 @@ Rectangle {
     required property int index
 
     // --- injected per-tab configuration -------------------------------------------
-    // The owning tab widget (SyncSettingsQuickWidget / BackupSettingsQuickWidget).
-    // Passed in explicitly because both widgets share one QML engine root context and
+    // The tab's actions object (SyncSettingsActions / BackupSettingsActions, SNC-6795).
+    // Passed in explicitly because both tabs share one QML engine root context and
     // therefore cannot be exposed under a single global context-property name.
     property var settingsAccess
 
