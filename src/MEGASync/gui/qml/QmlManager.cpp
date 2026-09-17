@@ -13,6 +13,7 @@
 #include "QmlDialogManager.h"
 #include "QmlTheme.h"
 #include "QmlUtils.h"
+#include "SettingsTabIds.h"
 #include "SyncErrors.h"
 #include "SyncInfo.h"
 
@@ -62,6 +63,13 @@ void QmlManager::registerCommonQmlElements()
                                      0,
                                      "SyncErrors",
                                      QString::fromUtf8("Cannot create SyncErrors in QML"));
+
+    qmlRegisterUncreatableMetaObject(SettingsTabIds::staticMetaObject,
+                                     "SettingsTabIds",
+                                     1,
+                                     0,
+                                     "SettingsTabIds",
+                                     QString::fromUtf8("Cannot create SettingsTabIds in QML"));
 
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController",
                                                 QString::fromUtf8("Cannot create WarningLevel in QML"));

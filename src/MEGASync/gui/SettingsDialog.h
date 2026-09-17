@@ -26,20 +26,9 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum Tabs{
-        GENERAL_TAB  = 0,
-        ACCOUNT_TAB = 1,
-        SYNCS_TAB = 2,
-        BACKUP_TAB = 3,
-        SECURITY_TAB = 4,
-        FOLDERS_TAB  = 5,
-        NETWORK_TAB  = 6,
-        NOTIFICATIONS_TAB = 7
-    };
-    Q_ENUM(Tabs)
-
     explicit SettingsDialog(MegaApplication* app, bool proxyOnly = false, QWidget* parent = nullptr);
     ~SettingsDialog();
+    // tab: a SettingsTabIds::Tab value; NONE or unknown ids keep the current tab.
     void openSettingsTab(int tab = -1);
     void setProxyOnly(bool proxyOnly);
 

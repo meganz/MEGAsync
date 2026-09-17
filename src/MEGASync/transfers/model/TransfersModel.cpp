@@ -9,7 +9,7 @@
 #include "Platform.h"
 #include "PowerOptions.h"
 #include "ServiceUrls.h"
-#include "SettingsDialog.h"
+#include "SettingsTabIds.h"
 #include "ThreadPool.h"
 #include "TransferItem.h"
 #include "TransferMetaData.h"
@@ -2055,7 +2055,7 @@ void TransfersModel::showSyncCancelledWarning()
                 QTimer::singleShot(0,
                                    []()
                                    {
-                                       MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+                                       MegaSyncApp->openSettings(SettingsTabIds::SYNCS);
                                    });
             }
 

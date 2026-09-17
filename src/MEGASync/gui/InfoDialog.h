@@ -6,7 +6,6 @@
 #include "MegaDelegateHoverManager.h"
 #include "Preferences.h"
 #include "QtPositioningBugFixer.h"
-#include "SettingsDialog.h"
 #include "state_machines/DiscountPolicy.h"
 #include "StatusInfo.h"
 #include "SyncInfo.h"
@@ -20,7 +19,9 @@
 #include <QDialog>
 #include <QGraphicsOpacityEffect>
 #include <QPainter>
+#include <QParallelAnimationGroup>
 #include <QProcess>
+#include <QPropertyAnimation>
 #include <QTimer>
 
 #include <memory>

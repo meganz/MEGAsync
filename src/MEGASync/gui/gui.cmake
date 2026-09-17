@@ -1,5 +1,6 @@
 set(DESKTOP_APP_GUI_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/SettingsDialog.h
+    ${CMAKE_CURRENT_LIST_DIR}/settings/SettingsTabIds.h
     ${CMAKE_CURRENT_LIST_DIR}/AutoResizeStackedWidget.h
     ${CMAKE_CURRENT_LIST_DIR}/BalloonToolTip.h
     ${CMAKE_CURRENT_LIST_DIR}/BlurredShadowEffect.h
@@ -469,6 +470,7 @@ target_sources(${ExecutableTarget}
 
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/settings
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog
     ${CMAKE_CURRENT_LIST_DIR}/node_selector
     ${CMAKE_CURRENT_LIST_DIR}/node_selector/model
