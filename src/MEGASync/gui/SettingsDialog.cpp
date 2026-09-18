@@ -1,6 +1,7 @@
 #include "SettingsDialog.h"
 
 #include "AccountDetailsManager.h"
+#include "AccountState.h"
 #include "BugReportDialog.h"
 #include "ChangePasswordComponent.h"
 #include "CommonMessages.h"
@@ -96,8 +97,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->lEmail->installEventFilter(this);
 
     mAccountStateQuickWidget = mUi->accountStateQuickWidget;
-    connect(mAccountStateQuickWidget,
-            &AccountStateQuickWidget::upgradeRequested,
+    connect(mAccountStateQuickWidget->accountState(),
+            &AccountState::upgradeRequested,
             this,
             &SettingsDialog::on_bUpgrade_clicked);
 
@@ -1020,27 +1021,27 @@ void SettingsDialog::onCacheSizeAvailable()
 // Account -----------------------------------------------------------------------------------------
 void SettingsDialog::updateStorageElements()
 {
-    mAccountStateQuickWidget->updateStorageData();
+    mAccountStateQuickWidget->accountState()->updateStorageData();
 }
 
 void SettingsDialog::updateBandwidthElements()
 {
     const auto quotaState = MegaSyncApp->getTransferQuota()->quotaState();
-    mAccountStateQuickWidget->updateTransferData(quotaState);
+    mAccountStateQuickWidget->accountState()->updateTransferData(quotaState);
 }
 
 void SettingsDialog::updateAccountElements()
 {
     mUi->lAccountType->setText(Utilities::getReadablePlanFromId(mPreferences->accountType()));
     mUi->bUpgrade->show();
-    mAccountStateQuickWidget->setShowStorageCard(true);
-    mAccountStateQuickWidget->setShowTransferCard(true);
+    mAccountStateQuickWidget->accountState()->setShowStorageCard(true);
+    mAccountStateQuickWidget->accountState()->setShowTransferCard(true);
 
     switch (mPreferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
             mUi->bUpgrade->show();
-            mAccountStateQuickWidget->setShowTransferCard(false);
+            mAccountStateQuickWidget->accountState()->setShowTransferCard(false);
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             break;

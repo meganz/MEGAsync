@@ -1,7 +1,7 @@
 #include "QmlManager.h"
 
 #include "AccountInfoData.h"
-#include "AccountStateQuickWidget.h"
+#include "AccountState.h"
 #include "ApiEnums.h"
 #include "AppStatsEvents.h"
 #include "ChooseFile.h"
@@ -73,7 +73,17 @@ void QmlManager::registerCommonQmlElements()
 
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController",
                                                 QString::fromUtf8("Cannot create WarningLevel in QML"));
-    qmlRegisterUncreatableType<AccountStateQuickWidget>(
+    qmlRegisterUncreatableType<AccountState>(
+        "AccountState",
+        1,
+        0,
+        "AccountState",
+        QString::fromUtf8("Cannot create AccountState in QML"));
+    // SNC-6795: legacy alias so the settings QML keeps reading the enums as
+    // AccountStateQuickWidget.<NAME>. Remove once gui/qml/settings imports
+    // AccountState 1.0 instead (the surfaces are reused by the redesigned window,
+    // so this outlives the legacy dialog).
+    qmlRegisterUncreatableType<AccountState>(
         "AccountStateQuickWidget",
         1,
         0,
