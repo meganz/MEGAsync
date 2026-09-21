@@ -21,6 +21,17 @@ static constexpr IconEntry ICON_TABLE[] = {
     {"someissues", "tray_icon_blocked.svg"},
 };
 
+bool isHyprlandSession()
+{
+    if (qEnvironmentVariableIsSet("HYPRLAND_INSTANCE_SIGNATURE"))
+    {
+        return true;
+    }
+
+    return qEnvironmentVariable("XDG_CURRENT_DESKTOP").contains(
+        QStringLiteral("Hyprland"), Qt::CaseInsensitive);
+}
+
 } // namespace
 
 const TrayIconManager::AnimationDef TrayIconManager::ANIMATION_DEFS[] = {
@@ -79,6 +90,11 @@ QString TrayIconManager::themePrefix() const
 
 QIcon TrayIconManager::loadIcon(const QString& filename) const
 {
+    if (isHyprlandSession())
+    {
+        return QIcon(QStringLiteral(":/images/app_ico.ico"));
+    }
+
     QIcon icon(themePrefix() + filename);
 
 #ifdef __APPLE__

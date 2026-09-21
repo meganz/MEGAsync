@@ -23,7 +23,7 @@ GuestQmlDialog {
     }
 
     onGuestActiveChanged: (active) => {
-        if (!active) {
+        if (!active && Qt.platform.pluginName.indexOf("wayland") === -1) {
             fadeOut.start();
         }
     }
