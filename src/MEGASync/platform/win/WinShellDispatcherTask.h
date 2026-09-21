@@ -12,6 +12,7 @@
 #include <commctrl.h>
 #include <objbase.h>
 #include <stdlib.h>
+#include <string>
 #include <winbase.h>
 #include <windows.h>
 
@@ -39,9 +40,11 @@ class WinShellDispatcherTask : public QThread
     Q_OBJECT
 
  public:
-    WinShellDispatcherTask(MegaApplication *receiver);
-    virtual ~WinShellDispatcherTask();
-    void exitTask();
+     // bestEffort: legacy pipe - a failed claim is expected and non-fatal (logged
+     // softly, integration not disabled). pipeName: the name this instance serves.
+     WinShellDispatcherTask(MegaApplication* receiver, std::wstring pipeName, bool bestEffort);
+     virtual ~WinShellDispatcherTask();
+     void exitTask();
 
  protected:
     int dispatchPipe();
@@ -59,6 +62,8 @@ class WinShellDispatcherTask : public QThread
     void viewOnMega(const QString& path, bool versions);
     void syncFolderFromShellExt(const QString& path);
     void backupFolderFromShellExt(const QString& path);
+    // Emitted once when the legacy pipe first serves a request (SNC-6808 telemetry).
+    void legacyPipeUsed();
 
 protected:
     virtual void run();
@@ -70,6 +75,27 @@ private:
     void sendViewOnMegaSignal(const QStringList& parameters, bool versions, LPPIPEINST pipe);
 
     void sendErrorToPipe(LPPIPEINST pipe);
+
+    // Closes the first `count` created pipe instances and their events, and
+    // clears their slots.
+    void closeInstances(DWORD count);
+
+    // Closes the exit event (hEvents[INSTANCES]) and clears its slot.
+    void closeExitEvent();
+
+    // Disconnects pipe instance `i` and re-arms it for the next client.
+    VOID DisconnectAndReconnect(DWORD i);
+
+    // Per-dispatcher state (was globals) so scoped and legacy dispatchers can
+    // run at once (SNC-6808). Zero-initialised on purpose: as globals these were
+    // zeroed for free, as members they would hold garbage, and exitTask() reads
+    // hEvents[INSTANCES] even when dispatchPipe() returned before creating it.
+    PIPEINST Pipe[INSTANCES]{};
+    HANDLE hEvents[INSTANCES + 1]{};
+
+    std::wstring mPipeName;
+    bool mBestEffort = false;
+    bool mLegacyUsageReported = false;
 };
 
 #endif

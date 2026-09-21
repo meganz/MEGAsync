@@ -271,6 +271,7 @@ public slots:
     void shellExport(QQueue<QString> newExportQueue);
     void shellViewOnMega(const QString& localPath, bool versions);
     void shellViewOnMegaByHandle(mega::MegaHandle handle, bool versions);
+    void onShellLegacyPipeUsed();
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void uploadFilesToNode(const QList<QUrl>& files,
                            mega::MegaHandle targetNode,

@@ -147,6 +147,10 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/mac
     ${CMAKE_CURRENT_LIST_DIR}/win
     ${CMAKE_CURRENT_BINARY_DIR}/win
+    # Wire contracts shared with the Windows shell extension (see the README
+    # there). Declared here, next to the win/ sources that include them, so it
+    # reaches every target that compiles those sources, not only MEGAsync.
+    ${CMAKE_CURRENT_LIST_DIR}/../../common/win
 )
 target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 

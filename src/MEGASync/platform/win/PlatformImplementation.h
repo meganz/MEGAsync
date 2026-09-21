@@ -131,6 +131,8 @@ private:
     std::vector<BYTE> readValue(HKEY hKey, const wchar_t* name);
 
     WinShellDispatcherTask* shellDispatcherTask = nullptr;
+    // Transitional legacy-name dispatcher (best-effort).
+    WinShellDispatcherTask* legacyShellDispatcherTask = nullptr;
     std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;
     QPointer<WinThemeWatcher> watcher;
 };
