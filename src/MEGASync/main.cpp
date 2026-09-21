@@ -342,10 +342,16 @@ int main(int argc, char *argv[])
     // data directory. The folder is already created restricted, so this mostly catches
     // folders left behind by previous versions, or loosened afterwards. The MegaApi logger
     // is not available yet, so messages are buffered and flushed after the application is
-    // created.
+    // created. Errors are also written to stderr: when the folder could not be created
+    // there is no log file to flush into, and the single-instance lock below, which lives
+    // in that folder, fails as well, so the process exits before the logger ever exists.
     MegaApplication::restrictDataPathPermissions(
         [](int logLevel, const QString& message)
         {
+            if (logLevel <= MegaApi::LOG_LEVEL_ERROR)
+            {
+                std::cerr << message.toUtf8().constData() << std::endl;
+            }
             logMessages.emplace_back(logLevel, message);
         });
 
