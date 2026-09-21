@@ -64,7 +64,6 @@ public:
     static bool isMEGASyncOpen();
 
 private:
-    static LPCWSTR MEGA_PIPE;
     static WCHAR OP_PATH_STATE;
     static WCHAR OP_INIT;
     static WCHAR OP_END;

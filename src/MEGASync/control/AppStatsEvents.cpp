@@ -211,7 +211,9 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_SC, 600103},
     {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_STALLED_PREVIOUS_SESSION, 600104},
     {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_CS_FIRST_IN_SESSION, 600105},
-    {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_SC_FIRST_IN_SESSION, 600106}};
+    {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_SC_FIRST_IN_SESSION, 600106},
+    // TODO SNC-6808: record 600107 as used on the Confluence "Events" page.
+    {AppStatsEvents::EventType::SHELL_EXT_LEGACY_PIPE_USED, 600107}};
 
 // Deprecated are not displayed
 QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
@@ -484,7 +486,9 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_CS_FIRST_IN_SESSION,
      "First heartbeat timeout of this session on the cs channel"},
     {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_SC_FIRST_IN_SESSION,
-     "First heartbeat timeout of this session on the sc channel"}};
+     "First heartbeat timeout of this session on the sc channel"},
+    {AppStatsEvents::EventType::SHELL_EXT_LEGACY_PIPE_USED,
+     "Shell extension used the legacy pipe name"}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

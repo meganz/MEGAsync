@@ -2,6 +2,7 @@
 
 #include "DesktopManager.h"
 #include "RecursiveShellNotifier.h"
+#include "ShellDispatcherPipe.h"
 #include "ThemeManager.h"
 #include "ThreadedQueueShellNotifier.h"
 #include "WinAPIShell.h"
@@ -1032,18 +1033,54 @@ bool PlatformImplementation::showInFolder(QString pathIn)
                                                                                     QDir::toNativeSeparators(QDir(pathIn).canonicalPath())});
 }
 
+// Serve the legacy pipe during the transition; retire once telemetry shows it is
+// unused (SNC-6808).
+namespace
+{
+constexpr bool kServeLegacyShellPipe = true;
+}
+
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
 {
     if (shellDispatcherTask)
     {
         return;
     }
-    shellDispatcherTask = new WinShellDispatcherTask(receiver);
+
+    // Scoped pipe is mandatory: fail closed rather than fall back to an unscoped
+    // name (SNC-6808).
+    const std::wstring scopedName = ShellDispatcherPipe::name();
+    if (scopedName.empty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     "Shell dispatcher: could not determine the per-user pipe name. "
+                     "Shell integration is disabled.");
+        return;
+    }
+
+    shellDispatcherTask = new WinShellDispatcherTask(receiver, scopedName, false /* bestEffort */);
     shellDispatcherTask->start();
+
+    // Also serve the legacy name (best-effort, same hardening) for old DLLs still
+    // loaded in Explorer, until it restarts.
+    if (kServeLegacyShellPipe && !legacyShellDispatcherTask)
+    {
+        legacyShellDispatcherTask = new WinShellDispatcherTask(receiver,
+                                                               ShellDispatcherPipe::legacyName(),
+                                                               true /* bestEffort */);
+        legacyShellDispatcherTask->start();
+    }
 }
 
 void PlatformImplementation::stopShellDispatcher()
 {
+    if (legacyShellDispatcherTask)
+    {
+        legacyShellDispatcherTask->exitTask();
+        legacyShellDispatcherTask->wait();
+        legacyShellDispatcherTask->deleteLater();
+        legacyShellDispatcherTask = nullptr;
+    }
     if (shellDispatcherTask)
     {
         shellDispatcherTask->exitTask();

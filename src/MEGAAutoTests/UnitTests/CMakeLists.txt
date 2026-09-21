@@ -115,3 +115,9 @@ target_link_libraries(UnitTests
     )
 
 target_include_directories(UnitTests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ../3rdparty ${MegaSyncDir})
+
+if (WIN32)
+    # Pins the shell dispatcher pipe name contract shared with the shell extension
+    # (src/common/win). The include dir comes with platform.cmake above.
+    target_sources(UnitTests PRIVATE platform/ShellDispatcherPipeTests.cpp)
+endif()

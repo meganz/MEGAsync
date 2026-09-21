@@ -5644,6 +5644,16 @@ void MegaApplication::shellViewOnMegaByHandle(MegaHandle handle, bool versions)
         ServiceUrls::instance()->getNodeUrl(QString::fromUtf8(nodeHandle.get()), versions));
 }
 
+void MegaApplication::onShellLegacyPipeUsed()
+{
+    // An old shell-ext DLL is still using the legacy pipe; report once per
+    // session to gauge remaining usage (SNC-6808).
+    if (mStatsEventHandler)
+    {
+        mStatsEventHandler->sendEvent(AppStatsEvents::EventType::SHELL_EXT_LEGACY_PIPE_USED);
+    }
+}
+
 void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extraLinks)
 {
     if (appfinished || !megaApi->isLoggedIn())
