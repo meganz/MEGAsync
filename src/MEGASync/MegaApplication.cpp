@@ -100,6 +100,8 @@ using namespace std;
 QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
+bool MegaApplication::dataPathFromStandardLocation = false;
+QString MegaApplication::dataPathCreationError = QString();
 QString MegaApplication::lastNotificationError = QString();
 
 constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
@@ -131,17 +133,48 @@ void MegaApplication::loadDataPath()
     }
 #endif
 
+    dataPathFromStandardLocation = !dataPath.isEmpty();
+
     if (dataPath.isEmpty())
     {
         dataPath = QDir::currentPath();
     }
 
     dataPath = QDir::toNativeSeparators(dataPath);
-    QDir currentDir(dataPath);
-    if (!currentDir.exists())
+
+    if (dataPathFromStandardLocation)
     {
-        currentDir.mkpath(QString::fromUtf8("."));
+        Platform::getInstance()->createFolderRestrictedToOwner(dataPath, &dataPathCreationError);
     }
+    else
+    {
+        // Not ours to lock down, so it is created the usual way.
+        QDir(dataPath).mkpath(QString::fromUtf8("."));
+    }
+}
+
+void MegaApplication::restrictDataPathPermissions(const DataPathLogger& logger)
+{
+    if (!dataPathCreationError.isEmpty())
+    {
+        logger(MegaApi::LOG_LEVEL_ERROR,
+               QString::fromUtf8("Error creating the data directory %1: %2")
+                   .arg(dataPath, dataPathCreationError));
+    }
+
+    // The data directory holds the user configuration (MEGAsync.cfg, session data, logs),
+    // so it must not be readable by any other user. Restricting the folder was chosen over
+    // managing the permissions of each individual file: no other user can traverse into
+    // it, which protects every file inside.
+    //
+    // Skipped when we fell back to the current working directory: that path is not our
+    // private data dir (it could be $HOME or /), so we must not touch its permissions.
+    if (!dataPathFromStandardLocation)
+    {
+        return;
+    }
+
+    Utilities::restrictFolderToOwner(dataPath, logger);
 }
 
 MegaApplication::MegaApplication(int& argc, char** argv):

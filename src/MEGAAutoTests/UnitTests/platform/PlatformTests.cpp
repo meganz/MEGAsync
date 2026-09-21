@@ -10,6 +10,10 @@
 #include <QFileInfo>
 #include <QTemporaryDir>
 
+#ifndef Q_OS_WINDOWS
+#include <sys/stat.h>
+#endif
+
 class PlatformTests
 {
 public:
@@ -54,6 +58,26 @@ protected:
         CHECK(QFileInfo(itemPath).isHidden());
 #else
         CHECK(QFileInfo::exists(itemPath));
+#endif
+    }
+
+    // A restricted folder must stay fully usable by its owner: locking other users out is
+    // pointless if the app can no longer read, write or traverse its own data
+    static void checkOwnerOnly(const QString& folderPath)
+    {
+        const QFile::Permissions permissions(QFile::permissions(folderPath));
+        CHECK(permissions.testFlag(QFile::ReadOwner));
+        CHECK(permissions.testFlag(QFile::WriteOwner));
+        CHECK(permissions.testFlag(QFile::ExeOwner));
+
+        // Windows maps permissions onto ACLs, where these flags carry no meaning
+#ifndef Q_OS_WINDOWS
+        CHECK_FALSE(permissions.testFlag(QFile::ReadGroup));
+        CHECK_FALSE(permissions.testFlag(QFile::WriteGroup));
+        CHECK_FALSE(permissions.testFlag(QFile::ExeGroup));
+        CHECK_FALSE(permissions.testFlag(QFile::ReadOther));
+        CHECK_FALSE(permissions.testFlag(QFile::WriteOther));
+        CHECK_FALSE(permissions.testFlag(QFile::ExeOther));
 #endif
     }
 
@@ -183,6 +207,184 @@ TEST_CASE_METHOD(PlatformTests, "setHidden() on a path with . and .. components"
     CHECK(Platform::getInstance()->setHidden(indirectPath));
     checkIsHidden(filePath);
 }
+
+TEST_CASE_METHOD(PlatformTests, "createFolderRestrictedToOwner() creates a restricted folder")
+{
+    const QString folderPath(path(QLatin1String("data")));
+    QString errorMessage;
+
+    CHECK(Platform::getInstance()->createFolderRestrictedToOwner(folderPath, &errorMessage));
+
+    CHECK(QFileInfo(folderPath).isDir());
+    CHECK(errorMessage.isEmpty());
+    // The folder must be restricted from the moment it exists, never tightened afterwards
+    CHECK(Platform::getInstance()->isRestrictedToOwner(folderPath));
+    checkOwnerOnly(folderPath);
+}
+
+TEST_CASE_METHOD(PlatformTests, "createFolderRestrictedToOwner() creates the missing parents")
+{
+    const QString folderPath(path(QLatin1String("data/Mega Limited/MEGAsync")));
+    QString errorMessage;
+
+    CHECK(Platform::getInstance()->createFolderRestrictedToOwner(folderPath, &errorMessage));
+
+    CHECK(QFileInfo(folderPath).isDir());
+    CHECK(errorMessage.isEmpty());
+    CHECK(Platform::getInstance()->isRestrictedToOwner(folderPath));
+}
+
+TEST_CASE_METHOD(PlatformTests, "createFolderRestrictedToOwner() on an existing folder")
+{
+    const QString folderPath(createFolder(QLatin1String("existing")));
+    QString errorMessage;
+
+    // Creating an existing folder is not a failure: it is reported as done, and the
+    // startup enforcement is what brings an already existing folder back to owner only
+    CHECK(Platform::getInstance()->createFolderRestrictedToOwner(folderPath, &errorMessage));
+    CHECK(errorMessage.isEmpty());
+    CHECK(QFileInfo(folderPath).isDir());
+}
+
+TEST_CASE_METHOD(PlatformTests, "createFolderRestrictedToOwner() reports a failure")
+{
+    // A file sitting where a parent folder should be cannot be turned into a folder
+    const QString blocker(createFile(QLatin1String("blocker")));
+    const QString folderPath(path(QLatin1String("blocker/child")));
+    QString errorMessage;
+
+    CHECK_FALSE(Platform::getInstance()->createFolderRestrictedToOwner(folderPath, &errorMessage));
+
+    CHECK_FALSE(errorMessage.isEmpty());
+    CHECK_FALSE(QFileInfo(folderPath).exists());
+    CHECK(QFileInfo(blocker).isFile());
+}
+
+TEST_CASE_METHOD(PlatformTests, "createFolderRestrictedToOwner() without an error message")
+{
+    // The error message is optional: a caller that cannot report it may leave it out
+    const QString blocker(createFile(QLatin1String("blocker")));
+
+    CHECK_FALSE(
+        Platform::getInstance()->createFolderRestrictedToOwner(path(QLatin1String("blocker/child")),
+                                                               nullptr));
+}
+
+TEST_CASE_METHOD(PlatformTests, "restrictToOwner() closes an exposed folder")
+{
+    const QString folderPath(createFolder(QLatin1String("exposed")));
+
+    // Created through QDir, so it carries the default umask permissions
+#ifndef Q_OS_WINDOWS
+    REQUIRE(QFile::setPermissions(folderPath,
+                                  QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner |
+                                      QFile::ReadGroup | QFile::ExeGroup | QFile::ReadOther |
+                                      QFile::ExeOther));
+    REQUIRE_FALSE(Platform::getInstance()->isRestrictedToOwner(folderPath));
+#endif
+
+    CHECK(Platform::getInstance()->restrictToOwner(folderPath));
+
+    CHECK(Platform::getInstance()->isRestrictedToOwner(folderPath));
+}
+
+TEST_CASE_METHOD(PlatformTests, "isRestrictedToOwner() on an already restricted folder")
+{
+    const QString folderPath(path(QLatin1String("restricted")));
+    REQUIRE(Platform::getInstance()->createFolderRestrictedToOwner(folderPath, nullptr));
+
+    // Reported as restricted, so callers know there is nothing to change and stay quiet
+    CHECK(Platform::getInstance()->isRestrictedToOwner(folderPath));
+}
+
+TEST_CASE_METHOD(PlatformTests, "createFolderRestrictedToOwner() on a path taken by a file")
+{
+    const QString filePath(createFile(QLatin1String("taken")));
+    QString errorMessage;
+
+    CHECK_FALSE(Platform::getInstance()->createFolderRestrictedToOwner(filePath, &errorMessage));
+
+    CHECK_FALSE(errorMessage.isEmpty());
+    // The file must be left as it is, never replaced by the folder
+    CHECK(QFileInfo(filePath).isFile());
+}
+
+TEST_CASE_METHOD(PlatformTests, "createFolderRestrictedToOwner() reuses the existing parents")
+{
+    // Only the last component is missing, so the existing parents are kept as they are
+    const QString parentFolder(createFolder(QLatin1String("data/Mega Limited")));
+    const QString folderPath(path(QLatin1String("data/Mega Limited/MEGAsync")));
+    const QFile::Permissions parentPermissions(QFile::permissions(parentFolder));
+
+    CHECK(Platform::getInstance()->createFolderRestrictedToOwner(folderPath, nullptr));
+
+    CHECK(QFileInfo(folderPath).isDir());
+    CHECK(Platform::getInstance()->isRestrictedToOwner(folderPath));
+    // Parents are shared standard locations, so restricting the leaf must not touch them
+    CHECK(QFile::permissions(parentFolder) == parentPermissions);
+}
+
+#ifndef Q_OS_WINDOWS
+// The permissions of a new folder normally come from the umask, so these cases pin down
+// that the owner-only mode is applied whatever the umask happens to be. Only Windows is
+// excluded: there the base implementation relies on the inherited ACLs instead.
+TEST_CASE_METHOD(PlatformTests, "createFolderRestrictedToOwner() ignores a permissive umask")
+{
+    const mode_t previousUmask(umask(0));
+
+    const QString folderPath(path(QLatin1String("permissive")));
+    const bool created(Platform::getInstance()->createFolderRestrictedToOwner(folderPath, nullptr));
+
+    umask(previousUmask);
+
+    CHECK(created);
+    CHECK(Platform::getInstance()->isRestrictedToOwner(folderPath));
+    checkOwnerOnly(folderPath);
+}
+
+TEST_CASE_METHOD(PlatformTests, "createFolderRestrictedToOwner() ignores a strict umask")
+{
+    // A umask can only remove permissions, so the owner bits have to survive it
+    const mode_t previousUmask(umask(077));
+
+    const QString folderPath(path(QLatin1String("strict")));
+    const bool created(Platform::getInstance()->createFolderRestrictedToOwner(folderPath, nullptr));
+
+    umask(previousUmask);
+
+    CHECK(created);
+    CHECK(Platform::getInstance()->isRestrictedToOwner(folderPath));
+    checkOwnerOnly(folderPath);
+}
+
+TEST_CASE_METHOD(PlatformTests, "restrictToOwner() closes a folder open to the group only")
+{
+    const QString folderPath(createFolder(QLatin1String("group-readable")));
+    REQUIRE(QFile::setPermissions(folderPath,
+                                  QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner |
+                                      QFile::ReadGroup | QFile::ExeGroup));
+    REQUIRE_FALSE(Platform::getInstance()->isRestrictedToOwner(folderPath));
+
+    CHECK(Platform::getInstance()->restrictToOwner(folderPath));
+
+    CHECK(Platform::getInstance()->isRestrictedToOwner(folderPath));
+    checkOwnerOnly(folderPath);
+}
+
+TEST_CASE_METHOD(PlatformTests, "restrictToOwner() closes a folder open to the others only")
+{
+    const QString folderPath(createFolder(QLatin1String("other-writable")));
+    REQUIRE(QFile::setPermissions(folderPath,
+                                  QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner |
+                                      QFile::WriteOther));
+    REQUIRE_FALSE(Platform::getInstance()->isRestrictedToOwner(folderPath));
+
+    CHECK(Platform::getInstance()->restrictToOwner(folderPath));
+
+    CHECK(Platform::getInstance()->isRestrictedToOwner(folderPath));
+    checkOwnerOnly(folderPath);
+}
+#endif
 
 #ifdef Q_OS_WINDOWS
 TEST_CASE("Windows file-attribute paths preserve an extended prefix while cleaning")

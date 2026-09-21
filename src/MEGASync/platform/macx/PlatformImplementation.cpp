@@ -3,6 +3,7 @@
 #include "AppStatsEvents.h"
 #include "MacUpdateRouting.h"
 #include "MacXFunctions.h"
+#include "posix/PosixFileSystem.h"
 #include "Preferences.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
@@ -310,6 +311,12 @@ QString PlatformImplementation::getArchUpdateString() const
     }
 
     return QString::fromLatin1(routing.updateTrack);
+}
+
+bool PlatformImplementation::createFolderRestrictedToOwner(const QString& folder,
+                                                           QString* errorMessage)
+{
+    return PosixFileSystem::createFolderRestrictedToOwner(folder, errorMessage);
 }
 
 bool PlatformImplementation::showInFolder(QString pathIn)

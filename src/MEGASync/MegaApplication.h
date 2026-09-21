@@ -47,6 +47,7 @@
 #include <QQueue>
 #include <QSystemTrayIcon>
 
+#include <functional>
 #include <memory>
 
 class IntervalExecutioner;
@@ -103,6 +104,17 @@ public:
     static QString applicationFilePath();
     static QString applicationDirPath();
     static QString applicationDataPath();
+
+    // Receives mega::MegaApi::LOG_LEVEL_* messages from the data directory permission
+    // check, which runs before the MegaApi logger is available.
+    using DataPathLogger = std::function<void(int logLevel, const QString& message)>;
+
+    // Makes sure only the owner can access the data directory, so no other user can read
+    // the configuration it holds, and reports any error met while creating it. Enforced on
+    // every start, not only when the folder is created, so folders left behind by previous
+    // versions are tightened as well. Must be called after Platform::create() and right
+    // after applicationDataPath(), before anything writes into the folder.
+    static void restrictDataPathPermissions(const DataPathLogger& logger);
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
 
@@ -476,6 +488,13 @@ protected:
     static QString appPath;
     static QString appDirPath;
     static QString dataPath;
+    // Whether dataPath was resolved to a proper per-user data location, as opposed to the
+    // current working directory fallback used when QStandardPaths returns nothing. Only
+    // the former is ours to restrict: the fallback could be $HOME or /.
+    static bool dataPathFromStandardLocation;
+    // Why creating dataPath failed, if it did. Kept because loadDataPath() runs before
+    // any logger exists; reported by restrictDataPathPermissions().
+    static QString dataPathCreationError;
     static QString lastNotificationError;
 
     QThread *updateThread;

@@ -18,6 +18,7 @@ public:
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
     bool showInFolder(QString pathIn) override;
+    bool createFolderRestrictedToOwner(const QString& folder, QString* errorMessage) override;
     void startShellDispatcher(MegaApplication *receiver) override;
     void stopShellDispatcher() override;
     void syncFolderAdded(QString syncPath, QString syncName, QString syncID) override;

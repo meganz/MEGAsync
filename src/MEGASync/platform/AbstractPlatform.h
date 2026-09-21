@@ -109,6 +109,29 @@ public:
     // no-op that reports success. Returns false when the item could not be hidden.
     virtual bool setHidden(const QString& path);
 
+    // Creates `folder`, and any missing parent, so that only its owner can access it from
+    // the moment it exists: a folder created with the default umask and tightened
+    // afterwards is briefly reachable by other users, long enough for one to keep a
+    // descriptor on it and reach through it the files created inside later. Parents keep
+    // their usual permissions, being shared standard locations. Returns false on failure,
+    // describing it in `errorMessage` when one is given.
+    //
+    // The base implementation only creates the folder, which is enough on Windows: the
+    // per-user data location already denies other users through the ACLs it inherits. The
+    // POSIX platforms override it to apply the owner-only mode at creation time.
+    virtual bool createFolderRestrictedToOwner(const QString& folder, QString* errorMessage);
+
+    // Whether `path` is already inaccessible to users other than its owner. Lets callers
+    // report only the folders they actually had to tighten (see restrictToOwner).
+    virtual bool isRestrictedToOwner(const QString& path);
+
+    // Restricts a folder so that only its owner can access it, protecting every file
+    // inside from other users even though they are created with the default umask. The
+    // base implementation applies POSIX owner-only (0700) permissions, which is what
+    // macOS and Linux need; Windows overrides it because the per-user data location is
+    // already restricted to its owner by the ACLs it inherits.
+    virtual bool restrictToOwner(const QString& path);
+
     virtual void updateDisplayVersionAfterAutoUpdate(int versionCode, bool isPublic);
 
     virtual void addFileManagerExtensionToSystem() {}

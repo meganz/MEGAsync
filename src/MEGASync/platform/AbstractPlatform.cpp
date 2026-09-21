@@ -6,6 +6,8 @@
 #include "TokenParserWidgetManager.h"
 
 #include <QCursor>
+#include <QDir>
+#include <QFile>
 #include <QGuiApplication>
 #include <QScreen>
 #include <QWindow>
@@ -351,6 +353,37 @@ bool AbstractPlatform::setHidden(const QString& /*path*/)
 {
     // Items whose name starts with a dot are already hidden, nothing to do
     return true;
+}
+
+bool AbstractPlatform::createFolderRestrictedToOwner(const QString& folder, QString* errorMessage)
+{
+    if (QDir().mkpath(folder))
+    {
+        return true;
+    }
+
+    if (errorMessage)
+    {
+        *errorMessage = QString::fromUtf8("the folder could not be created");
+    }
+    return false;
+}
+
+bool AbstractPlatform::isRestrictedToOwner(const QString& path)
+{
+    // QFile::permissions() also reports the ReadUser/WriteUser/ExeUser flags, which hold
+    // the effective access of the running process rather than the stored mode, so the
+    // result cannot be compared against the owner-only set directly: only the group and
+    // other bits tell us whether the folder is exposed.
+    const QFile::Permissions groupAndOther = QFile::ReadGroup | QFile::WriteGroup |
+                                             QFile::ExeGroup | QFile::ReadOther |
+                                             QFile::WriteOther | QFile::ExeOther;
+    return !(QFile::permissions(path) & groupAndOther);
+}
+
+bool AbstractPlatform::restrictToOwner(const QString& path)
+{
+    return QFile::setPermissions(path, QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner);
 }
 
 void AbstractPlatform::updateDisplayVersionAfterAutoUpdate(int /*versionCode*/, bool /*isPublic*/)

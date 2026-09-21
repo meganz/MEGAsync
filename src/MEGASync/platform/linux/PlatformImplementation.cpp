@@ -3,6 +3,7 @@
 #include "DolphinFileManager.h"
 #include "MessageDialogOpener.h"
 #include "NautilusFileManager.h"
+#include "posix/PosixFileSystem.h"
 
 #include <QFile>
 #include <QGuiApplication>
@@ -269,6 +270,12 @@ void PlatformImplementation::moveDialog(QWidget* dialog, const QPoint& pos, QWin
         }
     }
     dialog->move(pos);
+}
+
+bool PlatformImplementation::createFolderRestrictedToOwner(const QString& folder,
+                                                           QString* errorMessage)
+{
+    return PosixFileSystem::createFolderRestrictedToOwner(folder, errorMessage);
 }
 
 bool PlatformImplementation::showInFolder(QString pathIn)
