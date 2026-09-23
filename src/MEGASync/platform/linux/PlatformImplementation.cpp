@@ -1101,6 +1101,16 @@ void PlatformImplementation::setRenderingBackend() const
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 }
 
+void PlatformImplementation::setStartupEnvironment() const
+{
+    // Disable the Qt/KDE XDG portal Screenshot-version probe in QGenericUnixServices.
+    // Its parentless QDBusPendingCallWatcher is the object killed in the
+    // ~QDBusPendingCallWatcher / receiverDeleted crash family seen at login.
+    // Only QColorDialog's color picker reads the result, and we don't use it.
+    // Note: this hides the symptom. The underlying dangling write is still unidentified.
+    qputenv("QT_NO_XDG_DESKTOP_PORTAL", "1");
+}
+
 void PlatformImplementation::startThemeMonitor()
 {
 #ifndef QT_NO_DBUS

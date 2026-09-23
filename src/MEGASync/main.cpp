@@ -535,6 +535,8 @@ int main(int argc, char *argv[])
 
     Platform::getInstance()->setRenderingBackend();
 
+    Platform::getInstance()->setStartupEnvironment();
+
 #ifndef Q_OS_MACOS
     const QString autoScreenScaleFactor = qEnvironmentVariable("QT_AUTO_SCREEN_SCALE_FACTOR");
     if (autoScreenScaleFactor == QString::fromUtf8("0"))

@@ -69,6 +69,7 @@ public:
     Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
     Preferences::ThemeAppeareance getPanelTheme() const override;
     void setRenderingBackend() const override;
+    void setStartupEnvironment() const override;
 
     QStringList getScreenshotsLocation() override;
 

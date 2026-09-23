@@ -174,6 +174,10 @@ public:
 
     virtual void setRenderingBackend() const {}
 
+    // Sets platform-specific environment variables that must be in place before
+    // MegaApplication (QApplication) is constructed.
+    virtual void setStartupEnvironment() const {}
+
     // Severs connections with assistive-technology clients before UI teardown.
     // Only needed on Windows; see PlatformImplementation::disconnectAccessibilityClients().
     virtual void disconnectAccessibilityClients() {}
