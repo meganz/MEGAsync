@@ -193,4 +193,6 @@ echo cleaning
 %endif
 %endif
 
+%{_datadir}/metainfo/nz.mega.megasync.dolphin_extension.metainfo.xml
+
 %changelog

@@ -120,6 +120,7 @@ fi
 %files
 %defattr(-,root,root)
 %{_libdir}/nemo/extensions-3.0/libMEGAShellExtNemo.so*
+%{_datadir}/metainfo/nz.mega.megasync.nemo_extension.metainfo.xml
 %{_datadir}/icons/hicolor/*/*/mega-*.icon
 %{_datadir}/icons/hicolor/*/*/mega-*.png
 

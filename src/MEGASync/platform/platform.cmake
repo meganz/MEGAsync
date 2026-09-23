@@ -160,5 +160,17 @@ if (UNIX AND NOT APPLE AND NOT DontUseResources)
    install(FILES platform/linux/data/megasync.desktop
        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/applications"
    )
+   # Install AppStream metadata
+   if (NOT MEGA_DESKTOP_APP_VERSION)
+       set(MEGA_DESKTOP_APP_VERSION "${PROJECT_VERSION}")
+   endif()
+   string(TIMESTAMP MEGA_METAINFO_RELEASE_DATE "%Y-%m-%d" UTC)
+   configure_file(platform/linux/data/nz.mega.megasync.metainfo.xml.in
+       "${CMAKE_CURRENT_BINARY_DIR}/nz.mega.megasync.metainfo.xml"
+       @ONLY
+   )
+   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/nz.mega.megasync.metainfo.xml"
+       DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/metainfo"
+   )
 
 endif()

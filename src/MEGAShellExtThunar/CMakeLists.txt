@@ -69,5 +69,9 @@ message(STATUS "Thunar extensions will be installed to: ${EXTENSIONS_PATH}")
 
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION "${EXTENSIONS_PATH}")
 
+# Install AppStream metadata
+install(FILES nz.mega.megasync.thunar_extension.metainfo.xml
+    DESTINATION share/metainfo)
+
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
     "lib${PROJECT_NAME}.so;lib${PROJECT_NAME}.so.1;lib${PROJECT_NAME}.so.1.0")

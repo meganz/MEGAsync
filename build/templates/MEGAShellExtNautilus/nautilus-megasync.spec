@@ -112,6 +112,7 @@ fi
 %files
 %defattr(-,root,root)
 %{_libdir}/nautilus/extensions-*/libMEGAShellExtNautilus.so*
+%{_datadir}/metainfo/nz.mega.megasync.nautilus_extension.metainfo.xml
 %{_datadir}/icons/hicolor/*/*/mega-*.icon
 %{_datadir}/icons/hicolor/*/*/mega-*.png
 
