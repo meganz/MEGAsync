@@ -452,6 +452,7 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %{_bindir}/%{name}
 %{_bindir}/mega-desktop-app-gfxworker
 %{_datadir}/applications/megasync.desktop
+%{_datadir}/metainfo/nz.mega.megasync.metainfo.xml
 %{_datadir}/icons/hicolor/*/*/mega.png
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/icons/*/*/*/*
