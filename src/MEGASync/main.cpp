@@ -326,13 +326,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain(QString::fromUtf8("mega.co.nz"));
     QCoreApplication::setApplicationName(QString::fromUtf8("MEGAsync")); //Do not change app name, keep MEGAsync because Linux rely on that for app paths.
     QCoreApplication::setApplicationVersion(QString::number(Preferences::VERSION_CODE));
-#ifdef Q_OS_LINUX
-    // Must match the installed desktop entry (/usr/share/applications/megasync.desktop).
-    // Without it, Qt on Wayland derives the window app_id from the reversed organization
-    // domain ("nz.co.mega.megasync"), which breaks dock/taskbar grouping and icon.
-    QGuiApplication::setDesktopFileName(QString::fromUtf8("megasync"));
-#endif
-
     Platform::create();
 
     const QString dataPath = MegaApplication::applicationDataPath();
@@ -695,6 +688,15 @@ int main(int argc, char *argv[])
     {
         QApplication::setDesktopSettingsAware(false);
     }
+#endif
+
+#ifdef Q_OS_LINUX
+    // Must match the installed desktop entry (/usr/share/applications/megasync.desktop).
+    // Without it, Qt on Wayland derives the window app_id from the reversed organization
+    // domain ("nz.co.mega.megasync"), which breaks dock/taskbar grouping and icon.
+    // Set it right before creating the application: ~QGuiApplication() clears it, and
+    // ScaleFactorManager creates and destroys a temporary QGuiApplication earlier on.
+    QGuiApplication::setDesktopFileName(QString::fromUtf8("megasync"));
 #endif
 
     MegaApplication app(argc, argv);
