@@ -132,6 +132,7 @@ elseif (APPLE)
     target_link_libraries(${ExecutableTarget}
         PRIVATE
         "-framework IOKit"
+        "-framework ServiceManagement"
     )
 else ()
     find_package(Qt5 REQUIRED COMPONENTS X11Extras DBus)

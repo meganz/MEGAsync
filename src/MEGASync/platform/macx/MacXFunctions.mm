@@ -9,6 +9,7 @@
 #include <QOperatingSystemVersion>
 #include <QWindow>
 
+#import <ServiceManagement/ServiceManagement.h>
 #import <objc/runtime.h>
 #import <sys/proc_info.h>
 #import <libproc.h>
@@ -169,6 +170,29 @@ void closeFileSelectionPanels(QWidget* parent)
 
 bool startAtLogin(bool opt)
 {
+    // From macOS 13 the shared-file-list login items are a no-op: the insert call
+    // returns an item that never reaches the user's Login Items. SMAppService is the
+    // API that works there, and it also reports whether the change was applied.
+    if (@available(macOS 13.0, *))
+    {
+        SMAppService* service = [SMAppService mainAppService];
+        NSError* error = nil;
+        bool ok = false;
+        if (opt)
+        {
+            ok = (service.status == SMAppServiceStatusEnabled) || [service registerAndReturnError:&error];
+        }
+        else
+        {
+            ok = (service.status != SMAppServiceStatusEnabled) || [service unregisterAndReturnError:&error];
+        }
+        if (!ok && error)
+        {
+            NSLog(@"Launch at login could not be %@: %@", opt ? @"enabled" : @"disabled", error);
+        }
+        return ok;
+    }
+
     if (opt)
     {
         //Enable start at login
@@ -459,6 +483,13 @@ bool revealInFinder(const QString& path)
 
 bool isStartAtLoginActive()
 {
+    if (@available(macOS 13.0, *))
+    {
+        // "Requires approval" means the user still has to allow it in System Settings;
+        // until then the app will not launch at login, so it is not active.
+        return [SMAppService mainAppService].status == SMAppServiceStatusEnabled;
+    }
+
     NSString *appPath = [[NSBundle mainBundle] bundlePath];
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
 
