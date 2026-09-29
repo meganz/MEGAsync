@@ -769,6 +769,26 @@ void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
     {
         mPreferences->setStartOnStartup(checked);
     }
+
+    // Show what the system actually did: the request can be refused, or on macOS 13+
+    // left waiting for the user's approval in System Settings, and then the app will
+    // not launch at login however the box was ticked.
+    const bool active =
+        mPreferences->startOnStartup() && Platform::getInstance()->isStartOnStartupActive();
+    if (mUi->cStartOnStartup->isChecked() != active)
+    {
+        mUi->cStartOnStartup->blockSignals(true);
+        mUi->cStartOnStartup->setChecked(active);
+        mUi->cStartOnStartup->blockSignals(false);
+    }
+
+    // The user asked for it but the system keeps it off because they turned the item off in
+    // the system settings. Only they can turn it back on there, so take them to that screen
+    // instead of leaving the box unticked with no explanation.
+    if (checked && !active && Platform::getInstance()->isStartOnStartupPendingUserApproval())
+    {
+        Platform::getInstance()->openStartOnStartupSystemSettings();
+    }
 }
 
 void SettingsDialog::on_cLanguage_currentIndexChanged(int index)

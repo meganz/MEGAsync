@@ -17,6 +17,8 @@ public:
     void notifySyncFileChange(std::string *localPath, int newState) override;
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
+    bool isStartOnStartupPendingUserApproval() override;
+    void openStartOnStartupSystemSettings() override;
     bool showInFolder(QString pathIn) override;
     bool createFolderRestrictedToOwner(const QString& folder, QString* errorMessage) override;
     void startShellDispatcher(MegaApplication *receiver) override;

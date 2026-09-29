@@ -256,6 +256,13 @@ void NotificationItem::updateNotificationData(UserNotification* newNotificationD
 
 void NotificationItem::updateNotificationData(bool downloadImage, bool downloadIcon)
 {
+    // A cached row can outlive its notification (expired or removed by the model) and
+    // still receive a language change; there is nothing to refresh then.
+    if (!mNotificationData)
+    {
+        return;
+    }
+
     mUi->lTitle->setText(mNotificationData->getTitle());
 
     mUi->lDescription->setText(mNotificationData->getDescription());

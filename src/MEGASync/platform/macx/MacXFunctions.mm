@@ -9,6 +9,7 @@
 #include <QOperatingSystemVersion>
 #include <QWindow>
 
+#import <ServiceManagement/ServiceManagement.h>
 #import <objc/runtime.h>
 #import <sys/proc_info.h>
 #import <libproc.h>
@@ -169,6 +170,49 @@ void closeFileSelectionPanels(QWidget* parent)
 
 bool startAtLogin(bool opt)
 {
+    // From macOS 13 the shared-file-list login items are a no-op: the insert call
+    // returns an item that never reaches the user's Login Items. SMAppService is the
+    // API that works there, and it also reports whether the change was applied.
+    if (@available(macOS 13.0, *))
+    {
+        SMAppService* service = [SMAppService mainAppService];
+        // Read once: the user can change it in System Settings between two reads.
+        const SMAppServiceStatus status = service.status;
+        NSError* error = nil;
+        bool ok = false;
+        if (opt)
+        {
+            // Enabled: nothing to do. RequiresApproval: the item exists but the user turned it
+            // off in System Settings and only they can turn it back on there; register() does
+            // not change that (it returns success and leaves the item off), so it is not called.
+            // The caller can detect the state with isStartAtLoginPendingApproval().
+            ok = (status == SMAppServiceStatusEnabled || status == SMAppServiceStatusRequiresApproval) ||
+                 [service registerAndReturnError:&error];
+        }
+        else
+        {
+            // Enabled and RequiresApproval are both registered items: a RequiresApproval one
+            // (turned off by the user in System Settings) must be removed too, or it stays
+            // listed there after the box is unticked. NotRegistered/NotFound: nothing to remove.
+            ok = (status != SMAppServiceStatusEnabled && status != SMAppServiceStatusRequiresApproval) ||
+                 [service unregisterAndReturnError:&error];
+        }
+        if (!ok)
+        {
+            const QString reason = error ? fromNSString(error.localizedDescription) :
+                                           QString::fromLatin1("no error returned");
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                               QString::fromLatin1("Launch at login could not be %1 (status %2): %3")
+                                   .arg(opt ? QString::fromLatin1("enabled") :
+                                              QString::fromLatin1("disabled"))
+                                   .arg(static_cast<int>(status))
+                                   .arg(reason)
+                                   .toUtf8()
+                                   .constData());
+        }
+        return ok;
+    }
+
     if (opt)
     {
         //Enable start at login
@@ -457,8 +501,34 @@ bool revealInFinder(const QString& path)
 }
 
 
+bool isStartAtLoginPendingApproval()
+{
+    if (@available(macOS 13.0, *))
+    {
+        // The item exists but the user turned it off in System Settings; only the user can
+        // turn it back on there.
+        return [SMAppService mainAppService].status == SMAppServiceStatusRequiresApproval;
+    }
+    return false;
+}
+
+void openStartAtLoginSystemSettings()
+{
+    if (@available(macOS 13.0, *))
+    {
+        [SMAppService openSystemSettingsLoginItems];
+    }
+}
+
 bool isStartAtLoginActive()
 {
+    if (@available(macOS 13.0, *))
+    {
+        // "Requires approval" means the user still has to allow it in System Settings;
+        // until then the app will not launch at login, so it is not active.
+        return [SMAppService mainAppService].status == SMAppServiceStatusEnabled;
+    }
+
     NSString *appPath = [[NSBundle mainBundle] bundlePath];
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
 

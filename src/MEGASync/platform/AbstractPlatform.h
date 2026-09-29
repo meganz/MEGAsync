@@ -50,6 +50,11 @@ public:
     virtual void notifySyncFileChange(std::string *localPath, int newState) = 0;
     virtual bool startOnStartup(bool value) = 0;
     virtual bool isStartOnStartupActive() = 0;
+    // The login item exists but the user turned it off in the system settings; only the user
+    // can turn it back on there. False where the OS has no such state.
+    virtual bool isStartOnStartupPendingUserApproval();
+    // Opens the system screen where the user manages login items. No-op where there is none.
+    virtual void openStartOnStartupSystemSettings();
     virtual bool isTilingWindowManager();
     // Are we running on the Wayland platform? Default uses the live
     // QGuiApplication's platform name (authoritative once the app exists). The

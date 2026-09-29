@@ -15,6 +15,8 @@ void setMacXActivationPolicy();
 QStringList qt_mac_NSArrayToQStringList(void *nsarray);
 bool startAtLogin(bool opt);
 bool isStartAtLoginActive();
+bool isStartAtLoginPendingApproval();
+void openStartAtLoginSystemSettings();
 void addLoginItem();
 void removeLoginItem();
 void addPathToPlaces(QString path, QString pathName);

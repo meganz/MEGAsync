@@ -1493,39 +1493,53 @@ void MegaApplication::onboardingFinished(bool fastLogin, bool comesFromOnboardin
         true,
         !fastLogin ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
 
-    // Apply the "Start on startup" configuration, make sure configuration has the actual value
-    // get the requested value
+#ifndef __APPLE__
+    // Apply the "Start on startup" configuration, make sure configuration has the actual value.
+    // On Windows and Linux the app is the only writer of the startup entry, so a failure means
+    // the stored value is wrong.
     bool startOnStartup = preferences->startOnStartup();
-    // try to enable / disable startup (e.g. copy or delete desktop file)
     if (!Platform::getInstance()->startOnStartup(startOnStartup))
     {
-        // in case of failure - make sure configuration keeps the right value
-        //LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
         preferences->setStartOnStartup(!startOnStartup);
     }
+#else
+    // On macOS the login item is shared with System Settings, where the user can add, remove
+    // or disable it at any time, so after the first run the app only changes it from the
+    // Settings checkbox. The checkbox shows the real system state, so a stored preference the
+    // system does not reflect simply shows as unticked until the user ticks it.
+    // First run of an account on this Mac: honour the default (enabled) once. The preference
+    // is left untouched on failure; ticking the checkbox retries.
+    if (!preferences->lastExecutionTime() && preferences->startOnStartup() &&
+        !Platform::getInstance()->startOnStartup(true))
+    {
+        MegaApi::log(
+            MegaApi::LOG_LEVEL_WARNING,
+            "Launch at login could not be enabled on first run; Settings will show it off");
+    }
+#endif
 
-if (!preferences->lastExecutionTime())
-{
-    #ifdef __APPLE__
+    if (!preferences->lastExecutionTime())
+    {
+#ifdef __APPLE__
         showInfoMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
-    #else
+#else
         showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
-    #endif
-}
+#endif
+    }
 
-preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
+    preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
 
-startUpdateTask();
-QString language = preferences->language();
-changeLanguage(language);
-updated = false;
+    startUpdateTask();
+    QString language = preferences->language();
+    changeLanguage(language);
+    updated = false;
 
-checkOperatingSystem();
+    checkOperatingSystem();
 
-if (!infoDialog)
-{
-    createInfoDialog();
-}
+    if (!infoDialog)
+    {
+        createInfoDialog();
+    }
     infoDialog->setUsage();
     infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
