@@ -176,19 +176,39 @@ bool startAtLogin(bool opt)
     if (@available(macOS 13.0, *))
     {
         SMAppService* service = [SMAppService mainAppService];
+        // Read once: the user can change it in System Settings between two reads.
+        const SMAppServiceStatus status = service.status;
         NSError* error = nil;
         bool ok = false;
         if (opt)
         {
-            ok = (service.status == SMAppServiceStatusEnabled) || [service registerAndReturnError:&error];
+            // Enabled: nothing to do. RequiresApproval: the item exists but the user turned it
+            // off in System Settings and only they can turn it back on there; register() does
+            // not change that (it returns success and leaves the item off), so it is not called.
+            // The caller can detect the state with isStartAtLoginPendingApproval().
+            ok = (status == SMAppServiceStatusEnabled || status == SMAppServiceStatusRequiresApproval) ||
+                 [service registerAndReturnError:&error];
         }
         else
         {
-            ok = (service.status != SMAppServiceStatusEnabled) || [service unregisterAndReturnError:&error];
+            // Enabled and RequiresApproval are both registered items: a RequiresApproval one
+            // (turned off by the user in System Settings) must be removed too, or it stays
+            // listed there after the box is unticked. NotRegistered/NotFound: nothing to remove.
+            ok = (status != SMAppServiceStatusEnabled && status != SMAppServiceStatusRequiresApproval) ||
+                 [service unregisterAndReturnError:&error];
         }
-        if (!ok && error)
+        if (!ok)
         {
-            NSLog(@"Launch at login could not be %@: %@", opt ? @"enabled" : @"disabled", error);
+            const QString reason = error ? fromNSString(error.localizedDescription) :
+                                           QString::fromLatin1("no error returned");
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                               QString::fromLatin1("Launch at login could not be %1 (status %2): %3")
+                                   .arg(opt ? QString::fromLatin1("enabled") :
+                                              QString::fromLatin1("disabled"))
+                                   .arg(static_cast<int>(status))
+                                   .arg(reason)
+                                   .toUtf8()
+                                   .constData());
         }
         return ok;
     }
@@ -480,6 +500,25 @@ bool revealInFinder(const QString& path)
     return true;
 }
 
+
+bool isStartAtLoginPendingApproval()
+{
+    if (@available(macOS 13.0, *))
+    {
+        // The item exists but the user turned it off in System Settings; only the user can
+        // turn it back on there.
+        return [SMAppService mainAppService].status == SMAppServiceStatusRequiresApproval;
+    }
+    return false;
+}
+
+void openStartAtLoginSystemSettings()
+{
+    if (@available(macOS 13.0, *))
+    {
+        [SMAppService openSystemSettingsLoginItems];
+    }
+}
 
 bool isStartAtLoginActive()
 {

@@ -31,6 +31,13 @@ bool AbstractPlatform::isTilingWindowManager()
     return false;
 }
 
+bool AbstractPlatform::isStartOnStartupPendingUserApproval()
+{
+    return false;
+}
+
+void AbstractPlatform::openStartOnStartupSystemSettings() {}
+
 bool AbstractPlatform::isWayland()
 {
     // When a GUI application exists, the platform plugin name is authoritative.

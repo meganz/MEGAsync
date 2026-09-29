@@ -89,6 +89,16 @@ bool PlatformImplementation::isStartOnStartupActive()
     return isStartAtLoginActive();
 }
 
+bool PlatformImplementation::isStartOnStartupPendingUserApproval()
+{
+    return isStartAtLoginPendingApproval();
+}
+
+void PlatformImplementation::openStartOnStartupSystemSettings()
+{
+    openStartAtLoginSystemSettings();
+}
+
 void PlatformImplementation::addFileManagerExtensionToSystem()
 {
     QStringList scriptArgs;

@@ -781,6 +781,14 @@ void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
         mUi->cStartOnStartup->setChecked(active);
         mUi->cStartOnStartup->blockSignals(false);
     }
+
+    // The user asked for it but the system keeps it off because they turned the item off in
+    // the system settings. Only they can turn it back on there, so take them to that screen
+    // instead of leaving the box unticked with no explanation.
+    if (checked && !active && Platform::getInstance()->isStartOnStartupPendingUserApproval())
+    {
+        Platform::getInstance()->openStartOnStartupSystemSettings();
+    }
 }
 
 void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
