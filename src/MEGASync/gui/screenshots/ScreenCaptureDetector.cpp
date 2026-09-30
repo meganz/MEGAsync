@@ -202,42 +202,81 @@ bool ScreenCaptureDetector::looksLikeScreenshot(const QString& fileName)
     // bytes: the build does not force a UTF-8 source charset on MSVC, so a
     // non-ASCII string literal would not survive every compiler. Add a locale
     // by adding one alternative.
+    //
+    // The words come from the OS strings themselves, not from memory: macOS
+    // screencaptureui's Localizable.loctable ("Screenshot") and gnome-shell's
+    // po files ("Screenshot From %s"). Several languages use a different word
+    // on each desktop, so both are listed. "." stands for one accented letter,
+    // which is a single code point only in NFC, hence the normalization below.
     static const QRegularExpression pattern(
-        QString::fromUtf8("^\\s*("
-                          "screen[ _-]?shot" // en (older macOS "Screen Shot")
-                          "|screen[ _-]?capture" // en variants
-                          "|screenclip" // Windows
-                          "|capture" // en, fr "Capture d'ecran"
-                          "|captura" // es, pt "Captura de pantalla"
-                          "|cattura" // it
-                          "|schermata" // it
-                          "|bildschirmfoto" // de
-                          "|schermafbeelding" // nl
-                          "|zrzut[ _-]?ekranu" // pl
-                          "|snimek[ _-]?obrazovky" // cs
-                          "|sk.rmbild" // sv "skarmbild"
-                          "|skjermbilde" // nb
-                          "|sk.rmbillede" // da
-                          "|n.ytt.kuva" // fi
-                          "|ekran[ _-]?g.r.nt.s." // tr
-                          "|k.perny.k.p" // hu
-                          // ru "Снимок экрана"
-                          "|\\x{0421}\\x{043d}\\x{0438}\\x{043c}\\x{043e}\\x{043a}"
-                          "[ _-]?\\x{044d}\\x{043a}\\x{0440}\\x{0430}\\x{043d}\\x{0430}"
-                          // uk "Знімок екрана"
-                          "|\\x{0417}\\x{043d}\\x{0456}\\x{043c}\\x{043e}\\x{043a}"
-                          "[ _-]?\\x{0435}\\x{043a}\\x{0440}\\x{0430}\\x{043d}\\x{0430}"
-                          // zh-Hans "屏幕截图", zh-Hant "螢幕截圖"
-                          "|\\x{5c4f}\\x{5e55}\\x{622a}\\x{56fe}"
-                          "|\\x{87a2}\\x{5e55}\\x{622a}\\x{5716}"
-                          // ja "スクリーンショット"
-                          "|\\x{30b9}\\x{30af}\\x{30ea}\\x{30fc}\\x{30f3}"
-                          "\\x{30b7}\\x{30e7}\\x{30c3}\\x{30c8}"
-                          // ko "스크린샷"
-                          "|\\x{c2a4}\\x{d06c}\\x{b9b0}\\x{c0f7}"
-                          ")"),
+        QString::fromUtf8(
+            "^\\s*("
+            "screen[ _-]?shot" // en (older macOS "Screen Shot")
+            "|screen[ _-]?capture" // en variants
+            "|screenclip" // Windows
+            "|capture(?!\\p{L})" // en, fr "Capture d'ecran"; not "captured"
+            "|captur[a\\x{103}](?!\\p{L})" // es, pt, ca; ro "Captura de ecran"; not "capturando"
+            "|cattura" // it
+            "|schermata" // it GNOME
+            "|bildschirmfoto" // de
+            "|scherm\\x{ad}?afbeelding" // nl macOS, with its soft hyphen
+            "|schermafdruk" // nl GNOME
+            "|zrzut[ _-]?ekranu" // pl
+            "|sn.m(ek|ka)[ _-]?obrazovky" // cs "Snimek", sk "Snimka"
+            "|sk.rm(av)?bild" // sv GNOME "Skarmbild", macOS "Skarmavbild"
+            "|skjermbilde" // nb
+            "|sk.rmbillede" // da
+            "|n.ytt.kuva" // fi macOS
+            "|kuvakaappaus" // fi GNOME
+            "|ekran[ _-]?(g.r.nt.s.|resmi)" // tr GNOME/Windows, macOS
+            "|k.perny.(k.p|fot.)" // hu GNOME, macOS
+            "|tangkapan[ _-]?(layar|skrin)" // id macOS, ms
+            "|cuplikan[ _-]?layar" // id GNOME
+            "|slika[ _-]?zaslona" // hr
+            "|posnetek[ _-]?zaslona" // sl
+            // vi macOS "Anh man hinh" / older "Anh chup Man hinh",
+            // GNOME "Chup man hinh"
+            "|(.nh( ch.p)?|ch.p)[ _-]?m.n[ _-]?h.nh"
+            // ru "Снимок экрана"
+            "|\\x{0421}\\x{043d}\\x{0438}\\x{043c}\\x{043e}\\x{043a}"
+            "[ _-]?\\x{044d}\\x{043a}\\x{0440}\\x{0430}\\x{043d}\\x{0430}"
+            // uk "Знімок екрана"
+            "|\\x{0417}\\x{043d}\\x{0456}\\x{043c}\\x{043e}\\x{043a}"
+            "[ _-]?\\x{0435}\\x{043a}\\x{0440}\\x{0430}\\x{043d}\\x{0430}"
+            // zh: macOS "截屏" (CN), "截圖" (TW), "螢幕截圖" (HK);
+            // GNOME "截图", "螢幕快照"; Windows "屏幕截图"
+            "|\\x{622a}(\\x{5c4f}|\\x{56fe}|\\x{5716})"
+            "|\\x{5c4f}\\x{5e55}\\x{622a}\\x{56fe}"
+            "|\\x{87a2}\\x{5e55}(\\x{622a}\\x{5716}|\\x{5feb}\\x{7167})"
+            // ja "スクリーンショット"
+            "|\\x{30b9}\\x{30af}\\x{30ea}\\x{30fc}\\x{30f3}"
+            "\\x{30b7}\\x{30e7}\\x{30c3}\\x{30c8}"
+            // ko "스크린샷"
+            "|\\x{c2a4}\\x{d06c}\\x{b9b0}\\x{c0f7}"
+            // ar macOS "لقطة الشاشة", elsewhere "لقطة شاشة"
+            "|\\x{0644}\\x{0642}\\x{0637}\\x{0629}[ _-]?(\\x{0627}\\x{0644})?"
+            "\\x{0634}\\x{0627}\\x{0634}\\x{0629}"
+            // he "צילום מסך"
+            "|\\x{05e6}\\x{05d9}\\x{05dc}\\x{05d5}\\x{05dd}"
+            "[ _-]?\\x{05de}\\x{05e1}\\x{05da}"
+            // el "Στιγμιότυπο οθόνης"
+            "|\\x{03a3}\\x{03c4}\\x{03b9}\\x{03b3}\\x{03bc}\\x{03b9}\\x{03cc}"
+            "\\x{03c4}\\x{03c5}\\x{03c0}\\x{03bf}[ _-]?"
+            "\\x{03bf}\\x{03b8}\\x{03cc}\\x{03bd}\\x{03b7}\\x{03c2}"
+            // hi "स्क्रीनशॉट"
+            "|\\x{0938}\\x{094d}\\x{0915}\\x{094d}\\x{0930}\\x{0940}"
+            "\\x{0928}\\x{0936}\\x{0949}\\x{091f}"
+            // th macOS "ภาพถ่ายหน้าจอ", GNOME "ภาพหน้าจอ"
+            "|\\x{0e20}\\x{0e32}\\x{0e1e}(\\x{0e16}\\x{0e48}\\x{0e32}\\x{0e22})?"
+            "\\x{0e2b}\\x{0e19}\\x{0e49}\\x{0e32}\\x{0e08}\\x{0e2d}"
+            ")"),
         QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
-    return pattern.match(fileName).hasMatch();
+
+    // macOS can hand out decomposed names (base letter + combining mark);
+    // fold them so an accented letter is one code point, as the pattern
+    // assumes. The soft hyphen in the Dutch name is not a combining mark and
+    // survives this, which is why the pattern allows it explicitly.
+    return pattern.match(fileName.normalized(QString::NormalizationForm_C)).hasMatch();
 }
 
 bool ScreenCaptureDetector::isTooBroadToWatch(const QString& directory)
