@@ -67,7 +67,9 @@ TEST_CASE_METHOD(ScreenCaptureDetectorTests, "looksLikeScreenshot() accepts OS c
     accepts("Bildschirmfoto vom 2026-06-10 14-05-33.png"); // de
     accepts("Schermafbeelding 2026-06-10 om 14.05.33.png"); // nl
     accepts("Zrzut ekranu z 2026-06-10 14-05-33.png"); // pl
-    accepts("Schermata 2026-06-10 alle 14.05.33.png"); // it
+    accepts("Schermata 2026-06-10 alle 14.05.33.png"); // it GNOME
+    accepts("Istantanea schermo 2023-06-10 alle 14.05.33.png"); // it, macOS before Sequoia
+    accepts("Screenshot 2026-06-10 alle 14.05.33.png"); // it, current macOS
     accepts("Sk\xC3\xA4rmbild 2026-06-10 kl. 14.05.33.png"); // sv
     accepts("N\xC3\xA4ytt\xC3\xB6kuva 2026-06-10 klo 14.05.33.png"); // fi
     accepts("Ekran g\xC3\xB6r\xC3\xBCnt\xC3\xBCs\xC3\xBC 2026-06-10.png"); // tr
@@ -80,6 +82,68 @@ TEST_CASE_METHOD(ScreenCaptureDetectorTests, "looksLikeScreenshot() accepts OS c
     accepts("\xE3\x82\xB9\xE3\x82\xAF\xE3\x83\xAA\xE3\x83\xBC\xE3\x83\xB3"
             "\xE3\x82\xB7\xE3\x83\xA7\xE3\x83\x83\xE3\x83\x88 2026.png"); // ja
     accepts("\xEC\x8A\xA4\xED\x81\xAC\xEB\xA6\xB0\xEC\x83\xB7 2026.png"); // ko
+
+    // Names verified against the OS strings (macOS screencaptureui
+    // Localizable.loctable, gnome-shell po files). Where the two desktops use
+    // different words both are covered. Hex escapes are split from a following
+    // hex-digit letter ("\xAD" "afbeelding") so the compiler does not swallow it.
+    accepts("Scherm\xC2\xAD"
+            "afbeelding 2026-06-10 om 14.05.33.png"); // nl macOS, soft hyphen
+    accepts("Schermafdruk van 2026-06-10 14-05-33.png"); // nl GNOME
+    accepts("Ekran Resmi 2026-06-10 14.05.33.png"); // tr macOS
+    accepts("Captur\xC4\x83 de ecran 2026-06-10 la 14.05.33.png"); // ro macOS
+    accepts("Sn\xC3\xADmek obrazovky 2026-06-10 v 14.05.33.png"); // cs macOS/GNOME
+    accepts("Sn\xC3\xADmka obrazovky 2026-06-10 o 14.05.33.png"); // sk macOS
+    accepts("Sk\xC3\xA4rmavbild 2026-06-10 kl. 14.05.33.png"); // sv macOS
+    accepts("K\xC3\xA9perny\xC5\x91"
+            "fot\xC3\xB3 2026-06-10 14.05.33.png"); // hu macOS
+    accepts("K\xC3\xA9perny\xC5\x91k\xC3\xA9p 2026-06-10 14-05-33.png"); // hu GNOME
+    accepts("Kuvakaappaus - 2026-06-10 14-05-33.png"); // fi GNOME
+    accepts("Tangkapan Layar 2026-06-10 pukul 14.05.33.png"); // id macOS
+    accepts("Cuplikan Layar Dari 2026-06-10 14-05-33.png"); // id GNOME
+    accepts("Tangkapan Skrin 2026-06-10 14.05.33.png"); // ms macOS
+    accepts("Slika zaslona 2026-06-10 u 14.05.33.png"); // hr macOS
+    accepts("Posnetek zaslona 2026-06-10 ob 14.05.33.png"); // sl macOS
+    accepts("\xE1\xBA\xA2nh m\xC3\xA0n h\xC3\xACnh 2026-06-10 l\xC3\xBA"
+            "c "
+            "14.05.33.png"); // vi macOS
+    accepts(
+        "\xE1\xBA\xA2nh ch\xE1\xBB\xA5p M\xC3\xA0n h\xC3\xACnh 2026-06-10.png"); // vi older macOS
+    accepts("Ch\xE1\xBB\xA5p m\xC3\xA0n h\xC3\xACnh t\xE1\xBB\xAB 2026-06-10 "
+            "14-05-33.png"); // vi GNOME
+    accepts("\xE6\x88\xAA\xE5\xB1\x8F"
+            "2026-06-10 14.05.33.png"); // zh_CN macOS
+    accepts("\xE6\x88\xAA\xE5\x9B\xBE 2026-06-10 14-05-33.png"); // zh_CN GNOME
+    accepts("\xE6\x88\xAA\xE5\x9C\x96 2026-06-10 14.05.33.png"); // zh_TW macOS
+    accepts("\xE8\x9E\xA2\xE5\xB9\x95\xE5\xBF\xAB\xE7\x85\xA7 2026-06-10 "
+            "14-05-33.png"); // zh_TW GNOME
+    accepts("\xD9\x84\xD9\x82\xD8\xB7\xD8\xA9 "
+            "\xD8\xA7\xD9\x84\xD8\xB4\xD8\xA7\xD8\xB4\xD8\xA9 "
+            "\xD9\xA2\xD9\xA0\xD9\xA2\xD9\xA6-\xD9\xA0\xD9\xA6-\xD9\xA1\xD9\xA0.png"); // ar macOS
+    accepts("\xD9\x84\xD9\x82\xD8\xB7\xD8\xA9 \xD8\xB4\xD8\xA7\xD8\xB4\xD8\xA9 "
+            "2026-06-10.png"); // ar without the article
+    accepts("\xD7\xA6\xD7\x99\xD7\x9C\xD7\x95\xD7\x9D \xD7\x9E\xD7\xA1\xD7\x9A "
+            "2026-06-10.png"); // he
+    accepts(
+        "\xCE\xA3\xCF\x84\xCE\xB9\xCE\xB3\xCE\xBC\xCE\xB9\xCF\x8C\xCF\x84\xCF\x85\xCF\x80\xCE\xBF "
+        "\xCE\xBF\xCE\xB8\xCF\x8C\xCE\xBD\xCE\xB7\xCF\x82 2026-06-10.png"); // el macOS
+    accepts(
+        "\xCE\xA3\xCF\x84\xCE\xB9\xCE\xB3\xCE\xBC\xCE\xB9\xCF\x8C\xCF\x84\xCF\x85\xCF\x80\xCE\xBF "
+        "\xCE\x9F\xCE\xB8\xCF\x8C\xCE\xBD\xCE\xB7\xCF\x82 "
+        "\xCE\xB1\xCF\x80\xCF\x8C 2026-06-10.png"); // el GNOME (capital Omicron)
+    accepts("\xE0\xA4\xB8\xE0\xA5\x8D\xE0\xA4\x95\xE0\xA5\x8D\xE0\xA4\xB0\xE0\xA5\x80\xE0\xA4\xA8"
+            "\xE0\xA4\xB6\xE0\xA5\x89\xE0\xA4\x9F "
+            "2026-06-10.png"); // hi macOS
+    accepts("\xE0\xB8\xA0\xE0\xB8\xB2\xE0\xB8\x9E\xE0\xB8\x96\xE0\xB9\x88\xE0\xB8\xB2\xE0\xB8\xA2"
+            "\xE0\xB8\xAB\xE0\xB8\x99\xE0\xB9\x89\xE0\xB8\xB2\xE0\xB8\x88\xE0\xB8\xAD "
+            "2026-06-10.png"); // th macOS
+    accepts("\xE0\xB8\xA0\xE0\xB8\xB2\xE0\xB8\x9E\xE0\xB8\xAB\xE0\xB8\x99\xE0\xB9\x89\xE0\xB8\xB2"
+            "\xE0\xB8\x88\xE0\xB8\xAD\xE0\xB8\x88\xE0\xB8\xB2\xE0\xB8\x81 "
+            "2026-06-10.png"); // th GNOME
+
+    // HFS+ stores names decomposed (base letter + combining mark); the
+    // detector must fold them before matching.
+    accepts("Na\xCC\x88ytto\xCC\x88kuva 2026-06-10 klo 14.05.33.png"); // fi, NFD
 }
 
 TEST_CASE_METHOD(ScreenCaptureDetectorTests, "looksLikeScreenshot() rejects the user's own files")
@@ -99,6 +163,14 @@ TEST_CASE_METHOD(ScreenCaptureDetectorTests, "looksLikeScreenshot() rejects the 
     rejects("family_capture.jpg");
     rejects("recaptured moment.png");
     rejects("photo-captura-familia.jpg");
+
+    // The capture word must be the whole word: "capture" and "captur[a]" are
+    // prefixes of ordinary English/Spanish words.
+    rejects("captured moment.png");
+    rejects("captures de boda.jpg");
+    rejects("capturando el momento.png");
+    rejects("catturato.jpg");
+    rejects("schermate del gioco.png");
 
     // The capture word must be at the START of the name, not merely present.
     rejects("my screenshot of the dog.jpg");
