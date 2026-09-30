@@ -4803,7 +4803,7 @@ void MegaApplication::uploadScreenshot(const QString& fileName,
         {
             DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog,
                                                                        false,
-                                                                       nullptr);
+                                                                       std::function<void()>());
         }
     }
 }
