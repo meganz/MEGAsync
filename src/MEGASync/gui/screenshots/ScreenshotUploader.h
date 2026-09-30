@@ -67,8 +67,9 @@ signals:
     void uploadProgress(QString filename, long long currentTransfered, long long totalTransfered);
     void uploadFinished(mega::MegaHandle nodeHandle);
     void uploadFailed(ScreenshotUploader::Error error, const QString& message);
-    // The SDK is retrying (typically connectivity loss). The transfer is
-    // still alive; it resumes automatically when the network is back.
+    // The SDK is retrying after a connectivity loss. The transfer is still
+    // alive; it resumes automatically when the network is back. Not emitted
+    // for storage over quota: that transfer is dropped from tracking instead.
     void waitingForConnection();
 
 private:

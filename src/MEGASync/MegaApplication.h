@@ -372,9 +372,9 @@ protected:
                                 QWidget* caller = nullptr);
     // Tells the screenshot flow that a capture queued for upload will not get a
     // transfer after all -- the conflict dialog was cancelled or resolved as
-    // "don't upload", the destination was invalid, a dialog was replaced out
-    // from under it, or the account is over quota -- so its uploader can free
-    // the in-flight slot. Always silent: every caller either acted on the
+    // "don't upload", the destination was invalid, or a dialog was replaced out
+    // from under it -- so its uploader can free the in-flight slot. Always
+    // silent: every caller either acted on the
     // user's own choice or has already reported the problem itself.
     void notifyCaptureUploadsSkipped();
     void processDownloadQueue(QString path);

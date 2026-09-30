@@ -4794,33 +4794,32 @@ void MegaApplication::uploadScreenshot(const QString& fileName,
         return;
     }
 
+    // Dedicated queue, never the shared mUploadQueue: keeps automatic captures
+    // from colliding with a user's in-flight manual upload.
+    //
+    // Queued even when the account is over quota, like any manual upload: the
+    // SDK parks the transfer ("Out of storage space" in the Transfer Manager)
+    // and resumes it on its own once there is space again.
+    mScreenshotUploadQueue.enqueue({fileName, MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE});
+    processUploadQueueImpl(mScreenshotUploadQueue, targetFolderHandle);
+
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED ||
                                   storageState == MegaApi::STORAGE_STATE_PAYWALL);
     if (storageIsOverQuota)
     {
-        // No upsell dialog from here. This path runs because the user pressed
-        // PrtScn, not because they asked to upload anything, and a modal over
-        // the screen they were capturing is the wrong response to a background
-        // event. It also cannot succeed: the upload would fail on quota.
-        //
-        // Nothing is hidden from the user by skipping -- applyStorageState()
-        // already raises the over-quota dialog on its own (rate-limited by
-        // OQ_DIALOG_INTERVAL_MS) and puts the info dialog into over-quota mode
-        // when the account enters RED or PAYWALL.
-        //
-        // Skipping also removes the reason the previous version needed a
-        // destroyed() fallback here: there is no continuation left to lose, and
-        // no dialog that DialogOpener could replace out from under one.
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
-                     "Screenshot upload skipped: account is over storage quota");
-        notifyCaptureUploadsSkipped();
-        return;
+        // Same informative dialog as a manual upload, with the same 12h
+        // rate-limit (createDialogIfNeeded). Shown after queueing rather than
+        // chained to its close: DialogOpener replaces a same-class sibling
+        // without emitting finished(), which would otherwise drop the capture.
+        auto overQuotaDialog =
+            OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_UPLOAD);
+        if (overQuotaDialog)
+        {
+            DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog,
+                                                                       false,
+                                                                       std::function<void()>());
+        }
     }
-
-    // Dedicated queue, never the shared mUploadQueue: keeps automatic captures
-    // from colliding with a user's in-flight manual upload.
-    mScreenshotUploadQueue.enqueue({fileName, MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE});
-    processUploadQueueImpl(mScreenshotUploadQueue, targetFolderHandle);
 }
 
 void MegaApplication::uploadActionFromWindowAfterOverQuotaCheck()

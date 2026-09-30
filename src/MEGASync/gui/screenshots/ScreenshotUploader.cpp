@@ -267,16 +267,33 @@ void ScreenshotUploader::onTransferTemporaryError(MegaApi*,
                                                   MegaTransfer* transfer,
                                                   MegaError* error)
 {
-    // Connectivity drops surface here (the SDK keeps retrying with backoff
-    // and resumes the transfer when the network returns). Let the UI show a
-    // "waiting for connection" state instead of failing.
-    Q_UNUSED(error)
-
     if (!isCurrentTransfer(transfer))
     {
         return;
     }
 
+    const int code = error->getErrorCode();
+    if (code == MegaError::API_EOVERQUOTA || code == MegaError::API_EPAYWALL)
+    {
+        // Storage over quota: the SDK keeps the upload parked and resumes it
+        // on its own once the account has space again, possibly days later.
+        // Stop tracking it now. Holding the slot would park every later
+        // capture in this in-memory queue instead of the SDK's persistent
+        // one, and a link copied when it finally completes would overwrite
+        // the clipboard out of context.
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     QString::fromUtf8("Screenshot upload parked by the SDK (storage over "
+                                       "quota), no longer tracked: %1")
+                         .arg(mLocalPath)
+                         .toUtf8()
+                         .constData());
+        skipCurrent();
+        return;
+    }
+
+    // Connectivity drops surface here (the SDK keeps retrying with backoff
+    // and resumes the transfer when the network returns). Let the UI show a
+    // "waiting for connection" state instead of failing.
     emit waitingForConnection();
 }
 

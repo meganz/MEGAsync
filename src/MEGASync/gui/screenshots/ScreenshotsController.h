@@ -27,9 +27,9 @@ public:
     void refresh();
     void enableClipboardCopyScreenshotLink(bool enabled);
     // Called by MegaApplication when a queued capture will not get a transfer
-    // after all: the user declined it, the destination was unusable, or the
-    // account is over quota. Unblocks the uploader without reporting an error --
-    // nothing failed, and the capture is still on disk.
+    // after all: the user declined it or the destination was unusable. Unblocks
+    // the uploader without reporting an error -- nothing failed, and the
+    // capture is still on disk.
     void onCaptureUploadSkipped();
     // Called by ScreenshotComponent when the user accepts the one-time enable
     // offer: turns the setting on, uploads the capture that triggered the
