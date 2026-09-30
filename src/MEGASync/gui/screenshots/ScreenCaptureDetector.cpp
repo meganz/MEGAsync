@@ -216,8 +216,10 @@ bool ScreenCaptureDetector::looksLikeScreenshot(const QString& fileName)
             "|screenclip" // Windows
             "|capture(?!\\p{L})" // en, fr "Capture d'ecran"; not "captured"
             "|captur[a\\x{103}](?!\\p{L})" // es, pt, ca; ro "Captura de ecran"; not "capturando"
-            "|cattura" // it
-            "|schermata" // it GNOME
+            "|cattura(?!\\p{L})" // it; not "catturato"
+            "|schermata(?!\\p{L})" // it GNOME "Schermata del"; not "schermate"
+            // it macOS before Sequoia (current macOS writes "Screenshot")
+            "|istantanea[ _-]?schermo"
             "|bildschirmfoto" // de
             "|scherm\\x{ad}?afbeelding" // nl macOS, with its soft hyphen
             "|schermafdruk" // nl GNOME

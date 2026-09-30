@@ -67,7 +67,9 @@ TEST_CASE_METHOD(ScreenCaptureDetectorTests, "looksLikeScreenshot() accepts OS c
     accepts("Bildschirmfoto vom 2026-06-10 14-05-33.png"); // de
     accepts("Schermafbeelding 2026-06-10 om 14.05.33.png"); // nl
     accepts("Zrzut ekranu z 2026-06-10 14-05-33.png"); // pl
-    accepts("Schermata 2026-06-10 alle 14.05.33.png"); // it
+    accepts("Schermata 2026-06-10 alle 14.05.33.png"); // it GNOME
+    accepts("Istantanea schermo 2023-06-10 alle 14.05.33.png"); // it, macOS before Sequoia
+    accepts("Screenshot 2026-06-10 alle 14.05.33.png"); // it, current macOS
     accepts("Sk\xC3\xA4rmbild 2026-06-10 kl. 14.05.33.png"); // sv
     accepts("N\xC3\xA4ytt\xC3\xB6kuva 2026-06-10 klo 14.05.33.png"); // fi
     accepts("Ekran g\xC3\xB6r\xC3\xBCnt\xC3\xBCs\xC3\xBC 2026-06-10.png"); // tr
@@ -167,6 +169,8 @@ TEST_CASE_METHOD(ScreenCaptureDetectorTests, "looksLikeScreenshot() rejects the 
     rejects("captured moment.png");
     rejects("captures de boda.jpg");
     rejects("capturando el momento.png");
+    rejects("catturato.jpg");
+    rejects("schermate del gioco.png");
 
     // The capture word must be at the START of the name, not merely present.
     rejects("my screenshot of the dog.jpg");
