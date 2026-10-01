@@ -44,7 +44,8 @@ public:
     // sequential); once the SDK has created a capture's transfer it is tracked
     // by tag and the next capture is handed over, so any number can be in
     // flight -- all visible in the Transfer Manager and persisted by the SDK,
-    // paused or not. Each one reports via uploadFinished() or uploadFailed().
+    // paused or not. Each one reports via uploadFinished() or uploadFailed(),
+    // except a transfer the user cancelled, which reports nothing.
     void upload(const QString& localPath);
     // True while a capture is between detection and SDK hand-over.
     bool isBusy() const;

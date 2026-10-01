@@ -247,6 +247,17 @@ void ScreenshotUploader::onTransferFinish(MegaApi*, MegaTransfer* transfer, Mega
         return;
     }
 
+    // Cancelled by the user, e.g. from the Transfer Manager. The SDK finishes it
+    // as STATE_CANCELLED + API_EINCOMPLETE; that is not a failure, so nothing
+    // is reported.
+    if (transfer->getState() == MegaTransfer::STATE_CANCELLED)
+    {
+        MegaApi::log(
+            MegaApi::LOG_LEVEL_INFO,
+            QString::fromUtf8("Screenshot upload cancelled: %1").arg(path).toUtf8().constData());
+        return;
+    }
+
     // Outcome of a transfer the SDK already owned: report it, but leave the
     // hand-over slot alone -- it may be busy with a later capture.
     if (isAuthError(error->getErrorCode()))
