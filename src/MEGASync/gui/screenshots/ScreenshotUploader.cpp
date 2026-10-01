@@ -26,9 +26,10 @@ ScreenshotUploader::ScreenshotUploader(MegaApi* megaApi, QObject* parent):
 
 void ScreenshotUploader::upload(const QString& localPath)
 {
-    if ((mBusy && mLocalPath == localPath) || mQueue.contains(localPath))
+    if ((mBusy && mLocalPath == localPath) || mQueue.contains(localPath) ||
+        mTrackedTransfers.key(localPath, -1) != -1)
     {
-        return; // already uploading or queued
+        return; // already handed over, in flight or queued
     }
 
     if (mBusy)
@@ -66,7 +67,6 @@ void ScreenshotUploader::startUploadFor(const QString& localPath)
 
     mBusy = true;
     mLocalPath = localPath;
-    mCurrentTag.reset();
     mTargetFolderHandle = INVALID_HANDLE;
     ensureRemoteFolderAndUpload();
 }
@@ -79,9 +79,9 @@ bool ScreenshotUploader::isBusy() const
 void ScreenshotUploader::reset()
 {
     mQueue.clear();
+    mTrackedTransfers.clear();
     mBusy = false;
     mLocalPath.clear();
-    mCurrentTag.reset();
     mTargetFolderHandle = INVALID_HANDLE;
 }
 
@@ -92,9 +92,13 @@ void ScreenshotUploader::skipCurrent()
         return;
     }
 
+    releaseSlot();
+}
+
+void ScreenshotUploader::releaseSlot()
+{
     mBusy = false;
     mLocalPath.clear();
-    mCurrentTag.reset();
     mTargetFolderHandle = INVALID_HANDLE;
     processNextInQueue();
 }
@@ -194,64 +198,84 @@ bool ScreenshotUploader::matchesPendingCapture(MegaTransfer* transfer) const
 
 void ScreenshotUploader::onTransferStart(MegaApi*, MegaTransfer* transfer)
 {
-    if (mCurrentTag.has_value() || !matchesPendingCapture(transfer))
+    if (!matchesPendingCapture(transfer))
     {
         return;
     }
 
-    // Latch the tag: it is the transfer's stable identity for the rest of its
-    // life, which the local path is not (see isCurrentTransfer).
-    mCurrentTag = transfer->getTag();
+    // The SDK owns the capture from here: its transfer is created, persisted
+    // and visible in the Transfer Manager, and it honours pause/resume on its
+    // own. Track it by tag (its stable identity, which the local path is not)
+    // and hand the next capture over right away. Holding the slot until the
+    // transfer finished parked every later capture in this in-memory queue --
+    // invisible, uncancellable and lost on restart -- for as long as the user
+    // kept transfers paused.
+    mTrackedTransfers.insert(transfer->getTag(), mLocalPath);
+    releaseSlot();
 }
 
-bool ScreenshotUploader::isCurrentTransfer(MegaTransfer* transfer) const
+QString ScreenshotUploader::trackedPath(MegaTransfer* transfer) const
 {
-    if (!mBusy || !transfer)
+    if (!transfer)
     {
-        return false;
+        return QString();
     }
 
-    if (mCurrentTag.has_value())
-    {
-        return transfer->getTag() == *mCurrentTag;
-    }
-
-    // No tag latched (onTransferStart not seen for this transfer): fall back to
-    // the identity checks so the capture still completes instead of wedging the
-    // queue on a permanently busy slot.
-    return matchesPendingCapture(transfer);
+    return mTrackedTransfers.value(transfer->getTag());
 }
 
 void ScreenshotUploader::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaError* error)
 {
-    if (isCurrentTransfer(transfer))
+    if (matchesPendingCapture(transfer))
     {
-        if (error->getErrorCode() == MegaError::API_OK)
-        {
-            const auto uploadedNode = transfer->getNodeHandle();
-            mBusy = false;
-            mCurrentTag.reset();
-            mTargetFolderHandle = INVALID_HANDLE;
-            emit uploadFinished(uploadedNode);
-            processNextInQueue();
-            return;
-        }
-
-        if (isAuthError(error->getErrorCode()))
-        {
-            fail(Error::AuthExpired,
-                 QCoreApplication::translate("ScreenshotUploader",
-                                             "Your session has expired. Please log in again"));
-            return;
-        }
-
-        fail(Error::TransferFailed, QString::fromUtf8(error->getErrorString()));
+        // Finished before its start was seen: adopt it so the slot is not
+        // wedged on a transfer that no longer exists.
+        mTrackedTransfers.insert(transfer->getTag(), mLocalPath);
+        releaseSlot();
     }
+
+    const QString path = trackedPath(transfer);
+    if (path.isEmpty())
+    {
+        return;
+    }
+    mTrackedTransfers.remove(transfer->getTag());
+
+    if (error->getErrorCode() == MegaError::API_OK)
+    {
+        emit uploadFinished(transfer->getNodeHandle());
+        return;
+    }
+
+    // Cancelled by the user, e.g. from the Transfer Manager. The SDK finishes it
+    // as STATE_CANCELLED + API_EINCOMPLETE; that is not a failure, so nothing
+    // is reported.
+    if (transfer->getState() == MegaTransfer::STATE_CANCELLED)
+    {
+        MegaApi::log(
+            MegaApi::LOG_LEVEL_INFO,
+            QString::fromUtf8("Screenshot upload cancelled: %1").arg(path).toUtf8().constData());
+        return;
+    }
+
+    // Outcome of a transfer the SDK already owned: report it, but leave the
+    // hand-over slot alone -- it may be busy with a later capture.
+    if (isAuthError(error->getErrorCode()))
+    {
+        emit uploadFailed(
+            Error::AuthExpired,
+            QCoreApplication::translate("ScreenshotUploader",
+                                        "Your session has expired. Please log in again"));
+        return;
+    }
+
+    emit uploadFailed(Error::TransferFailed, QString::fromUtf8(error->getErrorString()));
 }
 
 void ScreenshotUploader::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
-    if (!isCurrentTransfer(transfer))
+    const QString path = trackedPath(transfer);
+    if (path.isEmpty())
     {
         return;
     }
@@ -259,7 +283,7 @@ void ScreenshotUploader::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     const auto total = transfer->getTotalBytes();
     if (total > 0)
     {
-        emit uploadProgress(mLocalPath, transfer->getTransferredBytes(), total);
+        emit uploadProgress(path, transfer->getTransferredBytes(), total);
     }
 }
 
@@ -267,7 +291,8 @@ void ScreenshotUploader::onTransferTemporaryError(MegaApi*,
                                                   MegaTransfer* transfer,
                                                   MegaError* error)
 {
-    if (!isCurrentTransfer(transfer))
+    const QString path = trackedPath(transfer);
+    if (path.isEmpty())
     {
         return;
     }
@@ -277,17 +302,15 @@ void ScreenshotUploader::onTransferTemporaryError(MegaApi*,
     {
         // Storage over quota: the SDK keeps the upload parked and resumes it
         // on its own once the account has space again, possibly days later.
-        // Stop tracking it now. Holding the slot would park every later
-        // capture in this in-memory queue instead of the SDK's persistent
-        // one, and a link copied when it finally completes would overwrite
-        // the clipboard out of context.
+        // Stop tracking it: a link copied when it finally completes would
+        // overwrite the clipboard out of context.
         MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                      QString::fromUtf8("Screenshot upload parked by the SDK (storage over "
                                        "quota), no longer tracked: %1")
-                         .arg(mLocalPath)
+                         .arg(path)
                          .toUtf8()
                          .constData());
-        skipCurrent();
+        mTrackedTransfers.remove(transfer->getTag());
         return;
     }
 
@@ -300,7 +323,7 @@ void ScreenshotUploader::onTransferTemporaryError(MegaApi*,
 void ScreenshotUploader::fail(Error error, const QString& message)
 {
     mBusy = false;
-    mCurrentTag.reset();
+    mLocalPath.clear();
     mTargetFolderHandle = INVALID_HANDLE;
     emit uploadFailed(error, message);
     processNextInQueue();
