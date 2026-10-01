@@ -61,6 +61,11 @@ public:
     // to tell the user report it themselves.
     void skipCurrent();
 
+    // True if the path the SDK reports for a transfer (MegaTransfer::getPath())
+    // names the same file as a local path obtained through Qt. The two need not
+    // be the same string; see the definition. Public for the unit tests.
+    static bool isSameLocalPath(const QString& localPath, const char* transferPath);
+
     static inline const char* REMOTE_FOLDER_NAME = "Screenshots";
 
 signals:

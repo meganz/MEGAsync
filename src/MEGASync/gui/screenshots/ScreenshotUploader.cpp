@@ -189,7 +189,26 @@ bool ScreenshotUploader::matchesPendingCapture(MegaTransfer* transfer) const
 
     // Same file, going into the folder we resolved for this capture.
     return transfer->getParentHandle() == mTargetFolderHandle &&
-           mLocalPath == QString::fromUtf8(transfer->getPath());
+           isSameLocalPath(mLocalPath, transfer->getPath());
+}
+
+bool ScreenshotUploader::isSameLocalPath(const QString& localPath, const char* transferPath)
+{
+    if (!transferPath)
+    {
+        return false;
+    }
+
+    // The SDK does not hand back the string it was given: it keeps local paths
+    // in the file system's own form, which on macOS is the decomposed (NFD)
+    // one, while Qt reports file names precomposed (NFC). A capture name with
+    // an accented letter or Hangul -- what macOS writes for French, Portuguese,
+    // Czech, Swedish or Korean users, among others -- is then a different
+    // string on each side. Compared exactly, such a capture's transfer was
+    // never recognized: its upload slot stayed taken and every later capture
+    // queued behind it for the rest of the session.
+    return localPath.normalized(QString::NormalizationForm_C) ==
+           QString::fromUtf8(transferPath).normalized(QString::NormalizationForm_C);
 }
 
 void ScreenshotUploader::onTransferStart(MegaApi*, MegaTransfer* transfer)
