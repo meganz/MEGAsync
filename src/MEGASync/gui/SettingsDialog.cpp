@@ -1516,8 +1516,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
                 QString fPath = dialog->getPath();
                 if (!fPath.isEmpty())
                 {
-                    QTemporaryFile test(fPath + QDir::separator());
-                    if (test.open())
+                    if (Utilities::isLocalFolderWritable(fPath))
                     {
                         mHasDefaultDownloadOption = dialog->isDefaultDownloadOption();
                         mUi->eDownloadFolder->setText(fPath);

@@ -510,6 +510,11 @@ public:
     static void openBackupCenter();
 
     static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
+
+    // True if a new file can be created inside `path`. The check is done by actually creating
+    // (and removing) a temporary file, so it reflects the effective permissions rather than the
+    // ones reported by the filesystem. `path` may use either native or '/' separators.
+    static bool isLocalFolderWritable(const QString& path);
     static const QString getPlatformProps(const QString sourceStyleSheet);
 
     static bool isIncommingShare(mega::MegaNode* node);
