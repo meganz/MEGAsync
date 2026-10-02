@@ -26,6 +26,10 @@ bool AbstractPlatform::enableTrayIcon(QString /*executable*/)
 
 void AbstractPlatform::unHideTrayIcon() {}
 
+void AbstractPlatform::adoptTrayIconExpandedInterface() {}
+
+void AbstractPlatform::setTrayPrimaryActionHandler(std::function<void()>) {}
+
 bool AbstractPlatform::isTilingWindowManager()
 {
     return false;

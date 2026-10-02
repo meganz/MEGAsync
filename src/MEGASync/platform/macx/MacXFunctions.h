@@ -5,6 +5,8 @@
 #include <QStringList>
 #include <QWidget>
 
+#include <functional>
+
 #import <objc/runtime.h>
 
 Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
@@ -30,6 +32,8 @@ void selectorsImpl(QString uploadTitle, QString defaultDir, bool multiSelection,
 void raiseFileSelectionPanels();
 void closeFileSelectionPanels(QWidget* parent);
 void applyThemeToFrameWindow(QWindow* window, bool darkFrame, bool lockContent);
+void adoptStatusItemExpandedInterface();
+void setStatusItemPrimaryActionHandler(std::function<void()> handler);
 
 static NSOpenPanel *panel = nullptr;
 

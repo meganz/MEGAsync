@@ -10,6 +10,7 @@
 #include <QWindow>
 
 #import <objc/runtime.h>
+#import <objc/message.h>
 #import <sys/proc_info.h>
 #import <libproc.h>
 
@@ -569,4 +570,148 @@ if (!window) return;
         [win invalidateShadow];
         [win displayIfNeeded];
     }
+}
+
+namespace
+{
+NSStatusBarButton* findStatusBarButton(NSView* view)
+{
+    if (!view)
+    {
+        return nil;
+    }
+
+    if ([view isKindOfClass:[NSStatusBarButton class]])
+    {
+        return (NSStatusBarButton*)view;
+    }
+
+    for (NSView* subview in view.subviews)
+    {
+        if (NSStatusBarButton* button = findStatusBarButton(subview))
+        {
+            return button;
+        }
+    }
+
+    return nil;
+}
+
+// Qt owns the NSStatusItem and never exposes it, so it is reached through the button.
+id statusItemForButton(NSStatusBarButton* button)
+{
+    using MsgSendId = id (*)(id, SEL);
+    SEL itemSel = NSSelectorFromString(@"_statusItem");
+    if (!button || ![button respondsToSelector:itemSel])
+    {
+        return nil;
+    }
+    return ((MsgSendId)objc_msgSend)(button, itemSel);
+}
+
+id currentStatusItem()
+{
+    for (NSWindow* window in NSApp.windows)
+    {
+        if (NSStatusBarButton* button = findStatusBarButton(window.contentView))
+        {
+            return statusItemForButton(button);
+        }
+    }
+    return nil;
+}
+
+// Hand the status item back to AppKit. While a session is open the item stays in menu bar
+// keyboard navigation, which swallows Return for every window in the app.
+void releaseExpandedSession()
+{
+    using MsgSendId = id (*)(id, SEL);
+    using MsgSendVoid = void (*)(id, SEL);
+
+    id item = currentStatusItem();
+    SEL sessionSel = NSSelectorFromString(@"expandedInterfaceSession");
+    if (!item || ![item respondsToSelector:sessionSel])
+    {
+        return;
+    }
+
+    id session = ((MsgSendId)objc_msgSend)(item, sessionSel);
+    SEL cancelSel = NSSelectorFromString(@"cancel");
+    if (session && [session respondsToSelector:cancelSel])
+    {
+        ((MsgSendVoid)objc_msgSend)(session, cancelSel);
+    }
+}
+
+std::function<void()> gPrimaryActionHandler;
+}
+
+// macOS 27 presents a status item's panel through expanded-interface callbacks rather than the
+// button's target/action (see NSStatusItem.h and TN3212), and keeps the item in menu bar
+// keyboard navigation for as long as the session lasts. Qt registers no delegate, so the click
+// arrives as a synthesized mouse event and nothing ever ends the session: from the first click
+// onwards Return is swallowed before it reaches any of our windows.
+//
+// The Info Dialog manages its own lifetime (it hides itself when it loses focus), so rather
+// than mirroring that back to AppKit we take the callback purely as "the item was activated"
+// and release the session immediately.
+@interface MEGAStatusItemExpandedDelegate: NSObject
+@end
+
+@implementation MEGAStatusItemExpandedDelegate
+
+- (void)statusItem:(id)statusItem didBeginExpandedInterfaceSession:(id)session
+{
+    if (gPrimaryActionHandler)
+    {
+        gPrimaryActionHandler();
+    }
+
+    // Deferred: cancelling from inside the callback would re-enter AppKit's own teardown.
+    dispatch_async(dispatch_get_main_queue(),
+                   ^{
+                       releaseExpandedSession();
+                   });
+}
+
+- (void)statusItemDidEndExpandedInterfaceSession:(id)statusItem animated:(BOOL)animated
+{
+    // Required by the protocol, but there is nothing to do: the session is released as soon as
+    // it begins, and the dialog's visibility is toggled by the handler above.
+}
+
+@end
+
+void setStatusItemPrimaryActionHandler(std::function<void()> handler)
+{
+    gPrimaryActionHandler = std::move(handler);
+}
+
+void adoptStatusItemExpandedInterface()
+{
+    static MEGAStatusItemExpandedDelegate* delegate = nil;
+    static bool unavailable = false;
+
+    if (delegate || unavailable)
+    {
+        return;
+    }
+
+    id item = currentStatusItem();
+    if (!item)
+    {
+        return; // the native item does not exist yet; retried on the next show()
+    }
+
+    SEL setSel = NSSelectorFromString(@"setExpandedInterfaceDelegate:");
+    if (![item respondsToSelector:setSel])
+    {
+        unavailable = true; // before macOS 27; the target/action path still applies
+        return;
+    }
+
+    delegate = [[MEGAStatusItemExpandedDelegate alloc] init];
+
+    using MsgSendObj = void (*)(id, SEL, id);
+    ((MsgSendObj)objc_msgSend)(item, setSel, delegate);
 }

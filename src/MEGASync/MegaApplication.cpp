@@ -5070,6 +5070,17 @@ void MegaApplication::createTrayIcon()
                 &TrayIconManager::activated,
                 this,
                 &MegaApplication::trayIconActivated);
+
+        // On macOS 27 the status item reports its primary action through the expanded-interface
+        // callbacks instead of the button's action, so Qt never emits activated() for a left
+        // click. Route it into the same slot, so the login state, account-blocked handling and
+        // stats are all preserved. Right click still arrives through Qt as Context.
+        // A no-op on other platforms and on earlier macOS.
+        Platform::getInstance()->setTrayPrimaryActionHandler(
+            [this]()
+            {
+                trayIconActivated(QSystemTrayIcon::Trigger);
+            });
     }
 
     updateTrayIconMenu();

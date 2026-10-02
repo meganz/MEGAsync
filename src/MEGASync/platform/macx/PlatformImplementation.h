@@ -40,6 +40,9 @@ public:
     void raiseFileFolderSelectors() override;
     void closeFileFolderSelectors(QWidget* parent) override;
 
+    void adoptTrayIconExpandedInterface() override;
+    void setTrayPrimaryActionHandler(std::function<void()> handler) override;
+
     void addFileManagerExtensionToSystem() override;
     void enableFileManagerExtension(bool value) override;
 
