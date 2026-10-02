@@ -3,11 +3,15 @@
 #ifdef Q_OS_WINDOWS
 #include "WindowsFileAttributePath.h"
 #endif
+#ifdef Q_OS_LINUX
+#include "PlatformImplementation.h"
+#endif
 #include <catch.hpp>
 
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QStandardPaths>
 #include <QTemporaryDir>
 
 #ifndef Q_OS_WINDOWS
@@ -407,5 +411,39 @@ TEST_CASE("Windows file-attribute paths convert long UNC paths")
                            QLatin1String("\\file"));
 
     CHECK(WindowsFileAttributePath::prepare(input) == expected);
+}
+#endif
+
+#ifdef Q_OS_LINUX
+// GNOME Shell writes captures to $XDG_PICTURES_DIR/<"Screenshots" as the desktop
+// language spells it>. Listing only the English name meant a Spanish or Italian
+// desktop never had its capture folder watched, so the feature silently did
+// nothing there. The exact spelling depends on the locale the test process runs
+// under, so these check the contract rather than one language's word.
+TEST_CASE_METHOD(PlatformTests, "getScreenshotsLocation() lists the GNOME capture folder")
+{
+    const QString pictures = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    const QStringList directories = Platform::getInstance()->getScreenshotsLocation();
+
+    // The Pictures root and the English folder stay: KDE and older GNOME
+    // releases write there, whatever the language.
+    CHECK(directories.contains(pictures));
+    CHECK(directories.contains(pictures + QLatin1String("/Screenshots")));
+
+    // The GNOME folder is listed under Pictures, in the current language's
+    // spelling. In a C or English locale it coincides with the entry above;
+    // the detector de-duplicates, so the list may legitimately repeat it.
+    const QString gnomeFolder = PlatformImplementation::gnomeCaptureFolderName();
+    CHECK_FALSE(gnomeFolder.isEmpty());
+    CHECK_FALSE(gnomeFolder.contains(QLatin1Char('/')));
+    CHECK(directories.contains(pictures + QLatin1Char('/') + gnomeFolder));
+
+    // Nothing outside Pictures: the detector refuses the home directory and
+    // the Pictures root is already the widest folder it is asked to watch.
+    for (const QString& directory: directories)
+    {
+        INFO("capture folder must live under Pictures: " << directory.toStdString());
+        CHECK(directory.startsWith(pictures));
+    }
 }
 #endif

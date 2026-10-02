@@ -73,6 +73,10 @@ public:
 
     QStringList getScreenshotsLocation() override;
 
+    // Leaf name of the folder GNOME Shell saves captures to under Pictures, as
+    // the current desktop language spells it. Public for the unit tests.
+    static QString gnomeCaptureFolderName();
+
 private:
     static xcb_atom_t getAtom(xcb_connection_t* const connection, const char* name);
     bool isFedoraWithGnome();

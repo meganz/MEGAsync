@@ -11,9 +11,10 @@
 
 // Capture hook: detects new screen captures by watching the OS screenshot
 // directories (macOS: the `com.apple.screencapture location` default or the
-// Desktop; Windows: Pictures/Screenshots; Linux: Pictures and
-// Pictures/Screenshots). When a new image file appears and its size has
-// settled (the OS may still be writing it), captureDetected() is emitted.
+// Desktop; Windows: Pictures/Screenshots; Linux: Pictures, Pictures/Screenshots
+// and the GNOME capture folder under Pictures in the desktop language's
+// spelling). When a new image file appears and its size has settled (the OS
+// may still be writing it), captureDetected() is emitted.
 //
 // This is deliberately a directory watcher rather than a global-hotkey/screen
 // grabber: it reuses the native capture UX (⇧⌘3/4, PrtScn, gnome-screenshot)
