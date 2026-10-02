@@ -48,6 +48,7 @@ set(UNIT_TEST_FILES
     gui/user_messages/UserMessageModelTests.cpp
     gui/ScreenCaptureDetectorTests.cpp
     gui/ScreenCaptureStabilityTests.cpp
+    gui/ScreenshotUploaderTests.cpp
     stalled_issues/IgnoredStalledIssueTests.cpp
     syncs/MegaIgnoreManagerTests.cpp
     syncs/MegaIgnoreRulesTests.cpp

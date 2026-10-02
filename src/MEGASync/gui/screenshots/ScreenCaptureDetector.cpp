@@ -355,9 +355,15 @@ void ScreenCaptureDetector::scanDirectory(const QString& path)
             continue;
         }
 
-        const QDateTime created =
-            info.birthTime().isValid() ? info.birthTime() : info.lastModified();
-        if (created < mStartTime)
+        // A capture is written the moment it is taken, so both its birth time
+        // and its modification time are recent. An existing image copied into
+        // the folder gets a new birth time but keeps its source's modification
+        // time (Explorer, Finder and Nautilus all preserve it): that old mtime
+        // is what tells it apart from a capture, and keeps a user's photos out
+        // of the upload when they file them under "Screenshots". The birth
+        // time check still covers a file moved in with a recent mtime.
+        const QDateTime birth = info.birthTime();
+        if ((birth.isValid() && birth < mStartTime) || info.lastModified() < mStartTime)
         {
             mKnownFiles.insert(filePath);
             continue;

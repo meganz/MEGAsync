@@ -29,6 +29,7 @@ QmlDialog {
     title: ScreenshotStrings.title
     visible: false
     modality: Qt.NonModal
+    closeOnEscapePressed: true
     color: ColorTheme.pageBackground
     width: dialogWidth
     height: dialogHeight

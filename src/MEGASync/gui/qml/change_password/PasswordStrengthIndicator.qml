@@ -30,6 +30,9 @@ Row {
     spacing: 4
     topPadding: 4
     bottomPadding: 4
+    // Same disabled treatment as HintText, so the meter dims together with
+    // the strength hint below it while the form is disabled.
+    opacity: enabled ? 1.0 : 0.2
 
     Repeater {
         model: root.segmentCount

@@ -303,6 +303,38 @@ TEST_CASE_METHOD(StabilityFixture, "files present before start() are baselined, 
     CHECK(recorder.count() == 1);
 }
 
+TEST_CASE_METHOD(StabilityFixture, "an old image copied into the folder is not a capture")
+{
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    // Explorer, Finder and Nautilus give a copy a new birth time but keep the
+    // source's modification time. A photo library filed under "Screenshots"
+    // looks exactly like this, and must not be uploaded (nor publicly
+    // exported, with link copying on).
+    const QString copiedName = QString::fromUtf8("IMG_0042.png");
+    const QString copied = write(copiedName, 512);
+    {
+        QFile file(QDir(mWatched).filePath(copiedName));
+        REQUIRE(file.open(QIODevice::ReadWrite));
+        REQUIRE(file.setFileTime(QDateTime::currentDateTime().addDays(-30),
+                                 QFileDevice::FileModificationTime));
+        file.close();
+    }
+    detector.rescan(mWatched);
+    detector.tick(6);
+    CHECK(recorder.countOf(copied) == 0);
+
+    // A real capture is written now on both counts.
+    const QString fresh = write(QString::fromUtf8("Screenshot_new.png"), 512);
+    detector.rescan(mWatched);
+    detector.tick(6);
+    REQUIRE(recorder.countOf(fresh) == 1);
+    CHECK(recorder.count() == 1);
+}
+
 TEST_CASE_METHOD(StabilityFixture, "a file still being written is not reported until it settles")
 {
     TestableDetector detector(mWatched);
