@@ -41,6 +41,7 @@ Suggests: nautilus-megasync, dolphin-megasync, nemo-megasync, thunar-megasync
 
 # OpenSuse Leap 15.6 -> python311
 # OpenSuse Leap 16.0 -> python313
+# OpenSuse Leap 16.1 -> python313
 # OpenSuse Tumbleweed -> python313
 %if 0%{?sle_version} && 0%{?suse_version} < 1600
 BuildRequires: python311
@@ -260,6 +261,10 @@ DATA
 %if 0%{?sle_version} || 0%{?suse_version}
     %if 0%{?sle_version} == 160000
         %define reponame openSUSE_Leap_16.0
+    %endif
+
+    %if 0%{?sle_version} == 160100
+        %define reponame openSUSE_Leap_16.1
     %endif
 
     %if 0%{?sle_version} == 150500
