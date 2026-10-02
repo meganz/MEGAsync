@@ -643,8 +643,8 @@
     <name>ChangePasswordComponent</name>
     <message>
         <source>Done</source>
-        <translatorcomment></translatorcomment>
-        <translation>Done</translation>
+        <translatorcomment>Done</translatorcomment>
+        <translation>تم</translation>
     </message>
 </context>
 <context>
@@ -657,7 +657,7 @@
     <message>
         <source>This includes browsers, phones and other computers — signed out even if they were offline. This app stays signed in and your syncs keep running.</source>
         <translatorcomment>Message when the password has been changed. SNC-6910</translatorcomment>
-        <translation>This includes browsers, phones and other computers — signed out even if they were offline. This app stays signed in and your syncs keep running.</translation>
+        <translation>تم تسجيل خروجك من ميغا MEGA في متصفحات وأجهزة أخرى حتى لو كانت تلك الأجهزة غير متصلة بالإنترنت. يظل هذا التطبيق مُسجلاً الدخول وتستمر مزامنتك في العمل.</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -672,7 +672,7 @@
     <message>
         <source>Your password has been changed</source>
         <translatorcomment>Message when the password has been changed. SNC-6910</translatorcomment>
-        <translation>Your password has been changed</translation>
+        <translation>تم تغيير كلمة المرور الخاصة بك</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -695,27 +695,27 @@
     <message>
         <source>Enter a new password</source>
         <translatorcomment>Label hint displayed on input text control where the user can enter the new password. SNC-2109</translatorcomment>
-        <translation>Enter a new password</translation>
+        <translation>أدخل كلمة مرور جديدة</translation>
     </message>
     <message>
         <source>Enter your 2FA code</source>
         <translatorcomment>Label displayed next to input component to enter the 2FA code. SNC-2109</translatorcomment>
-        <translation>Enter your 2FA code</translation>
+        <translation>أدخل رمز المصادقة الثنائية 2FA</translation>
     </message>
     <message>
         <source>Incorrect code, check your authenticator app and try again.</source>
         <translatorcomment>Error Label displayed when the user enters and incorrect 2FA code. SNC-2109</translatorcomment>
-        <translation>Incorrect code, check your authenticator app and try again.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lost your authenticator device?</source>
         <translatorcomment>Link url label to forward to help article related with authenticator device. SNC-2109</translatorcomment>
-        <translation>Lost your authenticator device?</translation>
+        <translation>هل فقدت جهاز المصادقة الخاص بك؟</translation>
     </message>
     <message>
         <source>Moderate password</source>
         <translatorcomment>Label displayed next to the control to indicate that the password is moderate while its strength is being evaluated. SNC-2109</translatorcomment>
-        <translation>Moderate password</translation>
+        <translation>متوسط</translation>
     </message>
     <message>
         <source>New password</source>
@@ -725,27 +725,27 @@
     <message>
         <source>Re-enter your password</source>
         <translatorcomment>Label hint displayed on input text control where the user can re-enter the new password. SNC-2109</translatorcomment>
-        <translation>Re-enter your password</translation>
+        <translation>أعد إدخال كلمة مرورك</translation>
     </message>
     <message>
         <source>Strong password</source>
         <translatorcomment>Label displayed next to the control to indicate that the password is strong while its strength is being evaluated. SNC-2109</translatorcomment>
-        <translation>Strong password</translation>
+        <translation>قوي</translation>
     </message>
     <message>
         <source>Use at least 8 characters</source>
         <translatorcomment>Label displayed next to control to indicate the the password should have a minimum 8 characters. SNC-2109</translatorcomment>
-        <translation>Use at least 8 characters</translation>
+        <translation>استخدم على الأقل 8 أحرف</translation>
     </message>
     <message>
         <source>Weak password</source>
         <translatorcomment>Label displayed next to the control to indicate that the password is weak while its strength is being evaluated. SNC-2109</translatorcomment>
-        <translation>Weak password</translation>
+        <translation>ضعيفة</translation>
     </message>
     <message>
         <source>You&apos;ll be signed out of all other devices. This MEGA Desktop App session will stay signed in and your syncs won&apos;t be affected.</source>
         <translatorcomment>Informative label displayed in the change password form to indicate that all other sessions will be closed, except the current one. SNC-6910</translatorcomment>
-        <translation>You’ll be signed out of all other devices. This MEGA Desktop App session will stay signed in and your syncs won’t be affected.</translation>
+        <translation>سيتم تسجيل خروجك من جميع الأجهزة الأخرى. ستظل جلسة تطبيق الحاسوب المكتبي من ميغا MEGA مسجلة الدخول ولن تتأثر مزامنتك.</translation>
     </message>
 </context>
 <context>
@@ -1894,7 +1894,7 @@
     <message>
         <source>This can&apos;t be used as an exclusion. Remove the line breaks or hidden characters and try again.</source>
         <translatorcomment>Error hint under the value field of the add exclusion dialog, shown when the typed or pasted value contains a control character (a line break, a tab, an escape) that cannot be written as an exclusion rule.SNC-6769</translatorcomment>
-        <translation>This can’t be used as an exclusion. Remove the line breaks or hidden characters and try again.</translation>
+        <translation>لا يمكن استخدام هذا كاستثناء. قم بإزالة فواصل الأسطر أو الأحرف المخفية ثم حاول مرة أخرى.</translation>
     </message>
     <message>
         <source>Use comma (“,”) to separate multiple items</source>
@@ -6153,7 +6153,7 @@ Enter a different name</source>
     <message>
         <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
         <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>انقل ملفاتك من جوجل درايف Google Drive مباشرة إلى ميغا MEGA مع تشفير كامل. ابدأ ببضع نقرات فقط.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -6712,9 +6712,9 @@ Enter a different name</source>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.7.0. SNC-6928</translatorcomment>
-        <translation>- New: capture, annotate and instantly share screenshots straight from your desktop.
-- Changing your password now asks you to confirm before applying the change.
-- Bug fixes and performance improvements.
+        <translation>- جديد: التقاط لقطات الشاشة وإضافة تعليقات توضيحية عليها ومشاركتها فوراً من الحاسوب المكتبي.
+- تمت إضافة خطوة تأكيد إضافية عند تغيير كلمة المرور.
+- تصحيح أخطاء وتحسينات على الأداء.
 </translation>
     </message>
     <message>
@@ -7527,7 +7527,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>The uploaded file could not be found</source>
         <translatorcomment>Error message shown when creating a public link for an uploaded screenshot fails because the file cannot be found in the account. SNC-6699</translatorcomment>
-        <translation>The uploaded file could not be found</translation>
+        <translation>لم يتم العثور على الملف الذي تم ترفيعه</translation>
     </message>
 </context>
 <context>
@@ -7535,27 +7535,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Automatically save screenshots to MEGA?</source>
         <translatorcomment>Header of the one-time dialog asking the user to enable automatic screenshot uploads, shown when the first screenshot is detected. SNC-6699</translatorcomment>
-        <translation>Automatically save screenshots to MEGA?</translation>
+        <translation>هل يتم حفظ لقطات الشاشة تلقائيًا إلى ميغا MEGA؟</translation>
     </message>
     <message>
         <source>Back up your screenshots to the cloud automatically and access them across your devices.</source>
         <translatorcomment>Description of the dialog asking the user to enable automatic screenshot uploads. SNC-6699</translatorcomment>
-        <translation>Back up your screenshots to the cloud automatically and access them across your devices.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enable screenshots</source>
         <translatorcomment>Label for the button to enable automatic screenshot uploads. SNC-6699</translatorcomment>
-        <translation>Enable screenshots</translation>
+        <translation>تمكين لقطات الشاشة</translation>
     </message>
     <message>
         <source>Not now</source>
         <translatorcomment>Label for the button to decline enabling automatic screenshot uploads. SNC-6699</translatorcomment>
-        <translation>Not now</translation>
+        <translation>ليس الآن</translation>
     </message>
     <message>
         <source>Upload screenshots</source>
         <translatorcomment>Window title of the dialog offering to automatically upload screenshots to MEGA. SNC-6699</translatorcomment>
-        <translation>Upload screenshots</translation>
+        <translation>رفع لقطات الشاشة</translation>
     </message>
 </context>
 <context>
@@ -7563,22 +7563,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Could not access the Screenshots folder</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the destination Screenshots folder in the cloud drive cannot be accessed or created. SNC-6699</translatorcomment>
-        <translation>Could not access the Screenshots folder</translation>
+        <translation>تعذّر الوصول إلى مجلد لقطات الشاشة</translation>
     </message>
     <message>
         <source>The screenshot file no longer exists</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the captured file was removed before it could be uploaded. SNC-6699</translatorcomment>
-        <translation>The screenshot file no longer exists</translation>
+        <translation>لم يعد ملف لقطة الشاشة موجوداً</translation>
     </message>
     <message>
         <source>You are not logged in to MEGA</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the user is not logged in. SNC-6699</translatorcomment>
-        <translation>You are not logged in to MEGA</translation>
+        <translation>أنت غير مُسجّل الدخول إلى ميغا MEGA</translation>
     </message>
     <message>
         <source>Your session has expired. Please log in again</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the session is no longer valid. SNC-6699</translatorcomment>
-        <translation>Your session has expired. Please log in again</translation>
+        <translation>انتهت جلستك. الرجاء تسجيل الدخول مرة أخرى</translation>
     </message>
 </context>
 <context>
@@ -7699,7 +7699,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Copy link to clipboard after upload</source>
         <translatorcomment>Label for the checkbox in settings enabling copying the public link to the clipboard after a screenshot upload. SNC-6699</translatorcomment>
-        <translation>Copy link to clipboard after upload</translation>
+        <translation>انسخ الرابط إلى الحافظة بعد الترفيع</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -7969,12 +7969,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Save screenshots directly to MEGA</source>
         <translatorcomment>Label for the checkbox in settings enabling automatic screenshot uploads. SNC-6699</translatorcomment>
-        <translation>Save screenshots directly to MEGA</translation>
+        <translation>احفظ لقطات الشاشة مباشرة إلى ميغا MEGA</translation>
     </message>
     <message>
         <source>Screen shots</source>
         <translatorcomment>Title of the screenshots section in the General settings pane. SNC-6699</translatorcomment>
-        <translation>Screen shots</translation>
+        <translation>لقطات الشاشة</translation>
     </message>
     <message>
         <source>Security</source>
@@ -8820,7 +8820,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>This item can&apos;t be ignored: its name contains characters that can&apos;t be used in an exclusion. Rename or delete it to resolve this issue.</source>
         <translatorcomment>Description of a stalled issue row, replacing the usual one when the Ignore resolution cannot be offered because the item&apos;s name contains a control character.SNC-6769</translatorcomment>
-        <translation>This item can’t be ignored: its name contains characters that can’t be used in an exclusion. Rename or delete it to resolve this issue.</translation>
+        <translation>لا يمكن تجاهل هذا العنصر: يحتوي اسمه على أحرف لا يمكن استخدامها في الاستبعاد. أعد تسمية العنصر أو حذفه لحل المشكلة.</translation>
     </message>
 </context>
 <context>
@@ -9020,7 +9020,7 @@ Verify the permissions of the .megaignore file on your local sync folder locatio
     <message>
         <source>Some items can&apos;t be ignored: their names contain characters that can&apos;t be used in an exclusion. Rename or delete them to resolve these issues.</source>
         <translatorcomment>Informative text in the message box shown after ignoring several stalled issues, when some of them could not be ignored because their names contain a control character.SNC-6769</translatorcomment>
-        <translation>Some items can’t be ignored: their names contain characters that can’t be used in an exclusion. Rename or delete them to resolve these issues.</translation>
+        <translation>بعض العناصر لا يمكن تجاهلها: أسماؤها تحتوي على أحرف لا يمكن استخدامها في الاستبعاد. أعد تسمية هذه العناصر أو احذفها لحل هذه المشاكل.</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
