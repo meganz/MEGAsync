@@ -615,8 +615,8 @@
     <name>ChangePasswordComponent</name>
     <message>
         <source>Done</source>
-        <translatorcomment></translatorcomment>
-        <translation>Done</translation>
+        <translatorcomment>Done</translatorcomment>
+        <translation>Fertig</translation>
     </message>
 </context>
 <context>
@@ -629,7 +629,7 @@
     <message>
         <source>This includes browsers, phones and other computers — signed out even if they were offline. This app stays signed in and your syncs keep running.</source>
         <translatorcomment>Message when the password has been changed. SNC-6910</translatorcomment>
-        <translation>This includes browsers, phones and other computers — signed out even if they were offline. This app stays signed in and your syncs keep running.</translation>
+        <translation>Sie wurden in anderen Browsern und auf anderen Geräten von MEGA abgemeldet, selbst wenn diese offline sind. Diese App bleibt angemeldet, und Ihre Synchronisierungen laufen weiter.</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -644,7 +644,7 @@
     <message>
         <source>Your password has been changed</source>
         <translatorcomment>Message when the password has been changed. SNC-6910</translatorcomment>
-        <translation>Your password has been changed</translation>
+        <translation>Ihr Passwort wurde geändert</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -667,27 +667,27 @@
     <message>
         <source>Enter a new password</source>
         <translatorcomment>Label hint displayed on input text control where the user can enter the new password. SNC-2109</translatorcomment>
-        <translation>Enter a new password</translation>
+        <translation>Geben Sie ein neues Passwort ein</translation>
     </message>
     <message>
         <source>Enter your 2FA code</source>
         <translatorcomment>Label displayed next to input component to enter the 2FA code. SNC-2109</translatorcomment>
-        <translation>Enter your 2FA code</translation>
+        <translation>Geben Sie Ihren 2FA-Code ein</translation>
     </message>
     <message>
         <source>Incorrect code, check your authenticator app and try again.</source>
         <translatorcomment>Error Label displayed when the user enters and incorrect 2FA code. SNC-2109</translatorcomment>
-        <translation>Incorrect code, check your authenticator app and try again.</translation>
+        <translation>Falscher Code. Prüfen Sie Ihre Authentifizierungs-App und versuchen Sie es erneut</translation>
     </message>
     <message>
         <source>Lost your authenticator device?</source>
         <translatorcomment>Link url label to forward to help article related with authenticator device. SNC-2109</translatorcomment>
-        <translation>Lost your authenticator device?</translation>
+        <translation>Authentifizierungsgerät verloren?</translation>
     </message>
     <message>
         <source>Moderate password</source>
         <translatorcomment>Label displayed next to the control to indicate that the password is moderate while its strength is being evaluated. SNC-2109</translatorcomment>
-        <translation>Moderate password</translation>
+        <translation>Mittel</translation>
     </message>
     <message>
         <source>New password</source>
@@ -697,27 +697,27 @@
     <message>
         <source>Re-enter your password</source>
         <translatorcomment>Label hint displayed on input text control where the user can re-enter the new password. SNC-2109</translatorcomment>
-        <translation>Re-enter your password</translation>
+        <translation>Geben Sie Ihr Passwort erneut ein</translation>
     </message>
     <message>
         <source>Strong password</source>
         <translatorcomment>Label displayed next to the control to indicate that the password is strong while its strength is being evaluated. SNC-2109</translatorcomment>
-        <translation>Strong password</translation>
+        <translation>Stark</translation>
     </message>
     <message>
         <source>Use at least 8 characters</source>
         <translatorcomment>Label displayed next to control to indicate the the password should have a minimum 8 characters. SNC-2109</translatorcomment>
-        <translation>Use at least 8 characters</translation>
+        <translation>Verwenden Sie mindestens 8 Zeichen</translation>
     </message>
     <message>
         <source>Weak password</source>
         <translatorcomment>Label displayed next to the control to indicate that the password is weak while its strength is being evaluated. SNC-2109</translatorcomment>
-        <translation>Weak password</translation>
+        <translation>Schwach</translation>
     </message>
     <message>
         <source>You&apos;ll be signed out of all other devices. This MEGA Desktop App session will stay signed in and your syncs won&apos;t be affected.</source>
         <translatorcomment>Informative label displayed in the change password form to indicate that all other sessions will be closed, except the current one. SNC-6910</translatorcomment>
-        <translation>You’ll be signed out of all other devices. This MEGA Desktop App session will stay signed in and your syncs won’t be affected.</translation>
+        <translation>Sie werden auf allen anderen Geräten abgemeldet. Diese MEGA Desktop App bleibt angemeldet, und Ihre Synchronisierungen laufen weiter.</translation>
     </message>
 </context>
 <context>
@@ -1814,7 +1814,7 @@
     <message>
         <source>This can&apos;t be used as an exclusion. Remove the line breaks or hidden characters and try again.</source>
         <translatorcomment>Error hint under the value field of the add exclusion dialog, shown when the typed or pasted value contains a control character (a line break, a tab, an escape) that cannot be written as an exclusion rule.SNC-6769</translatorcomment>
-        <translation>This can’t be used as an exclusion. Remove the line breaks or hidden characters and try again.</translation>
+        <translation>Dieser Eintrag kann nicht als Ausschluss verwendet werden. Entfernen Sie Zeilenumbrüche oder unsichtbare Zeichen und versuchen Sie es erneut.</translation>
     </message>
     <message>
         <source>Use comma (“,”) to separate multiple items</source>
@@ -5845,7 +5845,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
         <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>Übertragen Sie Ihre Dateien direkt von Google Drive zu MEGA – vollständig verschlüsselt. Starten Sie mit nur wenigen Klicks.</translation>
+        <translation>Übertragen Sie Ihre Dateien direkt von anderen Cloudspeicherdiensten zu MEGA – vollständig verschlüsselt und mit nur wenigen Klicks.</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -6400,9 +6400,9 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 - Bug fixes and performance improvements.
 </source>
         <translatorcomment>Change log for version 6.7.0. SNC-6928</translatorcomment>
-        <translation>- New: capture, annotate and instantly share screenshots straight from your desktop.
-- Changing your password now asks you to confirm before applying the change.
-- Bug fixes and performance improvements.
+        <translation>- Neu: Sie können Screenshots direkt auf Ihrem Desktop aufnehmen, mit Anmerkungen versehen und sofort teilen.
+- Für Passwortänderungen wurde ein zusätzlicher Bestätigungsschritt eingeführt.
+- Fehlerkorrekturen und Leistungsverbesserungen.
 </translation>
     </message>
     <message>
@@ -7207,7 +7207,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>The uploaded file could not be found</source>
         <translatorcomment>Error message shown when creating a public link for an uploaded screenshot fails because the file cannot be found in the account. SNC-6699</translatorcomment>
-        <translation>The uploaded file could not be found</translation>
+        <translation>Die hochgeladene Datei wurde nicht gefunden</translation>
     </message>
 </context>
 <context>
@@ -7215,27 +7215,27 @@ Trotzdem löschen?</translation>
     <message>
         <source>Automatically save screenshots to MEGA?</source>
         <translatorcomment>Header of the one-time dialog asking the user to enable automatic screenshot uploads, shown when the first screenshot is detected. SNC-6699</translatorcomment>
-        <translation>Automatically save screenshots to MEGA?</translation>
+        <translation>Screenshots automatisch auf MEGA speichern?</translation>
     </message>
     <message>
         <source>Back up your screenshots to the cloud automatically and access them across your devices.</source>
         <translatorcomment>Description of the dialog asking the user to enable automatic screenshot uploads. SNC-6699</translatorcomment>
-        <translation>Back up your screenshots to the cloud automatically and access them across your devices.</translation>
+        <translation>Sichern Sie Ihre Screenshots automatisch in der Cloud, sodass Sie mit allen Ihren Geräten auf sie zugreifen können.</translation>
     </message>
     <message>
         <source>Enable screenshots</source>
         <translatorcomment>Label for the button to enable automatic screenshot uploads. SNC-6699</translatorcomment>
-        <translation>Enable screenshots</translation>
+        <translation>Screenshots aktivieren</translation>
     </message>
     <message>
         <source>Not now</source>
         <translatorcomment>Label for the button to decline enabling automatic screenshot uploads. SNC-6699</translatorcomment>
-        <translation>Not now</translation>
+        <translation>Jetzt nicht</translation>
     </message>
     <message>
         <source>Upload screenshots</source>
         <translatorcomment>Window title of the dialog offering to automatically upload screenshots to MEGA. SNC-6699</translatorcomment>
-        <translation>Upload screenshots</translation>
+        <translation>Screenshots hochladen</translation>
     </message>
 </context>
 <context>
@@ -7243,22 +7243,22 @@ Trotzdem löschen?</translation>
     <message>
         <source>Could not access the Screenshots folder</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the destination Screenshots folder in the cloud drive cannot be accessed or created. SNC-6699</translatorcomment>
-        <translation>Could not access the Screenshots folder</translation>
+        <translation>Kein Zugriff auf den Ordner „Screenshots“</translation>
     </message>
     <message>
         <source>The screenshot file no longer exists</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the captured file was removed before it could be uploaded. SNC-6699</translatorcomment>
-        <translation>The screenshot file no longer exists</translation>
+        <translation>Die Screenshot-Datei ist nicht mehr vorhanden</translation>
     </message>
     <message>
         <source>You are not logged in to MEGA</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the user is not logged in. SNC-6699</translatorcomment>
-        <translation>You are not logged in to MEGA</translation>
+        <translation>Sie sind nicht bei MEGA eingeloggt</translation>
     </message>
     <message>
         <source>Your session has expired. Please log in again</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the session is no longer valid. SNC-6699</translatorcomment>
-        <translation>Your session has expired. Please log in again</translation>
+        <translation>Ihre Sitzung ist abgelaufen. Bitte melden Sie sich wieder an</translation>
     </message>
 </context>
 <context>
@@ -7379,7 +7379,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>Copy link to clipboard after upload</source>
         <translatorcomment>Label for the checkbox in settings enabling copying the public link to the clipboard after a screenshot upload. SNC-6699</translatorcomment>
-        <translation>Copy link to clipboard after upload</translation>
+        <translation>Link nach dem Upload in die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -7649,12 +7649,12 @@ Trotzdem löschen?</translation>
     <message>
         <source>Save screenshots directly to MEGA</source>
         <translatorcomment>Label for the checkbox in settings enabling automatic screenshot uploads. SNC-6699</translatorcomment>
-        <translation>Save screenshots directly to MEGA</translation>
+        <translation>Screenshots direkt auf MEGA speichern</translation>
     </message>
     <message>
         <source>Screen shots</source>
         <translatorcomment>Title of the screenshots section in the General settings pane. SNC-6699</translatorcomment>
-        <translation>Screen shots</translation>
+        <translation>Screenshots</translation>
     </message>
     <message>
         <source>Security</source>
@@ -8484,7 +8484,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>This item can&apos;t be ignored: its name contains characters that can&apos;t be used in an exclusion. Rename or delete it to resolve this issue.</source>
         <translatorcomment>Description of a stalled issue row, replacing the usual one when the Ignore resolution cannot be offered because the item&apos;s name contains a control character.SNC-6769</translatorcomment>
-        <translation>This item can’t be ignored: its name contains characters that can’t be used in an exclusion. Rename or delete it to resolve this issue.</translation>
+        <translation>Dieses Element kann nicht ignoriert werden: Sein Name enthält Zeichen, die in einer Ausschlussregel nicht zulässig sind. Benennen Sie das Element um oder löschen Sie es, um das Problem zu beheben.</translation>
     </message>
 </context>
 <context>
@@ -8644,7 +8644,7 @@ Verify the permissions of the .megaignore file on your local sync folder locatio
     <message>
         <source>Some items can&apos;t be ignored: their names contain characters that can&apos;t be used in an exclusion. Rename or delete them to resolve these issues.</source>
         <translatorcomment>Informative text in the message box shown after ignoring several stalled issues, when some of them could not be ignored because their names contain a control character.SNC-6769</translatorcomment>
-        <translation>Some items can’t be ignored: their names contain characters that can’t be used in an exclusion. Rename or delete them to resolve these issues.</translation>
+        <translation>Einige Elemente können nicht ignoriert werden: Ihre Namen enthalten Zeichen, die in Ausschlussregeln nicht zulässig sind. Benennen Sie die Elemente um oder löschen Sie sie, um diese Probleme zu beheben.</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.

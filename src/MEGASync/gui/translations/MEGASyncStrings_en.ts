@@ -615,7 +615,7 @@
     <name>ChangePasswordComponent</name>
     <message>
         <source>Done</source>
-        <translatorcomment></translatorcomment>
+        <translatorcomment>Done</translatorcomment>
         <translation>Done</translation>
     </message>
 </context>
@@ -629,7 +629,7 @@
     <message>
         <source>This includes browsers, phones and other computers — signed out even if they were offline. This app stays signed in and your syncs keep running.</source>
         <translatorcomment>Message when the password has been changed. SNC-6910</translatorcomment>
-        <translation>This includes browsers, phones and other computers — signed out even if they were offline. This app stays signed in and your syncs keep running.</translation>
+        <translation>You’ve been signed out of MEGA in other browsers and on other devices, even if they were offline. This app stays signed in, and your syncs keep running.</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -677,7 +677,7 @@
     <message>
         <source>Incorrect code, check your authenticator app and try again.</source>
         <translatorcomment>Error Label displayed when the user enters and incorrect 2FA code. SNC-2109</translatorcomment>
-        <translation>Incorrect code, check your authenticator app and try again.</translation>
+        <translation>Incorrect code. Check your authenticator app and try again</translation>
     </message>
     <message>
         <source>Lost your authenticator device?</source>
@@ -687,7 +687,7 @@
     <message>
         <source>Moderate password</source>
         <translatorcomment>Label displayed next to the control to indicate that the password is moderate while its strength is being evaluated. SNC-2109</translatorcomment>
-        <translation>Moderate password</translation>
+        <translation>Moderate</translation>
     </message>
     <message>
         <source>New password</source>
@@ -702,7 +702,7 @@
     <message>
         <source>Strong password</source>
         <translatorcomment>Label displayed next to the control to indicate that the password is strong while its strength is being evaluated. SNC-2109</translatorcomment>
-        <translation>Strong password</translation>
+        <translation>Strong</translation>
     </message>
     <message>
         <source>Use at least 8 characters</source>
@@ -712,7 +712,7 @@
     <message>
         <source>Weak password</source>
         <translatorcomment>Label displayed next to the control to indicate that the password is weak while its strength is being evaluated. SNC-2109</translatorcomment>
-        <translation>Weak password</translation>
+        <translation>Weak</translation>
     </message>
     <message>
         <source>You&apos;ll be signed out of all other devices. This MEGA Desktop App session will stay signed in and your syncs won&apos;t be affected.</source>
@@ -5845,7 +5845,7 @@ Enter a different name.</translation>
     <message>
         <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
         <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</translation>
+        <translation>Move your files from another cloud storage service straight into MEGA, fully encrypted. Start in a few clicks.</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -6401,7 +6401,7 @@ Enter a different name.</translation>
 </source>
         <translatorcomment>Change log for version 6.7.0. SNC-6928</translatorcomment>
         <translation>- New: capture, annotate and instantly share screenshots straight from your desktop.
-- Changing your password now asks you to confirm before applying the change.
+- Added an extra confirmation step when changing your password.
 - Bug fixes and performance improvements.
 </translation>
     </message>
@@ -7258,7 +7258,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Your session has expired. Please log in again</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the session is no longer valid. SNC-6699</translatorcomment>
-        <translation>Your session has expired. Please log in again</translation>
+        <translation>Your session has expired. Log in again</translation>
     </message>
 </context>
 <context>
@@ -7654,7 +7654,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Screen shots</source>
         <translatorcomment>Title of the screenshots section in the General settings pane. SNC-6699</translatorcomment>
-        <translation>Screen shots</translation>
+        <translation>Screenshots</translation>
     </message>
     <message>
         <source>Security</source>
@@ -8484,7 +8484,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>This item can&apos;t be ignored: its name contains characters that can&apos;t be used in an exclusion. Rename or delete it to resolve this issue.</source>
         <translatorcomment>Description of a stalled issue row, replacing the usual one when the Ignore resolution cannot be offered because the item&apos;s name contains a control character.SNC-6769</translatorcomment>
-        <translation>This item can’t be ignored: its name contains characters that can’t be used in an exclusion. Rename or delete it to resolve this issue.</translation>
+        <translation>This item can’t be ignored: its name contains characters that can’t be used in an exclusion. Rename or delete it to resolve the issue.</translation>
     </message>
 </context>
 <context>
