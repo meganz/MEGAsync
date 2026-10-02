@@ -212,7 +212,14 @@ void ScreenshotsController::onUploadFinished(mega::MegaHandle nodeHandle)
 {
     MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SCREENSHOT_UPLOADED);
 
-    if (mClipboardScreenshotLinkCopyEnabled)
+    // A capture taken while the feature was on is uploaded regardless of what
+    // the setting says by the time its transfer finishes: the transfer is
+    // visible and cancellable in the Transfer Manager, and the SDK resumes it
+    // across restarts on its own. The link copy is different: it lands later,
+    // out of context, and overwrites whatever the user has on the clipboard,
+    // so it follows the setting as it stands now. The link setting alone is
+    // not enough, as it keeps its value while the feature is off.
+    if (mClipboardScreenshotLinkCopyEnabled && Preferences::instance()->uploadScreenshotsEnabled())
     {
         mLinkGenerator.generateLink(nodeHandle);
     }
