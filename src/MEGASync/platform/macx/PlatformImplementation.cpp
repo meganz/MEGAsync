@@ -74,6 +74,16 @@ void PlatformImplementation::raiseFileFolderSelectors()
     raiseFileSelectionPanels();
 }
 
+void PlatformImplementation::adoptTrayIconExpandedInterface()
+{
+    adoptStatusItemExpandedInterface();
+}
+
+void PlatformImplementation::setTrayPrimaryActionHandler(std::function<void()> handler)
+{
+    setStatusItemPrimaryActionHandler(std::move(handler));
+}
+
 void PlatformImplementation::closeFileFolderSelectors(QWidget* parent)
 {
     closeFileSelectionPanels(parent);

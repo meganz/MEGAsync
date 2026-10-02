@@ -13,6 +13,7 @@
 #include <QString>
 #include <QWindow>
 
+#include <functional>
 #include <string>
 
 struct SelectorInfo
@@ -46,6 +47,9 @@ public:
     virtual void prepareForSync();
     virtual bool enableTrayIcon(QString executable);
     virtual void unHideTrayIcon();
+    // macOS 27 only; no-ops elsewhere. See adoptStatusItemExpandedInterface().
+    virtual void adoptTrayIconExpandedInterface();
+    virtual void setTrayPrimaryActionHandler(std::function<void()> handler);
     virtual void notifyItemChange(const QString& localPath, int newState) = 0;
     virtual void notifySyncFileChange(std::string *localPath, int newState) = 0;
     virtual bool startOnStartup(bool value) = 0;
