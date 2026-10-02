@@ -21,6 +21,7 @@
 #include <QImageReader>
 #include <QPixmapCache>
 #include <QScreen>
+#include <QTemporaryFile>
 #include <QTextStream>
 
 #include <cmath>
@@ -1840,6 +1841,22 @@ void Utilities::openInMega(MegaHandle handle)
 void Utilities::openBackupCenter()
 {
     openUrl(ServiceUrls::getDeviceCenterUrl());
+}
+
+bool Utilities::isLocalFolderWritable(const QString& path)
+{
+    if (path.isEmpty())
+    {
+        return false;
+    }
+
+    // QDir::filePath() normalises the separators to '/' and takes care of a trailing one.
+    // That normalisation is required: QTemporaryFile resolves its template through
+    // QFileSystemEntry, which only treats "X:" or a leading '/' as absolute. A native UNC
+    // path ("\\server\share") therefore looks relative to it and gets joined onto the process
+    // working directory, so the probe would fail on any network share (SNC-6919).
+    QTemporaryFile test(QDir(path).filePath(QLatin1String(".XXXXXX")));
+    return test.open();
 }
 
 QString Utilities::getCommonPath(const QString &path1, const QString &path2, bool cloudPaths)

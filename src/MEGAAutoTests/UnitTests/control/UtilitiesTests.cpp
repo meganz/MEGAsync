@@ -158,6 +158,88 @@ TEST_CASE_METHOD(FolderPermissionsTests,
     checkLoggedOnce(mega::MegaApi::LOG_LEVEL_ERROR, filePath);
 }
 
+// isLocalFolderWritable() probes a folder by creating a file in it, so every case here is
+// checked against a real directory rather than against the permissions the filesystem reports
+class LocalFolderWritableTests
+{
+public:
+    LocalFolderWritableTests()
+    {
+        REQUIRE(mTempDir.isValid());
+    }
+
+protected:
+    QString root() const
+    {
+        return mTempDir.path();
+    }
+
+    QString path(const QString& name) const
+    {
+        return mTempDir.filePath(name);
+    }
+
+    int entryCount() const
+    {
+        return QDir(mTempDir.path())
+            .entryList(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot)
+            .size();
+    }
+
+private:
+    QTemporaryDir mTempDir;
+};
+
+TEST_CASE_METHOD(LocalFolderWritableTests, "isLocalFolderWritable() accepts a writable folder")
+{
+    CHECK(Utilities::isLocalFolderWritable(root()));
+}
+
+TEST_CASE_METHOD(LocalFolderWritableTests,
+                 "isLocalFolderWritable() accepts the separators the dialogs hand it")
+{
+    // The download dialogs keep their line edit in native separators and the folder selector
+    // returns '/' ones, so both spellings reach the check, with or without a trailing separator
+    CHECK(Utilities::isLocalFolderWritable(QDir::toNativeSeparators(root())));
+    CHECK(Utilities::isLocalFolderWritable(root() + QLatin1Char('/')));
+    CHECK(Utilities::isLocalFolderWritable(QDir::toNativeSeparators(root()) + QDir::separator()));
+}
+
+TEST_CASE_METHOD(LocalFolderWritableTests, "isLocalFolderWritable() rejects an empty path")
+{
+    CHECK_FALSE(Utilities::isLocalFolderWritable(QString()));
+}
+
+TEST_CASE_METHOD(LocalFolderWritableTests, "isLocalFolderWritable() rejects a missing folder")
+{
+    CHECK_FALSE(Utilities::isLocalFolderWritable(path(QLatin1String("never-created"))));
+}
+
+TEST_CASE_METHOD(LocalFolderWritableTests, "isLocalFolderWritable() leaves nothing behind")
+{
+    const int before(entryCount());
+
+    REQUIRE(Utilities::isLocalFolderWritable(root()));
+
+    // The probe file is a QTemporaryFile, so a folder the user picked must come out untouched
+    CHECK(entryCount() == before);
+}
+
+#ifdef Q_OS_WINDOWS
+TEST_CASE_METHOD(LocalFolderWritableTests,
+                 "isLocalFolderWritable() accepts a path starting with a double backslash")
+{
+    // SNC-6919: QTemporaryFile resolves its template through QFileSystemEntry, which only
+    // treats "X:" or a leading '/' as absolute. Any native path starting with "\\" therefore
+    // looks relative to it and gets joined onto the working directory, which is what made a
+    // network share ("\\machine\folder") report itself as not writable. The extended-length
+    // prefix trips the very same check, so it pins the regression without needing a share.
+    const QString extendedLengthPath(QLatin1String("\\\\?\\") + QDir::toNativeSeparators(root()));
+
+    CHECK(Utilities::isLocalFolderWritable(extendedLengthPath));
+}
+#endif
+
 #ifndef Q_OS_WINDOWS
 // Exposing a folder to other users takes POSIX permission bits, which is also the only
 // place where restrictFolderToOwner() has anything to do: on Windows the per-user location

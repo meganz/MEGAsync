@@ -8,7 +8,6 @@
 
 #include <QDesktopServices>
 #include <QPointer>
-#include <QTemporaryFile>
 
 DownloadFromMegaDialog::DownloadFromMegaDialog(QString path, QWidget *parent) :
     QDialog(parent),
@@ -81,8 +80,7 @@ void DownloadFromMegaDialog::onPathChanged(const QString& path)
         return;
     }
 
-    QTemporaryFile test(path + QDir::separator());
-    if (!test.open())
+    if (!Utilities::isLocalFolderWritable(path))
     {
         MessageDialogInfo msgInfo;
         msgInfo.parent = this;
@@ -126,9 +124,7 @@ void DownloadFromMegaDialog::on_bOK_clicked()
             dir.mkpath(QString::fromUtf8("."));
         }
 
-        QString qFilePath = QDir::fromNativeSeparators(ui->eFolderPath->text()); // QFile always wants `/` as separator
-        QTemporaryFile test(qFilePath + QDir::separator());
-        if (!test.open())
+        if (!Utilities::isLocalFolderWritable(ui->eFolderPath->text()))
         {
             MessageDialogInfo msgInfo;
             msgInfo.descriptionText = tr("You don't have write permissions in this local folder.");

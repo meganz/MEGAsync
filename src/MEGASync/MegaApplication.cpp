@@ -5288,10 +5288,7 @@ bool MegaApplication::hasDefaultDownloadFolder() const
     QString defaultPath = preferences->downloadFolder();
     if (preferences->hasDefaultDownloadFolder() && QDir(defaultPath).exists())
     {
-        // QFile always wants `/` as separator
-        QString qFilePath = QDir::fromNativeSeparators(defaultPath);
-        QTemporaryFile *test = new QTemporaryFile(qFilePath + QDir::separator());
-        if (test->open())
+        if (Utilities::isLocalFolderWritable(defaultPath))
         {
             hasDefaultDownloadFolder = true;
         }
@@ -5301,8 +5298,6 @@ bool MegaApplication::hasDefaultDownloadFolder() const
             preferences->setHasDefaultDownloadFolder(false);
             preferences->setDownloadFolder(QString());
         }
-
-        delete test;
     }
 
     return hasDefaultDownloadFolder;
