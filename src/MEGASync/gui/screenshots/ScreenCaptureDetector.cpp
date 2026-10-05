@@ -362,8 +362,9 @@ void ScreenCaptureDetector::scanDirectory(const QString& path)
         // is what tells it apart from a capture, and keeps a user's photos out
         // of the upload when they file them under "Screenshots". The birth
         // time check still covers a file moved in with a recent mtime.
-        const QDateTime birth = info.birthTime();
-        if ((birth.isValid() && birth < mStartTime) || info.lastModified() < mStartTime)
+        //
+        // This first look is not final: see onStabilityTimerTimeout.
+        if (predatesStart(info))
         {
             mKnownFiles.insert(filePath);
             continue;
@@ -375,6 +376,12 @@ void ScreenCaptureDetector::scanDirectory(const QString& path)
             mStabilityTimer.start();
         }
     }
+}
+
+bool ScreenCaptureDetector::predatesStart(const QFileInfo& info) const
+{
+    const QDateTime birth = info.birthTime();
+    return (birth.isValid() && birth < mStartTime) || info.lastModified() < mStartTime;
 }
 
 void ScreenCaptureDetector::onStabilityTimerTimeout()
@@ -430,6 +437,19 @@ void ScreenCaptureDetector::onStabilityTimerTimeout()
                 // anything that runs inside it.
                 mPendingFiles.erase(stateIt);
                 mKnownFiles.insert(filePath);
+
+                // Copy tools write the data first and the source's timestamps
+                // last, so a copy that was still in progress when the folder
+                // was scanned carried fresh timestamps and got this far. Its
+                // timestamps are final now that the data has settled, so the
+                // decision is taken again on these. That is what keeps a
+                // user's old photos, copied in bulk into the capture folder,
+                // out of the upload: the small ones are complete by the first
+                // scan, the large ones only by now.
+                if (predatesStart(info))
+                {
+                    continue;
+                }
                 emit captureDetected(filePath);
             }
             continue;
