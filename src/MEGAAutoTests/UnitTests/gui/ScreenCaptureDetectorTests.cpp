@@ -120,6 +120,12 @@ TEST_CASE_METHOD(ScreenCaptureDetectorTests, "looksLikeScreenshot() accepts OS c
     accepts("\xD9\x84\xD9\x82\xD8\xB7\xD8\xA9 "
             "\xD8\xA7\xD9\x84\xD8\xB4\xD8\xA7\xD8\xB4\xD8\xA9 "
             "\xD9\xA2\xD9\xA0\xD9\xA2\xD9\xA6-\xD9\xA0\xD9\xA6-\xD9\xA1\xD9\xA0.png"); // ar macOS
+    // The whole name as macOS writes it: its format puts U+200F RIGHT-TO-LEFT
+    // MARK before the word.
+    accepts("\xE2\x80\x8F\xD9\x84\xD9\x82\xD8\xB7\xD8\xA9 "
+            "\xD8\xA7\xD9\x84\xD8\xB4\xD8\xA7\xD8\xB4\xD8\xA9 2026-10-05 "
+            "\xD9\x81\xD9\x8A 10.05.33.png"); // ar macOS, full name
+    accepts("\xE2\x80\x8E\xE2\x81\xA8Screenshot 2026-10-05 at 10.05.33.png"); // LRM + FSI
     accepts("\xD9\x84\xD9\x82\xD8\xB7\xD8\xA9 \xD8\xB4\xD8\xA7\xD8\xB4\xD8\xA9 "
             "2026-06-10.png"); // ar without the article
     accepts("\xD7\xA6\xD7\x99\xD7\x9C\xD7\x95\xD7\x9D \xD7\x9E\xD7\xA1\xD7\x9A "
@@ -175,6 +181,12 @@ TEST_CASE_METHOD(ScreenCaptureDetectorTests, "looksLikeScreenshot() rejects the 
     // The capture word must be at the START of the name, not merely present.
     rejects("my screenshot of the dog.jpg");
     rejects("edited Screenshot 2026-06-10.png");
+
+    // Leading invisible marks are skipped, never taken as a match themselves.
+    rejects("\xE2\x80\x8F"
+            "captured moment.png");
+    rejects("\xE2\x80\x8FIMG_20261005_100533.jpg");
+    rejects("\xE2\x80\x8F");
 
     // Near misses that are not captures.
     rejects("Screen recording 2026-06-10.png");
