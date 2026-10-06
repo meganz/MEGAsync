@@ -208,9 +208,15 @@ bool ScreenCaptureDetector::looksLikeScreenshot(const QString& fileName)
     // po files ("Screenshot From %s"). Several languages use a different word
     // on each desktop, so both are listed. "." stands for one accented letter,
     // which is a single code point only in NFC, hence the normalization below.
+    //
+    // The word is not always the first character: the macOS Arabic name
+    // format starts with U+200F RIGHT-TO-LEFT MARK, so that the name lays out
+    // right to left. Leading invisible format characters (Unicode Cf) are
+    // skipped for that reason; they carry no letters, so skipping them never
+    // makes an unrelated name match.
     static const QRegularExpression pattern(
         QString::fromUtf8(
-            "^\\s*("
+            "^[\\s\\p{Cf}]*("
             "screen[ _-]?shot" // en (older macOS "Screen Shot")
             "|screen[ _-]?capture" // en variants
             "|screenclip" // Windows
