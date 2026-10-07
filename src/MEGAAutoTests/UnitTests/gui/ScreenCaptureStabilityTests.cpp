@@ -335,6 +335,39 @@ TEST_CASE_METHOD(StabilityFixture, "an old image copied into the folder is not a
     CHECK(recorder.count() == 1);
 }
 
+TEST_CASE_METHOD(StabilityFixture,
+                 "an old image is not a capture when its timestamps arrive after its data")
+{
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    // Copy tools write the data first and set the source's timestamps last,
+    // so the scan triggered by the file's appearance still sees fresh ones;
+    // the old modification time is only there once the copy has finished. A
+    // photo of a few megabytes is routinely still being copied at that scan.
+    const QString copiedName = QString::fromUtf8("IMG_0043.png");
+    const QString copied = write(copiedName, 512);
+    detector.rescan(mWatched); // seen while the copy is still in progress
+    {
+        QFile file(QDir(mWatched).filePath(copiedName));
+        REQUIRE(file.open(QIODevice::ReadWrite));
+        REQUIRE(file.setFileTime(QDateTime::currentDateTime().addDays(-30),
+                                 QFileDevice::FileModificationTime));
+        file.close();
+    }
+    detector.tick(6);
+    CHECK(recorder.countOf(copied) == 0);
+
+    // A real capture written now is still reported.
+    const QString fresh = write(QString::fromUtf8("Screenshot_new.png"), 512);
+    detector.rescan(mWatched);
+    detector.tick(6);
+    REQUIRE(recorder.countOf(fresh) == 1);
+    CHECK(recorder.count() == 1);
+}
+
 TEST_CASE_METHOD(StabilityFixture, "a file still being written is not reported until it settles")
 {
     TestableDetector detector(mWatched);

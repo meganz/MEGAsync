@@ -2,6 +2,7 @@
 #define SCREEN_CAPTURE_DETECTOR_H
 
 #include <QDateTime>
+#include <QFileInfo>
 #include <QFileSystemWatcher>
 #include <QHash>
 #include <QObject>
@@ -70,6 +71,10 @@ private:
     void watchCaptureDirectory(const QString& directory, bool baselineExistingFiles);
     void watchParentOf(const QString& directory);
     void promotePendingDirectories();
+    // True if the file's timestamps place it before this detector started, so
+    // it cannot be a capture taken in this session. Decided twice per file:
+    // when it first appears and again once it has settled, see the callers.
+    bool predatesStart(const QFileInfo& info) const;
 
     struct PendingFile
     {
