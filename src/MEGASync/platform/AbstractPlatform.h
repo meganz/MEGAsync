@@ -205,6 +205,15 @@ public:
         return false;
     }
 
+    // Files a change to which may move what getScreenshotsLocation() answers
+    // (Windows: the Snipping Tool's settings hives). Watched by the caller so
+    // a relocation is picked up while running; empty where the location is
+    // fixed or only polled.
+    virtual QStringList getScreenshotsLocationSources() const
+    {
+        return QStringList();
+    }
+
 signals:
     void themeChanged(Preferences::SystemColorScheme theme);
 

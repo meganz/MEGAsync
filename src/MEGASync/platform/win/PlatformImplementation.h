@@ -101,6 +101,7 @@ public:
 
     QStringList getScreenshotsLocation() override;
     bool isScreenshotsLocationPending() const override;
+    QStringList getScreenshotsLocationSources() const override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
@@ -132,7 +133,16 @@ private:
     static QString resolveVolumeGuidPath(const QString& path);
     std::string extractToken(const std::vector<BYTE>& data);
     std::vector<BYTE> readValue(HKEY hKey, const wchar_t* name);
+    static std::wstring snippingToolPackageRoot();
     bool mScreenshotsLocationPending = false;
+    // Last token resolved and the folder it named. A token always names the
+    // same folder (picking another one issues a new token), so this answers
+    // while the hive is locked and the folder is not dropped meanwhile.
+    QString mSnippingToolToken;
+    QString mSnippingToolFolder;
+    // Token whose failure to resolve was last logged: getScreenshotsLocation()
+    // is polled, and the same failure is reported once rather than every pass.
+    QString mSnippingToolLoggedToken;
 
     WinShellDispatcherTask* shellDispatcherTask = nullptr;
     // Transitional legacy-name dispatcher (best-effort).

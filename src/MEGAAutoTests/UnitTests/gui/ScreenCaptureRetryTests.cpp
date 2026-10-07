@@ -2,17 +2,22 @@
 #include <catch.hpp>
 
 #include <QDir>
+#include <QElapsedTimer>
+#include <QEventLoop>
 #include <QFile>
 #include <QFileInfo>
 #include <QTemporaryDir>
 #include <QThread>
+#include <QTimer>
 
-// Tests for the retry path: a capture directory the platform could not name at
-// start() (on Windows the Snipping Tool keeps its settings hive locked while it
-// runs) is attached once it resolves, and a capture taken in the meantime is
-// still reported. The retry is driven through its slot rather than waited for,
-// and the directories and the "pending" answer come from the test, so nothing
-// here touches the user's real capture folders.
+// Tests for the refresh path: the capture directories are resolved again while
+// running, so a folder the platform could not name at start() (on Windows the
+// Snipping Tool keeps its settings hive locked while it runs) is attached once
+// it resolves, and a folder the user relocates the capture location to is
+// picked up and the one left behind dropped. The refresh is driven through its
+// slot rather than waited for, except where the source watch itself is under
+// test, and the directories, the "pending" answer and the sources come from
+// the test, so nothing here touches the user's real capture folders.
 
 namespace
 {
@@ -26,9 +31,20 @@ public:
         mPending = pending;
     }
 
-    void retry()
+    void setSources(const QStringList& sources)
     {
-        REQUIRE(QMetaObject::invokeMethod(this, "onRetryTimerTimeout"));
+        mSources = sources;
+    }
+
+    void refresh()
+    {
+        REQUIRE(QMetaObject::invokeMethod(this, "onRefreshTimerTimeout"));
+    }
+
+    // What QFileSystemWatcher would deliver for a change in the directory.
+    void directoryChanged(const QString& directory)
+    {
+        REQUIRE(QMetaObject::invokeMethod(this, "onDirectoryChanged", Q_ARG(QString, directory)));
     }
 
     void tick(int times)
@@ -50,8 +66,14 @@ protected:
         return mPending;
     }
 
+    QStringList captureDirectorySources() const override
+    {
+        return mSources;
+    }
+
 private:
     QStringList mDirectories;
+    QStringList mSources;
     bool mPending = false;
 };
 
@@ -63,6 +85,7 @@ protected:
         REQUIRE(mTempDir.isValid());
         mEarly = subdir(QString::fromUtf8("Screenshots"));
         mLate = subdir(QString::fromUtf8("Relocated"));
+        mOther = subdir(QString::fromUtf8("RelocatedAgain"));
         QObject::connect(&mDetector,
                          &ScreenCaptureDetector::captureDetected,
                          [this](const QString& filePath)
@@ -97,13 +120,14 @@ protected:
     QTemporaryDir mTempDir;
     QString mEarly;
     QString mLate;
+    QString mOther;
     LateDetector mDetector;
     QStringList mReported;
 };
 
 } // namespace
 
-TEST_CASE_METHOD(RetryFixture, "a capture directory that resolves later is attached on retry")
+TEST_CASE_METHOD(RetryFixture, "a capture directory that resolves later is attached on refresh")
 {
     mDetector.setDirectories({mEarly}, true);
     mDetector.start();
@@ -115,7 +139,7 @@ TEST_CASE_METHOD(RetryFixture, "a capture directory that resolves later is attac
     const QString capture = write(mLate, QString::fromUtf8("Screenshot 2026-10-06 154449.png"));
 
     mDetector.setDirectories({mEarly, mLate}, false);
-    mDetector.retry();
+    mDetector.refresh();
     mDetector.tick(6);
 
     REQUIRE(mReported.size() == 1);
@@ -133,21 +157,21 @@ TEST_CASE_METHOD(RetryFixture,
     settleClock();
 
     mDetector.setDirectories({mEarly, mLate}, false);
-    mDetector.retry();
+    mDetector.refresh();
     mDetector.tick(6);
 
     CHECK(mReported.isEmpty());
     (void)old;
 }
 
-TEST_CASE_METHOD(RetryFixture, "a retry with nothing new to add is harmless")
+TEST_CASE_METHOD(RetryFixture, "a refresh with nothing new to add is harmless")
 {
     mDetector.setDirectories({mEarly}, true);
     mDetector.start();
     settleClock();
 
-    mDetector.retry();
-    mDetector.retry();
+    mDetector.refresh();
+    mDetector.refresh();
     mDetector.tick(2);
 
     CHECK(mReported.isEmpty());
@@ -157,7 +181,107 @@ TEST_CASE_METHOD(RetryFixture, "a retry with nothing new to add is harmless")
     // still goes through the name filter.
     write(mLate, QString::fromUtf8("holiday.png"));
     mDetector.setDirectories({mEarly, mLate}, false);
-    mDetector.retry();
+    mDetector.refresh();
     mDetector.tick(6);
     CHECK(mReported.isEmpty());
+}
+
+TEST_CASE_METHOD(RetryFixture, "a capture folder relocated while running is followed")
+{
+    mDetector.setDirectories({mEarly, mLate}, false);
+    mDetector.start();
+    settleClock();
+
+    // The user picks another folder in the Snipping Tool, then captures.
+    mDetector.setDirectories({mEarly, mOther}, false);
+    mDetector.refresh();
+    const QString capture = write(mOther, QString::fromUtf8("Screenshot 2026-10-07 121530.png"));
+    mDetector.directoryChanged(mOther);
+    mDetector.tick(6);
+
+    REQUIRE(mReported.size() == 1);
+    CHECK(mReported.first() == capture);
+
+    // The folder moved away from is no longer a capture folder: what lands
+    // there now is the user's own business.
+    write(mLate, QString::fromUtf8("Screenshot 2026-10-07 121600.png"));
+    mDetector.directoryChanged(mLate);
+    mDetector.tick(6);
+    CHECK(mReported.size() == 1);
+}
+
+TEST_CASE_METHOD(RetryFixture, "a capture settling in a folder moved away from is dropped")
+{
+    mDetector.setDirectories({mEarly, mLate}, false);
+    mDetector.start();
+    settleClock();
+
+    write(mLate, QString::fromUtf8("Screenshot 2026-10-07 121530.png"));
+    mDetector.directoryChanged(mLate);
+
+    mDetector.setDirectories({mEarly}, false);
+    mDetector.refresh();
+    mDetector.tick(6);
+
+    CHECK(mReported.isEmpty());
+}
+
+TEST_CASE_METHOD(RetryFixture, "an incomplete list does not drop a folder in use")
+{
+    mDetector.setDirectories({mEarly, mLate}, false);
+    mDetector.start();
+    settleClock();
+
+    // The settings could not be read this pass (Windows: the Snipping Tool is
+    // running and holds them), so the relocated folder is missing from the
+    // answer -- while it is the very folder the tool is saving to.
+    mDetector.setDirectories({mEarly}, true);
+    mDetector.refresh();
+
+    const QString capture = write(mLate, QString::fromUtf8("Screenshot 2026-10-07 121530.png"));
+    mDetector.directoryChanged(mLate);
+    mDetector.tick(6);
+
+    REQUIRE(mReported.size() == 1);
+    CHECK(mReported.first() == capture);
+}
+
+TEST_CASE_METHOD(RetryFixture, "a change to a location source triggers a refresh")
+{
+    const QString source = QDir(mTempDir.path()).filePath(QString::fromUtf8("settings.dat"));
+    {
+        QFile file(source);
+        REQUIRE(file.open(QIODevice::WriteOnly));
+        REQUIRE(file.write("before") == 6);
+    }
+
+    mDetector.setSources({source});
+    mDetector.setDirectories({mEarly}, false);
+    mDetector.start();
+    settleClock();
+
+    // Taken in the new folder before the detector knows about it, then the
+    // settings are written: the refresh that follows attaches the folder and
+    // finds the capture, without waiting for the periodic pass.
+    mDetector.setDirectories({mEarly, mLate}, false);
+    const QString capture = write(mLate, QString::fromUtf8("Screenshot 2026-10-07 121530.png"));
+    {
+        QFile file(source);
+        REQUIRE(file.open(QIODevice::WriteOnly | QIODevice::Append));
+        REQUIRE(file.write(" after") == 6);
+    }
+
+    // The source watch and its debounce are real here, so wait on the event
+    // loop; the stability timer reports the capture once it settles.
+    QElapsedTimer elapsed;
+    elapsed.start();
+    while (mReported.isEmpty() && elapsed.elapsed() < 15000)
+    {
+        QEventLoop loop;
+        QTimer::singleShot(50, &loop, &QEventLoop::quit);
+        loop.exec();
+    }
+
+    REQUIRE(mReported.size() == 1);
+    CHECK(mReported.first() == capture);
 }
