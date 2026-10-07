@@ -100,6 +100,7 @@ public:
     void disconnectAccessibilityClients() override;
 
     QStringList getScreenshotsLocation() override;
+    bool isScreenshotsLocationPending() const override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
@@ -126,11 +127,12 @@ private:
     static QString getRegKeyValue(HKEY regKey, const int valueIndex);
     static bool openRegistry(HKEY baseKey, const QString& regKeyPath, HKEY& openedKey);
 
-    std::vector<BYTE> readFileLocked(const std::wstring& path);
-    std::string findPathNearOffset(const std::vector<BYTE>& buf, size_t start, size_t window);
-    std::string resolveToken(const std::wstring& userClassesDat, const std::string& guid);
+    std::vector<BYTE> readFileLocked(const std::wstring& path, bool& inUse);
+    QString resolveSnippingToolFolder(const std::wstring& userClassesDat, const QString& token);
+    static QString resolveVolumeGuidPath(const QString& path);
     std::string extractToken(const std::vector<BYTE>& data);
     std::vector<BYTE> readValue(HKEY hKey, const wchar_t* name);
+    bool mScreenshotsLocationPending = false;
 
     WinShellDispatcherTask* shellDispatcherTask = nullptr;
     // Transitional legacy-name dispatcher (best-effort).

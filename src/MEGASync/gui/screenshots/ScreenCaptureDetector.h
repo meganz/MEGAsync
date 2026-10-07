@@ -61,13 +61,23 @@ protected:
     // they must never create files in.
     virtual QStringList captureDirectories() const;
 
+    // True while captureDirectories() is known to be incomplete because a
+    // user-configured location could not be read yet (Windows: the Snipping
+    // Tool keeps its settings hive locked for as long as it runs). The
+    // detector keeps asking at a slow pace until this turns false. Production
+    // answers with the platform layer; tests override it.
+    virtual bool captureDirectoriesPending() const;
+
 private slots:
     void onDirectoryChanged(const QString& path);
     void onStabilityTimerTimeout();
+    void onRetryTimerTimeout();
 
 private:
     void scanDirectory(const QString& path);
+    void addCaptureDirectory(const QString& directory, bool baselineExistingFiles);
     void watchCaptureDirectory(const QString& directory, bool baselineExistingFiles);
+    void logWatchedDirectories() const;
     void watchParentOf(const QString& directory);
     void promotePendingDirectories();
 
@@ -84,6 +94,8 @@ private:
 
     QFileSystemWatcher mWatcher;
     QTimer mStabilityTimer;
+    // Re-resolves the capture directories while captureDirectoriesPending().
+    QTimer mRetryTimer;
     QHash<QString, PendingFile> mPendingFiles;
     QSet<QString> mKnownFiles;
     // Directories actively scanned for captures. mWatcher may also hold

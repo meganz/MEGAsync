@@ -26,6 +26,9 @@ target_compile_definitions(UnitTests
 )
 target_platform_compile_options(TARGET UnitTests UNIX -D__STDC_FORMAT_MACROS)
 
+# Binary fixtures read at run time (see control/RegistryHiveReaderTests.cpp).
+target_compile_definitions(UnitTests PRIVATE UNIT_TESTS_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
+
 set(UNIT_TEST_FILES
     AllMegaIncludes.h
     main.cpp
@@ -37,6 +40,7 @@ set(UNIT_TEST_FILES
     ScaleFactorManagerTests.cpp
     control/TransferBatchTests.cpp
     control/TransferRemainingTimeTests.cpp
+    control/RegistryHiveReaderTests.cpp
     control/UtilitiesTests.cpp
     platform/PlatformTests.cpp
     syncs/control/MegaIgnoreManagerTests.cpp
@@ -48,6 +52,7 @@ set(UNIT_TEST_FILES
     gui/user_messages/UserMessageModelTests.cpp
     gui/ScreenCaptureDetectorTests.cpp
     gui/ScreenCaptureStabilityTests.cpp
+    gui/ScreenCaptureRetryTests.cpp
     gui/ScreenshotUploaderTests.cpp
     stalled_issues/IgnoredStalledIssueTests.cpp
     syncs/MegaIgnoreManagerTests.cpp

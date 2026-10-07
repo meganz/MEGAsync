@@ -196,6 +196,15 @@ public:
         return QStringList();
     }
 
+    // True when the last getScreenshotsLocation() could not read a location
+    // the user configured because another process holds it (Windows: the
+    // Snipping Tool keeps its settings hive locked while it runs). Callers may
+    // ask again later; the list is complete once this is false.
+    virtual bool isScreenshotsLocationPending() const
+    {
+        return false;
+    }
+
 signals:
     void themeChanged(Preferences::SystemColorScheme theme);
 
