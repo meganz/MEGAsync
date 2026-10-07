@@ -68,23 +68,17 @@ protected:
     // answers with the platform layer; tests override it.
     virtual bool captureDirectoriesPending() const;
 
-    // Files whose change may mean captureDirectories() changed (Windows: the
-    // Snipping Tool's settings hives). Watched to re-resolve promptly; the
-    // periodic refresh covers what the watch misses. Production answers with
-    // the platform layer; tests override it.
-    virtual QStringList captureDirectorySources() const;
-
 private slots:
     void onDirectoryChanged(const QString& path);
     void onStabilityTimerTimeout();
-    void onRefreshTimerTimeout();
-    void onSourceChanged();
+    // Re-resolves captureDirectories(): attaches new folders, drops the ones
+    // no longer listed. Connected to AbstractPlatform::screenshotsLocationChanged().
+    void onCaptureDirectoriesChanged();
 
 private:
     void scanDirectory(const QString& path);
     void addCaptureDirectory(const QString& directory, bool baselineExistingFiles);
     void removeCaptureDirectory(const QString& directory);
-    void watchSources();
     void syncWatchedPaths();
     void watchCaptureDirectory(const QString& directory, bool baselineExistingFiles);
     void logWatchedDirectories() const;
@@ -104,14 +98,7 @@ private:
 
     QFileSystemWatcher mWatcher;
     QTimer mStabilityTimer;
-    // Re-resolves the capture directories while running: the user can relocate
-    // a capture folder at any time, and nothing else tells the detector.
-    QTimer mRefreshTimer;
-    // Watches captureDirectorySources(), separate from mWatcher so its paths
-    // never mix with the capture folders. Changes arrive in bursts (a hive
-    // rewrite touches the file several times), hence the debounce.
-    QFileSystemWatcher mSourceWatcher;
-    QTimer mSourceDebounceTimer;
+    QMetaObject::Connection mLocationChangedConnection;
     QHash<QString, PendingFile> mPendingFiles;
     QSet<QString> mKnownFiles;
     // Directories actively scanned for captures. mWatcher may also hold

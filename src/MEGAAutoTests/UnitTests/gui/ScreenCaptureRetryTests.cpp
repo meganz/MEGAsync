@@ -1,23 +1,22 @@
+#include "Platform.h"
 #include "ScreenCaptureDetector.h"
+#include "TestSingletons.h"
 #include <catch.hpp>
 
 #include <QDir>
-#include <QElapsedTimer>
-#include <QEventLoop>
 #include <QFile>
 #include <QFileInfo>
 #include <QTemporaryDir>
 #include <QThread>
-#include <QTimer>
 
-// Tests for the refresh path: the capture directories are resolved again while
-// running, so a folder the platform could not name at start() (on Windows the
-// Snipping Tool keeps its settings hive locked while it runs) is attached once
-// it resolves, and a folder the user relocates the capture location to is
-// picked up and the one left behind dropped. The refresh is driven through its
-// slot rather than waited for, except where the source watch itself is under
-// test, and the directories, the "pending" answer and the sources come from
-// the test, so nothing here touches the user's real capture folders.
+// Tests for the refresh path: the capture directories are resolved again when
+// the platform announces a change, so a folder it could not name at start()
+// (on Windows the Snipping Tool keeps its settings hive locked while it runs)
+// is attached once it resolves, and a folder the user relocates the capture
+// location to is picked up and the one left behind dropped. The refresh is
+// driven through its slot, except where the platform signal itself is under
+// test, and the directories and the "pending" answer come from the test, so
+// nothing here touches the user's real capture folders.
 
 namespace
 {
@@ -31,14 +30,9 @@ public:
         mPending = pending;
     }
 
-    void setSources(const QStringList& sources)
-    {
-        mSources = sources;
-    }
-
     void refresh()
     {
-        REQUIRE(QMetaObject::invokeMethod(this, "onRefreshTimerTimeout"));
+        REQUIRE(QMetaObject::invokeMethod(this, "onCaptureDirectoriesChanged"));
     }
 
     // What QFileSystemWatcher would deliver for a change in the directory.
@@ -66,14 +60,8 @@ protected:
         return mPending;
     }
 
-    QStringList captureDirectorySources() const override
-    {
-        return mSources;
-    }
-
 private:
     QStringList mDirectories;
-    QStringList mSources;
     bool mPending = false;
 };
 
@@ -246,42 +234,27 @@ TEST_CASE_METHOD(RetryFixture, "an incomplete list does not drop a folder in use
     CHECK(mReported.first() == capture);
 }
 
-TEST_CASE_METHOD(RetryFixture, "a change to a location source triggers a refresh")
+TEST_CASE_METHOD(RetryFixture, "a location change announced by the platform triggers a refresh")
 {
-    const QString source = QDir(mTempDir.path()).filePath(QString::fromUtf8("settings.dat"));
-    {
-        QFile file(source);
-        REQUIRE(file.open(QIODevice::WriteOnly));
-        REQUIRE(file.write("before") == 6);
-    }
-
-    mDetector.setSources({source});
+    ensurePlatformCreated();
+    AbstractPlatform* platform = Platform::getInstance();
     mDetector.setDirectories({mEarly}, false);
     mDetector.start();
     settleClock();
 
-    // Taken in the new folder before the detector knows about it, then the
-    // settings are written: the refresh that follows attaches the folder and
-    // finds the capture, without waiting for the periodic pass.
+    // Taken in the new folder before the detector knows about it; the
+    // announcement attaches the folder and finds the capture.
     mDetector.setDirectories({mEarly, mLate}, false);
-    const QString capture = write(mLate, QString::fromUtf8("Screenshot 2026-10-07 121530.png"));
-    {
-        QFile file(source);
-        REQUIRE(file.open(QIODevice::WriteOnly | QIODevice::Append));
-        REQUIRE(file.write(" after") == 6);
-    }
-
-    // The source watch and its debounce are real here, so wait on the event
-    // loop; the stability timer reports the capture once it settles.
-    QElapsedTimer elapsed;
-    elapsed.start();
-    while (mReported.isEmpty() && elapsed.elapsed() < 15000)
-    {
-        QEventLoop loop;
-        QTimer::singleShot(50, &loop, &QEventLoop::quit);
-        loop.exec();
-    }
+    const QString capture = write(mLate, QString::fromUtf8("Screenshot 2026-10-07 131833.png"));
+    emit platform->screenshotsLocationChanged();
+    mDetector.tick(6);
 
     REQUIRE(mReported.size() == 1);
     CHECK(mReported.first() == capture);
+
+    // Harmless once stopped: the detector no longer listens.
+    mDetector.stop();
+    mDetector.setDirectories({mEarly, mLate, mOther}, false);
+    emit platform->screenshotsLocationChanged();
+    CHECK_FALSE(mDetector.isRunning());
 }

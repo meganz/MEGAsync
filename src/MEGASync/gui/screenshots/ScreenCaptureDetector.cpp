@@ -15,13 +15,6 @@ constexpr int STABLE_TICKS_REQUIRED = 2; // size unchanged for ~300ms => fully w
 // ~30s at STABILITY_INTERVAL_MS. Far longer than any real capture takes to
 // write, and bounds how long a file that never settles keeps the timer alive.
 constexpr int MAX_PENDING_TICKS = 200;
-// How often the capture directories are resolved again while running. Slow on
-// purpose: each pass reads the Snipping Tool's settings. It is the fallback;
-// a change to captureDirectorySources() triggers a pass sooner.
-constexpr int REFRESH_INTERVAL_MS = 30000;
-// Quiet time after the last change to a source before resolving: one settings
-// write touches the hive and its logs several times in quick succession.
-constexpr int SOURCE_DEBOUNCE_MS = 2000;
 const QStringList IMAGE_EXTENSIONS{QString::fromUtf8("png"),
                                    QString::fromUtf8("jpg"),
                                    QString::fromUtf8("jpeg")};
@@ -43,20 +36,6 @@ ScreenCaptureDetector::ScreenCaptureDetector(QObject* parent):
             &QTimer::timeout,
             this,
             &ScreenCaptureDetector::onStabilityTimerTimeout);
-
-    mRefreshTimer.setInterval(REFRESH_INTERVAL_MS);
-    connect(&mRefreshTimer, &QTimer::timeout, this, &ScreenCaptureDetector::onRefreshTimerTimeout);
-
-    mSourceDebounceTimer.setInterval(SOURCE_DEBOUNCE_MS);
-    mSourceDebounceTimer.setSingleShot(true);
-    connect(&mSourceWatcher,
-            &QFileSystemWatcher::fileChanged,
-            this,
-            &ScreenCaptureDetector::onSourceChanged);
-    connect(&mSourceDebounceTimer,
-            &QTimer::timeout,
-            this,
-            &ScreenCaptureDetector::onRefreshTimerTimeout);
 }
 
 void ScreenCaptureDetector::start()
@@ -83,8 +62,12 @@ void ScreenCaptureDetector::start()
 
     if (mRunning)
     {
-        watchSources();
-        mRefreshTimer.start();
+        // The user can relocate a capture folder at any time; the platform
+        // says when (Windows: the Snipping Tool's auto-save folder).
+        mLocationChangedConnection = connect(Platform::getInstance(),
+                                             &AbstractPlatform::screenshotsLocationChanged,
+                                             this,
+                                             &ScreenCaptureDetector::onCaptureDirectoriesChanged);
     }
 }
 
@@ -133,16 +116,12 @@ void ScreenCaptureDetector::logWatchedDirectories() const
                            .constData());
 }
 
-void ScreenCaptureDetector::onRefreshTimerTimeout()
+void ScreenCaptureDetector::onCaptureDirectoriesChanged()
 {
     if (!mRunning)
     {
         return;
     }
-
-    // Re-armed on every pass: QFileSystemWatcher drops a file that is replaced
-    // or deleted, and a source that did not exist at start() may exist now.
-    watchSources();
 
     const QStringList directories = captureDirectories();
     bool changed = false;
@@ -153,7 +132,7 @@ void ScreenCaptureDetector::onRefreshTimerTimeout()
             continue;
         }
 
-        // No baseline: a capture taken between the relocation and this pass
+        // No baseline: a capture taken between the relocation and this call
         // must not be lost. scanDirectory()'s timestamp check keeps anything
         // older than start() out, as for a folder created while running.
         addCaptureDirectory(directory, false);
@@ -188,11 +167,6 @@ void ScreenCaptureDetector::onRefreshTimerTimeout()
     }
 }
 
-void ScreenCaptureDetector::onSourceChanged()
-{
-    mSourceDebounceTimer.start();
-}
-
 void ScreenCaptureDetector::removeCaptureDirectory(const QString& directory)
 {
     mCaptureDirectories.remove(directory);
@@ -209,19 +183,6 @@ void ScreenCaptureDetector::removeCaptureDirectory(const QString& directory)
         else
         {
             ++it;
-        }
-    }
-}
-
-void ScreenCaptureDetector::watchSources()
-{
-    const QStringList watched = mSourceWatcher.files();
-    const QStringList sources = captureDirectorySources();
-    for (const QString& source: sources)
-    {
-        if (!watched.contains(source) && QFileInfo::exists(source))
-        {
-            mSourceWatcher.addPath(source);
         }
     }
 }
@@ -258,14 +219,8 @@ void ScreenCaptureDetector::stop()
     {
         mWatcher.removePaths(watched);
     }
-    const QStringList sources = mSourceWatcher.files();
-    if (!sources.isEmpty())
-    {
-        mSourceWatcher.removePaths(sources);
-    }
+    disconnect(mLocationChangedConnection);
     mStabilityTimer.stop();
-    mRefreshTimer.stop();
-    mSourceDebounceTimer.stop();
     mPendingFiles.clear();
     mKnownFiles.clear();
     mCaptureDirectories.clear();
@@ -329,11 +284,6 @@ QStringList ScreenCaptureDetector::captureDirectories() const
 bool ScreenCaptureDetector::captureDirectoriesPending() const
 {
     return Platform::getInstance()->isScreenshotsLocationPending();
-}
-
-QStringList ScreenCaptureDetector::captureDirectorySources() const
-{
-    return Platform::getInstance()->getScreenshotsLocationSources();
 }
 
 QStringList ScreenCaptureDetector::platformCaptureDirectories()

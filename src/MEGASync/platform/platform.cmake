@@ -43,6 +43,8 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/win/Laf.h.in
    ${CMAKE_CURRENT_LIST_DIR}/win/WinThemeWatcher.h
    ${CMAKE_CURRENT_LIST_DIR}/win/WinThemeWatcher.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/SnippingToolSettings.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/SnippingToolSettings.cpp
 )
 
 # Shared by the POSIX platform implementations, so it is built for both macOS and Linux.

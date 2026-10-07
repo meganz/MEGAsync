@@ -14,10 +14,12 @@
 #include <QProcess>
 #include <QString>
 #include <QThread>
+#include <QTimer>
 
 #include <string>
 #include <vector>
 
+class SnippingToolSettings;
 class WinShellDispatcherTask;
 
 class PlatformImplementation : public AbstractPlatform
@@ -101,7 +103,6 @@ public:
 
     QStringList getScreenshotsLocation() override;
     bool isScreenshotsLocationPending() const override;
-    QStringList getScreenshotsLocationSources() const override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
@@ -131,9 +132,11 @@ private:
     std::vector<BYTE> readFileLocked(const std::wstring& path, bool& inUse);
     QString resolveSnippingToolFolder(const std::wstring& userClassesDat, const QString& token);
     static QString resolveVolumeGuidPath(const QString& path);
-    std::string extractToken(const std::vector<BYTE>& data);
-    std::vector<BYTE> readValue(HKEY hKey, const wchar_t* name);
-    static std::wstring snippingToolPackageRoot();
+    // Created by the first getScreenshotsLocation(); owned through parenting.
+    SnippingToolSettings* mSnippingToolSettings = nullptr;
+    QTimer* mScreenshotsLocationRetryTimer = nullptr;
+    // Quick retries left after the Snipping Tool exited (see getScreenshotsLocation()).
+    int mScreenshotsLocationFastRetries = 0;
     bool mScreenshotsLocationPending = false;
     // Last token resolved and the folder it named. A token always names the
     // same folder (picking another one issues a new token), so this answers
