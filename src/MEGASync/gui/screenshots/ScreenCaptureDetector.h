@@ -84,6 +84,7 @@ private:
     void watchCaptureDirectory(const QString& directory, bool baselineExistingFiles);
     void logWatchedDirectories() const;
     void watchParentOf(const QString& directory);
+    void demoteMissingDirectories();
     void promotePendingDirectories();
     // True if the file's timestamps place it before this detector started, so
     // it cannot be a capture taken in this session. Decided twice per file:
@@ -106,9 +107,10 @@ private:
     QMetaObject::Connection mLocationChangedConnection;
     QHash<QString, PendingFile> mPendingFiles;
     QSet<QString> mKnownFiles;
-    // Directories actively scanned for captures. mWatcher may also hold
-    // parents of mPendingDirectories (capture folders the OS has not created
-    // yet); those are watched only to catch the folder's creation.
+    // Directories actively scanned for captures. mWatcher also holds the
+    // parents of these and of mPendingDirectories (capture folders the OS has
+    // not created yet, or that were removed); those are watched only to catch
+    // the folder disappearing and reappearing.
     QSet<QString> mCaptureDirectories;
     QSet<QString> mPendingDirectories;
     QDateTime mStartTime;

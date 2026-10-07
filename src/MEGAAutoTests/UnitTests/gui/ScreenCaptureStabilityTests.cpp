@@ -135,6 +135,15 @@ protected:
         QThread::msleep(50);
     }
 
+    // Lets the real QFileSystemWatcher deliver what it saw, for the cases where
+    // what it does (or fails to) report is the point of the test.
+    static void processWatcherEvents()
+    {
+        QEventLoop loop;
+        QTimer::singleShot(300, &loop, &QEventLoop::quit);
+        loop.exec();
+    }
+
     QString write(const QString& name, int bytes) const
     {
         const QString path = QDir(mWatched).filePath(name);
@@ -555,6 +564,37 @@ TEST_CASE_METHOD(StabilityFixture, "a capture folder deleted and recreated is pi
     REQUIRE(QDir().mkpath(mWatched));
     const QString firstCapture = write(QString::fromUtf8("Screenshot_back.png"), 512);
     detector.rescan(mTempDir.path()); // the watched parent sees the folder return
+
+    detector.tick(6);
+    REQUIRE(recorder.countOf(firstCapture) == 1);
+    CHECK(recorder.count() == 1);
+}
+
+TEST_CASE_METHOD(StabilityFixture,
+                 "a capture folder moved to the trash and recreated is picked up again")
+{
+    // Deleting from a file manager moves the folder to the trash. Unlike a real
+    // delete, QFileSystemWatcher does not report that rename for the folder
+    // itself and keeps it listed as watched, so only the parent sees it go.
+    // That is the behaviour under test, so this drives the real watcher rather
+    // than rescan().
+    TestableDetector detector(mWatched);
+    CaptureRecorder recorder(detector);
+    detector.start();
+    settleClockAfterStart();
+
+    const QString trash = QDir(mTempDir.path()).filePath(QString::fromUtf8("Trash"));
+    REQUIRE(QDir().mkpath(trash));
+    REQUIRE(QDir().rename(mWatched, QDir(trash).filePath(QString::fromUtf8("Screenshots"))));
+    processWatcherEvents();
+
+    REQUIRE(QDir().mkpath(mWatched));
+    processWatcherEvents();
+
+    // Written only once the folder is back, so only a watch on the recreated
+    // folder can see it.
+    const QString firstCapture = write(QString::fromUtf8("Screenshot_back.png"), 512);
+    processWatcherEvents();
 
     detector.tick(6);
     REQUIRE(recorder.countOf(firstCapture) == 1);
