@@ -4461,7 +4461,7 @@ Please refresh the view</source>
     <message>
         <source>Merge folders</source>
         <translatorcomment>Button to solve a name conflict sync stall by merging folders.SNC-2565</translatorcomment>
-        <translation>폴더 병합</translation>
+        <translation>폴더 합치기</translation>
     </message>
     <message>
         <source>Merge folders and rename the rest</source>
