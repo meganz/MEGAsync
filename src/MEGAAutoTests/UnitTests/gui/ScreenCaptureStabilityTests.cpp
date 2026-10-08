@@ -2,11 +2,15 @@
 #include <catch.hpp>
 
 #include <QDir>
+#include <QElapsedTimer>
 #include <QEventLoop>
 #include <QFile>
+#include <QFileInfo>
 #include <QTemporaryDir>
 #include <QThread>
 #include <QTimer>
+
+#include <functional>
 
 // Tests for the stability tick -- the loop that decides a newly appeared file has
 // finished being written and is therefore a capture to upload.
@@ -55,6 +59,8 @@ public:
     {
         REQUIRE(QMetaObject::invokeMethod(this, "onDirectoryChanged", Q_ARG(QString, directory)));
     }
+
+    using ScreenCaptureDetector::watchedDirectories;
 
 protected:
     QStringList captureDirectories() const override
@@ -136,12 +142,28 @@ protected:
     }
 
     // Lets the real QFileSystemWatcher deliver what it saw, for the cases where
-    // what it does (or fails to) report is the point of the test.
-    static void processWatcherEvents()
+    // what it does (or fails to) report is the point of the test. FSEvents
+    // (macOS) batches events for 0.5 s, so a wait shorter than that can miss
+    // the batch a change landed in.
+    static void processWatcherEvents(int ms)
     {
         QEventLoop loop;
-        QTimer::singleShot(300, &loop, &QEventLoop::quit);
+        QTimer::singleShot(ms, &loop, &QEventLoop::quit);
         loop.exec();
+    }
+
+    // Pumps the event loop until condition() holds or the timeout passes.
+    // Waiting on the outcome rather than on a fixed delay keeps the test
+    // independent of each backend's delivery latency.
+    static bool waitFor(const std::function<bool()>& condition, int timeoutMs = 5000)
+    {
+        QElapsedTimer timer;
+        timer.start();
+        while (!condition() && timer.elapsed() < timeoutMs)
+        {
+            processWatcherEvents(20);
+        }
+        return condition();
     }
 
     QString write(const QString& name, int bytes) const
@@ -578,6 +600,13 @@ TEST_CASE_METHOD(StabilityFixture,
     // itself and keeps it listed as watched, so only the parent sees it go.
     // That is the behaviour under test, so this drives the real watcher rather
     // than rescan().
+    //
+    // Only inotify (Linux) fails this without the fix: its watch follows the
+    // folder into the trash. FSEvents (macOS) matches events by path, so the
+    // recreated folder is reported either way and this passes with or without
+    // the fix there; the parent-watch invariant the fix relies on is pinned by
+    // "the parent of an existing capture folder is watched from start()" and
+    // the relocation tests in ScreenCaptureRetryTests.
     TestableDetector detector(mWatched);
     CaptureRecorder recorder(detector);
     detector.start();
@@ -586,17 +615,38 @@ TEST_CASE_METHOD(StabilityFixture,
     const QString trash = QDir(mTempDir.path()).filePath(QString::fromUtf8("Trash"));
     REQUIRE(QDir().mkpath(trash));
     REQUIRE(QDir().rename(mWatched, QDir(trash).filePath(QString::fromUtf8("Screenshots"))));
-    processWatcherEvents();
+    // Long enough for every backend to have reported the move before the
+    // folder comes back: inotify and Windows are immediate, FSEvents batches
+    // for 0.5 s.
+    processWatcherEvents(1000);
 
     REQUIRE(QDir().mkpath(mWatched));
-    processWatcherEvents();
+    processWatcherEvents(1000);
 
     // Written only once the folder is back, so only a watch on the recreated
-    // folder can see it.
+    // folder can see it. The real stability timer settles it: wait for the
+    // report, not for a fixed delay.
     const QString firstCapture = write(QString::fromUtf8("Screenshot_back.png"), 512);
-    processWatcherEvents();
-
-    detector.tick(6);
-    REQUIRE(recorder.countOf(firstCapture) == 1);
+    REQUIRE(waitFor(
+        [&recorder, &firstCapture]
+        {
+            return recorder.countOf(firstCapture) == 1;
+        }));
     CHECK(recorder.count() == 1);
+}
+
+TEST_CASE_METHOD(StabilityFixture,
+                 "the parent of an existing capture folder is watched from start()")
+{
+    // The parent is what reports the capture folder being moved to the trash
+    // (inotify does not report a watched folder's own rename), so it must be
+    // watched for the folder's whole lifetime, not only while the folder is
+    // still to be created. Checked on the watcher itself: whether this holds
+    // is invisible from the detector's behaviour on every backend but inotify.
+    TestableDetector detector(mWatched);
+    detector.start();
+
+    const QStringList watched = detector.watchedDirectories();
+    CHECK(watched.contains(mWatched));
+    CHECK(watched.contains(QFileInfo(mWatched).absolutePath()));
 }

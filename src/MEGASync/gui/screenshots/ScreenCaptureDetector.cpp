@@ -187,12 +187,19 @@ void ScreenCaptureDetector::removeCaptureDirectory(const QString& directory)
     }
 }
 
+QStringList ScreenCaptureDetector::watchedDirectories() const
+{
+    return mWatcher.directories();
+}
+
 void ScreenCaptureDetector::syncWatchedPaths()
 {
-    // What mWatcher must hold: every capture folder, plus the parent of each
-    // one not created yet. Anything else is left over from a removed folder.
+    // What mWatcher must hold: every capture folder, plus the parent of every
+    // capture folder, created or not. The parent is what reports a folder
+    // appearing, and being moved away (see demoteMissingDirectories). Anything
+    // else is left over from a removed folder.
     QSet<QString> needed = mCaptureDirectories;
-    for (const QString& directory: qAsConst(mPendingDirectories))
+    for (const QString& directory: mCaptureDirectories + mPendingDirectories)
     {
         needed.insert(QFileInfo(directory).absolutePath());
     }
@@ -277,6 +284,11 @@ void ScreenCaptureDetector::demoteMissingDirectories()
         // the trash. Drop that stale watch, or re-adding the path once the OS
         // recreates the folder is refused as "already watched" and no capture
         // is ever seen again. Demote it so it re-attaches when it reappears.
+        //
+        // On macOS the removal fails (the FSEvents engine cannot resolve a path
+        // that no longer exists) and the re-add is refused the same way, but it
+        // does not matter there: FSEvents matches events by path, so the
+        // recreated folder is reported through the stale entry.
         if (mWatcher.directories().contains(directory))
         {
             mWatcher.removePath(directory);

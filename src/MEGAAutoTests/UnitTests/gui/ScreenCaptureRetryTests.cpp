@@ -49,6 +49,8 @@ public:
         }
     }
 
+    using ScreenCaptureDetector::watchedDirectories;
+
 protected:
     QStringList captureDirectories() const override
     {
@@ -103,6 +105,11 @@ protected:
         REQUIRE(file.write(QByteArray(256, 'x')) == 256);
         file.close();
         return QDir::toNativeSeparators(QFileInfo(path).absoluteFilePath());
+    }
+
+    static QString parentOf(const QString& directory)
+    {
+        return QFileInfo(directory).absolutePath();
     }
 
     QTemporaryDir mTempDir;
@@ -257,4 +264,69 @@ TEST_CASE_METHOD(RetryFixture, "a location change announced by the platform trig
     mDetector.setDirectories({mEarly, mLate, mOther}, false);
     emit platform->screenshotsLocationChanged();
     CHECK_FALSE(mDetector.isRunning());
+}
+
+// The parent of a capture folder is what reports the folder being moved to the
+// trash (inotify does not report a watched folder's own rename), so it is
+// watched for the folder's whole lifetime. A refresh reconciles the watcher
+// against what it must hold; these pin down that the reconciliation neither
+// drops those parents nor leaks the ones a dropped folder no longer needs.
+// Checked on the watcher itself, since on every backend but inotify the
+// detector behaves the same with or without the parent watch.
+
+TEST_CASE_METHOD(RetryFixture, "a relocation keeps the parent of every capture folder watched")
+{
+    // Folders under different parents, so each parent watch is attributable.
+    const QString first = subdir(QString::fromUtf8("one/Screenshots"));
+    const QString second = subdir(QString::fromUtf8("two/Relocated"));
+
+    mDetector.setDirectories({first}, false);
+    mDetector.start();
+    REQUIRE(mDetector.watchedDirectories().contains(parentOf(first)));
+
+    mDetector.setDirectories({first, second}, false);
+    mDetector.refresh();
+
+    const QStringList watched = mDetector.watchedDirectories();
+    CHECK(watched.contains(first));
+    CHECK(watched.contains(second));
+    CHECK(watched.contains(parentOf(first)));
+    CHECK(watched.contains(parentOf(second)));
+}
+
+TEST_CASE_METHOD(RetryFixture, "a folder dropped by a relocation releases its parent watch")
+{
+    const QString first = subdir(QString::fromUtf8("one/Screenshots"));
+    const QString second = subdir(QString::fromUtf8("two/Relocated"));
+
+    mDetector.setDirectories({first}, false);
+    mDetector.start();
+
+    mDetector.setDirectories({second}, false);
+    mDetector.refresh();
+
+    const QStringList watched = mDetector.watchedDirectories();
+    CHECK_FALSE(watched.contains(first));
+    CHECK_FALSE(watched.contains(parentOf(first)));
+    CHECK(watched.contains(second));
+    CHECK(watched.contains(parentOf(second)));
+}
+
+TEST_CASE_METHOD(RetryFixture,
+                 "a dropped folder's parent stays watched while another capture folder lives in it")
+{
+    // mEarly and mLate share the fixture's parent: dropping one must not take
+    // the parent watch away from the other.
+    REQUIRE(parentOf(mEarly) == parentOf(mLate));
+
+    mDetector.setDirectories({mEarly, mLate}, false);
+    mDetector.start();
+
+    mDetector.setDirectories({mLate}, false);
+    mDetector.refresh();
+
+    const QStringList watched = mDetector.watchedDirectories();
+    CHECK_FALSE(watched.contains(mEarly));
+    CHECK(watched.contains(mLate));
+    CHECK(watched.contains(parentOf(mLate)));
 }

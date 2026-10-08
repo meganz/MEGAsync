@@ -69,6 +69,11 @@ protected:
     // answers with the platform layer; tests override it.
     virtual bool captureDirectoriesPending() const;
 
+    // What QFileSystemWatcher actually holds. For tests: a folder the detector
+    // treats as watched is not necessarily one the watcher reports on, and the
+    // parent watches that catch a folder being moved away are only visible here.
+    QStringList watchedDirectories() const;
+
 private slots:
     void onDirectoryChanged(const QString& path);
     void onStabilityTimerTimeout();
