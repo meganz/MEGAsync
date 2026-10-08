@@ -187,12 +187,19 @@ void ScreenCaptureDetector::removeCaptureDirectory(const QString& directory)
     }
 }
 
+QStringList ScreenCaptureDetector::watchedDirectories() const
+{
+    return mWatcher.directories();
+}
+
 void ScreenCaptureDetector::syncWatchedPaths()
 {
-    // What mWatcher must hold: every capture folder, plus the parent of each
-    // one not created yet. Anything else is left over from a removed folder.
+    // What mWatcher must hold: every capture folder, plus the parent of every
+    // capture folder, created or not. The parent is what reports a folder
+    // appearing, and being moved away (see demoteMissingDirectories). Anything
+    // else is left over from a removed folder.
     QSet<QString> needed = mCaptureDirectories;
-    for (const QString& directory: qAsConst(mPendingDirectories))
+    for (const QString& directory: mCaptureDirectories + mPendingDirectories)
     {
         needed.insert(QFileInfo(directory).absolutePath());
     }
@@ -233,6 +240,10 @@ void ScreenCaptureDetector::watchCaptureDirectory(const QString& directory,
 {
     mWatcher.addPath(directory);
     mCaptureDirectories.insert(directory);
+    // The parent is what reports the folder being moved away (see
+    // demoteMissingDirectories), so watch it for the folder's whole lifetime,
+    // not only while it is pending.
+    watchParentOf(directory);
 
     // Baseline: everything already present is not a new capture. Skipped for
     // folders that appear while running (they are created by the OS together
@@ -254,6 +265,37 @@ void ScreenCaptureDetector::watchParentOf(const QString& directory)
     if (QDir(parent).exists())
     {
         mWatcher.addPath(parent);
+    }
+}
+
+void ScreenCaptureDetector::demoteMissingDirectories()
+{
+    const auto active = mCaptureDirectories; // copy: mutated while iterating
+    for (const QString& directory: active)
+    {
+        if (QDir(directory).exists())
+        {
+            continue;
+        }
+
+        // Deleting from a file manager moves the folder to the trash, and
+        // QFileSystemWatcher (inotify) does not report a watched folder being
+        // renamed: it keeps the path listed while following the folder into
+        // the trash. Drop that stale watch, or re-adding the path once the OS
+        // recreates the folder is refused as "already watched" and no capture
+        // is ever seen again. Demote it so it re-attaches when it reappears.
+        //
+        // On macOS the removal fails (the FSEvents engine cannot resolve a path
+        // that no longer exists) and the re-add is refused the same way, but it
+        // does not matter there: FSEvents matches events by path, so the
+        // recreated folder is reported through the stale entry.
+        if (mWatcher.directories().contains(directory))
+        {
+            mWatcher.removePath(directory);
+        }
+        mCaptureDirectories.remove(directory);
+        mPendingDirectories.insert(directory);
+        watchParentOf(directory);
     }
 }
 
@@ -444,21 +486,14 @@ bool ScreenCaptureDetector::isSharedDirectory(const QString& path)
 
 void ScreenCaptureDetector::onDirectoryChanged(const QString& path)
 {
+    // Demote first: a folder moved away and recreated between two events must
+    // be re-attached to the new folder, not left on the stale watch.
+    demoteMissingDirectories();
     promotePendingDirectories();
 
     if (!mCaptureDirectories.contains(path))
     {
-        // A watched parent changed but the pending folder is still missing.
-        return;
-    }
-
-    if (!QDir(path).exists())
-    {
-        // Deleted mid-session: QFileSystemWatcher drops the path silently.
-        // Demote it so it re-attaches when the OS recreates it.
-        mCaptureDirectories.remove(path);
-        mPendingDirectories.insert(path);
-        watchParentOf(path);
+        // A watched parent changed, or the folder itself was just demoted.
         return;
     }
 
