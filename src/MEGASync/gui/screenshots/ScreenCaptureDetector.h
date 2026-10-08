@@ -62,13 +62,27 @@ protected:
     // they must never create files in.
     virtual QStringList captureDirectories() const;
 
+    // True while captureDirectories() is known to be incomplete because a
+    // user-configured location could not be read yet (Windows: the Snipping
+    // Tool keeps its settings hive locked for as long as it runs). Folders
+    // missing from an incomplete list are kept rather than dropped. Production
+    // answers with the platform layer; tests override it.
+    virtual bool captureDirectoriesPending() const;
+
 private slots:
     void onDirectoryChanged(const QString& path);
     void onStabilityTimerTimeout();
+    // Re-resolves captureDirectories(): attaches new folders, drops the ones
+    // no longer listed. Connected to AbstractPlatform::screenshotsLocationChanged().
+    void onCaptureDirectoriesChanged();
 
 private:
     void scanDirectory(const QString& path);
+    void addCaptureDirectory(const QString& directory, bool baselineExistingFiles);
+    void removeCaptureDirectory(const QString& directory);
+    void syncWatchedPaths();
     void watchCaptureDirectory(const QString& directory, bool baselineExistingFiles);
+    void logWatchedDirectories() const;
     void watchParentOf(const QString& directory);
     void promotePendingDirectories();
     // True if the file's timestamps place it before this detector started, so
@@ -89,6 +103,7 @@ private:
 
     QFileSystemWatcher mWatcher;
     QTimer mStabilityTimer;
+    QMetaObject::Connection mLocationChangedConnection;
     QHash<QString, PendingFile> mPendingFiles;
     QSet<QString> mKnownFiles;
     // Directories actively scanned for captures. mWatcher may also hold

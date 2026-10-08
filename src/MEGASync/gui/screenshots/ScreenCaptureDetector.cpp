@@ -54,33 +54,157 @@ void ScreenCaptureDetector::start()
     const QStringList directories = captureDirectories();
     for (const QString& directory: directories)
     {
-        if (isTooBroadToWatch(directory))
-        {
-            mega::MegaApi::log(
-                mega::MegaApi::LOG_LEVEL_WARNING,
-                QString::fromUtf8("Screenshot detector: refusing to watch '%1', it is "
-                                  "too broad to treat as a capture folder")
-                    .arg(directory)
-                    .toUtf8()
-                    .constData());
-            continue;
-        }
-
-        if (QDir(directory).exists())
-        {
-            watchCaptureDirectory(directory, true);
-        }
-        else
-        {
-            // The OS creates the capture folder on first use (e.g. Windows
-            // creates Pictures/Screenshots with the first Win+PrtScn). Watch
-            // the parent and attach the folder when it appears.
-            mPendingDirectories.insert(directory);
-            watchParentOf(directory);
-        }
+        addCaptureDirectory(directory, true);
     }
 
     mRunning = !mWatcher.directories().isEmpty();
+    logWatchedDirectories();
+
+    if (mRunning)
+    {
+        // The user can relocate a capture folder at any time; the platform
+        // says when (Windows: the Snipping Tool's auto-save folder).
+        mLocationChangedConnection = connect(Platform::getInstance(),
+                                             &AbstractPlatform::screenshotsLocationChanged,
+                                             this,
+                                             &ScreenCaptureDetector::onCaptureDirectoriesChanged);
+    }
+}
+
+void ScreenCaptureDetector::addCaptureDirectory(const QString& directory,
+                                                bool baselineExistingFiles)
+{
+    if (isTooBroadToWatch(directory))
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                           QString::fromUtf8("Screenshot detector: refusing to watch '%1', it is "
+                                             "too broad to treat as a capture folder")
+                               .arg(directory)
+                               .toUtf8()
+                               .constData());
+        return;
+    }
+
+    if (QDir(directory).exists())
+    {
+        watchCaptureDirectory(directory, baselineExistingFiles);
+    }
+    else
+    {
+        // The OS creates the capture folder on first use (e.g. Windows
+        // creates Pictures/Screenshots with the first Win+PrtScn). Watch
+        // the parent and attach the folder when it appears.
+        mPendingDirectories.insert(directory);
+        watchParentOf(directory);
+    }
+}
+
+void ScreenCaptureDetector::logWatchedDirectories() const
+{
+    // The only trace of which folders are covered. A location that resolved
+    // to the wrong place is invisible otherwise: nothing fails, captures are
+    // just never seen.
+    const QStringList watched = mCaptureDirectories.values();
+    const QStringList pending = mPendingDirectories.values();
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
+                       QString::fromUtf8("Screenshot detector watching: %1%2")
+                           .arg(watched.join(QString::fromUtf8(", ")),
+                                pending.isEmpty() ? QString() :
+                                                    QString::fromUtf8(" (not created yet: %1)")
+                                                        .arg(pending.join(QString::fromUtf8(", "))))
+                           .toUtf8()
+                           .constData());
+}
+
+void ScreenCaptureDetector::onCaptureDirectoriesChanged()
+{
+    if (!mRunning)
+    {
+        return;
+    }
+
+    const QStringList directories = captureDirectories();
+    bool changed = false;
+    for (const QString& directory: directories)
+    {
+        if (mCaptureDirectories.contains(directory) || mPendingDirectories.contains(directory))
+        {
+            continue;
+        }
+
+        // No baseline: a capture taken between the relocation and this call
+        // must not be lost. scanDirectory()'s timestamp check keeps anything
+        // older than start() out, as for a folder created while running.
+        addCaptureDirectory(directory, false);
+        if (mCaptureDirectories.contains(directory))
+        {
+            scanDirectory(directory);
+        }
+        changed = true;
+    }
+
+    // A folder no longer listed is one the user moved the capture location
+    // away from. Not while pending: the list is incomplete then, and the
+    // folder it lacks may well be the one still in use.
+    if (!captureDirectoriesPending())
+    {
+        QSet<QString> stale = mCaptureDirectories + mPendingDirectories;
+        for (const QString& directory: directories)
+        {
+            stale.remove(directory);
+        }
+        for (const QString& directory: stale)
+        {
+            removeCaptureDirectory(directory);
+            changed = true;
+        }
+    }
+
+    if (changed)
+    {
+        syncWatchedPaths();
+        logWatchedDirectories();
+    }
+}
+
+void ScreenCaptureDetector::removeCaptureDirectory(const QString& directory)
+{
+    mCaptureDirectories.remove(directory);
+    mPendingDirectories.remove(directory);
+
+    // A capture still settling there is dropped with the folder. mKnownFiles
+    // is kept: should the user move back, what was already seen stays seen.
+    for (auto it = mPendingFiles.begin(); it != mPendingFiles.end();)
+    {
+        if (QFileInfo(QDir::fromNativeSeparators(it.key())).absolutePath() == directory)
+        {
+            it = mPendingFiles.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+}
+
+void ScreenCaptureDetector::syncWatchedPaths()
+{
+    // What mWatcher must hold: every capture folder, plus the parent of each
+    // one not created yet. Anything else is left over from a removed folder.
+    QSet<QString> needed = mCaptureDirectories;
+    for (const QString& directory: qAsConst(mPendingDirectories))
+    {
+        needed.insert(QFileInfo(directory).absolutePath());
+    }
+
+    const QStringList watched = mWatcher.directories();
+    for (const QString& path: watched)
+    {
+        if (!needed.contains(path))
+        {
+            mWatcher.removePath(path);
+        }
+    }
 }
 
 void ScreenCaptureDetector::stop()
@@ -95,6 +219,7 @@ void ScreenCaptureDetector::stop()
     {
         mWatcher.removePaths(watched);
     }
+    disconnect(mLocationChangedConnection);
     mStabilityTimer.stop();
     mPendingFiles.clear();
     mKnownFiles.clear();
@@ -154,6 +279,11 @@ bool ScreenCaptureDetector::isRunning() const
 QStringList ScreenCaptureDetector::captureDirectories() const
 {
     return platformCaptureDirectories();
+}
+
+bool ScreenCaptureDetector::captureDirectoriesPending() const
+{
+    return Platform::getInstance()->isScreenshotsLocationPending();
 }
 
 QStringList ScreenCaptureDetector::platformCaptureDirectories()

@@ -196,8 +196,23 @@ public:
         return QStringList();
     }
 
+    // True when the last getScreenshotsLocation() could not read a location
+    // the user configured because another process holds it (Windows: the
+    // Snipping Tool keeps its settings hive locked while it runs). The list is
+    // incomplete until this is false; screenshotsLocationChanged() is emitted
+    // when it is worth asking again.
+    virtual bool isScreenshotsLocationPending() const
+    {
+        return false;
+    }
+
 signals:
     void themeChanged(Preferences::SystemColorScheme theme);
+    // What getScreenshotsLocation() answers may have changed: ask it again.
+    // Emitted only where the platform can tell (Windows: the Snipping Tool's
+    // auto-save folder was relocated, or a pending location may now resolve);
+    // the first answer is always obtained by asking.
+    void screenshotsLocationChanged();
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
