@@ -85,6 +85,7 @@ enum GetUserStatsReason {
     USERSTATS_STORAGECACHEUNKNOWN,
     USERSTATS_SHOWMAINDIALOG,
     USERSTATS_REMOVEVERSIONS,
+    USERSTATS_STREAMOVERQUOTA,
 };
 
 class MegaApplication : public QApplication, public mega::MegaListener
@@ -685,6 +686,7 @@ private:
 
     void createUserMessageController();
     void closeUpsellStorageDialog();
+    void enterTransferOverQuota(std::chrono::seconds waitTime, GetUserStatsReason reason);
 
     void createGfxProvider(const QString& basePath);
     void startCrashReportingDialog();
