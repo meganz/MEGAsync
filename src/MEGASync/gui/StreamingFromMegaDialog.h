@@ -57,9 +57,10 @@ private:
     QString streamURL;
     LastStreamingSelection lastStreamSelection;
     QString mPublicLink;
+    bool mStreamStarted = false;
 
     bool generateStreamURL();
-    void sendStreamStartedEvent();
+    void onStreamStarted();
     void showTransferOverQuota();
     void updateFileInfo(QString fileName, LinkStatus status);
     void openStreamWithApp(QString app);

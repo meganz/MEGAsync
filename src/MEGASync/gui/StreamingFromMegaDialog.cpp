@@ -208,7 +208,7 @@ void StreamingFromMegaDialog::on_bCopyLink_clicked()
 {
     if (!streamURL.isEmpty())
     {
-        sendStreamStartedEvent();
+        onStreamStarted();
 
         QApplication::clipboard()->setText(streamURL);
         ((MegaApplication *)qApp)->showInfoMessage(tr("The link has been copied to the clipboard"));
@@ -323,13 +323,7 @@ bool StreamingFromMegaDialog::generateStreamURL()
 
 void StreamingFromMegaDialog::openStreamWithApp(QString app)
 {
-    sendStreamStartedEvent();
-
-    // The app may already be over quota from a download: the player will stall, so say why.
-    if (MegaSyncApp->getTransferQuota()->isOverQuota())
-    {
-        showTransferOverQuota();
-    }
+    onStreamStarted();
 
     if (app.isEmpty())
     {
@@ -340,13 +334,22 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
     Platform::getInstance()->streamWithApp(app, streamURL);
 }
 
-void StreamingFromMegaDialog::sendStreamStartedEvent()
+void StreamingFromMegaDialog::onStreamStarted()
 {
-    if (mSelectedMegaNode)
+    if (!mSelectedMegaNode)
     {
-        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
-            AppStatsEvents::EventType::LINK_STREAM_STARTED,
-            true);
+        return;
+    }
+
+    mStreamStarted = true;
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::LINK_STREAM_STARTED,
+        true);
+
+    // The app may already be over quota from a download: the player will stall, so say why.
+    if (MegaSyncApp->getTransferQuota()->isOverQuota())
+    {
+        showTransferOverQuota();
     }
 }
 
@@ -439,6 +442,19 @@ void StreamingFromMegaDialog::onTransferQuotaStateChanged(QuotaState state)
     if (state == QuotaState::OVERQUOTA)
     {
         showTransferOverQuota();
+
+        // Only bring the dialog forward when a stream from it is the one being blocked.
+        if (mStreamStarted)
+        {
+            show();
+            raise();
+            activateWidgetWaylandSafe(this);
+        }
+    }
+    else if (!ui->wErrorBannerOQ->isHidden())
+    {
+        // Over quota can end without the wait time running out (e.g. after an upgrade).
+        updateStreamingState();
     }
 }
 
@@ -452,8 +468,4 @@ void StreamingFromMegaDialog::showTransferOverQuota()
     updateFileInfo(MegaNodeNames::getNodeName(mSelectedMegaNode.get()),
                    LinkStatus::TRANSFER_OVER_QUOTA);
     showStreamingError();
-
-    show();
-    raise();
-    activateWidgetWaylandSafe(this);
 }
