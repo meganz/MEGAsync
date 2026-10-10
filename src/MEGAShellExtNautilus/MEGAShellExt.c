@@ -701,8 +701,12 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
         default:
             break;
     }
-    // invalidate current emblems.
-    nautilus_file_info_invalidate_extension_info(file);
+    // Do NOT invalidate the extension info here.
+    // Since Nautilus 51, nautilus_file_info_invalidate_extension_info() removes
+    // the information added by extensions, including the emblems set above
+    // (documented behaviour). This wiped the sync-status emblems and they were
+    // never displayed. nautilus_file_info_add_emblem() already emits
+    // nautilus_file_changed(), which is enough to trigger a repaint.
     return NAUTILUS_OPERATION_COMPLETE;
 }
 
