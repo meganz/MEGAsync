@@ -4956,6 +4956,10 @@ void MegaApplication::streamActionClicked()
         {
             auto streamSelector = new StreamingFromMegaDialog(megaApi, megaApiFolders);
             connect(mTransferQuota.get(), &TransferQuota::waitTimeIsOver, streamSelector, &StreamingFromMegaDialog::updateStreamingState);
+            connect(mTransferQuota.get(),
+                    &TransferQuota::sendState,
+                    streamSelector,
+                    &StreamingFromMegaDialog::onTransferQuotaStateChanged);
             DialogOpener::showDialog<StreamingFromMegaDialog>(streamSelector);
         }
     });
@@ -7006,6 +7010,17 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
         // commit invokes refreshStorageUIs() again once values are in.
         AccountDetailsManager::instance()->refreshStorageBreakdownLocal();
     }
+    else if (event->getType() == MegaEvent::EVENT_STREAM_OVERQUOTA)
+    {
+        // Streams served by the local HTTP server go through the SDK file service and are
+        // not backed by a MegaTransfer, so a stream that runs out of transfer quota is only
+        // reported through this event. getNumber() is the time left, in seconds.
+        if (event->getNumber() > 0)
+        {
+            enterTransferOverQuota(std::chrono::seconds(event->getNumber()),
+                                   USERSTATS_STREAMOVERQUOTA);
+        }
+    }
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
     {
         manageBusinessStatus(event->getNumber());
@@ -7498,18 +7513,31 @@ void MegaApplication::onTransferTemporaryError(MegaApi* api, MegaTransfer* trans
                 tr("Your upload(s) cannot proceed because %1's account is full")
                     .arg(contact ? QString::fromUtf8(contact->getEmail()) : tr("contact")));
         }
-        else if (e->getValue() && !mTransferQuota->isOverQuota())
+        else if (e->getValue())
         {
-            preferences->clearTemporalBandwidth();
-            // Get udpated transfer quota (also pro status in case out of quota is due to account
-            // paid period expiry).
-            AccountDetailsManager::instance()->updateUserStats(
-                AccountDetailsManager::Flag::TRANSFER_PRO,
-                true,
-                USERSTATS_TRANSFERTEMPERROR);
-            mTransferQuota->setOverQuota(std::chrono::seconds(e->getValue()));
+            enterTransferOverQuota(std::chrono::seconds(e->getValue()),
+                                   USERSTATS_TRANSFERTEMPERROR);
         }
     }
+}
+
+void MegaApplication::enterTransferOverQuota(std::chrono::seconds waitTime,
+                                             GetUserStatsReason reason)
+{
+    // Blocked downloads and media players keep retrying while over quota: only the first
+    // report moves the state, refreshes the stats and raises the alerts.
+    if (mTransferQuota->isOverQuota())
+    {
+        return;
+    }
+
+    preferences->clearTemporalBandwidth();
+    // Get updated transfer quota (also pro status in case out of quota is due to account
+    // paid period expiry).
+    AccountDetailsManager::instance()->updateUserStats(AccountDetailsManager::Flag::TRANSFER_PRO,
+                                                       true,
+                                                       reason);
+    mTransferQuota->setOverQuota(waitTime);
 }
 
 void MegaApplication::onAccountUpdate(MegaApi *)

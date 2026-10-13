@@ -3,11 +3,10 @@
 
 #include "LinkProcessor.h"
 #include "megaapi.h"
-#include "QTMegaTransferListener.h"
+#include "TransferQuota.h"
 
 #include <QClipboard>
 #include <QDialog>
-#include <QHash>
 #include <QMessageBox>
 #include <QPointer>
 
@@ -17,7 +16,7 @@ namespace Ui {
 class StreamingFromMegaDialog;
 }
 
-class StreamingFromMegaDialog : public QDialog, public mega::MegaTransferListener
+class StreamingFromMegaDialog: public QDialog
 {
     Q_OBJECT
 
@@ -30,11 +29,9 @@ public:
     explicit StreamingFromMegaDialog(mega::MegaApi *megaApi,mega::MegaApi* megaApiFolders, QWidget *parent = 0);
     ~StreamingFromMegaDialog();
 
-    void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
-    void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer) override;
-
 public slots:
     void updateStreamingState();
+    void onTransferQuotaStateChanged(QuotaState state);
 
 protected:
     bool event(QEvent* event) override;
@@ -56,15 +53,15 @@ private:
     std::unique_ptr<LinkProcessor> mLinkProcessor;
     mega::MegaApi *megaApi;
     mega::MegaApi* mMegaApiFolders;
-    std::unique_ptr<mega::QTMegaTransferListener> delegateTransferListener;
     std::shared_ptr<mega::MegaNode> mSelectedMegaNode;
     QString streamURL;
     LastStreamingSelection lastStreamSelection;
     QString mPublicLink;
-    QHash<mega::MegaHandle, int> mPendingStreamingEvents;
+    bool mStreamStarted = false;
 
     bool generateStreamURL();
-    void registerPendingStreamingEvent();
+    void onStreamStarted();
+    void showTransferOverQuota();
     void updateFileInfo(QString fileName, LinkStatus status);
     void openStreamWithApp(QString app);
     void showStreamingError();
