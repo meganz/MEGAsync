@@ -7137,9 +7137,39 @@ Do you want to delete it anyway?</source>
         <translatorcomment>Header of the one-time dialog asking the user to enable automatic screenshot uploads, shown when the first screenshot is detected. SNC-6699</translatorcomment>
         <translation>自動儲存螢幕截圖到MEGA？</translation>
     </message>
+    <message>
+        <source>Back up your screenshots to the cloud automatically and access them across your devices.</source>
+        <translatorcomment>Description of the dialog asking the user to enable automatic screenshot uploads. SNC-6699</translatorcomment>
+        <translation>自動將您的螢幕截圖備份到雲端，並在您的各個裝置上隨時存取。</translation>
+    </message>
+    <message>
+        <source>Enable screenshots</source>
+        <translatorcomment>Label for the button to enable automatic screenshot uploads. SNC-6699</translatorcomment>
+        <translation>啟用螢幕截圖</translation>
+    </message>
+    <message>
+        <source>Upload screenshots</source>
+        <translatorcomment>Window title of the dialog offering to automatically upload screenshots to MEGA. SNC-6699</translatorcomment>
+        <translation>上傳螢幕截圖</translation>
+    </message>
 </context>
 <context>
     <name>ScreenshotUploader</name>
+    <message>
+        <source>Could not access the Screenshots folder</source>
+        <translatorcomment>Error message shown when a screenshot upload fails because the destination Screenshots folder in the cloud drive cannot be accessed or created. SNC-6699</translatorcomment>
+        <translation>無法存取螢幕截圖資料夾</translation>
+    </message>
+    <message>
+        <source>The screenshot file no longer exists</source>
+        <translatorcomment>Error message shown when a screenshot upload fails because the captured file was removed before it could be uploaded. SNC-6699</translatorcomment>
+        <translation>螢幕截圖檔案已不存在</translation>
+    </message>
+    <message>
+        <source>You are not logged in to MEGA</source>
+        <translatorcomment>Error message shown when a screenshot upload fails because the user is not logged in. SNC-6699</translatorcomment>
+        <translation>您尚未登入MEGA</translation>
+    </message>
     <message>
         <source>Your session has expired. Please log in again</source>
         <translatorcomment>Error message shown when a screenshot upload fails because the session is no longer valid. SNC-6699</translatorcomment>
@@ -7260,6 +7290,11 @@ Do you want to delete it anyway?</source>
         <source>Control who can access new folders and files created in the app, whether it’s just you, your group, or everyone on this device.</source>
         <translatorcomment>Descriptive text in File Management pane explaining the permissions section for new folders and files. DSN-2978</translatorcomment>
         <translation>控管在此應用程式中建立之新資料夾與檔案的存取權限（可設定為僅限本人、您的群組或此裝置上的所有人）。</translation>
+    </message>
+    <message>
+        <source>Copy link to clipboard after upload</source>
+        <translatorcomment>Label for the checkbox in settings enabling copying the public link to the clipboard after a screenshot upload. SNC-6699</translatorcomment>
+        <translation>上傳後將連結複製到剪貼簿</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -7525,6 +7560,11 @@ Do you want to delete it anyway?</source>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
         <translation>報告問題</translation>
+    </message>
+    <message>
+        <source>Save screenshots directly to MEGA</source>
+        <translatorcomment>Label for the checkbox in settings enabling automatic screenshot uploads. SNC-6699</translatorcomment>
+        <translation>直接將螢幕截圖儲存到MEGA</translation>
     </message>
     <message>
         <source>Screen shots</source>
@@ -8501,6 +8541,11 @@ Verify the permissions of the .megaignore file on your local sync folder locatio
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>某些問題無法解決。
 驗證本地同步資料夾位置中.megaignore檔案的權限。</translation>
+    </message>
+    <message>
+        <source>Some items can&apos;t be ignored: their names contain characters that can&apos;t be used in an exclusion. Rename or delete them to resolve these issues.</source>
+        <translatorcomment>Informative text in the message box shown after ignoring several stalled issues, when some of them could not be ignored because their names contain a control character.SNC-6769</translatorcomment>
+        <translation>有些項目無法忽略：其名稱包含無法用於排除項目的字元。請重命名或刪除這些項目以解決此問題。</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
