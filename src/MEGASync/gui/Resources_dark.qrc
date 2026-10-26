@@ -11,9 +11,11 @@
         <file alias="spinbox_down_arrow">images/themed/dark/spinbox_down_arrow.svg</file>
         <file alias="switch_on_pressed">images/themed/dark/switch_on_pressed.svg</file>
         <file alias="switch_on_hover">images/themed/dark/switch_on_hover.svg</file>
+        <file alias="switch_on_disabled">images/themed/dark/switch_on_disabled.svg</file>
         <file alias="switch_on">images/themed/dark/switch_on.svg</file>
         <file alias="switch_off_pressed">images/themed/dark/switch_off_pressed.svg</file>
         <file alias="switch_off_hover">images/themed/dark/switch_off_hover.svg</file>
+        <file alias="switch_off_disabled">images/themed/dark/switch_off_disabled.svg</file>
         <file alias="switch_off">images/themed/dark/switch_off.svg</file>
         <file alias="images/help-icon.svg">images/help-icon.svg</file>
         <file alias="radio_unchecked">images/themed/dark/radio_unchecked.svg</file>

@@ -27,7 +27,7 @@ Suggests: nautilus-megasync, dolphin-megasync, nemo-megasync, thunar-megasync
 #!BuildIgnore: post-build-checks
     BuildRequires: update-desktop-files
     BuildRequires: libqt5-qtbase-devel, libqt5-linguist-devel, libqt5-qtsvg-devel, libqt5-qtx11extras-devel, libqt5-qtdeclarative-devel
-    Requires: libQt5Core5 libqt5-qtquickcontrols libqt5-qtquickcontrols2
+    Requires: libQt5Core5 libqt5-qtquickcontrols libqt5-qtquickcontrols2 libqt5-qtgraphicaleffects
     BuildRequires: kernel-devel
 %else
     BuildRequires: python3, kernel-headers
@@ -41,6 +41,7 @@ Suggests: nautilus-megasync, dolphin-megasync, nemo-megasync, thunar-megasync
 
 # OpenSuse Leap 15.6 -> python311
 # OpenSuse Leap 16.0 -> python313
+# OpenSuse Leap 16.1 -> python313
 # OpenSuse Tumbleweed -> python313
 %if 0%{?sle_version} && 0%{?suse_version} < 1600
 BuildRequires: python311
@@ -60,7 +61,7 @@ BuildRequires: python313
     %endif
 
     BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
-    Requires: qt5-qtbase >= 5.15, qt5-qtsvg, qt5-qtdeclarative, qqc2-desktop-style, qt5-qtquickcontrols, qt5-qtquickcontrols2
+    Requires: qt5-qtbase >= 5.15, qt5-qtsvg, qt5-qtdeclarative, qqc2-desktop-style, qt5-qtquickcontrols, qt5-qtquickcontrols2, qt5-qtgraphicaleffects
 
 %endif
 
@@ -73,7 +74,7 @@ BuildRequires: python313
 %if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version}
     BuildRequires: desktop-file-utils
     BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-linguist, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
-    Requires: qt5-qtbase qt5-qtquickcontrols qt5-qtquickcontrols2 qt5-qtdeclarative
+    Requires: qt5-qtbase qt5-qtquickcontrols qt5-qtquickcontrols2 qt5-qtdeclarative qt5-qtgraphicaleffects
 %endif
 
 
@@ -260,6 +261,10 @@ DATA
 %if 0%{?sle_version} || 0%{?suse_version}
     %if 0%{?sle_version} == 160000
         %define reponame openSUSE_Leap_16.0
+    %endif
+
+    %if 0%{?sle_version} == 160100
+        %define reponame openSUSE_Leap_16.1
     %endif
 
     %if 0%{?sle_version} == 150500

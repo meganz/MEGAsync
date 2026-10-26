@@ -4,12 +4,15 @@
 #include "CreateRemoveSyncsManager.h"
 #include "megaapi.h"
 #include "Platform.h"
+#include "ShellDispatcherPipe.h"
 #include "SyncController.h"
 
-PIPEINST Pipe[INSTANCES];
-HANDLE hEvents[INSTANCES+1];
+#include <memory>
+#include <sddl.h>
+#include <string>
 
-VOID DisconnectAndReconnect(DWORD i);
+// Pipe[] / hEvents[] are now members of WinShellDispatcherTask (see header);
+// ConnectToNewClient stays a free function - it is stateless.
 BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo);
 
 using namespace std;
@@ -27,14 +30,97 @@ typedef enum {
        STRING_BACKUP = 8
 } StringID;
 
-WinShellDispatcherTask::WinShellDispatcherTask(MegaApplication *receiver) : QThread()
+namespace
+{
+
+// Frees memory that Win32 allocated with LocalAlloc (the security descriptor
+// built by ConvertStringSecurityDescriptorToSecurityDescriptorW). Local to the
+// app on purpose: the only thing it shares with the shell extension is the
+// pipe name contract (ShellDispatcherPipe.h), not utility code.
+struct LocalFreer
+{
+    void operator()(void* memory) const
+    {
+        if (memory)
+        {
+            LocalFree(memory);
+        }
+    }
+};
+
+using SecurityDescriptorPtr = std::unique_ptr<void, LocalFreer>;
+
+// Builds a security descriptor granting full access to the current user and to
+// nobody else, for the shell dispatcher pipe (SNC-6808).
+//
+// Passing NULL to CreateNamedPipe instead would fall back to the access token's
+// default DACL, which is inherited from whoever launched us rather than stated
+// here, so it is not ours to rely on. "P" (protected) stops that DACL from
+// being widened by inheritance.
+//
+// Returns an empty pointer on failure, which the caller must treat as fatal:
+// falling back to the default DACL is the very thing this avoids.
+SecurityDescriptorPtr createCurrentUserSecurityDescriptor(DWORD& error)
+{
+    const std::wstring sid = ShellDispatcherPipe::currentUserSid();
+    if (sid.empty())
+    {
+        error = ERROR_NONE_MAPPED;
+        return nullptr;
+    }
+
+    const std::wstring definition = L"D:P(A;;GA;;;" + sid + L")";
+
+    PSECURITY_DESCRIPTOR descriptor = nullptr;
+    if (!ConvertStringSecurityDescriptorToSecurityDescriptorW(definition.c_str(),
+                                                              SDDL_REVISION_1,
+                                                              &descriptor,
+                                                              nullptr))
+    {
+        error = GetLastError();
+        return nullptr;
+    }
+
+    return SecurityDescriptorPtr(descriptor);
+}
+
+} // namespace
+
+WinShellDispatcherTask::WinShellDispatcherTask(MegaApplication* receiver,
+                                               std::wstring pipeName,
+                                               bool bestEffort):
+    QThread(),
+    mPipeName(std::move(pipeName)),
+    mBestEffort(bestEffort)
 {
     this->receiver = receiver;
     moveToThread(this);
 }
 
-WinShellDispatcherTask::~WinShellDispatcherTask()
+WinShellDispatcherTask::~WinShellDispatcherTask() {}
+
+// Releases the first `count` instances/events when dispatchPipe() aborts partway
+// (the thread is exiting, so nothing else frees them) and clears the slots.
+void WinShellDispatcherTask::closeInstances(DWORD count)
 {
+    for (DWORD j = 0; j < count; j++)
+    {
+        CloseHandle(Pipe[j].hPipeInst);
+        Pipe[j].hPipeInst = nullptr;
+        CloseHandle(hEvents[j]);
+        hEvents[j] = nullptr;
+    }
+}
+
+// Closes the exit event and clears its slot. stopShellDispatcher() calls
+// exitTask() at shutdown even when this dispatcher already gave up on its own
+// (routine for the best-effort legacy pipe when another user owns the name),
+// so that later SetEvent() must see nullptr, a harmless failure, rather than a
+// closed handle value the kernel may have reused for another object.
+void WinShellDispatcherTask::closeExitEvent()
+{
+    CloseHandle(hEvents[INSTANCES]);
+    hEvents[INSTANCES] = nullptr;
 }
 
 void WinShellDispatcherTask::run()
@@ -56,6 +142,11 @@ void WinShellDispatcherTask::run()
             receiver,
             &MegaApplication::shellViewOnMega,
             Qt::QueuedConnection);
+    connect(this,
+            &WinShellDispatcherTask::legacyPipeUsed,
+            receiver,
+            &MegaApplication::onShellLegacyPipeUsed,
+            Qt::QueuedConnection);
 
     dispatchPipe();
 }
@@ -64,7 +155,36 @@ int WinShellDispatcherTask::dispatchPipe()
 {
     DWORD i, dwWait, cbRet, dwErr;
     BOOL fSuccess;
-    PCWSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGAprivacyMEGAsync");
+
+    // Name chosen by the caller (scoped or legacy). Defensive check; the caller
+    // already validated the scoped name before starting (SNC-6808).
+    if (mPipeName.empty())
+    {
+        return 0;
+    }
+    PCWSTR lpszPipename = mPipeName.c_str();
+
+    // Restrict the pipe to the current user with an explicit DACL, rather than
+    // relying on the token's inherited default (see helper above / SNC-6808).
+    // Fail closed if it cannot be built.
+    DWORD securityError = ERROR_SUCCESS;
+    const SecurityDescriptorPtr securityDescriptor =
+        createCurrentUserSecurityDescriptor(securityError);
+    if (!securityDescriptor)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromUtf8("Shell dispatcher: unable to build the pipe security "
+                                       "descriptor (error %1). Shell integration is disabled.")
+                         .arg(QString::number(securityError))
+                         .toUtf8()
+                         .constData());
+        return 0;
+    }
+
+    SECURITY_ATTRIBUTES securityAttributes{};
+    securityAttributes.nLength = sizeof(securityAttributes);
+    securityAttributes.lpSecurityDescriptor = securityDescriptor.get();
+    securityAttributes.bInheritHandle = FALSE;
 
     // The initial loop creates several instances of a named pipe
     // along with an event object for each instance.  An
@@ -82,28 +202,83 @@ int WinShellDispatcherTask::dispatchPipe()
 
         if (hEvents[i] == NULL)
         {
-            printf("CreateEvent failed with %lu.\n", GetLastError());
+            const DWORD error = GetLastError();
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Shell dispatcher: CreateEvent failed for instance "
+                                           "%1 with error %2. Shell integration is disabled.")
+                             .arg(QString::number(i), QString::number(error))
+                             .toUtf8()
+                             .constData());
+            closeInstances(i);
             return 0;
         }
 
         Pipe[i].oOverlap.hEvent = hEvents[i];
 
-        Pipe[i].hPipeInst = CreateNamedPipe(
-            lpszPipename,            // pipe name
-            PIPE_ACCESS_DUPLEX |     // read/write access
-            FILE_FLAG_OVERLAPPED,    // overlapped mode
-            PIPE_TYPE_MESSAGE |      // message-type pipe
-            PIPE_READMODE_MESSAGE |  // message-read mode
-            PIPE_WAIT,               // blocking mode
-            INSTANCES,               // number of instances
-            BUFSIZE*sizeof(TCHAR),   // output buffer size
-            BUFSIZE*sizeof(TCHAR),   // input buffer size
-            PIPE_TIMEOUT,            // client time-out
-            NULL);                   // default security attributes
+        // Claim the name exclusively on the first instance only. Without
+        // FILE_FLAG_FIRST_PIPE_INSTANCE, if a local process created this name
+        // before us, CreateNamedPipe would silently add an instance to THEIR
+        // pipe and hand them our clients (SNC-6808). With it, an already-owned
+        // name is a hard failure we can see. Instances 2..N are further
+        // instances of the name we just claimed, so the flag must not be set on
+        // them - it would make them fail.
+        DWORD openMode = PIPE_ACCESS_DUPLEX | FILE_FLAG_OVERLAPPED;
+        if (i == 0)
+        {
+            openMode |= FILE_FLAG_FIRST_PIPE_INSTANCE;
+        }
+
+        Pipe[i].hPipeInst = CreateNamedPipe(lpszPipename, // pipe name
+                                            openMode, // access, overlapped, first-instance claim
+                                            PIPE_TYPE_MESSAGE | // message-type pipe
+                                                PIPE_READMODE_MESSAGE | // message-read mode
+                                                PIPE_WAIT | // blocking mode
+                                                PIPE_REJECT_REMOTE_CLIENTS, // local-only: pipes
+                                                                            // are reachable over
+                                                                            // SMB otherwise
+                                            INSTANCES, // number of instances
+                                            BUFSIZE * sizeof(TCHAR), // output buffer size
+                                            BUFSIZE * sizeof(TCHAR), // input buffer size
+                                            PIPE_TIMEOUT, // client time-out
+                                            &securityAttributes); // current-user-only DACL
 
         if (Pipe[i].hPipeInst == INVALID_HANDLE_VALUE)
         {
-            printf("CreateNamedPipe failed with %lu.\n", GetLastError());
+            const DWORD error = GetLastError();
+
+            // On instance 0, ERROR_ACCESS_DENIED means another process already
+            // owns the name (SNC-6808).
+            const bool nameTaken = (i == 0 && error == ERROR_ACCESS_DENIED);
+
+            if (mBestEffort)
+            {
+                // Legacy pipe: name owned by another user/process. Expected and
+                // harmless; the scoped pipe is unaffected.
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                             QString::fromUtf8("Shell dispatcher: legacy pipe not served "
+                                               "(instance %1, error %2).")
+                                 .arg(QString::number(i), QString::number(error))
+                                 .toUtf8()
+                                 .constData());
+            }
+            else
+            {
+                // A squatted scoped pipe is otherwise invisible - name it.
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                             QString::fromUtf8("Shell dispatcher: CreateNamedPipe failed for "
+                                               "instance %1 with error %2.%3 Shell integration "
+                                               "is disabled.")
+                                 .arg(QString::number(i),
+                                      QString::number(error),
+                                      nameTaken ?
+                                          QString::fromUtf8(" The pipe name is already owned "
+                                                            "by another process.") :
+                                          QString())
+                                 .toUtf8()
+                                 .constData());
+            }
+            CloseHandle(hEvents[i]);
+            closeInstances(i);
             return 0;
         }
 
@@ -142,16 +317,8 @@ int WinShellDispatcherTask::dispatchPipe()
         if (i < 0 || i > (INSTANCES - 1))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Shell dispatcher closing...");
-            for (int j = 0; j < INSTANCES; j++)
-            {
-                CloseHandle(Pipe[j].hPipeInst);
-            }
-
-            for (int j = 0; j < (INSTANCES + 1); j++)
-            {
-                CloseHandle(hEvents[j]);
-            }
-
+            closeInstances(INSTANCES);
+            closeExitEvent();
             return 0;
         }
 
@@ -170,7 +337,16 @@ int WinShellDispatcherTask::dispatchPipe()
             case CONNECTING_STATE:
                 if (!fSuccess)
                 {
-                    printf("Error %lu.\n", GetLastError());
+                    const DWORD error = GetLastError();
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                 QString::fromUtf8("Shell dispatcher: connect failed for "
+                                                   "instance %1 with error %2. Shell "
+                                                   "integration is disabled.")
+                                     .arg(QString::number(i), QString::number(error))
+                                     .toUtf8()
+                                     .constData());
+                    closeInstances(INSTANCES);
+                    closeExitEvent();
                     return 0;
                 }
                 Pipe[i].dwState = READING_STATE;
@@ -199,7 +375,11 @@ int WinShellDispatcherTask::dispatchPipe()
 
             default:
             {
-                printf("Invalid pipe state.\n");
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                             "Shell dispatcher: invalid pipe state. "
+                             "Shell integration is disabled.");
+                closeInstances(INSTANCES);
+                closeExitEvent();
                 return 0;
             }
             }
@@ -244,6 +424,12 @@ int WinShellDispatcherTask::dispatchPipe()
             // The request was successfully read from the client.
             // Get the reply data and write it to the client.
         case WRITING_STATE:
+            // Report first legacy-pipe use once, via the main thread (SNC-6808).
+            if (mBestEffort && !mLegacyUsageReported)
+            {
+                mLegacyUsageReported = true;
+                emit legacyPipeUsed();
+            }
             GetAnswerToRequest(&Pipe[i]);
 
             fSuccess = WriteFile(
@@ -275,7 +461,11 @@ int WinShellDispatcherTask::dispatchPipe()
 
         default:
         {
-            printf("Invalid pipe state.\n");
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         "Shell dispatcher: invalid pipe state. "
+                         "Shell integration is disabled.");
+            closeInstances(INSTANCES);
+            closeExitEvent();
             return 0;
         }
         }
@@ -296,12 +486,18 @@ void WinShellDispatcherTask::exitTask()
 // closes its handle to the pipe. Disconnect from this client, then
 // call ConnectNamedPipe to wait for another client to connect.
 
-VOID DisconnectAndReconnect(DWORD i)
+VOID WinShellDispatcherTask::DisconnectAndReconnect(DWORD i)
 {
     // Disconnect the pipe instance.
     if (! DisconnectNamedPipe(Pipe[i].hPipeInst) )
     {
-        printf("DisconnectNamedPipe failed with %lu.\n", GetLastError());
+        const DWORD error = GetLastError();
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     QString::fromUtf8("Shell dispatcher: DisconnectNamedPipe failed for "
+                                       "instance %1 with error %2.")
+                         .arg(QString::number(i), QString::number(error))
+                         .toUtf8()
+                         .constData());
     }
 
     // Call a subroutine to connect to the new client.
@@ -325,15 +521,17 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
 
     // Start an overlapped connection for this pipe instance.
     fConnected = ConnectNamedPipe(hPipe, lpo);
+    const DWORD error = GetLastError();
 
     // Overlapped ConnectNamedPipe should return zero.
     if (fConnected)
     {
-        printf("ConnectNamedPipe failed with %lu.\n", GetLastError());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     "Shell dispatcher: ConnectNamedPipe unexpectedly succeeded synchronously.");
         return 0;
     }
 
-    switch (GetLastError())
+    switch (error)
     {
     // The overlapped connection in progress.
     case ERROR_IO_PENDING:
@@ -348,7 +546,11 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
     // If an error occurs during the connect operation...
     default:
     {
-        printf("ConnectNamedPipe failed with %lu.\n", GetLastError());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromUtf8("Shell dispatcher: ConnectNamedPipe failed with error %1.")
+                         .arg(QString::number(error))
+                         .toUtf8()
+                         .constData());
         return 0;
     }
     }

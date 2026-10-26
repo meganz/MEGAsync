@@ -1,6 +1,7 @@
 #include "SettingsDialog.h"
 
 #include "AccountDetailsManager.h"
+#include "AccountState.h"
 #include "BugReportDialog.h"
 #include "ChangePasswordComponent.h"
 #include "CommonMessages.h"
@@ -17,6 +18,7 @@
 #include "qml/AccountStateQuickWidget.h"
 #include "RequestListenerManager.h"
 #include "ServiceUrls.h"
+#include "SettingsTabIds.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
 #include "ui_SettingsDialog.h"
@@ -95,8 +97,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->lEmail->installEventFilter(this);
 
     mAccountStateQuickWidget = mUi->accountStateQuickWidget;
-    connect(mAccountStateQuickWidget,
-            &AccountStateQuickWidget::upgradeRequested,
+    connect(mAccountStateQuickWidget->accountState(),
+            &AccountState::upgradeRequested,
             this,
             &SettingsDialog::on_bUpgrade_clicked);
 
@@ -242,35 +244,35 @@ void SettingsDialog::openSettingsTab(int tab)
 
     switch (tab)
     {
-        case GENERAL_TAB:
+        case SettingsTabIds::GENERAL:
             mUi->bGeneral->click();
             break;
 
-        case ACCOUNT_TAB:
+        case SettingsTabIds::ACCOUNT:
             mUi->bAccount->click();
             break;
 
-        case SYNCS_TAB:
+        case SettingsTabIds::SYNCS:
             mUi->bSyncs->click();
             break;
 
-        case BACKUP_TAB:
+        case SettingsTabIds::BACKUP:
             mUi->bBackup->click();
             break;
 
-        case SECURITY_TAB:
+        case SettingsTabIds::SECURITY:
             mUi->bSecurity->click();
             break;
 
-        case FOLDERS_TAB:
+        case SettingsTabIds::FILE_MANAGEMENT:
             mUi->bFolders->click();
             break;
 
-        case NETWORK_TAB:
+        case SettingsTabIds::NETWORK:
             mUi->bNetwork->click();
             break;
 
-        case NOTIFICATIONS_TAB:
+        case SettingsTabIds::NOTIFICATIONS:
             mUi->bNotifications->click();
             break;
 
@@ -468,6 +470,9 @@ void SettingsDialog::loadSettings()
     SettingsDialog::updateAccountElements();
     SettingsDialog::updateStorageElements();
     SettingsDialog::updateBandwidthElements();
+
+    // screenshots upload settings.
+    refreshScreenshotUploadSettings();
 
     updateUploadFolder();
     updateDownloadFolder();
@@ -764,6 +769,26 @@ void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
     {
         mPreferences->setStartOnStartup(checked);
     }
+
+    // Show what the system actually did: the request can be refused, or on macOS 13+
+    // left waiting for the user's approval in System Settings, and then the app will
+    // not launch at login however the box was ticked.
+    const bool active =
+        mPreferences->startOnStartup() && Platform::getInstance()->isStartOnStartupActive();
+    if (mUi->cStartOnStartup->isChecked() != active)
+    {
+        mUi->cStartOnStartup->blockSignals(true);
+        mUi->cStartOnStartup->setChecked(active);
+        mUi->cStartOnStartup->blockSignals(false);
+    }
+
+    // The user asked for it but the system keeps it off because they turned the item off in
+    // the system settings. Only they can turn it back on there, so take them to that screen
+    // instead of leaving the box unticked with no explanation.
+    if (checked && !active && Platform::getInstance()->isStartOnStartupPendingUserApproval())
+    {
+        Platform::getInstance()->openStartOnStartupSystemSettings();
+    }
 }
 
 void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
@@ -865,6 +890,42 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 
         MessageDialogOpener::critical(msgInfo);
     }
+}
+
+void SettingsDialog::refreshScreenshotUploadSettings()
+{
+    mLoadingSettings++;
+    mUi->enableScreenshotUpload->setChecked(mPreferences->uploadScreenshotsEnabled());
+    mUi->enableScreenshotLinkGeneration->setEnabled(mPreferences->uploadScreenshotsEnabled());
+    mUi->enableScreenshotLinkGeneration->setChecked(
+        mPreferences->clipboardCopyScreenshotLinkEnabled());
+    mLoadingSettings--;
+}
+
+void SettingsDialog::on_enableScreenshotUpload_toggled(bool checked)
+{
+    if (mLoadingSettings)
+        return;
+
+    // Only gate the dependent checkbox visually; its stored preference is
+    // the user's choice and survives toggling the feature off and on.
+    mUi->enableScreenshotLinkGeneration->setEnabled(checked);
+
+    mPreferences->setUploadScreenshotsEnabled(checked);
+    // The user has now interacted with the setting, so the first-capture
+    // discovery offer has served its purpose.
+    mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER,
+                                           true);
+    mApp->refreshScreenshotUploader();
+}
+
+void SettingsDialog::on_enableScreenshotLinkGeneration_toggled(bool checked)
+{
+    if (mLoadingSettings)
+        return;
+
+    mPreferences->setClipboardCopyScreenshotLinkEnabled(checked);
+    mApp->enableClipboardCopyScreenshotLink(checked);
 }
 
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
@@ -980,27 +1041,27 @@ void SettingsDialog::onCacheSizeAvailable()
 // Account -----------------------------------------------------------------------------------------
 void SettingsDialog::updateStorageElements()
 {
-    mAccountStateQuickWidget->updateStorageData();
+    mAccountStateQuickWidget->accountState()->updateStorageData();
 }
 
 void SettingsDialog::updateBandwidthElements()
 {
     const auto quotaState = MegaSyncApp->getTransferQuota()->quotaState();
-    mAccountStateQuickWidget->updateTransferData(quotaState);
+    mAccountStateQuickWidget->accountState()->updateTransferData(quotaState);
 }
 
 void SettingsDialog::updateAccountElements()
 {
     mUi->lAccountType->setText(Utilities::getReadablePlanFromId(mPreferences->accountType()));
     mUi->bUpgrade->show();
-    mAccountStateQuickWidget->setShowStorageCard(true);
-    mAccountStateQuickWidget->setShowTransferCard(true);
+    mAccountStateQuickWidget->accountState()->setShowStorageCard(true);
+    mAccountStateQuickWidget->accountState()->setShowTransferCard(true);
 
     switch (mPreferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
             mUi->bUpgrade->show();
-            mAccountStateQuickWidget->setShowTransferCard(false);
+            mAccountStateQuickWidget->accountState()->setShowTransferCard(false);
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             break;
@@ -1455,8 +1516,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
                 QString fPath = dialog->getPath();
                 if (!fPath.isEmpty())
                 {
-                    QTemporaryFile test(fPath + QDir::separator());
-                    if (test.open())
+                    if (Utilities::isLocalFolderWritable(fPath))
                     {
                         mHasDefaultDownloadOption = dialog->isDefaultDownloadOption();
                         mUi->eDownloadFolder->setText(fPath);

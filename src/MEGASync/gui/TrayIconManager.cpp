@@ -234,6 +234,10 @@ void TrayIconManager::show()
     if (mTrayIcon)
     {
         mTrayIcon->show();
+
+        // The native status item only exists once the icon is shown, and createTrayIcon()
+        // can recreate it, so this runs on every show().
+        Platform::getInstance()->adoptTrayIconExpandedInterface();
     }
 }
 

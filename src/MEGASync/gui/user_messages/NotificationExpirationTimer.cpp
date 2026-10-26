@@ -11,21 +11,24 @@ constexpr int SECS_IN_1_DAY = 86400;
 
 NotificationExpirationTimer::NotificationExpirationTimer(QObject* parent):
     QTimer(parent),
-    mLastTimeInterval(0),
     mExpirationTimeSecs(0),
     mStopped(false)
 {
+    // A coarse timer may wake up to 5% early. As the interval is a whole number
+    // of seconds, an early tick can land in the same wall-clock second it was
+    // armed in, so getRemainingTime() returns the same value and the countdown
+    // re-arms for another full second instead of advancing: it drifts one second
+    // behind and never reaches expiration on time. A precise timer never fires
+    // early, so each tick lands in the intended second.
+    setTimerType(Qt::PreciseTimer);
     connect(this, &QTimer::timeout, this, &NotificationExpirationTimer::onTimeout);
 }
 
 NotificationExpirationTimer::NotificationExpirationTimer(int64_t expirationTimeSecs,
                                                          QObject* parent):
-    QTimer(parent),
-    mLastTimeInterval(0),
-    mStopped(false)
+    NotificationExpirationTimer(parent)
 {
-    connect(this, &QTimer::timeout, this, &NotificationExpirationTimer::onTimeout);
-    start(static_cast<int>(expirationTimeSecs));
+    startExpirationTime(expirationTimeSecs);
 }
 
 void NotificationExpirationTimer::startExpirationTime(int64_t expirationTimeSecs)
@@ -33,7 +36,11 @@ void NotificationExpirationTimer::startExpirationTime(int64_t expirationTimeSecs
     stop();
     mExpirationTimeSecs = expirationTimeSecs;
     mStopped = false;
-    onTimeout();
+
+    // Only schedule the next update. The current remaining time is not reported
+    // here because the caller displays it itself when it arms the countdown, and
+    // reporting it would repeat the expiration handling on every re-arm.
+    singleShot(getRemainingTime());
 }
 
 void NotificationExpirationTimer::stopExpirationTime()
@@ -51,37 +58,29 @@ int64_t NotificationExpirationTimer::getRemainingTime() const
 
 void NotificationExpirationTimer::singleShot(int64_t remainingTimeSecs)
 {
-    TimeInterval timeInterval(remainingTimeSecs);
-    int interval = 0;
+    // NotificationItem displays the remaining time rounded down, built from
+    // remainingTimeSecs - 1. So the text changes when the remaining time
+    // reaches the next lower multiple of the unit being displayed.
+    const int64_t displayedSecs = remainingTimeSecs - 1;
+    int64_t unitSecs = 1;
 
-    if (timeInterval.days > 0 && timeInterval.days > mLastTimeInterval.days)
+    if (displayedSecs >= SECS_IN_1_DAY)
     {
-        // Time until the next change of day
-        int secondsUntilNextDay =
-            static_cast<int>(remainingTimeSecs) - timeInterval.days * SECS_IN_1_DAY;
-        interval = secondsUntilNextDay * MSEC_IN_1_SEC;
+        unitSecs = SECS_IN_1_DAY;
     }
-    else if ((timeInterval.days == 1 && timeInterval.hours == 0) ||
-             (timeInterval.hours > 0 && timeInterval.hours > mLastTimeInterval.hours))
+    else if (displayedSecs >= SECS_IN_1_HOUR)
     {
-        // Time until the next change of hour
-        int secondsUntilNextHour =
-            static_cast<int>(remainingTimeSecs) - timeInterval.hours * SECS_IN_1_HOUR;
-        interval = secondsUntilNextHour * MSEC_IN_1_SEC;
-    }
-    else
-    {
-        // Update every second
-        interval = MSEC_IN_1_SEC;
+        unitSecs = SECS_IN_1_HOUR;
     }
 
-    if (interval > 0)
-    {
-        stop();
-        mLastTimeInterval = timeInterval;
-        setInterval(interval);
-        start();
-    }
+    // Never zero: (displayedSecs / unitSecs) * unitSecs is at most displayedSecs,
+    // which is remainingTimeSecs - 1.
+    const int64_t secsUntilNextChange =
+        (unitSecs > 1) ? remainingTimeSecs - (displayedSecs / unitSecs) * unitSecs : 1;
+
+    stop();
+    setInterval(static_cast<int>(secsUntilNextChange * MSEC_IN_1_SEC));
+    start();
 }
 
 void NotificationExpirationTimer::onTimeout()
@@ -93,5 +92,14 @@ void NotificationExpirationTimer::onTimeout()
 
     int64_t remainingTimeSecs = getRemainingTime();
     emit expired(static_cast<int>(remainingTimeSecs));
+
+    // A receiver may have stopped the countdown while handling the expiration, in
+    // which case the timer must not be armed again: it repeats, so it would keep
+    // waking up every second only to return here.
+    if (mStopped)
+    {
+        return;
+    }
+
     singleShot(remainingTimeSecs);
 }

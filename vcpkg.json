@@ -79,6 +79,17 @@
                 "catch2",
                 "trompeloeil"
             ]
+        },
+        "c-ares-backend-curl": {
+            "description": "Enable c-ares backend for curl",
+            "dependencies": [
+                {
+                    "name": "curl",
+                    "features": [
+                        "c-ares"
+                    ]
+                }
+            ]
         }
     },
     "dependencies": [
@@ -87,6 +98,7 @@
         {
             "name": "curl",
             "features": [
+                "websockets",
                 "zstd"
             ]
         },

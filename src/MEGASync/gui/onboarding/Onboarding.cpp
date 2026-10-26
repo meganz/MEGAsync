@@ -8,7 +8,6 @@
 #include "OnboardingQmlDialog.h"
 #include "PasswordStrengthChecker.h"
 #include "ServiceUrls.h"
-#include "SettingsDialog.h"
 #include "StatsEventHandler.h"
 #include "SyncsComponent.h"
 #include "Utilities.h"
@@ -26,9 +25,10 @@ Onboarding::Onboarding(QObject* parent):
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
     qmlRegisterType<AccountStatusController>("AccountStatusController", 1, 0, "AccountStatusController");
-    qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker", 1, 0, "PasswordStrengthChecker");
-    qmlRegisterUncreatableType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog",
-                                               QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
+    qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker",
+                                             1,
+                                             0,
+                                             "PasswordStrengthChecker");
 
     BackupCandidatesComponent::registerQmlModules();
 

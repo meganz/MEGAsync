@@ -14,9 +14,12 @@
 #include <QProcess>
 #include <QString>
 #include <QThread>
+#include <QTimer>
 
 #include <string>
+#include <vector>
 
+class SnippingToolSettings;
 class WinShellDispatcherTask;
 
 class PlatformImplementation : public AbstractPlatform
@@ -63,6 +66,8 @@ public:
 
     bool makePubliclyReadable(const QString& fileName) override;
     bool setHidden(const QString& path) override;
+    bool isRestrictedToOwner(const QString& path) override;
+    bool restrictToOwner(const QString& path) override;
     void updateDisplayVersionAfterAutoUpdate(int versionCode, bool isPublic) override;
 
     void streamWithApp(const QString& app, const QString& url) override;
@@ -96,6 +101,9 @@ public:
 
     void disconnectAccessibilityClients() override;
 
+    QStringList getScreenshotsLocation() override;
+    bool isScreenshotsLocationPending() const override;
+
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
 
@@ -121,9 +129,28 @@ private:
     static QString getRegKeyValue(HKEY regKey, const int valueIndex);
     static bool openRegistry(HKEY baseKey, const QString& regKeyPath, HKEY& openedKey);
 
-    WinShellDispatcherTask *shellDispatcherTask = nullptr;
-    std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;
+    std::vector<BYTE> readFileLocked(const std::wstring& path, bool& inUse);
+    QString resolveSnippingToolFolder(const std::wstring& userClassesDat, const QString& token);
+    static QString resolveVolumeGuidPath(const QString& path);
+    // Created by the first getScreenshotsLocation(); owned through parenting.
+    SnippingToolSettings* mSnippingToolSettings = nullptr;
+    QTimer* mScreenshotsLocationRetryTimer = nullptr;
+    // Quick retries left after the Snipping Tool exited (see getScreenshotsLocation()).
+    int mScreenshotsLocationFastRetries = 0;
+    bool mScreenshotsLocationPending = false;
+    // Last token resolved and the folder it named. A token always names the
+    // same folder (picking another one issues a new token), so this answers
+    // while the hive is locked and the folder is not dropped meanwhile.
+    QString mSnippingToolToken;
+    QString mSnippingToolFolder;
+    // Token whose failure to resolve was last logged: getScreenshotsLocation()
+    // is polled, and the same failure is reported once rather than every pass.
+    QString mSnippingToolLoggedToken;
 
+    WinShellDispatcherTask* shellDispatcherTask = nullptr;
+    // Transitional legacy-name dispatcher (best-effort).
+    WinShellDispatcherTask* legacyShellDispatcherTask = nullptr;
+    std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;
     QPointer<WinThemeWatcher> watcher;
 };
 

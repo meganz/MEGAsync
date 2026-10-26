@@ -26,6 +26,9 @@ target_compile_definitions(UnitTests
 )
 target_platform_compile_options(TARGET UnitTests UNIX -D__STDC_FORMAT_MACROS)
 
+# Binary fixtures read at run time (see control/RegistryHiveReaderTests.cpp).
+target_compile_definitions(UnitTests PRIVATE UNIT_TESTS_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
+
 set(UNIT_TEST_FILES
     AllMegaIncludes.h
     main.cpp
@@ -37,10 +40,23 @@ set(UNIT_TEST_FILES
     ScaleFactorManagerTests.cpp
     control/TransferBatchTests.cpp
     control/TransferRemainingTimeTests.cpp
+    control/RegistryHiveReaderTests.cpp
     control/UtilitiesTests.cpp
     platform/PlatformTests.cpp
     syncs/control/MegaIgnoreManagerTests.cpp
     syncs/control/SyncControllerTests.cpp
+    gui/user_messages/FakeUserMessages.h
+    gui/user_messages/NotificationExpirationTimerTests.cpp
+    gui/user_messages/NotificationItemTests.cpp
+    gui/user_messages/UserMessageCacheManagerTests.cpp
+    gui/user_messages/UserMessageModelTests.cpp
+    gui/ScreenCaptureDetectorTests.cpp
+    gui/ScreenCaptureStabilityTests.cpp
+    gui/ScreenCaptureRetryTests.cpp
+    gui/ScreenshotUploaderTests.cpp
+    stalled_issues/IgnoredStalledIssueTests.cpp
+    syncs/MegaIgnoreManagerTests.cpp
+    syncs/MegaIgnoreRulesTests.cpp
 )
 
 if(USE_BREAKPAD)
@@ -105,3 +121,9 @@ target_link_libraries(UnitTests
     )
 
 target_include_directories(UnitTests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ../3rdparty ${MegaSyncDir})
+
+if (WIN32)
+    # Pins the shell dispatcher pipe name contract shared with the shell extension
+    # (src/common/win). The include dir comes with platform.cmake above.
+    target_sources(UnitTests PRIVATE platform/ShellDispatcherPipeTests.cpp)
+endif()

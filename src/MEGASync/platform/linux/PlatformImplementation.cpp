@@ -3,6 +3,7 @@
 #include "DolphinFileManager.h"
 #include "MessageDialogOpener.h"
 #include "NautilusFileManager.h"
+#include "posix/PosixFileSystem.h"
 
 #include <QFile>
 #include <QGuiApplication>
@@ -15,6 +16,8 @@
 #include <QVariantMap>
 #include <QX11Info>
 #include <sys/statvfs.h>
+
+#include <libintl.h>
 
 #ifndef QT_NO_DBUS
 #include <QDBusConnection>
@@ -269,6 +272,12 @@ void PlatformImplementation::moveDialog(QWidget* dialog, const QPoint& pos, QWin
         }
     }
     dialog->move(pos);
+}
+
+bool PlatformImplementation::createFolderRestrictedToOwner(const QString& folder,
+                                                           QString* errorMessage)
+{
+    return PosixFileSystem::createFolderRestrictedToOwner(folder, errorMessage);
 }
 
 bool PlatformImplementation::showInFolder(QString pathIn)
@@ -1094,6 +1103,16 @@ void PlatformImplementation::setRenderingBackend() const
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 }
 
+void PlatformImplementation::setStartupEnvironment() const
+{
+    // Disable the Qt/KDE XDG portal Screenshot-version probe in QGenericUnixServices.
+    // Its parentless QDBusPendingCallWatcher is the object killed in the
+    // ~QDBusPendingCallWatcher / receiverDeleted crash family seen at login.
+    // Only QColorDialog's color picker reads the result, and we don't use it.
+    // Note: this hides the symptom. The underlying dangling write is still unidentified.
+    qputenv("QT_NO_XDG_DESKTOP_PORTAL", "1");
+}
+
 void PlatformImplementation::startThemeMonitor()
 {
 #ifndef QT_NO_DBUS
@@ -1421,4 +1440,40 @@ Preferences::ThemeAppeareance PlatformImplementation::getPanelTheme() const
     }
 
     return effectiveTheme();
+}
+
+QStringList PlatformImplementation::getScreenshotsLocation()
+{
+    QStringList directories;
+    const QString pictures = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    directories << pictures << pictures + QString::fromUtf8("/Screenshots");
+
+    // GNOME Shell saves to $XDG_PICTURES_DIR/_("Screenshots") with the folder
+    // name run through gettext ("Capturas de pantalla", "Schermate",
+    // "Bildschirmfotos", ...). With a non-English desktop language that folder
+    // is not "Screenshots", so listing only the English name meant no capture
+    // was ever seen. The spelling comes from GNOME Shell's own message catalog
+    // rather than a table of our own, so it cannot drift from what the desktop
+    // actually writes. In an English or C locale, or when the catalog is not
+    // installed, the lookup returns the msgid and the entry is de-duplicated
+    // by the detector.
+    const QString gnomeFolder = gnomeCaptureFolderName();
+    if (!gnomeFolder.isEmpty())
+    {
+        directories << pictures + QLatin1Char('/') + gnomeFolder;
+    }
+
+    return directories;
+}
+
+QString PlatformImplementation::gnomeCaptureFolderName()
+{
+    // The message domain and msgid are GNOME Shell's (js/ui/screenshot.js,
+    // _storeScreenshot). Catalogs live in the system locale directory on the
+    // distributions we package for. The process locale is already applied:
+    // QCoreApplication calls setlocale(LC_ALL, "") on Unix at construction.
+    static const char* const GNOME_SHELL_DOMAIN = "gnome-shell";
+    bindtextdomain(GNOME_SHELL_DOMAIN, "/usr/share/locale");
+    bind_textdomain_codeset(GNOME_SHELL_DOMAIN, "UTF-8");
+    return QString::fromUtf8(dgettext(GNOME_SHELL_DOMAIN, "Screenshots"));
 }

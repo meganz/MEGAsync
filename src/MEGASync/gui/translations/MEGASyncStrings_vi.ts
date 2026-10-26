@@ -605,11 +605,24 @@
     </message>
 </context>
 <context>
+    <name>ChangePasswordComponent</name>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Done</translatorcomment>
+        <translation>Xong</translation>
+    </message>
+</context>
+<context>
     <name>ChangePasswordController</name>
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful. SNC-5799</translatorcomment>
         <translation>Mật khẩu đã được thay đổi</translation>
+    </message>
+    <message>
+        <source>This includes browsers, phones and other computers — signed out even if they were offline. This app stays signed in and your syncs keep running.</source>
+        <translatorcomment>Message when the password has been changed. SNC-6910</translatorcomment>
+        <translation>Bạn đã đăng&#xa0;xuất khỏi MEGA trên các trình&#xa0;duyệt và thiết&#xa0;bị khác, kể cả phiên ngoại&#xa0;tuyến. Ứng&#xa0;dụng này vẫn đăng&#xa0;nhập và phiên đồng&#xa0;bộ của&#xa0;bạn tiếp&#xa0;tục chạy.</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -620,6 +633,11 @@
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one. SNC-5799</translatorcomment>
         <translation>Mật&#xa0;khẩu bạn vừa nhập trùng với mật&#xa0;khẩu hiện&#xa0;tại, hãy nhập một mật&#xa0;khẩu mới</translation>
+    </message>
+    <message>
+        <source>Your password has been changed</source>
+        <translatorcomment>Message when the password has been changed. SNC-6910</translatorcomment>
+        <translation>Mật&#xa0;khẩu của&#xa0;bạn đã được thay&#xa0;đổi</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -640,9 +658,59 @@
         <translation>Nhập lại mật khẩu mới</translation>
     </message>
     <message>
+        <source>Enter a new password</source>
+        <translatorcomment>Label hint displayed on input text control where the user can enter the new password. SNC-2109</translatorcomment>
+        <translation>Nhập một mật&#xa0;khẩu mới</translation>
+    </message>
+    <message>
+        <source>Enter your 2FA code</source>
+        <translatorcomment>Label displayed next to input component to enter the 2FA code. SNC-2109</translatorcomment>
+        <translation>Nhập mã 2FA của&#xa0;bạn</translation>
+    </message>
+    <message>
+        <source>Incorrect code, check your authenticator app and try again.</source>
+        <translatorcomment>Error Label displayed when the user enters and incorrect 2FA code. SNC-2109</translatorcomment>
+        <translation>Mã không chính&#xa0;xác. Kiểm&#xa0;tra app lập&#xa0;xác&#xa0;thực của&#xa0;bạn và thử&#xa0;lại</translation>
+    </message>
+    <message>
+        <source>Lost your authenticator device?</source>
+        <translatorcomment>Link url label to forward to help article related with authenticator device. SNC-2109</translatorcomment>
+        <translation>Thiết bị có cài app lập xác&#xa0;thực đã bị mất?</translation>
+    </message>
+    <message>
+        <source>Moderate password</source>
+        <translatorcomment>Label displayed next to the control to indicate that the password is moderate while its strength is being evaluated. SNC-2109</translatorcomment>
+        <translation>Tạm được</translation>
+    </message>
+    <message>
         <source>New password</source>
         <translatorcomment>Label displayed next to control where the user can enter the new password. SNC-5799</translatorcomment>
         <translation>Mật khẩu mới</translation>
+    </message>
+    <message>
+        <source>Re-enter your password</source>
+        <translatorcomment>Label hint displayed on input text control where the user can re-enter the new password. SNC-2109</translatorcomment>
+        <translation>Nhập lại mật&#xa0;khẩu</translation>
+    </message>
+    <message>
+        <source>Strong password</source>
+        <translatorcomment>Label displayed next to the control to indicate that the password is strong while its strength is being evaluated. SNC-2109</translatorcomment>
+        <translation>Mạnh</translation>
+    </message>
+    <message>
+        <source>Use at least 8 characters</source>
+        <translatorcomment>Label displayed next to control to indicate the the password should have a minimum 8 characters. SNC-2109</translatorcomment>
+        <translation>Sử&#xa0;dụng ít nhất 8 ký&#xa0;tự</translation>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translatorcomment>Label displayed next to the control to indicate that the password is weak while its strength is being evaluated. SNC-2109</translatorcomment>
+        <translation>Yếu</translation>
+    </message>
+    <message>
+        <source>You&apos;ll be signed out of all other devices. This MEGA Desktop App session will stay signed in and your syncs won&apos;t be affected.</source>
+        <translatorcomment>Informative label displayed in the change password form to indicate that all other sessions will be closed, except the current one. SNC-6910</translatorcomment>
+        <translation>Bạn sẽ bị đăng&#xa0;xuất khỏi tất&#xa0;cả các thiết&#xa0;bị khác. Phiên đăng&#xa0;nhập tại App&#xa0;MEGA cho Máy&#xa0;Tính này sẽ vẫn được duy&#xa0;trì và các phiên đồng&#xa0;bộ sẽ không&#xa0;bị ảnh&#xa0;hưởng.</translation>
     </message>
 </context>
 <context>
@@ -1722,6 +1790,11 @@
         <source>Smaller than</source>
         <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
         <translation>nhỏ hơn</translation>
+    </message>
+    <message>
+        <source>This can&apos;t be used as an exclusion. Remove the line breaks or hidden characters and try again.</source>
+        <translatorcomment>Error hint under the value field of the add exclusion dialog, shown when the typed or pasted value contains a control character (a line break, a tab, an escape) that cannot be written as an exclusion rule.SNC-6769</translatorcomment>
+        <translation>Không thể dùng cái này làm quy&#xa0;tắc loại&#xa0;trừ. Xóa các dấu ngắt dòng hoặc ký&#xa0;tự ẩn rồi thử&#xa0;lại.</translation>
     </message>
     <message>
         <source>Use comma (“,”) to separate multiple items</source>
@@ -5695,7 +5768,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
         <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>Chuyển các tệp của bạn từ Google Drive trực&#xa0;tiếp vào MEGA, được mã&#xa0;hóa hoàn&#xa0;toàn. Bắt&#xa0;đầu chỉ với vài cú nhấp chuột.</translation>
+        <translation>Chuyển các tệp của&#xa0;bạn từ các dịch&#xa0;vụ lưu&#xa0;trữ đám&#xa0;mây khác vào&#xa0;thẳng MEGA, được mã&#xa0;hóa hoàn&#xa0;toàn. Bắt&#xa0;đầu chỉ với vài cú nhấp&#xa0;chuột.</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -6241,6 +6314,17 @@ Nhập một tên khác.</translation>
         <translatorcomment>Change log for version 6.2.0. SNC-6221</translatorcomment>
         <translation>- Cải&#xa0;thiện độ&#xa0;tin&#xa0;cậy cho&#xa0;các trình&#xa0;điều&#xa0;khiển đồ&#xa0;họa gặp&#xa0;lỗi trên&#xa0;Windows
 - Sửa&#xa0;lỗi nhỏ và&#xa0;cải&#xa0;thiện hiệu&#xa0;suất
+</translation>
+    </message>
+    <message>
+        <source>- New: capture, annotate and instantly share screenshots straight from your desktop.
+- Changing your password now asks you to confirm before applying the change.
+- Bug fixes and performance improvements.
+</source>
+        <translatorcomment>Change log for version 6.7.0. SNC-6928</translatorcomment>
+        <translation>- Mới: chụp, chú&#xa0;thích và chia&#xa0;sẻ ngay lập&#xa0;tức ảnh chụp màn&#xa0;hình trực&#xa0;tiếp từ máy&#xa0;tính của&#xa0;bạn.
+- Thêm bước xác&#xa0;nhận bổ&#xa0;sung khi thay&#xa0;đổi mật&#xa0;khẩu của&#xa0;bạn.
+- Cải&#xa0;thiện hiệu&#xa0;suất và sửa&#xa0;chữa các lỗi&#xa0;hỏng.
 </translation>
     </message>
     <message>
@@ -7039,6 +7123,65 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     </message>
 </context>
 <context>
+    <name>ScreenshotLinkGenerator</name>
+    <message>
+        <source>The uploaded file could not be found</source>
+        <translatorcomment>Error message shown when creating a public link for an uploaded screenshot fails because the file cannot be found in the account. SNC-6699</translatorcomment>
+        <translation>Không&#xa0;thể tìm&#xa0;thấy tệp&#xa0;tin đã tải&#xa0;lên</translation>
+    </message>
+</context>
+<context>
+    <name>ScreenshotStrings</name>
+    <message>
+        <source>Automatically save screenshots to MEGA?</source>
+        <translatorcomment>Header of the one-time dialog asking the user to enable automatic screenshot uploads, shown when the first screenshot is detected. SNC-6699</translatorcomment>
+        <translation>Tự&#xa0;động lưu ảnh chụp màn&#xa0;hình lên MEGA?</translation>
+    </message>
+    <message>
+        <source>Back up your screenshots to the cloud automatically and access them across your devices.</source>
+        <translatorcomment>Description of the dialog asking the user to enable automatic screenshot uploads. SNC-6699</translatorcomment>
+        <translation>Tự&#xa0;động sao&#xa0;lưu ảnh chụp màn&#xa0;hình lên Ổ&#xa0;Mây và xem lại từ tất&#xa0;cả các thiết&#xa0;bị của riêng&#xa0;mình.</translation>
+    </message>
+    <message>
+        <source>Enable screenshots</source>
+        <translatorcomment>Label for the button to enable automatic screenshot uploads. SNC-6699</translatorcomment>
+        <translation>Bật chụp màn&#xa0;hình</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translatorcomment>Label for the button to decline enabling automatic screenshot uploads. SNC-6699</translatorcomment>
+        <translation>Để lúc khác</translation>
+    </message>
+    <message>
+        <source>Upload screenshots</source>
+        <translatorcomment>Window title of the dialog offering to automatically upload screenshots to MEGA. SNC-6699</translatorcomment>
+        <translation>Tải lên các ảnh chụp màn&#xa0;hình</translation>
+    </message>
+</context>
+<context>
+    <name>ScreenshotUploader</name>
+    <message>
+        <source>Could not access the Screenshots folder</source>
+        <translatorcomment>Error message shown when a screenshot upload fails because the destination Screenshots folder in the cloud drive cannot be accessed or created. SNC-6699</translatorcomment>
+        <translation>Không&#xa0;thể truy&#xa0;cập thư&#xa0;mục Ảnh&#xa0;chụp màn&#xa0;hình</translation>
+    </message>
+    <message>
+        <source>The screenshot file no longer exists</source>
+        <translatorcomment>Error message shown when a screenshot upload fails because the captured file was removed before it could be uploaded. SNC-6699</translatorcomment>
+        <translation>Tệp ảnh chụp màn&#xa0;hình không còn tồn&#xa0;tại</translation>
+    </message>
+    <message>
+        <source>You are not logged in to MEGA</source>
+        <translatorcomment>Error message shown when a screenshot upload fails because the user is not logged in. SNC-6699</translatorcomment>
+        <translation>Bạn chưa có đăng&#xa0;nhập vào MEGA</translation>
+    </message>
+    <message>
+        <source>Your session has expired. Please log in again</source>
+        <translatorcomment>Error message shown when a screenshot upload fails because the session is no longer valid. SNC-6699</translatorcomment>
+        <translation>Phiên đã hết&#xa0;hạn. Hãy đăng&#xa0;nhập lại</translation>
+    </message>
+</context>
+<context>
     <name>SearchLineEdit</name>
     <message>
         <source>Search</source>
@@ -7152,6 +7295,11 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>Control who can access new folders and files created in the app, whether it’s just you, your group, or everyone on this device.</source>
         <translatorcomment>Descriptive text in File Management pane explaining the permissions section for new folders and files. DSN-2978</translatorcomment>
         <translation>Kiểm soát ai có thể truy&#xa0;cập các thư&#xa0;mục và tệp&#xa0;tin mới được tạo trong ứng&#xa0;dụng, dù đó chỉ là bạn, nhóm của bạn hay mọi người trên thiết&#xa0;bị này.</translation>
+    </message>
+    <message>
+        <source>Copy link to clipboard after upload</source>
+        <translatorcomment>Label for the checkbox in settings enabling copying the public link to the clipboard after a screenshot upload. SNC-6699</translatorcomment>
+        <translation>Sao&#xa0;chép đường liên&#xa0;kết vào bảng nhớ&#xa0;tạm sau khi tải&#xa0;lên</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -7417,6 +7565,16 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
         <translation>Báo cáo lỗi</translation>
+    </message>
+    <message>
+        <source>Save screenshots directly to MEGA</source>
+        <translatorcomment>Label for the checkbox in settings enabling automatic screenshot uploads. SNC-6699</translatorcomment>
+        <translation>Lưu ảnh chụp màn&#xa0;hình trực&#xa0;tiếp vào MEGA</translation>
+    </message>
+    <message>
+        <source>Screen shots</source>
+        <translatorcomment>Title of the screenshots section in the General settings pane. SNC-6699</translatorcomment>
+        <translation>Ảnh chụp màn&#xa0;hình</translation>
     </message>
     <message>
         <source>Security</source>
@@ -8239,6 +8397,11 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
         <translation>Hành&#xa0;động này sẽ bỏ qua vấn&#xa0;đề và mục sẽ không được đồng&#xa0;bộ hóa cho đến khi vấn&#xa0;đề được giải&#xa0;quyết.</translation>
     </message>
+    <message>
+        <source>This item can&apos;t be ignored: its name contains characters that can&apos;t be used in an exclusion. Rename or delete it to resolve this issue.</source>
+        <translatorcomment>Description of a stalled issue row, replacing the usual one when the Ignore resolution cannot be offered because the item&apos;s name contains a control character.SNC-6769</translatorcomment>
+        <translation>Mục này không&#xa0;thể phớt&#xa0;lờ được: tên chứa các ký&#xa0;tự không&#xa0;thể dùng được trong quy&#xa0;tắc loại&#xa0;trừ. Đổi tên hoặc xóa đi để giải&#xa0;quyết vấn&#xa0;đề.</translation>
+    </message>
 </context>
 <context>
     <name>StalledIssueTab</name>
@@ -8383,6 +8546,11 @@ Verify the permissions of the .megaignore file on your local sync folder locatio
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Một số vấn&#xa0;đề không thể giải&#xa0;quyết được.
 Kiểm&#xa0;tra quyền của tệp .megaignore trong vị&#xa0;trí thư&#xa0;mục đồng&#xa0;bộ cục&#xa0;bộ của bạn.</translation>
+    </message>
+    <message>
+        <source>Some items can&apos;t be ignored: their names contain characters that can&apos;t be used in an exclusion. Rename or delete them to resolve these issues.</source>
+        <translatorcomment>Informative text in the message box shown after ignoring several stalled issues, when some of them could not be ignored because their names contain a control character.SNC-6769</translatorcomment>
+        <translation>Một số mục không thể phớt&#xa0;lờ: tên có chứa các ký&#xa0;tự không dùng&#xa0;được trong quy&#xa0;tắc loại&#xa0;trừ. Đổi tên hoặc xóa đi để giải&#xa0;quyết các vấn&#xa0;đề này.</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.

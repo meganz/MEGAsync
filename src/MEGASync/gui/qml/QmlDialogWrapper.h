@@ -384,6 +384,23 @@ public:
             std::cout << qmlComponent.errorString().toStdString() << std::endl;
 #endif
         }
+
+        if (!mWindow)
+        {
+            // The QML component failed to load (errors logged above) or create()/
+            // the QmlDialog cast returned null: this wrapper can never be shown.
+            // Self-destruct so DialogOpener drops the entry (same cleanup path as
+            // the destroyed-propagation above) and the next trigger creates a
+            // fresh wrapper, instead of leaving a permanent zombie that silently
+            // swallows every future dialog of this type. Note mWrapper (and any
+            // request it fired in its constructor, e.g. Upsell TYPE_GET_PRICING)
+            // already exists: its dataReady may still arrive before the deferred
+            // delete runs, which is why setShowWhenCreated() guards mWindow too.
+            ::mega::MegaApi::log(
+                ::mega::MegaApi::LOG_LEVEL_ERROR,
+                "QmlDialogWrapper: no QmlDialog window was created; discarding wrapper");
+            deleteLater();
+        }
     }
 
     ~QmlDialogWrapper() = default;
@@ -400,7 +417,16 @@ public:
                 this,
                 [this]()
                 {
-                    mWindow->readyToBeShow();
+                    // mWindow is a QPointer and can be null: the QML component may
+                    // have failed to load/create (Q_ASSERT is a no-op in release and
+                    // the wiring block in the constructor is skipped), while mWrapper
+                    // and its controller were created before the QML and may already
+                    // have a request in flight that drives dataReady (e.g. Upsell
+                    // TYPE_GET_PRICING). See DESKTOP-APP-5DD / DESKTOP-APP-53Y.
+                    if (mWindow)
+                    {
+                        mWindow->readyToBeShow();
+                    }
                 });
 
         // DialogOpener checks this flag on the wrapper widget (the object it

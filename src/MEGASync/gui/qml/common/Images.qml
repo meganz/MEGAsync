@@ -41,6 +41,8 @@ QtObject {
     readonly property url mega: imagesQmlPath + "mega.svg"
     readonly property url trash: imagesQmlPath + "trash.svg"
     readonly property url xCircle: imagesQmlPath + "x_circle.svg"
+    readonly property url cross: imagesQmlPath + "x.svg"
+    readonly property url twoFAKeypad: imagesQmlPath + "two_fa_keypad.png"
     readonly property url smallCheck: imagesQmlPath + "small_check.svg"
     readonly property url checkCircle: imagesQmlPath + "check_circle.svg"
     readonly property url checkCircleFilled: imagesQmlPath + "check_circle_filled.svg"
@@ -65,6 +67,7 @@ QtObject {
     readonly property url downArrow: imagesQmlPath + "down-arrow.svg"
     readonly property url externalLink: imagesQmlPath + "external-link.svg"
     readonly property url offerBanner: imagesQmlPath + "offer_banner.png"
+    readonly property url screenshotsUpload: imagesQmlPath + "screenshots_upload.png"
 
     readonly property url dialogMessageQuestion: imagesQmlPath + "dialog_message_question.svg"
     readonly property url dialogMessageInformation: imagesQmlPath + "dialog_message_information.svg"

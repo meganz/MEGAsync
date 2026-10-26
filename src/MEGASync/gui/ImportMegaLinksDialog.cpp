@@ -14,7 +14,6 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QPointer>
-#include <QTemporaryFile>
 
 using namespace mega;
 
@@ -142,8 +141,7 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
             return;
         }
 
-        QTemporaryFile test(nativePath + QDir::separator());
-        if (!test.open())
+        if (!Utilities::isLocalFolderWritable(nativePath))
         {
             MessageDialogInfo info;
             info.descriptionText = tr("You don't have write permissions in this local folder.");
@@ -232,9 +230,7 @@ void ImportMegaLinksDialog::on_bOk_clicked()
             dir.mkpath(QLatin1String("."));
         }
 
-        QString qFilePath = QDir::fromNativeSeparators(ui->eLocalFolder->text()); // QFile always wants `/` as separator
-        QTemporaryFile test(qFilePath + QDir::separator());
-        if (!test.open())
+        if (!Utilities::isLocalFolderWritable(ui->eLocalFolder->text()))
         {
             MessageDialogInfo msgInfo;
             msgInfo.descriptionText = tr("You don't have write permissions in this local folder.");

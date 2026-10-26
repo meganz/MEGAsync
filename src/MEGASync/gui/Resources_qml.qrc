@@ -10,6 +10,10 @@
         <file alias="images/qml/lock.svg">images/qml/lock.svg</file>
         <file alias="images/qml/trash.svg">images/qml/trash.svg</file>
         <file alias="images/qml/x_circle.svg">images/qml/x_circle.svg</file>
+        <file alias="images/qml/x.svg">images/qml/x.svg</file>
+        <file alias="images/qml/two_fa_keypad.png">images/qml/two_fa_keypad.png</file>
+        <file alias="images/qml/two_fa_keypad@2x.png">images/qml/two_fa_keypad@2x.png</file>
+        <file alias="images/qml/two_fa_keypad@3x.png">images/qml/two_fa_keypad@3x.png</file>
         <file alias="images/qml/tip.svg">images/qml/tip.svg</file>
         <file alias="images/qml/small_circle.svg">images/qml/small_circle.svg</file>
         <file alias="images/qml/onboarding/database.svg">images/qml/onboarding/database.svg</file>
@@ -104,6 +108,9 @@
         <file alias="images/qml/offer_banner@3x.png">images/qml/offer_banner@3x.png</file>
         <file alias="images/qml/offer_banner@2x.png">images/qml/offer_banner@2x.png</file>
         <file alias="images/qml/offer_banner.png">images/qml/offer_banner.png</file>
+        <file alias="images/qml/screenshots_upload.png">images/qml/screenshots_upload.png</file>
+        <file alias="images/qml/screenshots_upload@2x.png">images/qml/screenshots_upload@2x.png</file>
+        <file alias="images/qml/screenshots_upload@3x.png">images/qml/screenshots_upload@3x.png</file>
         <file alias="tag-01-medium-thin-outline.svg">images/themed/tokenizable/tag-01-medium-thin-outline.svg</file>
         <file alias="folder-search_small_thin_outline.svg">images/qml/folder-search_small_thin_outline.svg</file>
         <file alias="sync-01_small_thin_outline.svg">images/qml/sync-01_small_thin_outline.svg</file>

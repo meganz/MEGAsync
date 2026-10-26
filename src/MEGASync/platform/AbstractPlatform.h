@@ -13,6 +13,7 @@
 #include <QString>
 #include <QWindow>
 
+#include <functional>
 #include <string>
 
 struct SelectorInfo
@@ -46,10 +47,18 @@ public:
     virtual void prepareForSync();
     virtual bool enableTrayIcon(QString executable);
     virtual void unHideTrayIcon();
+    // macOS 27 only; no-ops elsewhere. See adoptStatusItemExpandedInterface().
+    virtual void adoptTrayIconExpandedInterface();
+    virtual void setTrayPrimaryActionHandler(std::function<void()> handler);
     virtual void notifyItemChange(const QString& localPath, int newState) = 0;
     virtual void notifySyncFileChange(std::string *localPath, int newState) = 0;
     virtual bool startOnStartup(bool value) = 0;
     virtual bool isStartOnStartupActive() = 0;
+    // The login item exists but the user turned it off in the system settings; only the user
+    // can turn it back on there. False where the OS has no such state.
+    virtual bool isStartOnStartupPendingUserApproval();
+    // Opens the system screen where the user manages login items. No-op where there is none.
+    virtual void openStartOnStartupSystemSettings();
     virtual bool isTilingWindowManager();
     // Are we running on the Wayland platform? Default uses the live
     // QGuiApplication's platform name (authoritative once the app exists). The
@@ -109,6 +118,29 @@ public:
     // no-op that reports success. Returns false when the item could not be hidden.
     virtual bool setHidden(const QString& path);
 
+    // Creates `folder`, and any missing parent, so that only its owner can access it from
+    // the moment it exists: a folder created with the default umask and tightened
+    // afterwards is briefly reachable by other users, long enough for one to keep a
+    // descriptor on it and reach through it the files created inside later. Parents keep
+    // their usual permissions, being shared standard locations. Returns false on failure,
+    // describing it in `errorMessage` when one is given.
+    //
+    // The base implementation only creates the folder, which is enough on Windows: the
+    // per-user data location already denies other users through the ACLs it inherits. The
+    // POSIX platforms override it to apply the owner-only mode at creation time.
+    virtual bool createFolderRestrictedToOwner(const QString& folder, QString* errorMessage);
+
+    // Whether `path` is already inaccessible to users other than its owner. Lets callers
+    // report only the folders they actually had to tighten (see restrictToOwner).
+    virtual bool isRestrictedToOwner(const QString& path);
+
+    // Restricts a folder so that only its owner can access it, protecting every file
+    // inside from other users even though they are created with the default umask. The
+    // base implementation applies POSIX owner-only (0700) permissions, which is what
+    // macOS and Linux need; Windows overrides it because the per-user data location is
+    // already restricted to its owner by the ACLs it inherits.
+    virtual bool restrictToOwner(const QString& path);
+
     virtual void updateDisplayVersionAfterAutoUpdate(int versionCode, bool isPublic);
 
     virtual void addFileManagerExtensionToSystem() {}
@@ -151,12 +183,36 @@ public:
 
     virtual void setRenderingBackend() const {}
 
+    // Sets platform-specific environment variables that must be in place before
+    // MegaApplication (QApplication) is constructed.
+    virtual void setStartupEnvironment() const {}
+
     // Severs connections with assistive-technology clients before UI teardown.
     // Only needed on Windows; see PlatformImplementation::disconnectAccessibilityClients().
     virtual void disconnectAccessibilityClients() {}
 
+    virtual QStringList getScreenshotsLocation()
+    {
+        return QStringList();
+    }
+
+    // True when the last getScreenshotsLocation() could not read a location
+    // the user configured because another process holds it (Windows: the
+    // Snipping Tool keeps its settings hive locked while it runs). The list is
+    // incomplete until this is false; screenshotsLocationChanged() is emitted
+    // when it is worth asking again.
+    virtual bool isScreenshotsLocationPending() const
+    {
+        return false;
+    }
+
 signals:
     void themeChanged(Preferences::SystemColorScheme theme);
+    // What getScreenshotsLocation() answers may have changed: ask it again.
+    // Emitted only where the platform can tell (Windows: the Snipping Tool's
+    // auto-save folder was relocated, or a pending location may now resolve);
+    // the first answer is always obtained by asking.
+    void screenshotsLocationChanged();
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;

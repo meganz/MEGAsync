@@ -42,8 +42,16 @@ void ChangePasswordController::onRequestFinish(mega::MegaRequest* req, mega::Meg
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                emit passwordChangeSucceed(tr("Password changed"),
-                                           tr("Your password has been changed."));
+                // The API invalidates every other session as part of the
+                // password change itself (same server path as `usr`), so no
+                // explicit killSession is needed and the outcome is always the
+                // same: only this session survives. SNC-6910
+                emit passwordChangeSucceed(
+                    tr("Password changed"),
+                    tr("Your password has been changed"),
+                    tr("This includes browsers, phones and other computers — signed out even "
+                       "if they were offline. This app stays signed in and your syncs keep "
+                       "running."));
             }
             else if (e->getErrorCode() == MegaError::API_EFAILED ||
                      e->getErrorCode() == MegaError::API_EEXPIRED)
@@ -73,7 +81,7 @@ void ChangePasswordController::check2FA(QString pin)
                                             listener.get());
 }
 
-void ChangePasswordController::changePassword(QString password, QString confirmPassword)
+void ChangePasswordController::changePassword(QString password)
 {
     if (mMegaApi->checkPassword(password.toUtf8()))
     {

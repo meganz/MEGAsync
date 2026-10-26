@@ -11,6 +11,7 @@
 #include "Platform.h"
 #include "QmlDialogWrapper.h"
 #include "ServiceUrls.h"
+#include "SettingsTabIds.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
@@ -155,7 +156,7 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
             this,
             []()
             {
-                MegaSyncApp->openSettings(SettingsDialog::ACCOUNT_TAB);
+                MegaSyncApp->openSettings(SettingsTabIds::ACCOUNT);
                 MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
                     AppStatsEvents::EventType::AVATAR_CLICKED,
                     true);
@@ -1292,6 +1293,7 @@ bool InfoDialog::event(QEvent* event)
         ui->retranslateUi(this);
         updateUpgradeButtonText();
         updateCreateSyncButtonText();
+        updateDialogState();
     }
     else if (event->type() == ThemeManager::ThemeChanged && mPreferences->logged())
     {
@@ -1489,7 +1491,7 @@ void InfoDialog::on_bNotificationsSettings_clicked()
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
         AppStatsEvents::EventType::NOTIFICATION_SETTINGS_CLICKED,
         true);
-    MegaSyncApp->openSettings(SettingsDialog::NOTIFICATIONS_TAB);
+    MegaSyncApp->openSettings(SettingsTabIds::NOTIFICATIONS);
 }
 
 void InfoDialog::on_bDiscard_clicked()
@@ -1572,7 +1574,7 @@ void InfoDialog::on_bDismissSyncSettings_clicked()
 
 void InfoDialog::on_bOpenSyncSettings_clicked()
 {
-    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    MegaSyncApp->openSettings(SettingsTabIds::SYNCS);
     mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
@@ -1583,7 +1585,7 @@ void InfoDialog::on_bDismissBackupsSettings_clicked()
 
 void InfoDialog::on_bOpenBackupsSettings_clicked()
 {
-    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
+    MegaSyncApp->openSettings(SettingsTabIds::BACKUP);
     mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
@@ -1594,7 +1596,7 @@ void InfoDialog::on_bDismissAllSyncsSettings_clicked()
 
 void InfoDialog::on_bOpenAllSyncsSettings_clicked()
 {
-    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    MegaSyncApp->openSettings(SettingsTabIds::SYNCS);
     mSyncInfo->dismissUnattendedDisabledSyncs(SyncInfo::AllHandledSyncTypes);
 }
 

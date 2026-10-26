@@ -3,55 +3,34 @@
 
 #include "MegaQuickWidget.h"
 
-class SyncController;
-class SyncSettingsModelBase;
+class SyncSettingsActionsBase;
 
 /**
- * @brief Common bridge widget shared by the Syncs and Backups settings tabs.
+ * @brief Legacy Settings dialog host of the Syncs and Backups QML surfaces.
  *
- * Owns the list model and a reference to the relevant controller (SyncController for
- * syncs, BackupsController for backups; the latter is-a SyncController, so the shared
- * pause/resume/reboot/remove operations dispatch through the base reference). The QML
- * delegate calls into the tab-neutral Q_INVOKABLEs declared here; the two genuinely
- * tab-specific operations (add and remove, which use different create/remove managers)
- * are virtual seams implemented by the subclasses.
+ * The actions QML calls live in SyncSettingsActionsBase and its subclasses
+ * (SNC-6795). This widget only hosts the QML view, exposes the actions and the
+ * model to it, and closes the delegate's context menu on clicks outside the view.
  */
 class SettingsQuickWidgetBase: public MegaQuickWidget
 {
     Q_OBJECT
 
 public:
-    Q_INVOKABLE void exploreLocal(const QString& localFolder) const;
-    Q_INVOKABLE void openInMega(int index) const;
-    Q_INVOKABLE void pause(int index) const;
-    Q_INVOKABLE void resume(int index) const;
-    Q_INVOKABLE void openExclusionsDialog(int index) const;
-    Q_INVOKABLE void rescan(int index) const;
-    Q_INVOKABLE void reboot(int index) const;
-    Q_INVOKABLE void removeNonConfirmation(int index) const;
-    Q_INVOKABLE void onGetMoreQuotaClicked() const;
-    Q_INVOKABLE void sortModelByName(bool ascending = true);
-    Q_INVOKABLE void sortModelByStatus(bool ascending = true);
-
-    Q_INVOKABLE virtual void addItem() const = 0;
-    Q_INVOKABLE virtual void remove(int index) const = 0;
-
-    Q_INVOKABLE void setContextMenuOpen(bool open);
-
-signals:
-    void closeContextMenu();
+    SyncSettingsActionsBase* actions() const;
 
 protected:
-    SettingsQuickWidgetBase(SyncSettingsModelBase* model,
-                            SyncController& controller,
-                            QWidget* parent = nullptr);
+    explicit SettingsQuickWidgetBase(QWidget* parent = nullptr);
 
-    SyncSettingsModelBase* model() const;
+    // Called once by the subclass constructor before setSource(). The actions
+    // object must already be parented to this widget.
+    void setActions(SyncSettingsActionsBase* actions);
     bool eventFilter(QObject* watched, QEvent* event) override;
 
 private:
-    SyncSettingsModelBase* mModel;
-    SyncController& mController;
+    void onContextMenuOpenChanged(bool open);
+
+    SyncSettingsActionsBase* mActions = nullptr;
 };
 
 #endif // SETTINGS_QUICK_WIDGET_BASE_H

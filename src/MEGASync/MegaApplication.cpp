@@ -44,7 +44,9 @@
 #include "QTMegaApiManager.h"
 #include "ReloadingEventHandler.h"
 #include "RequestListenerManager.h"
+#include "ScreenshotsController.h"
 #include "ServiceUrls.h"
+#include "SettingsTabIds.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
@@ -71,6 +73,7 @@
 #include <QSettings>
 #include <QTranslator>
 
+#include <algorithm>
 #include <cassert>
 
 #ifdef Q_OS_LINUX
@@ -97,6 +100,8 @@ using namespace std;
 QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
+bool MegaApplication::dataPathFromStandardLocation = false;
+QString MegaApplication::dataPathCreationError = QString();
 QString MegaApplication::lastNotificationError = QString();
 
 constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
@@ -128,17 +133,48 @@ void MegaApplication::loadDataPath()
     }
 #endif
 
+    dataPathFromStandardLocation = !dataPath.isEmpty();
+
     if (dataPath.isEmpty())
     {
         dataPath = QDir::currentPath();
     }
 
     dataPath = QDir::toNativeSeparators(dataPath);
-    QDir currentDir(dataPath);
-    if (!currentDir.exists())
+
+    if (dataPathFromStandardLocation)
     {
-        currentDir.mkpath(QString::fromUtf8("."));
+        Platform::getInstance()->createFolderRestrictedToOwner(dataPath, &dataPathCreationError);
     }
+    else
+    {
+        // Not ours to lock down, so it is created the usual way.
+        QDir(dataPath).mkpath(QString::fromUtf8("."));
+    }
+}
+
+void MegaApplication::restrictDataPathPermissions(const DataPathLogger& logger)
+{
+    if (!dataPathCreationError.isEmpty())
+    {
+        logger(MegaApi::LOG_LEVEL_ERROR,
+               QString::fromUtf8("Error creating the data directory %1: %2")
+                   .arg(dataPath, dataPathCreationError));
+    }
+
+    // The data directory holds the user configuration (MEGAsync.cfg, session data, logs),
+    // so it must not be readable by any other user. Restricting the folder was chosen over
+    // managing the permissions of each individual file: no other user can traverse into
+    // it, which protects every file inside.
+    //
+    // Skipped when we fell back to the current working directory: that path is not our
+    // private data dir (it could be $HOME or /), so we must not touch its permissions.
+    if (!dataPathFromStandardLocation)
+    {
+        return;
+    }
+
+    Utilities::restrictFolderToOwner(dataPath, logger);
 }
 
 MegaApplication::MegaApplication(int& argc, char** argv):
@@ -153,7 +189,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mUserMessageController(nullptr),
     mGfxProvider(nullptr),
     mSyncReminderNotificationManager(nullptr),
-    misSyncingStateWrongLogged(false)
+    misSyncingStateWrongLogged(false),
+    mScreenshotsController(nullptr)
 {
 #if defined Q_OS_MACOS && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -1152,9 +1189,9 @@ void MegaApplication::start()
     //In case the previous session did not remove all of them
     Preferences::instance()->clearTempTransfersPath();
 
-    const auto startupSession = preferences->getSession();
-    const bool startupHasSession = !startupSession.isEmpty();
-    const bool startupLogged = preferences->logged();
+    auto startupSession = preferences->getSession();
+    bool startupHasSession = !startupSession.isEmpty();
+    bool startupLogged = preferences->logged();
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                  QString::fromUtf8(
@@ -1164,6 +1201,25 @@ void MegaApplication::start()
                      .arg(QVariant::fromValue(AppState::instance()->getAppState()).toString())
                      .toUtf8()
                      .constData());
+
+    if (!startupHasSession && startupLogged)
+    {
+        if (preferences->repairMissingUserSessionFromGeneral())
+        {
+            startupSession = preferences->getSession();
+            startupHasSession = !startupSession.isEmpty();
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_WARNING,
+                QString::fromUtf8(
+                    "Logout diagnostics: repaired missing account session from general session. "
+                    "sessionEmpty=%1")
+                    .arg(startupSession.isEmpty())
+                    .toUtf8()
+                    .constData());
+        }
+
+        startupLogged = preferences->logged();
+    }
 
     // Self-heal stale account context persisted in settings. If there is no session to resume,
     // startup should not keep an account group open as "logged".
@@ -1437,39 +1493,53 @@ void MegaApplication::onboardingFinished(bool fastLogin, bool comesFromOnboardin
         true,
         !fastLogin ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
 
-    // Apply the "Start on startup" configuration, make sure configuration has the actual value
-    // get the requested value
+#ifndef __APPLE__
+    // Apply the "Start on startup" configuration, make sure configuration has the actual value.
+    // On Windows and Linux the app is the only writer of the startup entry, so a failure means
+    // the stored value is wrong.
     bool startOnStartup = preferences->startOnStartup();
-    // try to enable / disable startup (e.g. copy or delete desktop file)
     if (!Platform::getInstance()->startOnStartup(startOnStartup))
     {
-        // in case of failure - make sure configuration keeps the right value
-        //LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
         preferences->setStartOnStartup(!startOnStartup);
     }
+#else
+    // On macOS the login item is shared with System Settings, where the user can add, remove
+    // or disable it at any time, so after the first run the app only changes it from the
+    // Settings checkbox. The checkbox shows the real system state, so a stored preference the
+    // system does not reflect simply shows as unticked until the user ticks it.
+    // First run of an account on this Mac: honour the default (enabled) once. The preference
+    // is left untouched on failure; ticking the checkbox retries.
+    if (!preferences->lastExecutionTime() && preferences->startOnStartup() &&
+        !Platform::getInstance()->startOnStartup(true))
+    {
+        MegaApi::log(
+            MegaApi::LOG_LEVEL_WARNING,
+            "Launch at login could not be enabled on first run; Settings will show it off");
+    }
+#endif
 
-if (!preferences->lastExecutionTime())
-{
-    #ifdef __APPLE__
+    if (!preferences->lastExecutionTime())
+    {
+#ifdef __APPLE__
         showInfoMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
-    #else
+#else
         showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
-    #endif
-}
+#endif
+    }
 
-preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
+    preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
 
-startUpdateTask();
-QString language = preferences->language();
-changeLanguage(language);
-updated = false;
+    startUpdateTask();
+    QString language = preferences->language();
+    changeLanguage(language);
+    updated = false;
 
-checkOperatingSystem();
+    checkOperatingSystem();
 
-if (!infoDialog)
-{
-    createInfoDialog();
-}
+    if (!infoDialog)
+    {
+        createInfoDialog();
+    }
     infoDialog->setUsage();
     infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
@@ -1488,7 +1558,7 @@ if (!infoDialog)
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
-        auto settingsTabToOpen = SettingsDialog::SYNCS_TAB;
+        auto settingsTabToOpen = SettingsTabIds::SYNCS;
         QString message;
         QVector<MegaSync::SyncType> syncsTypesToDismiss;
 
@@ -1634,6 +1704,19 @@ void MegaApplication::onFetchNodesFinished()
         mSettingsDialog->setProxyOnly(false);
     }
     requestUserData();
+
+    // Started here rather than in onLoginFinished(): both controllers reach
+    // that before fetch-nodes has completed (LoginController::onLogin kicks off
+    // fetchNodes() and then calls it; FastLoginController::onLogin calls it and
+    // fetches afterwards). A capture detected in that window reached the
+    // uploader with no root node available, raising a "not ready yet" error
+    // popup -- and because the detector had already recorded the file, it was
+    // never retried. Starting once the nodes are in place means the account is
+    // always usable while the detector is watching.
+    mScreenshotsController = ScreenshotsController::instance();
+    refreshScreenshotUploader();
+    enableClipboardCopyScreenshotLink(
+        Preferences::instance()->clipboardCopyScreenshotLinkEnabled());
 }
 
 void MegaApplication::onLogout()
@@ -1664,6 +1747,11 @@ void MegaApplication::onLogout()
     mStalledIssuesModel->fullReset();
     mStatusController->reset();
     EmailRequester::instance()->reset();
+
+    if (mScreenshotsController)
+    {
+        mScreenshotsController->stop();
+    }
 
     // Queue processing of logout cleanup to avoid race conditions
     // due to threadifing processing.
@@ -1871,24 +1959,47 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 // to the Mega node that is passed as parameter
 void MegaApplication::processUploadQueue(MegaHandle nodeHandle, QWidget* caller)
 {
+    processUploadQueueImpl(mUploadQueue, nodeHandle, caller);
+}
+
+void MegaApplication::processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>>& queue,
+                                             MegaHandle nodeHandle,
+                                             QWidget* caller)
+{
     if (appfinished)
     {
         return;
     }
+
+    // The automatic screenshot flow keeps its uploader "busy" until this
+    // pass creates a transfer for the capture; every path that drops the
+    // queue without doing so must notify it or the flow stays blocked. Only
+    // the screenshot queue ever carries captures.
+    const bool queueHasCaptures =
+        std::any_of(queue.cbegin(),
+                    queue.cend(),
+                    [](const QPair<QString, PiTagTrigger>& item)
+                    {
+                        return item.second == MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE;
+                    });
 
     std::shared_ptr<MegaNode> node(megaApi->getNodeByHandle(nodeHandle));
 
     //If the destination node doesn't exist in the current filesystem, clear the queue and show an error message
     if (!node || node->isFile())
     {
-        mUploadQueue.clear();
+        if (queueHasCaptures)
+        {
+            notifyCaptureUploadsSkipped();
+        }
+        queue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The upload has been cancelled"));
         return;
     }
 
     noUploadedStarted = true;
 
-    auto uploads = CheckDuplicatedNodes::checkUploads(mUploadQueue, node);
+    auto uploads = CheckDuplicatedNodes::checkUploads(queue, node);
 
     if (uploads->isConflictFree())
     {
@@ -1896,17 +2007,83 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle, QWidget* caller)
     }
     else
     {
+        // An automatic capture must never take a conflict dialog away from the
+        // user. DialogOpener replaces a same-class sibling by deleting it
+        // without emitting finished(), so opening a second DuplicatedNodeDialog
+        // here would destroy the one the user is filling in and silently
+        // discard their entire upload batch. Skip the capture instead: nothing
+        // has failed, the file is still on disk, and later captures are
+        // unaffected.
+        if (queueHasCaptures)
+        {
+            auto openConflictDialog = DialogOpener::findDialog<DuplicatedNodeDialog>();
+            if (openConflictDialog && openConflictDialog->getDialog())
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                             "Screenshot upload skipped: a name conflict dialog is already open");
+                notifyCaptureUploadsSkipped();
+                return;
+            }
+        }
+
         auto checkUploadNameDialog(new DuplicatedNodeDialog(caller));
         checkUploadNameDialog->setConflicts(std::move(uploads));
+
+        // DialogOpener replaces an already-open dialog of the same class by
+        // deleting it without emitting finished(), which skips the callback
+        // below. Fall back to destroyed() so a replaced dialog still frees
+        // the capture slot instead of wedging the uploader.
+        auto captureOutcomeSettled = std::make_shared<bool>(false);
+        if (queueHasCaptures)
+        {
+            connect(checkUploadNameDialog,
+                    &QObject::destroyed,
+                    this,
+                    [this, captureOutcomeSettled]()
+                    {
+                        if (!*captureOutcomeSettled)
+                        {
+                            notifyCaptureUploadsSkipped();
+                        }
+                    });
+        }
+
         DialogOpener::showDialog<DuplicatedNodeDialog>(
             checkUploadNameDialog,
-            [this, checkUploadNameDialog]()
+            [this, checkUploadNameDialog, queueHasCaptures, captureOutcomeSettled]()
             {
+                *captureOutcomeSettled = true;
+                bool captureUploaded = false;
                 if (checkUploadNameDialog && checkUploadNameDialog->result() == QDialog::Accepted)
                 {
+                    // mResolvedConflicts holds exactly what gets uploaded
+                    // ("don't upload" items are excluded by the dialog).
+                    const auto& resolved = checkUploadNameDialog->getResolvedConflicts();
+                    captureUploaded = std::any_of(
+                        resolved.cbegin(),
+                        resolved.cend(),
+                        [](const std::shared_ptr<DuplicatedNodeInfo>& info)
+                        {
+                            return info->getPiTagTrigger() == MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE;
+                        });
                     onUploadsCheckedAndReady(checkUploadNameDialog->conflicts());
                 }
+
+                // Dialog cancelled, or accepted with the capture resolved as
+                // "don't upload": no transfer will ever be created for it.
+                if (queueHasCaptures && !captureUploaded)
+                {
+                    notifyCaptureUploadsSkipped();
+                }
             });
+    }
+}
+
+void MegaApplication::notifyCaptureUploadsSkipped()
+{
+    if (mScreenshotsController)
+    {
+        mScreenshotsController->onCaptureUploadSkipped();
     }
 }
 
@@ -1997,7 +2174,12 @@ void MegaApplication::processDownloadQueue(QString path)
 void MegaApplication::createTransferManagerDialog()
 {
     mTransferManager = new TransferManager(megaApi);
-    infoDialog->setTransferManager(mTransferManager);
+    // infoDialog is reset on logout and not yet created before onboarding
+    // finishes; the tray action can still fire in both states.
+    if (infoDialog)
+    {
+        infoDialog->setTransferManager(mTransferManager);
+    }
 
     // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If
     // Completed tab is active, tracking is disabled
@@ -2556,14 +2738,22 @@ void MegaApplication::cleanAll()
     mTransfersModel->deleteLater();
     mTransfersModel = nullptr;
 
-    // Ensure that there aren't objects deleted with deleteLater()
-    // that may try to access megaApi after
-    // their deletion
+    // Deliver pending events first (queued QTMegaEvents must run while megaApi is alive),
+    // then explicitly flush the DeferredDelete events queued above. processEvents() alone
+    // does NOT deliver deleteLater() requests posted at the current event-loop level (they
+    // are re-posted for a loop level that is only reached at ~QCoreApplication, see
+    // QCoreApplicationPrivate::sendPostedEvents), so without the explicit flush the models
+    // outlive removeMegaApis() below: their worker threads (TransferThread,
+    // StalledIssuesReceiver) keep consuming the SDK callbacks fired while the MegaApi
+    // instances are destroyed - which crashes on exit with ongoing transfers. Flushing here
+    // runs the destructors now: they join their threads and unregister their SDK listeners
+    // while megaApi is still valid.
     // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
+    QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
 
     // Delete the shared QML engine only after every QQuickWidget created from it has been
-    // destroyed by the deleteLater()/processEvents() above (e.g. InfoDialog's
+    // destroyed by the deleteLater() flush above (e.g. InfoDialog's
     // TransfersSummaryQuickWidget and SettingsDialog's AccountStateQuickWidget, which are
     // closed via DialogOpener::closeAllDialogs()). Deleting the engine while one of those
     // widgets is still alive tears down a live QML scene mid-binding - reproducible during an
@@ -2578,6 +2768,11 @@ void MegaApplication::cleanAll()
     mTrayIconManager = nullptr;
 
     logger.reset();
+
+    if (mScreenshotsController)
+    {
+        mScreenshotsController->stop();
+    }
 
     if (reboot)
     {
@@ -2872,6 +3067,22 @@ void MegaApplication::updateUsedStorage(const bool sendEvent)
     else
     {
         preferences->setUsedStorage(receivedStorageSum);
+    }
+}
+
+void MegaApplication::refreshScreenshotUploader()
+{
+    if (mScreenshotsController)
+    {
+        mScreenshotsController->refresh();
+    }
+}
+
+void MegaApplication::enableClipboardCopyScreenshotLink(bool enabled)
+{
+    if (mScreenshotsController)
+    {
+        mScreenshotsController->enableClipboardCopyScreenshotLink(enabled);
     }
 }
 
@@ -4575,6 +4786,42 @@ void MegaApplication::uploadActionClicked(AppStatsEvents::EventType event)
     uploadActionFromWindowAfterOverQuotaCheck();
 }
 
+void MegaApplication::uploadScreenshot(const QString& fileName,
+                                       ::mega::MegaHandle targetFolderHandle)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    // Dedicated queue, never the shared mUploadQueue: keeps automatic captures
+    // from colliding with a user's in-flight manual upload.
+    //
+    // Queued even when the account is over quota, like any manual upload: the
+    // SDK parks the transfer ("Out of storage space" in the Transfer Manager)
+    // and resumes it on its own once there is space again.
+    mScreenshotUploadQueue.enqueue({fileName, MegaApi::PITAG_TRIGGER_CAMERA_CAPTURE});
+    processUploadQueueImpl(mScreenshotUploadQueue, targetFolderHandle);
+
+    const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED ||
+                                  storageState == MegaApi::STORAGE_STATE_PAYWALL);
+    if (storageIsOverQuota)
+    {
+        // Same informative dialog as a manual upload, with the same 12h
+        // rate-limit (createDialogIfNeeded). Shown after queueing rather than
+        // chained to its close: DialogOpener replaces a same-class sibling
+        // without emitting finished(), which would otherwise drop the capture.
+        auto overQuotaDialog =
+            OverQuotaDialog::createDialogIfNeeded(OverQuotaDialogType::STORAGE_UPLOAD);
+        if (overQuotaDialog)
+        {
+            DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog,
+                                                                       false,
+                                                                       std::function<void()>());
+        }
+    }
+}
+
 void MegaApplication::uploadActionFromWindowAfterOverQuotaCheck()
 {
     QString  defaultFolderPath = getDefaultUploadPath();
@@ -4709,6 +4956,10 @@ void MegaApplication::streamActionClicked()
         {
             auto streamSelector = new StreamingFromMegaDialog(megaApi, megaApiFolders);
             connect(mTransferQuota.get(), &TransferQuota::waitTimeIsOver, streamSelector, &StreamingFromMegaDialog::updateStreamingState);
+            connect(mTransferQuota.get(),
+                    &TransferQuota::sendState,
+                    streamSelector,
+                    &StreamingFromMegaDialog::onTransferQuotaStateChanged);
             DialogOpener::showDialog<StreamingFromMegaDialog>(streamSelector);
         }
     });
@@ -4836,6 +5087,17 @@ void MegaApplication::createTrayIcon()
                 &TrayIconManager::activated,
                 this,
                 &MegaApplication::trayIconActivated);
+
+        // On macOS 27 the status item reports its primary action through the expanded-interface
+        // callbacks instead of the button's action, so Qt never emits activated() for a left
+        // click. Route it into the same slot, so the login state, account-blocked handling and
+        // stats are all preserved. Right click still arrives through Qt as Context.
+        // A no-op on other platforms and on earlier macOS.
+        Platform::getInstance()->setTrayPrimaryActionHandler(
+            [this]()
+            {
+                trayIconActivated(QSystemTrayIcon::Trigger);
+            });
     }
 
     updateTrayIconMenu();
@@ -5030,10 +5292,7 @@ bool MegaApplication::hasDefaultDownloadFolder() const
     QString defaultPath = preferences->downloadFolder();
     if (preferences->hasDefaultDownloadFolder() && QDir(defaultPath).exists())
     {
-        // QFile always wants `/` as separator
-        QString qFilePath = QDir::fromNativeSeparators(defaultPath);
-        QTemporaryFile *test = new QTemporaryFile(qFilePath + QDir::separator());
-        if (test->open())
+        if (Utilities::isLocalFolderWritable(defaultPath))
         {
             hasDefaultDownloadFolder = true;
         }
@@ -5043,8 +5302,6 @@ bool MegaApplication::hasDefaultDownloadFolder() const
             preferences->setHasDefaultDownloadFolder(false);
             preferences->setDownloadFolder(QString());
         }
-
-        delete test;
     }
 
     return hasDefaultDownloadFolder;
@@ -5151,7 +5408,7 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
         mDiscountStateMachine->isInCooldownState())
     {
         auto dialogInfo(DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>());
-        if (dialogInfo)
+        if (dialogInfo && dialogInfo->getDialog() && dialogInfo->getDialog()->wrapper())
         {
             dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
         }
@@ -5361,7 +5618,18 @@ void MegaApplication::uploadWithPiTagTrigger(const QStringList& newUploadQueue,
 // Called when the user wants to upload a list of files and/or folders from the shell
 void MegaApplication::shellUpload(const QQueue<QString>& newUploadQueue)
 {
-    uploadWithPiTagTrigger(newUploadQueue, MegaApi::PITAG_TRIGGER_EXPLORER_EXTENSION);
+    if (appfinished)
+    {
+        return;
+    }
+    if (megaApi && megaApi->isLoggedIn())
+    {
+        uploadWithPiTagTrigger(newUploadQueue, MegaApi::PITAG_TRIGGER_EXPLORER_EXTENSION);
+    }
+    else
+    {
+        QmlDialogManager::instance()->openOnboardingDialog();
+    }
 }
 
 void MegaApplication::shellBackup(QStringList newBackupList)
@@ -5430,6 +5698,16 @@ void MegaApplication::shellViewOnMegaByHandle(MegaHandle handle, bool versions)
     std::unique_ptr<const char[]> nodeHandle(MegaApi::handleToBase64(handle));
     Utilities::openUrl(
         ServiceUrls::instance()->getNodeUrl(QString::fromUtf8(nodeHandle.get()), versions));
+}
+
+void MegaApplication::onShellLegacyPipeUsed()
+{
+    // An old shell-ext DLL is still using the legacy pipe; report once per
+    // session to gauge remaining usage (SNC-6808).
+    if (mStatsEventHandler)
+    {
+        mStatsEventHandler->sendEvent(AppStatsEvents::EventType::SHELL_EXT_LEGACY_PIPE_USED);
+    }
 }
 
 void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extraLinks)
@@ -6103,7 +6381,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
     }
     else
     {
-        openSettings(SettingsDialog::SYNCS_TAB);
+        openSettings(SettingsTabIds::SYNCS);
         if (megaFolderHandle == ::mega::INVALID_HANDLE)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
@@ -6732,6 +7010,17 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
         // commit invokes refreshStorageUIs() again once values are in.
         AccountDetailsManager::instance()->refreshStorageBreakdownLocal();
     }
+    else if (event->getType() == MegaEvent::EVENT_STREAM_OVERQUOTA)
+    {
+        // Streams served by the local HTTP server go through the SDK file service and are
+        // not backed by a MegaTransfer, so a stream that runs out of transfer quota is only
+        // reported through this event. getNumber() is the time left, in seconds.
+        if (event->getNumber() > 0)
+        {
+            enterTransferOverQuota(std::chrono::seconds(event->getNumber()),
+                                   USERSTATS_STREAMOVERQUOTA);
+        }
+    }
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
     {
         manageBusinessStatus(event->getNumber());
@@ -7224,18 +7513,31 @@ void MegaApplication::onTransferTemporaryError(MegaApi* api, MegaTransfer* trans
                 tr("Your upload(s) cannot proceed because %1's account is full")
                     .arg(contact ? QString::fromUtf8(contact->getEmail()) : tr("contact")));
         }
-        else if (e->getValue() && !mTransferQuota->isOverQuota())
+        else if (e->getValue())
         {
-            preferences->clearTemporalBandwidth();
-            // Get udpated transfer quota (also pro status in case out of quota is due to account
-            // paid period expiry).
-            AccountDetailsManager::instance()->updateUserStats(
-                AccountDetailsManager::Flag::TRANSFER_PRO,
-                true,
-                USERSTATS_TRANSFERTEMPERROR);
-            mTransferQuota->setOverQuota(std::chrono::seconds(e->getValue()));
+            enterTransferOverQuota(std::chrono::seconds(e->getValue()),
+                                   USERSTATS_TRANSFERTEMPERROR);
         }
     }
+}
+
+void MegaApplication::enterTransferOverQuota(std::chrono::seconds waitTime,
+                                             GetUserStatsReason reason)
+{
+    // Blocked downloads and media players keep retrying while over quota: only the first
+    // report moves the state, refreshes the stats and raises the alerts.
+    if (mTransferQuota->isOverQuota())
+    {
+        return;
+    }
+
+    preferences->clearTemporalBandwidth();
+    // Get updated transfer quota (also pro status in case out of quota is due to account
+    // paid period expiry).
+    AccountDetailsManager::instance()->updateUserStats(AccountDetailsManager::Flag::TRANSFER_PRO,
+                                                       true,
+                                                       reason);
+    mTransferQuota->setOverQuota(waitTime);
 }
 
 void MegaApplication::onAccountUpdate(MegaApi *)

@@ -17,6 +17,19 @@ background-color: #FFFFFFFF; /*colorToken.page-background*/
 color: #ff303233; /*colorToken.text-primary*/
 }
 
+/*
+    QMessageBox
+    Qt's widget-based QFileDialog spawns internal QMessageBoxes (overwrite
+    confirmation, "folder not found") parented to the dialog, so they inherit
+    the themed QLabel text color from this stylesheet. Their background must
+    be themed too, or in dark mode they render light text on the default
+    light background.
+*/
+QMessageBox
+{
+background-color: #FFFFFFFF; /*colorToken.page-background*/
+}
+
 QFileDialog QAbstractItemView
 {
 color: #ff303233; /*colorToken.text-primary*/
@@ -744,6 +757,11 @@ image: url(:/switch_on_hover);
 image: url(:/switch_on_pressed);
 }
 
+#switch::indicator:checked:disabled
+{
+image: url(:/switch_on_disabled);
+}
+
 #switch::indicator:unchecked
 {
 image: url(:/switch_off);
@@ -757,6 +775,11 @@ image: url(:/switch_off_hover);
 #switch::indicator:unchecked:pressed
 {
 image: url(:/switch_off_pressed);
+}
+
+#switch::indicator:unchecked:disabled
+{
+image: url(:/switch_off_disabled);
 }
 
 /*

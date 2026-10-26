@@ -43,6 +43,20 @@ target_sources_conditional(${ExecutableTarget}
    ${CMAKE_CURRENT_LIST_DIR}/win/Laf.h.in
    ${CMAKE_CURRENT_LIST_DIR}/win/WinThemeWatcher.h
    ${CMAKE_CURRENT_LIST_DIR}/win/WinThemeWatcher.cpp
+   ${CMAKE_CURRENT_LIST_DIR}/win/SnippingToolSettings.h
+   ${CMAKE_CURRENT_LIST_DIR}/win/SnippingToolSettings.cpp
+)
+
+# Shared by the POSIX platform implementations, so it is built for both macOS and Linux.
+# It must be declared once: target_sources_conditional() marks the files it is given
+# HEADER_FILE_ONLY when its flag is false, and listing them in the macOS and the Linux
+# blocks would let the block whose flag is false exclude them from the build.
+target_sources_conditional(${ExecutableTarget}
+   FLAG UNIX
+   QT_AWARE
+   PRIVATE
+   ${CMAKE_CURRENT_LIST_DIR}/posix/PosixFileSystem.h
+   ${CMAKE_CURRENT_LIST_DIR}/posix/PosixFileSystem.cpp
 )
 
 target_sources_conditional(${ExecutableTarget}
@@ -120,6 +134,7 @@ elseif (APPLE)
     target_link_libraries(${ExecutableTarget}
         PRIVATE
         "-framework IOKit"
+        "-framework ServiceManagement"
     )
 else ()
     find_package(Qt5 REQUIRED COMPONENTS X11Extras DBus)
@@ -147,6 +162,10 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/mac
     ${CMAKE_CURRENT_LIST_DIR}/win
     ${CMAKE_CURRENT_BINARY_DIR}/win
+    # Wire contracts shared with the Windows shell extension (see the README
+    # there). Declared here, next to the win/ sources that include them, so it
+    # reaches every target that compiles those sources, not only MEGAsync.
+    ${CMAKE_CURRENT_LIST_DIR}/../../common/win
 )
 target_include_directories(${ExecutableTarget} PRIVATE ${INCLUDE_DIRECTORIES})
 

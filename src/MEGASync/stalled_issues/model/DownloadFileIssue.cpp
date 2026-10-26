@@ -209,7 +209,9 @@ void InvalidFingerprintDownloadIssue::solveIssues()
         foreach(auto issue, mFingerprintIssuesToFix)
         {
             std::shared_ptr<DownloadTransferInfo> info(new DownloadTransferInfo());
-            info->state = TransferData::ACTIVE_STATES_MASK;
+            // PENDING also covers queued/paused/retrying fix downloads, so solving
+            // again while one is waiting does not enqueue a duplicate
+            info->state = TransferData::PENDING_STATES_MASK;
             if (!issue.consultData()->isBeingSolvedByDownload(info))
             {
                 mega::MegaNode* node(MegaSyncApp->getMegaApi()->getNodeByHandle(info->nodeHandle));

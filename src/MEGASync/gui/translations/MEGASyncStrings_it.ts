@@ -5772,7 +5772,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
         <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>Sposta i tuoi file da Google Drive direttamente in MEGA, completamente criptati. Inizia in pochi clic.</translation>
+        <translation>Sposta i tuoi file da in altro servizio di archiviazione cloud direttamente in MEGA, completamente criptati. Inizia in pochi clic.</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
@@ -10323,7 +10323,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Select a shared folder to upload your items to</source>
         <translatorcomment>Guidance banner in the upload node selector, shown in Incoming Shares when no folder is selected, prompting the user to pick a shared folder as the upload destination. SNC-6420</translatorcomment>
-        <translation>Seleziona una cartella condivisa in cui caricare i tuoi elementi.</translation>
+        <translation>Seleziona una cartella condivisa in cui caricare i tuoi elementi</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>

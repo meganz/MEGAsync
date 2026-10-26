@@ -21,6 +21,7 @@
 #include <QImageReader>
 #include <QPixmapCache>
 #include <QScreen>
+#include <QTemporaryFile>
 #include <QTextStream>
 
 #include <cmath>
@@ -784,6 +785,73 @@ bool Utilities::removeRecursively(QString path)
     return success;
 }
 
+// Renders the owner/group/other bits of `permissions` as a POSIX style octal mode. Only
+// used to make the messages below actionable; the platform layer owns the bits themselves
+// (see AbstractPlatform::restrictToOwner).
+static QString toOctalMode(QFile::Permissions permissions)
+{
+    const auto digit =
+        [permissions](QFile::Permission read, QFile::Permission write, QFile::Permission execute)
+    {
+        return ((permissions & read) ? 4 : 0) + ((permissions & write) ? 2 : 0) +
+               ((permissions & execute) ? 1 : 0);
+    };
+
+    return QString::fromLatin1("0%1%2%3")
+        .arg(digit(QFile::ReadOwner, QFile::WriteOwner, QFile::ExeOwner))
+        .arg(digit(QFile::ReadGroup, QFile::WriteGroup, QFile::ExeGroup))
+        .arg(digit(QFile::ReadOther, QFile::WriteOther, QFile::ExeOther));
+}
+
+void Utilities::restrictFolderToOwner(const QString& folder, const PermissionsLogger& logger)
+{
+    // Nothing to protect if the folder is not there. Worth reporting on its own: the
+    // caller expects to have created it, so whatever is written into it next fails too.
+    if (!QFileInfo(folder).isDir())
+    {
+        logger(MegaApi::LOG_LEVEL_ERROR,
+               QString::fromUtf8("Folder is missing, its access cannot be restricted to the "
+                                 "owner: %1")
+                   .arg(folder));
+        return;
+    }
+
+    auto platform = Platform::getInstance();
+    if (platform->isRestrictedToOwner(folder))
+    {
+        return;
+    }
+
+    const QString previousMode = toOctalMode(QFile::permissions(folder));
+
+    if (!platform->restrictToOwner(folder))
+    {
+        logger(MegaApi::LOG_LEVEL_ERROR,
+               QString::fromUtf8("Failed to restrict the folder access to the owner, it stays "
+                                 "accessible to other users (mode %1): %2")
+                   .arg(previousMode, folder));
+        return;
+    }
+
+    // Confirm the change actually took effect: some filesystems (FAT/exFAT, some network
+    // mounts) accept the request and keep their own fixed, permissive permissions, so a
+    // reported success is not enough to consider the content protected.
+    if (!platform->isRestrictedToOwner(folder))
+    {
+        logger(MegaApi::LOG_LEVEL_ERROR,
+               QString::fromUtf8("Folder is still accessible to other users after restricting "
+                                 "its access (mode %1, was %2), the filesystem may not support "
+                                 "permissions: %3")
+                   .arg(toOctalMode(QFile::permissions(folder)), previousMode, folder));
+        return;
+    }
+
+    logger(MegaApi::LOG_LEVEL_INFO,
+           QString::fromUtf8("Folder was accessible to other users (mode %1), access restricted "
+                             "to the owner only: %2")
+               .arg(previousMode, folder));
+}
+
 void Utilities::copyRecursively(QString srcPath, QString dstPath)
 {
     if (!srcPath.size() || !dstPath.size())
@@ -1324,7 +1392,9 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     {
         int64_t ts = list->get(it);
         QDateTime date = QDateTime::fromMSecsSinceEpoch(ts * 1000l);
-        readableTimes.append(QLocale().toString(date.date(), QLocale::LongFormat));
+        // Use the in-app language, not the system locale (SNC-6853)
+        const QLocale locale(MegaSyncApp->getCurrentLanguageCode());
+        readableTimes.append(locale.toString(date.date(), QLocale::LongFormat));
 
         if (it != list->size() - 1)
         {
@@ -1773,6 +1843,22 @@ void Utilities::openBackupCenter()
     openUrl(ServiceUrls::getDeviceCenterUrl());
 }
 
+bool Utilities::isLocalFolderWritable(const QString& path)
+{
+    if (path.isEmpty())
+    {
+        return false;
+    }
+
+    // QDir::filePath() normalises the separators to '/' and takes care of a trailing one.
+    // That normalisation is required: QTemporaryFile resolves its template through
+    // QFileSystemEntry, which only treats "X:" or a leading '/' as absolute. A native UNC
+    // path ("\\server\share") therefore looks relative to it and gets joined onto the process
+    // working directory, so the probe would fail on any network share (SNC-6919).
+    QTemporaryFile test(QDir(path).filePath(QLatin1String(".XXXXXX")));
+    return test.open();
+}
+
 QString Utilities::getCommonPath(const QString &path1, const QString &path2, bool cloudPaths)
 {
     QString ret;
@@ -1998,13 +2084,16 @@ QString Utilities::getTranslatedError(const MegaError* error)
     return QCoreApplication::translate("MegaError", error->getErrorString());
 }
 
-std::shared_ptr<MegaError> Utilities::removeRemoteFile(const MegaNode* node)
+std::shared_ptr<MegaError> Utilities::removeRemoteFile(const MegaNode* node,
+                                                       const QString& preparedBinFolderPath)
 {
     std::shared_ptr<MegaError> error;
 
     if(node)
     {
-        error = MoveToMEGABin()(node->getHandle(), QLatin1String(""), true);
+        error = preparedBinFolderPath.isEmpty() ?
+                    MoveToMEGABin()(node->getHandle(), QLatin1String(""), true) :
+                    MoveToMEGABin()(node->getHandle(), preparedBinFolderPath);
     }
 
     return error;

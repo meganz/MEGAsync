@@ -197,6 +197,8 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::MACOS_ARM64_UPDATE_URL_ADJUSTED_FOR_INTEL_BINARY, 600091},
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_ONBOARDING, 600094},
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU, 600095},
+    {AppStatsEvents::EventType::SCREENSHOT_UPLOADED, 600092},
+    {AppStatsEvents::EventType::SCREENSHOT_LINK_CREATED, 600093},
     // 600096-600106: onboarding funnel and heartbeat-timeout instrumentation,
     // registered in the stats events Confluence page (SNC-6881)
     {AppStatsEvents::EventType::ONBOARDING_LOGIN_OK, 600096},
@@ -209,7 +211,9 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_TIMEOUTS_SC, 600103},
     {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_STALLED_PREVIOUS_SESSION, 600104},
     {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_CS_FIRST_IN_SESSION, 600105},
-    {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_SC_FIRST_IN_SESSION, 600106}};
+    {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_SC_FIRST_IN_SESSION, 600106},
+    // TODO SNC-6808: record 600107 as used on the Confluence "Events" page.
+    {AppStatsEvents::EventType::SHELL_EXT_LEGACY_PIPE_USED, 600107}};
 
 // Deprecated are not displayed
 QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
@@ -460,6 +464,8 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
      "Migration tool opened (from onboarding)"},
     {AppStatsEvents::EventType::MIGRATION_TOOL_OPENED_FROM_MENU,
      "Migration tool opened (from menu)"},
+    {AppStatsEvents::EventType::SCREENSHOT_UPLOADED, "Screenshot is being uploaded to mega"},
+    {AppStatsEvents::EventType::SCREENSHOT_LINK_CREATED, "Screenshot link is generated"},
     {AppStatsEvents::EventType::ONBOARDING_LOGIN_OK, "Onboarding: login OK"},
     {AppStatsEvents::EventType::ONBOARDING_FETCHNODES_COMPLETED,
      "Onboarding: fetchnodes completed"},
@@ -480,7 +486,9 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_CS_FIRST_IN_SESSION,
      "First heartbeat timeout of this session on the cs channel"},
     {AppStatsEvents::EventType::HEARTBEAT_TIMEOUT_SC_FIRST_IN_SESSION,
-     "First heartbeat timeout of this session on the sc channel"}};
+     "First heartbeat timeout of this session on the sc channel"},
+    {AppStatsEvents::EventType::SHELL_EXT_LEGACY_PIPE_USED,
+     "Shell extension used the legacy pipe name"}};
 
 QString AppStatsEvents::getEventMessage(EventType event,
                                          const QStringList& args)

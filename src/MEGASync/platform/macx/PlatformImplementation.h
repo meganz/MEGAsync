@@ -17,7 +17,10 @@ public:
     void notifySyncFileChange(std::string *localPath, int newState) override;
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
+    bool isStartOnStartupPendingUserApproval() override;
+    void openStartOnStartupSystemSettings() override;
     bool showInFolder(QString pathIn) override;
+    bool createFolderRestrictedToOwner(const QString& folder, QString* errorMessage) override;
     void startShellDispatcher(MegaApplication *receiver) override;
     void stopShellDispatcher() override;
     void syncFolderAdded(QString syncPath, QString syncName, QString syncID) override;
@@ -38,6 +41,9 @@ public:
     virtual void fileAndFolderSelector(const SelectorInfo& info) override;
     void raiseFileFolderSelectors() override;
     void closeFileFolderSelectors(QWidget* parent) override;
+
+    void adoptTrayIconExpandedInterface() override;
+    void setTrayPrimaryActionHandler(std::function<void()> handler) override;
 
     void addFileManagerExtensionToSystem() override;
     void enableFileManagerExtension(bool value) override;
@@ -60,6 +66,8 @@ public:
 
     Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
     void applyCurrentThemeOnCurrentDialogFrame(QWindow* window) override;
+
+    QStringList getScreenshotsLocation() override;
 
 private:
     void disableSignalHandler();

@@ -212,9 +212,13 @@
         <file>change_password/ChangePasswordPage.qml</file>
         <file>change_password/TwoFAPage.qml</file>
         <file>change_password/ChangePasswordStrings.qml</file>
+        <file>change_password/PasswordStrengthIndicator.qml</file>
         <file>change_password/qmldir</file>
         <file>offer/OfferDialog.qml</file>
         <file>offer/qmldir</file>
         <file>offer/OfferStrings.qml</file>
+        <file>screenshots/qmldir</file>
+        <file>screenshots/Screenshot.qml</file>
+        <file>screenshots/ScreenshotStrings.qml</file>
     </qresource>
 </RCC>

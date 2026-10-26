@@ -9,7 +9,9 @@
 #include <QOperatingSystemVersion>
 #include <QWindow>
 
+#import <ServiceManagement/ServiceManagement.h>
 #import <objc/runtime.h>
+#import <objc/message.h>
 #import <sys/proc_info.h>
 #import <libproc.h>
 
@@ -169,6 +171,49 @@ void closeFileSelectionPanels(QWidget* parent)
 
 bool startAtLogin(bool opt)
 {
+    // From macOS 13 the shared-file-list login items are a no-op: the insert call
+    // returns an item that never reaches the user's Login Items. SMAppService is the
+    // API that works there, and it also reports whether the change was applied.
+    if (@available(macOS 13.0, *))
+    {
+        SMAppService* service = [SMAppService mainAppService];
+        // Read once: the user can change it in System Settings between two reads.
+        const SMAppServiceStatus status = service.status;
+        NSError* error = nil;
+        bool ok = false;
+        if (opt)
+        {
+            // Enabled: nothing to do. RequiresApproval: the item exists but the user turned it
+            // off in System Settings and only they can turn it back on there; register() does
+            // not change that (it returns success and leaves the item off), so it is not called.
+            // The caller can detect the state with isStartAtLoginPendingApproval().
+            ok = (status == SMAppServiceStatusEnabled || status == SMAppServiceStatusRequiresApproval) ||
+                 [service registerAndReturnError:&error];
+        }
+        else
+        {
+            // Enabled and RequiresApproval are both registered items: a RequiresApproval one
+            // (turned off by the user in System Settings) must be removed too, or it stays
+            // listed there after the box is unticked. NotRegistered/NotFound: nothing to remove.
+            ok = (status != SMAppServiceStatusEnabled && status != SMAppServiceStatusRequiresApproval) ||
+                 [service unregisterAndReturnError:&error];
+        }
+        if (!ok)
+        {
+            const QString reason = error ? fromNSString(error.localizedDescription) :
+                                           QString::fromLatin1("no error returned");
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                               QString::fromLatin1("Launch at login could not be %1 (status %2): %3")
+                                   .arg(opt ? QString::fromLatin1("enabled") :
+                                              QString::fromLatin1("disabled"))
+                                   .arg(static_cast<int>(status))
+                                   .arg(reason)
+                                   .toUtf8()
+                                   .constData());
+        }
+        return ok;
+    }
+
     if (opt)
     {
         //Enable start at login
@@ -457,8 +502,34 @@ bool revealInFinder(const QString& path)
 }
 
 
+bool isStartAtLoginPendingApproval()
+{
+    if (@available(macOS 13.0, *))
+    {
+        // The item exists but the user turned it off in System Settings; only the user can
+        // turn it back on there.
+        return [SMAppService mainAppService].status == SMAppServiceStatusRequiresApproval;
+    }
+    return false;
+}
+
+void openStartAtLoginSystemSettings()
+{
+    if (@available(macOS 13.0, *))
+    {
+        [SMAppService openSystemSettingsLoginItems];
+    }
+}
+
 bool isStartAtLoginActive()
 {
+    if (@available(macOS 13.0, *))
+    {
+        // "Requires approval" means the user still has to allow it in System Settings;
+        // until then the app will not launch at login, so it is not active.
+        return [SMAppService mainAppService].status == SMAppServiceStatusEnabled;
+    }
+
     NSString *appPath = [[NSBundle mainBundle] bundlePath];
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
 
@@ -569,4 +640,148 @@ if (!window) return;
         [win invalidateShadow];
         [win displayIfNeeded];
     }
+}
+
+namespace
+{
+NSStatusBarButton* findStatusBarButton(NSView* view)
+{
+    if (!view)
+    {
+        return nil;
+    }
+
+    if ([view isKindOfClass:[NSStatusBarButton class]])
+    {
+        return (NSStatusBarButton*)view;
+    }
+
+    for (NSView* subview in view.subviews)
+    {
+        if (NSStatusBarButton* button = findStatusBarButton(subview))
+        {
+            return button;
+        }
+    }
+
+    return nil;
+}
+
+// Qt owns the NSStatusItem and never exposes it, so it is reached through the button.
+id statusItemForButton(NSStatusBarButton* button)
+{
+    using MsgSendId = id (*)(id, SEL);
+    SEL itemSel = NSSelectorFromString(@"_statusItem");
+    if (!button || ![button respondsToSelector:itemSel])
+    {
+        return nil;
+    }
+    return ((MsgSendId)objc_msgSend)(button, itemSel);
+}
+
+id currentStatusItem()
+{
+    for (NSWindow* window in NSApp.windows)
+    {
+        if (NSStatusBarButton* button = findStatusBarButton(window.contentView))
+        {
+            return statusItemForButton(button);
+        }
+    }
+    return nil;
+}
+
+// Hand the status item back to AppKit. While a session is open the item stays in menu bar
+// keyboard navigation, which swallows Return for every window in the app.
+void releaseExpandedSession()
+{
+    using MsgSendId = id (*)(id, SEL);
+    using MsgSendVoid = void (*)(id, SEL);
+
+    id item = currentStatusItem();
+    SEL sessionSel = NSSelectorFromString(@"expandedInterfaceSession");
+    if (!item || ![item respondsToSelector:sessionSel])
+    {
+        return;
+    }
+
+    id session = ((MsgSendId)objc_msgSend)(item, sessionSel);
+    SEL cancelSel = NSSelectorFromString(@"cancel");
+    if (session && [session respondsToSelector:cancelSel])
+    {
+        ((MsgSendVoid)objc_msgSend)(session, cancelSel);
+    }
+}
+
+std::function<void()> gPrimaryActionHandler;
+}
+
+// macOS 27 presents a status item's panel through expanded-interface callbacks rather than the
+// button's target/action (see NSStatusItem.h and TN3212), and keeps the item in menu bar
+// keyboard navigation for as long as the session lasts. Qt registers no delegate, so the click
+// arrives as a synthesized mouse event and nothing ever ends the session: from the first click
+// onwards Return is swallowed before it reaches any of our windows.
+//
+// The Info Dialog manages its own lifetime (it hides itself when it loses focus), so rather
+// than mirroring that back to AppKit we take the callback purely as "the item was activated"
+// and release the session immediately.
+@interface MEGAStatusItemExpandedDelegate: NSObject
+@end
+
+@implementation MEGAStatusItemExpandedDelegate
+
+- (void)statusItem:(id)statusItem didBeginExpandedInterfaceSession:(id)session
+{
+    if (gPrimaryActionHandler)
+    {
+        gPrimaryActionHandler();
+    }
+
+    // Deferred: cancelling from inside the callback would re-enter AppKit's own teardown.
+    dispatch_async(dispatch_get_main_queue(),
+                   ^{
+                       releaseExpandedSession();
+                   });
+}
+
+- (void)statusItemDidEndExpandedInterfaceSession:(id)statusItem animated:(BOOL)animated
+{
+    // Required by the protocol, but there is nothing to do: the session is released as soon as
+    // it begins, and the dialog's visibility is toggled by the handler above.
+}
+
+@end
+
+void setStatusItemPrimaryActionHandler(std::function<void()> handler)
+{
+    gPrimaryActionHandler = std::move(handler);
+}
+
+void adoptStatusItemExpandedInterface()
+{
+    static MEGAStatusItemExpandedDelegate* delegate = nil;
+    static bool unavailable = false;
+
+    if (delegate || unavailable)
+    {
+        return;
+    }
+
+    id item = currentStatusItem();
+    if (!item)
+    {
+        return; // the native item does not exist yet; retried on the next show()
+    }
+
+    SEL setSel = NSSelectorFromString(@"setExpandedInterfaceDelegate:");
+    if (![item respondsToSelector:setSel])
+    {
+        unavailable = true; // before macOS 27; the target/action path still applies
+        return;
+    }
+
+    delegate = [[MEGAStatusItemExpandedDelegate alloc] init];
+
+    using MsgSendObj = void (*)(id, SEL, id);
+    ((MsgSendObj)objc_msgSend)(item, setSel, delegate);
 }

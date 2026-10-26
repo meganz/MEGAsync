@@ -1,11 +1,13 @@
 #include "MEGAinterface.h"
 
 #include "ContextMenuData.h"
+#include "ShellDispatcherPipe.h"
 #include "Utilities.h"
 
-// clang-format off
-LPCWSTR MegaInterface::MEGA_PIPE    = L"\\\\.\\pipe\\MEGAprivacyMEGAsync";
+#include <memory>
+#include <string>
 
+// clang-format off
 WCHAR MegaInterface::OP_PATH_STATE              = L'P'; //Path state
 WCHAR MegaInterface::OP_INIT                    = L'I'; //Init operation
 WCHAR MegaInterface::OP_END                     = L'E'; //End operation
@@ -22,29 +24,135 @@ WCHAR MegaInterface::OP_REMOVE_FROM_LEFT_PANE   = L'J'; // Remove a sync from le
 
 // clang-format on
 
+namespace
+{
+
+// Closes a Win32 HANDLE. Local to the extension on purpose: the only thing it
+// shares with MEGAsync is the pipe name contract (ShellDispatcherPipe.h), not
+// utility code.
+struct HandleCloser
+{
+    void operator()(HANDLE handle) const
+    {
+        if (handle && handle != INVALID_HANDLE_VALUE)
+        {
+            CloseHandle(handle);
+        }
+    }
+};
+
+using HandlePtr = std::unique_ptr<void, HandleCloser>;
+
+// The pipe name and this process's own SID are process-constant; Explorer asks
+// for the state of every item it paints, so avoid re-querying the token each
+// time. Magic statics: initialized once, thread-safe. If resolution fails at
+// first use the empty result is cached too - fail-closed for the process
+// lifetime, same outcome as failing on every call.
+const std::wstring& cachedPipeName()
+{
+    static const std::wstring pipeName = ShellDispatcherPipe::name();
+    return pipeName;
+}
+
+const std::wstring& cachedOwnSid()
+{
+    static const std::wstring sid = ShellDispatcherPipe::currentUserSid();
+    return sid;
+}
+
+// Confirms the process serving `pipe` runs as the current user, i.e. it is this
+// user's own MEGAsync and not another local user squatting the name (SNC-6808).
+// CallNamedPipeW gave no handle to inspect; that is why sendRequest now opens
+// the pipe explicitly and calls this before sending anything.
+bool serverIsCurrentUser(HANDLE pipe)
+{
+    ULONG serverPid = 0;
+    if (!GetNamedPipeServerProcessId(pipe, &serverPid))
+    {
+        return false;
+    }
+
+    const HandlePtr server(OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, serverPid));
+    if (!server)
+    {
+        return false;
+    }
+
+    const std::wstring serverSid = ShellDispatcherPipe::processUserSid(server.get());
+    const std::wstring& ownSid = cachedOwnSid();
+    return !serverSid.empty() && serverSid == ownSid;
+}
+
+} // namespace
+
 int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int responseLen)
 {
-    BOOL success;
+    const std::wstring& pipeName = cachedPipeName();
+    if (pipeName.empty())
+    {
+        return 0;
+    }
+
+    const int requestLen = lstrlen(content) + 3;
+    std::unique_ptr<WCHAR[]> request(new WCHAR[requestLen]);
+    StringCchPrintfW(request.get(), requestLen, L"%c:%s", type, content);
+
+    // Open the pipe explicitly instead of CallNamedPipeW, so the server can be
+    // verified before anything is sent. An unavailable pipe (missing or all
+    // instances busy) fails immediately here, matching the old NMPWAIT_NOWAIT.
+    const HandlePtr pipe(CreateFileW(pipeName.c_str(),
+                                     GENERIC_READ | GENERIC_WRITE,
+                                     0,
+                                     nullptr,
+                                     OPEN_EXISTING,
+                                     // Cap the server's impersonation of this client at
+                                     // identification: a rogue server that somehow got past the
+                                     // SID check below could otherwise impersonate Explorer's
+                                     // token at impersonation level.
+                                     SECURITY_SQOS_PRESENT | SECURITY_IDENTIFICATION,
+                                     nullptr));
+    if (pipe.get() == INVALID_HANDLE_VALUE)
+    {
+        return 0;
+    }
+
+    // Only talk to our own MEGAsync.
+    if (!serverIsCurrentUser(pipe.get()))
+    {
+        return 0;
+    }
+
+    // The server pipe is message mode; switch this handle to match so one read
+    // returns one whole reply.
+    DWORD mode = PIPE_READMODE_MESSAGE;
+    if (!SetNamedPipeHandleState(pipe.get(), &mode, nullptr, nullptr))
+    {
+        return 0;
+    }
+
+    DWORD written = 0;
+    if (!WriteFile(pipe.get(), request.get(), requestLen * sizeof(WCHAR), &written, nullptr))
+    {
+        return 0;
+    }
+
     DWORD readed = 0;
-    int requestLen = lstrlen(content)+3;
-    LPWSTR request = new WCHAR[requestLen];
-    StringCchPrintfW(request, requestLen, L"%c:%s", type, content);
-    success = CallNamedPipeW(
-       MegaInterface::MEGA_PIPE,            // pipe name
-       (LPVOID)request,                     // message to server
-       requestLen * sizeof(WCHAR),          // message length
-       (LPVOID)response,                    // buffer to receive reply
-       responseLen,                         // size of read buffer
-       &readed,                             // number of bytes read
-       NMPWAIT_NOWAIT);                     // waits
-    delete[] request;
-    if (success) return readed;
-    return 0;
+    if (!ReadFile(pipe.get(), (LPVOID)response, responseLen, &readed, nullptr))
+    {
+        return 0;
+    }
+
+    return static_cast<int>(readed);
 }
 
 bool MegaInterface::isMEGASyncOpen()
 {
-    return WaitNamedPipe(MegaInterface::MEGA_PIPE, 0) != 0;
+    const std::wstring& pipeName = cachedPipeName();
+    if (pipeName.empty())
+    {
+        return false;
+    }
+    return WaitNamedPipeW(pipeName.c_str(), 0) != 0;
 }
 
 MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath, bool overlayIcons)

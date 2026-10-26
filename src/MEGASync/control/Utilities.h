@@ -510,6 +510,11 @@ public:
     static void openBackupCenter();
 
     static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
+
+    // True if a new file can be created inside `path`. The check is done by actually creating
+    // (and removing) a temporary file, so it reflects the effective permissions rather than the
+    // ones reported by the filesystem. `path` may use either native or '/' separators.
+    static bool isLocalFolderWritable(const QString& path);
     static const QString getPlatformProps(const QString sourceStyleSheet);
 
     static bool isIncommingShare(mega::MegaNode* node);
@@ -544,7 +549,12 @@ public:
 
     static QString getTranslatedError(const mega::MegaError* error);
 
-    static std::shared_ptr<mega::MegaError> removeRemoteFile(const mega::MegaNode* node);
+    // preparedBinFolderPath: a path returned by MoveToMEGABin::createBinFolder(), so batched
+    // removals all land in the folder that was prepared. Empty means "resolve the default
+    // date folder here", which re-derives the date per call.
+    static std::shared_ptr<mega::MegaError>
+        removeRemoteFile(const mega::MegaNode* node,
+                         const QString& preparedBinFolderPath = QString());
     static std::shared_ptr<mega::MegaError> removeSyncRemoteFile(const mega::MegaNode* node);
     static std::shared_ptr<mega::MegaError> removeRemoteFile(const QString& path);
     static std::shared_ptr<mega::MegaError> removeSyncRemoteFile(const QString& path);
@@ -654,6 +664,19 @@ public:
     static void removeAvatars();
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
+
+    // Receives mega::MegaApi::LOG_LEVEL_* messages. Taken as a callback because folder
+    // permissions are enforced at startup, before the MegaApi logger is available.
+    using PermissionsLogger = std::function<void(int logLevel, const QString& message)>;
+
+    // Restricts `folder` so that only its owner can access it, protecting every file
+    // inside from other users even though they are created with the default umask.
+    // Applied on every call, so a folder left behind by a previous version, or loosened
+    // afterwards, is tightened as well. How the folder is restricted, and whether it
+    // needs to be at all, is platform specific: see AbstractPlatform::restrictToOwner().
+    // Logs only when the permissions had to be changed, or when that failed. Callers own
+    // the decision of whether the folder is theirs to restrict.
+    static void restrictFolderToOwner(const QString& folder, const PermissionsLogger& logger);
 
     static void queueFunctionInAppThread(std::function<void()> fun);
     static void queueFunctionInObjectThread(QObject* object, std::function<void()> fun);

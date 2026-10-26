@@ -3,6 +3,7 @@
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "ServiceUrls.h"
+#include "SettingsTabIds.h"
 #include "StalledIssue.h"
 #include "StalledIssueDelegate.h"
 #include "StalledIssuesModel.h"
@@ -97,7 +98,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
             this,
             []()
             {
-                MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+                MegaSyncApp->openSettings(SettingsTabIds::SYNCS);
             });
 
     connect(ui->HelpButton,

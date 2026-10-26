@@ -107,6 +107,7 @@ protected:
 
     void onLogout(mega::MegaRequest* request, mega::MegaError* e);
     void fetchNodes();
+    void dumpSession();
 
     mega::MegaApi * mMegaApi;
     std::shared_ptr<Preferences> mPreferences;
@@ -117,7 +118,6 @@ private slots:
     void onAppStateChanged(AppState::AppStates oldAppState, AppState::AppStates newAppState);
 
 private:
-    void dumpSession();
     bool isWaitingForEmailConfirmation() const;
     QString getRepeatedEmailMsg();
     void setEmail(const QString& email);

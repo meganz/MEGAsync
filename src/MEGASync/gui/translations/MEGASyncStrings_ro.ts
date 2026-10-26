@@ -5849,7 +5849,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Move your files from Google Drive straight into MEGA, fully encrypted. Start in a few clicks.</source>
         <translatorcomment>Onboarding button description for the cloud migration tool. SNC-6703</translatorcomment>
-        <translation>Mută-ți fișierele din Google Drive direct în MEGA, complet criptate. Începe în doar câteva clicuri.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>

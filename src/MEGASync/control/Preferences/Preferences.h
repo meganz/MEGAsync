@@ -52,6 +52,7 @@ public:
     void setFileHash(const QString& filePath, const QString& fileHash);
     void setSession(QString session);
     void setSessionInUserGroup(QString session);
+    bool repairMissingUserSessionFromGeneral();
     QString getSession();
     void removeEphemeralCredentials();
     void setEphemeralCredentials(const EphemeralCredentials &cred);
@@ -417,6 +418,11 @@ public:
     void setDontShowExportLinkDialog(bool value);
     bool getDontShowExportLinkDialog();
 
+    bool uploadScreenshotsEnabled();
+    void setUploadScreenshotsEnabled(bool value);
+    bool clipboardCopyScreenshotLinkEnabled();
+    void setClipboardCopyScreenshotLinkEnabled(bool value);
+
     enum class ThemeType
     {
         UNINITIALIZED = -1,
@@ -505,7 +511,8 @@ public:
         ONE_TIME_ACTION_ONBOARDING_SHOWN = 6,
         ONE_TIME_ACTION_UNHIDE_TRAY_ICON = 7,
         ONE_TIME_ACTION_REQUEST_PIN_TASKBAR = 8,
-        ONE_TIME_ACTION_MACOS_ARM64_UPDATE_URL_ADJUSTED_EVENT_SENT = 9
+        ONE_TIME_ACTION_MACOS_ARM64_UPDATE_URL_ADJUSTED_EVENT_SENT = 9,
+        ONE_TIME_ACTION_SCREENSHOT_ENABLE_OFFER = 10
     };
 
     enum {
@@ -869,6 +876,9 @@ protected:
     static const QString reclaimPeriodSeconds;
     static const QString reclaimTargetBytes;
     static const QString reclaimThresholdBytes;
+
+    static const QString uploadScreenshotsKey;
+    static const QString clipboardCopyScreenshotLinkKey;
 
 private:
     void updateFullName();

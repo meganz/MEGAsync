@@ -313,6 +313,12 @@ const QString Preferences::reclaimThresholdBytes = QString::fromLatin1("reclaimT
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
 const bool Preferences::defaultAwakeIfActive = false;
 
+// screen shot settings.
+const QString Preferences::uploadScreenshotsKey =
+    QString::fromLatin1("uploadScreenshotsEnabledKey");
+const QString Preferences::clipboardCopyScreenshotLinkKey =
+    QString::fromLatin1("clipboardCopyScreenshotLink");
+
 const bool Preferences::defaultStartOnStartup = true;
 const bool Preferences::defaultUpdateAutomatically = true;
 const bool Preferences::defaultCleanerDaysLimit     = true;
@@ -523,6 +529,49 @@ void Preferences::setSessionInUserGroup(QString session)
                      .toUtf8()
                      .constData());
     syncSettingsLocked("setSessionInUserGroup");
+}
+
+bool Preferences::repairMissingUserSessionFromGeneral()
+{
+    QMutexLocker locker(&mutex);
+    if (!logged())
+    {
+        return false;
+    }
+
+    const auto userSession = mSettings->value(sessionKey).toString();
+    if (!userSession.isEmpty())
+    {
+        return false;
+    }
+
+    mSettings->endGroup();
+    const auto currentAccount = mSettings->value(currentAccountKey).toString();
+    const auto generalSession = getValue<QString>(sessionKey);
+    if (!currentAccount.isEmpty())
+    {
+        mSettings->beginGroup(currentAccount);
+    }
+
+    if (currentAccount.isEmpty() || generalSession.isEmpty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     QString::fromUtf8("Session repair skipped. currentAccountEmpty=%1 %2")
+                         .arg(currentAccount.isEmpty())
+                         .arg(sessionSummaryForLog(generalSession))
+                         .toUtf8()
+                         .constData());
+        return false;
+    }
+
+    mSettings->setValue(sessionKey, generalSession);
+    MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                 QString::fromUtf8("Session repaired. source=general destination=user %1")
+                     .arg(sessionSummaryForLog(generalSession))
+                     .toUtf8()
+                     .constData());
+    syncSettingsLocked("repairMissingUserSessionFromGeneral");
+    return true;
 }
 
 void Preferences::storeSessionInGeneral(QString session)
@@ -2556,6 +2605,34 @@ bool Preferences::awakeIfActiveEnabled()
 void Preferences::setAwakeIfActive(bool value)
 {
     setValueConcurrently(awakeIfActiveKey, value);
+}
+
+bool Preferences::uploadScreenshotsEnabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = getValue(uploadScreenshotsKey, false);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::setUploadScreenshotsEnabled(bool value)
+{
+    setValueConcurrently(uploadScreenshotsKey, value);
+}
+
+bool Preferences::clipboardCopyScreenshotLinkEnabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = getValue(clipboardCopyScreenshotLinkKey, false);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::setClipboardCopyScreenshotLinkEnabled(bool value)
+{
+    setValueConcurrently(clipboardCopyScreenshotLinkKey, value);
 }
 
 bool Preferences::fileVersioningDisabled()

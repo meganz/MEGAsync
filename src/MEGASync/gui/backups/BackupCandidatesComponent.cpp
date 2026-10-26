@@ -6,6 +6,7 @@
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "Preferences.h"
+#include "SettingsTabIds.h"
 #include "SyncsQmlDialog.h"
 
 static bool qmlRegistrationDone = false;
@@ -58,7 +59,7 @@ void BackupCandidatesComponent::registerQmlModules()
 
 void BackupCandidatesComponent::openBackupsTabInPreferences() const
 {
-    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
+    MegaSyncApp->openSettings(SettingsTabIds::BACKUP);
 }
 
 BackupCandidates* BackupCandidatesComponent::getData()

@@ -6,7 +6,6 @@
 #endif
 
 const char CLIENT_KEY[] = "FhMgXbqb";
-const char USER_AGENT[] = "MEGA/MEGAUpdaterTask";
 
 #ifdef _WIN32
     #ifdef _WIN64

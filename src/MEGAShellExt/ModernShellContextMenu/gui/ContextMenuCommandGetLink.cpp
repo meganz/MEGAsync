@@ -29,6 +29,9 @@ IFACEMETHODIMP ContextMenuCommandGetLink::Invoke(IShellItemArray* psiItemArray,
 {
     UNREFERENCED_PARAMETER(pbc);
 
+    // GetState() may have cached a truncated selection; re-read the full one.
+    initializeContextMenuData(psiItemArray);
+
     if (GetState(psiItemArray) == ECS_ENABLED)
     {
         mContextMenuData.requestGetLinks();

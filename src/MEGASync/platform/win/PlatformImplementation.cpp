@@ -2,6 +2,9 @@
 
 #include "DesktopManager.h"
 #include "RecursiveShellNotifier.h"
+#include "RegistryHiveReader.h"
+#include "ShellDispatcherPipe.h"
+#include "SnippingToolSettings.h"
 #include "ThemeManager.h"
 #include "ThreadedQueueShellNotifier.h"
 #include "WinAPIShell.h"
@@ -23,6 +26,7 @@
 #include <comdef.h>
 #include <dpapi.h>
 #include <dwmapi.h>
+#include <memory>
 #include <shellapi.h>
 #include <taskschd.h>
 #include <tchar.h>
@@ -49,6 +53,16 @@ enum class StartupApprovedState : BYTE
 
 constexpr HRESULT kTaskFolderAlreadyExists =
     static_cast<HRESULT>(HRESULT_FROM_WIN32(ERROR_ALREADY_EXISTS));
+
+// How often the screenshots location is asked for again while it cannot be
+// watched or resolved (see getScreenshotsLocation()). Slow on purpose: the
+// lock that defers it lasts for as long as the Snipping Tool runs.
+constexpr int SCREENSHOTS_LOCATION_RETRY_MS = 30000;
+// Right after the Snipping Tool exits, the hive it held is released within
+// moments, though not always by the time the exit is signalled. Asked again at
+// this pace for a few seconds before falling back to the slow retry.
+constexpr int SCREENSHOTS_LOCATION_FAST_RETRY_MS = 500;
+constexpr int SCREENSHOTS_LOCATION_FAST_RETRIES = 10;
 }
 bool WindowsPlatform_exiting = false;
 static const QString NotAllowedDefaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
@@ -850,6 +864,20 @@ bool PlatformImplementation::setHidden(const QString& path)
     return SetFileAttributesW(nativePathPtr, attributes | FILE_ATTRIBUTE_HIDDEN) != FALSE;
 }
 
+bool PlatformImplementation::isRestrictedToOwner(const QString& /*path*/)
+{
+    // The per-user data location (%LOCALAPPDATA%) already denies access to other users
+    // through the ACLs it inherits, so there is nothing to check.
+    return true;
+}
+
+bool PlatformImplementation::restrictToOwner(const QString& /*path*/)
+{
+    // Nothing to do, see isRestrictedToOwner(). Overridden so the POSIX owner-only
+    // permissions of the base implementation are never applied to an ACL-governed path.
+    return true;
+}
+
 void PlatformImplementation::updateDisplayVersionAfterAutoUpdate(int versionCode, bool isPublic)
 {
     const int major = versionCode / 10000;
@@ -1031,18 +1059,54 @@ bool PlatformImplementation::showInFolder(QString pathIn)
                                                                                     QDir::toNativeSeparators(QDir(pathIn).canonicalPath())});
 }
 
+// Serve the legacy pipe during the transition; retire once telemetry shows it is
+// unused (SNC-6808).
+namespace
+{
+constexpr bool kServeLegacyShellPipe = true;
+}
+
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
 {
     if (shellDispatcherTask)
     {
         return;
     }
-    shellDispatcherTask = new WinShellDispatcherTask(receiver);
+
+    // Scoped pipe is mandatory: fail closed rather than fall back to an unscoped
+    // name (SNC-6808).
+    const std::wstring scopedName = ShellDispatcherPipe::name();
+    if (scopedName.empty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     "Shell dispatcher: could not determine the per-user pipe name. "
+                     "Shell integration is disabled.");
+        return;
+    }
+
+    shellDispatcherTask = new WinShellDispatcherTask(receiver, scopedName, false /* bestEffort */);
     shellDispatcherTask->start();
+
+    // Also serve the legacy name (best-effort, same hardening) for old DLLs still
+    // loaded in Explorer, until it restarts.
+    if (kServeLegacyShellPipe && !legacyShellDispatcherTask)
+    {
+        legacyShellDispatcherTask = new WinShellDispatcherTask(receiver,
+                                                               ShellDispatcherPipe::legacyName(),
+                                                               true /* bestEffort */);
+        legacyShellDispatcherTask->start();
+    }
 }
 
 void PlatformImplementation::stopShellDispatcher()
 {
+    if (legacyShellDispatcherTask)
+    {
+        legacyShellDispatcherTask->exitTask();
+        legacyShellDispatcherTask->wait();
+        legacyShellDispatcherTask->deleteLater();
+        legacyShellDispatcherTask = nullptr;
+    }
     if (shellDispatcherTask)
     {
         shellDispatcherTask->exitTask();
@@ -2088,4 +2152,310 @@ QString PlatformImplementation::getGfxProviderPath()
 Preferences::ThemeAppeareance PlatformImplementation::getPanelTheme() const
 {
     return getCurrentThemeAppearance().systemScheme;
+}
+
+QStringList PlatformImplementation::getScreenshotsLocation()
+{
+    QStringList directories;
+    mScreenshotsLocationPending = false;
+
+    // Where Win+PrtScn always auto-saves, whatever the Snipping Tool is
+    // configured to do.
+    const QString defaultScreenshotsPath =
+        QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) +
+        QString::fromUtf8("/Screenshots");
+
+    // The Snipping Tool's own auto-save folder, if the user relocated it.
+    QString snippingToolPath;
+
+    if (!mSnippingToolSettings)
+    {
+        // Created on first use, so nothing is held open unless screenshot
+        // detection runs.
+        mSnippingToolSettings = new SnippingToolSettings(this);
+        connect(mSnippingToolSettings,
+                &SnippingToolSettings::autoSaveFolderTokenChanged,
+                this,
+                &PlatformImplementation::screenshotsLocationChanged);
+
+        // Single shot, re-armed below by each call that still needs it: once
+        // nobody asks any more (detection turned off), it stops by itself.
+        mScreenshotsLocationRetryTimer = new QTimer(this);
+        mScreenshotsLocationRetryTimer->setSingleShot(true);
+        connect(mScreenshotsLocationRetryTimer,
+                &QTimer::timeout,
+                this,
+                &PlatformImplementation::screenshotsLocationChanged);
+
+        connect(mSnippingToolSettings,
+                &SnippingToolSettings::toolExited,
+                this,
+                [this]()
+                {
+                    mScreenshotsLocationFastRetries = SCREENSHOTS_LOCATION_FAST_RETRIES;
+                    mScreenshotsLocationRetryTimer->start(SCREENSHOTS_LOCATION_FAST_RETRY_MS);
+                });
+    }
+
+    const QString screenshotsToken = mSnippingToolSettings->autoSaveFolderToken();
+    if (!screenshotsToken.isEmpty())
+    {
+        // The token names an entry of the Snipping Tool's FutureAccessList,
+        // kept in its private hive.
+        const std::wstring userClassesDat =
+            SnippingToolSettings::packageRoot() + L"\\SystemAppData\\Helium\\UserClasses.dat";
+
+        const QString previousFolder = mSnippingToolFolder;
+        const QString snippingToolConfiguredPath =
+            resolveSnippingToolFolder(userClassesDat, screenshotsToken);
+        if (!snippingToolConfiguredPath.isEmpty())
+        {
+            // Normalize to Qt separators: ScreenCaptureDetector compares
+            // against QStandardPaths forward-slash values.
+            const QString resolved =
+                QDir::cleanPath(QDir::fromNativeSeparators(snippingToolConfiguredPath));
+            if (!resolved.isEmpty())
+            {
+                // Logged once per folder: this runs again on every change.
+                if (!QDir(resolved).exists() && snippingToolConfiguredPath != previousFolder)
+                {
+                    // Kept anyway: the detector watches the parent and
+                    // attaches the folder when it appears.
+                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                                 QString::fromUtf8(
+                                     "Configured Snipping Tool screenshots folder not found: %1")
+                                     .arg(resolved)
+                                     .toUtf8()
+                                     .constData());
+                }
+
+                snippingToolPath = resolved;
+            }
+        }
+    }
+
+    // A relocation is announced by the settings themselves, except in two
+    // cases that need asking again: the token is new but the hive naming its
+    // folder is locked (it can be for as long as the tool runs, which it does
+    // right after a relocation), or the settings could not be watched (the
+    // tool has not been installed or run yet). The tool's exit is what
+    // releases the hive, so it triggers a quick burst of retries; the slow
+    // one covers the rest. Each retry is announced as a possible change.
+    if (mScreenshotsLocationPending)
+    {
+        mSnippingToolSettings->watchToolExit();
+    }
+
+    if (mScreenshotsLocationPending || !mSnippingToolSettings->isWatching())
+    {
+        if (mScreenshotsLocationFastRetries > 0)
+        {
+            --mScreenshotsLocationFastRetries;
+            mScreenshotsLocationRetryTimer->start(SCREENSHOTS_LOCATION_FAST_RETRY_MS);
+        }
+        else
+        {
+            mScreenshotsLocationRetryTimer->start(SCREENSHOTS_LOCATION_RETRY_MS);
+        }
+    }
+    else
+    {
+        mScreenshotsLocationFastRetries = 0;
+        mScreenshotsLocationRetryTimer->stop();
+    }
+
+    // Both, not one or the other: relocating the Snipping Tool's auto-save
+    // folder does not move Win+PrtScn, which keeps writing to
+    // Pictures\Screenshots. Replacing the default here meant a user who had
+    // relocated it lost detection of every Win+PrtScn capture.
+    // ScreenCaptureDetector normalizes and de-duplicates the list, and watches
+    // the parent of a folder that does not exist yet, so listing both is free.
+    directories << defaultScreenshotsPath;
+    if (!snippingToolPath.isEmpty())
+    {
+        directories << snippingToolPath;
+    }
+
+    return directories;
+}
+
+bool PlatformImplementation::isScreenshotsLocationPending() const
+{
+    return mScreenshotsLocationPending;
+}
+
+// Read raw bytes from a file that may be shared-locked by the OS. inUse tells
+// a file another process holds exclusively apart from a missing one.
+std::vector<BYTE> PlatformImplementation::readFileLocked(const std::wstring& path, bool& inUse)
+{
+    inUse = false;
+    HANDLE h = CreateFileW(path.c_str(),
+                           GENERIC_READ,
+                           FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                           nullptr,
+                           OPEN_EXISTING,
+                           FILE_ATTRIBUTE_NORMAL,
+                           nullptr);
+
+    if (h == INVALID_HANDLE_VALUE)
+    {
+        inUse = GetLastError() == ERROR_SHARING_VIOLATION;
+        return {};
+    }
+
+    // Closes on every exit, including the exception a failed allocation below
+    // would throw past the old CloseHandle() call.
+    const std::unique_ptr<void, decltype(&::CloseHandle)> handleGuard(h, &::CloseHandle);
+
+    // GetFileSizeEx, not GetFileSize: the latter reports failure by returning
+    // INVALID_FILE_SIZE (0xFFFFFFFF), which used to go straight into the
+    // vector's size and request a 4GiB allocation, throwing std::bad_alloc out
+    // of a call path with no handler. It also truncates sizes above 4GiB.
+    LARGE_INTEGER fileSize{};
+    if (!GetFileSizeEx(h, &fileSize))
+    {
+        return {};
+    }
+
+    // The only caller reads UserClasses.dat, a registry hive of at most a few
+    // MB. Anything larger is not the file we expect, so refuse it rather than
+    // pulling it into memory. An empty result is the failure signal the caller
+    // already handles.
+    constexpr LONGLONG MAX_READ_BYTES = 64LL * 1024 * 1024;
+    if (fileSize.QuadPart <= 0 || fileSize.QuadPart > MAX_READ_BYTES)
+    {
+        return {};
+    }
+
+    std::vector<BYTE> buf(static_cast<size_t>(fileSize.QuadPart));
+    DWORD read = 0;
+    if (!ReadFile(h, buf.data(), static_cast<DWORD>(buf.size()), &read, nullptr))
+    {
+        return {};
+    }
+
+    // A short read leaves the tail zero-filled, and the scanners downstream
+    // cannot distinguish that from real hive content. Keep only what arrived.
+    buf.resize(read);
+
+    return buf;
+}
+
+// Resolve a Snipping Tool FutureAccessList token to the folder it names.
+//
+// The entry lives in the tool's private registry hive. That file cannot be
+// opened through the registry API from here (RegLoadAppKey rejects it,
+// RegLoadKey needs a privilege), so it is read as bytes and walked with
+// RegistryHiveReader. It cannot be read at all while the Snipping Tool runs:
+// the system holds it exclusively until the tool's process exits, which need
+// not be when its window closes. The folder last resolved for the same token
+// answers meanwhile; a token not seen before is reported through
+// isScreenshotsLocationPending() so the detector keeps what it watches and
+// asks again later.
+//
+// A byte scan for the first drive-letter string after the token used to stand
+// in for the hive walk. The entry carries a serialized shell link whose
+// localized folder names ("...\windows.storage.dll,-NNNNN") and MUI cache
+// strings sit in the same region, so the scan returned those on some machines
+// and the folder was never watched.
+QString PlatformImplementation::resolveSnippingToolFolder(const std::wstring& userClassesDat,
+                                                          const QString& token)
+{
+    bool inUse = false;
+    const std::vector<BYTE> hive = readFileLocked(userClassesDat, inUse);
+    if (hive.empty())
+    {
+        if (inUse)
+        {
+            if (token == mSnippingToolToken)
+            {
+                return mSnippingToolFolder;
+            }
+
+            mScreenshotsLocationPending = true;
+            if (token != mSnippingToolLoggedToken)
+            {
+                mSnippingToolLoggedToken = token;
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                             "Snipping Tool settings are in use by another process; its "
+                             "screenshots folder will be resolved when they are released");
+            }
+        }
+        return QString();
+    }
+
+    const RegistryHiveReader reader(
+        QByteArray::fromRawData(reinterpret_cast<const char*>(hive.data()),
+                                static_cast<int>(hive.size())));
+    const QStringList entry{QString::fromUtf8("Local Settings"),
+                            QString::fromUtf8("Software"),
+                            QString::fromUtf8("Microsoft"),
+                            QString::fromUtf8("Windows"),
+                            QString::fromUtf8("CurrentVersion"),
+                            QString::fromUtf8("AppModel"),
+                            QString::fromUtf8("SystemAppData"),
+                            QString::fromUtf8("Microsoft.ScreenSketch_8wekyb3d8bbwe"),
+                            QString::fromUtf8("PersistedStorageItemTable"),
+                            QString::fromUtf8("ManagedByApp"),
+                            token};
+
+    // "Metadata" holds the plain path; "FilePath" the same under its volume
+    // GUID, kept as a fallback should a Windows release drop the former.
+    QString folder = reader.readString(entry, QString::fromUtf8("Metadata"));
+    if (folder.isEmpty())
+    {
+        folder = resolveVolumeGuidPath(reader.readString(entry, QString::fromUtf8("FilePath")));
+    }
+
+    if (!folder.isEmpty())
+    {
+        mSnippingToolToken = token;
+        mSnippingToolFolder = folder;
+    }
+    else if (token != mSnippingToolLoggedToken)
+    {
+        mSnippingToolLoggedToken = token;
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                     QString::fromUtf8("Snipping Tool screenshots folder entry not found for "
+                                       "token %1 (hive %2)")
+                         .arg(token,
+                              reader.isValid() ? QString::fromUtf8("valid") :
+                                                 QString::fromUtf8("unreadable"))
+                         .toUtf8()
+                         .constData());
+    }
+
+    return folder;
+}
+
+// "\\?\Volume{GUID}\rest" -> "C:\rest". Anything else is returned as is; a
+// volume without a drive letter yields empty.
+QString PlatformImplementation::resolveVolumeGuidPath(const QString& path)
+{
+    static const QString VOLUME_PREFIX = QString::fromUtf8("\\\\?\\Volume{");
+    if (!path.startsWith(VOLUME_PREFIX, Qt::CaseInsensitive))
+    {
+        return path;
+    }
+
+    const int volumeEnd = path.indexOf(QLatin1Char('\\'), VOLUME_PREFIX.size());
+    if (volumeEnd < 0)
+    {
+        return QString();
+    }
+
+    const std::wstring volume = path.left(volumeEnd + 1).toStdWString();
+    std::vector<wchar_t> mountPoints(MAX_PATH * 4);
+    DWORD length = 0;
+    if (!GetVolumePathNamesForVolumeNameW(volume.c_str(),
+                                          mountPoints.data(),
+                                          static_cast<DWORD>(mountPoints.size()),
+                                          &length) ||
+        length == 0 || mountPoints[0] == L'\0')
+    {
+        return QString();
+    }
+
+    // The first entry of the multi-string is the drive letter when there is one.
+    return QString::fromWCharArray(mountPoints.data()) + path.mid(volumeEnd + 1);
 }

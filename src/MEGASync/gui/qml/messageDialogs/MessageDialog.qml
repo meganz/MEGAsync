@@ -65,6 +65,7 @@ QmlDialog {
                                         - (footer.visible ? footer.implicitHeight + sizes.textColumnSpacing : 0)
                                         - sizes.defaultSpacing - bottomButtonsRow.implicitHeight
                                         - (checkBoxItem.visible ? checkBoxItem.implicitHeight + sizes.defaultSpacing : 0)
+                                        - (bannerItem.visible ? bannerItem.implicitHeight + sizes.defaultSpacing : 0)
 
     width: window.totalWidth
     height: window.totalHeight
@@ -222,6 +223,77 @@ QmlDialog {
                     textLineHeight: sizes.descriptionTextLineHeight
                     textPixelSize: Texts.Text.Size.NORMAL
                     textWeight: Font.Normal
+                }
+            }
+        }
+
+        Rectangle {
+            id: bannerItem
+
+            readonly property int bannerPadding: 12
+            readonly property string bannerText: messageDialogDataAccess
+                                                 ? messageDialogDataAccess.bannerTextInfo.text
+                                                 : ""
+
+            visible: bannerText !== ""
+            Layout.fillWidth: true
+            // The content column reserves only 21px on the right (button
+            // alignment); the banner must sit 24px from both dialog edges,
+            // mirroring the left content margin.
+            Layout.rightMargin: sizes.leftContentMargin - sizes.rightContentMargin
+            // implicitHeight, NOT Layout.preferredHeight: bannerContentRow is
+            // anchored to this rectangle, so the rectangle has to size itself
+            // from the row's content rather than have its height negotiated by
+            // contentColum. As a Layout.preferredHeight binding, the outer
+            // layout consumed the row's first-pass implicitHeight - the
+            // unwrapped, single-line estimate - and never grew back, leaving
+            // the wrapped text laid out inside a box too small to show it
+            // (SNC-2109). Mirrors the SettingsLinearProgress banner (SNC-6431).
+            implicitHeight: bannerContentRow.implicitHeight + 2 * bannerPadding
+            radius: 8
+            color: ColorTheme.notificationInfo
+
+            RowLayout {
+                id: bannerContentRow
+
+                anchors {
+                    fill: parent
+                    margins: bannerItem.bannerPadding
+                }
+                spacing: 8
+
+                SvgImage {
+                    Layout.preferredWidth: sizes.bannerIconSize
+                    Layout.preferredHeight: sizes.bannerIconSize
+                    Layout.alignment: Qt.AlignTop
+                    source: Images.info
+                    sourceSize: Qt.size(sizes.bannerIconSize, sizes.bannerIconSize)
+                    color: ColorTheme.textInfo
+                }
+
+                // The wrapped text sits in its own ColumnLayout rather than
+                // directly in the row, so the row negotiates width with a
+                // layout (which reports the wrapped height) instead of with a
+                // Text (whose implicitWidth is the full unwrapped line).
+                ColumnLayout {
+                    id: bannerTextLayout
+
+                    Layout.fillWidth: true
+                    spacing: 0
+
+                    Texts.Text {
+                        id: bannerTextItem
+
+                        Layout.fillWidth: true
+                        text: bannerItem.bannerText
+                        wrapMode: Text.WordWrap
+                        lineHeightMode: Text.FixedHeight
+                        lineHeight: sizes.descriptionTextLineHeight
+                        font {
+                            pixelSize: Texts.Text.Size.NORMAL
+                            weight: Font.DemiBold
+                        }
+                    }
                 }
             }
         }

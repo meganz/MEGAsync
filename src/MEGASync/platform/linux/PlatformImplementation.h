@@ -32,6 +32,7 @@ public:
                                  const QRect& parentGeometry) const override;
     void moveDialog(QWidget* dialog, const QPoint& pos, QWindow* visualParent = nullptr) override;
     bool showInFolder(QString pathIn) override;
+    bool createFolderRestrictedToOwner(const QString& folder, QString* errorMessage) override;
     void startShellDispatcher(MegaApplication *receiver) override;
     void stopShellDispatcher() override;
     void syncFolderAdded(QString syncPath, QString syncName, QString syncID) override;
@@ -68,6 +69,13 @@ public:
     Preferences::SystemColorScheme getCurrentThemeAppearance() const override;
     Preferences::ThemeAppeareance getPanelTheme() const override;
     void setRenderingBackend() const override;
+    void setStartupEnvironment() const override;
+
+    QStringList getScreenshotsLocation() override;
+
+    // Leaf name of the folder GNOME Shell saves captures to under Pictures, as
+    // the current desktop language spells it. Public for the unit tests.
+    static QString gnomeCaptureFolderName();
 
 private:
     static xcb_atom_t getAtom(xcb_connection_t* const connection, const char* name);

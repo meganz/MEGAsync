@@ -978,6 +978,7 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         int errorCode = e->getErrorCode();
         if (errorCode == mega::MegaError::API_OK)
         {
+            dumpSession();
             MegaSyncApp->onLoginFinished();
             if (!mPreferences->getSession().isEmpty())
             {

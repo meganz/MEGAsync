@@ -3,13 +3,16 @@
 #include "AppStatsEvents.h"
 #include "MacUpdateRouting.h"
 #include "MacXFunctions.h"
+#include "posix/PosixFileSystem.h"
 #include "Preferences.h"
 #include "StatsEventHandler.h"
 #include "ThemeManager.h"
 #include "Utilities.h"
 
+#include <QDir>
 #include <QHostInfo>
 #include <QScreen>
+#include <QStandardPaths>
 
 #include <cstdlib>
 #include <fstream>
@@ -71,6 +74,16 @@ void PlatformImplementation::raiseFileFolderSelectors()
     raiseFileSelectionPanels();
 }
 
+void PlatformImplementation::adoptTrayIconExpandedInterface()
+{
+    adoptStatusItemExpandedInterface();
+}
+
+void PlatformImplementation::setTrayPrimaryActionHandler(std::function<void()> handler)
+{
+    setStatusItemPrimaryActionHandler(std::move(handler));
+}
+
 void PlatformImplementation::closeFileFolderSelectors(QWidget* parent)
 {
     closeFileSelectionPanels(parent);
@@ -84,6 +97,16 @@ bool PlatformImplementation::startOnStartup(bool value)
 bool PlatformImplementation::isStartOnStartupActive()
 {
     return isStartAtLoginActive();
+}
+
+bool PlatformImplementation::isStartOnStartupPendingUserApproval()
+{
+    return isStartAtLoginPendingApproval();
+}
+
+void PlatformImplementation::openStartOnStartupSystemSettings()
+{
+    openStartAtLoginSystemSettings();
 }
 
 void PlatformImplementation::addFileManagerExtensionToSystem()
@@ -308,6 +331,12 @@ QString PlatformImplementation::getArchUpdateString() const
     }
 
     return QString::fromLatin1(routing.updateTrack);
+}
+
+bool PlatformImplementation::createFolderRestrictedToOwner(const QString& folder,
+                                                           QString* errorMessage)
+{
+    return PosixFileSystem::createFolderRestrictedToOwner(folder, errorMessage);
 }
 
 bool PlatformImplementation::showInFolder(QString pathIn)
@@ -602,4 +631,42 @@ void PlatformImplementation::applyCurrentThemeOnCurrentDialogFrame(QWindow* wind
                             ThemeManager::instance()->getCurrentColorScheme() ==
                                 Preferences::ThemeAppeareance::DARK,
                             true);
+}
+
+QStringList PlatformImplementation::getScreenshotsLocation()
+{
+    QStringList directories;
+
+    // Users can relocate macOS screenshots with
+    // `defaults write com.apple.screencapture location <dir>`.
+    QProcess defaults;
+    defaults.start(QString::fromUtf8("defaults"),
+                   {QString::fromUtf8("read"),
+                    QString::fromUtf8("com.apple.screencapture"),
+                    QString::fromUtf8("location")});
+    if (defaults.waitForFinished(1000) && defaults.exitCode() == 0)
+    {
+        QString location = QString::fromUtf8(defaults.readAllStandardOutput()).trimmed();
+        if (location.startsWith(QLatin1Char('~')))
+        {
+            location.replace(0, 1, QDir::homePath());
+        }
+
+        // The default is stored verbatim, so it commonly carries a trailing
+        // separator ("~/Desktop/") or redundant "." / ".." segments. Normalize
+        // it: callers compare capture directories by path.
+        location = QDir::cleanPath(location);
+
+        if (!location.isEmpty() && QDir(location).exists())
+        {
+            directories << location;
+        }
+    }
+
+    if (directories.empty())
+    {
+        directories << QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    }
+
+    return directories;
 }

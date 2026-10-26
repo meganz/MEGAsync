@@ -39,6 +39,7 @@ set(MEGAShellExt_HEADERS
     ClassFactoryContextMenuExt.h
     ClassFactory.h
     MegaInterface.h
+    ../common/win/ShellDispatcherPipe.h
 )
 
 set(MEGAShellExt_SOURCES
@@ -93,6 +94,7 @@ target_link_libraries(MEGAShellExt
 target_include_directories(MEGAShellExt
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../common/win
     ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/gui
     ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/utilities
     ${CMAKE_CURRENT_SOURCE_DIR}/ModernShellContextMenu/msix

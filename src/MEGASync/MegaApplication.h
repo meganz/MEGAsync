@@ -47,6 +47,7 @@
 #include <QQueue>
 #include <QSystemTrayIcon>
 
+#include <functional>
 #include <memory>
 
 class IntervalExecutioner;
@@ -67,6 +68,7 @@ class AccountStatusController;
 class StatsEventHandler;
 class UserMessageController;
 class SyncReminderNotificationManager;
+class ScreenshotsController;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -83,6 +85,7 @@ enum GetUserStatsReason {
     USERSTATS_STORAGECACHEUNKNOWN,
     USERSTATS_SHOWMAINDIALOG,
     USERSTATS_REMOVEVERSIONS,
+    USERSTATS_STREAMOVERQUOTA,
 };
 
 class MegaApplication : public QApplication, public mega::MegaListener
@@ -102,6 +105,17 @@ public:
     static QString applicationFilePath();
     static QString applicationDirPath();
     static QString applicationDataPath();
+
+    // Receives mega::MegaApi::LOG_LEVEL_* messages from the data directory permission
+    // check, which runs before the MegaApi logger is available.
+    using DataPathLogger = std::function<void(int logLevel, const QString& message)>;
+
+    // Makes sure only the owner can access the data directory, so no other user can read
+    // the configuration it holds, and reports any error met while creating it. Enforced on
+    // every start, not only when the folder is created, so folders left behind by previous
+    // versions are tightened as well. Must be called after Platform::create() and right
+    // after applicationDataPath(), before anything writes into the folder.
+    static void restrictDataPathPermissions(const DataPathLogger& logger);
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
 
@@ -208,6 +222,10 @@ public:
     static void showStalledIssuesDialog();
     bool isOnboarding();
 
+    // screenshots upload.
+    void refreshScreenshotUploader();
+    void enableClipboardCopyScreenshotLink(bool enabled);
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -244,6 +262,7 @@ public slots:
     void goToFiles();
     void pauseTransfers();
     void showChangeLog();
+    void uploadScreenshot(const QString& fileName, mega::MegaHandle targetFolderHandle);
     void uploadActionClicked(AppStatsEvents::EventType event);
     void uploadActionFromWindowAfterOverQuotaCheck();
     void runUploadActionWithTargetHandle(const mega::MegaHandle& targetFolder,
@@ -265,6 +284,7 @@ public slots:
     void shellExport(QQueue<QString> newExportQueue);
     void shellViewOnMega(const QString& localPath, bool versions);
     void shellViewOnMegaByHandle(mega::MegaHandle handle, bool versions);
+    void onShellLegacyPipeUsed();
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void uploadFilesToNode(const QList<QUrl>& files,
                            mega::MegaHandle targetNode,
@@ -347,6 +367,17 @@ protected:
     bool showTrayIconAlwaysNEW();
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle, QWidget* caller = nullptr);
+
+    void processUploadQueueImpl(QQueue<QPair<QString, PiTagTrigger>>& queue,
+                                mega::MegaHandle nodeHandle,
+                                QWidget* caller = nullptr);
+    // Tells the screenshot flow that a capture queued for upload will not get a
+    // transfer after all -- the conflict dialog was cancelled or resolved as
+    // "don't upload", the destination was invalid, or a dialog was replaced out
+    // from under it -- so its uploader can free the in-flight slot. Always
+    // silent: every caller either acted on the
+    // user's own choice or has already reported the problem itself.
+    void notifyCaptureUploadsSkipped();
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();
@@ -420,6 +451,9 @@ protected:
     mega::MegaHandle mFolderUploadTarget;
 
     QQueue<QPair<QString, PiTagTrigger>> mUploadQueue;
+    // Automatic screenshot captures upload through this dedicated queue, never
+    // through mUploadQueue - see processUploadQueueImpl().
+    QQueue<QPair<QString, PiTagTrigger>> mScreenshotUploadQueue;
     QQueue<WrappedNode> downloadQueue;
     BlockingBatch mBlockingBatch;
 
@@ -455,6 +489,13 @@ protected:
     static QString appPath;
     static QString appDirPath;
     static QString dataPath;
+    // Whether dataPath was resolved to a proper per-user data location, as opposed to the
+    // current working directory fallback used when QStandardPaths returns nothing. Only
+    // the former is ours to restrict: the fallback could be $HOME or /.
+    static bool dataPathFromStandardLocation;
+    // Why creating dataPath failed, if it did. Kept because loadDataPath() runs before
+    // any logger exists; reported by restrictDataPathPermissions().
+    static QString dataPathCreationError;
     static QString lastNotificationError;
 
     QThread *updateThread;
@@ -528,6 +569,7 @@ protected:
     QPointer<DiscountStateMachine> mDiscountStateMachine;
 
     bool misSyncingStateWrongLogged;
+    ScreenshotsController* mScreenshotsController;
 
 private:
     QList<QNetworkInterface> findNewNetworkInterfaces();
@@ -644,6 +686,7 @@ private:
 
     void createUserMessageController();
     void closeUpsellStorageDialog();
+    void enterTransferOverQuota(std::chrono::seconds waitTime, GetUserStatsReason reason);
 
     void createGfxProvider(const QString& basePath);
     void startCrashReportingDialog();

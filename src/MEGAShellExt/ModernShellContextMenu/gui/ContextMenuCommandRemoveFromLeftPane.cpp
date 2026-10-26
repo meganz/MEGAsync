@@ -26,6 +26,9 @@ IFACEMETHODIMP ContextMenuCommandRemoveFromLeftPane::Invoke(IShellItemArray* psi
 {
     UNREFERENCED_PARAMETER(pbc);
 
+    // GetState() may have cached a truncated selection; re-read the full one.
+    initializeContextMenuData(psiItemArray);
+
     if (GetState(psiItemArray) == ECS_ENABLED)
     {
         mContextMenuData.removeFromLeftPane();

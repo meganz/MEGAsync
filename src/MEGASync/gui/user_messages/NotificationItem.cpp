@@ -1,5 +1,6 @@
 #include "NotificationItem.h"
 
+#include "ApiImageLabel.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "StatsEventHandler.h"
@@ -26,6 +27,18 @@ NotificationItem::NotificationItem(QWidget* parent):
     TokenParserWidgetManager::instance()->applyCurrentTheme(this);
     this->style()->unpolish(this);
     this->style()->polish(this);
+
+    // The images are downloaded, so they are not available yet when the row is
+    // first painted. They reach the notifications tab only once the row is
+    // invalidated, just like the remaining time of an offer.
+    connect(mUi->lImageLarge,
+            &ApiImageLabel::imageReady,
+            this,
+            &NotificationItem::requestRowRefresh);
+    connect(mUi->lImageSmall,
+            &ApiImageLabel::imageReady,
+            this,
+            &NotificationItem::requestRowRefresh);
 }
 
 NotificationItem::~NotificationItem()
@@ -38,6 +51,15 @@ void NotificationItem::setData(UserMessage* data)
     UserNotification* notification = dynamic_cast<UserNotification*>(data);
     if (notification)
     {
+        // This widget is recycled by UserMessageCacheManager, so the connections
+        // to the previously displayed notification must be dropped before
+        // connecting to the new one. Otherwise they pile up and
+        // updateNotificationData runs once per accumulated connection.
+        if (mNotificationData)
+        {
+            QObject::disconnect(mNotificationData, nullptr, this, nullptr);
+        }
+
         setNotificationData(notification);
         connect(notification,
                 &UserMessage::dataReset,
@@ -115,6 +137,26 @@ void NotificationItem::onCTAClicked()
 }
 
 void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
+{
+    updateExpirationText(remainingTimeSecs);
+    requestRowRefresh();
+}
+
+void NotificationItem::requestRowRefresh()
+{
+    // UserMessageDelegate renders this widget off screen to paint the row, so
+    // repainting a child is not enough: the model has to invalidate the row for the
+    // change to reach the notifications tab. Without this, the countdown only moves
+    // while the row is hovered, as a hovered row is turned into an editor and an
+    // editor widget does paint itself.
+    // The notification is gone when it has just been removed for being expired.
+    if (mNotificationData)
+    {
+        mNotificationData->updated();
+    }
+}
+
+void NotificationItem::updateExpirationText(int64_t remainingTimeSecs)
 {
     // It is required to display this text and disable clicks
     // after the expiration time.
@@ -210,14 +252,17 @@ void NotificationItem::updateNotificationData(UserNotification* newNotificationD
             &NotificationItem::onUserNotificationDestroyed);
 
     updateNotificationData(imageHasChanged, iconHasChanged);
-
-    // Since the notifications can be reused,
-    // we need to reset the expiration time color
-    updateExpirationText();
 }
 
 void NotificationItem::updateNotificationData(bool downloadImage, bool downloadIcon)
 {
+    // A cached row can outlive its notification (expired or removed by the model) and
+    // still receive a language change; there is nothing to refresh then.
+    if (!mNotificationData)
+    {
+        return;
+    }
+
     mUi->lTitle->setText(mNotificationData->getTitle());
 
     mUi->lDescription->setText(mNotificationData->getDescription());
@@ -244,6 +289,9 @@ void NotificationItem::updateNotificationData(bool downloadImage, bool downloadI
         setIcon();
     }
 
+    // Arming the countdown only schedules the next update, so the remaining time
+    // has to be displayed here. Since notifications can be reused, this also
+    // resets the expiration text and the clickable state of a recycled widget.
     mExpirationTimer.startExpirationTime(mNotificationData->getEnd());
     updateExpirationText();
 }
@@ -274,30 +322,32 @@ void NotificationItem::setIcon()
 
 void NotificationItem::updateExpirationText()
 {
-    onTimerExpirated(mExpirationTimer.getRemainingTime());
+    updateExpirationText(mExpirationTimer.getRemainingTime());
 }
 
 bool NotificationItem::updateExpiredTimeAndClicks(int64_t remainingTimeSecs)
 {
-    bool updated = false;
-    if (remainingTimeSecs <= 1)
+    if (remainingTimeSecs > 1)
     {
-        if (remainingTimeSecs == 1)
-        {
-            mUi->lTime->setText(tr("Offer expired"));
-            mUi->bCTA->setEnabled(false);
-            this->setCursor(Qt::ArrowCursor);
-            this->setAttribute(Qt::WA_TransparentForMouseEvents);
-        }
-        else if (remainingTimeSecs == -NUM_SECS_TO_WAIT_BEFORE_REMOVE)
-        {
-            mExpirationTimer.stopExpirationTime();
-            if (mNotificationData)
-            {
-                mNotificationData->markAsExpired();
-            }
-        }
-        updated = true;
+        return false;
     }
-    return updated;
+
+    // The clock can jump over the exact expiration second (system time change,
+    // resume from sleep), so the expired state is applied for any past instant
+    // instead of only for the exact one.
+    mUi->lTime->setText(tr("Offer expired"));
+    mUi->bCTA->setEnabled(false);
+    this->setCursor(Qt::ArrowCursor);
+    this->setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    if (remainingTimeSecs <= -NUM_SECS_TO_WAIT_BEFORE_REMOVE)
+    {
+        mExpirationTimer.stopExpirationTime();
+        if (mNotificationData)
+        {
+            mNotificationData->markAsExpired();
+        }
+    }
+
+    return true;
 }

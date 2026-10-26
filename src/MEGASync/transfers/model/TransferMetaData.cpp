@@ -111,8 +111,14 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
             value->id = id;
             TransferData::TransferState state(TransferData::TRANSFER_NONE);
 
-            if (transfer->getState() == mega::MegaTransfer::STATE_FAILED ||
-                e->getErrorCode() != mega::MegaError::API_OK)
+            if (transfer->getState() == mega::MegaTransfer::STATE_CANCELLED)
+            {
+                // The SDK reports a user cancellation as STATE_CANCELLED + API_EINCOMPLETE.
+                // It is not a failure and must not trigger an "incomplete" notification.
+                state = TransferData::TRANSFER_CANCELLED;
+            }
+            else if (transfer->getState() == mega::MegaTransfer::STATE_FAILED ||
+                     e->getErrorCode() != mega::MegaError::API_OK)
             {
                 state = TransferData::TRANSFER_FAILED;
                 value->failedTransfer = std::shared_ptr<mega::MegaTransfer>(transfer->copy());

@@ -6,6 +6,8 @@
 
 #include <QRegularExpression>
 
+#include <algorithm>
+
 const char MegaIgnoreRule::SIZE_RULE_LEFT_SIDE_REG_EX[] = "^#*(exclude-(larger|smaller))$";
 const char MegaIgnoreRule::SIZE_RULE_RIGHT_SIDE_REG_EX[] = "^[0-9]+[kmg]?$";
 const char MegaIgnoreRule::LARGE_SIZE_LEFT_SIDE_REG_EX[] = "#*(exclude-larger):*";
@@ -17,6 +19,21 @@ const char MegaIgnoreRule::CAPTURE_EXTENSION_REG_EX[] = "\\.(.*)";
 
 const auto asterisk = QString::fromUtf8("*");
 ////////////////MEGA IGNORE RULE
+bool MegaIgnoreRule::isPatternWritable(const QString& pattern)
+{
+    return std::none_of(pattern.cbegin(),
+                        pattern.cend(),
+                        [](QChar chr)
+                        {
+                            return chr.category() == QChar::Other_Control;
+                        });
+}
+
+bool MegaIgnoreRule::spansMultipleLines(const QString& ruleAsText)
+{
+    return ruleAsText.contains(QLatin1Char('\n')) || ruleAsText.contains(QLatin1Char('\r'));
+}
+
 bool MegaIgnoreRule::isEqual(const QString& ruleAsStringToCompare) const
 {
     QString ruleAsString(getModifiedRule());
@@ -209,14 +226,21 @@ void MegaIgnoreNameRule::setWildCardType(WildCardType wildCard)
     markAsDirty();
 }
 
-void MegaIgnoreNameRule::setPattern(const QString &pattern)
+bool MegaIgnoreNameRule::setPattern(const QString& pattern)
 {
-    if(pattern == mPattern)
+    if (!isPatternWritable(pattern))
     {
-        return;
+        return false;
     }
+
+    if (pattern == mPattern)
+    {
+        return true;
+    }
+
     mPattern = pattern;
     markAsDirty();
+    return true;
 }
 
 void MegaIgnoreNameRule::fillWildCardType(const QString& rightSidePart)
@@ -301,12 +325,18 @@ const QString& MegaIgnoreExtensionRule::extension() const
     return mExtension;
 }
 
-void MegaIgnoreExtensionRule::setPattern(const QString &pattern)
+bool MegaIgnoreExtensionRule::setPattern(const QString& pattern)
 {
-    if(mPattern == pattern)
+    if (!isPatternWritable(pattern))
     {
-        return;
+        return false;
     }
+
+    if (mPattern == pattern)
+    {
+        return true;
+    }
+
     if(pattern.startsWith(QLatin1String(".")))
     {
         mPattern = pattern;
@@ -319,6 +349,7 @@ void MegaIgnoreExtensionRule::setPattern(const QString &pattern)
         mPattern = QLatin1String(".") + pattern;
     }
     markAsDirty();
+    return true;
 }
 
 ////////////////MEGA IGNORE SIZE RULE

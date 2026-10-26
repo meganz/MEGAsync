@@ -54,6 +54,19 @@ public:
     void markAsDirty();
     bool isDirty() const;
 
+    // A rule occupies exactly one line and the format has no escape syntax, so a pattern
+    // carrying a line terminator is written out as extra rules. The SDK splits lines on both
+    // CR and LF (readLines) and matches patterns verbatim against the unescaped name, so no
+    // encoding keeps such a pattern on one line and still matches it: it cannot be written.
+    // Control characters that are not line terminators cannot split a rule, but they have no
+    // legitimate use in a pattern either, so a new pattern carrying any of them is refused.
+    static bool isPatternWritable(const QString& pattern);
+
+    // True when writing this text out would produce more than the one rule it stands for. This
+    // is the subset of isPatternWritable() that actually breaks the file, so it is what a line
+    // already present in the user's .megaignore is held to.
+    static bool spansMultipleLines(const QString& ruleAsText);
+
 protected:
     RuleType mRuleType;
     QString mRule;
@@ -127,7 +140,9 @@ public:
     void setTarget(Target target);
     WildCardType getWildCardType();
     void setWildCardType(WildCardType wildCard);
-    virtual void setPattern(const QString &pattern);
+    // False when the pattern is refused, so a caller editing a rule can tell that the rule still
+    // holds the one it had. An unchanged pattern is not a refusal.
+    virtual bool setPattern(const QString& pattern);
     void setStrategy(Strategy newStrategy);
     Strategy getStrategy() const;
 
@@ -173,8 +188,12 @@ public:
     MegaIgnoreExtensionRule(const QString& rule, bool isCommented);
     explicit MegaIgnoreExtensionRule(Class classType, const QString& extension);
 
-    RuleType ruleType() const override { return RuleType::EXTENSIONRULE; }
-    void setPattern(const QString &pattern) override;
+    RuleType ruleType() const override
+    {
+        return RuleType::EXTENSIONRULE;
+    }
+
+    bool setPattern(const QString& pattern) override;
 
     const QString& extension() const;
     QString getDisplayText() const override { return mExtension; }

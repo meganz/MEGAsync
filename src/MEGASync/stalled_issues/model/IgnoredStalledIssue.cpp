@@ -3,6 +3,10 @@
 #include "MegaApplication.h"
 #include "MegaIgnoreManager.h"
 
+#include <QDir>
+
+#include <algorithm>
+
 QMap<mega::MegaHandle, bool> IgnoredStalledIssue::mSymLinksIgnoredInSyncs = QMap<mega::MegaHandle, bool>();
 
 IgnoredStalledIssue::IgnoredStalledIssue(const mega::MegaSyncStall *stallIssue)
@@ -22,10 +26,63 @@ mega::MegaSyncStall::SyncPathProblem IgnoredStalledIssue::linkType() const
     return mLinkType;
 }
 
+QString IgnoredStalledIssue::ignoreRulePattern(const IgnoredPath& ignoredPath,
+                                               const mega::MegaSync& sync)
+{
+    QDir dir(ignoredPath.pathSide == IgnoredPath::IgnorePathSide::REMOTE ?
+                 QString::fromUtf8(sync.getLastKnownMegaFolder()) :
+                 QDir::toNativeSeparators(QString::fromUtf8(sync.getLocalFolder())));
+    return dir.relativeFilePath(ignoredPath.path);
+}
+
+bool IgnoredStalledIssue::canBeIgnored() const
+{
+    // Symlinks are ignored with a fixed "-s:*" rule that carries no path, so they are always
+    // ignorable. Every other case writes one rule per path, and a name that cannot be put on a
+    // single line cannot be written as a rule at all.
+    if (isSymLink())
+    {
+        return true;
+    }
+
+    if (mCanBeIgnored.has_value())
+    {
+        return mCanBeIgnored.value();
+    }
+
+    if (mIgnoredPaths.isEmpty())
+    {
+        return false;
+    }
+
+    if (syncIds().isEmpty())
+    {
+        return true;
+    }
+
+    std::shared_ptr<mega::MegaSync> sync(
+        MegaSyncApp->getMegaApi()->getSyncByBackupId(firstSyncId()));
+    if (!sync)
+    {
+        return true;
+    }
+
+    // Only the part below the sync root is written, so that is what has to be writable: a control
+    // character in the root itself, or in a cloud folder above it, says nothing about this item.
+    mCanBeIgnored = std::all_of(mIgnoredPaths.cbegin(),
+                                mIgnoredPaths.cend(),
+                                [&sync](const IgnoredPath& ignoredPath)
+                                {
+                                    return MegaIgnoreRule::isPatternWritable(
+                                        ignoreRulePattern(ignoredPath, *sync));
+                                });
+    return mCanBeIgnored.value();
+}
+
 bool IgnoredStalledIssue::isAutoSolvable() const
 {
     //Always autosolvable, we don´t need to check if smart mode is active
-    return !isSolved() && !syncIds().isEmpty() &&
+    return !isSolved() && !syncIds().isEmpty() && canBeIgnored() &&
            (mLinkType == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink ||
             mLinkType == mega::MegaSyncStall::SyncPathProblem::DetectedHardLink ||
             mLinkType == mega::MegaSyncStall::SyncPathProblem::DetectedSpecialFile);
@@ -33,6 +90,8 @@ bool IgnoredStalledIssue::isAutoSolvable() const
 
 void IgnoredStalledIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
+    mCanBeIgnored.reset();
+
     StalledIssue::fillIssue(stall);
     if(getReason() == mega::MegaSyncStall::FileIssue && consultLocalData())
     {
@@ -137,6 +196,8 @@ StalledIssue::ResolutionState IgnoredStalledIssue::autoSolveIssue()
                 auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
 
                 MegaIgnoreManager ignoreManager(folderPath, false);
+                auto ruleRejected(false);
+
                 if(isSymLink())
                 {
                     ignoreManager.addIgnoreSymLinksRule();
@@ -144,27 +205,24 @@ StalledIssue::ResolutionState IgnoredStalledIssue::autoSolveIssue()
                 }
                 else
                 {
-                    QDir dir;
                     foreach(auto ignoredPath, mIgnoredPaths)
                     {
-                        if(ignoredPath.pathSide == IgnoredPath::IgnorePathSide::REMOTE)
+                        // The writer refuses a pattern it cannot put on a single line. Without
+                        // this check the issue would be reported as solved while nothing was
+                        // written.
+                        if (!ignoreManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
+                                                       ignoreRulePattern(ignoredPath, *sync),
+                                                       MegaIgnoreNameRule::Target::NONE,
+                                                       MegaIgnoreNameRule::Type::p))
                         {
-                            dir.setPath(QString::fromUtf8(sync->getLastKnownMegaFolder()));
+                            ruleRejected = true;
                         }
-                        else
-                        {
-                            dir.setPath(folderPath);
-                        }
-
-                        ignoreManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
-                                                  dir.relativeFilePath(ignoredPath.path),
-                                                  MegaIgnoreNameRule::Target::NONE,
-                                                  MegaIgnoreNameRule::Type::p);
                     }
                 }
 
                 auto changesApplied(ignoreManager.applyChanges());
-                if(changesApplied < MegaIgnoreManager::ApplyChangesError::NO_WRITE_PERMISSION)
+                if (!ruleRejected &&
+                    changesApplied < MegaIgnoreManager::ApplyChangesError::NO_WRITE_PERMISSION)
                 {
                     result = StalledIssue::ResolutionState::SOLVED;
                 }
@@ -195,7 +253,7 @@ CloudNodeIsBlockedIssue::CloudNodeIsBlockedIssue(const mega::MegaSyncStall* stal
 
 bool CloudNodeIsBlockedIssue::isAutoSolvable() const
 {
-    return true;
+    return canBeIgnored();
 }
 
 void CloudNodeIsBlockedIssue::fillIssue(const mega::MegaSyncStall* stall)
