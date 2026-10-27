@@ -72,3 +72,7 @@ set(HICOLOR share/icons/hicolor)
 install(FILES ${FILES32} DESTINATION ${HICOLOR}/32x32/emblems)
 install(FILES ${FILES64} DESTINATION ${HICOLOR}/64x64/emblems)
 
+# Install AppStream metadata
+install(FILES nz.mega.megasync.nautilus_extension.metainfo.xml
+    DESTINATION share/metainfo)
+

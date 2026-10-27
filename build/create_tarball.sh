@@ -158,6 +158,7 @@ ln -s ../../src/MEGAShellExtNautilus/mega_notify_client.c $EXT_NAME/mega_notify_
 ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../src/MEGAShellExtNautilus/CMakeLists.txt $EXT_NAME/CMakeLists.txt
+ln -s ../../src/MEGAShellExtNautilus/nz.mega.megasync.nautilus_extension.metainfo.xml $EXT_NAME/nz.mega.megasync.nautilus_extension.metainfo.xml
 ln -s ../../src/MEGAShellExtNautilus/data $EXT_NAME/data
 #ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 
@@ -219,6 +220,7 @@ ln -s ../../src/MEGAShellExtNemo/mega_notify_client.c $EXT_NAME/mega_notify_clie
 ln -s ../../src/MEGAShellExtNemo/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtNemo/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../src/MEGAShellExtNemo/CMakeLists.txt $EXT_NAME/CMakeLists.txt
+ln -s ../../src/MEGAShellExtNemo/nz.mega.megasync.nemo_extension.metainfo.xml $EXT_NAME/nz.mega.megasync.nemo_extension.metainfo.xml
 ln -s ../../src/MEGAShellExtNemo/data $EXT_NAME/data
 ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 
@@ -275,6 +277,7 @@ ln -s ../../src/MEGAShellExtThunar/mega_ext_client.h $EXT_NAME/mega_ext_client.h
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../src/MEGAShellExtThunar/CMakeLists.txt $EXT_NAME/CMakeLists.txt
+ln -s ../../src/MEGAShellExtThunar/nz.mega.megasync.thunar_extension.metainfo.xml $EXT_NAME/nz.mega.megasync.thunar_extension.metainfo.xml
 ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 
 export GZIP=-9
@@ -334,6 +337,7 @@ ln -s ../../src/MEGAShellExtDolphin/megasync-plugin-overlay.cpp $EXT_NAME/megasy
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin-overlay.json $EXT_NAME/megasync-plugin-overlay.json
 ln -s ../../src/MEGAShellExtDolphin/data $EXT_NAME/data
 ln -s ../../src/MEGAShellExtDolphin/CMakeLists.txt $EXT_NAME/CMakeLists.txt
+ln -s ../../src/MEGAShellExtDolphin/nz.mega.megasync.dolphin_extension.metainfo.xml $EXT_NAME/nz.mega.megasync.dolphin_extension.metainfo.xml
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.h $EXT_NAME/megasync-plugin.h
 ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 

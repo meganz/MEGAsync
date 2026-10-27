@@ -68,6 +68,10 @@ file(GLOB_RECURSE FILES64 "data/emblems/64x64/*")
 install(FILES ${FILES32} DESTINATION ${HICOLOR_INSTALL_DIR}/32x32/emblems)
 install(FILES ${FILES64} DESTINATION ${HICOLOR_INSTALL_DIR}/64x64/emblems)
 
+# Install AppStream metadata
+install(FILES nz.mega.megasync.dolphin_extension.metainfo.xml
+    DESTINATION ${KDE_INSTALL_METAINFODIR})
+
 #---ACTION PLUGIN---
 set(MEGA_PLUGIN megasync-plugin)
 kcoreaddons_add_plugin(${MEGA_PLUGIN}

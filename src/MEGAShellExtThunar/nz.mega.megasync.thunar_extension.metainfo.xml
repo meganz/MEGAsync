@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2026 MEGA Limited <support@mega.co.nz>
+
+  This file is released under the FSF All Permissive License (FSFAP).
+-->
+<component type="addon">
+  <id>nz.mega.megasync.thunar_extension</id>
+
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+
+  <name>MEGA Sync extension for Thunar</name>
+  <summary>See and manage your MEGA files and syncs in Thunar</summary>
+
+  <description>
+    <p>
+      Adds MEGA integration to Thunar: check the sync status of your files and folders
+      at a glance, and send, share or open them on MEGA without leaving the file manager.
+    </p>
+    <ul>
+      <li>Easily see and track your sync statuses.</li>
+      <li>Send files and folders to MEGA.</li>
+      <li>Share your synced files and folders with anyone by creating links.</li>
+      <li>View files in MEGA's browser (webclient).</li>
+    </ul>
+  </description>
+
+  <extends>org.xfce.thunar</extends>
+  <extends>nz.mega.megasync</extends>
+
+  <url type="homepage">https://mega.io/desktop</url>
+  <url type="help">https://help.mega.io/</url>
+  <url type="bugtracker">https://github.com/meganz/MEGAsync/issues</url>
+
+  <developer id="nz.mega">
+    <name>MEGA Limited</name>
+  </developer>
+</component>

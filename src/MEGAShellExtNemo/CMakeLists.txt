@@ -63,6 +63,10 @@ set(HICOLOR "${DESKTOP_DESTDIR}/share/icons/hicolor")
 install(DIRECTORY "${EMBLEMS_LOC}/32x32/" DESTINATION "${HICOLOR}/32x32/emblems" FILES_MATCHING PATTERN "*nemo*")
 install(DIRECTORY "${EMBLEMS_LOC}/64x64/" DESTINATION "${HICOLOR}/64x64/emblems" FILES_MATCHING PATTERN "*nemo*")
 
+# Install AppStream metadata
+install(FILES nz.mega.megasync.nemo_extension.metainfo.xml
+    DESTINATION "${DESKTOP_DESTDIR}/share/metainfo")
+
 if(NOT DEFINED no_desktop)
     install(CODE "
         message(STATUS \"Updating GTK\")

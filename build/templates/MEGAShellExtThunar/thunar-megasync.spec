@@ -56,5 +56,6 @@ rm -fr %{buildroot}/%{_datadir}/icons/hicolor/icon-theme.cache || true
 %files
 %defattr(-,root,root)
 %(pkg-config --variable=extensionsdir thunarx-3 || pkg-config --variable=extensionsdir thunarx-2)/libMEGAShellExtThunar.so*
+%{_datadir}/metainfo/nz.mega.megasync.thunar_extension.metainfo.xml
 
 %changelog
