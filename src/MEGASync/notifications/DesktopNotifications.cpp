@@ -791,6 +791,11 @@ void DesktopNotifications::sendBusinessWarningNotification(int businessStatus) c
     }
 }
 
+bool DesktopNotifications::takeTrayMessageClick()
+{
+    return mNotificator->takeTrayMessageClick();
+}
+
 void DesktopNotifications::sendInfoNotification(const QString& title, const QString& message) const
 {
     NotificationInfo info;

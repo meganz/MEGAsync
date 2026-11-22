@@ -147,7 +147,8 @@ NotificatorBase::NotificatorBase(const QString &programName, QSystemTrayIcon *tr
     mProgramName(programName),
     mMode(None),
     mTrayIcon(trayicon),
-    mCurrentNotification(nullptr)
+    mCurrentNotification(nullptr),
+    mTrayMessageShown(false)
 {
 }
 
@@ -180,7 +181,15 @@ void NotificatorBase::notifySystray(Class cls, const QString &title, const QStri
     default:
         break;
     }
+    mTrayMessageShown = true;
     mTrayIcon->showMessage(title, text, sicon, millisTimeout);
+}
+
+bool NotificatorBase::takeTrayMessageClick()
+{
+    const bool trayMessageShown = mTrayMessageShown;
+    mTrayMessageShown = false;
+    return trayMessageShown;
 }
 
 void NotificatorBase::notifySystray(DesktopAppNotificationBase *notification)

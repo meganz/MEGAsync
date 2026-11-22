@@ -6290,6 +6290,15 @@ void MegaApplication::onMessageClicked()
         return;
     }
 
+    // Only react if the click belongs to a message we showed through the tray icon. Qt 5's
+    // D-Bus tray icon emits messageClicked() for clicks on any application's notification.
+    if (!mOsNotifications || !mOsNotifications->takeTrayMessageClick())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
+                     "Ignoring messageClicked: no tray message from this app is pending");
+        return;
+    }
+
     if (lastTrayMessage == tr("A new version of MEGAsync is available. Click on this message to install it"))
     {
         triggerInstallUpdate();
