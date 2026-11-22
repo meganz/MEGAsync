@@ -58,6 +58,7 @@ public:
     void sendInfoNotification(const NotificationInfo& info) const;
     void sendWarningNotification(const QString& title, const QString& message) const;
     void sendErrorNotification(const QString& title, const QString& message) const;
+    bool takeTrayMessageClick();
 
 public slots:
     void replyIncomingPendingRequest(DesktopAppNotification::Action action);

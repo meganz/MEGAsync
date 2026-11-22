@@ -93,6 +93,11 @@ public:
     NotificatorBase(const QString &programName, QSystemTrayIcon *trayIcon, QObject *parent);
     virtual ~NotificatorBase() = default;
 
+    /** Returns whether a message shown with QSystemTrayIcon::showMessage() is still waiting
+       for a click, and clears that state.
+     */
+    bool takeTrayMessageClick();
+
     // Message class
     enum Class
     {
@@ -126,6 +131,7 @@ protected:
     Mode mMode;
     QSystemTrayIcon *mTrayIcon;
     QPointer<DesktopAppNotificationBase> mCurrentNotification;
+    bool mTrayMessageShown;
 
     virtual void notifySystray(Class cls, const QString &title, const QString &text, int millisTimeout, bool forceQt = false);
     virtual void notifySystray(DesktopAppNotificationBase *notification);
