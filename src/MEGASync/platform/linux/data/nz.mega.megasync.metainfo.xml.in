@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2026 MEGA Limited <support@mega.co.nz>
+
+  This file is released under the FSF All Permissive License (FSFAP).
+-->
+<component type="desktop-application">
+  <id>nz.mega.megasync</id>
+
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+
+  <name>MEGAsync</name>
+  <summary>Sync and back up your files with your MEGA cloud drive</summary>
+
+  <description>
+    <p>
+      The MEGA Desktop App gives you full control over your uploads and downloads, and
+      keeps your computer and your MEGA cloud drive in sync.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Sync your entire MEGA cloud drive, or only selected folders, with your computer, so that the latest version of your data is available on every device.</li>
+      <li>Back up your computer to MEGA to automatically copy files and folders in real time and avoid accidental data loss.</li>
+      <li>Manage your transfers with the transfer manager: add, sort, search for, prioritise, pause and cancel uploads and downloads.</li>
+      <li>Stream audio and video files stored in MEGA directly with your favourite media player.</li>
+      <li>Handle every transfer started from a browser with the app, removing browser limitations and improving reliability and speed.</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">megasync.desktop</launchable>
+
+  <url type="homepage">https://mega.io/desktop</url>
+  <url type="help">https://help.mega.io/</url>
+  <url type="bugtracker">https://github.com/meganz/MEGAsync/issues</url>
+  <url type="contact">https://mega.io/contact</url>
+  <url type="vcs-browser">https://github.com/meganz/MEGAsync</url>
+
+  <developer id="nz.mega">
+    <name>MEGA Limited</name>
+  </developer>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Manage your uploads and downloads in the transfer manager</caption>
+      <image width="1420" height="1065">https://mega.io/wp-content/uploads/2023/01/DA-img-4.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Recover previous versions of your files and folders</caption>
+      <image width="1420" height="1065">https://mega.io/wp-content/uploads/2023/01/DA-img-3.png</image>
+    </screenshot>
+  </screenshots>
+
+  <categories>
+    <category>Network</category>
+    <category>FileTransfer</category>
+    <category>Utility</category>
+  </categories>
+
+  <keywords>
+    <keyword>mega</keyword>
+    <keyword>sync</keyword>
+    <keyword>backup</keyword>
+    <keyword>cloud storage</keyword>
+    <keyword>file transfer</keyword>
+  </keywords>
+
+  <content_rating type="oars-1.1"/>
+
+  <releases>
+    <release version="@MEGA_DESKTOP_APP_VERSION@" date="@MEGA_METAINFO_RELEASE_DATE@" urgency="medium"/>
+  </releases>
+</component>
