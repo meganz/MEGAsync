@@ -2,6 +2,17 @@
 
 #include "Platform.h"
 
+#include <QGuiApplication>
+
+namespace
+{
+bool isNativeWaylandSession()
+{
+    return QGuiApplication::platformName().contains(QString::fromUtf8("wayland"),
+                                                    Qt::CaseInsensitive);
+}
+}
+
 GuestQmlDialog::GuestQmlDialog(QWindow *parent)
     : QmlDialog(parent)
 {
@@ -12,6 +23,13 @@ GuestQmlDialog::GuestQmlDialog(QWindow *parent)
     setFlags(flags() | Qt::FramelessWindowHint | Qt::Tool);
 
     QObject::connect(this, &GuestQmlDialog::activeChanged, [=]() {
+        // Native Wayland focus transitions from tray hosts are unreliable here;
+        // treating every inactive transition as a dismissal makes the popup unusable.
+        if (isNativeWaylandSession() && !this->isActive())
+        {
+            return;
+        }
+
         emit guestActiveChanged(this->isActive());
     });
 }
